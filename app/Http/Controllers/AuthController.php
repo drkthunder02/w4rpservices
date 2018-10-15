@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Socialite\Contracts\Factory as Socialite;
-use Laravel\Illuminate\Two\User as SocialiteUser;
+use Socialite;
+use SocialiteUser;
 use App\User;
 //use Laravel\Socialite\Contracts\Factory as Socialite;
 //use Laravel\Socialite\Two\User as SocialiteUser;
