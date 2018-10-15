@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 //use Laravel\Socialite\Contracts\Factory as Socialite;
 //use Laravel\Socialite\Two\User as SocialiteUser;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+//use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 //use SocialiteUser;
 
 
 class AuthController extends Controller
 {
-    use AuthenticatesUsers;
+    //use AuthenticatesUsers;
 
     /**
      * Redirect the user to the Eve Online authentication page.
@@ -19,7 +19,7 @@ class AuthController extends Controller
      * @return Response
      */
     public function redirectToProvider() {
-        return Socialite::driver('eveonline')->redirect();
+        return Socialite::driver('eveonline')->setScopes(['publicData'])->redirect();
     }
 
     /**
