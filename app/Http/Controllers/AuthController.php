@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Socialite;
 use SocialiteUser;
+use Laravel\Socialite\Contracts\User as ProviderUser;
 use App\User;
-//use Laravel\Socialite\Contracts\Factory as Socialite;
-//use Laravel\Socialite\Two\User as SocialiteUser;
-//use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
@@ -29,8 +29,10 @@ class AuthController extends Controller
      */
     public function handleProviderCallback() {
         $eve_data = Socialite::driver('eveonline')->user();
+
+
         //Get or create the User bound to this login
-        $user = $this->findOrCreateUser($eve_data);
+        $user = $this->createOrGetUser($eve_data);
         //Auth the user
         auth()->login($user);
 
@@ -45,7 +47,7 @@ class AuthController extends Controller
      * 
      * @param \Laravel\Socialite\Two\User $user
      */
-    private function findOrCreateUser(SociateUser $eve_user): User {
+    private function createOrGetUser(Provider $eve_user) {
         //check if the user already exists in the database
         if($existing = User::find($eve_user->character_id)) {
             //Check the owner hash and update if necessary
