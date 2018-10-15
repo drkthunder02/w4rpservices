@@ -27,8 +27,8 @@ class AuthController extends Controller
      * 
      * @return Response
      */
-    public function handleProviderCallback(Socialite $social) {
-        $eve_data = $social->driver('eveonline')->user();
+    public function handleProviderCallback() {
+        $eve_data = Socialite::driver('eveonline')->user();
         //Get or create the User bound to this login
         $user = $this->findOrCreateUser($eve_data);
         //Auth the user
