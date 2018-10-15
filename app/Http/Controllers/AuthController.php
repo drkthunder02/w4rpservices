@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Laravel\Socialite\Contracts\Factory as Socialite;
+use Laravel\Illuminate\Two\User as SocialiteUser;
+use App\User;
 //use Laravel\Socialite\Contracts\Factory as Socialite;
 //use Laravel\Socialite\Two\User as SocialiteUser;
 //use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Socialite;
-//use SocialiteUser;
-
 
 class AuthController extends Controller
 {
@@ -28,8 +28,46 @@ class AuthController extends Controller
      * @return Response
      */
     public function handleProviderCallback(Socialite $social) {
-        $user = $social->driver('eveonline')->user();
-        Auth::login($user);
+        $eve_data = $social->driver('eveonline')->user();
+        //Get or create the User bound to this login
+        $user = $this->findOrCreateUser($eve_data);
+        //Auth the user
+        auth()->login($user);
+
+        return redirect()->to('/dashboard');
+
         dd($user);
+    }
+
+    /**
+     * Check if a user exists in the database, else, create and 
+     * return the user object.
+     * 
+     * @param \Laravel\Socialite\Two\User $user
+     */
+    private function findOrCreateUser(SociateUser $eve_user): User {
+        //check if the user already exists in the database
+        if($existing = User::find($eve_user->character_id)) {
+            //Check the owner hash and update if necessary
+            if($existing->character_owner_hash !== $eve_user->character_owner_hash) {
+                $existing->owner_has = $eve_user->character_owner_hash;
+                $existing->save();
+            }
+            
+            return $existing;
+        }
+
+        return User::forceCreate([
+            'id' => $eve_user->character_id,
+            'name' => $eve_user->name,
+            'owner_hash' => $eve_user->character_owner_hash,
+            'email' => null,
+        ]);
+    }
+
+    public function loginUser(User $user): bool {
+        auth()->login($user, true);
+
+        return true;
     }
 }
