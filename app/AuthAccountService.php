@@ -13,6 +13,8 @@ class AuthAccountService {
      * @param \Laravel\Socialite\Two\User $user
      */
     public function createOrGetUser(ProviderUser $eve_user) {
+        //Search for user in the database
+        
 
         $account = AuthAccount::whereProvider('eveonline')->whereProviderUserId($eve_user->getId())->first();
 
@@ -49,28 +51,9 @@ class AuthAccountService {
             $account->save();
 
             return $user;
-        }
-/*
-        //check if the user already exists in the database
-        if($existing = User::find($eve_user->character_id)) {
-            //Check the owner hash and update if necessary
-            if($existing->character_owner_hash !== $eve_user->character_owner_hash) {
-                $existing->owner_has = $eve_user->character_owner_hash;
-                $existing->save();
-            }
-            
-            return $existing;
+
         }
 
-        if(!eve_user)
-
-        return User::forceCreate([
-            'id' => $eve_user->character_id,
-            'name' => $eve_user->name,
-            'owner_hash' => $eve_user->character_owner_hash,
-            'email' => null,
-        ]);
-        */
     }
     
 }

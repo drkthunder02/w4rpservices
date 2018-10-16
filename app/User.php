@@ -27,8 +27,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function getCharacterId() {
-        return $this->character_id;
-    }
 }

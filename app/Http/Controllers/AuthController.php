@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\AuthAccountService;
 use Socialite;
 use SocialiteUser;
 use App\User;
-use App\AuthAccountService;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+
+
+
+use DB;
 
 class AuthController extends Controller
 {
@@ -28,29 +34,15 @@ class AuthController extends Controller
      * @return Response
      */
     public function handleProviderCallback(AuthAccountService $service) {
+        $ssoUser = Socialite::driver('eveonline')->user();
 
-        $user = $service->createOrGetUser(Socialite::driver('eveonline')->user());
+        $user = $service->createOrGetUser($ssoUser);
 
         auth()->login($user);
 
         return redirect()->to('/dashboard');
-/*
-        $eve_data = Socialite::driver('eveonline')->user();
-
-        //Get or create the User bound to this login
-        $user = $this->createOrGetUser($eve_data);
-        //Auth the user
-        auth()->login($user);
-
-        
-*/
         dd($user);
     }
-/*
-    public function loginUser(User $user): bool {
-        auth()->login($user, true);
 
-        return true;
-    }
-*/
+    
 }

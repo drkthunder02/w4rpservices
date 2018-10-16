@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Socialite;
 
 class LoginController extends Controller
 {
@@ -40,5 +41,19 @@ class LoginController extends Controller
     public function logout(Request $request) {
         Auth::logout();
         return redirect('/');
+    }
+
+    public function redirectToProvider() {
+        return Socialite::driver('eveonline')->setScopes(['publicData'])->redirect();
+    }
+
+    public function handleProviderCallback(AuthAccountService $service) {
+        $ssoUser = Socialite::driver('eveonline')->user();
+        dd($ssoUser);
+        $user = $service->createOrGetUser($ssoUser);
+
+        auth()->login($user);
+
+        return redirect()->to('/dashboard');
     }
 }
