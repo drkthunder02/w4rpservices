@@ -77,7 +77,7 @@ class LoginController extends Controller
             return $authUser;
         } else {
             //Get what type of account the user should have
-            $accountType = getAccountType($eve_user->refreshToken, $eve_user->getId());
+            $accountType = $this->getAccountType($eve_user->refreshToken, $eve_user->getId());
 
             return User::create([
                 'name' => $eve_user->getName(),
