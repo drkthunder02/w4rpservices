@@ -17,8 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/login', 'Auth/LoginController@redirectToProvider');
-Route::get('/callback', 'Auth/LoginController@handleProviderCallback');
+Route::get('/login', 'Auth\LoginController@redirectToProvider');
+Route::get('/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/dashboard', 'DashboardController@index');
 Route::get('/dashboard/addmoon', 'DashboardController@addMoon');
