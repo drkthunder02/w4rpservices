@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Socialite;
 use SocialiteUser;
-//use Laravel\Socialite\Contracts\User as ProviderUser;
-use Laravel\Socialite\Two\User as ProviderUser;
 use App\User;
+use App\AuthAccountService;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -28,49 +27,30 @@ class AuthController extends Controller
      * 
      * @return Response
      */
-    public function handleProviderCallback() {
-        $eve_data = Socialite::driver('eveonline')->user();
+    public function handleProviderCallback(AuthAccountService $service) {
 
+        $user = $service->createOrGetUser(Socialite::driver('eveonline')->user());
+
+        auth()->login($user);
+
+        return redirect()->to('/dashboard');
+/*
+        $eve_data = Socialite::driver('eveonline')->user();
 
         //Get or create the User bound to this login
         $user = $this->createOrGetUser($eve_data);
         //Auth the user
         auth()->login($user);
 
-        return redirect()->to('/dashboard');
-
+        
+*/
         dd($user);
     }
-
-    /**
-     * Check if a user exists in the database, else, create and 
-     * return the user object.
-     * 
-     * @param \Laravel\Socialite\Two\User $user
-     */
-    private function createOrGetUser(Provider $eve_user) {
-        //check if the user already exists in the database
-        if($existing = User::find($eve_user->character_id)) {
-            //Check the owner hash and update if necessary
-            if($existing->character_owner_hash !== $eve_user->character_owner_hash) {
-                $existing->owner_has = $eve_user->character_owner_hash;
-                $existing->save();
-            }
-            
-            return $existing;
-        }
-
-        return User::forceCreate([
-            'id' => $eve_user->character_id,
-            'name' => $eve_user->name,
-            'owner_hash' => $eve_user->character_owner_hash,
-            'email' => null,
-        ]);
-    }
-
+/*
     public function loginUser(User $user): bool {
         auth()->login($user, true);
 
         return true;
     }
+*/
 }
