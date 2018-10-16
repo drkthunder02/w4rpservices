@@ -19,6 +19,8 @@ class User extends Authenticatable
         'name', 'email', 'avatar', 'owner_hash', 'id', 'expiresIn', 'token', 'refreshToken',
     ];
 
+    protected $table = 'users';
+
     /**
      * The attributes that should be hidden for arrays.
      *

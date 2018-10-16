@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use Auth;
+use Illuminate\Foundation\Auth\User;
 
 class LoginController extends Controller
 {
@@ -48,10 +49,10 @@ class LoginController extends Controller
         return Socialite::driver('eveonline')->setScopes(['publicData'])->redirect();
     }
 
-    public function handleProviderCallback(AuthAccountService $service) {
+    public function handleProviderCallback() {
         $ssoUser = Socialite::driver('eveonline')->user();
-        
-        $user = $service->createOrGetUser($ssoUser);
+
+        $user = $this->createOrGetUser($ssoUser);
 
         auth()->login($user);
 
@@ -66,20 +67,20 @@ class LoginController extends Controller
      */
     private function createOrGetUser($eve_user) {
         //Search for user in the database
-        $authUser = User::where($eve_user->id)->first();
-        //$account = AuthAccount::whereProvider('eveonline')->whereProviderUserId($eve_user->getId())->first();
+        $authUser = User::where('id', $eve_user->id)->first();
         if($authUser) {
             return $authUser;
         } else {
+            
             return User::create([
-                'name' => $user->getName(),
+                'name' => $eve_user->getName(),
                 'email' => null,
-                'avatar' => $user->avatar,
-                'owner_hash' => $user->character_owner_hash,
-                'id'=> $user->getId(),
-                'expiresIn' => $user->expiresIn,
-                'token' => $user->token,
-                'refreshToken' => $user->refreshToken,
+                'avatar' => $eve_user->avatar,
+                'owner_hash' => $eve_user->owner_hash,
+                'id'=> $eve_user->getId(),
+                'expiresIn' => $eve_user->expiresIn,
+                'token' => $eve_user->token,
+                'refreshToken' => $eve_user->refreshToken,
             ]);
         }
     }
