@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Socialite;
 use SocialiteUser;
-use Laravel\Socialite\Contracts\User as ProviderUser;
+//use Laravel\Socialite\Contracts\User as ProviderUser;
+use Laravel\Socialite\Two\User as ProviderUser;
 use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
