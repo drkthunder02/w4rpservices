@@ -78,7 +78,7 @@ class LoginController extends Controller
                 'avatar' => $eve_user->avatar,
                 'owner_hash' => $eve_user->owner_hash,
                 'id'=> $eve_user->getId(),
-                'expiresIn' => $eve_user->expiresIn,
+                'expires_in' => $eve_user->expiresIn,
                 'token' => $eve_user->token,
                 'refreshToken' => $eve_user->refreshToken,
             ]);
