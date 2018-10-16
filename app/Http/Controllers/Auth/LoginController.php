@@ -77,7 +77,7 @@ class LoginController extends Controller
                 'email' => null,
                 'avatar' => $eve_user->avatar,
                 'owner_hash' => $eve_user->owner_hash,
-                'id'=> $eve_user->getId(),
+                'character_id'=> $eve_user->getId(),
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
                 'refresh_token' => $eve_user->refreshToken,
