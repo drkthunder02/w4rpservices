@@ -54,7 +54,7 @@ class LoginController extends Controller
 
         $user = $this->createOrGetUser($ssoUser);
 
-        auth()->login($user);
+        auth()->login($user, true);
 
         return redirect()->to('/dashboard');
     }
