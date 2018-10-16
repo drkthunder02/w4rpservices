@@ -2,7 +2,8 @@
 
 namespace App;
 
-use Laravel\Socialite\Contracts\User as ProviderUser;
+//use Laravel\Socialite\Contracts\User as ProviderUser;
+use Laravel\Socailiate\Two\User as ProviderUser;
 
 class AuthAccountService {
     /**
@@ -11,9 +12,9 @@ class AuthAccountService {
      * 
      * @param \Laravel\Socialite\Two\User $user
      */
-    private function createOrGetUser(Provider $eve_user) {
+    public function createOrGetUser(ProviderUser $eve_user) {
 
-        $account = AuthAccount::whereProvider('eveonline')->whereProviderUserId($providerUser->getId())->first();
+        $account = AuthAccount::whereProvider('eveonline')->whereProviderUserId($eve_user->getId())->first();
 
         if($account) {
             return $account->user;
