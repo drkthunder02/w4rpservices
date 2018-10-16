@@ -118,12 +118,7 @@ class LoginController extends Controller
             'corporation_id' => $character_info->corporation_id,
         ]);
 
-        //Get the alliance information
-        $alliance_info = $esi->invoke('get','/alliances/{alliance_id}/', [
-            'alliance_id' => $corp_info->alliance_id,
-        ]);
-
-        if($alliance_info->alliance_id == '99004116') {
+        if($corp_info->alliance_id == '99004116') {
             return 'W4RP';
         } else if(in_array($alliance_info->alliance_id, array(99006297, 498125261, 99003214, 99004136, 9900237, 99001657, 99006069, 99001099, 99003838))) {
             return 'Legacy';
