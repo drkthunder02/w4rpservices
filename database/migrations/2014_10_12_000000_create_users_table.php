@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('access_token');
             $table->string('refresh_token');
             $table->integer('expires_in');
-            $table->string('owner_has');
+            $table->string('owner_hash');
             $table->string('user_type')->default('Guest');
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
