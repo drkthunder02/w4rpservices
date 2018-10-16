@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use Auth;
-use Illuminate\Foundation\Auth\User;
+use App\User;
 
 class LoginController extends Controller
 {

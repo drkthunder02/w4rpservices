@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('character_id');
+            $table->string('avatar');
             $table->string('access_token');
             $table->string('refresh_token');
             $table->integer('expires_in');
