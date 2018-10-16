@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -49,11 +50,37 @@ class LoginController extends Controller
 
     public function handleProviderCallback(AuthAccountService $service) {
         $ssoUser = Socialite::driver('eveonline')->user();
-        dd($ssoUser);
+        
         $user = $service->createOrGetUser($ssoUser);
 
         auth()->login($user);
 
         return redirect()->to('/dashboard');
+    }
+
+     /**
+     * Check if a user exists in the database, else, create and 
+     * return the user object.
+     * 
+     * @param \Laravel\Socialite\Two\User $user
+     */
+    private function createOrGetUser($eve_user) {
+        //Search for user in the database
+        $authUser = User::where($eve_user->id)->first();
+        //$account = AuthAccount::whereProvider('eveonline')->whereProviderUserId($eve_user->getId())->first();
+        if($authUser) {
+            return $authUser;
+        } else {
+            return User::create([
+                'name' => $user->getName(),
+                'email' => null,
+                'avatar' => $user->avatar,
+                'owner_hash' => $user->character_owner_hash,
+                'id'=> $user->getId(),
+                'expiresIn' => $user->expiresIn,
+                'token' => $user->token,
+                'refreshToken' => $user->refreshToken,
+            ]);
+        }
     }
 }
