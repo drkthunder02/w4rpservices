@@ -401,12 +401,8 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
-        'App\\AuthAccount' => __DIR__ . '/../..' . '/app/AuthAccount.php',
-        'App\\AuthAccountService' => __DIR__ . '/../..' . '/app/AuthAccountService.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
-        'App\\EsiToken' => __DIR__ . '/../..' . '/app/EsiToken.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -423,7 +419,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Library\\EsiLogin' => __DIR__ . '/../..' . '/app/Library/EsiLogin.php',
+        'App\\Library\\AllianceOrders' => __DIR__ . '/../..' . '/app/Library/AllianceOrders.php',
         'App\\Library\\MoonCalc' => __DIR__ . '/../..' . '/app/Library/MoonCalc.php',
         'App\\Moon' => __DIR__ . '/../..' . '/app/Moon.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
