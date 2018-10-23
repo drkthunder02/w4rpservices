@@ -24,6 +24,8 @@ class AllianceOrders {
 
         return $price;
     }
+
+    
 }
 
 ?>
