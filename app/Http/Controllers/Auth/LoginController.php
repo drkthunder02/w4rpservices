@@ -45,15 +45,29 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Logout function
+     * 
+     * @return void
+     */
     public function logout(Request $request) {
         Auth::logout();
         return redirect('/');
     }
 
+    /**
+     * Redirect to the provider's website
+     * 
+     * @return Socialite
+     */
     public function redirectToProvider() {
         return Socialite::driver('eveonline')->setScopes(['publicData'])->redirect();
     }
 
+    /**
+     * Get token from callback
+     * Redirect to the dashboard if logging in successfully. 
+     */
     public function handleProviderCallback() {
         $ssoUser = Socialite::driver('eveonline')->user();
 
@@ -78,7 +92,7 @@ class LoginController extends Controller
         } else {
             //Get what type of account the user should have
             $accountType = $this->getAccountType($eve_user->refreshToken, $eve_user->getId());
-
+            //Create a user account
             return User::create([
                 'name' => $eve_user->getName(),
                 'email' => null,
@@ -92,7 +106,15 @@ class LoginController extends Controller
             ]);
         }
     }
-
+    
+    /**
+     * Gets the appropriate account type the user should be assigned through ESI API
+     * 
+     * @param refreshToken
+     * @param charId
+     * 
+     * @return text
+     */
     private function getAccountType($refreshToken, $charId) {
         //Set caching to null
         $configuration = Configuration::getInstance();
@@ -117,7 +139,7 @@ class LoginController extends Controller
         $corp_info = $esi->invoke('get', '/corporations/{corporation_id}/', [
             'corporation_id' => $character_info->corporation_id,
         ]);
-
+        //Send back the appropriate group
         if($corp_info->alliance_id == '99004116') {
             return 'W4RP';
         } else if(in_array($alliance_info->alliance_id, array(99006297, 498125261, 99003214, 99004136, 9900237, 99001657, 99006069, 99001099, 99003838))) {

@@ -9,6 +9,7 @@ namespace App\Library;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
+use DB;
 
 class MoonCalc {
     
@@ -21,7 +22,7 @@ class MoonCalc {
         //Total pull size is 14,385,600 m3
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
         //Get the configuration for pricing calculations
-        $config = $db->fetchRow('SELECT * FROM Config');
+        $config = DB::table('Config')->get();
         if($firstQuan >= 1.00) {
         $firstPerc = $firstQuan / 100.00;
         } else {
@@ -43,52 +44,54 @@ class MoonCalc {
         $fourthPerc = $fourthQuan;
         }
         if($firstOre != "None") {
-            $m3Size = $db->fetchColumn('SELECT m3Size FROM ItemComposition WHERE Name= :name', array('name' => $firstOre));
+            $m3Size = DB::table('ItemComposition')->where('Name', $firstOre)->value('m3Size');
+            //$m3Size = $db->fetchColumn('SELECT m3Size FROM ItemComposition WHERE Name= :name', array('name' => $firstOre));
             //Find the m3 value of the first ore
             $firstActualm3 = floor($firstPerc * $totalPull);
             //Calculate the units of the first ore
             $firstUnits = floor($firstActualm3 / $m3Size);
             //Get the unit price from the database
-            $firstUnitPrice = $db->fetchColumn('SELECT UnitPrice  FROM OrePrices WHERE Name= :name', array('name'=> $firstOre));
+            $firstUnitPrice = DB::table('OrePrices')->where('UnitPrice', $firstOre)->value('UnitPrice');
+            //$firstUnitPrice = $db->fetchColumn('SELECT UnitPrice  FROM OrePrices WHERE Name= :name', array('name'=> $firstOre));
             //Calculate the total price for the first ore
             $firstTotal = $firstUnits * $firstUnitPrice;
         } else {
             $firstTotal = 0.00;
         }
         if($secondOre != "None") {
-            $m3Size = $db->fetchColumn('SELECT m3Size FROM ItemComposition WHERE Name= :name', array('name' => $secondOre));
+            $m3Size = DB::table('ItemComposition')->where('Name', $secondOre)->value('m3Size');
             //find the m3 value of the second ore
             $secondActualm3 = floor($secondPerc * $totalPull);
             //Calculate the units of the second ore
             $secondUnits = floor($secondActualm3 / $m3Size);
             //Get the  unit price from the database
-            $secondUnitPrice = $db->fetchColumn('SELECT UnitPrice FROM OrePrices WHERE Name= :name', array('name' => $secondOre));
+            $secondUnitPrice = DB::table('OrePrices')->where('UnitPrice', $secondOre)->value('UnitPrice');
             //calculate the total price for the second ore
             $secondTotal = $secondUnits * $secondUnitPrice;
         } else {
             $secondTotal = 0.00;
         }
         if($thirdOre != "None") {
-            $m3Size = $db->fetchColumn('SELECT m3Size FROM ItemComposition WHERE Name= :name', array('name' => $thirdOre));
+            $m3Size = DB::table('ItemComposition')->where('Name', $thirdOre)->value('m3Size');
             //find the m3 value of the third ore
             $thirdActualm3 = floor($thirdPerc * $totalPull);
             //calculate the units of the third ore
             $thirdUnits = floor($thirdActualm3 / $m3Size);
             //Get the unit price from the database
-            $thirdUnitPrice = $db->fetchColumn('SELECT UnitPrice FROM OrePrices WHERE Name= :name', array('name' => $thirdOre));
+            $thirdUnitPrice = DB::table('OrePrices')->where('UnitPrice', $thirdOre)->value('UnitPrice');
             //calculate the total price for the third ore
             $thirdTotal = $thirdUnits * $thirdUnitPrice;
         } else {
             $thirdTotal = 0.00;
         }
         if($fourthOre != "None") {
-            $m3Size = $db->fetchColumn('SELECT m3Size FROM ItemComposition WHERE Name= :name', array('name' => $fourthOre));
+            $m3Size = DB::table('ItemComposition')->where('Name', $fourthOre)->value('m3Size');
             //Find the m3 value of the fourth ore
             $fourthActualm3 = floor($fourthPerc * $totalPull);
             //Calculate the units of the fourth ore
             $fourthUnits = floor($fourthActualm3 / $m3Size);
             //Get the unit price from the database
-            $fourthUnitPrice = $db->fetchColumn('SELECT UnitPrice FROM OrePrices WHERE Name= :name', array('name' => $fourthOre));
+            $fourthUnitPrice = DB::table('OrePrices')->where('UnitPrice', $fourthOre)->value('UnitPrice');
             //calculate the total price for the fourth ore
             $fourthTotal = $fourthUnits * $fourthUnitPrice;
         } else {
@@ -97,7 +100,7 @@ class MoonCalc {
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
-        $rentalPrice = $totalPriceMined * ($config['RentalTax'] / 100.00);
+        $rentalPrice = $totalPriceMined * ($config->RentalTax / 100.00);
         //Format the rental price to the appropriate number
         $rentalPrice = number_format($rentalPrice, "2", ".", ",");
        
@@ -114,15 +117,15 @@ class MoonCalc {
             $browser = false;
             printf("Running price update from command line.\n");
         }
-        $db = DBOpen();
+
         //Get the configuration from the config table
-        $config = $db->fetchRow('SELECT * FROM Config');
+        $config = DB::table('Config')->get();
         //Calculate refine rate
-        $refineRate = $config['RefineRate'] / 100.00;
+        $refineRate = $config->RefineRate / 100.00;
         //Calculate the current time
         $time = time();
         //Get the max time from the database
-        $maxTime = $db->fetchColumn('SELECT MAX(Time) FROM Prices WHERE ItemId= :id', array('id' => 34));
+        $maxTime = DB::select('SELECT MAX(Time) FROM Prices WHERE ItemId = ?', [34]);
         //Get the price of the basic minerals
         $tritaniumPrice = $db->fetchColumn('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time', array('id' => 34, 'time' => $maxTime));
         $pyeritePrice = $db->fetchColumn('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time', array('id' => 35, 'time' => $maxTime));
