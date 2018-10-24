@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `Moons`
 --
 
-CREATE TABLE `moons` (
+CREATE TABLE IF NOT EXISTS `moons` (
   `id` int(10) NOT NULL,
   `System` varchar(10) DEFAULT NULL,
   `Planet` varchar(10) DEFAULT NULL,

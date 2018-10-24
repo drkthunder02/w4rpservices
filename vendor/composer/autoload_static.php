@@ -419,7 +419,6 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Library\\AllianceOrders' => __DIR__ . '/../..' . '/app/Library/AllianceOrders.php',
         'App\\Library\\MoonCalc' => __DIR__ . '/../..' . '/app/Library/MoonCalc.php',
         'App\\Moon' => __DIR__ . '/../..' . '/app/Moon.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

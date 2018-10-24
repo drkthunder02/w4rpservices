@@ -24,7 +24,6 @@ return array(
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
-    'App\\Library\\AllianceOrders' => $baseDir . '/app/Library/AllianceOrders.php',
     'App\\Library\\MoonCalc' => $baseDir . '/app/Library/MoonCalc.php',
     'App\\Moon' => $baseDir . '/app/Moon.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
