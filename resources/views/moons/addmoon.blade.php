@@ -1,5 +1,4 @@
 @extends('layouts.b4')
-@include('inc.messages')
 @include('layouts.navbar')
 @section('content')
 <div class="container">

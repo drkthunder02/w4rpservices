@@ -52,36 +52,26 @@ class MoonsController extends Controller
         return redirect('/dashboard')->with('success', 'Moon Added');
     }
 
-    /**
-     * Returns a view with a table select for all of the structures in the corp owned by the player
-     */
-    public function moonminedisplay() {
-        // Disable all caching by setting the NullCache as the
-        // preferred cache handler. By default, Eseye will use the
-        // FileCache.
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
+    public function updateMoon() {
+        return view('moons.updatemoon');
+    }
 
-        /**
-         * Create the auth user space.
-         * Get the character Id.
-         * Check the character id against the esi token table
-         * If the refresh token is available then request an ESI pull
-         * If the refresh token is not available, display an error message
-         */
-        $user = Auth::user();
-        $characterId = $user->getCharacterId();
-
-        // Prepare an authentication container for ESI
-        $authentication = new EsiAuthentication([
-            'client_id'     => env('ESI_CLIENT_ID'),
-            'secret'        => env('ESI_SECRET_KEY'),
-            'refresh_token' => null,
+    public function storeUpdateMoon(Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'renter' => 'required',
+            'date' => 'required'
         ]);
 
-        // Instantiate a new ESI instance.
-        $esi = new Eseye($authentication);
+        $date = strtotime($request->date . '00:00:01');
 
-        return 'Work In Progress!';
+        DB::table('moons')
+            ->where('StructureName', $request->name)
+            ->update([
+                'RentalCorp' => $request->renter,
+                'RentalEnd' => $date,
+            ]);
+
+        return redirect('/dashboard')->with('success', 'Moon Updated');
     }
 }
