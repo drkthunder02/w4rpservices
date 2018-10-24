@@ -11,12 +11,22 @@ use Seat\Eseye\Eseye;
 
 class MoonsController extends Controller
 {
+    public function displayMoons() {
+        $moons = DB::table('moons')->get();
+        
+        return view('dashboard.moon.moon')->with('moons', $moons);
+    }
+
+    public function addMoon() {
+        return view('dashboard.addmoon');
+    }
+
     /**
      * Add a new moon into the database
      * 
      * @return \Illuminate\Http\Reponse
      */
-    public function addMoon(Request $request) {
+    public function storeMoon(Request $request) {
         $this->validate($request, [
             'region' => 'required',
             'system' => 'required',
@@ -72,5 +82,6 @@ class MoonsController extends Controller
         // Instantiate a new ESI instance.
         $esi = new Eseye($authentication);
 
+        return 'Work In Progress!';
     }
 }

@@ -16,17 +16,15 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+//Login display pages
 Route::get('/login', 'Auth\LoginController@redirectToProvider');
 Route::get('/callback', 'Auth\LoginController@handleProviderCallback');
-
+//Dashboard Controller Display pages
 Route::get('/dashboard', 'DashboardController@index');
-Route::get('/dashboard/addmoon', 'DashboardController@addMoon');
-Route::get('/dashboard/updatemoon', 'DashboardController@updateMoon');
-Route::get('/dashboard/moons', 'DashboardController@displayMoons');
-Route::get('/dashboard/profile', 'DashboardController@profile');
-//Route::get('/callback', 'DashboardController@callback');
-Route::get('/dashboard/moonmine/display', 'MoonsController@moonminedisplay');
-Route::post('moonmine', 'MoonsController@moonmine');
 
+//Moon Controller display pages
+Route::get('/moons/display', 'MoonsController@displayMoons');
+Route::get('/moons/addmoon', 'MoonsController@addMoon');
+Route::get('/moons/updatemoon', 'MoonsController@updateMoon');
+//Moon Controller POSTS requests
 Route::post('moons', 'MoonsController@addMoon');

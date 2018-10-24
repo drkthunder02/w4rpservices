@@ -29,17 +29,7 @@ class DashboardController extends Controller
         return view('dashboard');
     }
 
-    public function addMoon() {
-        return view('dashboard.addmoon');
-    }
-
     public function profile() {
         //
-    }
-
-    public function displayMoons() {
-        $moons = DB::table('moons')->get();
-        
-        return 'Moons Display Table';
     }
 }
