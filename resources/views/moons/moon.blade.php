@@ -20,7 +20,7 @@
                 <th>Rental End</th>
             </thead>
             <tbody>
-                {{ $html }}
+                {!! $html !!}
             </tbody>
         </table>
     </div>
