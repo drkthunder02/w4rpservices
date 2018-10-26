@@ -22,6 +22,7 @@ class MoonCalc {
     public function SpatialMoons($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
+        dd($firstQuan);
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
