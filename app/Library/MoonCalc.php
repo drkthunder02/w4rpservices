@@ -120,7 +120,7 @@ class MoonCalc {
             $uri = '?region=10000002&types=' . $value;
             $result = $client->request('GET', $uri);
             $item = json_decode($result->getBody());
-            dd($item->value);
+            dd($item);
             DB::table('Prices')->insert([
                 'Name' => $key,
                 'ItemId' => $value,
