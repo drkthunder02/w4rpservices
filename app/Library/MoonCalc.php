@@ -227,10 +227,10 @@ class MoonCalc {
                             ($composition[0]->Neodymium * $neodymiumPrice[0]->Price) + 
                             ($composition[0]->Promethium * $promethiumPrice[0]->Price) +
                             ($composition[0]->Thulium * $thuliumPrice[0]->Price));
-            dd($batchPrice);
             //Calculate the batch price with the refine rate included
             //Batch Price is base price for everything
             $batchPrice = $batchPrice * $refineRate;
+            dd($batchPrice);
             //Calculate the unit price
             $price = $batchPrice / $composition[0]->BatchSize;
             //Calculate the m3 price
