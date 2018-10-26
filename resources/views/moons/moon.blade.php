@@ -20,6 +20,7 @@
                 <th>Rental End</th>
             </thead>
             <tbody>
+                @if(sizeof($moons) > 0)
                 @foreach ($moons as $moon)
                     <tr>
                         <td>{{ $moon->system }}</td>
@@ -36,6 +37,7 @@
                         <td>{{ $moon->rentend }}</td>
                     </tr>
                 @endforeach
+                @endif
             </tbody>
         </table>
     </div>
