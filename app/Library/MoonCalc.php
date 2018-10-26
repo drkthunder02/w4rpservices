@@ -73,8 +73,6 @@ class MoonCalc {
     }
 
     public function FetchNewPrices() {
-        //Open a database connection
-        $db = DBOpen();
         $ItemIDs = array(
             "Tritanium" => 34,
             "Pyerite" => 35,
