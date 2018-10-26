@@ -49,7 +49,7 @@ class MoonsController extends Controller
             $html .= '</tr>';
         }
 
-        return view('moons.moon')->with($html);
+        return view('moons.moon')->with('html', $html);
     }
 
     public function addMoon() {
