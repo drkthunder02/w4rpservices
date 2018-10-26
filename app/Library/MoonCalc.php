@@ -189,14 +189,13 @@ class MoonCalc {
         $thuliumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16653, $maxTime]);
         //Get the item compositions
         $items = DB::select('SELECT Name,ItemId FROM ItemComposition');
+        dd($tritaniumPrice);
         //Go through each of the items and update the price
         foreach($items as $item) {
             //Get the item composition
-            //$composition = DB::select('SELECT * FROM ItemComposition WHERE ItemId = ?', [$item->ItemId]);
-            $composition = DB::table('Prices')->where('ItemId', $item->ItemId)->last();
-            //$composition = DB::table('Prices')->where('ItemId', $item->ItemId);
+            $composition = DB::select('SELECT * FROM ItemComposition WHERE ItemId = ?', [$item->ItemId]);
             //Calculate the Batch Price
-            $batchPrice = ( ($composition['Tritanium'] * $tritaniumPrice) +
+            $batchPrice = ( ($composition->Tritanium * $tritaniumPrice) +
                             ($composition['Pyerite'] * $pyeritePrice) +
                             ($composition['Mexallon'] * $mexallonPrice) +
                             ($composition['Isogen'] * $isogenPrice) +
