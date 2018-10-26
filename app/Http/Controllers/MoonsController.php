@@ -9,6 +9,7 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use DB;
+use App\Library\MoonCalc;
 
 class MoonsController extends Controller
 {
@@ -16,6 +17,10 @@ class MoonsController extends Controller
      * Function to display the moons and pass data to the blade template
      */
     public function displayMoons() {
+        //Setup calls to the MoonCalc class
+        $moonCalc = new MoonCalc();
+        //Update the prices for the moon
+        $moonCalc->FetchNewPrices();
         //get all of the moons from the database
         $moons = DB::table('moons')->get();
         //declare the html variable and set it to null
@@ -24,6 +29,8 @@ class MoonsController extends Controller
             //Setup formats as needed
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
             $rentalEnd = date('d.m.Y', $moon->RentalEnd);
+            $price = $moonCalc->SpatialMoons($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
+                                             $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             //Add the data to the html string to be passed to the view
             $html .= '<tr>';
             $html .= '<td>' . $spm . '</td>';
@@ -36,7 +43,7 @@ class MoonsController extends Controller
             $html .= '<td>' . $moon->ThirdQuantity . '</td>';
             $html .= '<td>' . $moon->FourthOre . '</td>';
             $html .= '<td>' . $moon->FourthQuantity . '</td>';
-            $html .= '<td>' . $moon->Price . '</td>';
+            $html .= '<td>' . $price . '</td>';
             $html .= '<td>' . $moon->Renter . '</td>';
             $html .= '<td>' . $rentalEnd . '</td>';
             $html .= '</tr>';
