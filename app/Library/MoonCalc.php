@@ -139,6 +139,7 @@ class MoonCalc {
 
         //Get the configuration from the config table
         $config = DB::table('Config')->get();
+        dd($config);
         //Calculate refine rate
         $refineRate = $config->RefineRate / 100.00;
         //Calculate the current time
