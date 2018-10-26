@@ -13,7 +13,7 @@ class CreateConfigTable extends Migration
      */
     public function up()
     {
-        Schema::create('config', function (Blueprint $table) {
+        Schema::create('Config', function (Blueprint $table) {
             $table->decimal('RentalTax', 5,2);
             $table->decimal('AllyRentalTax', 5, 2);
             $table->decimal('RefineRate', 5, 2);
@@ -28,6 +28,6 @@ class CreateConfigTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('config');
+        Schema::dropIfExists('Config');
     }
 }

@@ -22,7 +22,7 @@ class MoonsController extends Controller
         //Update the prices for the moon
         $moonCalc->FetchNewPrices();
         //get all of the moons from the database
-        $moons = DB::table('moons')->get();
+        $moons = DB::table('Moons')->get();
         //declare the html variable and set it to null
         $html = '';
         foreach($moons as $moon) {

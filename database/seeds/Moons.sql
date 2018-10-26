@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `Moons`
 --
 
-CREATE TABLE IF NOT EXISTS `moons` (
+CREATE TABLE IF NOT EXISTS `Moons` (
   `id` int(10) NOT NULL,
   `System` varchar(10) DEFAULT NULL,
   `Planet` varchar(10) DEFAULT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `moons` (
 -- Dumping data for table `Moons`
 --
 
-INSERT INTO `moons` (`id`, `System`, `Planet`, `Moon`, `StructureName`, `FirstOre`, `FirstQuantity`, `SecondOre`, `SecondQuantity`, `ThirdOre`, `ThirdQuantity`, `FourthOre`, `FourthQuantity`, `RentalCorp`, `RentalEnd`) VALUES
+INSERT INTO `Moons` (`id`, `System`, `Planet`, `Moon`, `StructureName`, `FirstOre`, `FirstQuantity`, `SecondOre`, `SecondQuantity`, `ThirdOre`, `ThirdQuantity`, `FourthOre`, `FourthQuantity`, `RentalCorp`, `RentalEnd`) VALUES
 (50, 'LN-56V', '3', '1', 'No Name', 'Cubic Bistot', 35, 'Stable Veldspar', 35, 'Sylvite', 10, 'Zircon', 20, 'HYPNO', 1533081600),
 (52, 'LN-56V', '5', '7', '5-7', 'Loparite', 21, 'Monazite', 20, 'Pellucid Crokite', 31, 'Scintillating Hemorphite', 29, 'UOS', 1515715200),
 (53, 'LN-56V', '5', '15', 'PUB', 'Carnotite', 25, 'Opulent Pyroxeres', 45, 'Zircon', 31, 'None', 0, 'HYPNO', 1536624000),
@@ -83,21 +83,6 @@ INSERT INTO `moons` (`id`, `System`, `Planet`, `Moon`, `StructureName`, `FirstOr
 (82, 'QI-S9W', '7', '2', 'No Name', 'Cinnabar', 30, 'Coesite', 21, 'Opulent Pyroxeres', 19, 'Zircon', 30, NULL, NULL),
 (83, 'B-A587', '6', '6', 'No Name', 'Chromite', 22, 'Opulent Pyroxeres', 17, 'Platinoid Omber', 17, 'Ytterbite', 44, NULL, NULL),
 (84, 'LN-56V', '4', '8', 'No Name', 'Dazzling Spodumain', 10, 'Flawless Arkonor', 32, 'Glossy Scordite', 29, 'Zircon', 29, NULL, NULL);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `Moons`
---
-ALTER TABLE `moons`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
 
 --
 -- AUTO_INCREMENT for table `Moons`

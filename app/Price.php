@@ -13,5 +13,5 @@ class Price extends Model
     public $primaryKey = 'id';
 
     // Timestamps
-    public $timestamps = 'true';
+    public $timestamps = 'false';
 }

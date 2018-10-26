@@ -110,10 +110,6 @@ INSERT INTO `item_composition` (`Name`, `ItemId`, `m3Size`, `BatchSize`, `Tritan
 ('Ytterbite', 45513, '10.00', 100, 0, 0, 0, 0, 50, 100, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 20, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22);
 
 --
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `ItemComposition`
 --
 ALTER TABLE `item_composition`

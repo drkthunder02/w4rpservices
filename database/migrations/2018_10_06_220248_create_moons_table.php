@@ -13,7 +13,7 @@ class CreateMoonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('moons', function (Blueprint $table) {
+        Schema::create('Moons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('Region');
             $table->string('System');
@@ -30,7 +30,6 @@ class CreateMoonsTable extends Migration
             $table->integer('FourthQuantity')->default('0');
             $table->string('RentalCorp')->default('0');
             $table->integer('RentalEnd')->default('0');
-            $table->timestamps();
         });
     }
 
@@ -41,6 +40,6 @@ class CreateMoonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('moons');
+        Schema::dropIfExists('Moons');
     }
 }

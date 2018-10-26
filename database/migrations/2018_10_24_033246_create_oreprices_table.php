@@ -13,7 +13,7 @@ class CreateOrepricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('oreprices', function (Blueprint $table) {
+        Schema::create('OrePrices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('Name');
             $table->integer('ItemId');
@@ -32,6 +32,6 @@ class CreateOrepricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('oreprices');
+        Schema::dropIfExists('OrePrices');
     }
 }

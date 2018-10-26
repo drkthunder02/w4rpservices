@@ -19,7 +19,6 @@ class CreatePricesTable extends Migration
             $table->integer('ItemId');
             $table->decimal('Price', 20, 2);
             $table->string('Time');
-            $table->timestamps();
         });
     }
 
@@ -30,6 +29,6 @@ class CreatePricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prices');
+        Schema::dropIfExists('Prices');
     }
 }
