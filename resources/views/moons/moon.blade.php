@@ -20,13 +20,7 @@
                 <th>Rental End</th>
             </thead>
             <tbody>
-                @if(sizeof($moons) > 0)
-                @foreach ($moons as $moon)
-                    <tr>
-                        <td>{{ $moon }}</td>
-                    </tr>
-                @endforeach
-                @endif
+                {{ $moonsHtml }}
             </tbody>
         </table>
     </div>

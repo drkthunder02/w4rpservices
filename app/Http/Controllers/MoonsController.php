@@ -14,8 +14,15 @@ class MoonsController extends Controller
 {
     public function displayMoons() {
         $moons = DB::table('moons')->get();
-        
-        return view('moons.moon')->with($moons);
+        $moonsHtml = '';
+        foreach($moons as $moon) {
+            $moonsHtml .= '<td>' . $moon->system . '</td>';
+            $moonsHtml .= '<td>' . $moon->strucure . '</td>';
+            $moonsHtml .= '<td>' . $moon->firstore . '</td>';
+            $moonsHtml .= '<td>' . $moon->firstquan . '</td>';
+        }
+
+        return view('moons.moon')->with($moonsHtml);
     }
 
     public function addMoon() {
