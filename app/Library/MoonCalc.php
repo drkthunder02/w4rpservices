@@ -230,9 +230,9 @@ class MoonCalc {
             //Calculate the batch price with the refine rate included
             //Batch Price is base price for everything
             $batchPrice = $batchPrice * $refineRate;
-            dd($batchPrice);
             //Calculate the unit price
             $price = $batchPrice / $composition[0]->BatchSize;
+            dd($price);
             //Calculate the m3 price
             $m3Price = $price / $composition[0]->m3Size;
             //Insert the prices into the Pricees table
