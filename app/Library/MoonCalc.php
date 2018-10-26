@@ -12,6 +12,9 @@ use Session;
 use DB;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use App\Config;
+use App\Moon;
+use App\Price;
 
 class MoonCalc {
 
