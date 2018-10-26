@@ -193,8 +193,8 @@ class MoonCalc {
         foreach($items as $item) {
             //Get the item composition
             //$composition = DB::select('SELECT * FROM ItemComposition WHERE ItemId = ?', [$item->ItemId]);
-            $composition = DB::table('Prices')->where('ItemId', $item->ItemId);
-            dd($item->ItemId);
+            $composition = DB::table('Prices')->where('ItemId', $item->ItemId)->last();
+            //$composition = DB::table('Prices')->where('ItemId', $item->ItemId);
             //Calculate the Batch Price
             $batchPrice = ( ($composition['Tritanium'] * $tritaniumPrice) +
                             ($composition['Pyerite'] * $pyeritePrice) +
