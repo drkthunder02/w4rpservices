@@ -21,7 +21,6 @@ class CreateOrepricesTable extends Migration
             $table->decimal('UnitPrice', 20, 2);
             $table->decimal('m3Price', 20, 2);
             $table->string('Time');
-            $table->timestamps();
         });
     }
 

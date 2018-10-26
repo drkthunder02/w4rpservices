@@ -232,7 +232,6 @@ class MoonCalc {
             $batchPrice = $batchPrice * $refineRate;
             //Calculate the unit price
             $price = $batchPrice / $composition[0]->BatchSize;
-            dd($price);
             //Calculate the m3 price
             $m3Price = $price / $composition[0]->m3Size;
             //Insert the prices into the Pricees table
@@ -278,6 +277,8 @@ class MoonCalc {
         //Calculate the total amount from the units and unit price
         $total = $units * $unitPrice;
         //Return the value
+
+        dd($total);
         return $total;
     }
 
