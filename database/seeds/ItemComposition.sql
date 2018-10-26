@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `ItemComposition`
 --
 
-CREATE TABLE `item_composition` (
+CREATE TABLE `ItemComposition` (
   `Name` varchar(31) DEFAULT NULL,
   `ItemId` int(10) NOT NULL,
   `m3Size` decimal(10,2) NOT NULL DEFAULT 0.00,
@@ -72,7 +72,7 @@ CREATE TABLE `item_composition` (
 -- Dumping data for table `ItemComposition`
 --
 
-INSERT INTO `item_composition` (`Name`, `ItemId`, `m3Size`, `BatchSize`, `Tritanium`, `Pyerite`, `Mexallon`, `Isogen`, `Nocxium`, `Zydrine`, `Megacyte`, `Morphite`, `HeavyWater`, `LiquidOzone`, `NitrogenIsotopes`, `HeliumIsotopes`, `HydrogenIsotopes`, `OxygenIsotopes`, `StrontiumClathrates`, `AtmosphericGases`, `EvaporiteDeposits`, `Hydrocarbons`, `Silicates`, `Cobalt`, `Scandium`, `Titanium`, `Tungsten`, `Cadmium`, `Platinum`, `Vanadium`, `Chromium`, `Technetium`, `Hafnium`, `Caesium`, `Mercury`, `Dysprosium`, `Neodymium`, `Promethium`, `Thulium`) VALUES
+INSERT INTO `ItemComposition` (`Name`, `ItemId`, `m3Size`, `BatchSize`, `Tritanium`, `Pyerite`, `Mexallon`, `Isogen`, `Nocxium`, `Zydrine`, `Megacyte`, `Morphite`, `HeavyWater`, `LiquidOzone`, `NitrogenIsotopes`, `HeliumIsotopes`, `HydrogenIsotopes`, `OxygenIsotopes`, `StrontiumClathrates`, `AtmosphericGases`, `EvaporiteDeposits`, `Hydrocarbons`, `Silicates`, `Cobalt`, `Scandium`, `Titanium`, `Tungsten`, `Cadmium`, `Platinum`, `Vanadium`, `Chromium`, `Technetium`, `Hafnium`, `Caesium`, `Mercury`, `Dysprosium`, `Neodymium`, `Promethium`, `Thulium`) VALUES
 ('Flawless Arkonor', 46678, '16.00', 100, 24200, 0, 2750, 0, 0, 0, 352, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('Cubic Bistot', 46676, '16.00', 100, 0, 13800, 0, 0, 0, 518, 115, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('Pellucid Crokite', 46677, '16.00', 100, 24150, 0, 0, 0, 874, 155, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -112,7 +112,7 @@ INSERT INTO `item_composition` (`Name`, `ItemId`, `m3Size`, `BatchSize`, `Tritan
 --
 -- Indexes for table `ItemComposition`
 --
-ALTER TABLE `item_composition`
+ALTER TABLE `ItemComposition`
   ADD UNIQUE KEY `oreName` (`Name`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
