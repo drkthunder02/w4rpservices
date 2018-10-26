@@ -26,6 +26,7 @@ class MoonsController extends Controller
         //declare the html variable and set it to null
         $html = '';
         foreach($moons as $moon) {
+            dd($moon->FirstOre);
             //Setup formats as needed
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
             $rentalEnd = date('d.m.Y', $moon->RentalEnd);
