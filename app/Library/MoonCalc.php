@@ -151,8 +151,7 @@ class MoonCalc {
         $maxTime = DB::table('Prices')->where('ItemId', 34)->max('Time');
         //Get the price of the basic minerals
         $tritaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [34, $maxTime]);
-        $tritanium = DB::table('Prices')->select('Price')->where(['ItemId' => 34, 'Time' => $maxTime]);
-        //$tritaniumPrice = $db->fetchColumn('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time', array('id' => 34, 'time' => $maxTime));
+        $tritanium = DB::select( DB::raw('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time'), array('id' => 34, 'time' => $maxTime));
         $pyeritePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [35, $maxTime]);
         $mexallonPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [36, $maxTime]);
         $isogenPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [37, $maxTime]);
@@ -190,7 +189,7 @@ class MoonCalc {
         $thuliumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16653, $maxTime]);
         //Get the item compositions
         $items = DB::select('SELECT Name,ItemId FROM ItemComposition');
-        dd($tritanium->Price);
+        dd($tritanium);
         //Go through each of the items and update the price
         foreach($items as $item) {
             //Get the item composition
