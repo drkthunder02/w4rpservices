@@ -5,7 +5,6 @@
     <div class="jumbotron">
         <table class="table table-striped">
             <thead>
-                <th>Region</th>
                 <th>System</th>
                 <th>Name</th>
                 <th>First Ore</th>
@@ -23,7 +22,6 @@
             <tbody>
                 @foreach ($moons as $moon)
                     <tr>
-                        <td>{{ $moon->region }}</td>
                         <td>{{ $moon->system }}</td>
                         <td>{{ $moon->structure }}</td>
                         <td>{{ $moon->firstore }}</td>
