@@ -143,7 +143,6 @@ class MoonCalc {
         $config = DB::table('Config')->first();
         //Calculate refine rate
         $refineRate = $config->RefineRate / 100.00;
-        dd($refineRate);
         //Calculate the current time
         $time = time();
         //Get the max time from the database
@@ -228,6 +227,7 @@ class MoonCalc {
                             ($composition[0]->Neodymium * $neodymiumPrice[0]->Price) + 
                             ($composition[0]->Promethium * $promethiumPrice[0]->Price) +
                             ($composition[0]->Thulium * $thuliumPrice[0]->Price));
+            dd($batchPrice);
             //Calculate the batch price with the refine rate included
             //Batch Price is base price for everything
             $batchPrice = $batchPrice * $refineRate;
