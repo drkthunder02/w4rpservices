@@ -86,7 +86,7 @@ class LoginController extends Controller
      */
     private function createOrGetUser($eve_user) {
         //Search for user in the database
-        $authUser = User::where('id', $eve_user->id)->first();
+        $authUser = User::where('character_id', $eve_user->id)->first();
         if($authUser) {
             return $authUser;
         } else {
