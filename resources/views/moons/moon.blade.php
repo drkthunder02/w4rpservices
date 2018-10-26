@@ -20,7 +20,24 @@
                 <th>Rental End</th>
             </thead>
             <tbody>
-                {{ $moonsHtml }}
+                @if(sizeof($moons) > 0)
+                @foreach ($moons as $moon)
+                    <tr>
+                        <td>{{ $moon['system'] }}</td>
+                        <td>{{ $moon['structure'] }}</td>
+                        <td>{{ $moon['firstore'] }}</td>
+                        <td>{{ $moon['firstquan'] }}</td>
+                        <td>{{ $moon['secondore'] }}</td>
+                        <td>{{ $moon['secondquan'] }}</td>
+                        <td>{{ $moon['thirdore'] }}</td>
+                        <td>{{ $moon['thirdquan'] }}</td>
+                        <td>{{ $moon['fourthore'] }}</td>
+                        <td>{{ $moon['price'] }}</td>
+                        <td>{{ $moon['renter'] }}</td>
+                        <td>{{ $moon['rentend'] }}</td>
+                    </tr>
+                @endforeach
+                @endif
             </tbody>
         </table>
     </div>
