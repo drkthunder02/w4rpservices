@@ -141,7 +141,7 @@ class MoonCalc {
     private function UpdateItemPricing() {
 
         //Get the configuration from the config table
-        $config = DB::table('Config')->get();
+        $config = DB::table('Config')->first();
         //Calculate refine rate
         $refineRate = $config->RefineRate / 100.00;
         //Calculate the current time
