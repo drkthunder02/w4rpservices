@@ -8,6 +8,7 @@ use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
+use DB;
 
 class MoonsController extends Controller
 {
