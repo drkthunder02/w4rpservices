@@ -150,7 +150,8 @@ class MoonCalc {
         //Get the max time from the database
         $maxTime = DB::table('Prices')->where('ItemId', 34)->max('Time');
         //Get the price of the basic minerals
-        $tritaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [34, $maxTime])->get();
+        $tritaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [34, $maxTime]);
+        $tritanium = DB::table('Prices')->select('Price')->where(['ItemId' => 34, 'Time' => $maxTime]);
         //$tritaniumPrice = $db->fetchColumn('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time', array('id' => 34, 'time' => $maxTime));
         $pyeritePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [35, $maxTime]);
         $mexallonPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [36, $maxTime]);
