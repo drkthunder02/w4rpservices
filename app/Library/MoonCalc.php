@@ -118,7 +118,8 @@ class MoonCalc {
         foreach($ItemIDs as $key => $value) {
             $client = new Client();
             $url = 'https://market.fuzzwork.co.uk/aggregates/?region=10000002&types=' . $value;
-            $result = $client->request('GET', $url);
+            $item = $client->request('GET', $url);
+            dd($item);
             DB::table('Prices')->insert([
                 'Name' => $key,
                 'ItemId' => $value,
