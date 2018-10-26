@@ -149,7 +149,6 @@ class MoonCalc {
         $time = time();
         //Get the max time from the database
         $maxTime = DB::table('Prices')->where('ItemId', 34)->max('Time');
-        //$maxTime = DB::select('SELECT MAX(Time) FROM Prices WHERE ItemId = ?', [34]);
         //Get the price of the basic minerals
         $tritaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [34, $maxTime]);
         //$tritaniumPrice = $db->fetchColumn('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time', array('id' => 34, 'time' => $maxTime));
@@ -193,7 +192,8 @@ class MoonCalc {
         //Go through each of the items and update the price
         foreach($items as $item) {
             //Get the item composition
-            $composition = DB::select('SELECT * FROM ItemComposition WHERE ItemId = ?', [$item->ItemId]);
+            //$composition = DB::select('SELECT * FROM ItemComposition WHERE ItemId = ?', [$item->ItemId]);
+            $composition = DB::table('Prices')->where('ItemId', $item->ItemId);
             //Calculate the Batch Price
             $batchPrice = ( ($composition->Tritanium * $tritaniumPrice) +
                             ($composition['Pyerite'] * $pyeritePrice) +
