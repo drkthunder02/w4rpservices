@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `ItemComposition`
 --
 
-CREATE TABLE `ItemComposition` (
+CREATE TABLE IF NOT EXISTS `ItemComposition` (
   `Name` varchar(31) DEFAULT NULL,
   `ItemId` int(10) NOT NULL,
   `m3Size` decimal(10,2) NOT NULL DEFAULT 0.00,
