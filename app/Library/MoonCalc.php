@@ -135,8 +135,6 @@ class MoonCalc {
         }
 
         $this->UpdateItemPricing();
-        //Close the database connection
-        DBClose($db);
     }
 
     private function UpdateItemPricing() {
