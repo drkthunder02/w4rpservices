@@ -2,7 +2,6 @@
 @include('layouts.navbar')
 @section('content')
 <div class="container">
-    <div class="jumbotron">
         <table class="table table-striped">
             <thead>
                 <th>System</th>
