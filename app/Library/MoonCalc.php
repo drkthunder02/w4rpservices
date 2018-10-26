@@ -190,7 +190,7 @@ class MoonCalc {
         $thuliumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16653, $maxTime]);
         //Get the item compositions
         $items = DB::select('SELECT Name,ItemId FROM ItemComposition');
-        dd($tritanium);
+        dd($tritanium->Price);
         //Go through each of the items and update the price
         foreach($items as $item) {
             //Get the item composition
