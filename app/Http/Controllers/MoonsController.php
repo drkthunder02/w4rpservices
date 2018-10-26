@@ -22,7 +22,7 @@ class MoonsController extends Controller
         $html = '';
         foreach($moons as $moon) {
             //Setup formats as needed
-            $spm = $moon['System'] . ' - ' . $moon['Planet'] . ' - ' . $moon['Moon'];
+            $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
             $rentalEnd = date('d.m.Y', $moon['RentalEnd']);
             //Add the data to the html string to be passed to the view
             $html .= '<tr>';
