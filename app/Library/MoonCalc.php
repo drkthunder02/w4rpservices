@@ -274,7 +274,6 @@ class MoonCalc {
         $units = floor($actualm3 / $m3Size);
         //Look up the unit price from the database
         $unitPrice = DB::table('OrePrices')->where('Name', $ore)->value('UnitPrice');
-        dd($unitPrice);
         //Calculate the total amount from the units and unit price
         $total = $units * $unitPrice;
         //Return the value
