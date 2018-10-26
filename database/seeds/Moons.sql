@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS `Moons` (
   `FourthOre` varchar(50) DEFAULT 'None',
   `FourthQuantity` int(3) DEFAULT 0,
   `RentalCorp` varchar(50) DEFAULT NULL,
-  `RentalEnd` int(12) DEFAULT NULL
+  `RentalEnd` int(12) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -87,7 +88,7 @@ INSERT INTO `Moons` (`id`, `System`, `Planet`, `Moon`, `StructureName`, `FirstOr
 --
 -- AUTO_INCREMENT for table `Moons`
 --
-ALTER TABLE `moons`
+ALTER TABLE `Moons`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
