@@ -22,7 +22,6 @@ class MoonCalc {
     public function SpatialMoons($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
-        dd($firstQuan);
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
@@ -274,7 +273,7 @@ class MoonCalc {
         //Calculate the units once we have the size and actual m3 value
         $units = floor($actualm3 / $m3Size);
         //Look up the unit price from the database
-        $unitPrice = DB::table('OrePrices')->where('UnitPrice', $ore)->value('UnitPrice');
+        $unitPrice = DB::table('OrePrices')->where('Name', $ore)->value('UnitPrice');
         dd($unitPrice);
         //Calculate the total amount from the units and unit price
         $total = $units * $unitPrice;
