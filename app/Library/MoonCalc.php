@@ -119,7 +119,7 @@ class MoonCalc {
             $client = new Client(['base_uri' => 'https://market.fuzzwork.co.uk/aggregates/']);
             $uri = '?region=10000002&types=' . $value;
             $result = $client->request('GET', $uri);
-            $item = $result->getBody();
+            $item = json_decode($result->getBody());
             dd($item);
             DB::table('Prices')->insert([
                 'Name' => $key,
