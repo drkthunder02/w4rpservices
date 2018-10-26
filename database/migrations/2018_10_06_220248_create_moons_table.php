@@ -28,7 +28,7 @@ class CreateMoonsTable extends Migration
             $table->integer('ThirdQuantity')->default('0');
             $table->string('FourthOre')->default('None');
             $table->integer('FourthQuantity')->default('0');
-            $table->string('RentalCorp')->default('0');
+            $table->string('RentalCorp')->default('Not Rented');
             $table->integer('RentalEnd')->default('0');
         });
     }
