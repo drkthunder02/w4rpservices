@@ -272,13 +272,12 @@ class MoonCalc {
         $actualm3 = floor($percentage * $totalPull);
         //Calculate the units once we have the size and actual m3 value
         $units = floor($actualm3 / $m3Size);
+        dd($units);
         //Look up the unit price from the database
         $unitPrice = DB::table('OrePrices')->where('UnitPrice', $ore)->value('UnitPrice');
         //Calculate the total amount from the units and unit price
         $total = $units * $unitPrice;
         //Return the value
-
-        dd($total);
         return $total;
     }
 
