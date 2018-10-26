@@ -116,9 +116,9 @@ class MoonCalc {
         //Base url is https://market.fuzzwork.co.uk/aggregates/?region=10000002&types=34
         //Going to use curl for these requests
         foreach($ItemIDs as $key => $value) {
-            $client = new Client();
-            $url = 'https://market.fuzzwork.co.uk/aggregates/?region=10000002&types=' . $value;
-            $result = $client->request('GET', $url);
+            $client = new Client(['base_uri' => 'https://market.fuzzwork.co.uk/aggregates/']);
+            $uri = '?region=10000002&types=' . $value;
+            $result = $client->request('GET', $uri);
             $item = $result->getBody();
             dd($item);
             DB::table('Prices')->insert([
