@@ -16,7 +16,7 @@ class MoonsController extends Controller
         $moons = DB::table('moons')->get();
         
         //return view('moons.moon')->with('moons', $moons);
-        return view('moons.moon', ['moons' => $moons]);
+        return view('moons.moon', compact('moons'));
     }
 
     public function addMoon() {
