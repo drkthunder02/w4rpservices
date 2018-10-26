@@ -123,7 +123,8 @@ class MoonCalc {
             DB::table('Prices')->insert([
                 'Name' => $key,
                 'ItemId' => $value,
-                'Price' => $item[$value]['sell']['median'],
+                //'Price' => $item[$value]['sell']['median'],
+                'Price' => $item->value->sell->median,
                 'Time' => $time
             ]);
         }
