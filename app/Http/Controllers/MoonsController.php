@@ -23,21 +23,21 @@ class MoonsController extends Controller
         foreach($moons as $moon) {
             //Setup formats as needed
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
-            $rentalEnd = date('d.m.Y', $moon['RentalEnd']);
+            $rentalEnd = date('d.m.Y', $moon->RentalEnd);
             //Add the data to the html string to be passed to the view
             $html .= '<tr>';
             $html .= '<td>' . $spm . '</td>';
-            $html .= '<td>' . $moon['StructureName'] . '</td>';
-            $html .= '<td>' . $moon['FirstOre'] . '</td>';
-            $html .= '<td>' . $moon['FirstQuantity'] . '</td>';
-            $html .= '<td>' . $moon['SecondOre'] . '</td>';
-            $html .= '<td>' . $moon['SecondQuantity'] . '</td>';
-            $html .= '<td>' . $moon['ThirdOre'] . '</td>';
-            $html .= '<td>' . $moon['ThirdQuantity'] . '</td>';
-            $html .= '<td>' . $moon['FourthOre'] . '</td>';
-            $html .= '<td>' . $moon['FourthQuantity'] . '</td>';
-            $html .= '<td>' . $moon['Price'] . '</td>';
-            $html .= '<td>' . $moon['Renter'] . '</td>';
+            $html .= '<td>' . $moon->StructureName . '</td>';
+            $html .= '<td>' . $moon->FirstOre . '</td>';
+            $html .= '<td>' . $moon->FirstQuantity . '</td>';
+            $html .= '<td>' . $moon->SecondOre . '</td>';
+            $html .= '<td>' . $moon->SecondQuantity . '</td>';
+            $html .= '<td>' . $moon->ThirdOre . '</td>';
+            $html .= '<td>' . $moon->ThirdQuantity . '</td>';
+            $html .= '<td>' . $moon->FourthOre . '</td>';
+            $html .= '<td>' . $moon->FourthQuantity . '</td>';
+            $html .= '<td>' . $moon->Price . '</td>';
+            $html .= '<td>' . $moon->Renter . '</td>';
             $html .= '<td>' . $rentalEnd . '</td>';
             $html .= '</tr>';
         }
