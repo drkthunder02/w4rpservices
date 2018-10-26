@@ -44,7 +44,7 @@ class MoonsController extends Controller
             $html .= '<td>' . $moon->FourthOre . '</td>';
             $html .= '<td>' . $moon->FourthQuantity . '</td>';
             $html .= '<td>' . $price . '</td>';
-            $html .= '<td>' . $moon->Renter . '</td>';
+            $html .= '<td>' . $moon->RentalCorp . '</td>';
             $html .= '<td>' . $rentalEnd . '</td>';
             $html .= '</tr>';
         }
