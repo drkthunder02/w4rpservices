@@ -189,47 +189,46 @@ class MoonCalc {
         $thuliumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16653, $maxTime]);
         //Get the item compositions
         $items = DB::select('SELECT Name,ItemId FROM ItemComposition');
-        dd($tritaniumPrice[0]->Price);
         //Go through each of the items and update the price
         foreach($items as $item) {
             //Get the item composition
             $composition = DB::select('SELECT * FROM ItemComposition WHERE ItemId = ?', [$item->ItemId]);
             //Calculate the Batch Price
-            $batchPrice = ( ($composition->Tritanium * $tritaniumPrice) +
-                            ($composition['Pyerite'] * $pyeritePrice) +
-                            ($composition['Mexallon'] * $mexallonPrice) +
-                            ($composition['Isogen'] * $isogenPrice) +
-                            ($composition['Nocxium'] * $nocxiumPrice) +
-                            ($composition['Zydrine'] * $zydrinePrice) +
-                            ($composition['Megacyte'] * $megacytePrice) + 
-                            ($composition['Morphite'] * $morphitePrice) +
-                            ($composition['HeavyWater'] * $heavyWaterPrice) +
-                            ($composition['LiquidOzone'] * $liquidOzonePrice) +
-                            ($composition['NitrogenIsotopes'] * $nitrogenIsotopesPrice) +
-                            ($composition['HeliumIsotopes'] * $heliumIsotopesPrice) + 
-                            ($composition['HydrogenIsotopes'] * $hydrogenIsotopesPrice) +
-                            ($composition['OxygenIsotopes'] * $oxygenIsotopesPrice) +
-                            ($composition['StrontiumClathrates'] * $strontiumClathratesPrice) +
-                            ($composition['AtmosphericGases'] * $atmosphericGasesPrice) +
-                            ($composition['EvaporiteDeposits'] * $evaporiteDepositsPirce) +
-                            ($composition['Hydrocarbons'] * $hydrocarbonsPrice) +
-                            ($composition['Silicates'] * $silicatesPrice) +
-                            ($composition['Cobalt'] * $cobaltPrice) +
-                            ($composition['Scandium'] * $scandiumPrice) +
-                            ($composition['Titanium'] * $titaniumPrice) +
-                            ($composition['Tungsten'] * $tungstenPrice) +
-                            ($composition['Cadmium'] * $cadmiumPrice) +
-                            ($composition['Platinum'] * $platinumPrice) +
-                            ($composition['Vanadium'] * $vanadiumPrice) +
-                            ($composition['Chromium'] * $chromiumPrice)+
-                            ($composition['Technetium'] * $technetiumPrice) +
-                            ($composition['Hafnium'] * $hafniumPrice) +
-                            ($composition['Caesium'] * $caesiumPrice) +
-                            ($composition['Mercury'] * $mercuryPrice) +
-                            ($composition['Dysprosium'] * $dysprosiumPrice) +
-                            ($composition['Neodymium'] * $neodymiumPrice) + 
-                            ($composition['Promethium'] * $promethiumPrice) +
-                            ($composition['Thulium'] * $thuliumPrice));
+            $batchPrice = ( ($composition[0]->Tritanium * $tritaniumPrice[0]->Price) +
+                            ($composition['Pyerite'] * $pyeritePrice[0]->Price) +
+                            ($composition['Mexallon'] * $mexallonPrice[0]->Price) +
+                            ($composition['Isogen'] * $isogenPrice[0]->Price) +
+                            ($composition['Nocxium'] * $nocxiumPrice[0]->Price) +
+                            ($composition['Zydrine'] * $zydrinePrice[0]->Price) +
+                            ($composition['Megacyte'] * $megacytePrice[0]->Price) + 
+                            ($composition['Morphite'] * $morphitePrice[0]->Price) +
+                            ($composition['HeavyWater'] * $heavyWaterPrice[0]->Price) +
+                            ($composition['LiquidOzone'] * $liquidOzonePrice[0]->Price) +
+                            ($composition['NitrogenIsotopes'] * $nitrogenIsotopesPrice[0]->Price) +
+                            ($composition['HeliumIsotopes'] * $heliumIsotopesPrice[0]->Price) + 
+                            ($composition['HydrogenIsotopes'] * $hydrogenIsotopesPrice[0]->Price) +
+                            ($composition['OxygenIsotopes'] * $oxygenIsotopesPrice[0]->Price) +
+                            ($composition['StrontiumClathrates'] * $strontiumClathratesPrice[0]->Price) +
+                            ($composition['AtmosphericGases'] * $atmosphericGasesPrice[0]->Price) +
+                            ($composition['EvaporiteDeposits'] * $evaporiteDepositsPirce[0]->Price) +
+                            ($composition['Hydrocarbons'] * $hydrocarbonsPrice[0]->Price) +
+                            ($composition['Silicates'] * $silicatesPrice[0]->Price) +
+                            ($composition['Cobalt'] * $cobaltPrice[0]->Price) +
+                            ($composition['Scandium'] * $scandiumPrice[0]->Price) +
+                            ($composition['Titanium'] * $titaniumPrice[0]->Price) +
+                            ($composition['Tungsten'] * $tungstenPrice[0]->Price) +
+                            ($composition['Cadmium'] * $cadmiumPrice[0]->Price) +
+                            ($composition['Platinum'] * $platinumPrice[0]->Price) +
+                            ($composition['Vanadium'] * $vanadiumPrice[0]->Price) +
+                            ($composition['Chromium'] * $chromiumPrice[0]->Price)+
+                            ($composition['Technetium'] * $technetiumPrice[0]->Price) +
+                            ($composition['Hafnium'] * $hafniumPrice[0]->Price) +
+                            ($composition['Caesium'] * $caesiumPrice[0]->Price) +
+                            ($composition['Mercury'] * $mercuryPrice[0]->Price) +
+                            ($composition['Dysprosium'] * $dysprosiumPrice[0]->Price) +
+                            ($composition['Neodymium'] * $neodymiumPrice[0]->Price) + 
+                            ($composition['Promethium'] * $promethiumPrice[0]->Price) +
+                            ($composition['Thulium'] * $thuliumPrice[0]->Price));
             //Calculate the batch price with the refine rate included
             //Batch Price is base price for everything
             $batchPrice = $batchPrice * $refineRate;
