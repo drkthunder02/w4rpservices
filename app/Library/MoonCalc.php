@@ -193,8 +193,6 @@ class MoonCalc {
         foreach($items as $item) {
             //Get the item composition
             $composition = DB::select('SELECT * FROM ItemComposition WHERE ItemId = ?', [$item->ItemId]);
-
-            dd($composition[0]);
             //Calculate the Batch Price
             $batchPrice = ( ($composition[0]->Tritanium * $tritaniumPrice[0]->Price) +
                             ($composition[0]->Pyerite * $pyeritePrice[0]->Price) +
@@ -235,20 +233,19 @@ class MoonCalc {
             //Batch Price is base price for everything
             $batchPrice = $batchPrice * $refineRate;
             //Calculate the unit price
-            $price = $batchPrice / $composition['BatchSize'];
+            $price = $batchPrice / $composition[0]->BatchSize;
             //Calculate the m3 price
-            $m3Price = $price / $composition['m3Size'];
+            $m3Price = $price / $composition[0]->m3Size;
             //Insert the prices into the Pricees table
             DB::table('OrePrices')->insert([
-                'Name' => $composition['Name'],
-                'ItemId' => $composition['ItemId'],
+                'Name' => $composition[0]->Name,
+                'ItemId' => $composition[0]->ItemId,
                 'BatchPrice' => $batchPrice,
                 'UnitPrice' => $price,
                 'm3Price' => $m3Price,
                 'Time' => $time
             ]);
         }
-        DBClose($db);
     }
 
     private function FuzzworkPrice($url) {
