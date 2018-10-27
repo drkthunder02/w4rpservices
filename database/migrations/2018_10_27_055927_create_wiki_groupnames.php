@@ -16,6 +16,7 @@ class CreateWikiGroupnames extends Migration
         Schema::create('wiki_groupnames', function(Blueprint $table) {
             $table->increments('id');
             $table->string('gname');
+            $table->timestamps();
         });
     }
 

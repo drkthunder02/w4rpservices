@@ -8,7 +8,4 @@ class DokuMember extends Model
 {
     // Table Name
     protected $table = 'wiki_member';
-
-    // Timestamps
-    public $timestamps = 'false';
 }
