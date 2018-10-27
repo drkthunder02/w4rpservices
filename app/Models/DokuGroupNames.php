@@ -8,4 +8,6 @@ class DokuGroupNames extends Model
 {
     // Table Name
     protected $table = 'wiki_groupnames';
+
+    public $timestamps = false;
 }
