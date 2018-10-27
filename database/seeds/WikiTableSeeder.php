@@ -40,7 +40,7 @@ class WikiTableSeeder extends Seeder
         DB::table('wiki_member')->insert([
             'uid' => '1',
             'gid' => '1',
-            'gropuname' => 'user',
+            'groupname' => 'user',
         ]);
     }
 }
