@@ -49,7 +49,7 @@ class WikiController extends Controller
         $gname = DB::select('SELECT gname FROM wiki_groupnames WHERE id = ?', [1]);
         $member->uid = $uid[0]->id;
         $member->gid = 1;
-        $member->gname = $gname[0]->gname;
+        $member->groupname = $gname[0]->gname;
         $member->save();
         //Return to the dashboard view
         return view('/dashboard')->with('success');
