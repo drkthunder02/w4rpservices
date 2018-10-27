@@ -67,9 +67,9 @@ class WikiController extends Controller
         $name = strtolower($name);
         $name = str_replace(' ', '_', $name);
         $check = DB::select('SELECT login FROM wiki_user WHERE login = ?', [$name]);
-        if($check[0]->login == $name) {
+        if(isset($check[0])) {
             return redirect('/dashboard')->with('error', 'Login Not Found!');
-        }
+        } 
 
         return view('wiki.changepassword');
     }
