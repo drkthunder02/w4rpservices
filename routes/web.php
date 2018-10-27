@@ -27,5 +27,11 @@ Route::get('/dashboard', 'DashboardController@index');
 Route::get('/moons/display', 'MoonsController@displayMoons');
 Route::get('/moons/addmoon', 'MoonsController@addMoon');
 Route::get('/moons/updatemoon', 'MoonsController@updateMoon');
-//Moon Controller POSTS requests
-Route::post('moons', 'MoonsController@addMoon');
+//Moon Controller POST requests
+Route::post('storeMoon', 'MoonsController@addMoon');
+Route::post('storeUpdateMoon', 'MoonsController@storeUpdateMoon');
+
+//Wiki Controller display pages
+Route::get('/wiki/register', 'WikiController@displayRegister');
+//Wiki Controller POST requests
+Route::post('storeRegister', 'WikiController@storeRegister');

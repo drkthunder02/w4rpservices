@@ -9,6 +9,10 @@
             {{ Form::text('region', '', ['class' => 'form-control', 'placeholder' => 'Region']) }}
             {{ Form::label('system', 'System') }}
             {{ Form::text('system', '', ['class' => 'form-control', 'placeholder' => 'System']) }}
+            {{ Form::label('planet', 'Planet') }}
+            {{ Form::text('planet', '', ['class' => 'form-control', 'placeholder' => 'Planet']) }}
+            {{ Form::label('moon', 'Moon') }}
+            {{ Form::text('moon', '', ['class' => 'form-control', 'placeholder' => 'Moon']) }}
             {{ Form::label('struture', 'Structure Name') }}
             {{ Form::text('structure', '', ['class' => 'form-control', 'placeholder' => 'Structure Name']) }}
             {{ Form::label('firstore', 'First Ore') }}

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
-use App\Moon;
+use App\Models\Moon;
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
-use DB;
 use App\Library\MoonCalc;
 
 class MoonsController extends Controller
@@ -73,6 +73,8 @@ class MoonsController extends Controller
         $moon = new Moon;
         $moon->Region = $request->input('region');
         $moon->System = $request->input('system');
+        $moon->Planet = $request->input('planet');
+        $moon->Moon = $request->input('moon');
         $moon->StructureName = $request->input('structure');
         $moon->FirstOre = $request->input('firstore');
         $moon->FirstQuantity = $request->input('firstquan');
@@ -93,15 +95,17 @@ class MoonsController extends Controller
 
     public function storeUpdateMoon(Request $request) {
         $this->validate($request, [
-            'name' => 'required',
+            'system' => 'required',
+            'planet' => 'required',
+            'moon' => 'required',
             'renter' => 'required',
             'date' => 'required'
         ]);
 
         $date = strtotime($request->date . '00:00:01');
-
-        DB::table('moons')
-            ->where('StructureName', $request->name)
+        //Update the database entry
+        DB::table('Moons')
+            ->whereColumn(['System', '=', $request->system], ['Planet', '=', $request->planet], ['Moon', '=', $request->moon])
             ->update([
                 'RentalCorp' => $request->renter,
                 'RentalEnd' => $date,
