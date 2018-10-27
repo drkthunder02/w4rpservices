@@ -12,6 +12,17 @@ use App\Models\DokuUser;
 class WikiController extends Controller
 {
     public function displayRegister() {
+        //make user name syntax like we want it.
+        $name = Auth::user()->name;
+        $name = strtolower($name);
+        $name = str_replace(' ', '_', $name);
+
+        //Check to see if the user is already registered in the database
+        $check = DB::select('SELECT login FROM wiki_user WHERE login = ?', [$name]);
+        if(isset($check[0]) && ($check[0]->login === $name)) {
+            return redirect('/dashboard')->with('error', 'Already registered for the wiki!');            
+        }
+
         return view('wiki.register');
     }
 
@@ -39,12 +50,6 @@ class WikiController extends Controller
         $name = strtolower($name);
         $name = str_replace(' ', '_', $name);
 
-        //Check to see if the user is already registered in the database
-        $check = DB::select('SELECT login FROM wiki_user WHERE login = ?', [$name]);
-        if(isset($check[0]) && ($check[0]->login === $name)) {
-            return redirect('/dashboard')->with('error', 'Already registered for the wiki!');            
-        }
-        
         //Add the new user to the wiki
         $user->login = $name;
         $user->pass = $password;
