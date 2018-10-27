@@ -50,7 +50,7 @@ class LoginController extends Controller
      * 
      * @return void
      */
-    public function logout(Request $request) {
+    public function logout() {
         Auth::logout();
         return redirect('/');
     }
