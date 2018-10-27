@@ -16,7 +16,7 @@ class CreateWikiUsers extends Migration
         Schema::create('wiki_user', function(Blueprint $table) {
             $table->increments('id');
             $table->string('login');
-            $table->string('password');
+            $table->string('pass');
             $table->string('name');
             $table->string('mail');
             $table->timestamps();
