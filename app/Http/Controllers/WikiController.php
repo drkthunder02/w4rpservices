@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 use App\Models\DokuGroupNames;
 use App\Models\DokuMember;
 use App\Models\DokuUser;
