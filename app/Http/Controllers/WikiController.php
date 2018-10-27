@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Models\DokuGroupNames;
+use App\Models\DokuMember;
+use App\Models\DokuUser;
 
 class WikiController extends Controller
 {
@@ -17,7 +20,68 @@ class WikiController extends Controller
             'password2' => 'required',
         ]);
 
+        $password = '';
+
+        //Check to make sure the password matches
+        if($request->password !== $request->password2) {
+            return view('/dashboard')->with('error');
+        } else {
+            $password = md5($request->password);
+        }
+
+        //Load the model
+        $user = new App\Models\DokuUser;
+        $member = new App\Models\DokuMember;
+
+        //make user name syntax like we want it.
+        $name = Auth::user()->name;
+        $name = strtolower($name);
+        $name = str_replace(' ', '_', $name);
         //Add the new user to the wiki
-        
+        $user->login = $name;
+        $user->pass = $password;
+        $user->name = Auth::user()->name;
+        $user->save();
+
+        //Get the user from the table to get the uid
+        $uid = DB::select('SELECT id FROM wiki_user WHERE login = ?', [$name]);
+        $gname = DB::select('SELECT gname FROM wiki_groupnames WHERE id = ?', [1]);
+        $member->uid = $uid[0]->id;
+        $member->gid = 1;
+        $member->gname = $gname[0]->gname;
+        $member->save();
+        //Return to the dashboard view
+        return view('/dashboard')->with('success');
+    }
+
+    public function displayChangePassword() {
+        return view('wiki.changepassword');
+    }
+
+    public function changePassword(Request $request) {
+        $this->validate($request, [
+            'password' => 'required',
+            'password2' => 'required',
+        ]);
+
+        //Check for a valid password
+        $password = '';
+        if($request->password !== $request->password2) {
+            return view('/dashboard')->with('error');
+        } else {
+            $password = md5($request->password);
+        }
+        //Get a model ready for the database
+        $user = new App\Models\DokuUser;
+        //Find the username for the database through the  character name in auth
+        $name = Auth::user()->name;
+        $name = strtolower($name);
+        $name = str_replace(' ', '_', $name);
+        //Update the password for the login name
+        DB::table('wiki_user')
+            ->where('login', $name)
+            ->update(['pass' => $password]);
+
+        return view('/dashboard')->with('success');
     }
 }

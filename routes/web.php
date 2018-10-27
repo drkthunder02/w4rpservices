@@ -33,5 +33,7 @@ Route::post('storeUpdateMoon', 'MoonsController@storeUpdateMoon');
 
 //Wiki Controller display pages
 Route::get('/wiki/register', 'WikiController@displayRegister');
+Route::get('/wiki/changepassword', 'WikiController@displayChangePassword');
 //Wiki Controller POST requests
 Route::post('storeRegister', 'WikiController@storeRegister');
+Route::post('changePassword', 'WikiController@changePassword');
