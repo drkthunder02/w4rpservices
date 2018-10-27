@@ -21,6 +21,12 @@
             </li>
             @endcan
             <li class="nav-item">
+                <a class="nav-link" href="/wiki/register">Wiki Registration</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/wiki/changepassword">Wiki Password Change</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
