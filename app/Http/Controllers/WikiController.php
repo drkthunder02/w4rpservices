@@ -52,10 +52,18 @@ class WikiController extends Controller
         $member->groupname = $gname[0]->gname;
         $member->save();
         //Return to the dashboard view
-        return view('/dashboard')->with('success');
+        return redirect('/dashboard')->with('success', 'Registration successful.');
     }
 
     public function displayChangePassword() {
+        $name = Auth::user()->name;
+        $name = strtolower($name);
+        $name = str_replace(' ', '_', $name);
+        $check = DB::select('SELECT login FROM wiki_user WHERE login = ?', [$name]);
+        if($check[0]->login === $name) {
+            return redirect('/dashboard')->with('error', 'Login Not Found!');
+        }
+
         return view('wiki.changepassword');
     }
 
@@ -68,7 +76,7 @@ class WikiController extends Controller
         //Check for a valid password
         $password = '';
         if($request->password !== $request->password2) {
-            return view('/dashboard')->with('error');
+            return redirect('/wiki/changepassword')->with('error', 'Passwords did not match');
         } else {
             $password = md5($request->password);
         }
@@ -83,6 +91,6 @@ class WikiController extends Controller
             ->where('login', $name)
             ->update(['pass' => $password]);
 
-        return view('/dashboard')->with('success');
+        return redirect('/dashboard')->with('success', 'Password changed successfully.');
     }
 }

@@ -1,5 +1,4 @@
 @extends('layouts.b4')
-@include('layouts.navbar')
 @section('content')
 <div class="container">
     <h2>Update Existing Moon</h2>

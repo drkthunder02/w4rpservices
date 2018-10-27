@@ -1,5 +1,4 @@
 @extends('layouts.b4')
-@include('layouts.navbar')
 @section('content')
 <div class="container col-md-12">
         <table class="table table-striped">

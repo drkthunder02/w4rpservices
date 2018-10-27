@@ -1,5 +1,4 @@
 @extends('layouts.b4')
-@include('layouts.navbar')
 @section('content')
 <div class="container">
     <h2>Register for Warped Intentions Wiki<h2>
