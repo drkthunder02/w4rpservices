@@ -21,10 +21,10 @@
 </head>
 <body>
     <div id="app">
-        <h1>Welcome to the W4RP Services Page</h1>
-        <div class="container">
-            <a href="/login">Please login!</a>
-        </div>
+            <div class="card-header">Welcome to the W4RP Services Page</div>
+            <div class="card-body">
+                <a href="/login">Please Login</a>
+            </div>
     </div>
 </body>
 </html>
