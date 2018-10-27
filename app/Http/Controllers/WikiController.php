@@ -30,8 +30,8 @@ class WikiController extends Controller
         }
 
         //Load the model
-        $user = new App\Models\DokuUser;
-        $member = new App\Models\DokuMember;
+        $user = new DokuUser;
+        $member = new DokuMember;
 
         //make user name syntax like we want it.
         $name = Auth::user()->name;
@@ -72,7 +72,7 @@ class WikiController extends Controller
             $password = md5($request->password);
         }
         //Get a model ready for the database
-        $user = new App\Models\DokuUser;
+        $user = new DokuUser;
         //Find the username for the database through the  character name in auth
         $name = Auth::user()->name;
         $name = strtolower($name);
