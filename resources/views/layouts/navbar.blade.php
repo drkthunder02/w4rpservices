@@ -3,7 +3,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="container-fluid">
-        <div class="navbar-header">
+        <!-- <div class="navbar-header"> -->
             <ul class="navbar-nav mr-auto">
                 <a class="navbar-brand" href="/dashboard">W4RP</a>
                 @can('isAdmin')
@@ -32,6 +32,6 @@
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
-        </div> 
+        <!-- </div> -->
     </div>
 </nav>
