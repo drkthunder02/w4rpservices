@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+use App\Models\Config;
+use App\Models\Moon;
+use App\Models\Price;
+use App\Models\ItemComposition;
 
 class OrePricesSeeder extends Seeder
 {

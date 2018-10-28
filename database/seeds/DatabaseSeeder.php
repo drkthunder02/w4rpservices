@@ -2,8 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
 
 class DatabaseSeeder extends Seeder
 {
