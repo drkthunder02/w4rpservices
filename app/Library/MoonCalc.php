@@ -267,7 +267,7 @@ class MoonCalc {
         //Specify the total pull amount
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
         //Find the size of the asteroid from the database
-        $m3Size = DB::table('ItemComposition')->where(['Name' => $ore, 'Time' => $maxTime])->value('m3Size');
+        $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
         //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
         $actualm3 = floor($percentage * $totalPull);
         //Calculate the units once we have the size and actual m3 value
