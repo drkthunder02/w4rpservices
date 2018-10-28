@@ -1,0 +1,36 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Table structure for table `groupnames`
+--
+
+CREATE TABLE IF NOT EXISTS `wiki_groupnames` (
+  `id` int(20) NOT NULL,
+  `gname` varchar(255) CHARACTER SET utf8 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `groupnames`
+--
+
+INSERT INTO `wiki_groupnames` (`id`, `gname`) VALUES
+(1, 'user'),
+(2, 'it'),
+(3, 'fc'),
+(4, 'admin');
+
+--
+-- AUTO_INCREMENT for table `groupnames`
+--
+ALTER TABLE `wiki_groupnames`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

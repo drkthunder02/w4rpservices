@@ -19,6 +19,9 @@ class CreateWikiUsers extends Migration
             $table->string('pass');
             $table->string('name');
             $table->string('mail')->default('')->nullable();
+            $table->primary('id');
+            $table->unique('id', 'id');
+            $table->unique('login', 'user');
         });
     }
 

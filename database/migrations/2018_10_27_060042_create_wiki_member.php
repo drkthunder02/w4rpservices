@@ -17,6 +17,7 @@ class CreateWikiMember extends Migration
             $table->integer('uid');
             $table->integer('gid');
             $table->string('groupname');
+            $table->primary(['uid', 'gid']);
         });
     }
 
