@@ -33,3 +33,20 @@
         </ul>
     </nav>
 </div>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+             <a href="#" class="brand">BRAND</a>
+            <ul class="nav pull-right">
+              <li><a href="#">Fixed Link</a></li>
+            </ul>
+            <div class="nav-collapse">
+              <ul class="nav">
+                <li><a href="#">L1</a></li>
+                <li><a href=#">L2</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
