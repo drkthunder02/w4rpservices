@@ -124,13 +124,21 @@ class MoonCalc {
             $uri = '?region=10000002&types=' . $value;
             $result = $client->request('GET', $uri);
             $item = json_decode($result->getBody(), true);
-            
+
+            DB::table('Prices')->where('Name', $key)->update([
+                'Name' => $key,
+                'ItemId' => $value,
+                'Price' => $item[$value]['sell']['median'],
+                'Time' => $time,
+            ]);
+            /*
             DB::table('Prices')->insert([
                 'Name' => $key,
                 'ItemId' => $value,
                 'Price' => $item[$value]['sell']['median'],
                 'Time' => $time
             ]);
+            */
         }
 
         $this->UpdateItemPricing();
@@ -146,7 +154,6 @@ class MoonCalc {
         $time = time();
         //Get the max time from the database
         $maxTime = DB::table('Prices')->where('ItemId', 34)->max('Time');
-        dd($maxTime);
         //Get the price of the basic minerals
         $tritaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [34, $maxTime]);
         $tritanium = DB::select( DB::raw('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time'), array('id' => 34, 'time' => $maxTime));
@@ -234,7 +241,16 @@ class MoonCalc {
             $price = $batchPrice / $composition[0]->BatchSize;
             //Calculate the m3 price
             $m3Price = $price / $composition[0]->m3Size;
-            //Insert the prices into the Pricees table
+            //Update the prices in the Prices table
+            DB::table('OrePrices')->where('Name', $composition[0]->Name)->update([
+                'Name' => $composition[0]->Name,
+                'ItemId' => $composition[0]->ItemId,
+                'BatchPrice' => $batchPrice,
+                'UnitPrice' => $price,
+                'm3Price' => $m3Price,
+            ]);
+            /*
+            //Insert the prices into the Prices table
             DB::table('OrePrices')->insert([
                 'Name' => $composition[0]->Name,
                 'ItemId' => $composition[0]->ItemId,
@@ -243,31 +259,15 @@ class MoonCalc {
                 'm3Price' => $m3Price,
                 'Time' => $time
             ]);
+            */
         }
-    }
-
-    private function FuzzworkPrice($url) {
-        //Initialize the curl request
-        $ch = curl_init();
-        //Set the curl options
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
-        curl_setopt($ch, CURLOPT_HTTPGET, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        //Execute the curl
-        $result = curl_exec($ch);
-        //Get the resultant data and decode the json request
-        $data = json_decode($result, true);
-        
-        //Return the array of data
-        return $data;
     }
 
     private function CalcPrice($ore, $percentage) {
         //Specify the total pull amount
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
         //Find the size of the asteroid from the database
-        $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
+        $m3Size = DB::table('ItemComposition')->where(['Name' => $ore, 'Time' => $maxTime])->value('m3Size');
         //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
         $actualm3 = floor($percentage * $totalPull);
         //Calculate the units once we have the size and actual m3 value
