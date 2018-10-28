@@ -2,7 +2,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="container-fluid">
+    <!-- <div class="container-fluid"> -->
         <!-- <div class="navbar-header"> -->
             <ul class="navbar-nav mr-auto">
                 <a class="navbar-brand" href="/dashboard">W4RP</a>
@@ -33,5 +33,5 @@
                 </li>
             </ul>
         <!-- </div> -->
-    </div>
+    <!-- </div> -->
 </nav>
