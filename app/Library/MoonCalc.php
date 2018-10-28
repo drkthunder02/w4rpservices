@@ -142,11 +142,11 @@ class MoonCalc {
         $config = DB::table('Config')->first();
         //Calculate refine rate
         $refineRate = $config->RefineRate / 100.00;
-        dd($refineRate);
         //Calculate the current time
         $time = time();
         //Get the max time from the database
         $maxTime = DB::table('Prices')->where('ItemId', 34)->max('Time');
+        dd($maxTime);
         //Get the price of the basic minerals
         $tritaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [34, $maxTime]);
         $tritanium = DB::select( DB::raw('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time'), array('id' => 34, 'time' => $maxTime));
