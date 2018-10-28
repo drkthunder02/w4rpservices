@@ -20,7 +20,7 @@ class CreateWikiUsers extends Migration
             $table->string('name');
             $table->string('mail')->default('')->nullable();
             $table->primary('id');
-            $table->unique('id', 'id');
+            $table->unique('id');
             $table->unique('login', 'user');
         });
     }
