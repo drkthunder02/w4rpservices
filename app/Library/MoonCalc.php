@@ -131,18 +131,8 @@ class MoonCalc {
                 'Price' => $item[$value]['sell']['median'],
                 'Time' => $time,
             ]);
-            
-            /*
-            DB::table('Prices')->insert([
-                'Name' => $key,
-                'ItemId' => $value,
-                'Price' => $item[$value]['sell']['median'],
-                'Time' => $time
-            ]);
-            */
-            
         }
-
+        
         $this->UpdateItemPricing();
     }
 
@@ -251,18 +241,6 @@ class MoonCalc {
                 'UnitPrice' => $price,
                 'm3Price' => $m3Price,
             ]);
-                        
-            /*
-            //Insert the prices into the Prices table
-            DB::table('OrePrices')->insert([
-                'Name' => $composition[0]->Name,
-                'ItemId' => $composition[0]->ItemId,
-                'BatchPrice' => $batchPrice,
-                'UnitPrice' => $price,
-                'm3Price' => $m3Price,
-                'Time' => $time
-            ]);
-            */
         }
     }
 

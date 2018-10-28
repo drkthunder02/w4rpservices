@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            //WikiTableSeeder::class,
-            //ConfigTableSeeder::class,
+            WikiTableSeeder::class,
+            ConfigTableSeeder::class,
             OrePricesSeeder::class,
         ]);
     }
