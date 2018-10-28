@@ -129,7 +129,6 @@ class MoonCalc {
                 'Name' => $key,
                 'ItemId' => $value,
                 'Price' => $item[$value]['sell']['median'],
-                //'Price' => $item->value->sell->median,
                 'Time' => $time
             ]);
         }
@@ -143,6 +142,7 @@ class MoonCalc {
         $config = DB::table('Config')->first();
         //Calculate refine rate
         $refineRate = $config->RefineRate / 100.00;
+        dd($refineRate);
         //Calculate the current time
         $time = time();
         //Get the max time from the database
