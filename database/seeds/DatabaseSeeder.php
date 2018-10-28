@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             WikiTableSeeder::class,
+            ConfigTableSeeder::class,
         ]);
     }
 }

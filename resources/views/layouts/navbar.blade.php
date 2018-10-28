@@ -23,6 +23,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wiki</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                    <a class="dropdown-item" href="https://www.w4rp.space">Wiki</a>
                     <a class="dropdown-item" href="/wiki/register">Registration</a>
                     <a class="dropdown-item" href="/wiki/changepassword">Change Password</a>
                 </div>

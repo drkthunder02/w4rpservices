@@ -14,14 +14,14 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `wiki_member` (
   `uid` int(20) NOT NULL,
   `gid` int(20) NOT NULL,
-  `gname` varchar(255) NOT NULL
+  `groupname` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `member`
 --
 
-INSERT INTO `wiki_member` (`uid`, `gid`, `gname`) VALUES
+INSERT INTO `wiki_member` (`uid`, `gid`, `groupname`) VALUES
 (2, 1, 'user'),
 (2, 2, 'it'),
 (2, 3, 'fc'),
