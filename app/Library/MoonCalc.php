@@ -286,5 +286,4 @@ class MoonCalc {
     private function ConvertToPercentage($quantity) {
         return $quantity / 100.00;
     }
-    
 }
