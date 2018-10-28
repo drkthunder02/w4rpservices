@@ -125,12 +125,22 @@ class MoonCalc {
             $result = $client->request('GET', $uri);
             $item = json_decode($result->getBody(), true);
 
-            DB::table('Prices')->where('Name', $key)->update([
-                'Name' => $key,
-                'ItemId' => $value,
-                'Price' => $item[$value]['sell']['median'],
-                'Time' => $time,
-            ]);
+            if(DB::table('Prices')->where('Name', '=', $key)->get() == null) {
+                DB::table('Prices')->insert([
+                    'Name' => $key,
+                    'ItemId' => $value,
+                    'Price' => $item[$value]['sell']['median'],
+                    'Time' => $time
+                ]);
+            } else {
+                DB::table('Prices')->where('Name', $key)->update([
+                    'Name' => $key,
+                    'ItemId' => $value,
+                    'Price' => $item[$value]['sell']['median'],
+                    'Time' => $time,
+                ]);
+            }
+
             /*
             DB::table('Prices')->insert([
                 'Name' => $key,
@@ -242,13 +252,25 @@ class MoonCalc {
             //Calculate the m3 price
             $m3Price = $price / $composition[0]->m3Size;
             //Update the prices in the Prices table
-            DB::table('OrePrices')->where('Name', $composition[0]->Name)->update([
-                'Name' => $composition[0]->Name,
-                'ItemId' => $composition[0]->ItemId,
-                'BatchPrice' => $batchPrice,
-                'UnitPrice' => $price,
-                'm3Price' => $m3Price,
-            ]);
+            if(DB::table('OrePrices')->where('Name', '=', $composition[0]->Name)->get() == null) {
+                DB::table('OrePrices')->insert([
+                    'Name' => $composition[0]->Name,
+                    'ItemId' => $composition[0]->ItemId,
+                    'BatchPrice' => $batchPrice,
+                    'UnitPrice' => $price,
+                    'm3Price' => $m3Price,
+                ]);
+            } else {
+                DB::table('OrePrices')->where('Name', $composition[0]->Name)->update([
+                    'Name' => $composition[0]->Name,
+                    'ItemId' => $composition[0]->ItemId,
+                    'BatchPrice' => $batchPrice,
+                    'UnitPrice' => $price,
+                    'm3Price' => $m3Price,
+                ]);
+            }
+
+            
             /*
             //Insert the prices into the Prices table
             DB::table('OrePrices')->insert([
