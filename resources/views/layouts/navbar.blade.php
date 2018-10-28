@@ -28,12 +28,7 @@
                         <a class="dropdown-item" href="/wiki/changepassword">Change Password</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item navbar-right">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
