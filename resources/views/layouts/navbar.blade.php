@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-sm bg-light">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">W4RP</a>
+            <a class="navbar-brand" href="/dashboard">W4RP</a>
         </div>
         <ul class="navbar-nav">
             @can('isAdmin')
