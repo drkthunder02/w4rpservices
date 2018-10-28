@@ -4,7 +4,7 @@
     </button>
     <div class="container-fluid">
         <div class="navbar-header">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
                 <a class="navbar-brand" href="/dashboard">W4RP</a>
                 @can('isAdmin')
                 <li class="nav-item">
@@ -28,7 +28,7 @@
                         <a class="dropdown-item" href="/wiki/changepassword">Change Password</a>
                     </div>
                 </li>
-                <li class="nav-item" align="right">
+                <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
