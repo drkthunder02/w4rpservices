@@ -1,153 +1,21 @@
 <?php
-/* 
- *  W4RP Services
- *  GNU Public License
- */
 
-namespace App\Library;
+use Illuminate\Database\Seeder;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Session;
-use DB;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
-use App\Models\Config;
-use App\Models\Moon;
-use App\Models\Price;
-use App\Models\ItemComposition;
-
-class MoonCalc {
-
-    public function SpatialMoons($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
-        //Total pull size is 14,385,600 m3
-        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
-        //Get the configuration for pricing calculations
-        $config = DB::table('Config')->get();
-        if($firstQuan >= 1.00) {
-            $firstPerc = $this->ConvertToPercentage($firstQuan);
-        } else {
-            $firstPerc = $firstQuan;
-        }
-        if($secondQuan >= 1.00) {
-            $secondPerc = $this->ConvertToPercentage($secondQuan);
-        } else {
-            $secondPerc = $secondQuan;
-        }
-        if($thirdQuan >= 1.00) {
-            $thirdPerc = $this->ConvertToPercentage($thirdQuan);
-        } else {
-            $thirdPerc = $thirdQuan;
-        }
-        if($fourthQuan >= 1.00) {
-            $fourthPerc = $this->ConvertToPercentage($fourthQuan);
-        } else {
-            $fourthPerc = $fourthQuan;
-        }
-        if($firstOre != "None") {
-            $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
-        } else {
-            $firstTotal = 0.00;
-        }
-        if($secondOre != "None") {
-            $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
-        } else {
-            $secondTotal = 0.00;
-        }
-        if($thirdOre != "None") {
-            $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
-        } else {
-            $thirdTotal = 0.00;
-        }
-        if($fourthOre != "None") {
-            $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
-        } else {
-            $fourthTotal = 0.00;
-        }
-        //Calculate the total to price to be mined in one month
-        $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
-        //Calculate the rental price.  Refined rate is already included in the price from rental composition
-        $rentalPrice = $totalPriceMined * ($config[0]->RentalTax / 100.00);
-        //Format the rental price to the appropriate number
-        $rentalPrice = number_format($rentalPrice, "2", ".", ",");
-       
-        //Return the rental price to the caller
-        return $rentalPrice;
-    }
-
-    public function FetchNewPrices() {
-        $ItemIDs = array(
-            "Tritanium" => 34,
-            "Pyerite" => 35,
-            "Mexallon" => 36,
-            "Isogen" => 37,
-            "Nocxium" => 38,
-            "Zydrine" => 39,
-            "Megacyte" => 40,
-            "Morphite" => 11399,
-            "HeliumIsotopes" => 16274,
-            "NitrogenIsotopes" => 17888,
-            "OxygenIsotopes" => 17887,
-            "HydrogenIsotopes" => 17889,
-            "LiquidOzone" => 16273,
-            "HeavyWater" => 16272,
-            "StrontiumClathrates" => 16275,
-            "AtmosphericGases" => 16634,
-            "EvaporiteDeposits" => 16635,
-            "Hydrocarbons" => 16633,
-            "Silicates" => 16636,
-            "Cobalt" => 16640,
-            "Scandium" => 16639,
-            "Titanium" => 16638,
-            "Tungsten" => 16637,
-            "Cadmium" => 16643,
-            "Platinum" => 16644,
-            "Vanadium" => 16642,
-            "Chromium" => 16641,
-            "Technetium" => 16649,
-            "Hafnium" => 16648,
-            "Caesium" => 16647,
-            "Mercury" => 16646,
-            "Dysprosium" => 16650,
-            "Neodymium" => 16651,
-            "Promethium" => 16652,
-            "Thulium" => 16653,
-        );
-        $time = time();
-        $item = array();
-        //Get the json data for each ItemId from https://market.fuzzwork.co.uk/api/
-        //Base url is https://market.fuzzwork.co.uk/aggregates/?region=10000002&types=34
-        //Going to use curl for these requests
-        foreach($ItemIDs as $key => $value) {
-            $client = new Client(['base_uri' => 'https://market.fuzzwork.co.uk/aggregates/']);
-            $uri = '?region=10000002&types=' . $value;
-            $result = $client->request('GET', $uri);
-            $item = json_decode($result->getBody(), true);
-
-            DB::table('Prices')->where('Name', $key)->update([
-                'Name' => $key,
-                'ItemId' => $value,
-                'Price' => $item[$value]['sell']['median'],
-                'Time' => $time,
-            ]);
-            
-            /*
-            DB::table('Prices')->insert([
-                'Name' => $key,
-                'ItemId' => $value,
-                'Price' => $item[$value]['sell']['median'],
-                'Time' => $time
-            ]);
-            */
-            
-        }
-
+class OrePricesSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $this->FetchNewPrices();
         $this->UpdateItemPricing();
     }
 
     private function UpdateItemPricing() {
-
         //Get the configuration from the config table
         $config = DB::table('Config')->first();
         //Calculate refine rate
@@ -242,17 +110,7 @@ class MoonCalc {
             //Calculate the unit price
             $price = $batchPrice / $composition[0]->BatchSize;
             //Calculate the m3 price
-            $m3Price = $price / $composition[0]->m3Size;
-            //Update the prices in the Prices table
-            DB::table('OrePrices')->where('Name', $composition[0]->Name)->update([
-                'Name' => $composition[0]->Name,
-                'ItemId' => $composition[0]->ItemId,
-                'BatchPrice' => $batchPrice,
-                'UnitPrice' => $price,
-                'm3Price' => $m3Price,
-            ]);
-                        
-            /*
+            $m3Price = $price / $composition[0]->m3Size;  
             //Insert the prices into the Prices table
             DB::table('OrePrices')->insert([
                 'Name' => $composition[0]->Name,
@@ -262,29 +120,64 @@ class MoonCalc {
                 'm3Price' => $m3Price,
                 'Time' => $time
             ]);
-            */
         }
     }
 
-    private function CalcPrice($ore, $percentage) {
-        //Specify the total pull amount
-        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
-        //Find the size of the asteroid from the database
-        $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
-        //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
-        $actualm3 = floor($percentage * $totalPull);
-        //Calculate the units once we have the size and actual m3 value
-        $units = floor($actualm3 / $m3Size);
-        //Look up the unit price from the database
-        $unitPrice = DB::table('OrePrices')->where('Name', $ore)->value('UnitPrice');
-        //Calculate the total amount from the units and unit price
-        $total = $units * $unitPrice;
-        //Return the value
-        return $total;
+    private function FetchNewPrices() {
+        $ItemIDs = array(
+            "Tritanium" => 34,
+            "Pyerite" => 35,
+            "Mexallon" => 36,
+            "Isogen" => 37,
+            "Nocxium" => 38,
+            "Zydrine" => 39,
+            "Megacyte" => 40,
+            "Morphite" => 11399,
+            "HeliumIsotopes" => 16274,
+            "NitrogenIsotopes" => 17888,
+            "OxygenIsotopes" => 17887,
+            "HydrogenIsotopes" => 17889,
+            "LiquidOzone" => 16273,
+            "HeavyWater" => 16272,
+            "StrontiumClathrates" => 16275,
+            "AtmosphericGases" => 16634,
+            "EvaporiteDeposits" => 16635,
+            "Hydrocarbons" => 16633,
+            "Silicates" => 16636,
+            "Cobalt" => 16640,
+            "Scandium" => 16639,
+            "Titanium" => 16638,
+            "Tungsten" => 16637,
+            "Cadmium" => 16643,
+            "Platinum" => 16644,
+            "Vanadium" => 16642,
+            "Chromium" => 16641,
+            "Technetium" => 16649,
+            "Hafnium" => 16648,
+            "Caesium" => 16647,
+            "Mercury" => 16646,
+            "Dysprosium" => 16650,
+            "Neodymium" => 16651,
+            "Promethium" => 16652,
+            "Thulium" => 16653,
+        );
+        $time = time();
+        $item = array();
+        //Get the json data for each ItemId from https://market.fuzzwork.co.uk/api/
+        //Base url is https://market.fuzzwork.co.uk/aggregates/?region=10000002&types=34
+        //Going to use curl for these requests
+        foreach($ItemIDs as $key => $value) {
+            $client = new Client(['base_uri' => 'https://market.fuzzwork.co.uk/aggregates/']);
+            $uri = '?region=10000002&types=' . $value;
+            $result = $client->request('GET', $uri);
+            $item = json_decode($result->getBody(), true);
+            
+            DB::table('Prices')->insert([
+                'Name' => $key,
+                'ItemId' => $value,
+                'Price' => $item[$value]['sell']['median'],
+                'Time' => $time
+            ]);
+        }
     }
-
-    private function ConvertToPercentage($quantity) {
-        return $quantity / 100.00;
-    }
-    
 }
