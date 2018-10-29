@@ -109,7 +109,7 @@ class LoginController extends Controller
             return $authUser;
         } else {
             //Get what type of account the user should have
-            $accountType = $this->getAccountType($eve_user->refreshToken, $eve_user->getId());
+            $accountType = $this->getAccountType(null, $eve_user->getId());
             //Create a user account
             return User::create([
                 'name' => $eve_user->getName(),
@@ -119,7 +119,7 @@ class LoginController extends Controller
                 'character_id'=> $eve_user->getId(),
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
-                'refresh_token' => $eve_user->refreshToken,
+                //'refresh_token' => $eve_user->refreshToken,
                 'user_type' => $accountType,
                 'scopes' => $eve_user->user['Scopes'],
             ]);
@@ -143,7 +143,7 @@ class LoginController extends Controller
         $authentication = new EsiAuthentication([
             'client_id' => env('EVEONLINE_CLIENT_ID'),
             'secret' => env('EVEONLINE_CLIENT_SECRET'),
-            'refresh_token' => $refreshToken,
+            //'refresh_token' => $refreshToken,
         ]);
 
         // Instantiate a new ESI instance
