@@ -34,14 +34,13 @@ class RedirectIfAuthenticated
             return $next($request);
         } else if (strpos($request->requestUri, '/callback') !== false) {
             $ssoUser = Socialite::driver('eveonline')->user();
+            dd($ssoUser);
             $this->updateUser($ssoUser);
 
             return $next($request);
         } else {
             return $next($request);
         }
-        
-        
     }
 
     /**
