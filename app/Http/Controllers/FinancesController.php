@@ -17,7 +17,7 @@ use Seat\Eseye\Eseye;
 class FinancesController extends Controller
 {
     public function redirectToProvider() {
-        return Socialite::driver('eveonline')->setScopes(['publicData', 'esi-wallet.read_corporation_wallet.v1'])->redirect();
+        return Socialite::driver('eveonline')->setScopes(['publicData', 'esi-wallet.read_corporation_wallets.v1'])->redirect();
     }
 
     public function displayWallet() {
