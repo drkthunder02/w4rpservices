@@ -24,7 +24,7 @@ class FinancesController extends Controller
         $esi = new \App\Library\Finances();
 
         //Get the Journal Entries and just return them
-        $journals = $esi->GetMasterWalletJouranl();
+        $journals = $esi->GetMasterWalletJournal();
 
         return $journals;
     }
