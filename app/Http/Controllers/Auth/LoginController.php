@@ -87,6 +87,7 @@ class LoginController extends Controller
      * @param \Laravel\Socialite\Two\User $user
      */
     private function createOrGetUser($eve_user) {
+        dd($eve_user);
         //Search for user in the database
         $authUser = User::where('character_id', $eve_user->id)->first();
         if($authUser) {
