@@ -90,6 +90,7 @@ class LoginController extends Controller
         //Search for user in the database
         $authUser = User::where('character_id', $eve_user->id)->first();
         if($authUser) {
+            /*
             DB::table('users')->where('character_id', $eve_user->id)->update([
                 'name' => $eve_user->getName(),
                 'email' => null,
@@ -102,6 +103,7 @@ class LoginController extends Controller
                 'refresh_token' => $eve_user->refreshToken,
                 'scopes' => $eve_user->user['Scopes'],
             ]);
+            */
 
             return $authUser;
         } else {
