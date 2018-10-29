@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use Auth;
+use DB;
 use App\User;
 
 use Seat\Eseye\Cache\NullCache;
