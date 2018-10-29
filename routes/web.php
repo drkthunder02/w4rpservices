@@ -37,3 +37,7 @@ Route::get('/wiki/changepassword', 'WikiController@displayChangePassword');
 //Wiki Controller POST requests
 Route::post('storeRegister', 'WikiController@storeRegister');
 Route::post('changePassword', 'WikiController@changePassword');
+
+//Finance Controller display pages
+Route::get('/finances/login', 'FinancesController@redirectToProvider');
+Route::get('/finances/display/wallet', 'FinancesController@displayWallet');

@@ -88,6 +88,18 @@ class LoginController extends Controller
         //Search for user in the database
         $authUser = User::where('character_id', $eve_user->id)->first();
         if($authUser) {
+            User::update([
+                'name' => $eve_user->getName(),
+                'email' => null,
+                'avatar' => $eve_user->avatar,
+                'owner_hash' => $eve_user->owner_hash,
+                'character_id' => $eve_user->getId(),
+                'expires_in' => $eve_user->expiresIn,
+                'access_token' => $eve_user->token,
+                'refresh_token' => $eve_user->refreshToken,
+                'user_type' => $accountType,
+            ]);
+
             return $authUser;
         } else {
             //Get what type of account the user should have

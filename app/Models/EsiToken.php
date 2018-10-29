@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Price extends Model
+class EsiToken extends Model
 {
     // Table Name
-    protected $table = 'Prices';
+    protected $table = 'EsiTokens';
 
     //Primary Key
     public $primaryKey = 'id';
 
     // Timestamps
-    public $timestamps = false;
+    public $timestamps = true;
 }
