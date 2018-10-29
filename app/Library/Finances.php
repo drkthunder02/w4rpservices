@@ -29,8 +29,8 @@ class Finances {
         $user = DB::table('users')->where('name', 'Minerva Arbosa')->get();
 
         $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
-            'client_id' => env(ESI_CLIENT_ID),
-            'secret' => env(ESI_SECRET_KEY),
+            'client_id' => env('ESI_CLIENT_ID'),
+            'secret' => env('ESI_SECRET_KEY'),
             'refresh_token' => $user->refresh_token,
         ]);
 
