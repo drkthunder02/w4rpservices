@@ -88,7 +88,7 @@ class LoginController extends Controller
         //Search for user in the database
         $authUser = User::where('character_id', $eve_user->id)->first();
         if($authUser) {
-            User::update([
+            DB::table('users')-where('character_id', $eve_user->id)->update([
                 'name' => $eve_user->getName(),
                 'email' => null,
                 'avatar' => $eve_user->avatar,
