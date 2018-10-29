@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Socialite;
 use Auth;
 use DB;
@@ -69,9 +70,9 @@ class LoginController extends Controller
      * Get token from callback
      * Redirect to the dashboard if logging in successfully. 
      */
-    public function handleProviderCallback() {
+    public function handleProviderCallback(Request $request) {
         $ssoUser = Socialite::driver('eveonline')->user();
-
+        dd($request);
         $user = $this->createOrGetUser($ssoUser);
 
         auth()->login($user, true);
