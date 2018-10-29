@@ -70,10 +70,9 @@ class LoginController extends Controller
      * Get token from callback
      * Redirect to the dashboard if logging in successfully. 
      */
-    public function handleProviderCallback(Request $request) {
-        dd($request);
+    public function handleProviderCallback() {
         $ssoUser = Socialite::driver('eveonline')->user();
-        
+
         $user = $this->createOrGetUser($ssoUser);
 
         auth()->login($user, true);
