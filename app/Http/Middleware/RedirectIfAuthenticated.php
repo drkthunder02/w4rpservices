@@ -28,7 +28,7 @@ class RedirectIfAuthenticated
     {       
         if($request->pathInfo == '/login') {
             if (Auth::guard($guard)->check()) {
-                return redirect('/dashboard');
+                return redirect('/dashboard')->with('Sucess', '/login path');
             }
 
             return $next($request);
