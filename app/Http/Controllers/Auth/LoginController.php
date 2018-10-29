@@ -99,8 +99,8 @@ class LoginController extends Controller
                 'character_id' => $eve_user->getId(),
                 'inserted_at' => time(),
                 'expires_in' => $eve_user->expiresIn,
-                'access_token' => $eve_user->token,
-                'refresh_token' => $eve_user->refreshToken,
+                //'access_token' => $eve_user->token,
+                //'refresh_token' => $eve_user->refreshToken,
                 'scopes' => $eve_user->user['Scopes'],
             ]);
 
