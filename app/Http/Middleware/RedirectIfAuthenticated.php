@@ -25,16 +25,20 @@ class RedirectIfAuthenticated
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
-    {
-        dd($request);
-        $ssoUser = Socialite::driver('eveonline')->user();
-        $this->updateUser($ssoUser);
-        
-        if (Auth::guard($guard)->check()) {
-            return redirect('/dashboard');
-        }
+    {        
+        if($request->requestUri == '/login') {
+            if (Auth::guard($guard)->check()) {
+                return redirect('/dashboard');
+            }
+    
+            return $next($request);
+        } else if (strpos($request->requestUri, '/callback') !== false) {
+            $ssoUser = Socialite::driver('eveonline')->user();
+            $this->updateUser($ssoUser);
 
-        return $next($request);
+            return $next($request);
+        }
+        
     }
 
     /**
@@ -43,17 +47,21 @@ class RedirectIfAuthenticated
      * @param \Laravel\Socialite\Two\User $user
      */
     private function updateUser($eve_user) {
-        DB::table('users')->where('character_id', $eve_user->id)->update([
-            'name' => $eve_user->getName(),
-            'email' => null,
-            'avatar' => $eve_user->avatar,
-            'owner_hash' => $eve_user->owner_hash,
-            'character_id' => $eve_user->getId(),
-            'inserted_at' => time(),
-            'expires_in' => $eve_user->expiresIn,
-            'access_token' => $eve_user->token,
-            'refresh_token' => $eve_user->refreshToken,
-            'scopes' => $eve_user->user->Scopes,
-        ]);
+        $userFound = DB::table('users')->where('character_id', $eve_user->id)->first();
+        if($userFound != null) {
+            DB::table('users')->where('character_id', $eve_user->id)->update([
+                'name' => $eve_user->getName(),
+                'email' => null,
+                'avatar' => $eve_user->avatar,
+                'owner_hash' => $eve_user->owner_hash,
+                'character_id' => $eve_user->getId(),
+                'inserted_at' => time(),
+                'expires_in' => $eve_user->expiresIn,
+                'access_token' => $eve_user->token,
+                'refresh_token' => $eve_user->refreshToken,
+                'scopes' => $eve_user->user->Scopes,
+            ]);
+        }
+        
     }
 }
