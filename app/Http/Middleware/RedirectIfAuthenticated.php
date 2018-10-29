@@ -37,7 +37,10 @@ class RedirectIfAuthenticated
             $this->updateUser($ssoUser);
 
             return $next($request);
+        } else {
+            return $next($request);
         }
+        
         
     }
 
