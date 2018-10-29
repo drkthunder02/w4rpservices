@@ -26,9 +26,13 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $ssoUser = Socialite::driver('eveonline')->user();
-        dd($ssoUser);
-
+        try {
+            $ssoUser = Socialite::driver('eveonline')->user();
+            $this->updateUser($ssoUser);
+        } catch(Exception $e) {
+            return redirect('/dashboard')->with('error', 'Unable to handle request.');
+        }
+        
 
         if (Auth::guard($guard)->check()) {
             return redirect('/dashboard');
@@ -55,7 +59,7 @@ class RedirectIfAuthenticated
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
                 'refresh_token' => $eve_user->refreshToken,
-                'scopes' => '',
+                'scopes' => $eve_user->user->Scopes,
             ]);
         }
     }
