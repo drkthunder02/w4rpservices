@@ -6,9 +6,14 @@
         <a class="navbar-brand" href="/dashboard">W4RP</a>
         <ul class="navbar-nav mr-auto">
             @can('isAdmin')
-            <li class="nav-item">
-                <a class="nav-link" href="/dashboard/finances">Finances</a>
-            </li>
+            <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Finances</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                        <a class="dropdown-item" href="/finances/login">Register</a>
+                        <a class="dropdown-item" href="/finances/wallets">Wallets</a>
+                        <a class="dropdown-item" href="/finances/report">Report</a>
+                    </div>
+                </li>
             @endcan
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moons</a>

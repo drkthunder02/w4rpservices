@@ -28,7 +28,7 @@ class FinancesController extends Controller
 
         //Get the Journal Entries and just return them
         $journals = $esi->GetMasterWalletJournal();
-
+        dd($jouranls);
         return $journals;
     }
 }
