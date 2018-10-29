@@ -63,7 +63,8 @@ class LoginController extends Controller
      * @return Socialite
      */
     public function redirectToProvider() {
-        return Socialite::driver('eveonline')->setScopes(['publicData'])->redirect();
+        return Socialite::driver('eveonline')->redirect();
+        //return Socialite::driver('eveonline')->setScopes(['publicData'])->redirect();
     }
 
     /**
@@ -72,7 +73,7 @@ class LoginController extends Controller
      */
     public function handleProviderCallback() {
         $ssoUser = Socialite::driver('eveonline')->user();
-
+        dd($ssoUser);
         $user = $this->createOrGetUser($ssoUser);
 
         auth()->login($user, true);
