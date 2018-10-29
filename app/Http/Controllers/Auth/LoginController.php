@@ -90,7 +90,6 @@ class LoginController extends Controller
         //Search for user in the database
         $authUser = User::where('character_id', $eve_user->id)->first();
         if($authUser) {
-            /*
             DB::table('users')->where('character_id', $eve_user->id)->update([
                 'name' => $eve_user->getName(),
                 'email' => null,
@@ -103,7 +102,6 @@ class LoginController extends Controller
                 'refresh_token' => $eve_user->refreshToken,
                 'scopes' => $eve_user->user['Scopes'],
             ]);
-            */
 
             return $authUser;
         } else {
@@ -137,13 +135,6 @@ class LoginController extends Controller
         //Set caching to null
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
-
-        //Prepare an authentication container for ESI
-        $authentication = new EsiAuthentication([
-            'client_id' => env('EVEONLINE_CLIENT_ID'),
-            'secret' => env('EVEONLINE_CLIENT_SECRET'),
-            'refresh_token' => $refreshToken,
-        ]);
 
         // Instantiate a new ESI instance
         $esi = new Eseye();

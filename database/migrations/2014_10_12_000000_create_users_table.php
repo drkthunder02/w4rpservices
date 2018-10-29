@@ -18,10 +18,10 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('character_id');
             $table->string('avatar');
-            $table->string('access_token');
-            $table->string('refresh_token');
+            $table->string('access_token')->nullable();
+            $table->string('refresh_token')->nullable();
             $table->integer('inserted_at')->default(0);
-            $table->integer('expires_in');
+            $table->integer('expires_in')->default(0);
             $table->string('owner_hash');
             $table->string('user_type')->default('Guest');
             $table->text('scopes')->default('publicData');
