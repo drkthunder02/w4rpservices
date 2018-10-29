@@ -26,8 +26,8 @@ class Finances {
     private $esi;
 
     public function __construct() {
-        $user = DB::table('users')->where('name', 'Minerva Arbosa')->get();
-        dd($user);
+        $user = DB::table('users')->where('name', 'Minerva Arbosa')->first();
+        
         $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
             'client_id' => env('ESI_CLIENT_ID'),
             'secret' => env('ESI_SECRET_KEY'),
