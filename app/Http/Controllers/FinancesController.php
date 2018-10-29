@@ -20,6 +20,7 @@ class FinancesController extends Controller
         if(!Auth::check()) {
             return redirect()->to('/');
         }
+
         return Socialite::driver('eveonline')->setScopes(['publicData', 'esi-wallet.read_corporation_wallets.v1'])->redirect();
     }
 
@@ -28,7 +29,7 @@ class FinancesController extends Controller
 
         //Get the Journal Entries and just return them
         $journals = $esi->GetMasterWalletJournal();
-        dd($jouranls);
+        dd($journals);
         return $journals;
     }
 }
