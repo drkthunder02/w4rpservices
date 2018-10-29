@@ -26,14 +26,10 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        try {
-            $ssoUser = Socialite::driver('eveonline')->user();
-            $this->updateUser($ssoUser);
-        } catch(Exception $e) {
-            return redirect('/dashboard')->with('error', 'Unable to handle request.');
-        }
+        dd($request);
+        $ssoUser = Socialite::driver('eveonline')->user();
+        $this->updateUser($ssoUser);
         
-
         if (Auth::guard($guard)->check()) {
             return redirect('/dashboard');
         }
@@ -47,20 +43,17 @@ class RedirectIfAuthenticated
      * @param \Laravel\Socialite\Two\User $user
      */
     private function updateUser($eve_user) {
-        $authUser = User::where('character_id', $eve_user->id)->first();
-        if($authuser) {
-            DB::table('users')->where('character_id', $eve_user->id)->update([
-                'name' => $eve_user->getName(),
-                'email' => null,
-                'avatar' => $eve_user->avatar,
-                'owner_hash' => $eve_user->owner_hash,
-                'character_id' => $eve_user->getId(),
-                'inserted_at' => time(),
-                'expires_in' => $eve_user->expiresIn,
-                'access_token' => $eve_user->token,
-                'refresh_token' => $eve_user->refreshToken,
-                'scopes' => $eve_user->user->Scopes,
-            ]);
-        }
+        DB::table('users')->where('character_id', $eve_user->id)->update([
+            'name' => $eve_user->getName(),
+            'email' => null,
+            'avatar' => $eve_user->avatar,
+            'owner_hash' => $eve_user->owner_hash,
+            'character_id' => $eve_user->getId(),
+            'inserted_at' => time(),
+            'expires_in' => $eve_user->expiresIn,
+            'access_token' => $eve_user->token,
+            'refresh_token' => $eve_user->refreshToken,
+            'scopes' => $eve_user->user->Scopes,
+        ]);
     }
 }
