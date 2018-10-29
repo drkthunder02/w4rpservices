@@ -61,7 +61,7 @@ class RedirectIfAuthenticated
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
                 'refresh_token' => $eve_user->refreshToken,
-                'scopes' => $eve_user->user->Scopes,
+                'scopes' => $eve_user->user['Scopes'],
             ]);
         }
         
