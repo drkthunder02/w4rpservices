@@ -33,7 +33,7 @@ class RedirectIfAuthenticated
             }
     
             return $next($request);
-        } else if ($reqest->pathInfo == '/callback') {
+        } else if ($request->pathInfo == '/callback') {
             $ssoUser = Socialite::driver('eveonline')->user();
             $this->updateUser($ssoUser);
 
