@@ -100,6 +100,7 @@ class LoginController extends Controller
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
                 'refresh_token' => $eve_user->refreshToken,
+                'scopes' => $eve_user->user->Scopes,
             ]);
 
             return $authUser;
@@ -117,7 +118,7 @@ class LoginController extends Controller
                 'access_token' => $eve_user->token,
                 'refresh_token' => $eve_user->refreshToken,
                 'user_type' => $accountType,
-                'scopes' => 'publicData',
+                'scopes' => $eve_user->user->Scopes,
             ]);
         }
     }

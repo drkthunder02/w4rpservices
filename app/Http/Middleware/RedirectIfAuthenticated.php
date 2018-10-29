@@ -49,7 +49,6 @@ class RedirectIfAuthenticated
      * @param \Laravel\Socialite\Two\User $user
      */
     private function updateUser($eve_user) {
-        dd($eve_user->user->Scopes);
         $userFound = DB::table('users')->where('character_id', $eve_user->id)->first();
         if($userFound != null) {
             DB::table('users')->where('character_id', $eve_user->id)->update([
