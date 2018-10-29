@@ -25,17 +25,19 @@ class RedirectIfAuthenticated
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
-    {       
-        if ($request->pathInfo == "/callback") {
-            $ssoUser = Socialite::driver('eveonline')->user();
-            $this->updateUser($ssoUser);
-            dd($ssoUser);
-            return $next($request);
-        } else {
+    {     
+        if($request->pathInfo == '/login') {
             if (Auth::guard($guard)->check()) {
                 return redirect('/dashboard');
             }
 
+            return $next($request);
+        } else if ($request->pathInfo == '/callback') {
+            $ssoUser = Socialite::driver('eveonline')->user();
+            $this->updateUser($ssoUser);
+            
+            return $next($request);
+        } else {
             return $next($request);
         }
     }
