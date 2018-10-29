@@ -72,9 +72,7 @@ class LoginController extends Controller
      * Redirect to the dashboard if logging in successfully. 
      */
     public function handleProviderCallback() {
-        if(!Auth::check()) {
-            return redirect()->to('/');
-        }
+        
         $ssoUser = Socialite::driver('eveonline')->user();
         $user = $this->createOrGetUser($ssoUser);
 
