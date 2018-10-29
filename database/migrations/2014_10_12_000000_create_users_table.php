@@ -20,9 +20,11 @@ class CreateUsersTable extends Migration
             $table->string('avatar');
             $table->string('access_token');
             $table->string('refresh_token');
+            $table->integer('inserted_at')->default(0);
             $table->integer('expires_in');
             $table->string('owner_hash');
             $table->string('user_type')->default('Guest');
+            $table->text('scopes')->default('publicData');
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

@@ -95,10 +95,10 @@ class LoginController extends Controller
                 'avatar' => $eve_user->avatar,
                 'owner_hash' => $eve_user->owner_hash,
                 'character_id' => $eve_user->getId(),
+                'inserted_at' => time(),
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
                 'refresh_token' => $eve_user->refreshToken,
-                'user_type' => $accountType,
             ]);
 
             return $authUser;
