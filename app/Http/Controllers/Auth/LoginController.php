@@ -117,6 +117,7 @@ class LoginController extends Controller
                 'access_token' => $eve_user->token,
                 'refresh_token' => $eve_user->refreshToken,
                 'user_type' => $accountType,
+                'scopes' => 'publicData',
             ]);
         }
     }
