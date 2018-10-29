@@ -19,7 +19,7 @@ class CreateHoldingCorpFinancesJournal extends Migration
             $table->decimal('balance', 20, 2);
             $table->integer('context_id');
             $table->string('context_id_type');
-            $table->date('date');
+            $table->dateTime('date');
             $table->string('description');
             $table->integer('first_party_id')->nullable();
             $table->string('reason')->nullabe();

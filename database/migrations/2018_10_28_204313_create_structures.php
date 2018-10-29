@@ -15,21 +15,21 @@ class CreateStructures extends Migration
     {
         Schema::create('Structures', function(Blueprint $table) {
             $table->integer('corporation_id');
-            $table->date('fuel_expires');
-            $table->date('next_reinforce_apply');
+            $table->dateTime('fuel_expires');
+            $table->dateTime('next_reinforce_apply');
             $table->integer('next_reinforce_hour');
             $table->integer('next_reinforce_weekday');
             $table->integer('profile_id');
             $table->integer('reinforce_hour');
             $table->integer('reinforce_weekday');
-            $table->data('services');
+            $table->dateTime('services');
             $table->string('state');
             $table->date('state_timer_end');
             $table->date('state_timer_start');
             $table->integer('structure_id')->unique();
             $table->integer('system_id');
             $table->integer('type_id');
-            $table->date('unanchors_at');
+            $table->dateTime('unanchors_at');
             $table->timestamps();
         });
     }

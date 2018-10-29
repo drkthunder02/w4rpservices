@@ -16,7 +16,7 @@ class CreateMarketOrders extends Migration
         Schema::create('MarketOrders', function(Blueprint $table) {
             $table->integer('duration');
             $table->boolean('is_buy_order');
-            $table->date('issued');
+            $table->dateTime('issued');
             $table->integer('location_id');
             $table->integer('min_volume');
             $table->integer('order_id')->unique();
