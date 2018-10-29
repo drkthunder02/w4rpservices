@@ -142,11 +142,11 @@ class LoginController extends Controller
         $authentication = new EsiAuthentication([
             'client_id' => env('EVEONLINE_CLIENT_ID'),
             'secret' => env('EVEONLINE_CLIENT_SECRET'),
-            //'refresh_token' => $refreshToken,
+            'refresh_token' => $refreshToken,
         ]);
 
         // Instantiate a new ESI instance
-        $esi = new Eseye($authentication);
+        $esi = new Eseye();
 
         //Get the character information
         $character_info = $esi->invoke('get', '/characters/{character_id}/', [
