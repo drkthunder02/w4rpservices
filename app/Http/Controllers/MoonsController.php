@@ -109,7 +109,7 @@ class MoonsController extends Controller
         //Update the database entry
         DB::table('Moons')
             ->whereColumn([
-                ['System', '=', $request->system], 
+                ['System=' . $request->system], 
                 ['Planet', '=', $request->planet], 
                 ['Moon', '=', $request->moon]
             ])
