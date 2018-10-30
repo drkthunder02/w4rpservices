@@ -47,6 +47,7 @@ class Finances {
 
     public function GetMasterWalletJournal() {
         $journal = $this->esi->invoke('get', '/corporations/98287666/wallets/1/journal/');
+        $journal = json_decode($journal->raw, true);
 
         return $journal;
     }
