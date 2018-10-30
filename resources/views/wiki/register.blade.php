@@ -8,7 +8,7 @@
                     <h2>Register for Warped Intentions Wiki</h2>
                 </div>
                 <div class="card-body">
-                    <h1>Your Username is: {{ session('name') }} </h1><br>
+                    <h3>Your Username is: {{ $name }} </h3><br>
                     {!! Form::open(['action' => 'WikiController@storeRegister', 'method' => 'POST']) !!}
                     <div class="form-group col-md-6">
                         {{ Form::label('password', 'Password') }}

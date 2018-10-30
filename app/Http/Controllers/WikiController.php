@@ -76,7 +76,7 @@ class WikiController extends Controller
             return redirect('/dashboard')->with('error', 'Login Not Found!');
         } 
 
-        return view('wiki.changepassword');
+        return view('wiki.changepassword')->with('name', $name);
     }
 
     public function changePassword(Request $request) {
