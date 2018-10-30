@@ -10,5 +10,5 @@ class DokuUser extends Model
     protected $table = 'wiki_user';
 
     // Timestamps
-    public $timestamps = 'true';
+    public $timestamps = false;
 }
