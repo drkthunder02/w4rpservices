@@ -5,7 +5,7 @@
     {!! Form::open(['action' => 'MoonsController@storeUpdateMoon', 'method' => 'POST']) !!}
     <div class="form-group col-md-6">
         {{ Form::label('system', 'System') }}
-        {{ Form::text('system', '', ['class' => 'form-control', 'placeholder' => 'Planet']) }}
+        {{ Form::text('system', '', ['class' => 'form-control', 'placeholder' => 'System']) }}
         {{ Form::label('planet', 'Planet') }}
         {{ Form::text('planet', '', ['class' => 'form-control', 'placeholder' => 'Planet']) }}
         {{ Form::label('moon', 'Moon') }}
