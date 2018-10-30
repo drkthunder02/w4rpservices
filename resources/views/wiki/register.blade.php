@@ -1,15 +1,26 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
-    <h2>Register for Warped Intentions Wiki<h2>
-        {!! Form::open(['action' => 'WikiController@storeRegister', 'method' => 'POST']) !!}
-        <div class="form-group col-md-6">
-            {{ Form::label('password', 'Password') }}
-            {{ Form::password('password', ['class' => 'form-control']) }}
-            {{ Form::label('password2', 'Repeat Password') }}
-            {{ Form::password('password2', ['class' => 'form-control']) }}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Register for Warped Intentions Wiki</h2>
+                </div>
+                <div class="card-body">
+                    <h1>Your Username is: {{ session('name') }} </h1><br>
+                    {!! Form::open(['action' => 'WikiController@storeRegister', 'method' => 'POST']) !!}
+                    <div class="form-group col-md-6">
+                        {{ Form::label('password', 'Password') }}
+                        {{ Form::password('password', ['class' => 'form-control']) }}
+                        {{ Form::label('password2', 'Repeat Password') }}
+                        {{ Form::password('password2', ['class' => 'form-control']) }}
+                    </div>
+                    {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+                    {!! Form::close() !!}
+                </div>
+            </div>
         </div>
-        {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
-        {!! Form::close() !!}
+    </div>
 </div>
 @endsection

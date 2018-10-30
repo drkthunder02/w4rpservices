@@ -23,7 +23,7 @@ class WikiController extends Controller
             return redirect('/dashboard')->with('error', 'Already registered for the wiki!');            
         }
 
-        return view('wiki.register');
+        return view('wiki.register')->with('name', $name);
     }
 
     public function storeRegister(Request $request) {
