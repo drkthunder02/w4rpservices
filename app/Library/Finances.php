@@ -48,9 +48,11 @@ class Finances {
     public function GetMasterWalletJournal() {
         $journals = $this->esi->invoke('get', '/corporations/98287666/wallets/1/journal/');
         $journals = json_decode($journal->raw, true);
-        foreach($journals as $entry) {
-            DB::table('HoldingCorpFinancesJournal');
-        }
+        //foreach($journals as $entry) {
+        //    DB::table('HoldingCorpFinancesJournal');
+        //}
+
+        return $journals;
         
     }
 }
