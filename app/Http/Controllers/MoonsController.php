@@ -118,6 +118,6 @@ class MoonsController extends Controller
                 'RentalEnd' => $date,
             ]);
 
-        return redirect('/dashboard')->with('success', 'Moon Updated');
+        return redirect('/moons/display')->with('success', 'Moon Updated');
     }
 }
