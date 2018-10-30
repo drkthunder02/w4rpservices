@@ -28,7 +28,7 @@ class MoonsController extends Controller
         foreach($moons as $moon) {
             //Setup formats as needed
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
-            $rentalEnd = date('d.m.Y', $moon->RentalEnd);
+            $rentalEnd = date('m/d/Y', $moon->RentalEnd);
             $price = $moonCalc->SpatialMoons($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                              $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             $allyPrice = $moonCalc->SpatialMoonsOutOfAlliance($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
