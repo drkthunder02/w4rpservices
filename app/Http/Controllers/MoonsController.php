@@ -108,7 +108,11 @@ class MoonsController extends Controller
         $date = strtotime($request->date . '00:00:01');
         //Update the database entry
         DB::table('Moons')
-            ->whereColumn([$request->system, '=', 'System'], [$request->planet, '=', 'Planet'], [$request->moon, '=', 'Moon'])
+            ->whereColumn([
+                ['System', '=', $request->system], 
+                ['Planet', '=', $request->planet], 
+                ['Moon', '=', $request->moon]
+            ])
             ->update([
                 'RentalCorp' => $request->renter,
                 'RentalEnd' => $date,
