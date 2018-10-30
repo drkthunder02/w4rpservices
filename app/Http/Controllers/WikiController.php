@@ -64,7 +64,7 @@ class WikiController extends Controller
         $member->groupname = $gname[0]->gname;
         $member->save();
         //Return to the dashboard view
-        return redirect('/dashboard')->with('success', 'Registration successful.<br>Your username is: ' . $name);
+        return redirect('/dashboard')->with('success', 'Registration successful.  Your username is: ' . $name);
     }
 
     public function displayChangePassword() {
@@ -103,6 +103,6 @@ class WikiController extends Controller
             ->where('login', $name)
             ->update(['pass' => $password]);
 
-        return redirect('/dashboard')->with('success', 'Password changed successfully.<br>Your username is: ' . $name);
+        return redirect('/dashboard')->with('success', 'Password changed successfully.  Your username is: ' . $name);
     }
 }
