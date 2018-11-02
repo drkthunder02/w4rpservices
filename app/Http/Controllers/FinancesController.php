@@ -16,6 +16,10 @@ use Seat\Eseye\Eseye;
 
 class FinancesController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function redirectToProvider() {
         if(!Auth::check()) {
             return redirect()->to('/');
