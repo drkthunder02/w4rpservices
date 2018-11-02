@@ -14,7 +14,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if(!Auth::check()){
+        if(!$this->auth->check()){
             return route('/');
         }
     }
