@@ -13,6 +13,10 @@ use App\Library\MoonCalc;
 
 class MoonsController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Function to display the moons and pass data to the blade template
      */
