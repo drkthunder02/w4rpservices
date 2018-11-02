@@ -11,6 +11,10 @@ use App\Models\DokuUser;
 
 class WikiController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function displayRegister() {
         //make user name syntax like we want it.
         $name = Auth::user()->name;
