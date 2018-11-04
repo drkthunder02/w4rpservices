@@ -13,5 +13,5 @@ class Moon extends Model
     public $primaryKey = 'id';
 
     // Timestamps
-    public $timestamps = 'false';
+    public $timestamps = false;
 }
