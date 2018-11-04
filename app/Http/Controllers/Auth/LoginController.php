@@ -120,9 +120,9 @@ class LoginController extends Controller
             if($accountType == 'Guest') {
                 $role = 'Guest';
             } else if($accountType == 'Legacy'){
-                $role = 'Legacy';
+                $role = 'User';
             } else if($accountType == 'W4RP') {
-                $role = 'W4RP';
+                $role = 'User';
             } else {
                 $role = 'None';
             }
