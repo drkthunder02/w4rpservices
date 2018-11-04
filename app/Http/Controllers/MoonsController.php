@@ -35,8 +35,6 @@ class MoonsController extends Controller
             $rentalEnd = date('m/d/Y', $moon->RentalEnd);
             $price = $moonCalc->SpatialMoons($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                              $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-            $allyPrice = $moonCalc->SpatialMoonsOutOfAlliance($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                                              $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             //Add the data to the html string to be passed to the view
             $html .= '<tr>';
             $html .= '<td>' . $spm . '</td>';
@@ -49,8 +47,8 @@ class MoonsController extends Controller
             $html .= '<td>' . $moon->ThirdQuantity . '</td>';
             $html .= '<td>' . $moon->FourthOre . '</td>';
             $html .= '<td>' . $moon->FourthQuantity . '</td>';
-            $html .= '<td>' . $price . '</td>';
-            $html .= '<td>' . $allyPrice . '</td>';
+            $html .= '<td>' . $price['alliance'] . '</td>';
+            $html .= '<td>' . $price['outofalliance'] . '</td>';
             $html .= '<td>' . $moon->RentalCorp . '</td>';
             $html .= '<td>' . $rentalEnd . '</td>';
             $html .= '</tr>';
