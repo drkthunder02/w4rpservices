@@ -41,6 +41,10 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('isGuest', function($user) {
             return $user->hasRole('Guest') == 'Guest';
         });
+
+        $gate->define('isNone', function($user) {
+            return $user->hasRole('None') == 'None';
+        });
 /*
         $gate->define('isSuperAdmin', function($user) {
             return $user->user_type == 'SuperAdmin';
