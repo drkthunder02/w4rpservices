@@ -21,6 +21,18 @@ class MoonCalc {
 
     private function IsRMoon($ore) {
         $ores = [
+            'Zeolites' => 'Gas',
+            'Sylvite' => 'Gas',
+            'Bitumens' => 'Gas',
+            'Coesite' => 'Gas',
+            'Cobaltite' => 'R8',
+            'Euxenite' => 'R8',
+            'Titanite' => 'R8',
+            'Scheelite' => 'R8',
+            'Otavite' => 'R16',
+            'Sperrylite' => 'R16',
+            'Vanadinite' => 'R16',
+            'Chromite' => 'R16',
             'Carnotite' => 'R32',
             'Zircon' => 'R32',
             'Pollucite' => 'R32',
@@ -41,7 +53,7 @@ class MoonCalc {
         return false;
     }
 
-    public function SpatialMoonsOnlyRares($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
+    public function SpatialMoonsOnlyGoo($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
@@ -228,7 +240,7 @@ class MoonCalc {
         return $rentalPrice;
     }
 
-    public function SpatialMoonsOutOfAllianceOnlyRares($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
+    public function SpatialMoonsOutOfAllianceOnlyGoo($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
