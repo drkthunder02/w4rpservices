@@ -77,7 +77,7 @@ class LoginController extends Controller
 
         auth()->login($user, true);
 
-        return redirect()->to('/dashboard');
+        return redirect()->to('/dashboard')->with('success', 'Successfully Logged In or Updated ESI.');
     }
 
      /**
