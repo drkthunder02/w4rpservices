@@ -45,8 +45,7 @@ class User extends Authenticatable
 
     public function hasRole($role)
     {
-        $something = User::where('role')->get();
-        dd($something);
+        dd(User::where('role', 'Admin')->get());
         return User::where('role', $role)->get();
     }
 
