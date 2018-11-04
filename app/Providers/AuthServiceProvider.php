@@ -38,10 +38,6 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('User') == 'User';
         });
 
-        $gate->define('isLegacy', function($user) {
-            return $user->hasRole('Legacy') == 'Legacy';
-        });
-
         $gate->define('isGuest', function($user) {
             return $user->hasRole('Guest') == 'Guest';
         });

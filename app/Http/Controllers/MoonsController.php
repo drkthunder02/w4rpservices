@@ -59,6 +59,7 @@ class MoonsController extends Controller
     }
 
     public function addMoon() {
+        $this->middleware('role:SuperUser');
         return view('moons.addmoon');
     }
 
@@ -68,6 +69,7 @@ class MoonsController extends Controller
      * @return \Illuminate\Http\Reponse
      */
     public function storeMoon(Request $request) {
+        $this->middleware('role:SuperUser');
         $this->validate($request, [
             'region' => 'required',
             'system' => 'required',
@@ -96,10 +98,12 @@ class MoonsController extends Controller
     }
 
     public function updateMoon() {
+        $this->middleware('role:Admin');
         return view('moons.updatemoon');
     }
 
     public function storeUpdateMoon(Request $request) {
+        $this->middleware('role:Admin');
         $this->validate($request, [
             'system' => 'required',
             'planet' => 'required',
