@@ -64,7 +64,6 @@ class LoginController extends Controller
      */
     public function redirectToProvider() {
         return Socialite::driver('eveonline')->redirect();
-        //return Socialite::driver('eveonline')->setScopes(['publicData'])->redirect();
     }
 
     /**
@@ -127,9 +126,7 @@ class LoginController extends Controller
                 'character_id'=> $eve_user->getId(),
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
-                //'refresh_token' => $eve_user->refreshToken,
                 'user_type' => $accountType,
-                'scopes' => $eve_user->user['Scopes'],
             ]);
         }
     }
@@ -162,7 +159,15 @@ class LoginController extends Controller
         //Send back the appropriate group
         if($corp_info->alliance_id == '99004116') {
             return 'W4RP';
-        } else if(in_array($alliance_info->alliance_id, array(99006297, 498125261, 99003214, 99004136, 9900237, 99001657, 99006069, 99001099, 99003838))) {
+        } else if(in_array($alliance_info->alliance_id, array(99006297, 
+                                                              498125261, 
+                                                              99003214, 
+                                                              99004136, 
+                                                              9900237, 
+                                                              99001657, 
+                                                              99006069, 
+                                                              99001099, 
+                                                              99003838))) {
             return 'Legacy';
         } else {
             return 'Guest';
