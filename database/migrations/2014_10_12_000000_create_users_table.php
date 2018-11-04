@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('expires_in')->default(0);
             $table->string('owner_hash');
             $table->string('user_type')->default('Guest');
+            $table->string('role')->default('Guest');
             $table->text('scopes')->default('publicData');
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();

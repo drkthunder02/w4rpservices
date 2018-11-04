@@ -27,6 +27,7 @@ class User extends Authenticatable
         'refresh_token', 
         'user_type',
         'scopes',
+        'role',
     ];
 
     protected $table = 'users';
@@ -41,4 +42,13 @@ class User extends Authenticatable
     ];
 
     protected $guarded = [];
+
+    public function hasRole($role)
+    {
+        return User::where('role', $role)->get();
+    }
+
+    public function getUserType() {
+        return User::where('user_type')->get();
+    }
 }

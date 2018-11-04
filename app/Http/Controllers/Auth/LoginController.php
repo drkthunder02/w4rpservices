@@ -117,6 +117,15 @@ class LoginController extends Controller
         } else {
             //Get what type of account the user should have
             $accountType = $this->getAccountType(null, $eve_user->getId());
+            if($accountType == 'Guest') {
+                $role = 'Guest';
+            } else if($accountType == 'Legacy'){
+                $role = 'Legacy';
+            } else if($accountType == 'W4RP') {
+                $role = 'W4RP';
+            } else {
+                $role = 'None';
+            }
             //Create a user account
             return User::create([
                 'name' => $eve_user->getName(),
@@ -127,6 +136,7 @@ class LoginController extends Controller
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
                 'user_type' => $accountType,
+                'role' => $role,
             ]);
         }
     }

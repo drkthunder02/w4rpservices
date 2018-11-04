@@ -27,6 +27,26 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies($gate);
 
         $gate->define('isSuperAdmin', function($user) {
+            return $user->hasRole('SuperAdmin') == 'SuperAdmin';
+        });
+
+        $gate->define('isAdmin', function($user) {
+            return $user->hasRole('Admin') == 'Admin';
+        });
+
+        $gate->define('isUser', function($user) {
+            return $user->hasRole('User') == 'User';
+        });
+
+        $gate->define('isLegacy', function($user) {
+            return $user->hasRole('Legacy') == 'Legacy';
+        });
+
+        $gate->define('isGuest', function($user) {
+            return $user->hasRole('Guest') == 'Guest';
+        });
+/*
+        $gate->define('isSuperAdmin', function($user) {
             return $user->user_type == 'SuperAdmin';
         });
 
@@ -45,5 +65,6 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('isGuest', function($user) {
             return $user->user_type == 'Guest';
         });
+        */
     }
 }
