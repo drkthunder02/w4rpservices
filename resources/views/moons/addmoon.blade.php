@@ -17,7 +17,7 @@
             {{ Form::label('firstore', 'First Ore') }}
             {{ Form::text('firstore', '', ['class' => 'form-control', 'placeholder' => 'First Ore Name']) }}
             {{ Form::label('firstquan', 'First Ore Quantity') }}
-            {{ Form::text('firstquan', '', ['class' => 'form-control', 'placeholder' => 'Second Ore Quantity']) }}
+            {{ Form::text('firstquan', '', ['class' => 'form-control', 'placeholder' => 'First Ore Quantity']) }}
             {{ Form::label('secondore', 'Second Ore') }}
             {{ Form::text('secondore', '', ['class' => 'form-control', 'placeholder' => 'Second Ore Name']) }}
             {{ Form::label('secondquan', 'Second Ore Quantity') }}
