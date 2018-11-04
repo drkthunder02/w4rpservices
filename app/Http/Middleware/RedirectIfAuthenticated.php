@@ -17,14 +17,15 @@ use Seat\Eseye\Eseye;
 class RedirectIfAuthenticated
 {
     
+    /*
     public function handle($request, Closure $next, $guard = null)
     {
-        dd($next);
         if (Auth::guard($guard)->check()) {
             return redirect()->to('/dashboard');
         }
         return $next($request);
     }
+    */
     
 
     /**
@@ -35,7 +36,6 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
-    /*
     public function handle($request, Closure $next, $guard = null)
     {     
         if($request->pathInfo == '/login' && Auth::guard($guard)->check()) {
@@ -51,7 +51,6 @@ class RedirectIfAuthenticated
             return $next($request);
         }
     }
-    */
 
     /**
      * Update the user information in the database
