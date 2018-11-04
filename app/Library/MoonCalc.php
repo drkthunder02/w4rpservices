@@ -19,40 +19,6 @@ use App\Models\ItemComposition;
 
 class MoonCalc {
 
-    private function IsRMoon($ore) {
-        $ores = [
-            'Zeolites' => 'Gas',
-            'Sylvite' => 'Gas',
-            'Bitumens' => 'Gas',
-            'Coesite' => 'Gas',
-            'Cobaltite' => 'R8',
-            'Euxenite' => 'R8',
-            'Titanite' => 'R8',
-            'Scheelite' => 'R8',
-            'Otavite' => 'R16',
-            'Sperrylite' => 'R16',
-            'Vanadinite' => 'R16',
-            'Chromite' => 'R16',
-            'Carnotite' => 'R32',
-            'Zircon' => 'R32',
-            'Pollucite' => 'R32',
-            'Cinnabar' => 'R32',
-            'Xenotime' => 'R64',
-            'Monazite' => 'R64',
-            'Loparite' => 'R64',
-            'Ytterbite' => 'R64',
-        ];
-
-        foreach($ores as $key => $value) {
-            
-            if(strtolower($key) == strtolower($ore)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public function SpatialMoonsOnlyGoo($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
@@ -374,5 +340,43 @@ class MoonCalc {
 
     private function ConvertToPercentage($quantity) {
         return $quantity / 100.00;
+    }
+
+    private function IsRMoon($ore) {
+        $ores = [
+            'Prime Arkonor' => 'Null',
+            'Cubic Bistot' => 'Null',
+            'Pellucid Crokite' => 'Null',
+            'Jet Ochre' => 'Null',
+            'Zeolites' => 'Gas',
+            'Sylvite' => 'Gas',
+            'Bitumens' => 'Gas',
+            'Coesite' => 'Gas',
+            'Cobaltite' => 'R8',
+            'Euxenite' => 'R8',
+            'Titanite' => 'R8',
+            'Scheelite' => 'R8',
+            'Otavite' => 'R16',
+            'Sperrylite' => 'R16',
+            'Vanadinite' => 'R16',
+            'Chromite' => 'R16',
+            'Carnotite' => 'R32',
+            'Zircon' => 'R32',
+            'Pollucite' => 'R32',
+            'Cinnabar' => 'R32',
+            'Xenotime' => 'R64',
+            'Monazite' => 'R64',
+            'Loparite' => 'R64',
+            'Ytterbite' => 'R64',
+        ];
+
+        foreach($ores as $key => $value) {
+            
+            if(strtolower($key) == strtolower($ore)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
