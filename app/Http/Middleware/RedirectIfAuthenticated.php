@@ -17,17 +17,6 @@ use Seat\Eseye\Eseye;
 class RedirectIfAuthenticated
 {
     
-    /*
-    public function handle($request, Closure $next, $guard = null)
-    {
-        if (Auth::guard($guard)->check()) {
-            return redirect()->to('/dashboard');
-        }
-        return $next($request);
-    }
-    */
-    
-
     /**
      * Handle an incoming request.
      *
@@ -37,42 +26,11 @@ class RedirectIfAuthenticated
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
-    {     
-        if($request->pathInfo == '/login' && Auth::guard($guard)->check()) {
-                return redirect()->to('/dashboard');
-        } else if ($request->pathInfo == '/' && Auth::guard($guard)->check()) {
+    {
+        if (Auth::guard($guard)->check()) {
             return redirect()->to('/dashboard');
-        } else if ($request->pathInfo == '/callback') {
-            $ssoUser = Socialite::driver('eveonline')->user();
-            $this->updateUser($ssoUser);
-            
-            return $next($request);
-        } else {
-            return $next($request);
         }
+        return $next($request);
     }
 
-    /**
-     * Update the user information in the database
-     * 
-     * @param \Laravel\Socialite\Two\User $user
-     */
-    private function updateUser($eve_user) {
-        $userFound = DB::table('users')->where('character_id', $eve_user->id)->first();
-        if($userFound != null) {
-            DB::table('users')->where('character_id', $eve_user->id)->update([
-                'name' => $eve_user->getName(),
-                'email' => null,
-                'avatar' => $eve_user->avatar,
-                'owner_hash' => $eve_user->owner_hash,
-                'character_id' => $eve_user->getId(),
-                'inserted_at' => time(),
-                'expires_in' => $eve_user->expiresIn,
-                'access_token' => $eve_user->token,
-                'refresh_token' => $eve_user->refreshToken,
-                'scopes' => $eve_user->user['Scopes'],
-            ]);
-        }
-        
-    }
 }
