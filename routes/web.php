@@ -18,7 +18,7 @@ Route::get('/', function () {
 //Auth::routes();
 //Login display pages
 Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('login');
-Route::get('/callback', 'Auth\LoginController@handleProviderCallback')->middleware('callback');
+Route::get('/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('/logout', 'Auth\LoginController@logout');
 //Dashboard Controller Display pages
 Route::get('/dashboard', 'DashboardController@index');
