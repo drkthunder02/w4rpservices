@@ -19,6 +19,101 @@ use App\Models\ItemComposition;
 
 class MoonCalc {
 
+    private function IsRMoon($ore) {
+        $ores = [
+            'Carnotite' => 'R32',
+            'Zircon' => 'R32',
+            'Pollucite' => 'R32',
+            'Cinnabar' => 'R32',
+            'Xenotime' => 'R64',
+            'Monazite' => 'R64',
+            'Loparite' => 'R64',
+            'Ytterbite' => 'R64',
+        ];
+
+        foreach($ores as $key => $value) {
+            
+            if(strtolower($key) == strtolower($ore)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function SpatialMoonsOnlyRares($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
+        //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
+        //Total pull size is 14,385,600 m3
+        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+        //Get the configuration for pricing calculations
+        $config = DB::table('Config')->get();
+        if($firstQuan >= 1.00) {
+            $firstPerc = $this->ConvertToPercentage($firstQuan);
+        } else {
+            $firstPerc = $firstQuan;
+        }
+        if($secondQuan >= 1.00) {
+            $secondPerc = $this->ConvertToPercentage($secondQuan);
+        } else {
+            $secondPerc = $secondQuan;
+        }
+        if($thirdQuan >= 1.00) {
+            $thirdPerc = $this->ConvertToPercentage($thirdQuan);
+        } else {
+            $thirdPerc = $thirdQuan;
+        }
+        if($fourthQuan >= 1.00) {
+            $fourthPerc = $this->ConvertToPercentage($fourthQuan);
+        } else {
+            $fourthPerc = $fourthQuan;
+        }
+        if($firstOre != "None") {
+            if($this->IsRMoon($firstOre)) {
+                $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
+            } else {
+                $firstTotal = 0.00;
+            }
+        } else {
+            $firstTotal = 0.00;
+        }
+        if($secondOre != "None") {
+            if($this->IsRMoon($secondOre)) {
+                $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
+            } else {
+                $secondTotal = 0.00;
+            }
+        } else {
+            $secondTotal = 0.00;
+        }
+        if($thirdOre != "None") {
+            if($this->IsRMoon($thirdOre)) {
+                $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
+            } else {
+                $thirdTotal = 0.00;
+            }
+        } else {
+            $thirdTotal = 0.00;
+        }
+        if($fourthOre != "None") {
+            if($this->IsRMoon($fourthOre)) {
+                $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
+            } else {
+                $fourthTotal = 0.00;
+            }
+        } else {
+            $fourthTotal = 0.00;
+        }
+        //Calculate the total to price to be mined in one month
+        $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
+        //Calculate the rental price.  Refined rate is already included in the price from rental composition
+        $rentalPrice = $totalPriceMined * ($config[0]->RentalTax / 100.00);
+        //Format the rental price to the appropriate number
+        $rentalPrice = number_format($rentalPrice, "2", ".", ",");
+       
+        //Return the rental price to the caller
+        return $rentalPrice;
+    }
+
     public function SpatialMoons($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
