@@ -119,7 +119,7 @@ class MoonCalc {
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
         $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
-        $rentalPrice['outofalliance'] = $totalPriceMined * (config[0]->AllyRentalTax / 100.00);
+        $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
         //Format the rental price to the appropriate number
         $rentalPrice['alliance'] = number_format($rentalPrice['alliance'], "2", ".", ",");
         $rentalPrice['outofalliance'] = number_format($rentalPrice['outofalliance'], "2", ".", ",");
