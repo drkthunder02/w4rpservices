@@ -9,6 +9,9 @@ use Socialite;
 use Auth;
 use DB;
 use App\User;
+use App\Models\EsiScope;
+use App\Models\Esitoken;
+use App\Models\UserRole;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
