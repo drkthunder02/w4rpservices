@@ -45,26 +45,5 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('isNone', function($user) {
             return $user->role == 'None';
         });
-/*
-        $gate->define('isSuperAdmin', function($user) {
-            return $user->user_type == 'SuperAdmin';
-        });
-
-        $gate->define('isAdmin', function($user) {
-            return $user->user_type == 'Admin';
-        });
-
-        $gate->define('isW4RP', function($user) {
-            return $user->user_type == 'W4RP';
-        });
-
-        $gate->define('isLegacy', function($user) {
-            return $user->user_type == 'Legacy';
-        });
-
-        $gate->define('isGuest', function($user) {
-            return $user->user_type == 'Guest';
-        });
-        */
     }
 }
