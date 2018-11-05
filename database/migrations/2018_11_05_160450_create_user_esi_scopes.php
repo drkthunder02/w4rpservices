@@ -15,7 +15,8 @@ class CreateUserEsiScopes extends Migration
     {
         Schema::create('UserEsiScopes', function(Blueprint $table) {
             $table->integer('id')->increments();
-            $table->foreign('character_id')->integer('character_id');
+            $table->integer('character_id');
+            $table->foreign('character_id')->references('character_id')->on('users');
             $table->string('scope');
             $table->timestamps();
         });
