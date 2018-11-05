@@ -16,7 +16,7 @@ class CreateUserRolesTable extends Migration
         if(!Schema::hasTable('user_roles')) {
             Schema::create('user_roles', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('user_id');
+                $table->integer('character_id');
                 $table->string('role')->default('None');
                 $table->timestamps();
             });

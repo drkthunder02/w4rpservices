@@ -17,7 +17,6 @@ class CreateEsiTokens extends Migration
             Schema::create('EsiTokens', function(Blueprint $table) {
                 $table->integer('id')->increments();
                 $table->integer('character_id')->unique();
-                $table->foreign('character_id')->references('character_id')->on('users');
                 $table->string('access_token');
                 $table->string('refresh_token');
                 $table->integer('expires_in');
