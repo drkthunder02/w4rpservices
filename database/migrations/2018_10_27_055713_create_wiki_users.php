@@ -30,6 +30,6 @@ class CreateWikiUsers extends Migration
      */
     public function down()
     {
-        Schemma::dropIfExists('wiki_user');
+        Schema::dropIfExists('wiki_user');
     }
 }
