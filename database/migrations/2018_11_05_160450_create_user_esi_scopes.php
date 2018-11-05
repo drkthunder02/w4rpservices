@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEsiTokens extends Migration
+class CreateUserEsiScopes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateEsiTokens extends Migration
      */
     public function up()
     {
-        Schema::create('EsiTokens', function(Blueprint $table) {
+        Schema:create('UserEsiScopes', function(Blueprint $table) {
             $table->integer('id')->increments();
             $table->integer('character_id');
-            $table->string('access_token');
-            $table->string('refresh_token');
-            $table->integer('expires_in');
+            $table->string('scope');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateEsiTokens extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('EsiTokens');
+        Schema::dropIfExists('UserEsiScopes');
     }
 }

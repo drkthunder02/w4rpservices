@@ -446,6 +446,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Structure' => __DIR__ . '/../..' . '/app/Models/Structure.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\UserRole' => __DIR__ . '/../..' . '/app/Models/UserRole.php',
         'BeyondCode\\DumpServer\\DumpServerCommand' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',
         'BeyondCode\\DumpServer\\DumpServerServiceProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',
         'BeyondCode\\DumpServer\\Dumper' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/Dumper.php',
