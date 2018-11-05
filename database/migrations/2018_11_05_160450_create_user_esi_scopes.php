@@ -13,7 +13,7 @@ class CreateUserEsiScopes extends Migration
      */
     public function up()
     {
-        Schema:create('UserEsiScopes', function(Blueprint $table) {
+        Schema::create('UserEsiScopes', function(Blueprint $table) {
             $table->integer('id')->increments();
             $table->integer('character_id');
             $table->string('scope');
