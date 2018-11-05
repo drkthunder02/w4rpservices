@@ -59,4 +59,8 @@ class User extends Authenticatable
     public function esiscopes() {
         return $this->hasMany('App\Models\EsiScope');
     }
+
+    public function esitoken() {
+        return $this->hasOne('App\Models\EsiToken');
+    }
 }
