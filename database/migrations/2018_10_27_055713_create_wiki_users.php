@@ -13,14 +13,16 @@ class CreateWikiUsers extends Migration
      */
     public function up()
     {
-        Schema::create('wiki_user', function(Blueprint $table) {
-            $table->increments('id');
-            $table->string('login');
-            $table->string('pass');
-            $table->string('name');
-            $table->string('mail')->default('')->nullable();
-            $table->unique('login', 'user');
-        });
+        if (!Schema::hasTable('wiki_user')) {
+            Schema::create('wiki_user', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('login');
+                $table->string('pass');
+                $table->string('name');
+                $table->string('mail')->default('')->nullable();
+                $table->unique('login', 'user');
+            });
+        }
     }
 
     /**

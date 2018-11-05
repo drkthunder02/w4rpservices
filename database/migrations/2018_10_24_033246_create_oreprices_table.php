@@ -13,15 +13,17 @@ class CreateOrepricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('OrePrices', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('Name');
-            $table->integer('ItemId');
-            $table->decimal('BatchPrice', 20,2);
-            $table->decimal('UnitPrice', 20, 2);
-            $table->decimal('m3Price', 20, 2);
-            $table->string('Time');
-        });
+        if(!Schema::hasTable('OrePrices')) {
+            Schema::create('OrePrices', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('Name');
+                $table->integer('ItemId');
+                $table->decimal('BatchPrice', 20,2);
+                $table->decimal('UnitPrice', 20, 2);
+                $table->decimal('m3Price', 20, 2);
+                $table->string('Time');
+            });
+        }
     }
 
     /**

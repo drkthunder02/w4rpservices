@@ -13,15 +13,17 @@ class CreateEsiTokens extends Migration
      */
     public function up()
     {
-        Schema::create('EsiTokens', function(Blueprint $table) {
-            $table->integer('id')->increments();
-            $table->integer('character_id')->unique();
-            $table->foreign('character_id')->references('character_id')->on('users');
-            $table->string('access_token');
-            $table->string('refresh_token');
-            $table->integer('expires_in');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('EsiTokens')) {
+            Schema::create('EsiTokens', function(Blueprint $table) {
+                $table->integer('id')->increments();
+                $table->integer('character_id')->unique();
+                $table->foreign('character_id')->references('character_id')->on('users');
+                $table->string('access_token');
+                $table->string('refresh_token');
+                $table->integer('expires_in');
+                $table->timestamps();
+           });
+        }
     }
 
     /**

@@ -13,12 +13,14 @@ class CreateConfigTable extends Migration
      */
     public function up()
     {
-        Schema::create('Config', function (Blueprint $table) {
-            $table->decimal('RentalTax', 5,2);
-            $table->decimal('AllyRentalTax', 5, 2);
-            $table->decimal('RefineRate', 5, 2);
-            $table->integer('RentalTime');
-        });
+        if(!Schema::hasTable('Config')) {
+            Schema::create('Config', function (Blueprint $table) {
+                $table->decimal('RentalTax', 5,2);
+                $table->decimal('AllyRentalTax', 5, 2);
+                $table->decimal('RefineRate', 5, 2);
+                $table->integer('RentalTime');
+            });
+        }
     }
 
     /**

@@ -13,11 +13,13 @@ class CreateWikiGroupnames extends Migration
      */
     public function up()
     {
-        Schema::create('wiki_groupnames', function(Blueprint $table) {
-            $table->increments('id');
-            $table->string('gname');
-            $table->unique('id', 'id');
-        });
+        if(!Schema::hasTable('wiki_groupnames')) {
+            Schema::create('wiki_groupnames', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('gname');
+                $table->unique('id', 'id');
+            });
+        }
     }
 
     /**

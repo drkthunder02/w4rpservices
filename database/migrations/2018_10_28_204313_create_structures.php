@@ -13,25 +13,27 @@ class CreateStructures extends Migration
      */
     public function up()
     {
-        Schema::create('Structures', function(Blueprint $table) {
-            $table->integer('corporation_id');
-            $table->dateTime('fuel_expires');
-            $table->dateTime('next_reinforce_apply');
-            $table->integer('next_reinforce_hour');
-            $table->integer('next_reinforce_weekday');
-            $table->integer('profile_id');
-            $table->integer('reinforce_hour');
-            $table->integer('reinforce_weekday');
-            $table->dateTime('services');
-            $table->string('state');
-            $table->date('state_timer_end');
-            $table->date('state_timer_start');
-            $table->integer('structure_id')->unique();
-            $table->integer('system_id');
-            $table->integer('type_id');
-            $table->dateTime('unanchors_at');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('Structures')) {
+            Schema::create('Structures', function(Blueprint $table) {
+                $table->integer('corporation_id');
+                $table->dateTime('fuel_expires');
+                $table->dateTime('next_reinforce_apply');
+                $table->integer('next_reinforce_hour');
+                $table->integer('next_reinforce_weekday');
+                $table->integer('profile_id');
+                $table->integer('reinforce_hour');
+                $table->integer('reinforce_weekday');
+                $table->dateTime('services');
+                $table->string('state');
+                $table->date('state_timer_end');
+                $table->date('state_timer_start');
+                $table->integer('structure_id')->unique();
+                $table->integer('system_id');
+                $table->integer('type_id');
+                $table->dateTime('unanchors_at');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

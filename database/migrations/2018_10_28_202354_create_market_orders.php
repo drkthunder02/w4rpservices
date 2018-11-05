@@ -13,20 +13,21 @@ class CreateMarketOrders extends Migration
      */
     public function up()
     {
-        Schema::create('MarketOrders', function(Blueprint $table) {
-            $table->integer('duration');
-            $table->boolean('is_buy_order');
-            $table->dateTime('issued');
-            $table->integer('location_id');
-            $table->integer('min_volume');
-            $table->integer('order_id')->unique();
-            $table->decimal('price', 20, 2);
-            $table->string('range');
-            $table->integer('system_id');
-            $table->integer('volume_remain');
-            $table->integer('volume_total');
-        });
-        
+        if(!Schema::hasTable('MarketOrders')) {
+            Schema::create('MarketOrders', function(Blueprint $table) {
+                $table->integer('duration');
+                $table->boolean('is_buy_order');
+                $table->dateTime('issued');
+                $table->integer('location_id');
+                $table->integer('min_volume');
+                $table->integer('order_id')->unique();
+                $table->decimal('price', 20, 2);
+                $table->string('range');
+                $table->integer('system_id');
+                $table->integer('volume_remain');
+                $table->integer('volume_total');
+            });
+        }
     }
 
     /**

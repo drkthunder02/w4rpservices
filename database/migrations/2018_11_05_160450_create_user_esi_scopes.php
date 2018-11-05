@@ -13,13 +13,15 @@ class CreateUserEsiScopes extends Migration
      */
     public function up()
     {
-        Schema::create('UserEsiScopes', function(Blueprint $table) {
-            $table->integer('id')->increments();
-            $table->integer('character_id');
-            $table->foreign('character_id')->references('character_id')->on('users');
-            $table->string('scope');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('UserEsiScopes')) {
+            Schema::create('UserEsiScopes', function(Blueprint $table) {
+                $table->integer('id')->increments();
+                $table->integer('character_id');
+                $table->foreign('character_id')->references('character_id')->on('users');
+                $table->string('scope');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

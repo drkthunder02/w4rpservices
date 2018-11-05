@@ -13,12 +13,14 @@ class CreateWikiMember extends Migration
      */
     public function up()
     {
-        Schema::create('wiki_member', function(Blueprint $table) {
-            $table->integer('uid');
-            $table->integer('gid');
-            $table->string('groupname');
-            $table->primary(['uid', 'gid']);
-        });
+        if(!Schema::hasTable('wiki_member')) {
+            Schema::create('wiki_member', function(Blueprint $table) {
+                $table->integer('uid');
+                $table->integer('gid');
+                $table->string('groupname');
+                $table->primary(['uid', 'gid']);
+            });
+        }
     }
 
     /**
