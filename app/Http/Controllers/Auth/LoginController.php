@@ -133,7 +133,7 @@ class LoginController extends Controller
                     DB::table('EsiScopes')->insert([
                         'character_id' => $eve_user->getId(),
                         'scope' => $scope,
-                    ])
+                    ]);
                 }
             } else {
                 DB::table('users')->where('character_id', $eve_user->id)->update([
