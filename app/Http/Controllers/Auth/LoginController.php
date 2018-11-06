@@ -117,7 +117,7 @@ class LoginController extends Controller
                     DB::table('EsiTokens')->where('character_id', $eve_user->id)->update([
                         'character_id' => $eve_user->getId(),
                         'access_token' => $eve_user->token,
-                        'refresh_token' => $eve_user->token,
+                        'refresh_token' => $eve_user->refreshToken,
                         'expires_in' => $eve_user->expiresIn,
                     ]);
                 } else {
