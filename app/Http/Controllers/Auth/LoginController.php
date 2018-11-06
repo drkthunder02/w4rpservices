@@ -114,7 +114,7 @@ class LoginController extends Controller
                 $token = EsiToken::where('character_id', $eve_user->id)->first();
                 if($token) {
                     //Update the ESI Token
-                    DB::table('EsiTokens')->where('character_id', $eve_user->id)->update([
+                    DB::table('UserEsiTokens')->where('character_id', $eve_user->id)->update([
                         'character_id' => $eve_user->getId(),
                         'access_token' => $eve_user->token,
                         'refresh_token' => $eve_user->token,
@@ -122,7 +122,7 @@ class LoginController extends Controller
                     ]);
                 } else {
                     //Save the ESI Token in the database
-                    DB::table('EsiTokens')->insert([
+                    DB::table('UserEsiTokens')->insert([
                         'character_id' => $eve_user->getId(),
                         'access_token' => $eve_user->token,
                         'refresh_token' => $eve_user->token,
@@ -131,11 +131,11 @@ class LoginController extends Controller
                 }
                 //After creating the token, we need to update the table for scopes
                 //First we look for all the scopes, then if need be add entries or delete entries from the database
-                DB::table('EsiScopes')->where('character_id', $eve_user->id)->delete();
+                DB::table('UserEsiScopes')->where('character_id', $eve_user->id)->delete();
                 //EsiScopes::where('character_id', $eve_user->id)->delete();
                 $scopes = explode(' ', $eve_user->user['Scopes']);
                 foreach($scopes as $scope) {
-                    DB::table('EsiScopes')->insert([
+                    DB::table('UserEsiScopes')->insert([
                         'character_id' => $eve_user->getId(),
                         'scope' => $scope,
                     ]);
