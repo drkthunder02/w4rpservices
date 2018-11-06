@@ -12,6 +12,16 @@ class UserRole extends Model
     // Timestamps 
     public $timestamps = true;
 
+    /**
+     *  The attributes that are mass assignable
+     * 
+     * @var array
+     */
+    protected $fillable = [
+        'character_id',
+        'role',
+    ];
+
     public function user() {
         return $this->belongsTo('App\User', 'character_id', 'user_id');
     }

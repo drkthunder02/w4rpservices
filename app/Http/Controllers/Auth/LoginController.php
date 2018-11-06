@@ -113,6 +113,7 @@ class LoginController extends Controller
                 //If we have a token update the token, if not create an entry into the database
                 $token = EsiToken::where('character_id', $eve_user->id)->first();
                 if($token) {
+
                     //Update the ESI Token
                     DB::table('EsiTokens')->where('character_id', $eve_user->id)->update([
                         'character_id' => $eve_user->getId(),
@@ -122,12 +123,20 @@ class LoginController extends Controller
                     ]);
                 } else {
                     //Save the ESI Token in the database
+                    $token = new App\Models\EsiToken;
+                    $token->character_id  = $eve_user->id;
+                    $token->access_token = $eve_user->token;
+                    $token->refresh_token = $eve_user->refreshToken;
+                    $token->expires_in = $eve_user->expiresIn;
+                    $token->save();
+                    /*
                     DB::table('EsiTokens')->insert([
                         'character_id' => $eve_user->getId(),
                         'access_token' => $eve_user->token,
-                        'refresh_token' => $eve_user->token,
+                        'refresh_token' => $eve_user->refreshToken,
                         'expires_in' => $eve_user->expiresIn,
                     ]);
+                    */
                 }
                 //After creating the token, we need to update the table for scopes
                 //First we look for all the scopes, then if need be add entries or delete entries from the database
