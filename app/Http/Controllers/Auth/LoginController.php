@@ -10,9 +10,9 @@ use Auth;
 use DB;
 
 use App\User;
-use App\EsiScope;
-use App\EsiToken;
-use App\UserRole;
+use App\Models\EsiScope;
+use App\Models\EsiToken;
+use App\Models\UserRole;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -131,7 +131,8 @@ class LoginController extends Controller
                 }
                 //After creating the token, we need to update the table for scopes
                 //First we look for all the scopes, then if need be add entries or delete entries from the database
-                EsiScopes::where('character_id', $eve_user->id)->delete();
+                DB::table('EsiScopes')->where('character_id', $eve_user->id)->delete();
+                //EsiScopes::where('character_id', $eve_user->id)->delete();
                 $scopes = explode(' ', $eve_user->user['Scopes']);
                 foreach($scopes as $scope) {
                     DB::table('EsiScopes')->insert([
