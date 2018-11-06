@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -46,7 +48,15 @@ class User extends Authenticatable
     //Used in middleware to make sure a user is able to access many of the pages
     public function hasRole($role)
     {
-        
+        $charId = User::where('character_id')->get();
+        $checks = DB::table('user_roles')->where('character_id', $charId)->get();
+        foreach($checks as $check) {
+            if($check['role'] == $role) {
+                return true;
+            }
+        }
+
+        return false;
         //return User::where('role', $role)->get();
     }
 
@@ -56,10 +66,6 @@ class User extends Authenticatable
 
     public function roles() {
         return $this->hasMany('App\Models\UserRole');
-    }
-
-    public function esiscopes() {
-        return $this->hasMany('App\Models\EsiScope');
     }
 
     public function esitoken() {

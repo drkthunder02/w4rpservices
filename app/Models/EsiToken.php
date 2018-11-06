@@ -26,4 +26,8 @@ class EsiToken extends Model
         'refresh_token',
         'expires_in',
     ];
+
+    public function esiscopes() {
+        return $this->hasMany('App\Models\EsiScope');
+    }
 }
