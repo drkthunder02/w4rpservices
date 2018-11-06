@@ -100,7 +100,7 @@ class LoginController extends Controller
             //if a refresh token is present, then we are doing a scope callback to update scopes for an access token
             if($eve_user->refreshToken !== null) {
                 //Check if the owner hash has changed to call the user type if it needs to be updated
-                if(OwnerHasChanged($authUser->owner_hash, $eve_user->owner_hash)) {
+                if($this->OwnerHasChanged($authUser->owner_hash, $eve_user->owner_hash)) {
                     $role = $this->GetRole(null, $eve_user->id);
                     //Update the user information never the less.
                     DB::table('users')->where('character_id', $eve_user->id)->update([
