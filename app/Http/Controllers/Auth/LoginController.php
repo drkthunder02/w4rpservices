@@ -132,6 +132,7 @@ class LoginController extends Controller
                 //After creating the token, we need to update the table for scopes
                 //First we look for all the scopes, then if need be add entries or delete entries from the database
                 DB::table('UserEsiScopes')->where('character_id', $eve_user->id)->delete();
+                dd($eve_user->user['Scopes']);
                 //EsiScopes::where('character_id', $eve_user->id)->delete();
                 $scopes = explode(' ', $eve_user->user['Scopes']);
                 foreach($scopes as $scope) {
