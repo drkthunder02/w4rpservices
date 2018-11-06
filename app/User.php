@@ -53,14 +53,14 @@ class User extends Authenticatable
     }
 
     public function roles() {
-        return $this->hasMany('App\UserRole');
+        return $this->hasMany('App\Models\UserRole');
     }
 
     public function esiscopes() {
-        return $this->hasMany('App\EsiScope');
+        return $this->hasMany('App\Models\EsiScope');
     }
 
     public function esitoken() {
-        return $this->hasOne('App\EsiToken');
+        return $this->hasOne('App\Models\EsiToken');
     }
 }
