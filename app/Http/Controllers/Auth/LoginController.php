@@ -192,7 +192,7 @@ class LoginController extends Controller
      */
     private function SetRole($role, $charId) {
         //Insert the role into the database
-        $roles = new App\Models\UserRole;
+        $roles = new \App\Models\UserRole;
         $roles->character_id = $charId;
         $roles->role = $role;
         $roles->save();
