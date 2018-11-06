@@ -78,7 +78,6 @@ class LoginController extends Controller
      */
     public function handleProviderCallback() {
         $ssoUser = Socialite::driver('eveonline')->user();
-        dd($ssoUser);
         $user = $this->createOrGetUser($ssoUser);
 
         auth()->login($user, true);
