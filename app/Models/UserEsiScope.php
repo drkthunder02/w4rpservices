@@ -4,17 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EsiScope extends Model
+class UserEsiScope extends Model
 {
     // Table Name
     protected $table = 'UserEsiScopes';
 
     // Timestamps
     public $timestamps = true;
-
-    public function user() {
-        return $this->belongsTo('App\User', 'character_id', 'character_id');
-    }
 
     /**
      *  The attributes that are mass assignable
@@ -25,4 +21,8 @@ class EsiScope extends Model
         'character_id',
         'scope',
     ];
+
+    public function user() {
+        return $this->belongsTo('App\User', 'character_id', 'character_id');
+    }
 }
