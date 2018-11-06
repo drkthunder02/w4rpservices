@@ -114,7 +114,7 @@ class LoginController extends Controller
                 $token = EsiToken::where('character_id', $eve_user->id)->first();
                 if($token) {
                     //Update the ESI Token
-                    DB::table('UserEsiTokens')->where('character_id', $eve_user->id)->update([
+                    DB::table('EsiTokens')->where('character_id', $eve_user->id)->update([
                         'character_id' => $eve_user->getId(),
                         'access_token' => $eve_user->token,
                         'refresh_token' => $eve_user->token,
@@ -122,7 +122,7 @@ class LoginController extends Controller
                     ]);
                 } else {
                     //Save the ESI Token in the database
-                    DB::table('UserEsiTokens')->insert([
+                    DB::table('EsiTokens')->insert([
                         'character_id' => $eve_user->getId(),
                         'access_token' => $eve_user->token,
                         'refresh_token' => $eve_user->token,
@@ -163,6 +163,7 @@ class LoginController extends Controller
             } else {
                 $role = 'None';
             }
+
             //Create a user account
             return User::create([
                 'name' => $eve_user->getName(),
