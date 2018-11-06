@@ -77,7 +77,7 @@ class LoginController extends Controller
      * Redirect to the dashboard if logging in successfully. 
      */
     public function handleProviderCallback() {
-        
+        dd(Socialite::driver('eveonline'));
         $ssoUser = Socialite::driver('eveonline')->user();
         $user = $this->createOrGetUser($ssoUser);
 
@@ -286,8 +286,9 @@ class LoginController extends Controller
                                                               9900237, 
                                                               99001657, 
                                                               99006069, 
-                                                              99001099, 
-                                                              99003838))) {
+                                                              99001099,     //The Watchmen.
+                                                              99003838))    //Requiem Eternal
+                                                              ) {
             return 'Legacy';
         } else {
             return 'Guest';
