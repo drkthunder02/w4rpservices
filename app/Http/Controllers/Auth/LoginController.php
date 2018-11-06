@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use App\Models\EsiScope;
-use App\Models\EsiToken;
-use App\Models\UserRole;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Socialite;
 use Auth;
 use DB;
+
+use App\User;
+use App\Models\EsiScope;
+use App\Models\EsiToken;
+use App\Models\UserRole;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -146,7 +146,7 @@ class LoginController extends Controller
                 foreach($scopes as $scope) {
                     $data = new App\Models\EsiScope;
                     $data->character_id = $eve_user->id;
-                    $data->scopoe = $scope;
+                    $data->scope = $scope;
                     $data->save();
                     /*
                     DB::table('EsiScopes')->insert([
