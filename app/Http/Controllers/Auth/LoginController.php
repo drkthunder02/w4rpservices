@@ -99,19 +99,29 @@ class LoginController extends Controller
         if($authUser) {
             //if a refresh token is present, then we are doing a scope callback to update scopes for an access token
             if($eve_user->refreshToken !== null) {
-                //Update the user information never the less.
-                DB::table('users')->where('character_id', $eve_user->id)->update([
-                    'name' => $eve_user->getName(),
-                    'email' => null,
-                    'avatar' => $eve_user->avatar,
-                    'owner_hash' => $eve_user->owner_hash,
-                    'character_id' => $eve_user->getId(),
-                    //'inserted_at' => time(),
-                    //'expires_in' => $eve_user->expiresIn,
-                    //'access_token' => $eve_user->token,
-                    //'refresh_token' => $eve_user->refreshToken,
-                    //'scopes' => $eve_user->user['Scopes'],
-                ]);
+                //Check if the owner hash has changed to call the user type if it needs to be updated
+                if(OwnerHasChanged($authUser->owner_hash, $eve_user->owner_hash)) {
+                    $role = $this->GetRole(null, $eve_user->id);
+                    //Update the user information never the less.
+                    DB::table('users')->where('character_id', $eve_user->id)->update([
+                        'name' => $eve_user->getName(),
+                        'email' => null,
+                        'avatar' => $eve_user->avatar,
+                        'owner_hash' => $eve_user->owner_hash,
+                        'character_id' => $eve_user->getId(),
+                        'role' => $role,
+                    ]);
+                } else {
+                    //Update the user information never the less.
+                    DB::table('users')->where('character_id', $eve_user->id)->update([
+                        'name' => $eve_user->getName(),
+                        'email' => null,
+                        'avatar' => $eve_user->avatar,
+                        'owner_hash' => $eve_user->owner_hash,
+                        'character_id' => $eve_user->getId(),
+                    ]);
+                }
+                
                 //See if we have an access token for the user.
                 //If we have a token update the token, if not create an entry into the database
                 $token = EsiToken::where('character_id', $eve_user->id)->first();
@@ -132,17 +142,11 @@ class LoginController extends Controller
                     $token->expires_in = $eve_user->expiresIn;
                     $token->save();
                 }
+
                 //After creating the token, we need to update the table for scopes
                 //First we look for all the scopes, then if need be add entries or delete entries from the database
-                DB::table('EsiScopes')->where('character_id', $eve_user->id)->delete();
-                //EsiScopes::where('character_id', $eve_user->id)->delete();
-                $scopes = explode(' ', $eve_user->user['Scopes']);
-                foreach($scopes as $scope) {
-                    $data = new \App\Models\EsiScope;
-                    $data->character_id = $eve_user->id;
-                    $data->scope = $scope;
-                    $data->save();
-                }
+                $this->SetScopes($eve_user->user['Scopes'], $eve_user->id);
+
             } else {
                 //If the user is already in the database, but no refresh token was present in the callback, then just update the user
                 DB::table('users')->where('character_id', $eve_user->id)->update([
@@ -156,17 +160,8 @@ class LoginController extends Controller
             //Return the user to the calling auth function
             return $authUser;
         } else {
-            //Get what type of account the user should have
-            $accountType = $this->getAccountType(null, $eve_user->getId());
-            if($accountType == 'Guest') {
-                $role = 'Guest';
-            } else if($accountType == 'Legacy'){
-                $role = 'User';
-            } else if($accountType == 'W4RP') {
-                $role = 'User';
-            } else {
-                $role = 'None';
-            }
+            //Get the role for the character to be stored in the database
+            $role = $this->GetRole();
 
             //Create a user account
             return User::create([
@@ -181,6 +176,59 @@ class LoginController extends Controller
                 'role' => $role,
             ]);
         }
+    }
+
+    /**
+     * Set the user scopes in the database
+     * 
+     * @param scopes
+     * @param charId
+     */
+    private function SetScopes($scopes, $charId) {
+        DB::table('EsiScopes')->where('character_id', $charId)->delete();
+        //EsiScopes::where('character_id', $eve_user->id)->delete();
+        $scopes = explode(' ', $scopes);
+        foreach($scopes as $scope) {
+            $data = new \App\Models\EsiScope;
+            $data->character_id = $charId;
+            $data->scope = $scope;
+            $data->save();
+        }
+    }
+
+    /**
+     * Get the current owner hash, and compare it with the new owner hash
+     * 
+     * @param hash
+     * @param charId
+     */
+    private function OwnerHasChanged($hash, $newHash) {
+        if($hash === $newHash) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Get the account type and returns it
+     * 
+     * @param refreshToken
+     * @param character_id
+     */
+    private function GetRole($refreshToken, $charId) {
+        $accountType = $this->getAccountType($refreshToken, $charId);
+        if($accountType == 'Guest') {
+            $role = 'Guest';
+        } else if($accountType == 'Legacy'){
+            $role = 'User';
+        } else if($accountType == 'W4RP') {
+            $role = 'User';
+        } else {
+            $role = 'None';
+        }
+
+        return $role;
     }
     
     /**
