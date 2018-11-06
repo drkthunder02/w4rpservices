@@ -129,14 +129,6 @@ class LoginController extends Controller
                     $token->refresh_token = $eve_user->refreshToken;
                     $token->expires_in = $eve_user->expiresIn;
                     $token->save();
-                    /*
-                    DB::table('EsiTokens')->insert([
-                        'character_id' => $eve_user->getId(),
-                        'access_token' => $eve_user->token,
-                        'refresh_token' => $eve_user->refreshToken,
-                        'expires_in' => $eve_user->expiresIn,
-                    ]);
-                    */
                 }
                 //After creating the token, we need to update the table for scopes
                 //First we look for all the scopes, then if need be add entries or delete entries from the database
@@ -144,16 +136,10 @@ class LoginController extends Controller
                 //EsiScopes::where('character_id', $eve_user->id)->delete();
                 $scopes = explode(' ', $eve_user->user['Scopes']);
                 foreach($scopes as $scope) {
-                    $data = new \App\Models\EsiScope;
+                    $data = new App\Models\EsiScope;
                     $data->character_id = $eve_user->id;
                     $data->scope = $scope;
                     $data->save();
-                    /*
-                    DB::table('EsiScopes')->insert([
-                        'character_id' => $eve_user->id,
-                        'scope' => $scope,
-                    ]);
-                    */
                 }
             } else {
                 DB::table('users')->where('character_id', $eve_user->id)->update([
