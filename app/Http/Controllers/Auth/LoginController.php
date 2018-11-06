@@ -276,19 +276,23 @@ class LoginController extends Controller
             'corporation_id' => $character_info->corporation_id,
         ]);
         //Send back the appropriate group
-        if($corp_info->alliance_id == '99004116') {
-            return 'W4RP';
-        } else if(in_array($alliance_info->alliance_id, array(99006297, 
-                                                              498125261, 
-                                                              99003214, 
-                                                              99004136, 
-                                                              9900237, 
-                                                              99001657, 
-                                                              99006069, 
-                                                              99001099,     //The Watchmen.
-                                                              99003838))    //Requiem Eternal
-                                                              ) {
-            return 'Legacy';
+        if(isset($corp_info->alliance_id)) {
+            if($corp_info->alliance_id == '99004116') {
+                return 'W4RP';
+            } else if(in_array($alliance_info->alliance_id, array(99006297, 
+                                                                498125261, 
+                                                                99003214, 
+                                                                99004136, 
+                                                                9900237, 
+                                                                99001657, 
+                                                                99006069, 
+                                                                99001099,     //The Watchmen.
+                                                                99003838))    //Requiem Eternal
+                                                                ) {
+                return 'Legacy';
+            } else {
+                return 'Guest';
+            }
         } else {
             return 'Guest';
         }
