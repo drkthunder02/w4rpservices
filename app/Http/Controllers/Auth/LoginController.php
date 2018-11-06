@@ -165,7 +165,7 @@ class LoginController extends Controller
             return $authUser;
         } else {
             //Get the role for the character to be stored in the database
-            $role = $this->GetRole();
+            $role = $this->GetRole(null, $eve_user->id);
             //Set the role for the user
             $this->SetRole($role, $eve_user->id);
 
