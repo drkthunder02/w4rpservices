@@ -95,25 +95,27 @@ class LoginController extends Controller
     private function createOrGetUser($eve_user) {
         //Search for user in the database
         $authUser = User::where('character_id', $eve_user->id)->first();
+        //If the user is found, do more checks to see what type of login we are doing
         if($authUser) {
+            //if a refresh token is present, then we are doing a scope callback to update scopes for an access token
             if($eve_user->refreshToken !== null) {
+                //Update the user information never the less.
                 DB::table('users')->where('character_id', $eve_user->id)->update([
                     'name' => $eve_user->getName(),
                     'email' => null,
                     'avatar' => $eve_user->avatar,
                     'owner_hash' => $eve_user->owner_hash,
                     'character_id' => $eve_user->getId(),
-                    'inserted_at' => time(),
-                    'expires_in' => $eve_user->expiresIn,
-                    'access_token' => $eve_user->token,
-                    'refresh_token' => $eve_user->refreshToken,
-                    'scopes' => $eve_user->user['Scopes'],
+                    //'inserted_at' => time(),
+                    //'expires_in' => $eve_user->expiresIn,
+                    //'access_token' => $eve_user->token,
+                    //'refresh_token' => $eve_user->refreshToken,
+                    //'scopes' => $eve_user->user['Scopes'],
                 ]);
                 //See if we have an access token for the user.
                 //If we have a token update the token, if not create an entry into the database
                 $token = EsiToken::where('character_id', $eve_user->id)->first();
                 if($token) {
-
                     //Update the ESI Token
                     DB::table('EsiTokens')->where('character_id', $eve_user->id)->update([
                         'character_id' => $eve_user->getId(),
@@ -121,7 +123,7 @@ class LoginController extends Controller
                         'refresh_token' => $eve_user->refreshToken,
                         'expires_in' => $eve_user->expiresIn,
                     ]);
-                } else {
+                } else {  //If a token entry is not found, then we create a new token entry into the database
                     //Save the ESI Token in the database
                     $token = new App\Models\EsiToken;
                     $token->character_id  = $eve_user->id;
@@ -142,6 +144,7 @@ class LoginController extends Controller
                     $data->save();
                 }
             } else {
+                //If the user is already in the database, but no refresh token was present in the callback, then just update the user
                 DB::table('users')->where('character_id', $eve_user->id)->update([
                     'name' => $eve_user->getName(),
                     'email' => null,
@@ -150,7 +153,7 @@ class LoginController extends Controller
                     'character_id' => $eve_user->getId(),
                 ]);
             }
-
+            //Return the user to the calling auth function
             return $authUser;
         } else {
             //Get what type of account the user should have
