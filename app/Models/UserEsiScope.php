@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserEsiScope extends Model
+class EsiScope extends Model
 {
     // Table Name
-    protected $table = 'UserEsiScopes';
+    protected $table = 'EsiScopes';
 
     // Timestamps
     public $timestamps = true;
