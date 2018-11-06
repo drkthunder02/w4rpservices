@@ -28,6 +28,6 @@ class EsiToken extends Model
     ];
 
     public function esiscopes() {
-        return $this->hasMany('App\Models\EsiScope');
+        return $this->hasMany('App\Models\EsiScope', 'character_id', 'character_id');
     }
 }

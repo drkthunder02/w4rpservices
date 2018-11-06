@@ -66,10 +66,10 @@ class User extends Authenticatable
     }
 
     public function roles() {
-        return $this->hasMany('App\Models\UserRole');
+        return $this->hasMany('App\Models\UserRole', 'character_id', 'character_id');
     }
 
     public function esitoken() {
-        return $this->hasOne('App\Models\EsiToken');
+        return $this->hasOne('App\Models\EsiToken', 'character_id', 'character_id');
     }
 }
