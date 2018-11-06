@@ -152,7 +152,7 @@ return [
          */
         Collective\Html\HtmlServiceProvider::class,
         //nullx27\Socialite\EveOnline\Providers\EveOnlineServiceProvider::class,
-        Laravel\Socialite\SocialiteServerProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
         /*
          * Application Service Providers...
