@@ -144,10 +144,16 @@ class LoginController extends Controller
                 //EsiScopes::where('character_id', $eve_user->id)->delete();
                 $scopes = explode(' ', $eve_user->user['Scopes']);
                 foreach($scopes as $scope) {
+                    $data = new App\Models\EsiScope;
+                    $data->character_id = $eve_user->id;
+                    $data->scopoe = $scope;
+                    $data->save();
+                    /*
                     DB::table('UserEsiScopes')->insert([
                         'character_id' => $eve_user->id,
                         'scope' => $scope,
                     ]);
+                    */
                 }
             } else {
                 DB::table('users')->where('character_id', $eve_user->id)->update([
