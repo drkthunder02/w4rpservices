@@ -17,7 +17,7 @@ class CreateEsiScopes extends Migration
             Schema::create('EsiScopes', function(Blueprint $table) {
                 $table->increments('id');
                 $table->integer('character_id');
-                $table->foreign('character_id')->references('character_id')->on('EsiToken');
+                $table->foreign('character_id')->references('character_id')->on('EsiTokens');
                 $table->string('scope');
                 $table->timestamps();
             });
