@@ -101,7 +101,11 @@ class LoginController extends Controller
             if($eve_user->refreshToken !== null) {
                 //Check if the owner hash has changed to call the user type if it needs to be updated
                 if($this->OwnerHasChanged($authUser->owner_hash, $eve_user->owner_hash)) {
+                    //Get the right role for the user
                     $role = $this->GetRole(null, $eve_user->id);
+                    //Set the role for the user
+                    $this->SetRole($role, $eve_user->id);
+
                     //Update the user information never the less.
                     DB::table('users')->where('character_id', $eve_user->id)->update([
                         'name' => $eve_user->getName(),
@@ -162,6 +166,8 @@ class LoginController extends Controller
         } else {
             //Get the role for the character to be stored in the database
             $role = $this->GetRole();
+            //Set the role for the user
+            $this->SetRole($role, $eve_user->id);
 
             //Create a user account
             return User::create([
@@ -176,6 +182,20 @@ class LoginController extends Controller
                 'role' => $role,
             ]);
         }
+    }
+
+    /**
+     * Set the user role in the database
+     * 
+     * @param role
+     * @param charId
+     */
+    private function SetRole($role, $charId) {
+        //Insert the role into the database
+        $roles = new App\Models\UserRole;
+        $roles->character_id = $charId;
+        $roles->role = $role;
+        $roles->save();
     }
 
     /**

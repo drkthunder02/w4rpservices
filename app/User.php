@@ -43,8 +43,10 @@ class User extends Authenticatable
 
     protected $guarded = [];
 
+    //Used in middleware to make sure a user is able to access many of the pages
     public function hasRole($role)
     {
+        
         //return User::where('role', $role)->get();
     }
 
