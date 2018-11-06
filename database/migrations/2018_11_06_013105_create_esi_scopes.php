@@ -15,14 +15,12 @@ class CreateEsiScopes extends Migration
     {
         if(!Schema::hasTable('EsiScopes')) {
             Schema::create('EsiScopes', function(Blueprint $table) {
-                $table->integer('id')->increments();
+                $table->increments('id');
                 $table->integer('character_id');
                 $table->string('scope');
                 $table->timestamps();
             });
         }
-
-        Schema::dropIfExists('UserEsiScopes');
     }
 
     /**
