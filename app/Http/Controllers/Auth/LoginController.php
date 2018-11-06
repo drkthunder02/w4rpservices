@@ -178,7 +178,7 @@ class LoginController extends Controller
                 'character_id'=> $eve_user->getId(),
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
-                'user_type' => $accountType,
+                'user_type' => $this->GetAccountType(null, $eve_user->id),
                 'role' => $role,
             ]);
         }
@@ -237,7 +237,7 @@ class LoginController extends Controller
      * @param character_id
      */
     private function GetRole($refreshToken, $charId) {
-        $accountType = $this->getAccountType($refreshToken, $charId);
+        $accountType = $this->GetAccountType($refreshToken, $charId);
         if($accountType == 'Guest') {
             $role = 'Guest';
         } else if($accountType == 'Legacy'){
@@ -259,7 +259,7 @@ class LoginController extends Controller
      * 
      * @return text
      */
-    private function getAccountType($refreshToken, $charId) {
+    private function GetAccountType($refreshToken, $charId) {
         //Set caching to null
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
