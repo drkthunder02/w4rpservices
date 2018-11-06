@@ -48,8 +48,9 @@ class User extends Authenticatable
     //Used in middleware to make sure a user is able to access many of the pages
     public function hasRole($role)
     {
-        $charId = User::where('character_id')->get();
-        $checks = DB::table('user_roles')->where('character_id', $charId)->get();
+        $checks = User::roles()->get();
+        //$charId = User::where('character_id')->get();
+        //$checks = DB::table('user_roles')->where('character_id', $charId)->get();
         foreach($checks as $check) {
             if($check['role'] == $role) {
                 return true;
