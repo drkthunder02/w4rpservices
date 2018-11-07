@@ -107,21 +107,14 @@ class LoginController extends Controller
 
                     //Update the user information never the less.
                     DB::table('users')->where('character_id', $eve_user->id)->update([
-                        'name' => $eve_user->getName(),
-                        'email' => null,
                         'avatar' => $eve_user->avatar,
                         'owner_hash' => $eve_user->owner_hash,
-                        'character_id' => $eve_user->getId(),
                         'role' => $role,
                     ]);
                 } else {
                     //Update the user information never the less.
                     DB::table('users')->where('character_id', $eve_user->id)->update([
-                        'name' => $eve_user->getName(),
-                        'email' => null,
                         'avatar' => $eve_user->avatar,
-                        'owner_hash' => $eve_user->owner_hash,
-                        'character_id' => $eve_user->getId(),
                     ]);
                 }
                 
@@ -153,11 +146,7 @@ class LoginController extends Controller
             } else {
                 //If the user is already in the database, but no refresh token was present in the callback, then just update the user
                 DB::table('users')->where('character_id', $eve_user->id)->update([
-                    'name' => $eve_user->getName(),
-                    'email' => null,
                     'avatar' => $eve_user->avatar,
-                    'owner_hash' => $eve_user->owner_hash,
-                    'character_id' => $eve_user->getId(),
                 ]);
             }
             //Return the user to the calling auth function
@@ -204,8 +193,8 @@ class LoginController extends Controller
      * @param charId
      */
     private function SetScopes($scopes, $charId) {
+        //Delete the current scopes, so we can add new scopes into the database
         DB::table('EsiScopes')->where('character_id', $charId)->delete();
-        //EsiScopes::where('character_id', $eve_user->id)->delete();
         $scopes = explode(' ', $scopes);
         foreach($scopes as $scope) {
             $data = new \App\Models\EsiScope;

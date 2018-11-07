@@ -13,7 +13,7 @@ class Fleet {
      * Create a standing fleet from a registered fleet.
      */
     public function createStandingFleet() {
-
+        
     }
 
     /**
