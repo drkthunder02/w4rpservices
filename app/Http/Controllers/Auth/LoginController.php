@@ -279,7 +279,7 @@ class LoginController extends Controller
         if(isset($corp_info->alliance_id)) {
             if($corp_info->alliance_id == '99004116') {
                 return 'W4RP';
-            } else if(in_array($alliance_info->alliance_id, array(99006297, 
+            } else if(in_array($corp_info->alliance_id, array(99006297, 
                                                                 498125261, 
                                                                 99003214, 
                                                                 99004136, 
