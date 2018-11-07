@@ -74,7 +74,6 @@ class MoonsController extends Controller
             'region' => 'required',
             'system' => 'required',
             'structure' => 'required',
-
         ]);
 
         // Add new moon
@@ -126,5 +125,37 @@ class MoonsController extends Controller
             ]);
 
         return redirect('/moons/display')->with('success', 'Moon Updated');
+    }
+
+    public function displayTotalWorthForm() {
+        return view('moons.formTotalWorth');
+    }
+
+    public function displayTotalWorth(Request $request) {
+        $firstOre = $request->firstOre;
+        $firstQuantity = $request->firstQuantity;
+        $secondOre = $request->secondOre;
+        $secondQuantity = $request->secondQuantity;
+        $thirdOre = $request->thirdOre;
+        $thirdQuantity = $request->thirdQuantity;
+        $fourthOre = $request->fourthOre;
+        $fourthQuantity = $request->fourthQuantity;
+
+        //Setup calls to the MoonCalc class
+        $moonCalc = new MoonCalc();
+        //Update the prices for the moon
+        $moonCalc->FetchNewPrices();
+
+        $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity,
+                                                             $secondOre, $secondQuantity,
+                                                             $thirdOre, $thirdQuantity,
+                                                             $fourthOre, $fourthQuantity);
+
+        $totalWorth = $moonCalc->SpatialMoonsTotalWorth($firstOre, $firstQuantity,
+                                                        $secondOre, $secondQuantity,
+                                                        $thirdOre, $thirdQuantity,
+                                                        $fourthOre, $fourthQuantity);
+
+        return view('moons.displayTotalWorth')->with(['totalWorth' => $totalWorth, 'totalGoo' => $totalGoo]);
     }
 }
