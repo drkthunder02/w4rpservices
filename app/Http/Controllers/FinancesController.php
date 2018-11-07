@@ -21,14 +21,6 @@ class FinancesController extends Controller
         $this->middleware('role:Admin');
     }
 
-    public function redirectToProvider() {
-        if(!Auth::check()) {
-            return redirect()->to('/');
-        }
-
-        return Socialite::driver('eveonline')->setScopes(['publicData', 'esi-wallet.read_corporation_wallets.v1'])->redirect();
-    }
-
     public function displayWallet() {
         $esi = new \App\Library\Finances();
 

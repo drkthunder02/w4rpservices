@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('/callback', 'Auth\LoginController@handleProviderCallback')->name('callback');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
 //Dashboard Controller Display pages
 Route::get('/dashboard', 'DashboardController@index');
 
@@ -26,13 +27,10 @@ Route::get('/dashboard', 'DashboardController@index');
 Route::get('/moons/display', 'MoonsController@displayMoons');
 Route::get('/moons/addmoon', 'MoonsController@addMoon');
 Route::get('/moons/updatemoon', 'MoonsController@updateMoon');
-//Route::get('/moons/worth', 'MoonsController@displayWorth');
-//Route::get('/moons/mined', 'MoonsController@displayMined');
+
 //Moon Controller POST requests
 Route::post('storeMoon', 'MoonsController@storeMoon');
 Route::post('storeUpdateMoon', 'MoonsController@storeUpdateMoon');
-//Route::post('worth', 'MoonsController@displayMoonWorth');
-//Route::post('mined', 'MoonsController@displayMoonMined');
 
 //Wiki Controller display pages
 Route::get('/wiki/register', 'WikiController@displayRegister');
@@ -41,6 +39,14 @@ Route::get('/wiki/changepassword', 'WikiController@displayChangePassword');
 Route::post('storeRegister', 'WikiController@storeRegister');
 Route::post('changePassword', 'WikiController@changePassword');
 
-//Finance Controller display pages
-Route::get('/finances/login', 'FinancesController@redirectToProvider');
-Route::get('/finances/display/wallet', 'FinancesController@displayWallet');
+//Scopes Controller display pages
+Route::get('/scopes/select', 'EsiScopeController@displayScopes');
+Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
+
+//Fleet Controller display pages
+Route::get('/fleets/display');
+Route::get('/fleets/register', 'FleetsController@displayRegisterFleet');
+Route::get('/fleets/standing', 'FleetsController@displayStandingFleet');
+Route::get('/fleets/addpilot/{id}', 'FleetsController@addPilot');
+Route::get('/fleets/{id}/createwing', 'FleetsController@createWing');
+Route::get('/fleets/{id}/createsquad', 'FleetsController@createSquad');

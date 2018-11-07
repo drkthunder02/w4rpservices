@@ -7,8 +7,8 @@
 
  namespace App\Library;
 
- use Illuminate\Http\Request;
- use Session;
+use Illuminate\Http\Request;
+use Session;
 use DB;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -25,7 +25,8 @@ class Finances {
 
     private $esi;
 
-    public function __construct() {
+    public function __construct($charId = null) {
+        
         $user = DB::table('users')->where('name', 'Minerva Arbosa')->first();
         
         $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
@@ -35,8 +36,6 @@ class Finances {
         ]);
 
         $this->esi = new \Seat\Eseye\Eseye($authentication);
-
-        
     }
 
     public function GetMarketGroups() {
