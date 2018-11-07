@@ -295,7 +295,7 @@ class LoginController extends Controller
                 return 'Guest';
             }
         } else {
-            return 'Guest';
+            return 'None';
         }
     }
 }
