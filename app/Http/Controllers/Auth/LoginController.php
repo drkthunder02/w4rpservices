@@ -279,16 +279,17 @@ class LoginController extends Controller
         if(isset($corp_info->alliance_id)) {
             if($corp_info->alliance_id == '99004116') {
                 return 'W4RP';
-            } else if(in_array($corp_info->alliance_id, array(99006297, 
-                                                                498125261, 
-                                                                99003214, 
-                                                                99004136, 
-                                                                9900237, 
-                                                                99001657, 
-                                                                99006069, 
-                                                                99001099,     //The Watchmen.
-                                                                99003838))    //Requiem Eternal
-                                                                ) {
+            } else if(in_array($corp_info->alliance_id, array(99006297,   //Drone Walkers
+                                                              498125261,  //Test Alliance Please Ignore
+                                                              99003214,   //Brave Collective
+                                                              99004136,   //Dangerous Voltage
+                                                              99002367,   //Evictus    
+                                                              99001657,   //Rezada Regnum
+                                                              99006069,   //Tactical Supremacy
+                                                              99001099,   //The Watchmen.
+                                                              99006297,   //Drone Walkers
+                                                              99003838))  //Requiem Eternal
+                                                              ) {
                 return 'Legacy';
             } else {
                 return 'Guest';
