@@ -3,8 +3,8 @@
 <div class="container">
     <h2>Total Worth of the Moon / Month</h2>
     <div class="jumbotron">
-        Total Moon Goo + Ore Worth: <?php echo $totalWorth; ?> <br>
-        Total Moon Goo Worth: <?php echo $totalGoo; ?> <br>
+        Total Moon Goo + Ore Worth: <?php echo $totalWorth; ?> ISK<br>
+        Total Moon Goo Worth: <?php echo $totalGoo; ?> ISK<br>
     </div>
 </div>
 @endsection
