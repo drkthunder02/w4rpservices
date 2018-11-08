@@ -99,7 +99,7 @@ class MoonCalc {
             $fourthPerc = $fourthQuan;
         }
         if($firstOre != "None") {
-            if($this->IsRMoon($firstOre)) {
+            if($this->IsRMoonGoo($firstOre)) {
                 $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
             } else {
                 $firstTotal = 0.00;
@@ -108,7 +108,7 @@ class MoonCalc {
             $firstTotal = 0.00;
         }
         if($secondOre != "None") {
-            if($this->IsRMoon($secondOre)) {
+            if($this->IsRMoonGoo($secondOre)) {
                 $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
             } else {
                 $secondTotal = 0.00;
@@ -117,7 +117,7 @@ class MoonCalc {
             $secondTotal = 0.00;
         }
         if($thirdOre != "None") {
-            if($this->IsRMoon($thirdOre)) {
+            if($this->IsRMoonGoo($thirdOre)) {
                 $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
             } else {
                 $thirdTotal = 0.00;
@@ -126,7 +126,7 @@ class MoonCalc {
             $thirdTotal = 0.00;
         }
         if($fourthOre != "None") {
-            if($this->IsRMoon($fourthOre)) {
+            if($this->IsRMoonGoo($fourthOre)) {
                 $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
             } else {
                 $fourthTotal = 0.00;
@@ -462,6 +462,41 @@ class MoonCalc {
 
     private function ConvertToPercentage($quantity) {
         return $quantity / 100.00;
+    }
+
+    private function IsRMoonGoo($ore) {
+        $ores = [
+            'Zeolites' => 'Gas',
+            'Sylvite' => 'Gas',
+            'Bitumens' => 'Gas',
+            'Coesite' => 'Gas',
+            'Cobaltite' => 'R8',
+            'Euxenite' => 'R8',
+            'Titanite' => 'R8',
+            'Scheelite' => 'R8',
+            'Otavite' => 'R16',
+            'Sperrylite' => 'R16',
+            'Vanadinite' => 'R16',
+            'Chromite' => 'R16',
+            'Carnotite' => 'R32',
+            'Zircon' => 'R32',
+            'Pollucite' => 'R32',
+            'Cinnabar' => 'R32',
+            'Xenotime' => 'R64',
+            'Monazite' => 'R64',
+            'Loparite' => 'R64',
+            'Ytterbite' => 'R64',
+        ];
+
+        foreach($ores as $key => $value) {
+            
+            if(strtolower($key) == strtolower($ore)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     }
 
     private function IsRMoon($ore) {
