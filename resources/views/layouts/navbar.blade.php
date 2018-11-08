@@ -28,7 +28,7 @@
         <ul class="navbar-nav m1-auto">
             @can('isAdmin')
             <li class="nav-item">
-                <a class="nav-link" href="/admin">Admin</a>
+                <a class="nav-link" href="/admin/dashboard">Admin</a>
             </li>
             @endcan
             <li class="nav-item">
