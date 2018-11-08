@@ -19,7 +19,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moons</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
-                    <a class="dropdown-item" href="/moons/display/Worth">Moon Worth</a>
+                    <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     @can('isAdmin')
                     <a class="dropdown-item" href="/moons/addmoon">Add Moon</a>
                     <a class="dropdown-item" href="/moons/updatemoon">Update Moon</a>
