@@ -1,6 +1,6 @@
 @extends('layouts.b4')
 @section('content')
-<div class="container">
+<div class="container col-md-12">
     <h2>Admin Dashboard</h2>
     <div class="col-md-6 card">
         <div class="card-header">
@@ -23,7 +23,7 @@
             {!! Form::close() !!}
         </div>
     </div>
-    <div class="col-md-6 cardheader">
+    <div class="col-md-6 card">
         <div class="card-header">
             Remove Role from User
         </div>
