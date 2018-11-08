@@ -497,7 +497,6 @@ class MoonCalc {
 
         return false;
     }
-    }
 
     private function IsRMoon($ore) {
         $ores = [
