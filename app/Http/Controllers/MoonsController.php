@@ -150,11 +150,13 @@ class MoonsController extends Controller
                                                              $secondOre, $secondQuantity,
                                                              $thirdOre, $thirdQuantity,
                                                              $fourthOre, $fourthQuantity);
+        $totalGoo = number_format($totalGoo, 2, ".", ",");
 
         $totalWorth = $moonCalc->SpatialMoonsTotalWorth($firstOre, $firstQuantity,
                                                         $secondOre, $secondQuantity,
                                                         $thirdOre, $thirdQuantity,
                                                         $fourthOre, $fourthQuantity);
+        $totalWorth = number_format($totalWorth, 2, ".", ",");
 
         return view('moons.displayTotalWorth')->with(['totalWorth' => $totalWorth, 'totalGoo' => $totalGoo]);
     }
