@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('roles:Admin');
+        $this->middleware('role:Admin');
     }
 
     public function displayDashboard() {
