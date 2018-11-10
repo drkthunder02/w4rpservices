@@ -167,7 +167,6 @@ class LoginController extends Controller
                 'expires_in' => $eve_user->expiresIn,
                 'access_token' => $eve_user->token,
                 'user_type' => $this->GetAccountType(null, $eve_user->id),
-                'role' => $role,
             ]);
         }
     }

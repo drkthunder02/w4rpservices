@@ -28,6 +28,7 @@ Route::get('/moons/display', 'MoonsController@displayMoons');
 Route::get('/moons/addmoon', 'MoonsController@addMoon');
 Route::get('/moons/updatemoon', 'MoonsController@updateMoon');
 Route::get('/moons/display/worth', 'MoonsController@displayTotalWorthForm');
+Route::get('/moons/admin/display', 'MoonsController@displayMoonsAdmin');
 //Moon Controller POST requests
 Route::post('storeMoon', 'MoonsController@storeMoon');
 Route::post('storeUpdateMoon', 'MoonsController@storeUpdateMoon');

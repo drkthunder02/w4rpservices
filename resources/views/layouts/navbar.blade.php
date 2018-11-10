@@ -9,8 +9,11 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moons</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
+                    @can('isUser')
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
+                    @endcan
                     @can('isAdmin')
+                    <a class="dropdown-item" href="/moons/admin/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/addmoon">Add Moon</a>
                     <a class="dropdown-item" href="/moons/updatemoon">Update Moon</a>
                     @endcan

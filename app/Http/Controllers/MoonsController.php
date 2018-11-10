@@ -19,9 +19,9 @@ class MoonsController extends Controller
     }
 
     /**
-     * Function to display the moons and pass data to the blade template
+     * Function to display the moons to admins
      */
-    public function displayMoons() {
+    public function displayMoonsAdmin() {
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
         //Update the prices for the moon
@@ -50,6 +50,53 @@ class MoonsController extends Controller
             $html .= '<td>' . $moon->FourthQuantity . '</td>';
             $html .= '<td>' . $price['alliance'] . '</td>';
             $html .= '<td>' . $price['outofalliance'] . '</td>';
+            $html .= '<td>' . $moon->RentalCorp . '</td>';
+            $html .= '<td>' . $rentalEnd . '</td>';
+            $html .= '</tr>';
+        }
+
+        return view('moons.adminmoon')->with('html', $html);
+    }
+
+    /**
+     * Function to display the moons and pass data to the blade template
+     */
+    public function displayMoons() {
+        //Get the user type from the user Auth class
+        $type = Auth::user()->user_type;
+        //Setup calls to the MoonCalc class
+        $moonCalc = new MoonCalc();
+        //Update the prices for the moon
+        $moonCalc->FetchNewPrices();
+        //get all of the moons from the database
+        $moons = DB::table('Moons')->orderBy('System', 'asc')->get();
+        //declare the html variable and set it to null
+        $html = '';
+        foreach($moons as $moon) {
+            //Setup formats as needed
+            $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
+            $rentalEnd = date('m/d/Y', $moon->RentalEnd);
+            $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
+                                                    $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+            //Add the data to the html string to be passed to the view
+            $html .= '<tr>';
+            $html .= '<td>' . $spm . '</td>';
+            $html .= '<td>' . $moon->StructureName . '</td>';
+            $html .= '<td>' . $moon->FirstOre . '</td>';
+            $html .= '<td>' . $moon->FirstQuantity . '</td>';
+            $html .= '<td>' . $moon->SecondOre . '</td>';
+            $html .= '<td>' . $moon->SecondQuantity . '</td>';
+            $html .= '<td>' . $moon->ThirdOre . '</td>';
+            $html .= '<td>' . $moon->ThirdQuantity . '</td>';
+            $html .= '<td>' . $moon->FourthOre . '</td>';
+            $html .= '<td>' . $moon->FourthQuantity . '</td>';
+            if($type == 'W4RP') {
+                $html .= '<td>' . $price['alliance'] . '</td>';
+            } else if ($type == 'Legacy') {
+                $html .= '<td>' . $price['outofalliance'] . '</td>';
+            } else {
+                $html .= '<td>N/A</td>';
+            }
             $html .= '<td>' . $moon->RentalCorp . '</td>';
             $html .= '<td>' . $rentalEnd . '</td>';
             $html .= '</tr>';
