@@ -131,7 +131,7 @@ class LoginController extends Controller
                     ]);
                 } else {  //If a token entry is not found, then we create a new token entry into the database
                     //Save the ESI Token in the database
-                    $token = new App\Models\EsiToken;
+                    $token = new EsiToken;
                     $token->character_id  = $eve_user->id;
                     $token->access_token = $eve_user->token;
                     $token->refresh_token = $eve_user->refreshToken;
