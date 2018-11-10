@@ -25,8 +25,7 @@ class RequireRole
             'Admin' => 3,
         ];
         $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-        //$stuff = $check[0]->role;
-        //dd($stuff);
+
         if($ranking[$check[0]->role] === $ranking[$role]) {
             $confirmed = true;
         }

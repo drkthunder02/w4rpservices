@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 use DB;
+use \App\Models\UserRole;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isAdmin', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check === 'Admin') {
+            if($check[0]->role == 'Admin') {
                 return true;
             } else {
                 return false;
@@ -40,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isUser', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check === 'User') {
+            if($check[0]->role == 'User') {
                 return true;
             } else {
                 return false;
@@ -49,7 +50,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isGuest', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check === 'Guest') {
+            if($check[0]->role == 'Guest') {
                 return true;
             } else {
                 return false;
@@ -58,7 +59,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isNone', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check === 'None') {
+            if($check[0]->role == 'None') {
                 return true;
             } else {
                 return false;
