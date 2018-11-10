@@ -24,11 +24,8 @@ class AdminController extends Controller
         //Get the character id from the username using the user table
         $character = DB::table('users')->where('name', $user)->first();
         //Delete the current roles from the database
-        DB::table('user_roles')->where(['character_id' => $character->character_id])->delete();
-        //Insert the new role into the database
-        DB::table('user_roles')->insert([
-            'character_id' => $character->character->id,
-            'role'=> $role,
+        DB::table('user_roles')->where(['character_id' => $character->character_id])->update([
+            'role' => $role,
         ]);
         //Return the view and the message of user updated
         return view('admin.dashboard')->with('success', 'User Updated.');
