@@ -100,6 +100,7 @@ class Fleet {
         $wings = $esi->invoke('get', '/fleets/{fleet_id}/wings/', [
             'fleet_id' => $this->fleet,
         ]);
+        
     }
 
     private function HaveEsiScope($charId, $scope) {
