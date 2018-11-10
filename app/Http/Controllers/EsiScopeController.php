@@ -26,15 +26,8 @@ class EsiScopeController extends Controller
 
     public function redirectToProvider(Request $request) {
         dd($request);
-        //Set the array to build it
-        $scopes = [];
-        $i = 0;
-        foreach($request as $req) {
-            $scopes[$i] = $req;
-            $i++;
-        }
 
-        return Socialite::driver('eveonline')->setScopes($scopes)->redirect();
+        return Socialite::driver('eveonline')->setScopes($request->scopes)->redirect();
     }
 
 }
