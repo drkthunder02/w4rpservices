@@ -25,8 +25,9 @@ class EsiScopeController extends Controller
     }
 
     public function redirectToProvider(Request $request) {
+        dd($request);
         //Set the array to build it
-        $scopes = array();
+        $scopes = [];
         $i = 0;
         foreach($request as $req) {
             $scopes[$i] = $req;
