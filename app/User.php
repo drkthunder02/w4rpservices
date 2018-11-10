@@ -5,8 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use DB;
-use Auth;
+
+
 
 class User extends Authenticatable
 {
@@ -48,20 +48,13 @@ class User extends Authenticatable
     //Used in middleware to make sure a user is able to access many of the pages
     public function hasRole($role)
     {
-        //Get the roles from the user_roles table
-        $check = DB::table('user_roles')->where(['character_id' => auth()->user()->character_id])->get();
-        dd($check['role']);
+        $check = User::roles()->get();
+        dd($check);
         if($check['role'] == $role) {
             return true;
+        } else {
+            return false;
         }
-        dd($checks);
-        foreach($checks as $check) {
-            if($check->role == $role) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public function getUserType() {
@@ -69,7 +62,7 @@ class User extends Authenticatable
     }
 
     public function roles() {
-        return $this->hasMany('App\Models\UserRole', 'character_id', 'character_id');
+        return $this->hasOne('App\Models\UserRole', 'character_id', 'character_id');
     }
 
     public function esitoken() {
