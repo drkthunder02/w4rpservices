@@ -7,7 +7,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use DB;
 use Auth;
-use App\Models\UserRole;
 
 class User extends Authenticatable
 {
@@ -51,7 +50,8 @@ class User extends Authenticatable
     {
         //Get the roles from the user_roles table
         $check = DB::table('user_roles')->where(['character_id' => auth()->user()->character_id])->get();
-        if($check->role == $role) {
+        dd($check['role']);
+        if($check['role'] == $role) {
             return true;
         }
         dd($checks);
