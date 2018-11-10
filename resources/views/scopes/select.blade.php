@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <h2>Select Scopes for ESI</h2>
-    {!! From::open(['action' => 'EsiScopeController@redirectToProvider', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'EsiScopeController@redirectToProvider', 'method' => 'POST']) !!}
         <div class="form-group col-md-6">
             {{ Form::label('scopes[]', 'Public Data') }}
             {{ Form::checkbox('scopes[]', 'publicData') }}
