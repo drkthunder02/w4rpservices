@@ -18,14 +18,14 @@ class RequireRole
     public function handle($request, Closure $next, $role)
     {
         $confirmed = false;
-        $ranking = array([
+        $ranking = [
             'None' => 0,
             'Guest' => 1,
             'User' => 2,
             'Admin' => 3,
-        ]);
+        ];
         $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get();
-        dd($check->role);
+        dd($check);
         if($ranking[$check->role] === $ranking[$role]) {
             $confirmed = true;
         }
