@@ -24,16 +24,11 @@ class RequireRole
             'Admin' => 3,
         ]);
         $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-        foreach($ranking as $rank => $value) {
-            if($role === $check['role']) {
-                $confirmed = true;
-                break;
-            } else {
-                if($rank[$check['role']] > $rank[$check['role']]) {
-                    $confirmed = true;
-                    break;
-                }
-            }
+        if($ranking[$check] === $ranking[$role]) {
+            $confirmed = true;
+        }
+        if($ranking[$check] >= $ranking[$role]) {
+            $confirmed = true;
         }
 
         abort_unless(auth()->check() && $confirmed, 403, "You don't have permissions to access this area!");
