@@ -19,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
+     * These gates will always choose the highest roles
      *
      * @return void
      */
@@ -45,27 +46,5 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('isNone', function($user) {
             return $user->hasRole('None');
         });
-
-        /*
-        $gate->define('isSuperAdmin', function($user) {
-            return $user->role == 'SuperAdmin';
-        });
-
-        $gate->define('isAdmin', function($user) {
-            return $user->role == 'Admin';
-        });
-
-        $gate->define('isUser', function($user) {
-            return $user->role == 'User';
-        });
-
-        $gate->define('isGuest', function($user) {
-            return $user->role == 'Guest';
-        });
-
-        $gate->define('isNone', function($user) {
-            return $user->role == 'None';
-        });
-        */
     }
 }

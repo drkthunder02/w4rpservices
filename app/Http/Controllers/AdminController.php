@@ -23,16 +23,15 @@ class AdminController extends Controller
         $role = $request->role;
         //Get the character id from the username using the user table
         $character = DB::table('users')->where('name', $user)->first();
-        $check = DB::table('user_roles')->where(['character_id' => $character->character_id, 'role' => $role])->get();
-        if($check === null) {
-            DB::table('user_roles')->insert([
-                'character_id' => $characer->character->id,
-                'role'=> $role,
-            ]);
-            return view('admin.dashboard')->with('success', 'User Updated.');
-        }
-
-        return view('admin.dashboard')->with('error', 'User already has the role.');
+        //Delete the current roles from the database
+        DB::table('user_roles')->where(['character_id' => $character->character_id])->delete();
+        //Insert the new role into the database
+        DB::table('user_roles')->insert([
+            'character_id' => $characer->character->id,
+            'role'=> $role,
+        ]);
+        //Return the view and the message of user updated
+        return view('admin.dashboard')->with('success', 'User Updated.');
     }
 
     public function removeRole(Request $request) {
