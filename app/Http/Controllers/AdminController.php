@@ -27,7 +27,7 @@ class AdminController extends Controller
         DB::table('user_roles')->where(['character_id' => $character->character_id])->delete();
         //Insert the new role into the database
         DB::table('user_roles')->insert([
-            'character_id' => $characer->character->id,
+            'character_id' => $character->character->id,
             'role'=> $role,
         ]);
         //Return the view and the message of user updated

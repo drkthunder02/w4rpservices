@@ -17,7 +17,6 @@
                         'Guest' => 'Guest',
                         'User' => 'User',
                         'Admin' => 'Admin',
-                        'SuperUser' => 'SuperUser',
                         ], 'None') }}
                 </div>
                 {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
