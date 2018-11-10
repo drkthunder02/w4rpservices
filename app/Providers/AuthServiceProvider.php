@@ -28,7 +28,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies($gate);
 
         $gate->define('isAdmin', function($user) {
-            return $user->hasRole('Admin');
+            $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check == 'Admin') {
+                return true;
+            }
+            //return $user->hasRole('Admin');
         });
 
         $gate->define('isUser', function($user) {
