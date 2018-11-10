@@ -48,7 +48,7 @@ class User extends Authenticatable
     //Used in middleware to make sure a user is able to access many of the pages
     public function hasRole($role)
     {
-        $check = User::roles()->get();
+        $check = User::role()->get();
         dd($check);
         if($check['role'] == $role) {
             return true;
@@ -61,8 +61,8 @@ class User extends Authenticatable
         return User::where('user_type')->get();
     }
 
-    public function roles() {
-        return $this->hasOne('App\Models\UserRole', 'character_id', 'character_id');
+    public function role() {
+        return $this->hasOne('App\Models\UserRole', 'character_id');
     }
 
     public function esitoken() {
