@@ -32,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isAdmin', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]->role == 'Admin') {
+            if($check[0]->role === 'Admin') {
                 return true;
             } else {
                 return false;
@@ -41,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isUser', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]->role == 'User') {
+            if($check[0]->role === 'User') {
                 return true;
             } else {
                 return false;
@@ -50,7 +50,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isGuest', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]->role == 'Guest') {
+            if($check[0]->role === 'Guest') {
                 return true;
             } else {
                 return false;
@@ -59,7 +59,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isNone', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]->role == 'None') {
+            if($check[0]->role === 'None') {
                 return true;
             } else {
                 return false;
