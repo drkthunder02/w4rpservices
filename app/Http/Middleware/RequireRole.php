@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use DB;
+use App\Models\UserRole;
 
 class RequireRole
 {
@@ -25,10 +26,10 @@ class RequireRole
         ]);
         $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
         dd($check);
-        if($ranking[$check['role']] === $ranking[$role]) {
+        if($ranking[$check] === $ranking[$role]) {
             $confirmed = true;
         }
-        if($ranking[$check['role']] >= $ranking[$role]) {
+        if($ranking[$check] >= $ranking[$role]) {
             $confirmed = true;
         }
 
