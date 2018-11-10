@@ -5,8 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
-
+use DB;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -48,7 +48,8 @@ class User extends Authenticatable
     //Used in middleware to make sure a user is able to access many of the pages
     public function hasRole($role)
     {
-        $checks = User::roles()->get();
+        $checks = DB::table('user_roles')->where(['character_id' => auth()->user()->character_id])->get();
+        //$checks = User::roles()->get();
         foreach($checks as $check) {
             if($check['role'] == $role) {
                 return true;
