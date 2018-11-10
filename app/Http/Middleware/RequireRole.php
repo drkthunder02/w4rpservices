@@ -16,7 +16,6 @@ class RequireRole
     public function handle($request, Closure $next, $role)
     {
         $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-        dd($check);
         if($check === $role) {
             $confirmed = true;
         } else {
