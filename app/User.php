@@ -48,7 +48,7 @@ class User extends Authenticatable
     //Used in middleware to make sure a user is able to access many of the pages
     public function hasRole($role)
     {
-        $check = User::role()->get('role');
+        $check = User::role()->get(['role']);
         //dd($check);
         if($check == $role) {
             return true;
