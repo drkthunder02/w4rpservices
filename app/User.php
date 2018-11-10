@@ -49,7 +49,7 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         $check = User::role()->get();
-        dd($check);
+        //dd($check);
         if($check['role'] == $role) {
             return true;
         } else {
