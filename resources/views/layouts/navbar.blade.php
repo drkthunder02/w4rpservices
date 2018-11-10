@@ -24,6 +24,13 @@
                     <a class="dropdown-item" href="/wiki/changepassword">Change Password</a>
                 </div>
             </li>
+            <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fleet</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                        <a class="dropdown-item" href="/fleets/display">Display</a>
+                        <a class="dropdown-item" href="/fleets/register">Register</a>
+                    </div>
+                </li>
         </ul>
         <ul class="navbar-nav m1-auto">
             <li class="nav-item">

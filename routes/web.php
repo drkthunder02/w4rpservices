@@ -49,8 +49,6 @@ Route::get('/fleets/display');
 Route::get('/fleets/register', 'FleetsController@displayRegisterFleet');
 Route::get('/fleets/standing', 'FleetsController@displayStandingFleet');
 Route::get('/fleets/addpilot/{id}', 'FleetsController@addPilot');
-Route::get('/fleets/{id}/createwing', 'FleetsController@createWing');
-Route::get('/fleets/{id}/createsquad', 'FleetsController@createSquad');
 
 //Admin Controller display pages
 Route::get('/admin/dashboard', 'AdminController@displayDashboard');
