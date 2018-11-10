@@ -25,7 +25,6 @@ class EsiScopeController extends Controller
     }
 
     public function redirectToProvider(Request $request) {
-        dd($request);
 
         return Socialite::driver('eveonline')->setScopes($request->scopes)->redirect();
     }
