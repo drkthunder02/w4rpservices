@@ -31,23 +31,38 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isAdmin', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            dd($check);
-            if($check == 'Admin') {
+            if($check === 'Admin') {
                 return true;
+            } else {
+                return false;
             }
-            //return $user->hasRole('Admin');
         });
 
         $gate->define('isUser', function($user) {
-            return $user->hasRole('User');
+            $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check === 'User') {
+                return true;
+            } else {
+                return false;
+            }
         });
 
         $gate->define('isGuest', function($user) {
-            return $user->hasRole('Guest');
+            $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check === 'Guest') {
+                return true;
+            } else {
+                return false;
+            }
         });
 
         $gate->define('isNone', function($user) {
-            return $user->hasRole('None');
+            $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check === 'None') {
+                return true;
+            } else {
+                return false;
+            }
         });
     }
 }
