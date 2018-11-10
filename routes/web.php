@@ -45,9 +45,8 @@ Route::get('/scopes/select', 'EsiScopeController@displayScopes');
 Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
 
 //Fleet Controller display pages
-Route::get('/fleets/display');
+Route::get('/fleets/display', 'FleetsController@displayFleets');
 Route::get('/fleets/register', 'FleetsController@displayRegisterFleet');
-Route::get('/fleets/standing', 'FleetsController@displayStandingFleet');
 Route::get('/fleets/addpilot/{id}', 'FleetsController@addPilot');
 
 //Admin Controller display pages

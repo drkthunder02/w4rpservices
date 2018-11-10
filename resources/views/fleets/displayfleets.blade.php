@@ -1,6 +1,7 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
+    <h1>Work in Progress aka NOTHING WORKS!</h1><br>
     <h2>Standing Fleet</h2>
     <a href="{{ route('/fleets/addpilot', ['id' => $charId]) }}">Join Standing Fleet</a>
     @if($fleetCommander == true)

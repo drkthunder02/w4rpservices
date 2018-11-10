@@ -21,14 +21,10 @@ class FleetsController extends Controller
         return view('fleets.registerfleet');
     }
 
-    public function displayStandingFleet() {
-        //Retrieve the fleet from the session
-        $fleet = $request->session()->get('fleet');
-        //Display standing fleets
-        $display = $fleet->RenderFleetDisplay();
+    public function displayFleets() {
 
         //Return the view with the array of the fleet
-        return view('fleets.displaystanding')->with('display', $display);
+        return view('fleets.displayfleets');
     }
 
     public function registerFleet(Request $request) {
