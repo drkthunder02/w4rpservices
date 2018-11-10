@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use DB;
 use Auth;
+use App\Models\UserRole;
 
 class User extends Authenticatable
 {
