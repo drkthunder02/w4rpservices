@@ -27,7 +27,7 @@ class RequireRole
         if($ranking[$check] === $ranking[$role]) {
             $confirmed = true;
         }
-        if($ranking[$check] >= $ranking[$role]) {
+        if($ranking[$check['role']] >= $ranking[$role]) {
             $confirmed = true;
         }
 
