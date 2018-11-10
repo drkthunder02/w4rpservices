@@ -49,10 +49,13 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         //Get the roles from the user_roles table
-        $checks = DB::table('user_roles')->where(['character_id' => auth()->user()->character_id])->get();
+        $check = DB::table('user_roles')->where(['character_id' => auth()->user()->character_id])->get();
+        if($check->role == $role) {
+            return true;
+        }
         dd($checks);
         foreach($checks as $check) {
-            if($check['role'] == $role) {
+            if($check->role == $role) {
                 return true;
             }
         }
