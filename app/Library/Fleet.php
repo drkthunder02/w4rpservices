@@ -2,8 +2,13 @@
 
 namespace App\Library;
 
+use Auth;
 use Session;
 use DB;
+
+use App\Models\EsiToken;
+use App\Library\Fleet;
+use Carbon\Carbon;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -11,87 +16,102 @@ use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 
 class Fleet {
-    /**
-     * Get fleet information
-     */
-    public function GetFleetInfo($uri) {
 
+    private $fleet;
+    private $endTime;
+
+    private $fcId;
+
+    /**
+     * Constructor
+     * 
+     * @param fcId
+     */
+    public function __construct($charId) {
+        $this->fcId = $charId;
     }
 
     /**
-     * Update fleet information
+     * Set Fleet number
+     * 
+     * @param fleetUri
      */
-    public function UpdateFleet($fleet) {
+    public function SetFleetUri($fleetUri) {
+        //Trim the left side of the fleet number
+        $fleetUri = ltrim($fleetUri, 'https://esi.tech.ccp.is/v1/fleets/');
+        //Trim the right side of the fleet number
+        $fleetUri = rtrim($fleetUri, '/?datasource=tranquility');
+        $this->fleet = $fleetUri;
 
+        return $this->fleet;
     }
 
     /**
-     * Create a standing fleet from a registered fleet.
+     * Set the fleet's end time
+     * 
+     * @param endTime
      */
-    public function CreateStandingFleet($fleet) {
-        
+    public function SetFleetEndTime($endTime) {
+        $this->endTime = $endTime;
     }
 
-    /**
-     * Join the standing fleet
-     */
-    public function JoinStandingFleet($fleet, $charId) {
-
+    public function UpdateFleet($isFreeMove, $motd) {
+        //Check if the fc has the right scope
+        if(!$this->HaveEsiScope($this->fcId, 'esi-fleets.write_fleet.v1')) {
+            return false;
+        }
+        //Get the FC's refresh token from the table
+        $token = DB::table('EsiTokens')->where('character_id', $this->fcId)->first();
+        //Create the esi authentication container
+        $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
+            'client_id' => env('ESI_CLIENT_ID'),
+            'secret' => env('ESI_SECRET_KEY'),
+            'refresh_token' => $token->refresh_token,
+        ]);
+        //Create the esi class
+        $esi = new Eseye($authentication);
+        $error = $esi->invoke('put', '/fleets/{fleet_id}/', [
+            'fleet_id' => $this->fleet,
+            'new_settings' => [
+                'is_free_move' => $isFreeMove,
+                'motd' => $motd,
+            ],
+        ]);
     }
 
-    /**
-     * Leave the standing fleet
-     */
-    public function LeaveStandingFleet($fleet, $charId) {
+    public function RenderFleetDisplay() {
+        if(!$this->HaveEsiScope($this->fcId, 'esi-fleets.read_fleet.v1')) {
+            return false;
+        }
 
+        $display = array();
+
+        //Get the FC's refresh token from the table
+        $token = DB::table('EsiTokens')->where('character_id', $this->fcId)->first();
+        //Create the esi authentication container
+        $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
+            'client_id' => env('ESI_CLIENT_ID'),
+            'secret' => env('ESI_SECRET_KEY'),
+            'refresh_token' => $token->refresh_token,
+        ]);
+        //Create the esi class
+        $esi = new Eseye($authentication);
+        //Get the wings for the fleet wing ids
+        $wings = $esi->invoke('get', '/fleets/{fleet_id}/wings/', [
+            'fleet_id' => $this->fleet,
+        ]);
     }
 
-    /**
-     * Create new wing in a fleet
-     */
-    public function CreateNewWing($fleet) {
+    private function HaveEsiScope($charId, $scope) {
+        //Check for an esi scope
+        $checks = DB::table('EsiScopes')->where('character_id')->get();
+        foreach($checks as $check) {
+            if($check->scope === $scope) {
+                return true;
+            }
+        }
 
-    }
-
-    /**
-     * Create new squad in a fleet
-     */
-    public function CreateNewSquad($fleet) {
-
-    }
-
-    /**
-     * Modify the MotD of a fleet
-     */
-    public function ModifyMOTD($fleet) {
-        
-    }
-
-    /**
-     * Get a fleet's squads
-     */
-    public function GetSquads($fleet) {
-
-    }
-
-    /**
-     * Rename a fleet's squad
-     */
-    public function RenameSquad($fleet, $squad, $name) {
-
-    }
-    /**
-     * Get fleet's wings
-     */
-    public function GetWings($fleet) {
-
-    }
-
-    /**
-     * Rename a fleet wing
-     */
-    public function RenameWing($fleet, $wing, $name) {
-
+        return false;
     }
 }
 

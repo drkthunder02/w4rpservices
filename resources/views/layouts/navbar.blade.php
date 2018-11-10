@@ -26,6 +26,9 @@
             </li>
         </ul>
         <ul class="navbar-nav m1-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/scopes/select">Add Esi Scopes</a>
+            </li>
             @can('isAdmin')
             <li class="nav-item">
                 <a class="nav-link" href="/admin/dashboard">Admin</a>
