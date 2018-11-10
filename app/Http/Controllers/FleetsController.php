@@ -74,8 +74,6 @@ class FleetsController extends Controller
         }
     }
 
-    
-
     public function addPilot(Request $request) {
         //Retrieve the fleet from the session
         $fleet = $request->session()->get('fleet');
@@ -86,5 +84,13 @@ class FleetsController extends Controller
         } else {
             return view('fleets.displaystanding')->with('success', 'Pilot added to fleet.');
         }
+    }
+
+    public function updateFleet(Request $request) {
+        //Retrieve the fleet from the session
+        $fleet = $request->session()->get('fleet');
+        $fleet->UpdateFleet($request->isFreeMove, $request->motd);
+
+        return view('fleets.displaystanding')->with('success', 'Fleet updated.');
     }
 }
