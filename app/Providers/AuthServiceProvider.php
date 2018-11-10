@@ -31,7 +31,6 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('isAdmin', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
-            printf($check);
             if($check === 'Admin') {
                 return true;
             } else {
