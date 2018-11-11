@@ -16,8 +16,8 @@
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     @endcan
                     @can('isAdmin')
-                    <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     <a class="dropdown-item" href="/moons/admin/display">Display Moons</a>
+                    <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     <a class="dropdown-item" href="/moons/addmoon">Add Moon</a>
                     <a class="dropdown-item" href="/moons/updatemoon">Update Moon</a>
                     @endcan
