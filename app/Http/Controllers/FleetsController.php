@@ -28,7 +28,7 @@ class FleetsController extends Controller
     }
 
     public function registerFleet(Request $request) {
-        $fleet = new App\Library\Fleet(Auth::user()->character_id);
+        $fleet = new Fleet(Auth::user()->character_id);
         $fleetUri = $fleet->SetFleetUri($request->fleetUri);
         
         //Check for the fleet in the database
