@@ -82,7 +82,24 @@ class Fleet {
     public function AddPilot($charId) {
         //Get the ESI token for the FC to add the new pilot
         $token = DB::table('EsiTokens')->where('character_id', $this->fcId)->first();
-        //Create the ESI Call
+        //Create the ESI Call Container
+        $authentication = new EsiAuthentication([
+            'client_id' => env('ESI_CLIENT_ID'),
+            'secret' => env('ESI_SECRET_KEY'),
+            'refresh_token' => $token->refresh_token,
+        ]);
+        //Crate the ESI Class
+        $esi = new Eseye($authentication);
+        //Perform the call to ESI
+        $error = $esi->invoke('post', '/fleets/{fleet_id}/members/', [
+            'fleet_id' => $this->fleet,
+            'invitation' => [
+                'character_id' => $charId,
+                'role' => 'squad_member',
+            ],
+        ]);
+
+        return $error;
     }
 
     public function RenderFleetDisplay() {

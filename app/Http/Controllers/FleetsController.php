@@ -65,8 +65,6 @@ class FleetsController extends Controller
             $fleet->SetFleetEndTime($endTime);
             //Set the fleet into the session to be used later
             session(['fleet' => $fleet]);
-            $fleet = session('fleet');
-            dd($fleet);
 
             //Return the view with the success message
             return view('fleets.displayfleets')->with('success', 'Fleet registered.');
@@ -81,7 +79,7 @@ class FleetsController extends Controller
         $fleet = session('fleet');
         dd($fleet);
         //Add a pilot to the fleet
-        $error = $fleet->AddPilot(Auth::user()->character_id);
+        $error = $fleet->AddPilot($id);
         if($error) {
             return view('fleets.displaystanding')->with('error', 'Unable to add to fleet.');
         } else {
@@ -89,9 +87,9 @@ class FleetsController extends Controller
         }
     }
 
-    public function updateFleet(Request $request) {
+    public function updateFleet() {
         //Retrieve the fleet from the session
-        $fleet = $request->session()->get('fleet');
+        $fleet = session('fleet');
         $fleet->UpdateFleet($request->isFreeMove, $request->motd);
 
         return view('fleets.displaystanding')->with('success', 'Fleet updated.');
