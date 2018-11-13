@@ -34,7 +34,7 @@ class FleetsController extends Controller
         $fleetUri = $fleet->SetFleetUri($request->fleetUri);
         
         //Check for the fleet in the database
-        $check = DB::table('Fleets')->where('fleet')->first();
+        $check = DB::table('Fleets')->where('fleet', $fleetUri)->first();
         //If we do not find the fleet, let's create it.
         if($check !== null) {   
             $current = Carbon::now();
