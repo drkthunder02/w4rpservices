@@ -6,6 +6,8 @@
         <div class="form-group col-md-6">
             {{ Form::label('fleetUri', 'Fleet') }}
             {{ Form::text('fleetUri', '', ['class' => 'form-control', 'placeholder' => 'Fleet URL']) }}
+            {{ Form::label('description', 'Fleet Name') }}
+            {{ Form::text('description', '', ['class' => 'form control', 'placeholder' => 'Fleet Name']) }}
         </div>
         {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}

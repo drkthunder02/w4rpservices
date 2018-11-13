@@ -18,17 +18,17 @@ use Seat\Eseye\Eseye;
 class Fleet {
 
     private $fleet;
-    private $endTime;
-
     private $fcId;
+    private $endTime;
 
     /**
      * Constructor
      * 
      * @param fcId
      */
-    public function __construct($charId) {
+    public function __construct($charId = null, $fleetId = null) {
         $this->fcId = $charId;
+        $this->fleet = $fleetId;
     }
 
     /**
@@ -55,13 +55,16 @@ class Fleet {
         $this->endTime = $endTime;
     }
 
-    public function UpdateFleet($isFreeMove, $motd) {
+    public function UpdateFleet($fleet, $isFreeMove, $motd) {
+        //Get the fcid from the datatable
+        $fc = DB::table('Fleets')->where('fleet', $fleetId)->get();
+
         //Check if the fc has the right scope
-        if(!$this->HaveEsiScope($this->fcId, 'esi-fleets.write_fleet.v1')) {
-            return false;
+        if(!$this->HaveEsiScope($fc->character_id, 'esi-fleets.write_fleet.v1')) {
+            return 1;
         }
         //Get the FC's refresh token from the table
-        $token = DB::table('EsiTokens')->where('character_id', $this->fcId)->first();
+        $token = DB::table('EsiTokens')->where('character_id', $fc->character_id)->first();
         //Create the esi authentication container
         $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
             'client_id' => env('ESI_CLIENT_ID'),
@@ -71,17 +74,24 @@ class Fleet {
         //Create the esi class
         $esi = new Eseye($authentication);
         $error = $esi->invoke('put', '/fleets/{fleet_id}/', [
-            'fleet_id' => $this->fleet,
+            'fleet_id' => $fleet,
             'new_settings' => [
                 'is_free_move' => $isFreeMove,
                 'motd' => $motd,
             ],
         ]);
+
+        return $error;
     }
 
-    public function AddPilot($charId, $fleetId) {
+    public function AddPilot($fc, $charId) {
+         //Check if the fc has the right scope
+        if(!$this->HaveEsiScope($fc, 'esi-fleets.write_fleet.v1')) {
+            return 1;
+        }
+        
         //Get the ESI token for the FC to add the new pilot
-        $token = DB::table('EsiTokens')->where('character_id', $this->fcId)->first();
+        $token = DB::table('EsiTokens')->where('character_id', $fc->character_id)->first();
         //Create the ESI Call Container
         $authentication = new EsiAuthentication([
             'client_id' => env('ESI_CLIENT_ID'),
@@ -103,27 +113,7 @@ class Fleet {
     }
 
     public function RenderFleetDisplay() {
-        if(!$this->HaveEsiScope($this->fcId, 'esi-fleets.read_fleet.v1')) {
-            return false;
-        }
-
-        $display = array();
-
-        //Get the FC's refresh token from the table
-        $token = DB::table('EsiTokens')->where('character_id', $this->fcId)->first();
-        //Create the esi authentication container
-        $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
-            'client_id' => env('ESI_CLIENT_ID'),
-            'secret' => env('ESI_SECRET_KEY'),
-            'refresh_token' => $token->refresh_token,
-        ]);
-        //Create the esi class
-        $esi = new Eseye($authentication);
-        //Get the wings for the fleet wing ids
-        $wings = $esi->invoke('get', '/fleets/{fleet_id}/wings/', [
-            'fleet_id' => $this->fleet,
-        ]);
-        
+        //
     }
 
     private function HaveEsiScope($charId, $scope) {

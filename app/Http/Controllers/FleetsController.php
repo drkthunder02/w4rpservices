@@ -24,8 +24,18 @@ class FleetsController extends Controller
 
     public function displayFleets() {
         $fleets = DB::table('Fleets')->get();
+        $fleetIds = array();
+        $i = 0;
+        foreach($fleets as $fleet) {
+            $fleetIds[$i] = [
+                'fc' => $fleet->character_id,
+                'fleet' => $fleet->fleet,
+                'description' => $fleet->description,
+            ];
+            $i++;
+        }
         //Return the view with the array of the fleet
-        return view('fleets.displayfleets')->with('fleetId', $fleetId);
+        return view('fleets.displayfleets')->with('fleetIds', $fleetIds);
     }
 
     public function registerFleet(Request $request) {
@@ -56,13 +66,12 @@ class FleetsController extends Controller
             DB::table('Fleets')->insert([
                 'character_id' => Auth::user()->character_id,
                 'fleet' => $fleetUri,
+                'description' => $request->description,
                 'creation_time' => $current,
                 'fleet_end' => $endTime,
             ]);
             
             $fleet->SetFleetEndTime($endTime);
-            //Set the fleet into the session to be used later
-            Session::put('fleet', $fleet);
             //Return the view with the success message
             return view('fleets.displayfleets')->with('success', 'Fleet registered.');
         } else {
@@ -71,12 +80,11 @@ class FleetsController extends Controller
         }
     }
 
-    public function addPilot($id) {
-        //Retrieve the fleet from the session
-        $fleet = Session::get('session');
-        dd($fleet);
+    public function addPilot($fleetId, $charId) {
+        //Retrieve the fleet data
+        $fleet = DB::table('Fleets')->where('fleet', $fleetId)->get();
         //Add a pilot to the fleet
-        $error = $fleet->AddPilot($id);
+        $error = $fleet->AddPilot($fleet->character_id, $charId);
         if($error) {
             return view('fleets.displaystanding')->with('error', 'Unable to add to fleet.');
         } else {

@@ -18,6 +18,7 @@ class CreateFleetsTable extends Migration
                 $table->increments('id');
                 $table->string('character_id');
                 $table->string('fleet')->unique();
+                $table->text('description')->nullable();
                 $table->dateTime('creation_time');
                 $table->dateTime('fleet_end');
             });
