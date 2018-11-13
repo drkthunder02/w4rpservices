@@ -75,6 +75,7 @@ class FleetsController extends Controller
     public function addPilot(Request $request, $id) {
         //Retrieve the fleet from the session
         $fleet = $request->session()->get('fleet');
+        dd($fleet);
         //Add a pilot to the fleet
         $error = $fleet->AddPilot(Auth::user()->character_id);
         if($error) {
