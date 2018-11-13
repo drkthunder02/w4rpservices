@@ -63,6 +63,8 @@ class FleetsController extends Controller
             $fleet->SetFleetEndTime($endTime);
             //Set the fleet into the session to be used later
             session(['fleet' => $fleet]);
+            $fleet = session('fleet');
+            dd($fleet);
 
             //Return the view with the success message
             return view('fleets.displayfleets')->with('success', 'Fleet registered.');
