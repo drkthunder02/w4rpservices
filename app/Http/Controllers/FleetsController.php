@@ -22,9 +22,11 @@ class FleetsController extends Controller
     }
 
     public function displayFleets() {
+        $fleetId = 1;
+
 
         //Return the view with the array of the fleet
-        return view('fleets.displayfleets');
+        return view('fleets.displayfleets')->with('fleetId', $fleetId);
     }
 
     public function registerFleet(Request $request) {
@@ -63,10 +65,10 @@ class FleetsController extends Controller
             session(['fleet' => $fleet]);
 
             //Return the view with the success message
-            return view('fleets.displaystanding')->with('success', 'Fleet registered.');
+            return view('fleets.displayfleets')->with('success', 'Fleet registered.');
         } else {
             //Return the view with the error message of the fleet has been found already.
-            return view('fleets.displaystanding')->with('error', 'Fleet already in the database.');
+            return view('fleets.displayfleets')->with('error', 'Fleet already in the database.');
         }
     }
 
