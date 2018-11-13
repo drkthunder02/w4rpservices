@@ -23,9 +23,7 @@ class FleetsController extends Controller
     }
 
     public function displayFleets() {
-        $fleetId = 1;
-
-
+        $fleets = DB::table('Fleets')->get();
         //Return the view with the array of the fleet
         return view('fleets.displayfleets')->with('fleetId', $fleetId);
     }
