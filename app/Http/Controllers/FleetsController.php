@@ -74,6 +74,7 @@ class FleetsController extends Controller
 
     public function addPilot($id) {
         //Retrieve the fleet from the session
+        dd(session());
         $fleet = session('fleet');
         dd($fleet);
         //Add a pilot to the fleet

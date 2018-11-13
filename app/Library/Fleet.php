@@ -79,7 +79,7 @@ class Fleet {
         ]);
     }
 
-    public function AddPilot($charId) {
+    public function AddPilot($charId, $fleetId) {
         //Get the ESI token for the FC to add the new pilot
         $token = DB::table('EsiTokens')->where('character_id', $this->fcId)->first();
         //Create the ESI Call Container
