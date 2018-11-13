@@ -48,8 +48,8 @@ Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
 //Fleet Controller display pages
 Route::get('/fleets/display', 'FleetsController@displayFleets');
 Route::get('/fleets/register', 'FleetsController@displayRegisterFleet');
-Route::get('/fleets/addpilot/{id}', 'FleetsController@addPilot');
-Route::post('registerFleet', 'FleetsController@registerFleet');
+Route::get('/fleets/addpilot/{id}', 'FleetsController@addPilot')->name('addpilot');
+Route::post('/fleets/registerFleet', 'FleetsController@registerFleet');
 
 //Admin Controller display pages
 Route::get('/admin/dashboard', 'AdminController@displayDashboard');
