@@ -62,8 +62,7 @@ class FleetsController extends Controller
             
             $fleet->SetFleetEndTime($endTime);
             //Set the fleet into the session to be used later
-            session(['fleet' => $fleet]);
-
+            Session::put('fleet', $fleet);
             //Return the view with the success message
             return view('fleets.displayfleets')->with('success', 'Fleet registered.');
         } else {
@@ -74,8 +73,7 @@ class FleetsController extends Controller
 
     public function addPilot($id) {
         //Retrieve the fleet from the session
-        dd(session());
-        $fleet = session('fleet');
+        $fleet = Session::get('session');
         dd($fleet);
         //Add a pilot to the fleet
         $error = $fleet->AddPilot($id);
