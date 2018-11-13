@@ -72,7 +72,8 @@ class FleetsController extends Controller
         }
     }
 
-    public function addPilot($id, Request $request) {
+    public function addPilot($id) {
+        $request = new Request;
         //Retrieve the fleet from the session
         $fleet = $request->session()->get('fleet');
         //Add a pilot to the fleet
