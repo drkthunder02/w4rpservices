@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Auth;
 use DB;
+use Carbon\Carbon;
 
 use App\Library\Fleet;
 
@@ -36,7 +37,8 @@ class FleetsController extends Controller
         //Check for the fleet in the database
         $check = DB::table('Fleets')->where('fleet', $fleetUri)->first();
         //If we do not find the fleet, let's create it.
-        if($check === null) {   
+        if($check === null) {
+               
             $current = Carbon::now();
             //If we are between 00:00 and 05:00, we want to set the end time for 0500
             if($current->hour > 0 && $current->hour < 5) {
