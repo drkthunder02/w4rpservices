@@ -33,7 +33,7 @@ Route::get('/moons/admin/display', 'MoonsController@displayMoonsAdmin');
 Route::post('storeMoon', 'MoonsController@storeMoon');
 Route::post('storeUpdateMoon', 'MoonsController@storeUpdateMoon');
 Route::post('displayTotalWorth', 'MoonsController@displayTotalWorth');
-
+ 
 //Wiki Controller display pages
 Route::get('/wiki/register', 'WikiController@displayRegister');
 Route::get('/wiki/changepassword', 'WikiController@displayChangePassword');
@@ -49,6 +49,7 @@ Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
 Route::get('/fleets/display', 'FleetsController@displayFleets');
 Route::get('/fleets/register', 'FleetsController@displayRegisterFleet');
 Route::get('/fleets/addpilot/{id}', 'FleetsController@addPilot');
+Route::post('registerFleet', 'FleetsController@registerFleet');
 
 //Admin Controller display pages
 Route::get('/admin/dashboard', 'AdminController@displayDashboard');
