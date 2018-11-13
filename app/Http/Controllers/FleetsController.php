@@ -56,7 +56,7 @@ class FleetsController extends Controller
             }
             // Insert the fleet into the table
             DB::table('Fleets')->insert([
-                'character_id' => Auth::$user->character_id,
+                'character_id' => Auth::user()->character_id,
                 'fleet' => $fleetUri,
                 'creation_time' => $current,
                 'fleet_end' => $endTime,
