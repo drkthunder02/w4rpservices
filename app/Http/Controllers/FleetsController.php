@@ -25,6 +25,7 @@ class FleetsController extends Controller
     public function displayFleets() {
         //$fleets = DB::table('Fleets')->get();
         $fleets = \App\Models\Fleet::all();
+        dd($fleets);
         $data = array();
         $fc = array();
         $fleet = array();
