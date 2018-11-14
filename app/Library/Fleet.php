@@ -126,6 +126,7 @@ class Fleet {
             // You can also access the *actual* response we got from
             // ESI as a normal array.
             print_r($e->getEsiResponse());
+            dd($e->getEsiResponse());
         }
 
         return 'Invite Sent';
