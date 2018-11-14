@@ -94,7 +94,7 @@ class FleetsController extends Controller
 
     public function deleteFleet($fleetId) {
         DB::table('Fleets')->where('fleet', $fleetId)->delete();
-        return view('fleets.display')->with('success', 'Fleet deleted.');
+        return view('fleets.displayfleets')->with('success', 'Fleet deleted.');
     }
 
     public function addPilot($fleetId, $charId) {
