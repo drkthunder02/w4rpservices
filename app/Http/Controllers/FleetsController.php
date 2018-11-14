@@ -101,8 +101,8 @@ class FleetsController extends Controller
         $fleet = DB::table('Fleets')->where('fleet', $fleetId)->get();
         //Add a pilot to the fleet
         $error = $newPilot->AddPilot($fleet[0]->character_id, $charId, $fleetId);
-        dd($error);
-        return view('/dashboard')->with('success', $error);
+        
+        return view('/dashboard');
     }
 
     public function updateFleet() {

@@ -91,7 +91,7 @@ class Fleet {
         }
         
         //Get the ESI token for the FC to add the new pilot
-        $token = DB::table('EsiTokens')->where('character_id', $fc)->first();
+        $token = DB::table('EsiTokens')->where('character_id', $fc)->get();
         // Disable all caching by setting the NullCache as the
         // preferred cache handler. By default, Eseye will use the
         // FileCache.
@@ -102,7 +102,7 @@ class Fleet {
         $authentication = new EsiAuthentication([
             'client_id' => env('ESI_CLIENT_ID'),
             'secret' => env('ESI_SECRET_KEY'),
-            'refresh_token' => $token->refresh_token,
+            'refresh_token' => $token[0]->refresh_token,
         ]);
         //Crate the ESI Class
         $esi = new Eseye($authentication);
@@ -116,18 +116,6 @@ class Fleet {
                            'fleet_id' => $fleetId,
                        ]);
         } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
-             // The HTTP Response code and message can be retreived
-            // from the exception...
-            print $e->getCode() . PHP_EOL;
-            print $e->getMessage() . PHP_EOL;
-
-            // .. or from the EsiResponse available from the Exception
-            print $e->getEsiResponse()->getErrorCode() . PHP_EOL;
-            print $e->getEsiResponse()->error() . PHP_EOL;
-
-            // You can also access the *actual* response we got from
-            // ESI as a normal array.
-            print_r($e->getEsiResponse());
             dd($e->getEsiResponse());
         }
 
