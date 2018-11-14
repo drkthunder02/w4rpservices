@@ -47,7 +47,7 @@ class FleetsController extends Controller
         $size = sizeof($fc);
 
         //Return the view with the array of the fleet
-        return view('fleets.displayfleets')->with('data', $data);
+        return view('fleets.displayfleets')->with($data);
     }
 
     public function registerFleet(Request $request) {
