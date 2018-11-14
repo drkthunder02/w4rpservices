@@ -102,7 +102,7 @@ class FleetsController extends Controller
         //Add a pilot to the fleet
         $error = $newPilot->AddPilot($fleet[0]->character_id, $charId);
         if($error) {
-            return view('fleets.displayfleet')->with($error)->with('data', null);
+            return view('fleets.displayfleets')->with($error)->with('data', null);
         } else {
             return redirect('/fleets/display');
         }
