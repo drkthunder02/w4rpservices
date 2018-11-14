@@ -2,7 +2,6 @@
 
 namespace App\Library;
 
-use App;
 use Auth;
 use Session;
 use DB;
@@ -106,7 +105,7 @@ class Fleet {
             'refresh_token' => $token[0]->refresh_token,
         ]);
 
-        dd(env('ESI_CLIENT_ID', ''));
+        dd(env('ESI_CLIENT_ID', 'ESI_CLIENT_ID'));
 
         //Crate the ESI Class
         $esi = new Eseye($authentication);
