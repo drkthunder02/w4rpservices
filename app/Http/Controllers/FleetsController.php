@@ -25,7 +25,6 @@ class FleetsController extends Controller
     public function displayFleets() {
         //$fleets = DB::table('Fleets')->get();
         $fleets = \App\Models\Fleet::all();
-        dd($fleets);
         $data = array();
         $fc = array();
         $fleet = array();
@@ -44,6 +43,8 @@ class FleetsController extends Controller
             $fleet,
             $description,
         ];
+
+        dd($data);
 
         //Return the view with the array of the fleet
         return view('fleets.displayfleets')->with('fleet', $fleet);
@@ -69,7 +70,7 @@ class FleetsController extends Controller
                 //Figure out the hours to add to the fleet before purging it.
                 $endTime = Carbon::now();
                 $endTime->day++;
-                $endTime->hour = 5;
+                $endTime->hour = 11;
                 $endTime->minute = 0;
                 $endTime->second = 0;
             }
