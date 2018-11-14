@@ -100,13 +100,11 @@ class Fleet {
         ]);
         //Crate the ESI Class
         $esi = new Eseye($authentication);
+        //Setup the body of the esi message
+        $esi->setBody(['character_id' => $charId, 'role' => 'squad_member']);
         //Perform the call to ESI
         $error = $esi->invoke('post', '/fleets/{fleet_id}/members/', [
             'fleet_id' => $this->fleet,
-            'body' => [
-                'character_id' => $charId,
-                'role' => 'squad_member',
-            ],
         ]);
 
         return $error;
