@@ -109,6 +109,9 @@ class Fleet {
             'client_id'     => 'e5848fea3618427a8ee0dccb6a04fc62',
             'secret'        => 'TdnNGRM8RTNSifZdaIc9yHTTkYPgYEEXHRIbT6oY',
             'refresh_token' => $token[0]->refresh_token,
+            'scopes' => [
+                'esi-fleets.write_fleets.v1',
+            ],
         ]));
 
         
