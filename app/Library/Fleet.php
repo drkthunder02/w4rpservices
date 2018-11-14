@@ -109,7 +109,7 @@ class Fleet {
         //Crate the ESI Class
         $esi = new Eseye($authentication);
 
-        dd(config('esi.client_id'));
+        dd(config('esi.esi'));
         try {
         //Setup the body of the esi message and perform the call
         $esi->setBody(['character_id' => $charId, 
