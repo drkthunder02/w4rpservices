@@ -115,7 +115,7 @@ class Fleet {
                        'role' => 'squad_member',
                        'squad_id' => 0,
                        'wing_id' => 0,
-                       ])->invoke('post', '/fleets/{fleet_id/members', [
+                       ])->invoke('post', '/fleets/{fleet_id/members/', [
                            'fleet_id' => $fleetId,
                        ]);
         } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
