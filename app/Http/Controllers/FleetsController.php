@@ -84,17 +84,14 @@ class FleetsController extends Controller
             ]);
             
             $fleet->SetFleetEndTime($endTime);
-            //Return the view with the success message
-            return view('fleets.displayfleets')->with('success', 'Fleet registered.');
-        } else {
-            //Return the view with the error message of the fleet has been found already.
-            return view('fleets.displayfleets')->with('error', 'Fleet already in the database.');
-        }
+        } 
+
+        return redirect('/fleets/display');
     }
 
     public function deleteFleet($fleetId) {
         DB::table('Fleets')->where('fleet', $fleetId)->delete();
-        return view('fleets.displayfleets')->with('success', 'Fleet deleted.');
+        return redirect('/fleets/display');
     }
 
     public function addPilot($fleetId, $charId) {
@@ -102,11 +99,8 @@ class FleetsController extends Controller
         $fleet = DB::table('Fleets')->where('fleet', $fleetId)->get();
         //Add a pilot to the fleet
         $error = $fleet->AddPilot($fleet->character_id, $charId);
-        if($error) {
-            return view('fleets.displaystanding')->with('error', 'Unable to add to fleet.');
-        } else {
-            return view('fleets.displaystanding')->with('success', 'Pilot added to fleet.');
-        }
+
+        return redirect('/fleets/display');
     }
 
     public function updateFleet() {
@@ -114,6 +108,6 @@ class FleetsController extends Controller
         $fleet = session('fleet');
         $fleet->UpdateFleet($request->isFreeMove, $request->motd);
 
-        return view('fleets.displaystanding')->with('success', 'Fleet updated.');
+        return redirect('/fleets/display');
     }
 }
