@@ -105,9 +105,10 @@ class Fleet {
             'refresh_token' => $token[0]->refresh_token,
         ]);
 
-
+        
         //Crate the ESI Class
         $esi = new Eseye($authentication);
+        dd($esi);
         try {
         //Setup the body of the esi message and perform the call
         $esi->setBody(['character_id' => $charId, 
