@@ -100,16 +100,14 @@ class Fleet {
         $configuration->logfile_location = '/var/www/w4rpservices/storage/logs/eseye';
         //Create the ESI Call Container
         $authentication = new EsiAuthentication([
-            'client_id' => env('ESI_CLIENT_ID'),
-            'secret' => env('ESI_SECRET_KEY'),
+            'client_id' => config('esi.client_id'),
+            'secret' => config('esi.secret'),
             'refresh_token' => $token[0]->refresh_token,
         ]);
 
 
         //Crate the ESI Class
         $esi = new Eseye($authentication);
-
-        dd(config('esi'));
         try {
         //Setup the body of the esi message and perform the call
         $esi->setBody(['character_id' => $charId, 
