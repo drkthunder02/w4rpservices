@@ -23,6 +23,7 @@ class Fleet extends Model
     protected $fillable = [
         'character_id',
         'fleet',
+        'description',
         'creation_time',
         'time_left',
     ];
