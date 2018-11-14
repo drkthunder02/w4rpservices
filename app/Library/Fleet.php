@@ -105,7 +105,6 @@ class Fleet {
             'refresh_token' => $token[0]->refresh_token,
         ]);
 
-        dd(config('ESI_CLIENT_ID'));
 
         //Crate the ESI Class
         $esi = new Eseye($authentication);
