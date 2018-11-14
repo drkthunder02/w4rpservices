@@ -97,6 +97,7 @@ class Fleet {
         // FileCache.
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
+        $configuration->logfile_location = '/var/www/w4rpservices/storage/eseye';
         //Create the ESI Call Container
         $authentication = new EsiAuthentication([
             'client_id' => env('ESI_CLIENT_ID'),
@@ -108,9 +109,24 @@ class Fleet {
         //Setup the body of the esi message
         $esi->setBody(['character_id' => $charId, 'role' => 'squad_member']);
         //Perform the call to ESI
-        $error = $esi->invoke('post', '/fleets/{fleet_id}/members/', [
-            'fleet_id' => $fleetId,
-        ]);
+        try {
+            $esi->invoke('post', '/fleets/{fleet_id}/members/', [
+                'fleet_id' => $fleetId,
+            ]);
+        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
+             // The HTTP Response code and message can be retreived
+            // from the exception...
+            print $e->getCode() . PHP_EOL;
+            print $e->getMessage() . PHP_EOL;
+
+            // .. or from the EsiResponse available from the Exception
+            print $e->getEsiResponse()->getErrorCode() . PHP_EOL;
+            print $e->getEsiResponse()->error() . PHP_EOL;
+
+            // You can also access the *actual* response we got from
+            // ESI as a normal array.
+            print_r($e->getEsiResponse());
+        }
 
         return 'Invite Sent';
     }
