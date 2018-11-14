@@ -105,8 +105,8 @@ class Fleet {
             'secret' => env('ESI_SECRET_KEY'),
             'refresh_token' => $token[0]->refresh_token,
         ]);
-        
-        dd(env('ESI_CLIENT_ID'));
+
+        dd(env('ESI_CLIENT_ID', ''));
 
         //Crate the ESI Class
         $esi = new Eseye($authentication);
