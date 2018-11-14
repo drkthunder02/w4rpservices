@@ -24,18 +24,27 @@ class FleetsController extends Controller
 
     public function displayFleets() {
         $fleets = DB::table('Fleets')->get();
-        $fleetIds = array();
+        $data = array();
+        $fc = array();
+        $fleet = array();
+        $description = array();
         $i = 0;
-        foreach($fleets as $fleet) {
-            $fleetIds[$i] = [
-                'fc' => $fleet->character_id,
-                'fleet' => $fleet->fleet,
-                'description' => $fleet->description,
-            ];
+
+        foreach($fleets as $fl) {
+            $fc[$i] = $fl->character_id;
+            $fleet[$i] = $fl->fleet;
+            $description[$i] = $fl->description;
             $i++;
         }
+
+        $data = [
+            $fc,
+            $fleet,
+            $description,
+        ];
+
         //Return the view with the array of the fleet
-        return view('fleets.displayfleets')->with('fleetIds', $fleetIds);
+        return view('fleets.displayfleets')->with($data);
     }
 
     public function registerFleet(Request $request) {
