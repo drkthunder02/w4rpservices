@@ -85,11 +85,16 @@ class FleetsController extends Controller
             
             $fleet->SetFleetEndTime($endTime);
             //Return the view with the success message
-            return view('fleets.displayfleets')->with('success', 'Fleet registered.');
+            return view('/fleets/displayfleets')->with('success', 'Fleet registered.');
         } else {
             //Return the view with the error message of the fleet has been found already.
-            return view('fleets.displayfleets')->with('error', 'Fleet already in the database.');
+            return view('/fleets/displayfleets')->with('error', 'Fleet already in the database.');
         }
+    }
+
+    public function deleteFleet($fleetId) {
+        DB::table('Fleets')->where('fleet', $fleetId)->delete();
+        return view('fleets.display')->with('success', 'Fleet deleted.');
     }
 
     public function addPilot($fleetId, $charId) {
