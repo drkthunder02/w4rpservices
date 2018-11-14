@@ -84,7 +84,7 @@ class Fleet {
         return $error;
     }
 
-    public function AddPilot($fc, $charId) {
+    public function AddPilot($fc, $charId, $fleetId) {
          //Check if the fc has the right scope
         if(!$this->HaveEsiScope($fc, 'esi-fleets.write_fleet.v1')) {
             return 1;
@@ -104,7 +104,7 @@ class Fleet {
         $esi->setBody(['character_id' => $charId, 'role' => 'squad_member']);
         //Perform the call to ESI
         $error = $esi->invoke('post', '/fleets/{fleet_id}/members/', [
-            'fleet_id' => $this->fleet,
+            'fleet_id' => $fleetId,
         ]);
 
         return $error;
