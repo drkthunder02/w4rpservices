@@ -99,13 +99,13 @@ class Fleet {
         $configuration->cache = NullCache::class;
         $configuration->logfile_location = '/var/www/w4rpservices/storage/logs/eseye';
         //Create the ESI Call Container
-        $authentication = new EsiAuthentication([
-            'client_id' => config('esi.client_id'),
-            'secret' => config('esi.secret'),
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-
         $esi = new \Seat\Eseye\Eseye(new \Seat\Eseye\Containers\EsiAuthentication([
+            'client_id'     => 'e5848fea3618427a8ee0dccb6a04fc62',
+            'secret'        => 'TdnNGRM8RTNSifZdaIc9yHTTkYPgYEEXHRIbT6oY',
+            'refresh_token' => $token[0]->refresh_token,
+        ]));
+
+        $esi->setAuthentication(new \Seat\Eseye\Containers\EsiAuthentication([
             'client_id'     => 'e5848fea3618427a8ee0dccb6a04fc62',
             'secret'        => 'TdnNGRM8RTNSifZdaIc9yHTTkYPgYEEXHRIbT6oY',
             'refresh_token' => $token[0]->refresh_token,
@@ -113,7 +113,6 @@ class Fleet {
 
         
         //Crate the ESI Class
-        $esi = new Eseye($authentication);
         dd($esi);
         try {
         //Setup the body of the esi message and perform the call
