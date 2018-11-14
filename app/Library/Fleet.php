@@ -105,6 +105,12 @@ class Fleet {
             'refresh_token' => $token[0]->refresh_token,
         ]);
 
+        $esi = new \Seat\Eseye\Eseye(new \Seat\Eseye\Containers\EsiAuthentication([
+            'client_id'     => config('esi.client_id'),
+            'secret'        => config('esi.secret'),
+            'refresh_token' => $token[0]->refresh_token,
+        ]));
+
         
         //Crate the ESI Class
         $esi = new Eseye($authentication);
