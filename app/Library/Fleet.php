@@ -110,8 +110,6 @@ class Fleet {
         //Setup the body of the esi message and perform the call
         $esi->setBody(['character_id' => $charId, 
                        'role' => 'squad_member',
-                       'squad_id' => 0,
-                       'wing_id' => 0,
                        ])->invoke('post', '/fleets/{fleet_id}/members/', [
                            'fleet_id' => $fleetId,
                        ]);
