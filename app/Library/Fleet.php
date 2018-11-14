@@ -87,11 +87,16 @@ class Fleet {
     public function AddPilot($fc, $charId, $fleetId) {
          //Check if the fc has the right scope
         if(!$this->HaveEsiScope($fc, 'esi-fleets.write_fleet.v1')) {
-            return 1;
+            return 'Incorrect Scopes.';
         }
         
         //Get the ESI token for the FC to add the new pilot
         $token = DB::table('EsiTokens')->where('character_id', $fc->character_id)->first();
+        // Disable all caching by setting the NullCache as the
+        // preferred cache handler. By default, Eseye will use the
+        // FileCache.
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
         //Create the ESI Call Container
         $authentication = new EsiAuthentication([
             'client_id' => env('ESI_CLIENT_ID'),
@@ -107,7 +112,7 @@ class Fleet {
             'fleet_id' => $fleetId,
         ]);
 
-        return $error;
+        return 'Invite Sent';
     }
 
     public function RenderFleetDisplay() {
