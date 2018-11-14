@@ -113,7 +113,7 @@ class Fleet {
                 'esi-fleets.write_fleets.v1',
             ],
         ]));
-        //try {
+        try {
         //Setup the body of the esi message and perform the call
         $esi->setBody(['character_id' => $charId, 
                        'role' => 'squad_member',
@@ -122,9 +122,21 @@ class Fleet {
                        ])->invoke('post', '/fleets/{fleet_id/members/', [
                            'fleet_id' => $fleetId,
                        ]);
-        //} catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
-        //    dd($e->getEsiResponse());
-        //}
+        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
+            // The HTTP Response code and message can be retreived
+            // from the exception...
+            print $e->getCode() . PHP_EOL;
+            print $e->getMessage() . PHP_EOL;
+
+            // .. or from the EsiResponse available from the Exception
+            print $e->getEsiResponse()->getErrorCode() . PHP_EOL;
+            print $e->getEsiResponse()->error() . PHP_EOL;
+
+            // You can also access the *actual* response we got from
+            // ESI as a normal array.
+            print_r($e->getEsiResponse());
+            dd($e->getEsiResponse());
+        }
 
         return 'Invite Sent';
     }
