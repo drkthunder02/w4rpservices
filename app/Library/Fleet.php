@@ -2,6 +2,7 @@
 
 namespace App\Library;
 
+use App;
 use Auth;
 use Session;
 use DB;
