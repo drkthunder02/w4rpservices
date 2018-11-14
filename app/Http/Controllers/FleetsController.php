@@ -23,7 +23,8 @@ class FleetsController extends Controller
     }
 
     public function displayFleets() {
-        $fleets = DB::table('Fleets')->get();
+        //$fleets = DB::table('Fleets')->get();
+        $fleets = Fleet::all();
         $data = array();
         $fc = array();
         $fleet = array();
@@ -44,7 +45,7 @@ class FleetsController extends Controller
         ];
 
         //Return the view with the array of the fleet
-        return view('fleets.displayfleets')->with($data);
+        return view('fleets.displayfleets')->with('fleet', $fleet);
     }
 
     public function registerFleet(Request $request) {
