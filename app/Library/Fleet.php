@@ -113,10 +113,6 @@ class Fleet {
                 'esi-fleets.write_fleets.v1',
             ],
         ]));
-
-        
-        //Crate the ESI Class
-        dd($esi);
         try {
         //Setup the body of the esi message and perform the call
         $esi->setBody(['character_id' => $charId, 
