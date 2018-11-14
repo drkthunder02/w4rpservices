@@ -65,7 +65,7 @@ class FleetsController extends Controller
                 //Figure out the hours to add to the fleet before purging it.
                 $hour = $current->hour;
                 $endTime = Carbon::now();
-                $endTime->hour = 5 - $hour;
+                $endTime->hour = 11 - $hour;
             } else {
                 //Figure out the hours to add to the fleet before purging it.
                 $endTime = Carbon::now();
@@ -102,7 +102,7 @@ class FleetsController extends Controller
         //Add a pilot to the fleet
         $error = $newPilot->AddPilot($fleet[0]->character_id, $charId, $fleetId);
        
-        return view('/dashboard');
+        return view('/dashboard')->with('success', $error);
     }
 
     public function updateFleet() {
