@@ -91,7 +91,7 @@ class Fleet {
         }
         
         //Get the ESI token for the FC to add the new pilot
-        $token = DB::table('EsiTokens')->where('character_id', $fc->character_id)->first();
+        $token = DB::table('EsiTokens')->where('character_id', $fc)->first();
         // Disable all caching by setting the NullCache as the
         // preferred cache handler. By default, Eseye will use the
         // FileCache.
