@@ -122,6 +122,7 @@ class Fleet {
     private function HaveEsiScope($charId, $scope) {
         //Check for an esi scope
         $checks = DB::table('EsiScopes')->where('character_id')->get();
+        dd($checks);
         foreach($checks as $check) {
             if($check->scope === $scope) {
                 return true;
