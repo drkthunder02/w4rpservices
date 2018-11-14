@@ -106,13 +106,15 @@ class Fleet {
         ]);
         //Crate the ESI Class
         $esi = new Eseye($authentication);
-        //Setup the body of the esi message
-        $esi->setBody(['character_id' => $charId, 'role' => 'squad_member']);
-        //Perform the call to ESI
         try {
-            $esi->invoke('post', '/fleets/{fleet_id}/members/', [
-                'fleet_id' => $fleetId,
-            ]);
+        //Setup the body of the esi message and perform the call
+        $esi->setBody(['character_id' => $charId, 
+                       'role' => 'squad_member',
+                       'squad_id' => 0,
+                       'wing_id' => 0,
+                       ])->invoke('post', '/fleets/{fleet_id/members', [
+                           'fleet_id' => $fleetId,
+                       ]);
         } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
              // The HTTP Response code and message can be retreived
             // from the exception...
