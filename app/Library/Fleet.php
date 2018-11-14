@@ -113,7 +113,7 @@ class Fleet {
                 'esi-fleets.write_fleets.v1',
             ],
         ]));
-        try {
+        //try {
         //Setup the body of the esi message and perform the call
         $esi->setBody(['character_id' => $charId, 
                        'role' => 'squad_member',
@@ -122,9 +122,9 @@ class Fleet {
                        ])->invoke('post', '/fleets/{fleet_id/members/', [
                            'fleet_id' => $fleetId,
                        ]);
-        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
-            dd($e->getEsiResponse());
-        }
+        //} catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
+        //    dd($e->getEsiResponse());
+        //}
 
         return 'Invite Sent';
     }
