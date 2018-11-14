@@ -103,7 +103,7 @@ class Fleet {
         //Perform the call to ESI
         $error = $esi->invoke('post', '/fleets/{fleet_id}/members/', [
             'fleet_id' => $this->fleet,
-            'invitation' => [
+            'body' => [
                 'character_id' => $charId,
                 'role' => 'squad_member',
             ],
