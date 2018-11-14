@@ -97,13 +97,15 @@ class Fleet {
         // FileCache.
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
-        $configuration->logfile_location = '/var/www/w4rpservices/storage/eseye';
+        $configuration->logfile_location = '/var/www/w4rpservices/storage/logs/eseye';
         //Create the ESI Call Container
         $authentication = new EsiAuthentication([
             'client_id' => env('ESI_CLIENT_ID'),
             'secret' => env('ESI_SECRET_KEY'),
             'refresh_token' => $token[0]->refresh_token,
         ]);
+
+        dd(base64_encode(env('ESI_CLIENT_ID') . ':' . env('ESI_SECRET_KEY')));
 
         //Crate the ESI Class
         $esi = new Eseye($authentication);
