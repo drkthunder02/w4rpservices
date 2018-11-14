@@ -38,9 +38,9 @@ class Fleet {
      */
     public function SetFleetUri($fleetUri) {
         //Trim the left side of the fleet number
-        $fleetUri = ltrim($fleetUri, 'https://esi.tech.ccp.is/v1/fleets/');
+        $uris  = explode('https://esi.tech.cpp.is/v1/fleets/', $fleetUri);
         //Trim the right side of the fleet number
-        $fleetUri = rtrim($fleetUri, '/?datasource=tranquility');
+        $fleetUri = rtrim($uris[1], '/?datasource=tranquility');
         $this->fleet = $fleetUri;
 
         return $this->fleet;
