@@ -104,7 +104,7 @@ class Fleet {
             'secret'        => 'TdnNGRM8RTNSifZdaIc9yHTTkYPgYEEXHRIbT6oY',
             'refresh_token' => $token[0]->refresh_token,
         ]);
-        $esi = new \Seat\Eseye\Esesye($authentication);
+        $esi = new \Seat\Eseye\Eseye($authentication);
 
         try {
         //Setup the body of the esi message and perform the call
