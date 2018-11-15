@@ -105,6 +105,7 @@ class Fleet {
             'refresh_token' => $token[0]->refresh_token,
         ]);
         $esi = new \Seat\Eseye\Eseye($authentication);
+        dd(config('esi.client_id'));
 
         try {
         //Setup the body of the esi message and perform the call
