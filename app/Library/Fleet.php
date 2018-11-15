@@ -101,12 +101,11 @@ class Fleet {
         //Create the ESI Call Container
         $config = config('esi');
         $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
-            'client_id'     => 'e5848fea3618427a8ee0dccb6a04fc62',
-            'secret'        => 'TdnNGRM8RTNSifZdaIc9yHTTkYPgYEEXHRIbT6oY',
+            'client_id'     => $config['esi']['client_id'],
+            'secret'        => $config['esi']['secret'],
             'refresh_token' => $token[0]->refresh_token,
         ]);
         $esi = new \Seat\Eseye\Eseye($authentication);
-        dd($config['esi']['client_id']);
 
         try {
         //Setup the body of the esi message and perform the call
