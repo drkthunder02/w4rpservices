@@ -23,7 +23,6 @@ class FleetsController extends Controller
     }
 
     public function displayFleets() {
-        //$fleets = DB::table('Fleets')->get();
         $fleets = \App\Models\Fleet::all();
         $data = array();
         $fc = array();
@@ -51,7 +50,14 @@ class FleetsController extends Controller
     }
 
     public function registerFleet(Request $request) {
+        //Register a new instance of the fleet class
         $fleet = new Fleet(Auth::user()->character_id);
+        //Check to see if the character registering the fleet has the correct scope
+        if(!$fleet->HaveEsiScope($fc, 'esi-fleets.write_fleet.v1')) {
+            return view('inc.error')->with('error', 'User does not have the write fleet scope.');
+        }
+        
+        //Make the fleet uri so we can call later functions
         $fleetUri = $fleet->SetFleetUri($request->fleetUri);
         
         //Check for the fleet in the database
@@ -102,7 +108,13 @@ class FleetsController extends Controller
         //Add a pilot to the fleet
         $error = $newPilot->AddPilot($fleet[0]->character_id, $charId, $fleetId);
         
-        return view('/dashboard');
+        if($error === null) {
+            return view('/dashboard')->with('success', 'Invite for fleet sent.');
+        } else {
+            return view('inc.error')->with('error', $error);
+        }
+
+        
     }
 
     public function updateFleet() {

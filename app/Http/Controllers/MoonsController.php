@@ -124,6 +124,30 @@ class MoonsController extends Controller
             'structure' => 'required',
         ]);
 
+        if($request->input('firstquan') < 1.00) {
+            $firstQuan = $request->input('firstquan') * 100.00;
+        } else {
+            $firstQuan = $request->input('firstquan');
+        }
+
+        if($request->input('secondquan') < 1.00) {
+            $firstQuan = $request->input('secondquan') * 100.00;
+        } else {
+            $firstQuan = $request->input('secondquan');
+        }
+
+        if($request->input('thirdquan') < 1.00) {
+            $firstQuan = $request->input('thirdquan') * 100.00;
+        } else {
+            $firstQuan = $request->input('thirdquan');
+        }
+
+        if($request->input('fourthquan') < 1.00) {
+            $firstQuan = $request->input('fourthquan') * 100.00;
+        } else {
+            $firstQuan = $request->input('fourthquan');
+        }
+
         // Add new moon
         $moon = new Moon;
         $moon->Region = $request->input('region');

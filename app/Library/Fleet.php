@@ -85,11 +85,7 @@ class Fleet {
     }
 
     public function AddPilot($fc, $charId, $fleetId) {
-         //Check if the fc has the right scope
-        if(!$this->HaveEsiScope($fc, 'esi-fleets.write_fleet.v1')) {
-            return 'Incorrect Scopes.';
-        }
-        
+                
         //Get the ESI token for the FC to add the new pilot
         $token = DB::table('EsiTokens')->where('character_id', $fc)->get();
         // Disable all caching by setting the NullCache as the
@@ -128,16 +124,17 @@ class Fleet {
             // ESI as a normal array.
             print_r($e->getEsiResponse());
             dd($e->getEsiResponse());
+            return $e->getEsiResponse;
         }
 
-        return 'Invite Sent';
+        return null;
     }
 
     public function RenderFleetDisplay() {
         //
     }
 
-    private function HaveEsiScope($charId, $scope) {
+    public function HaveEsiScope($charId, $scope) {
         //Check for an esi scope
         $checks = DB::table('EsiScopes')->where('character_id', $charId)->get();
         foreach($checks as $check) {
