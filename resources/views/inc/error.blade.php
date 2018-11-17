@@ -1,4 +1,4 @@
-@extends('layout.b4')
+@extends('layouts.b4')
 @section('content')
 <div class="container">
     <div class="card-header">
