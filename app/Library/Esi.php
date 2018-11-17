@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\CreateEsiScopes;
+use App\Models\EsiScope;
 
 use DB;
 

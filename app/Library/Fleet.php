@@ -66,9 +66,10 @@ class Fleet {
         //Get the FC's refresh token from the table
         $token = DB::table('EsiTokens')->where('character_id', $fc->character_id)->first();
         //Create the esi authentication container
+        $config = config('esi');
         $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
-            'client_id' => env('ESI_CLIENT_ID'),
-            'secret' => env('ESI_SECRET_KEY'),
+            'client_id' => $config['esi']['client_id'],
+            'secret' => $config['esi']['secret'],
             'refresh_token' => $token->refresh_token,
         ]);
         //Create the esi class
@@ -111,20 +112,7 @@ class Fleet {
                            'fleet_id' => $fleetId,
                        ]);
         } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
-            // The HTTP Response code and message can be retreived
-            // from the exception...
-            print $e->getCode() . PHP_EOL;
-            print $e->getMessage() . PHP_EOL;
-
-            // .. or from the EsiResponse available from the Exception
-            print $e->getEsiResponse()->getErrorCode() . PHP_EOL;
-            print $e->getEsiResponse()->error() . PHP_EOL;
-
-            // You can also access the *actual* response we got from
-            // ESI as a normal array.
-            print_r($e->getEsiResponse());
-            dd($e->getEsiResponse());
-            return $e->getEsiResponse;
+            return $e->getEsiResponse();
         }
 
         return null;
