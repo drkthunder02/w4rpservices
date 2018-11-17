@@ -9,6 +9,7 @@ use DB;
 use Carbon\Carbon;
 
 use App\Library\Fleet;
+use App\Library\Esi;
 
 
 class FleetsController extends Controller
@@ -113,8 +114,25 @@ class FleetsController extends Controller
         } else {
             return view('inc.error')->with('error', $error);
         }
+    }
 
-        
+    public function addPilotName($fleetId, $name) {
+        $newPilot = new Fleet();
+        $esiHelper = new Esi();
+
+        //Retrieve the fleet data
+        $fleet = DB::table('Fleets')->where('fleet', $fleetId)->get();
+        //Search for the pilot's character id through his name
+        $charId = $esiHelper->FindCharacterId($name);
+        //Add the pilot to the fleet
+        $error = $newPilot->AddPilot($fleet[0]->character_id, $charId, $fleetId);
+        //If we don't have an error go back to the dashboard, 
+        //Otherwise, send the user to the error screen and print the error out.
+        if($error === null) {
+            return view('/dashboard')->with('success', 'Invite for fleet sent.');
+        } else {
+            return view('inc.error')->with('error', $error);
+        }
     }
 
     public function updateFleet() {
