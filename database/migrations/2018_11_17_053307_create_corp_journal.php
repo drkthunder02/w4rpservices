@@ -42,6 +42,6 @@ class CreateCorpJournal extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('CorpWalletJournals')
+        Schema::dropIfExists('CorpWalletJournals');
     }
 }
