@@ -53,8 +53,8 @@ class FleetsController extends Controller
     public function registerFleet(Request $request) {
         //Register a new instance of the fleet class
         $fleet = new Fleet(Auth::user()->character_id);
-        //Check to see if the character registering the fleet has the correct scope
-        if(!$fleet->HaveEsiScope(Auth::user()->character_id, 'esi-fleets.write_fleet.v1')) {
+        $esiHelper = new Esi();
+        if(!$esiHelper->HaveEsiScope) {
             return view('inc.error')->with('error', 'User does not have the write fleet scope.');
         }
         
@@ -106,9 +106,15 @@ class FleetsController extends Controller
 
         //Retrieve the fleet data
         $fleet = DB::table('Fleets')->where('fleet', $fleetId)->get();
-        //Add a pilot to the fleet
+        /**
+         * Add the pilot to the fleet
+         * @var fleet[0]->character_id is the FC of the fleet to get the refresh token
+         * @var charId is the character being added to the fleet
+         * @var fleetId is the number of the fleet to be retrieved from the database
+         */
         $error = $newPilot->AddPilot($fleet[0]->character_id, $charId, $fleetId);
-        
+        //If we don't have an error go back to the dashboard, 
+        //Otherwise, send the user to the error screen and print the error out.
         if($error === null) {
             return view('/dashboard')->with('success', 'Invite for fleet sent.');
         } else {
@@ -124,7 +130,12 @@ class FleetsController extends Controller
         $fleet = DB::table('Fleets')->where('fleet', $fleetId)->get();
         //Search for the pilot's character id through his name
         $charId = $esiHelper->FindCharacterId($name);
-        //Add the pilot to the fleet
+        /**
+         * Add the pilot to the fleet
+         * @var fleet[0]->character_id is the FC of the fleet to get the refresh token
+         * @var charId is the character being added to the fleet
+         * @var fleetId is the number of the fleet to be retrieved from the database
+         */
         $error = $newPilot->AddPilot($fleet[0]->character_id, $charId, $fleetId);
         //If we don't have an error go back to the dashboard, 
         //Otherwise, send the user to the error screen and print the error out.

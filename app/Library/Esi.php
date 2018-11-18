@@ -22,10 +22,11 @@ class Esi {
      * 
      * @return true,false
      */
-    public function CheckScope($charId, $scope) {
+    public function HaveEsiScope($charId, $scope) {
+        //Check for an esi scope
         $checks = DB::table('EsiScopes')->where('character_id', $charId)->get();
         foreach($checks as $check) {
-            if($check === $scope){
+            if($check->scope === $scope) {
                 return true;
             }
         }

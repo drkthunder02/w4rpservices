@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\corpJournal::class,
+        Commands\getCorps::class,
+        Commands\sendMail::class,
     ];
 
     /**
@@ -24,6 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // $schedule->command(corpJournal)->everyFifteenMinutes();
+        // $schedule->command(getCorps)->daily();
         // $schedule->command('inspire')
         //          ->hourly();
     }

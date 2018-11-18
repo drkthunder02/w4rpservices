@@ -401,7 +401,11 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\corpJournal' => __DIR__ . '/../..' . '/app/Console/Commands/corpJournal.php',
+        'App\\Console\\Commands\\getCorps' => __DIR__ . '/../..' . '/app/Console/Commands/getCorps.php',
+        'App\\Console\\Commands\\sendMail' => __DIR__ . '/../..' . '/app/Console/Commands/sendmail.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\CorpJournal' => __DIR__ . '/../..' . '/app/Models/CorpJournal.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',

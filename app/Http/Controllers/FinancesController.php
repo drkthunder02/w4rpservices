@@ -30,4 +30,8 @@ class FinancesController extends Controller
         dd($journals);
         return $journals;
     }
+
+    public function displayTaxes() {
+        
+    }
 }

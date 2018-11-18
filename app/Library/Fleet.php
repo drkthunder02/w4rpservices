@@ -106,11 +106,12 @@ class Fleet {
 
         try {
         //Setup the body of the esi message and perform the call
-        $esi->setBody(['character_id' => $charId, 
-                       'role' => 'squad_member',
-                       ])->invoke('post', '/fleets/{fleet_id}/members/', [
-                           'fleet_id' => $fleetId,
-                       ]);
+            $esi->setBody([
+                'character_id' => $charId, 
+                'role' => 'squad_member',
+            ])->invoke('post', '/fleets/{fleet_id}/members/', [
+                'fleet_id' => $fleetId,
+            ]);
         } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
             return $e->getEsiResponse();
         }
@@ -120,18 +121,6 @@ class Fleet {
 
     public function RenderFleetDisplay() {
         //
-    }
-
-    public function HaveEsiScope($charId, $scope) {
-        //Check for an esi scope
-        $checks = DB::table('EsiScopes')->where('character_id', $charId)->get();
-        foreach($checks as $check) {
-            if($check->scope === $scope) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
 

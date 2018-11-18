@@ -7,8 +7,6 @@
 
  namespace App\Library;
 
-use Illuminate\Http\Request;
-use Session;
 use DB;
 
 use App\Models\EsiScope;
@@ -18,9 +16,6 @@ use App\Models\CorpJournal;
 use App\Library\Esi;
 
 use Carbon\Carbon;
-
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -72,7 +67,23 @@ class Finances {
         
     }
 
-    public function CalculateMonthlyTaxes($corpId, $month, $overallTax) {
+    public function CalculateMonthlyRefineryTaxees($corpId, $month, $overallTax) {
+        $currentTime = Carbon::now();
+        $monthWanted = $month;
+        $untaxed = 0.00;
+        //Get the journal entries from the database
+        $entries = DB::table('CorpJournals')->where(['corporation_id' => $corpId, 'created_at' => $monthWanted, 'ref_type' => 127])->get();
+        foreach($entries as $entry) {
+            $untaxed += $entry->tax;
+        }
+        //The alliance will get 1.0 pts of the tax.  We need to calculate the correct percentage and return the value
+        $taxRatio = $overallTax / 1.0;
+        $taxed = $untaxed / $taxRatio;
+
+        return $taxed;
+    }
+
+    public function CalculateMonthlyMarketTaxes($corpId, $month, $overallTax) {
         //Convert the current time to a time / date
         $currentTime = Carbon::now();
         $monthWanted = $month;
@@ -90,8 +101,35 @@ class Finances {
         return $taxed;
     }
 
-    public function SendMail($charId) {
-        //
+    public function SendMail($charId, $taxAmount, $subject) {
+        //Retrieve the token for Amund Risalo
+        $token = DB::table('EsiTokens')->where('character_id', 93738489)->get();
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
+        $configuration->logfile_location = '/var/www/w4rpservices/storage/logs/eseye';
+        //Create the ESI authentication container
+        $config = config('esi');
+        $authentication = new EsiAuthentication([
+            'client_id'  => $config['esi']['client_id'],
+            'secret' => $config['esi']['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+        //Create the esi class variable
+        $esi = new Eseye($authentication);
+        try {
+            $esi->setBody([
+                'body' => $body,
+                'receipients' => [
+                    'recipient_id'=> $charId,
+                    'recipient_type' => 'character',
+                ],
+                'subject' => $subject,
+            ])->invoke('post', '/characters/{character_id}/mail/', [
+                'character_id' => 93738489,
+            ]);
+        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
+            return $e->getEsiResponse();
+        }
     }
 
     public function GetWalletJournal($division, $charId) {
