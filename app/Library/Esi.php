@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Library;
+
 use DB;
 
 use App\Models\EsiScope;
