@@ -54,7 +54,7 @@ class FleetsController extends Controller
         //Register a new instance of the fleet class
         $fleet = new Fleet(Auth::user()->character_id);
         $esiHelper = new Esi();
-        if(!$esiHelper->HaveEsiScope) {
+        if(!$esiHelper->HaveEsiScope()) {
             return view('inc.error')->with('error', 'User does not have the write fleet scope.');
         }
         
