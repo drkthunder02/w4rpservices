@@ -39,6 +39,15 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
+        $gate->define('isDirector', function($user) {
+            $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check[0]->role === 'Director') {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
         $gate->define('isUser', function($user) {
             $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
             if($check[0]->role === 'User') {

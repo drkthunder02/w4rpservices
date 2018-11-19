@@ -22,7 +22,8 @@ class RequireRole
             'None' => 0,
             'Guest' => 1,
             'User' => 2,
-            'Admin' => 3,
+            'Director' => 3,
+            'Admin' => 4,
         ];
         $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
 

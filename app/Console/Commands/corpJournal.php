@@ -41,12 +41,14 @@ class corpJournal extends Command
      */
     public function handle()
     {
+        //Setup the Finances Container
+        $finance = new Finances();
         //Get the characters that have the esi-wallet.read_corporation_wallets.v1
         //esi wallet scope
         $characters = DB::table('EsiScopes')->where('scopes', 'esi-wallet.read_corporation_wallets.v1')->get();
-        
-        foreach($characters as $char) {
 
+        foreach($characters as $char) {
+            $finance->GetWalletJournal(1, $characters->character_id);
         }
     }
 }

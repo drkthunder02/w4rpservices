@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use DB;
+
+use App\Models\CorpStructure;
+
+class RegisterStructure extends Controller
+{
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('role:Director');
+    }
+
+    public function displayRegisterStructure() {
+        return view('structures.register');
+    }
+
+    public function storeStructure(Request $request) {
+        $this->validate($request, [
+            'corporation_id' => 'required',
+            'corporation_name' => 'required',
+            'system' => 'required',
+            'structure_name' => 'required',
+            'tax' => 'required',
+            'structure_type' => 'required',
+        ]);
+
+        $structure = new CorpStructure();
+        $structure->corporation_id = $request->corporation_id;
+        $structure->corporation_name = $request->corporation_name;
+        $structure->region = $request->region;
+        $structure->system = $request->system;
+        $structure->structure_name = $request->structure_name;
+        $structure->tax = $request->tax;
+        $structure->structure_type = $request->structure_type;
+        $structure->save();
+
+        //Return the view and the message of user updated
+        return redirect('/dashboard')->with('success', 'Structure Added to Database');
+    }
+}

@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use App\Library\Finances;
+
 class sendMail extends Command
 {
     /**
@@ -32,6 +34,9 @@ class sendMail extends Command
 
     /**
      * Execute the console command.
+     * Gather the taxes needed and add them together.
+     * Send a mail to the character owning the ESI scope with the taxes
+     * owed to the holding corp
      *
      * @return mixed
      */

@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AllianceCorp extends Model
+class CorpStructure extends Model
 {
     /**
      * Table Name
      */
-    protected $table = 'AllianceCorps';
+    protected $table = 'CorpStructures';
 
     /**
      * Timestamps
@@ -23,6 +23,11 @@ class AllianceCorp extends Model
      */
     protected $fillable = [
         'corporation_id',
-        'name',
+        'corporation_name',
+        'region',
+        'system',
+        'structure_name',
+        'tax',
+        'structure_type',
     ];
 }

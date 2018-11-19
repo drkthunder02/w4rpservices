@@ -24,49 +24,6 @@ use Seat\Eseye\Eseye;
 
 class Finances {
 
-    public function PutWalletJournal($journal, $corpId, $division) {
-        $check = DB::table('CorpJournal')->where('id', $journal['id'])->get();
-        //if we don't find the journal entry, add the journal entry to the database
-        if($check == null) {
-            $entry = new CorpJournal;
-            $entry->id = $journal['id'];
-            $entry->corporation_id = $corpId;
-            $entry->division = $division;
-            if(isset($journal['amount'])) {
-                $entry->amount = $journal['amount'];
-            }
-            if(isset($journal['balance'])) {
-                $entry->balance = $journal['balance'];
-            }
-            if(isset($journal['context_id'])) {
-                $entry->context_id = $journal['context_id'];
-            }
-            if(isset($journal['context_id_type'])) {
-                $entry->context_id_type = $journal['context_id_type'];
-            }
-            $entry->date = $journal['date'];
-            $entry->description = $journal['description'];
-            if(isset($journal['first_party_id'])) {
-                $entry->first_party_id = $journal['first_party_id'];
-            }
-            if(isset($journal['reason'])) {
-                $entry->reason = $journal['reason'];
-            }
-            $entry->ref_type = $journal['ref_type'];
-            if(isset($journal['second_party_id'])) {
-                $entry->second_party_id = $journal['second_party_id'];
-            }
-            if(isset($journal['tax'])) {
-                $entry->tax = $journal['tax'];
-            }
-            if(isset($journal['tax_receiver_id'])) {
-                $entry->tax_receiver_id = $journal['tax_receiver_id'];
-            }
-            $entry->save();
-        }     
-        
-    }
-
     public function CalculateMonthlyRefineryTaxees($corpId, $month, $overallTax) {
         $currentTime = Carbon::now();
         $monthWanted = $month;
@@ -99,37 +56,6 @@ class Finances {
         $taxed = $untaxed / $taxRatio;
 
         return $taxed;
-    }
-
-    public function SendMail($charId, $taxAmount, $subject) {
-        //Retrieve the token for Amund Risalo
-        $token = DB::table('EsiTokens')->where('character_id', 93738489)->get();
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-        $configuration->logfile_location = '/var/www/w4rpservices/storage/logs/eseye';
-        //Create the ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-        //Create the esi class variable
-        $esi = new Eseye($authentication);
-        try {
-            $esi->setBody([
-                'body' => $body,
-                'receipients' => [
-                    'recipient_id'=> $charId,
-                    'recipient_type' => 'character',
-                ],
-                'subject' => $subject,
-            ])->invoke('post', '/characters/{character_id}/mail/', [
-                'character_id' => 93738489,
-            ]);
-        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
-            return $e->getEsiResponse();
-        }
     }
 
     public function GetWalletJournal($division, $charId) {
@@ -172,6 +98,49 @@ class Finances {
         foreach($journals as $entry) {
             $this->PutWalletJournal($entry, $corpId, $divison);
         }
+    }
+
+    private function PutWalletJournal($journal, $corpId, $division) {
+        $check = DB::table('CorpJournal')->where('id', $journal['id'])->get();
+        //if we don't find the journal entry, add the journal entry to the database
+        if($check == null) {
+            $entry = new CorpJournal;
+            $entry->id = $journal['id'];
+            $entry->corporation_id = $corpId;
+            $entry->division = $division;
+            if(isset($journal['amount'])) {
+                $entry->amount = $journal['amount'];
+            }
+            if(isset($journal['balance'])) {
+                $entry->balance = $journal['balance'];
+            }
+            if(isset($journal['context_id'])) {
+                $entry->context_id = $journal['context_id'];
+            }
+            if(isset($journal['context_id_type'])) {
+                $entry->context_id_type = $journal['context_id_type'];
+            }
+            $entry->date = $journal['date'];
+            $entry->description = $journal['description'];
+            if(isset($journal['first_party_id'])) {
+                $entry->first_party_id = $journal['first_party_id'];
+            }
+            if(isset($journal['reason'])) {
+                $entry->reason = $journal['reason'];
+            }
+            $entry->ref_type = $journal['ref_type'];
+            if(isset($journal['second_party_id'])) {
+                $entry->second_party_id = $journal['second_party_id'];
+            }
+            if(isset($journal['tax'])) {
+                $entry->tax = $journal['tax'];
+            }
+            if(isset($journal['tax_receiver_id'])) {
+                $entry->tax_receiver_id = $journal['tax_receiver_id'];
+            }
+            $entry->save();
+        }     
+        
     }
 
 }
