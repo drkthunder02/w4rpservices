@@ -24,8 +24,6 @@ class EsiScopeController extends Controller
     public function displayScopes() {
         //Get the ESI Scopes for the user
         $scopes = DB::table('EsiScopes')->where('character_id', Auth::user()->character_id)->get();
-        //We want to send the scopes to the page as pre-checked.
-        dd($scopes[0]->scope);
         return view('scopes.select')->with('scopes', $scopes);
     }
 
