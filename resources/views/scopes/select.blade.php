@@ -25,7 +25,7 @@
         </div>
         <div class="form-group col-md-6">
             {{ Form::label('scopes[]', 'Read Mail') }}
-            {{ Form::label('scopes[]', 'esi-mail.read_mail.v1')}}
+            {{ Form::checkbox('scopes[]', 'esi-mail.read_mail.v1')}}
         </div>
         <div class="form-group col-md-6">
             {{ Form::label('scopes[]', 'Corporation Wallets') }}
