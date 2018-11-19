@@ -44,8 +44,9 @@ class corpJournal extends Command
         //Get the characters that have the esi-wallet.read_corporation_wallets.v1
         //esi wallet scope
         $characters = DB::table('EsiScopes')->where('scopes', 'esi-wallet.read_corporation_wallets.v1')->get();
+        
         foreach($characters as $char) {
-            
+
         }
     }
 }
