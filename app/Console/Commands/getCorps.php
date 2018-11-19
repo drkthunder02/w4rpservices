@@ -4,6 +4,13 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use App\Models\AllianceCorp;
+
+use Seat\Eseye\Cache\NullCache;
+use Seat\Eseye\Configuration;
+use Seat\Eseye\Containers\EsiAuthentication;
+use Seat\Eseye\Eseye;
+
 class getCorps extends Command
 {
     /**
@@ -37,6 +44,33 @@ class getCorps extends Command
      */
     public function handle()
     {
-        //
+        //Set the parameters for ESI
+        $configuration = Configuration::getInstance();
+        $configuration->logfile_location = 'var/www/w4rpservices/storage/logs/eseye';
+        //Create the ESI container
+        $esi = new Eseye();
+        //try the  esi call to get all of the corporations in the alliance
+        try {
+            $corporations = $esi->invoke('get', '/alliances/{alliance_id}/corporations/', [
+                'alliance_id' => 99004116,
+            ]);
+        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e){
+            dd($e->getEsiResponse());
+        }
+        //Delete all of the entries in the AllianceCorps table
+        DB::table('AllianceCorps')->delete();
+        foreach($corporations as $corp) {
+            try {
+                $corpInfo = $esi->invoke('get', '/corporations/{corporation_id}/', [
+                    'corporation_id' => $corp,
+                ]);
+            } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
+                return $e->getEsiResponse();
+            }
+            $entry = new AllianceCorp;
+            $entry->corporation_id = $corp;
+            $entry->name = $corpInfo->name;
+            $entry->save();
+        }
     }
 }

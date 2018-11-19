@@ -110,8 +110,8 @@ class Finances {
         //Create the ESI authentication container
         $config = config('esi');
         $authentication = new EsiAuthentication([
-            'client_id'  => $config['esi']['client_id'],
-            'secret' => $config['esi']['secret'],
+            'client_id'  => $config['client_id'],
+            'secret' => $config['secret'],
             'refresh_token' => $token[0]->refresh_token,
         ]);
         //Create the esi class variable
@@ -142,8 +142,8 @@ class Finances {
         //Create the ESI authentication container
         $config = config('esi');
         $authentication = new EsiAuthentication([
-            'client_id'  => $config['esi']['client_id'],
-            'secret' => $config['esi']['secret'],
+            'client_id'  => $config['client_id'],
+            'secret' => $config['secret'],
             'refresh_token' => $token[0]->refresh_token,
         ]);
         //Create the esi class variable

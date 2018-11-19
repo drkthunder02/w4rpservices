@@ -16,6 +16,7 @@ class CreateAllianceCorps extends Migration
         if(!Schema::hasTable('AllianceCorps')) {
             Schema::create('AllianceCorps', function(Blueprint $table) {
                 $table->integer('corporation_id')->unique();
+                $table->string('name');
                 $table->timestamps();
             });
         }

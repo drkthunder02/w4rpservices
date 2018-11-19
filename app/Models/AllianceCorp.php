@@ -23,5 +23,6 @@ class AllianceCorp extends Model
      */
     protected $fillable = [
         'corporation_id',
+        'name',
     ];
 }

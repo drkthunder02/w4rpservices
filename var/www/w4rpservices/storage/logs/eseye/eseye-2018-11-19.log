@@ -1,0 +1,8 @@
+[2018-11-19 01:37:59] eseye.ERROR: [http 400, bad request] post -> https://login.eveonline.com/oauth/token/?grant_type=refresh_token [t/e: 0.68s/]
+[2018-11-19 01:38:16] eseye.ERROR: [http 400, bad request] post -> https://login.eveonline.com/oauth/token/?grant_type=refresh_token [t/e: 0.62s/]
+[2018-11-19 01:38:26] eseye.ERROR: [http 400, bad request] post -> https://login.eveonline.com/oauth/token/?grant_type=refresh_token [t/e: 0.63s/]
+[2018-11-19 01:38:50] eseye.ERROR: [http 400, bad request] post -> https://login.eveonline.com/oauth/token/?grant_type=refresh_token [t/e: 0.63s/]
+[2018-11-19 01:39:07] eseye.ERROR: [http 400, bad request] post -> https://login.eveonline.com/oauth/token/?grant_type=refresh_token [t/e: 0.50s/]
+[2018-11-19 01:39:32] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/alliances/99004116/corporations/?datasource=tranquility [t/e: 0.67s/100]
+[2018-11-19 01:56:56] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/alliances/99004116/corporations/?datasource=tranquility [t/e: 0.72s/100]
+[2018-11-19 01:57:58] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/corporations/98287666/?datasource=tranquility [t/e: 0.67s/100]

@@ -4,6 +4,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use DB;
+
+use App\Library\Finances;
+
 class corpJournal extends Command
 {
     /**
@@ -37,6 +41,11 @@ class corpJournal extends Command
      */
     public function handle()
     {
-        //
+        //Get the characters that have the esi-wallet.read_corporation_wallets.v1
+        //esi wallet scope
+        $characters = DB::table('EsiScopes')->where('scopes', 'esi-wallet.read_corporation_wallets.v1')->get();
+        foreach($characters as $char) {
+            
+        }
     }
 }

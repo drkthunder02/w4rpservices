@@ -68,8 +68,8 @@ class Fleet {
         //Create the esi authentication container
         $config = config('esi');
         $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
-            'client_id' => $config['esi']['client_id'],
-            'secret' => $config['esi']['secret'],
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
             'refresh_token' => $token->refresh_token,
         ]);
         //Create the esi class
@@ -98,8 +98,8 @@ class Fleet {
         //Create the ESI Call Container
         $config = config('esi');
         $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
-            'client_id'     => $config['esi']['client_id'],
-            'secret'        => $config['esi']['secret'],
+            'client_id'     => $config['client_id'],
+            'secret'        => $config['secret'],
             'refresh_token' => $token[0]->refresh_token,
         ]);
         $esi = new \Seat\Eseye\Eseye($authentication);
