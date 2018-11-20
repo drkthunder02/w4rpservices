@@ -24,6 +24,10 @@ use Seat\Eseye\Eseye;
 
 class Finances {
 
+    public function CalculateAverageFuelBlock() {
+
+    }
+
     public function CalculateMonthlyRefineryTaxees($corpId, $month, $overallTax) {
         $currentTime = Carbon::now();
         $monthWanted = $month;
@@ -96,7 +100,9 @@ class Finances {
         $journals = json_decode($journal->raw, true);
         //For each journal array, attempt to store in the database
         foreach($journals as $entry) {
-            $this->PutWalletJournal($entry, $corpId, $divison);
+            if($entry['ref_type'] == 46 || $entry['ref_type'] == 127) {
+                $this->PutWalletJournal($entry, $corpId, $divison);
+            }
         }
     }
 

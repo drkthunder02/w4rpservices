@@ -57,6 +57,15 @@ class Esi {
         return $character['character'];
     }
 
+    public function FindCorporationName($charId) {
+        $esi = new Eseye();
+        $character = $esi->invoke('get', '/characters/{character_id}/', [
+            'character_id' => $charId,
+        ]);
+
+        return $character->corporation_name;
+    }
+
 }
 
 ?>
