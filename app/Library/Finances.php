@@ -33,7 +33,7 @@ class Finances {
         $monthWanted = $month;
         $untaxed = 0.00;
         //Get the journal entries from the database
-        $entries = DB::table('CorpJournals')->where(['corporation_id' => $corpId, 'created_at' => $monthWanted, 'ref_type' => 127])->get();
+        $entries = DB::table('CorpJournals')->where(['corporation_id' => $corpId, 'created_at' => $monthWanted, 'ref_type' => 'reprocessing_tax'])->get();
         foreach($entries as $entry) {
             $untaxed += $entry->tax;
         }
@@ -50,7 +50,7 @@ class Finances {
         $monthWanted = $month;
         $untaxed = 0.00;
         //Get the journal entries from the database
-        $entries = DB::table('CorpJournals')->where(['corporation_id' => $corpId, 'created_at' => $monthWanted, 'ref_type' => 46])->get();
+        $entries = DB::table('CorpJournals')->where(['corporation_id' => $corpId, 'created_at' => $monthWanted, 'ref_type' => 'brokers_fee'])->get();
         foreach($entries as $entry) {
             $untaxed += $entry->tax;
         }
@@ -100,7 +100,7 @@ class Finances {
         $journals = json_decode($journal->raw, true);
         //For each journal array, attempt to store in the database
         foreach($journals as $entry) {
-            if($entry['ref_type'] == 46 || $entry['ref_type'] == 127) {
+            if($entry['ref_type'] == 'brokers_fee' || $entry['ref_type'] == 'reprocessing_tax') {
                 $this->PutWalletJournal($entry, $corpId, $divison);
             }
         }
