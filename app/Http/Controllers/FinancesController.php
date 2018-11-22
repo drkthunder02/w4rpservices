@@ -31,7 +31,8 @@ class FinancesController extends Controller
     public function displayWallet() {
         $helper = new Finances();
 
-        $data = $helper->GetWalletJournal(1, 92626011);
+        $helper->GetWalletJournal(1, 92626011);
+        dd($helper);
     }
 
     public function displayTaxes() {

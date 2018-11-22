@@ -16,6 +16,7 @@ class CreateCorpStructure extends Migration
         if(!Schema::hasTable('CorpStructures')) {
             Schema::create('CorpStructures', function(Blueprint $table) {
                 $table->increments('id');
+                $table->integer('character_id');
                 $table->integer('corporation_id');
                 $table->string('corporation_name');
                 $table->string('region');

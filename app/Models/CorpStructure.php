@@ -22,6 +22,7 @@ class CorpStructure extends Model
      * @var array
      */
     protected $fillable = [
+        'character_id',
         'corporation_id',
         'corporation_name',
         'region',

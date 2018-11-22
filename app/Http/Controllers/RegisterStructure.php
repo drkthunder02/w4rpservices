@@ -30,6 +30,7 @@ class RegisterStructure extends Controller
         ]);
 
         $structure = new CorpStructure();
+        $structure->character_id = Auth::user()->character_id;
         $structure->corporation_id = $request->corporation_id;
         $structure->corporation_name = $request->corporation_name;
         $structure->region = $request->region;
