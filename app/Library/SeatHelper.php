@@ -18,13 +18,14 @@ class SeatHelper {
         $guzzle = new Client([
             'headers' => [
                 'X-Token' => 'EXXruHji5xYGO07C9W31cDjjZ0D3nPVw',
-                'Accept:' => 'application/json',
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
                 'X-CSRF-Token' => 'EXXruHji5xYGO07C9W31cDjjZ0D3nPVw',
             ],
         ]);
         $data = $guzzle->request('GET', 'https://seat.warpedintentions.com/api/v2/corporation/wallet-journal/' . $corporationId);
-        //$body = json_decode($data->getBody());
-        dd($data->getBody());
+        $body = $data->getBody()->getContents();
+        dd($body);
     }
 
     private function DecodeDate($date) {
