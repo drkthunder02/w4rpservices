@@ -16,17 +16,17 @@ class CreateCorpJournal extends Migration
         if(!Schema::hasTable('CorpJournals')) {
             Schema::create('CorpJournals', function(Blueprint $table) {
                 $table->integer('id')->unique();
-                $table->integer('corporation_id');
+                $table->integer('corporation_id')->nullabe();
                 $table->integer('division')->default(0);
-                $table->decimal('amount', 20, 2);
-                $table->decimal('balance', 20, 2);
-                $table->integer('context_id');
-                $table->string('context_id_type');
-                $table->dateTime('date');
-                $table->string('description');
+                $table->decimal('amount', 20, 2)->nullable();
+                $table->decimal('balance', 20, 2)->nullable();
+                $table->integer('context_id')->nullable();
+                $table->string('context_id_type')->nullable();
+                $table->dateTime('date')->nullabe();
+                $table->string('description')->nullabe();
                 $table->integer('first_party_id')->nullable();
                 $table->string('reason')->nullabe();
-                $table->string('ref_type');
+                $table->string('ref_type')->nullabe();
                 $table->integer('second_party_id')->nullable();
                 $table->decimal('tax', 20, 2)->default(0.00);
                 $table->integer('tax_receiver_id')->nullable();
