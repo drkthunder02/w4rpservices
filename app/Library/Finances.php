@@ -101,7 +101,7 @@ class Finances {
         //For each journal array, attempt to store in the database
         foreach($journals as $entry) {
             if($entry['ref_type'] == 'brokers_fee' || $entry['ref_type'] == 'reprocessing_tax') {
-                $this->PutWalletJournal($entry, $entry->corporation_id, $divison);
+                $this->PutWalletJournal($entry, $entry['corporation_id'], $divison);
             }
         }
     }
