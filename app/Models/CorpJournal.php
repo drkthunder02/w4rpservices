@@ -9,7 +9,7 @@ class CorpJournal extends Model
     /**
      * Table Name
      */
-    protected $table = 'CorpJournal';
+    protected $table = 'CorpJournals';
 
     /**
      *  Timestamps
