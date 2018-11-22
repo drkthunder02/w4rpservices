@@ -108,6 +108,7 @@ class Finances {
 
     private function PutWalletJournal($journal, $corpId, $division) {
         $check = DB::table('CorpJournals')->where('id', $journal['id'])->get();
+        dd($check);
         //if we don't find the journal entry, add the journal entry to the database
         if($check == null) {
             $entry = new CorpJournal;
