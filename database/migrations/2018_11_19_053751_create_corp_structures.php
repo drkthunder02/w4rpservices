@@ -24,6 +24,7 @@ class CreateCorpStructures extends Migration
                 $table->string('structure_name');
                 $table->decimal('tax', 10, 2);
                 $table->string('structure_type');
+                $table->timestamps();
             });
         }
     }
