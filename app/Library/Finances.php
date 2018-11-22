@@ -97,7 +97,7 @@ class Finances {
             return $e->getEsiResponse();
         }
         //Decode the journal from json into an array for future processing
-        $journals = json_decode($journal->raw, true);
+        $journals = json_decode($journals->raw, true);
         dd($journals);
         //For each journal array, attempt to store in the database
         foreach($journals as $entry) {
