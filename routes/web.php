@@ -59,3 +59,7 @@ Route::post('/admin/removeRole', 'AdminController@removeRole');
 
 //Finances Controller display pages
 Route::get('/finances/display', 'FinancesController@displayWallet');
+
+//Structures Controller display pages
+Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
+Route::post('/structure/store', 'RegisterStructureController@storeStructure');

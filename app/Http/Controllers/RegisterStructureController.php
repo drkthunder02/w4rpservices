@@ -8,7 +8,7 @@ use DB;
 
 use App\Models\CorpStructure;
 
-class RegisterStructure extends Controller
+class RegisterStructureController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
