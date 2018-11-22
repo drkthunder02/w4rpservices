@@ -11,6 +11,7 @@ use Auth;
 use App\User;
 use App\Libary\Finances;
 use App\Library\Esi;
+use App\Library\SeatHelper;
 use App\Models\CorpJournal;
 
 use Carbon\Carbon;
@@ -28,7 +29,8 @@ class FinancesController extends Controller
     }
 
     public function displayWallet() {
-        // 
+        $helper = new SeatHelper();
+        $helper->GetCorpJournal(98287666);
     }
 
     public function displayTaxes() {

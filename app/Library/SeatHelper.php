@@ -25,6 +25,21 @@ class SeatHelper {
         ]);
         dd($data);
     }
+
+    private function DecodeDate($date) {
+        //Find the end of the date
+        $dateEnd = strpos($date, "T");
+        //Split the string up into date and time
+        $dateArr = str_split($date, $dateEnd);
+        //Trim the T and Z from the end of the second item in the array
+        $dateArr[1] = ltrim($dateArr[1], "T");
+        $dateArr[1] = rtrim($dateArr[1], "Z");
+        //Combine the date
+        $realDate = $dateArr[0] . " " . $dateArr[1];
+
+        //Return the combined date in the correct format
+        return $realDate;
+    }
 }
 
 ?>
