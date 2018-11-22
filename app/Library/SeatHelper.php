@@ -13,7 +13,7 @@ use GuzzleHttp\RequestOptions;
 
 class SeatHelper {
 
-    public function GetCorpJournal($corporationId) {
+    public function GetCorpJournal($corporationId, $page) {
         //Setup the guzzle client
         $guzzle = new Client([
             'headers' => [
@@ -23,7 +23,7 @@ class SeatHelper {
                 'X-CSRF-Token' => 'EXXruHji5xYGO07C9W31cDjjZ0D3nPVw',
             ],
         ]);
-        $data = $guzzle->request('GET', 'https://seat.warpedintentions.com/api/v2/corporation/wallet-journal/' . $corporationId);
+        $data = $guzzle->request('GET', 'https://seat.warpedintentions.com/api/v2/corporation/wallet-journal/' . $corporationId . '?page=' . $page);
         $body = $data->getBody()->getContents();
         dd($body);
     }
