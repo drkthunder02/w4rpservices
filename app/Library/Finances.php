@@ -71,8 +71,9 @@ class Finances {
         $configuration->logfile_location = '/var/www/w4rpservices/storage/logs/eseye';
         //Create the ESI authentication container
         $config = config('esi');
+        dd($config);
         $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
+            'client_id'  => $config['esi']['client_id'],
             'secret' => $config['secret'],
             'refresh_token' => $token[0]->refresh_token,
         ]);
