@@ -15,7 +15,7 @@ class SeatHelper {
 
     public function GetCorpJournal($corporationId) {
         //Setup the guzzle client
-        $guzzle = new GuzzleHttp\Client([
+        $guzzle = new Client([
             'headers' => [
                 'X-Token' => 'tTa59bxP4VzBAfZ3s1JJ2BkEj8mFixD0',
             ],
