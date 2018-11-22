@@ -110,7 +110,7 @@ class Finances {
         $check = DB::table('CorpJournals')->where('id', $journal['id'])->get();
         //if we don't find the journal entry, add the journal entry to the database
         if($check->count() === 0) {
-            $entry = new CorpJournal;
+            $entry = new \App\Models\CorpJournal;
             $entry->id = $journal['id'];
             $entry->corporation_id = $corpId;
             $entry->division = $division;
