@@ -29,8 +29,9 @@ class FinancesController extends Controller
     }
 
     public function displayWallet() {
-        $helper = new SeatHelper();
-        $helper->GetCorpJournal(98287666, 3);
+        $helper = new Finances();
+
+        $data = $helper->GetWalletJournal(1, 92626011);
     }
 
     public function displayTaxes() {

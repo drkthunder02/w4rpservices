@@ -98,6 +98,7 @@ class Finances {
         }
         //Decode the journal from json into an array for future processing
         $journals = json_decode($journal->raw, true);
+        dd($journals);
         //For each journal array, attempt to store in the database
         foreach($journals as $entry) {
             if($entry['ref_type'] == 'brokers_fee' || $entry['ref_type'] == 'reprocessing_tax') {
