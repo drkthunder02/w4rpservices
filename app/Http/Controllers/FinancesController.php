@@ -45,7 +45,7 @@ class FinancesController extends Controller
         $corpId = $helper->FindCorporationId(Auth::user()->character_id);
         //Get the taxes for the corporation
         $taxes = DB::table('CorpJournals')
-            ->where(['corporation_id'=> $corpId, 'ref_type' => 46])
+            ->where(['corporation_id'=> $corpId, 'ref_type' => 'brokers_fee'])
             ->whereBetween($start, $end)
             ->get();
         foreach($taxes as $tax) {
