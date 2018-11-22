@@ -21,7 +21,8 @@ class SeatHelper {
             ],
         ]);
         $data = $guzzle->request('GET', 'https://seat.warpedintentions.com/api/v2/corporation/wallet-journal/' . $corporationId);
-        dd($data);
+        $body = $data->getBody();
+        dd($body);
     }
 
     private function DecodeDate($date) {
