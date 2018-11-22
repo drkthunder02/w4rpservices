@@ -9,7 +9,7 @@ use Socialite;
 use Auth;
 
 use App\User;
-use App\Libary\Finances;
+use App\Library\Finances;
 use App\Library\Esi;
 use App\Library\SeatHelper;
 use App\Models\CorpJournal;
