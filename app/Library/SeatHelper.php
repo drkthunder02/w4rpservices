@@ -20,9 +20,7 @@ class SeatHelper {
                 'X-Token' => 'EXXruHji5xYGO07C9W31cDjjZ0D3nPVw',
             ],
         ]);
-        $data = $guzzle->request('GET', 'https://seat.warpedintentions.com/api/v2/corporation/wallet-journal/{corporation_id}', [
-            'corporation_id' => $corporationId,
-        ]);
+        $data = $guzzle->request('GET', 'https://seat.warpedintentions.com/api/v2/corporation/wallet-journal/' . $corporationId);
         dd($data);
     }
 
