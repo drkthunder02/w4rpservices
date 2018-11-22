@@ -62,4 +62,4 @@ Route::get('/finances/display', 'FinancesController@displayWallet');
 
 //Structures Controller display pages
 Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
-Route::post('/structure/store', 'RegisterStructureController@storeStructure');
+Route::post('/structures/store', 'RegisterStructureController@storeStructure');
