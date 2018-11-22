@@ -18,6 +18,7 @@ class SeatHelper {
         $guzzle = new Client([
             'headers' => [
                 'X-Token' => 'EXXruHji5xYGO07C9W31cDjjZ0D3nPVw',
+                'Accept' => 'application/json',
             ],
         ]);
         $data = $guzzle->request('GET', 'https://seat.warpedintentions.com/api/v2/corporation/wallet-journal/' . $corporationId);
