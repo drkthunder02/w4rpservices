@@ -60,6 +60,7 @@ class CorpJournal extends Command
 
     private function GetJournal($charId) {
         $finances = new Finances();
+        //Get the master wallet journal for the corporation for the character
         $finances->GetWalletJournal(1, $charId);
     }
 }

@@ -107,6 +107,10 @@ class Finances {
     }
 
     private function PutWalletJournal($journal, $corpId, $division) {
+        //Create ESI Helper class
+        $esiHelper = new Esi;
+        $date = $esiHelper->DecodeDate($journal['date']);
+
         $check = DB::table('CorpJournals')->where('id', $journal['id'])->get();
         //if we don't find the journal entry, add the journal entry to the database
         if($check->count() === 0) {
@@ -126,7 +130,7 @@ class Finances {
             if(isset($journal['context_id_type'])) {
                 $entry->context_id_type = $journal['context_id_type'];
             }
-            $entry->date = $journal['date'];
+            $entry->date = $date;
             $entry->description = $journal['description'];
             if(isset($journal['first_party_id'])) {
                 $entry->first_party_id = $journal['first_party_id'];
