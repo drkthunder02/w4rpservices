@@ -52,8 +52,8 @@ class CorpJournal extends Command
         //Add an entry into the jobs table
         $job = new ScheduleJob;
         $time = Carbon::now();
-        $job->name = 'CorpJournal';
-        $job->state = 'Starting';
+        $job->job_name = 'CorpJournal';
+        $job->job_state = 'Starting';
         $job->system_time = $time;
         $job->save();
         //Setup the Finances Container
