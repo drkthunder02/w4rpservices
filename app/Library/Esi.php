@@ -40,8 +40,8 @@ class Esi {
         $config = config('esi');
         //Create the esi authentication container
         $authentication = new EsiAuthentication([
-            'client_id' => $config['esi']['client_id'],
-            'secret' => $config['esi']['secret'],
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
         ]);
         //Create the esi container
         $esi = new Eseye($authentication);

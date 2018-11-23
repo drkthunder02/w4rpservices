@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use DB;
 
 use App\Library\Finances;
+use App\Library\Esi;
 
 use App\Models\EsiScope;
 use App\Models\EsiToken;
@@ -48,15 +49,17 @@ class CorpJournal extends Command
         //Setup the Finances Container
         $finance = new Finances();
         //Get the corps with structures logged in the database
-        $structures = DB::table('CorpStructures')->first();
-        //Get the characters that have the esi-wallet.read_corporation_wallets.v1
-        //esi wallet scope
-        $characters = DB::table('EsiScopes')->where('scope', 'esi-wallet.read_corporation_wallets.v1')->get();
-        //For each structure let's attemp to gather the characters owning the structures and peer into their wallets.
-        foreach($characters as $char) {
-            if($char->character_id == $structures->character_id) {
-                $this->line('Found Character and Structure.');
-            }
+        $structures = DB::table('CorpStructures')->get();
+        //For each structure get the corp journals from the corporation owning the structure
+        foreach($structures as $structure) {
+            $this->line('Getting corp journal');
+            $this->GetJournal($structure->character_id);
         }
+
+    }
+
+    private function GetJournal($charId) {
+        $finances = new Finances();
+        $finances->GetWalletJournal(1, $charId);
     }
 }
