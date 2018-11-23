@@ -27,9 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(CorpJournal::class)->everyFifteenMinutes();
-        // $schedule->command(getCorps)->daily();
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //$schedule->command(GetCorps::class)->daily();
     }
 
     /**

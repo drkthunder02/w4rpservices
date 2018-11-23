@@ -12,6 +12,9 @@ use App\Library\Esi;
 use App\Models\EsiScope;
 use App\Models\EsiToken;
 use App\Models\Structure;
+use App\Models\ScheduleJob;
+
+use Carbon\Carbon;
 
 class CorpJournal extends Command
 {
@@ -46,6 +49,13 @@ class CorpJournal extends Command
      */
     public function handle()
     {
+        //Add an entry into the jobs table
+        $job = new ScheduleJob;
+        $time = Carbon::now();
+        $job->name = 'CorpJournal';
+        $job->state = 'Starting';
+        $job->system_time = $time;
+        $job->save();
         //Setup the Finances Container
         $finance = new Finances();
         //Get the corps with structures logged in the database
@@ -56,6 +66,10 @@ class CorpJournal extends Command
             $this->GetJournal($structure->character_id);
         }
 
+        //Mark the job as finished
+        DB::table('schedule_jobs')->where('system_time', $time)->update([
+            'job_state' => 'Finished',
+        ]);
     }
 
     private function GetJournal($charId) {

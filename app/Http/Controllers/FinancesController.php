@@ -48,7 +48,7 @@ class FinancesController extends Controller
         //Get the taxes for the corporation
         $taxes = DB::table('CorpJournals')
             ->where(['corporation_id'=> $corpId, 'ref_type' => 'brokers_fee'])
-            ->whereBetween($start, $end)
+            ->whereBetween(['dateTime' => $start, 'dateTime' => $end])
             ->get();
         foreach($taxes as $tax) {
             $totalTax += $tax->amount;

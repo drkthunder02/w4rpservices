@@ -4,14 +4,19 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use DB;
+
 use App\Models\AllianceCorp;
+use App\Models\ScheduleJob;
+
+use Carbon\Carbon;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 
-class getCorps extends Command
+class GetCorps extends Command
 {
     /**
      * The name and signature of the console command.
@@ -44,6 +49,13 @@ class getCorps extends Command
      */
     public function handle()
     {
+        //Add an entry into the jobs table
+        $job = new ScheduleJob;
+        $time = Carbon::now();
+        $job->job_name = 'GetCorps';
+        $job->job_state = 'Starting';
+        $job->system_time = $time;
+        $job->save();
         //Set the parameters for ESI
         $configuration = Configuration::getInstance();
         $configuration->logfile_location = 'var/www/w4rpservices/storage/logs/eseye';
@@ -72,5 +84,10 @@ class getCorps extends Command
             $entry->name = $corpInfo->name;
             $entry->save();
         }
+
+        //If the job is finished we need to mark it in the table
+        DB::table('schedule_jobs')->where('system_time', $time)->update([
+            'job_state' => 'Finished',
+        ]);
     }
 }
