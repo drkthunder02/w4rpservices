@@ -57,6 +57,6 @@ class CorpJournal extends Command
             var_dump($structure);
         }
 
-        return 0;
+        return $structure;
     }
 }
