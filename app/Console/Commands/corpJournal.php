@@ -51,9 +51,11 @@ class corpJournal extends Command
         //Get the characters that have the esi-wallet.read_corporation_wallets.v1
         //esi wallet scope
         $characters = DB::table('EsiScopes')->where('scope', 'esi-wallet.read_corporation_wallets.v1')->get();
-        
+        //For each structure let's attemp to gather the characters owning the structures and peer into their wallets.
         foreach($structures as $structure) {
             foreach($characters as $char) {
+                var_dump($structure->character_id);
+                dd($char->character_id);
                 if($structure->character_id === $char->character_id) {
                     $finance->GetWalletJournal(1, $char->character_id);
                 }
