@@ -56,7 +56,5 @@ class CorpJournal extends Command
         foreach($structures as $structure) {
             var_dump($structure);
         }
-
-        return $structure;
     }
 }
