@@ -54,7 +54,7 @@ class CorpJournal extends Command
         $characters = DB::table('EsiScopes')->where('scope', 'esi-wallet.read_corporation_wallets.v1')->get();
         //For each structure let's attemp to gather the characters owning the structures and peer into their wallets.
         foreach($structures as $structure) {
-            printf($structures->character_id);
+            printf($structure->character_id);
         }
     }
 }
