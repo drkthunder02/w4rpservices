@@ -10,6 +10,7 @@ use App\Library\Finances;
 
 use App\Models\EsiScope;
 use App\Models\EsiToken;
+use App\Models\Structure;
 
 class corpJournal extends Command
 {
