@@ -48,11 +48,11 @@ class CorpJournal extends Command
         //Setup the Finances Container
         $finance = new Finances();
         //Get the corps with structures logged in the database
-        $structures = $this->table('CorpStructures')->first();
+        $structures = DB::table('CorpStructures')->first();
         dd($structures);
         //Get the characters that have the esi-wallet.read_corporation_wallets.v1
         //esi wallet scope
-        $characters = $this->table('EsiScopes')->where('scope', 'esi-wallet.read_corporation_wallets.v1')->get();
+        $characters = DB::table('EsiScopes')->where('scope', 'esi-wallet.read_corporation_wallets.v1')->get();
         //For each structure let's attemp to gather the characters owning the structures and peer into their wallets.
         
     }
