@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\CorpJournal::class,
         Commands\getCorps::class,
         Commands\sendMail::class,
+        Commands\UpdateMoonPricing::class,
     ];
 
     /**
@@ -27,10 +28,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('services:corpjournal')
-                 ->everyHour()
+                 ->hourly()
                  ->withoutOverlapping();
         $schedule->command('services:getcorps')
-                 ->everyDay()
+                 ->daily()
+                 ->withoutOverlapping();
+        $schedule->command('services:updatemoonprice')
+                 ->hourly()
                  ->withoutOverlapping();
         //$schedule->command('services:sendmail')
         //         ->monthlyOn(1, '09:00')
