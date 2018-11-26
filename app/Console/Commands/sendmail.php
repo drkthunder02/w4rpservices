@@ -3,8 +3,17 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Carbon\Carbon;
+use DB;
 
-use App\Library\Finances;
+use App\Library\Esi;
+use App\Library\Mail;
+use App\Models\ScheduleJob;
+
+use Seat\Eseye\Cache\NullCache;
+use Seat\Eseye\Configuration;
+use Seat\Eseye\Containers\EsiAuthentication;
+use Seat\Eseye\Eseye;
 
 class sendMail extends Command
 {
@@ -42,6 +51,19 @@ class sendMail extends Command
      */
     public function handle()
     {
-        //
+        //Add an entry into the jobs table
+        $job = new ScheduleJob;
+        $time = Carbon::now();
+        $job->job_name = 'SendMail';
+        $job->job_state = 'Starting';
+        $job->system_time = $time;
+        $job->save();
+
+        //Put our task in this section
+
+        //If the job is finished we need to mark it in the table
+        DB::table('schedule_jobs')->where('system_time', $time)->update([
+            'job_state' => 'Finished',
+        ]);
     }
 }

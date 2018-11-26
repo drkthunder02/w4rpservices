@@ -3,13 +3,11 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
 use DB;
+use Carbon\Carbon;
 
 use App\Models\AllianceCorp;
 use App\Models\ScheduleJob;
-
-use Carbon\Carbon;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -23,7 +21,7 @@ class GetCorps extends Command
      *
      * @var string
      */
-    protected $signature = 'services:getCorps';
+    protected $signature = 'services:getcorps';
 
     /**
      * The console command description.

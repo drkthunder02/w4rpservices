@@ -26,8 +26,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('services:corpjournal')->everyFifteenMinutes()->withoutOverlapping();
-        //$schedule->command(GetCorps::class)->daily();
+        $schedule->command('services:corpjournal')
+                 ->everyHour()
+                 ->withoutOverlapping();
+        $schedule->command('services:getcorps')
+                 ->everyDay()
+                 ->withoutOverlapping();
+        //$schedule->command('services:sendmail')
+        //         ->monthlyOn(1, '09:00')
+        //         ->withoutOverlapping();
     }
 
     /**

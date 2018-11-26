@@ -58,12 +58,22 @@ class CorpJournal extends Command
         $job->save();
         //Setup the Finances Container
         $finance = new Finances();
+        //Setup an array to store corporations which have been logged so we don't keep calling the same ones.  We need
+        //this step in order to save time during the cronjob.
+        $finishedCorps = array();
         //Get the corps with structures logged in the database
         $structures = DB::table('CorpStructures')->get();
         //For each structure get the corp journals from the corporation owning the structure
+        //After getting the corp journal for the corporation, let's not do the corporation again
         foreach($structures as $structure) {
-            $this->line('Getting corp journal');
+            foreach($finishedCorps as $finished) {
+                if($finished == $structure->corporation_id) {
+                    break;
+                }
+            }
+            //$this->line('Getting corp journal');
             $this->GetJournal($structure->character_id);
+            $finishedCorps[sizeof($finishedCorps)] = $structure->corporation_id;
         }
 
         //Mark the job as finished
