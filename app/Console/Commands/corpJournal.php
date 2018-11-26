@@ -61,6 +61,7 @@ class CorpJournal extends Command
         //Setup an array to store corporations which have been logged so we don't keep calling the same ones.  We need
         //this step in order to save time during the cronjob.
         $finishedCorps = array();
+        $corpCompleted = false;
         //Get the corps with structures logged in the database
         $structures = DB::table('CorpStructures')->get();
         //For each structure get the corp journals from the corporation owning the structure
@@ -68,12 +69,24 @@ class CorpJournal extends Command
         foreach($structures as $structure) {
             foreach($finishedCorps as $finished) {
                 if($finished == $structure->corporation_id) {
+                    $corpCompleted = true;
                     break;
+                } else {
+                    //If the corp wasn't completed yet ensure the variable is false
+                    //If the corp was completed, the variable will be true and this else
+                    //will be skipped
+                    $corpCompleted = false;
                 }
             }
-            //$this->line('Getting corp journal');
-            $this->GetJournal($structure->character_id);
-            $finishedCorps[sizeof($finishedCorps)] = $structure->corporation_id;
+            //If we didn't find the corporation was already done, then complete it.
+            if($corpCompleted === false) {
+                 //$this->line('Getting corp journal');
+                $this->GetJournal($structure->character_id);
+                $finishedCorps[sizeof($finishedCorps)] = $structure->corporation_id;
+                //After the corporation has been done set the variable back to false
+                $corpCompleted = false;
+            }
+           
         }
 
         //Mark the job as finished
