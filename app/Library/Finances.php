@@ -24,42 +24,41 @@ use Seat\Eseye\Eseye;
 
 class Finances {
 
-    public function CalculateAverageFuelBlock() {
+    public function CalculateFuelBlockCost($type) {
+        //Calculate how many fuel blocks are used in a month by a structure type
+        if($type === 'market') {
+            $fuelBlocks = 30*32*24;
+        } else if ($type === 'reprocessing') {
+            $fuelBlocks = 8*30*24;
+        } else {
+            $fuelBlocks = 0;
+        }
 
+        //Multiply the amount of fuel blocks used by the structure by 20,000.
+        $cost = $fuelBlocks * 20000;
+        //Return to the calling function
+        return $cost;
     }
 
-    public function CalculateMonthlyRefineryTaxees($corpId, $month, $overallTax) {
-        $currentTime = Carbon::now();
-        $monthWanted = $month;
-        $untaxed = 0.00;
-        //Get the journal entries from the database
-        $entries = DB::table('CorpJournals')->where(['corporation_id' => $corpId, 'created_at' => $monthWanted, 'ref_type' => 'reprocessing_tax'])->get();
-        foreach($entries as $entry) {
-            $untaxed += $entry->tax;
+    public function CalculateTax($taxAmount, $overallTax, $type) {
+        //The alliance will get a ratio of the tax.
+        //We need to calculate the correct ratio based on structure tax, 
+        //Then figure out what is owed to the alliance
+        if($type === 'market') {
+            $ratioType = 2.5;
+        } else if ($type === 'refinery') {
+            $ratioType = 1.0;
+        } else {
+            $ratioType = 1.5;
         }
-        //The alliance will get 1.0 pts of the tax.  We need to calculate the correct percentage and return the value
-        $taxRatio = $overallTax / 1.0;
-        $taxed = $untaxed / $taxRatio;
+        //Calculate the ratio since we have the base percentage the alliance takes
+        $taxRatio = $overallTax / $ratioType;
+        //Calculate the tax owed to the alliance by taking the tax amount collected
+        //and divide by the tax ratio.
+        $amount = $taxAmount / $taxRatio;
 
-        return $taxed;
-    }
-
-    public function CalculateMonthlyMarketTaxes($corpId, $month, $overallTax) {
-        //Convert the current time to a time / date
-        $currentTime = Carbon::now();
-        $monthWanted = $month;
-        $untaxed = 0.00;
-        //Get the journal entries from the database
-        $entries = DB::table('CorpJournals')->where(['corporation_id' => $corpId, 'created_at' => $monthWanted, 'ref_type' => 'brokers_fee'])->get();
-        foreach($entries as $entry) {
-            $untaxed += $entry->tax;
-        }
-        //The alliance will get 2.5 pts of the tax.  We need to calculate
-        //the correct percentage, and return the value
-        $taxRatio = $overallTax / 2.5;
-        $taxed = $untaxed / $taxRatio;
-
-        return $taxed;
+        //Return what is owed to the alliance
+        return $amount;
     }
 
     public function GetWalletJournal($division, $charId) {
