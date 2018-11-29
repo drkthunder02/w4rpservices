@@ -46,8 +46,8 @@ class FinancesController extends Controller
         $end->hour = 23;
         $end->minute = 59;
         $end->second = 59;
-        $startLast = Carbon::now()->firstDayOfPreviousMonth();
-        $endLast = Carbon::now()->lastDayOfPreviousMonth();
+        $startLast = new Carbon('first day of last month');
+        $endLast = new Carbon('last day of last month');
         $endLast->hour = 23;
         $endLast->minute = 59;
         $endLast->second = 59;
