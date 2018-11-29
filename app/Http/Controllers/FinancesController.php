@@ -70,7 +70,7 @@ class FinancesController extends Controller
         /**
          * In this next section we are removing the cost of fuel blocks from one structure
          */
-        $monthTaxesMarket = $monthTaxesMarket - ($hFinaces->CalculateFuelBlockCost('market') * $citadelCount);
+        $monthTaxesMarket = $monthTaxesMarket - ($hFinances->CalculateFuelBlockCost('market') * $citadelCount);
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
@@ -80,7 +80,7 @@ class FinancesController extends Controller
             $lastTaxesMarket = 0.00;
         }
 
-        $monthTaxesReprocessing = $monthTaxesReprocessing - ($hFinaces->CalculateFuelBlockCost('reprocessing') * $refineryCount);
+        $monthTaxesReprocessing = $monthTaxesReprocessing - ($hFinances->CalculateFuelBlockCost('reprocessing') * $refineryCount);
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
