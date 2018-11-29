@@ -63,7 +63,11 @@ class Esi {
             'character_id' => $charId,
         ]);
 
-        return $character->corporation_name;
+        $corporation = $esi->invoke('get', '/corporations/{corporation_id}/', [
+            'corporation_id' => $character->corporation_id,
+        ]);
+
+        return $corporation->name;
     }
 
     public function DecodeDate($date) {
