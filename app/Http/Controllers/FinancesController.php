@@ -92,10 +92,10 @@ class FinancesController extends Controller
 
         //Create the array to pass to the blade view
         $totalTaxes = [
-            'thisMonthReprocessing' => $monthTaxesReprocessing,
-            'lastMonthReprocessing' => $lastTaxesReprocessing,
-            'thisMonthMarket' => $monthTaxesMarket,
-            'lastMonthMarket' => $lastTaxesMarket,
+            'thisMonthReprocessing' => number_format($monthTaxesReprocessing, 2, '.', ','), 
+            'lastMonthReprocessing' => number_format($lastTaxesReprocessing, 2, '.', ','),
+            'thisMonthMarket' => number_format($monthTaxesMarket, 2, '.', ','),
+            'lastMonthMarket' => number_format($lastTaxesMarket, 2, '.', ','),
         ];
 
         return view('finances.taxes')->with('totalTaxes', $totalTaxes);
