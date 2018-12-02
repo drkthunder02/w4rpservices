@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Commands\\CorpJournal' => $baseDir . '/app/Console/Commands/corpJournal.php',
     'App\\Console\\Commands\\GetCorps' => $baseDir . '/app/Console/Commands/getCorps.php',
+    'App\\Console\\Commands\\UpdateMoonPricing' => $baseDir . '/app/Console/Commands/UpdateMoonPricing.php',
     'App\\Console\\Commands\\sendMail' => $baseDir . '/app/Console/Commands/sendmail.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
@@ -58,6 +59,7 @@ return array(
     'App\\Models\\Moon' => $baseDir . '/app/Models/Moon.php',
     'App\\Models\\OrePrice' => $baseDir . '/app/Models/OrePrice.php',
     'App\\Models\\Price' => $baseDir . '/app/Models/Price.php',
+    'App\\Models\\ScheduleJob' => $baseDir . '/app/Models/ScheduleJob.php',
     'App\\Models\\Structure' => $baseDir . '/app/Models/Structure.php',
     'App\\Models\\UserRole' => $baseDir . '/app/Models/UserRole.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

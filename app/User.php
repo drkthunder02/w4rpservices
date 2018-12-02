@@ -6,7 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-
+use App\Models\UserRole;
+use App\Models\UserPermission;
 
 class User extends Authenticatable
 {
@@ -45,17 +46,6 @@ class User extends Authenticatable
 
     protected $guarded = [];
 
-    //Used in middleware to make sure a user is able to access many of the pages
-    //public function hasRole($role)
-    //{
-    //    $check = User::role()->get(['role']);
-    //   if($check == $role) {
-    //        return true;
-    //    } else {
-    //        return false;
-    //    }
-    //}
-
     public function getUserType() {
         return User::where('user_type')->get();
     }
@@ -64,7 +54,62 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\UserRole', 'character_id');
     }
 
+    public function permissions() {
+        return $this->hasMany('App\Models\UserPermission', 'character_id');
+    }
+
     public function esitoken() {
         return $this->hasOne('App\Models\EsiToken', 'character_id', 'character_id');
+    }
+
+    public function hasPermission($permission, $perm = true) {
+        //Check if the user has a specific permission
+        if(UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get()) {
+            if($perm === true) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if($perm === true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public function hasRole($role, $permission = true) {
+        //If the user is a super user then he has all roles
+        if($this->hasSuperUser()) {
+            return true;
+        }
+
+        if(UserRole::where(['character_id' => $this->character_id, 'role' => $role])->get()) {
+            //Check for inverse permissions
+            if($permission === true) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            //Check for inverse permissions
+            if($permission === true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public function hasSuperUser() {
+        //Search for the super user role for the character from the database
+        $found = DB::table('user_roles')->where(['character_id' => $this->character_id, 'role' => 'SuperUser'])->get(['role']);
+        //If we find the SuperUser role, then the user has it, and returns true, else returns false
+        if($found == 'SuperUser') {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

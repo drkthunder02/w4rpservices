@@ -403,6 +403,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     public static $classMap = array (
         'App\\Console\\Commands\\CorpJournal' => __DIR__ . '/../..' . '/app/Console/Commands/corpJournal.php',
         'App\\Console\\Commands\\GetCorps' => __DIR__ . '/../..' . '/app/Console/Commands/getCorps.php',
+        'App\\Console\\Commands\\UpdateMoonPricing' => __DIR__ . '/../..' . '/app/Console/Commands/UpdateMoonPricing.php',
         'App\\Console\\Commands\\sendMail' => __DIR__ . '/../..' . '/app/Console/Commands/sendmail.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -453,6 +454,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Models\\Moon' => __DIR__ . '/../..' . '/app/Models/Moon.php',
         'App\\Models\\OrePrice' => __DIR__ . '/../..' . '/app/Models/OrePrice.php',
         'App\\Models\\Price' => __DIR__ . '/../..' . '/app/Models/Price.php',
+        'App\\Models\\ScheduleJob' => __DIR__ . '/../..' . '/app/Models/ScheduleJob.php',
         'App\\Models\\Structure' => __DIR__ . '/../..' . '/app/Models/Structure.php',
         'App\\Models\\UserRole' => __DIR__ . '/../..' . '/app/Models/UserRole.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
