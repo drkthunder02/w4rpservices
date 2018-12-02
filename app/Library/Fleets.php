@@ -94,7 +94,6 @@ class Fleets {
         // FileCache.
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
-        $configuration->logfile_location = '/var/www/w4rpservices/storage/logs/eseye';
         //Create the ESI Call Container
         $config = config('esi');
         $authentication = new EsiAuthentication([

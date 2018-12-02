@@ -19,7 +19,6 @@ class Mail {
         $token = DB::table('EsiTokens')->where('character_id', 93738489)->get();
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
-        $configuration->logfile_location = '/var/www/w4rpservices/storage/logs/eseye';
         //Create the ESI authentication container
         $config = config('esi');
         $authentication = new EsiAuthentication([
