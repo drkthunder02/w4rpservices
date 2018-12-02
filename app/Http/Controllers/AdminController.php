@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Models\UserRole;
-use App\Models\UserPermission;
-
 use DB;
+
+use App\Models\User\UserRole;
+use App\Models\User\UserPermission;
 
 class AdminController extends Controller
 {

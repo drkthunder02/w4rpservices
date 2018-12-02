@@ -32,12 +32,22 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fleet</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                        <a class="dropdown-item" href="/fleets/display">Display</a>
-                        <a class="dropdown-item" href="/fleets/register">Register</a>
-                    </div>
-                </li>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fleet</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                    <a class="dropdown-item" href="/fleets/display">Display</a>
+                    <a class="dropdown-item" href="/fleets/register">Register</a>
+                </div>
+            </li>
+            @if(Auth()->user()->hasPermission('logistics.minion'))
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fleet</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                    <a class="dropdown-item" href="/logistics/contracts/available">Available Contracts</a>
+                    <a class="dropdown-item" href="/logistics/contracts/completed">Completed Contracts</a>
+                    <a class="dropdown-item" href="/logistics/insurance/request">Insurance Request</a>
+                </div>
+            </li>
+            @endif
         </ul>
         <ul class="navbar-nav m1-auto">
             <li class="nav-item">

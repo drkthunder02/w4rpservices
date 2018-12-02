@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
-use App\Models\Moon;
+
+use App\Models\Moon\Moon;
+
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
+
 use App\Library\MoonCalc;
 
 class MoonsController extends Controller

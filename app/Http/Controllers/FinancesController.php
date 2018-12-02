@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 use DB;
 use Socialite;
 use Auth;
+use Carbon\Carbon;
 
 use App\User;
+use App\Models\User\UserRole;
+use App\Models\User\UserPermission;
+use App\Models\Corporation\CorpJournal;
+
 use App\Library\Finances;
 use App\Library\Esi;
 use App\Library\SeatHelper;
-use App\Models\CorpJournal;
-
-use Carbon\Carbon;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;

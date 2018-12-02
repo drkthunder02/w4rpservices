@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 
-use App\Models\CorpStructure;
+use App\Models\Corporation\CorpStructure;
 
 class RegisterStructureController extends Controller
 {

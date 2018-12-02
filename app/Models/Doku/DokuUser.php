@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Doku;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HoldingCorpJournal extends Model
+class DokuUser extends Model
 {
     // Table Name
-    protected $table = 'HoldingCorpFinancesJournal';
+    protected $table = 'wiki_user';
 
     // Timestamps
     public $timestamps = false;

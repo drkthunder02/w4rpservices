@@ -8,8 +8,10 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
-use App\Library\Fleet;
+use App\Library\Fleets;
 use App\Library\Esi;
+
+use App\Models\Fleet\Fleet;
 
 
 class FleetsController extends Controller
@@ -24,7 +26,7 @@ class FleetsController extends Controller
     }
 
     public function displayFleets() {
-        $fleets = \App\Models\Fleet::all();
+        $fleets = Fleet::all();
         $data = array();
         $fc = array();
         $fleet = array();
@@ -52,7 +54,7 @@ class FleetsController extends Controller
 
     public function registerFleet(Request $request) {
         //Register a new instance of the fleet class
-        $fleet = new Fleet(Auth::user()->character_id);
+        $fleet = new Fleets(Auth::user()->character_id);
         $esiHelper = new Esi();
         if(!$esiHelper->HaveEsiScope(Auth::user()->character_id, 'esi-fleets.write_fleet.v1')) {
             return view('inc.error')->with('error', 'User does not have the write fleet scope.');
@@ -102,7 +104,7 @@ class FleetsController extends Controller
     }
 
     public function addPilot($fleetId, $charId) {
-        $newPilot = new Fleet();
+        $newPilot = new Fleets();
 
         //Retrieve the fleet data
         $fleet = DB::table('Fleets')->where('fleet', $fleetId)->get();
@@ -123,7 +125,7 @@ class FleetsController extends Controller
     }
 
     public function addPilotName($fleetId, $name) {
-        $newPilot = new Fleet();
+        $newPilot = new Fleets();
         $esiHelper = new Esi();
 
         //Retrieve the fleet data

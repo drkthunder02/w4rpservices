@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Doku;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DokuMember extends Model
+class DokuGroupNames extends Model
 {
     // Table Name
-    protected $table = 'wiki_member';
+    protected $table = 'wiki_groupnames';
 
     public $timestamps = false;
 }

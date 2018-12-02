@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use DB;
 use Auth;
-use App\Models\DokuGroupNames;
-use App\Models\DokuMember;
-use App\Models\DokuUser;
+
+use App\Models\Doku\DokuGroupNames;
+use App\Models\Doku\DokuMember;
+use App\Models\Doku\DokuUser;
 
 class WikiController extends Controller
 {

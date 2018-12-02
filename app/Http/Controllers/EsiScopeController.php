@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use Socialite;
 use Auth;
+
 use App\User;
 
 use Seat\Eseye\Cache\NullCache;

@@ -4,7 +4,7 @@ namespace App\Library;
 
 use DB;
 
-use App\Models\EsiScope;
+use App\Models\Esi\EsiScope;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;

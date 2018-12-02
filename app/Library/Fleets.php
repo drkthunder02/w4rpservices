@@ -6,8 +6,8 @@ use Auth;
 use Session;
 use DB;
 
-use App\Models\EsiToken;
-use App\Library\Fleet;
+use App\Models\Esi\EsiToken;
+use App\Models\Fleet\Fleet;
 use Carbon\Carbon;
 
 use Seat\Eseye\Cache\NullCache;
@@ -15,7 +15,7 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 
-class Fleet {
+class Fleets {
 
     private $fleet;
     private $fcId;
@@ -67,7 +67,7 @@ class Fleet {
         $token = DB::table('EsiTokens')->where('character_id', $fc->character_id)->first();
         //Create the esi authentication container
         $config = config('esi');
-        $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
+        $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
             'refresh_token' => $token->refresh_token,
@@ -97,7 +97,7 @@ class Fleet {
         $configuration->logfile_location = '/var/www/w4rpservices/storage/logs/eseye';
         //Create the ESI Call Container
         $config = config('esi');
-        $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
+        $authentication = new EsiAuthentication([
             'client_id'     => $config['client_id'],
             'secret'        => $config['secret'],
             'refresh_token' => $token[0]->refresh_token,

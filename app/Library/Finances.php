@@ -9,9 +9,9 @@
 
 use DB;
 
-use App\Models\EsiScope;
-use App\Models\EsiToken;
-use App\Models\CorpJournal;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
+use App\Models\Corporation\CorpJournal;
 
 use App\Library\Esi;
 

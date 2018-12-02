@@ -4,7 +4,7 @@ namespace App\Library;
 
 use DB;
 
-use App\Models\CorpJournal;
+use App\Models\Corporation\CorpJournal;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;

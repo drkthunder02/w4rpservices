@@ -8,14 +8,17 @@ namespace App\Library;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use Session;
 use DB;
+
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+
 use App\Models\Config;
-use App\Models\Moon;
-use App\Models\Price;
-use App\Models\ItemComposition;
+use App\Models\Moon\Moon;
+use App\Models\Moon\Price;
+use App\Models\Moon\ItemComposition;
 
 class MoonCalc {
 

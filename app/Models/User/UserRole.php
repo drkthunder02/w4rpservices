@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EsiScope extends Model
+class UserRole extends Model
 {
     // Table Name
-    protected $table = 'EsiScopes';
+    protected $table = 'user_roles';
 
-    // Timestamps
+    // Timestamps 
     public $timestamps = true;
 
     /**
      *  The attributes that are mass assignable
      * 
-     *  @var array
+     * @var array
      */
     protected $fillable = [
         'character_id',
-        'scope',
+        'role',
     ];
 
     public function user() {
-        return $this->belongsTo('App\User', 'character_id', 'character_id');
+        return $this->belongsTo(User::class);
     }
 }

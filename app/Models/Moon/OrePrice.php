@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Moon;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Moon extends Model
+class OrePrice extends Model
 {
     // Table Name
-    protected $table = 'Moons';
+    protected $table = 'OrePrices';
 
     //Primary Key
     public $primaryKey = 'id';
 
     // Timestamps
-    public $timestamps = false;
+    public $timestamps = 'false';
 }

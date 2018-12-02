@@ -4,8 +4,8 @@ namespace App\Library;
 
 use DB;
 
-use App\Models\EsiScope;
-use App\Models\Esitoken;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\Esitoken;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
