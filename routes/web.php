@@ -64,3 +64,9 @@ Route::get('/finances/taxes', 'FinancesController@displayTaxes')->name('structur
 //Structures Controller display pages
 Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
 Route::post('/structures/store', 'RegisterStructureController@storeStructure');
+
+//AJAX Controller display pages
+Route::get('ajax',function() {
+    return view('/ajax/message');
+ });
+ Route::post('/getmsg','AjaxController@index');

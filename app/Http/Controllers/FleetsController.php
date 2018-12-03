@@ -25,6 +25,11 @@ class FleetsController extends Controller
         return view('fleets.registerfleet');
     }
 
+    public function displayFleetSetup() {
+
+        return 0;
+    }
+
     public function displayFleets() {
         $fleets = Fleet::all();
         $data = array();
@@ -45,8 +50,6 @@ class FleetsController extends Controller
             $fleet,
             $description,
         ];
-
-        $size = sizeof($fc);
 
         //Return the view with the array of the fleet
         return view('fleets.displayfleets')->with('data', $data);
