@@ -105,32 +105,13 @@ class FleetsController extends Controller
         $check = DB::table('Fleets')->where('fleet', $fleetUri)->first();
         //If we do not find the fleet, let's create it.
         if($check === null) {
-               
-            $current = Carbon::now();
-            //If we are between 00:00 and 05:00, we want to set the end time for 0500
-            if($current->hour > 0 && $current->hour < 5) {
-                //Figure out the hours to add to the fleet before purging it.
-                $hour = $current->hour;
-                $endTime = Carbon::now();
-                $endTime->hour = 11 - $hour;
-            } else {
-                //Figure out the hours to add to the fleet before purging it.
-                $endTime = Carbon::now();
-                $endTime->day++;
-                $endTime->hour = 11;
-                $endTime->minute = 0;
-                $endTime->second = 0;
-            }
             // Insert the fleet into the table
             DB::table('Fleets')->insert([
                 'character_id' => Auth::user()->character_id,
                 'fleet' => $fleetUri,
                 'description' => $request->description,
                 'creation_time' => $current,
-                'fleet_end' => $endTime,
             ]);
-            //Is this line needed?
-            $fleet->SetFleetEndTime($endTime);
         } 
 
         return redirect('/fleets/display');

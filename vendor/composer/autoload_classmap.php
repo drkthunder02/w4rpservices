@@ -7,9 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Commands\\CorpJournal' => $baseDir . '/app/Console/Commands/corpJournal.php',
+    'App\\Console\\Commands\\DumpFleets' => $baseDir . '/app/Console/Commands/dumpFleets.php',
     'App\\Console\\Commands\\GetCorps' => $baseDir . '/app/Console/Commands/getCorps.php',
     'App\\Console\\Commands\\UpdateMoonPricing' => $baseDir . '/app/Console/Commands/UpdateMoonPricing.php',
-    'App\\Console\\Commands\\dumpFleets' => $baseDir . '/app/Console/Commands/dumpFleets.php',
     'App\\Console\\Commands\\getLogisticContracts' => $baseDir . '/app/Console/Commands/getLogisticContracts.php',
     'App\\Console\\Commands\\sendMail' => $baseDir . '/app/Console/Commands/sendmail.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',

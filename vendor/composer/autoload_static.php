@@ -402,9 +402,9 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
 
     public static $classMap = array (
         'App\\Console\\Commands\\CorpJournal' => __DIR__ . '/../..' . '/app/Console/Commands/corpJournal.php',
+        'App\\Console\\Commands\\DumpFleets' => __DIR__ . '/../..' . '/app/Console/Commands/dumpFleets.php',
         'App\\Console\\Commands\\GetCorps' => __DIR__ . '/../..' . '/app/Console/Commands/getCorps.php',
         'App\\Console\\Commands\\UpdateMoonPricing' => __DIR__ . '/../..' . '/app/Console/Commands/UpdateMoonPricing.php',
-        'App\\Console\\Commands\\dumpFleets' => __DIR__ . '/../..' . '/app/Console/Commands/dumpFleets.php',
         'App\\Console\\Commands\\getLogisticContracts' => __DIR__ . '/../..' . '/app/Console/Commands/getLogisticContracts.php',
         'App\\Console\\Commands\\sendMail' => __DIR__ . '/../..' . '/app/Console/Commands/sendmail.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
