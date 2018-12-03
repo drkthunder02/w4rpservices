@@ -15,7 +15,7 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 
-class Fleets {
+class FleetHelper {
 
     private $fleet;
     private $fcId;
@@ -42,7 +42,9 @@ class Fleets {
         //Trim the right side of the fleet number
         $fleetUri = rtrim($uris[1], '/?datasource=tranquility');
         $this->fleet = $fleetUri;
+    }
 
+    public function GetFleetUri() {
         return $this->fleet;
     }
 

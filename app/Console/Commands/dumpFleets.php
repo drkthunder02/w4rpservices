@@ -3,27 +3,27 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+
 use DB;
 use Carbon\Carbon;
-use Commands\Library\CommandHelper;
 
-use App\Library\MoonCalc;
+use App\Models\ScheduleJob;
 
-class UpdateMoonPricing extends Command
+class dumpFleets extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'services:updatemoonprice';
+    protected $signature = 'services:dumpfleets';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update moon pricing on a scheduled basis';
+    protected $description = 'Command to remove all current fleets from the database';
 
     /**
      * Create a new command instance.
@@ -42,13 +42,13 @@ class UpdateMoonPricing extends Command
      */
     public function handle()
     {
-        //Create the command helper container
-        $task = new CommandHelper('CorpJournal');
-        //Add the entry into the jobs table saying the job is starting
-        $task->SetStartStatus();
-
-        $moonCalc = new MoonCalc();
-        $moonCalc->FetchNewPrices();
+        //Add an entry into the jobs table
+        $job = new ScheduleJob;
+        $time = Carbon::now();
+        $job->job_name = 'CorpJournal';
+        $job->job_state = 'Starting';
+        $job->system_time = $time;
+        $job->save();
 
         //Mark the job as finished
         $task->SetStopStatus();

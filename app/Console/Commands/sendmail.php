@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use DB;
+use Commands\Library\CommandHelper;
 
 use App\Library\Esi;
 use App\Library\Mail;
@@ -51,19 +52,14 @@ class sendMail extends Command
      */
     public function handle()
     {
-        //Add an entry into the jobs table
-        $job = new ScheduleJob;
-        $time = Carbon::now();
-        $job->job_name = 'SendMail';
-        $job->job_state = 'Starting';
-        $job->system_time = $time;
-        $job->save();
+        //Create the command helper container
+        $task = new CommandHelper('CorpJournal');
+        //Add the entry into the jobs table saying the job is starting
+        $task->SetStartStatus();
 
         //Put our task in this section
 
-        //If the job is finished we need to mark it in the table
-        DB::table('schedule_jobs')->where('system_time', $time)->update([
-            'job_state' => 'Finished',
-        ]);
+        //Mark the job as finished
+        $task->SetStopStatus();
     }
 }

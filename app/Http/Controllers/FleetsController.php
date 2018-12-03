@@ -8,28 +8,58 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
-use App\Library\Fleets;
+use App\Library\FleetHelper;
 use App\Library\Esi;
 
 use App\Models\Fleet\Fleet;
+use App\Models\Fleet\FleetActivity;
 
 
 class FleetsController extends Controller
 {
+    /**
+     * Construction function
+     * 
+     * returns nothing
+     */
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('role:User');
     }
+    
+    /**
+     * Records fleet activity when requested from the fleet info page
+     * 
+     * @var fleetId
+     */
+    public function recordFleetActivity($fleetId) {
+        $fleet = new FleetHelper();
+    }
 
+    /**
+     * Displays the blade for registering a fleet
+     * 
+     * @var (none) 
+     */
     public function displayRegisterFleet() {
         return view('fleets.registerfleet');
     }
 
+    /**
+     * Work in progress.  Doesn't do anything yet.
+     * 
+     * @var (none)
+     */
     public function displayFleetSetup() {
 
         return 0;
     }
 
+    /**
+     * Displays all currently recorded fleets
+     * 
+     * @var (none)
+     */
     public function displayFleets() {
         $fleets = Fleet::all();
         $data = array();
@@ -55,16 +85,21 @@ class FleetsController extends Controller
         return view('fleets.displayfleets')->with('data', $data);
     }
 
+    /**
+     * Allows a person to register a fleet through services.
+     * 
+     * @var Request
+     */
     public function registerFleet(Request $request) {
         //Register a new instance of the fleet class
-        $fleet = new Fleets(Auth::user()->character_id);
+        $fleet = new FleetHelper(Auth::user()->character_id, $request->fleetUri);
         $esiHelper = new Esi();
         if(!$esiHelper->HaveEsiScope(Auth::user()->character_id, 'esi-fleets.write_fleet.v1')) {
             return view('inc.error')->with('error', 'User does not have the write fleet scope.');
         }
         
         //Make the fleet uri so we can call later functions
-        $fleetUri = $fleet->SetFleetUri($request->fleetUri);
+        $fleetUri = $fleet->GetFleetUri();
         
         //Check for the fleet in the database
         $check = DB::table('Fleets')->where('fleet', $fleetUri)->first();
@@ -94,20 +129,31 @@ class FleetsController extends Controller
                 'creation_time' => $current,
                 'fleet_end' => $endTime,
             ]);
-            
+            //Is this line needed?
             $fleet->SetFleetEndTime($endTime);
         } 
 
         return redirect('/fleets/display');
     }
 
+    /**
+     * Deletes a fleet of fleetId
+     * 
+     * @var fleetId
+     */
     public function deleteFleet($fleetId) {
         DB::table('Fleets')->where('fleet', $fleetId)->delete();
         return redirect('/fleets/display');
     }
 
+    /**
+     * Add a pilot to the fleet
+     * 
+     * @var fleetId
+     * @var charId
+     */
     public function addPilot($fleetId, $charId) {
-        $newPilot = new Fleets();
+        $newPilot = new FleetHelper();
 
         //Retrieve the fleet data
         $fleet = DB::table('Fleets')->where('fleet', $fleetId)->get();
@@ -127,8 +173,14 @@ class FleetsController extends Controller
         }
     }
 
+    /**
+     * Add a pilot by his name rather than allowing him to click on the link
+     * 
+     * @var fleetId
+     * @var name
+     */
     public function addPilotName($fleetId, $name) {
-        $newPilot = new Fleets();
+        $newPilot = new FleetHelper();
         $esiHelper = new Esi();
 
         //Retrieve the fleet data
@@ -151,6 +203,11 @@ class FleetsController extends Controller
         }
     }
 
+    /**
+     * Update a fleet based on a session variable
+     * 
+     * @var session
+     */
     public function updateFleet() {
         //Retrieve the fleet from the session
         $fleet = session('fleet');

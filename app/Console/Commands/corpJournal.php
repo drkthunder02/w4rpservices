@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 
 use DB;
 
+use Commands\Library\CommandHelper;
+
 use App\Library\Finances;
 use App\Library\Esi;
 
@@ -49,13 +51,10 @@ class CorpJournal extends Command
      */
     public function handle()
     {
-        //Add an entry into the jobs table
-        $job = new ScheduleJob;
-        $time = Carbon::now();
-        $job->job_name = 'CorpJournal';
-        $job->job_state = 'Starting';
-        $job->system_time = $time;
-        $job->save();
+        //Create the command helper container
+        $task = new CommandHelper('CorpJournal');
+        //Add the entry into the jobs table saying the job is starting
+        $task->SetStartStatus();
         //Setup the Finances Container
         $finance = new Finances();
         //Setup an array to store corporations which have been logged so we don't keep calling the same ones.  We need
@@ -90,9 +89,7 @@ class CorpJournal extends Command
         }
 
         //Mark the job as finished
-        DB::table('schedule_jobs')->where('system_time', $time)->update([
-            'job_state' => 'Finished',
-        ]);
+        $task->SetStopStatus();
     }
 
     private function GetJournal($charId) {

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use DB;
 use Carbon\Carbon;
+use Commands\Library\CommandHelper;
 
 use App\Models\AllianceCorp;
 use App\Models\ScheduleJob;
@@ -47,13 +48,10 @@ class GetCorps extends Command
      */
     public function handle()
     {
-        //Add an entry into the jobs table
-        $job = new ScheduleJob;
-        $time = Carbon::now();
-        $job->job_name = 'GetCorps';
-        $job->job_state = 'Starting';
-        $job->system_time = $time;
-        $job->save();
+        //Create the command helper container
+        $task = new CommandHelper('CorpJournal');
+        //Add the entry into the jobs table saying the job is starting
+        $task->SetStartStatus();
         //Set the parameters for ESI
         $configuration = Configuration::getInstance();
         $configuration->logfile_location = 'var/www/w4rpservices/storage/logs/eseye';
@@ -83,9 +81,7 @@ class GetCorps extends Command
             $entry->save();
         }
 
-        //If the job is finished we need to mark it in the table
-        DB::table('schedule_jobs')->where('system_time', $time)->update([
-            'job_state' => 'Finished',
-        ]);
+        //Mark the job as finished
+        $task->SetStopStatus();
     }
 }
