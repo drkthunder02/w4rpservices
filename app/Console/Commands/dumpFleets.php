@@ -45,10 +45,13 @@ class dumpFleets extends Command
         //Add an entry into the jobs table
         $job = new ScheduleJob;
         $time = Carbon::now();
-        $job->job_name = 'CorpJournal';
+        $job->job_name = 'DumpFleets';
         $job->job_state = 'Starting';
         $job->system_time = $time;
         $job->save();
+
+        //Dump all fleets from the table to start a new day
+        DB::table('fleets')->delete();
 
         //Mark the job as finished
         $task->SetStopStatus();
