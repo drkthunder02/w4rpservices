@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\getCorps::class,
         Commands\sendMail::class,
         Commands\UpdateMoonPricing::class,
+        Commands\DumpFleets::class,
     ];
 
     /**
@@ -35,6 +36,9 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
         $schedule->command('services:updatemoonprice')
                  ->hourly()
+                 ->withoutOverlapping();
+        $schedule->command('services:dumpfleets')
+                 ->dailyAt('05:00')
                  ->withoutOverlapping();
         //$schedule->command('services:sendmail')
         //         ->monthlyOn(1, '09:00')

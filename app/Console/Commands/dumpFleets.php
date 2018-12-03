@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 use App\Models\ScheduleJob;
 
-class dumpFleets extends Command
+class DumpFleets extends Command
 {
     /**
      * The name and signature of the console command.
