@@ -32,8 +32,11 @@ class FleetsController extends Controller
      * 
      * @var fleetId
      */
-    public function recordFleetActivity($fleetId) {
+    public function storeFleetActivity($fleetId) {
         $fleet = new FleetHelper();
+        $fleet->StoreFleetActivity($fleetId);
+
+        return redirect('/display/fleets')->with('success', 'Fleet activity recorded.');
     }
 
     /**

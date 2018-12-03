@@ -8,6 +8,7 @@ use DB;
 
 use App\Models\Esi\EsiToken;
 use App\Models\Fleet\Fleet;
+use App\Models\Fleet\FleetActivity;
 use Carbon\Carbon;
 
 use Seat\Eseye\Cache\NullCache;
@@ -47,10 +48,22 @@ class FleetHelper {
         return $this->fleetUri;
     }
 
-    public function UpdateFleet() {
+    /**
+     * Update fleet motd and free move.
+     * 
+     * @param fleetId
+     */
+    public function UpdateFleet($fleetId) {
         return null;
     }
 
+    /**
+     * Helper function to add a pilot to the fleet using his character id
+     * 
+     * @param fc
+     * @param charId
+     * @param fleetId
+     */
     public function AddPilot($fc, $charId, $fleetId) {
                 
         //Get the ESI token for the FC to add the new pilot
@@ -79,6 +92,41 @@ class FleetHelper {
             ]);
         } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
             return $e->getEsiResponse();
+        }
+
+        return null;
+    }
+
+    /**
+     * Store Fleet Activity Tracking information into the database when caleld
+     * 
+     * @param fleetId
+     */
+    public function StoreFleetActivity($fleetId, $fcId) {
+        //Get the ESI token for the FC to get the fleet composition
+        $token = DB::table('EsiTokens')->where('character_id', $fcId)->get();
+        //Disable all caching by setting the NullCache as the preferred cache handler.
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
+        //Create the ESI Call Container
+        $config = config('esi');
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+        $esi = new Eseye($authentication);
+
+        try {
+            $fleetComp = $esi->invoke('get', '/fleets/{fleet_id}/members/', [
+                'fleet_id' => $fleetId,
+            ]);
+        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
+            return $e->getEsiResponse();
+        }
+        dd($fleetComp);
+        foreach($fleetComp as $comp) {
+
         }
 
         return null;
