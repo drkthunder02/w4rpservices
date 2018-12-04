@@ -37,6 +37,88 @@ class FinancesController extends Controller
         dd($helper);
     }
 
+    public function displayTaxesHistory() {
+        //Make the helper ESI Class
+        $helper = new Esi();
+        //Make the helper class for finances
+        $hFinances = new FinanceHelper();
+
+        //Get the character's corporation from esi
+        $corporation = $helper->FindCorporationName(Auth::user()->character_id);
+        $corpId = $helper->FindCorporationId(Auth::user()->character_id);
+
+        //Set the carbon date for the first day of this month, last day of this month
+        $currentStart = Carbon::now()->startOfMonth();
+        $currentEnd = Carbon::now()->endOfMonth();
+        //Setup the currentEnd to end at 23:59:59
+        $currentEnd->hour = 23;
+        $currentEnd->minute = 59;
+        $currentEnd->second = 59;
+
+        $dates = $this->RenderDates();
+        $totalTaxes = array();
+        $i = 0;
+        foreach($dates as $date) {
+            //Get the taxes for each month and store in the totalTaxes array and store the date as well.
+            $start = $date;
+            $end = new Carbon($date);
+            $end = $end->endOfMonth();            
+            $end->hour = 23;
+            $end->minute = 59;
+            $end->second = 59;
+
+            //Get the number of structures registered to a corporation
+            $citadelCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' AND structure_type='Citadel'");
+            $refineryCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' aND structure_type='Refinery'");
+
+            //Get the taxes for each type from the database
+            $marketTaxes = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='brokers_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
+            $reprocessingTaxes = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
+
+            /**
+             * In this next section we are going to remove the cost of fuel blocks from the structure taxes
+             */
+            //Market Taxes with fuel blocks added in
+            $marketTaxes = $marketTaxes - ($hFinances->CalculateFuelBlockCost('market') * $citadelCount);
+            if($marketTaxes < 0.00) {
+                $marketTaxes = 0.00;
+            }
+
+            //Reprocessing Taxes with fuel blocks added in
+            $reprocessingTaxes = $reprocessingTaxes - ($hFinances->CalculateFuelBlockCost('reprocessing') * $refineryCount);
+            if($reprocessingTaxes < 0.00) {
+                $reprocessingTaxes = 0.00;
+            }
+
+            //Add to the totalTaxes array to be sent out with the view
+            $totalTaxes[$i] = [
+                'date' => $start,
+                'reprocessing' => number_format($reprocessingTaxes, 2, '.', ','),
+                'market' => number_format($marketTaxes, 2, '.', ','),
+            ];
+            //Increment $i for the next iteration
+            $i++;
+        }
+
+        //Return the data to the view
+        return view('finances.taxes')->with('totalTaxes', $totalTaxes);
+    }
+
+    private function RenderDates()
+    {
+        $start = Carbon::now()->subYear()->startOfYear();
+        $months_to_render = Carbon::now()->diffInMonths($start);
+
+        $dates = [];
+
+        for($i = 0; $i <= $months_to_render; $i++) {
+            $dates[] = $start->toDateTimeString();
+            $start->addMonth();
+        }
+
+        return $dates;
+    }
+
     public function displayTaxes() {
         //Make the helper esi class
         $helper = new Esi();
