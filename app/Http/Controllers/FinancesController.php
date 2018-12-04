@@ -104,21 +104,6 @@ class FinancesController extends Controller
         return view('finances.taxes')->with('totalTaxes', $totalTaxes);
     }
 
-    private function RenderDates()
-    {
-        $start = Carbon::now()->subYear()->startOfYear();
-        $months_to_render = Carbon::now()->diffInMonths($start);
-
-        $dates = [];
-
-        for($i = 0; $i <= $months_to_render; $i++) {
-            $dates[] = $start->toDateTimeString();
-            $start->addMonth();
-        }
-
-        return $dates;
-    }
-
     public function displayTaxes() {
         //Make the helper esi class
         $helper = new Esi();
@@ -184,5 +169,20 @@ class FinancesController extends Controller
 
         return view('finances.taxes')->with('totalTaxes', $totalTaxes);
 
+    }
+
+    private function RenderDates()
+    {
+        $start = Carbon::now()->subYear()->startOfYear();
+        $months_to_render = Carbon::now()->diffInMonths($start);
+
+        $dates = [];
+
+        for($i = 0; $i <= $months_to_render; $i++) {
+            $dates[] = $start->toDateTimeString();
+            $start->addMonth();
+        }
+
+        return $dates;
     }
 }
