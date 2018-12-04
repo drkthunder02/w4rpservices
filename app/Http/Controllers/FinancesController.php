@@ -14,7 +14,7 @@ use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Corporation\CorpJournal;
 
-use App\Library\Finances;
+use App\Library\FinanceHelper;
 use App\Library\Esi;
 use App\Library\SeatHelper;
 
@@ -31,7 +31,7 @@ class FinancesController extends Controller
     }
 
     public function displayWallet() {
-        $helper = new Finances();
+        $helper = new FinanceHelper();
 
         $helper->GetWalletJournal(1, 92626011);
         dd($helper);
@@ -41,7 +41,7 @@ class FinancesController extends Controller
         //Make the helper esi class
         $helper = new Esi();
         //Make the helper class for finances
-        $hFinances = new Finances();
+        $hFinances = new FinanceHelper();
         //Set the carbon date for the first day of this month, last day of this month, and the previous month's first and last days.
         $start = Carbon::now()->startOfMonth();
         $end = Carbon::now()->endOfMonth();

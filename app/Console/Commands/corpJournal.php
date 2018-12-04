@@ -79,7 +79,6 @@ class CorpJournal extends Command
             }
             //If we didn't find the corporation was already done, then complete it.
             if($corpCompleted === false) {
-                 //$this->line('Getting corp journal');
                 $this->GetJournal($structure->character_id);
                 $finishedCorps[sizeof($finishedCorps)] = $structure->corporation_id;
                 //After the corporation has been done set the variable back to false
