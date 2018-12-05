@@ -65,12 +65,10 @@ class User extends Authenticatable
 
     public function hasPermission($permission) {
         $found = UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get(['permission']);
-        if(isset($found[0]->permission)) {
-            if($found[0]->permission == $permission) {
-                return true;
-            } else {
-                return false;
-            }
+        if(isset($found[0]->permission) && $found[0]->permission == $permission) {
+            return true;
+        } else {
+            return false;
         }
         
     }
