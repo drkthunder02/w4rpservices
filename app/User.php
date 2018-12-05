@@ -64,7 +64,7 @@ class User extends Authenticatable
     }
 
     public function hasPermission($permission) {
-        $perm = UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get();
+        $perm = DB::table('user_permissions')->where(['character_id' => $this->character_id, 'permission' => $permission])->get();
         dd($perm->permission);
         if(UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get(['permission'])) {
             return true;
