@@ -40,7 +40,7 @@
             </li>
             @if(Auth()->user()->hasPermission('logistics.minion'))
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fleet</a>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Logistics</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/logistics/contracts/available">Available Contracts</a>
                     <a class="dropdown-item" href="/logistics/contracts/completed">Completed Contracts</a>

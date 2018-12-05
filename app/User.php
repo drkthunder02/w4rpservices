@@ -62,20 +62,12 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\EsiToken', 'character_id', 'character_id');
     }
 
-    public function hasPermission($permission, $perm = true) {
+    public function hasPermission($permission) {
         //Check if the user has a specific permission
         if(UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get()) {
-            if($perm === true) {
-                return true;
-            } else {
-                return false;
-            }
+            return true;
         } else {
-            if($perm === true) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
     }
 
