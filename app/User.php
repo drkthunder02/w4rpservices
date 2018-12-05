@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use DB;
+//use DB;
 
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
@@ -65,8 +65,6 @@ class User extends Authenticatable
 
     public function hasPermission($permission) {
         $found = UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get(['permission']);
-        dd($found);
-        $found = DB::table('user_permissions')->where(['character_id' => $this->character_id, 'permission' => $permission])->get(['permission']);
         if($found[0]->permission == $permission) {
             return true;
         } else {
@@ -74,13 +72,15 @@ class User extends Authenticatable
         }
     }
 
-    public function hasRole($role, $permission = true) {
+    public function hasRole($role) {
         //If the user is a super user then he has all roles
         if($this->hasSuperUser()) {
             return true;
         }
 
-        if(UserRole::where(['character_id' => $this->character_id, 'role' => $role])->get()) {
+        $found = UserRole::where(['character_id' => $this->character_id, 'role' => $role])->get();
+
+        if($found[0]->role == $role) {
             return true;
         } else {
             return false;
@@ -89,9 +89,9 @@ class User extends Authenticatable
 
     public function hasSuperUser() {
         //Search for the super user role for the character from the database
-        $found = DB::table('user_roles')->where(['character_id' => $this->character_id, 'role' => 'SuperUser'])->get(['role']);
+        $found = UserRole::where(['character_id' => $this->character_id, 'role' => 'SuperUser'])->get(['role']);
         //If we find the SuperUser role, then the user has it, and returns true, else returns false
-        if($found == 'SuperUser') {
+        if($found[0]->role == 'SuperUser') {
             return true;
         } else {
             return false;
