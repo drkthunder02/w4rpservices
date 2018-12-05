@@ -65,9 +65,9 @@ class User extends Authenticatable
 
     public function hasPermission($permission) {
         //Check if the user has a specific permission
-        $perm = DB::table('user_permissions')->where(['character_id' => $this->character_id, 'permission' => $permission])->get(['permission']);
+        $perm = DB::table('user_permissions')->where(['character_id' => $this->character_id, 'permission' => $permission])->get();
         dd($perm);
-        if($perm === $permission) {
+        if($perm->permission === $permission) {
             return true;
         } else {
             return false;
