@@ -26,7 +26,7 @@ class CreateLogisticsContractsTable extends Migration
                 $table->string('destination_system_name')->nullable();
                 $table->decimal('price', 20, 2)->default(0.00);
                 $table->decimal('collateral', 20, 2)->default(0.00);
-                $table->boolean('insured')->default('false');
+                $table->boolean('insured')->default(false);
                 $table->timestamps();
             });
         }
