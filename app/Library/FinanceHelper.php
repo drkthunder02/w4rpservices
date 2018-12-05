@@ -32,9 +32,9 @@ class FinanceHelper {
     public function CalculateFuelBlockCost($type) {
         //Calculate how many fuel blocks are used in a month by a structure type
         if($type === 'market') {
-            $fuelBlocks = 30*32*24;
+            $fuelBlocks = 24*30*32;
         } else if ($type === 'reprocessing') {
-            $fuelBlocks = 8*30*24;
+            $fuelBlocks = 24*30*8;
         } else {
             $fuelBlocks = 0;
         }
@@ -51,8 +51,6 @@ class FinanceHelper {
         //Then figure out what is owed to the alliance
         if($type === 'market') {
             $ratioType = 2.5;
-        } else if ($type === 'refinery') {
-            $ratioType = 1.0;
         } else {
             $ratioType = 1.5;
         }
@@ -64,6 +62,26 @@ class FinanceHelper {
 
         //Return what is owed to the alliance
         return $amount;
+    }
+
+    /**
+     * Helper function to calculate a particular type of tax from the database
+     * 
+     * @param corpId
+     * @param type
+     * 
+     * @return tax
+     */
+    public function GetMonthlyTax($corpId, $type) {
+        $monthly = DB::table('CorpJournals')
+          ->select(DB::raw('SUM(tax) as monthly'))
+          ->where([
+            'corporation_id' => $corpId,
+            'ref_type' => $type
+        ])->whereBetween('date', [Carbon::now(), Carbon::now()->subMonth()])
+          ->get();
+
+        return $monthly;
     }
 
     public function GetWalletJournal($division, $charId) {
@@ -114,7 +132,7 @@ class FinanceHelper {
             //For each journal entry, attempt to store it in the database.
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
-                if($entry['ref_type'] == 'brokers_fee' || $entry['ref_type'] == 'reprocessing_tax') {
+                if($entry['ref_type'] == 'brokers_fee' || $entry['ref_type'] == 'reprocessing_tax' || $entry['ref_type'] == 'acceleration_gate_fee') {
                     $this->PutWalletJournal($entry, $corpId, $division);
                 }
             }

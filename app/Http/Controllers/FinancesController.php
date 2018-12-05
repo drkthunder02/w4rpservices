@@ -104,6 +104,10 @@ class FinancesController extends Controller
         return view('finances.taxes')->with('totalTaxes', $totalTaxes);
     }
 
+    public function displayJumpGateStatistics() {
+        
+    }
+
     public function displayTaxes() {
         //Make the helper esi class
         $helper = new Esi();
