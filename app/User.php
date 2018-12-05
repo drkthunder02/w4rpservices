@@ -81,7 +81,7 @@ class User extends Authenticatable
 
         $found = UserRole::where(['character_id' => $this->character_id, 'role' => $role])->get();
 
-        if($found[0]->role == $role) {
+        if(isset($found[0]) && $found[0]->role == $role) {
             return true;
         } else {
             return false;
@@ -92,7 +92,7 @@ class User extends Authenticatable
         //Search for the super user role for the character from the database
         $found = UserRole::where(['character_id' => $this->character_id, 'role' => 'SuperUser'])->get(['role']);
         //If we find the SuperUser role, then the user has it, and returns true, else returns false
-        if($found[0]->role == 'SuperUser') {
+        if(isset($found[0]->role) && $found[0]->role == 'SuperUser') {
             return true;
         } else {
             return false;
