@@ -48,6 +48,16 @@
                 </div>
             </li>
             @endif
+            @if(Auth()->user()->hasPermission('structure.operator'))
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Structures</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                    <a class="dropdown-item" href="/structures/display/taxes">Structure Taxes</a>
+                    <a class="dropdown-item" href="/structures/register">Register Structure</a>
+                </div>
+            </li>
+            @endif
+            @endif
         </ul>
         <ul class="navbar-nav m1-auto">
             <li class="nav-item">
