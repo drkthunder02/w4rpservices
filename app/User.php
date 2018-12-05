@@ -6,8 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use App\Models\UserRole;
-use App\Models\UserPermission;
+use App\Models\User\UserRole;
+use App\Models\User\UserPermission;
 
 class User extends Authenticatable
 {
