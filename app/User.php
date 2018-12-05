@@ -64,7 +64,9 @@ class User extends Authenticatable
     }
 
     public function hasPermission($permission) {
-        if(UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get(['permission'])) {
+        $found == DB::table('user_permissions')->where(['character_id' => $this->character_id, 'permission' => $permission])->get(['permission']);
+        dd($found);
+        if(UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get()) {
             return true;
         } else {
             return false;
@@ -78,19 +80,9 @@ class User extends Authenticatable
         }
 
         if(UserRole::where(['character_id' => $this->character_id, 'role' => $role])->get()) {
-            //Check for inverse permissions
-            if($permission === true) {
-                return true;
-            } else {
-                return false;
-            }
+            return true;
         } else {
-            //Check for inverse permissions
-            if($permission === true) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
     }
 
