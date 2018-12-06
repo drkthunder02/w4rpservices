@@ -51,15 +51,19 @@ class User extends Authenticatable
     }
 
     public function role() {
-        return $this->hasOne('App\Models\UserRole', 'character_id');
+        return $this->hasOne('App\Models\User\UserRole', 'character_id');
     }
 
     public function permissions() {
-        return $this->hasMany('App\Models\UserPermission', 'character_id');
+        return $this->hasMany('App\Models\User\UserPermission', 'character_id');
     }
 
     public function esitoken() {
-        return $this->hasOne('App\Models\EsiToken', 'character_id', 'character_id');
+        return $this->hasOne('App\Models\Esi\EsiToken', 'character_id', 'character_id');
+    }
+
+    public function esiScopes() {
+        return $this->hasMany('App\Models\Esi\EsiScope', 'character_id');
     }
 
     public function hasPermission($permission) {
@@ -72,13 +76,22 @@ class User extends Authenticatable
         
     }
 
+    public function hasEsiScope($scope) {
+        $found = EsiScope::where(['character_id' => $this->character_id, 'scope' => $scope])->get(['scope']);
+        if(isset($found[0]->scope) && $found[0]->scope == $scope) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function hasRole($role) {
         //If the user is a super user then he has all roles
         if($this->hasSuperUser()) {
             return true;
         }
 
-        $found = UserRole::where(['character_id' => $this->character_id, 'role' => $role])->get();
+        $found = UserRole::where(['character_id' => $this->character_id, 'role' => $role])->get(['role']);
 
         if(isset($found[0]) && $found[0]->role == $role) {
             return true;

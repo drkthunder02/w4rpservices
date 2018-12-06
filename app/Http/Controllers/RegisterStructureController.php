@@ -8,6 +8,7 @@ use Auth;
 use DB;
 
 use App\Models\Corporation\CorpStructure;
+use App\Library\Esi;
 
 class RegisterStructureController extends Controller
 {
@@ -17,7 +18,12 @@ class RegisterStructureController extends Controller
     }
 
     public function displayRegisterStructure() {
-        return view('structures.register');
+        //Check to see if the user has the read corp journal esi scope before allowing to register a structure
+        if(Auth()->user()->hasEsiScope('esi-wallet.read_corporation_wallets.v1')) {
+            return view('structures.register');
+        } else {
+            return view('dashboard')->with('error', 'You need to setup your esi scope for read corporation wallets');
+        }
     }
 
     public function storeStructure(Request $request) {
