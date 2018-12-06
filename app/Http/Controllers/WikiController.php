@@ -112,4 +112,23 @@ class WikiController extends Controller
 
         return redirect('/dashboard')->with('success', 'Password changed successfully.  Your username is: ' . $name);
     }
+
+    /**
+     * Displays the page to add a user to a certain group
+     */
+    public function displayAddUserToGroup() {
+        return view('wiki.displayaddug');
+    }
+
+    /**
+     * Stores the modifications to the user to add to a group to give permissions
+     * 
+     * @param uid
+     * @param gid
+     * @param gname
+     */
+    public function storeAddUserToGroup($uid, $gid, $gname) {
+
+        return redirect('/dashboard')->with('success', 'User added to the group: ' . $gid . ' with name of ' . $gname);
+    }
 }

@@ -57,7 +57,6 @@
                 </div>
             </li>
             @endif
-            @endif
         </ul>
         <ul class="navbar-nav m1-auto">
             <li class="nav-item">
