@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use App\Library\Fleets;
 
-use App\Models\Fleet;
+use App\Models\Fleet\Fleet;
 
 class AjaxController extends Controller {
 
