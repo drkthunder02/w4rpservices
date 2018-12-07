@@ -5,7 +5,7 @@ namespace Commands\Library;
 use DB;
 use Carbon\Carbon;
 
-use App\Models\ScheduleTask\ScheduleJob;
+use App\Models\ScheduledTask\ScheduleJob;
 
 class CommandHelper {
 
