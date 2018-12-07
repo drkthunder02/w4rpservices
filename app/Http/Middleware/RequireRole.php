@@ -6,7 +6,7 @@ use Closure;
 use DB;
 use \App\Models\User\UserRole;
 
-class RequireRole
+class RequireRole extends Middleware
 {
     /**
      * Handle an incoming request.
