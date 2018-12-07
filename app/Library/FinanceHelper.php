@@ -171,10 +171,10 @@ class FinanceHelper {
             } catch(\Seat\Eseye\Exceptions\RequestFailedException $e){
                 return $e->getEsiResponse();
             }
-            
+
             //Save all of the data to the database
             $char = new UserToCorporation;
-            $char->character_id = $character->character_id;
+            $char->character_id = $charId;
             $char->character_name = $character->name;
             $char->corporation_id = $character->corporation_id;
             $char->corporation_name = $corporation->name;
