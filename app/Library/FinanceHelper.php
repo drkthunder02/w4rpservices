@@ -132,9 +132,12 @@ class FinanceHelper {
             //For each journal entry, attempt to store it in the database.
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
-                if($entry['ref_type'] == 'brokers_fee' || $entry['ref_type'] == 'reprocessing_tax' || $entry['ref_type'] == 'jumpgate_fee') {
-                    $this->PutWalletJournal($entry, $corpId, $division);
+                if($entry['amount'] > 0) {
+                    if($entry['ref_type'] == 'brokers_fee' || $entry['ref_type'] == 'reprocessing_tax' || $entry['ref_type'] == 'jumpgate_fee') {
+                        $this->PutWalletJournal($entry, $corpId, $division);
+                    }
                 }
+                
             }
             
             //Increment the current page we are on.
