@@ -182,7 +182,7 @@ class FinanceHelper {
             return $character->corporation_id;
         } else {
             //Return the corporation_id if it was found in the database as it is what the calling function is looking for
-            dd($found);
+            var_dump($found);
             return $found->corporation_id;
         }
     }
