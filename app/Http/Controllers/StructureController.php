@@ -58,16 +58,16 @@ class StructureController extends Controller
         //$monthTaxesReprocessing = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
         //$lastTaxesReprocessing = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $startLast . "' AND '" . $endLast . "'");
 
-        $monthTaxesMarket = CorpJournals::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+        $monthTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
                                         ->sum();
-        $lastTaxesMarket = CorpJournals::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+        $lastTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$startLast, $endLast])
                                         ->sum();
-        $monthTaxesReprocessing = CorpJournals::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
+        $monthTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
                                         ->sum();
-        $lastTaxesReprocessing = CorpJournals::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
+        $lastTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$startLast, $endLast])
                                         ->sum();
 
