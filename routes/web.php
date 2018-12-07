@@ -56,6 +56,7 @@ Route::post('/fleets/registerFleet', 'FleetsController@registerFleet');
 Route::get('/admin/dashboard', 'AdminController@displayDashboard');
 Route::post('/admin/addRole', 'AdminController@addRole');
 Route::post('/admin/removeRole', 'AdminController@removeRole');
+Route::post('/admin/addPermission', 'AdminController@addPermission');
 
 //Finances Controller display pages
 Route::get('/finances/display', 'FinancesController@displayWallet');
