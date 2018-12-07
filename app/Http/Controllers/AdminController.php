@@ -34,9 +34,9 @@ class AdminController extends Controller
             $perm->permission = $permission;
             $perm->save();
 
-            return redirect('admin.dashboard')->with('success', 'User udpated!');
+            return redirect('/admin/dashboard')->with('success', 'User udpated!');
         } else {
-            return redirect('admin.dashboard')->with('error', 'User not updated or already has the permission.');
+            return redirect('/admin/dashboard')->with('error', 'User not updated or already has the permission.');
         }
     }
 
