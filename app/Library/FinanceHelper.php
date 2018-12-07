@@ -92,7 +92,7 @@ class FinanceHelper {
         $corpId = $this->GetCharCorp($charId);
 
         //Disable all caching by setting the NullCache as the preferred cache handler.
-        $configuraiton = Configuration::getInstance();
+        $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
 
         //Create an ESI authentication container
