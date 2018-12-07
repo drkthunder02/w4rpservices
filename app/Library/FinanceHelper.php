@@ -50,7 +50,7 @@ class FinanceHelper {
         //We need to calculate the correct ratio based on structure tax, 
         //Then figure out what is owed to the alliance
         if($type === 'market') {
-            $ratioType = 2.5;
+            $ratioType = 2.0;
         } else {
             $ratioType = 1.5;
         }
@@ -73,13 +73,9 @@ class FinanceHelper {
      * @return tax
      */
     public function GetMonthlyTax($corpId, $type) {
-        $monthly = DB::table('CorpJournals')
-          ->select(DB::raw('SUM(tax) as monthly'))
-          ->where([
-            'corporation_id' => $corpId,
-            'ref_type' => $type
-        ])->whereBetween('date', [Carbon::now(), Carbon::now()->subMonth()])
-          ->get();
+        $monthly = CorpJournal::where(['corporation_id' => $corId, 'ref_type' => $type])
+                                ->whereBetween('date', [Carbon::now(), Carbon::now()->subMonth()])
+                                ->sum('tax');
 
         return $monthly;
     }

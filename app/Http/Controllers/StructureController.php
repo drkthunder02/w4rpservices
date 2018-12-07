@@ -68,22 +68,35 @@ class StructureController extends Controller
          */
         $fuelCost = $hFinances->CalculateFuelBlockCost('market');
 
+        /**
+         * Calculate the final taxes and send to display
+         */
+
+        $tax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])
+                            ->avg('tax');
+        $rTax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])
+                            ->avg('tax');
+
         $monthTaxesMarket = $monthTaxesMarket - $fuelCost;
+        $monthTaxesMarket = $hFinance->CalculateTax($monthTaxesMarket, $tax, 'market');
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
 
         $lastTaxesMarket = $lastTaxesMarket - $fuelCost;
+        $lastTaxesMarket = $hFinance->CalculateTax($lastTaxesMarket, $tax, 'market');
         if($lastTaxesMarket < 0.00) {
             $lastTaxesMarket = 0.00;
         }
 
         $monthTaxesReprocessing = $monthTaxesReprocessing  - $fuelCost;
+        $monthTaxesReprocessing = $hFinance->CalculateTax($monthTaxesReprocessing, $rTax, 'refinery');
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
 
         $lastTaxesReprocessing = $lastTaxesReprocessing  - $fuelCost;
+        $lastTaxesReprocessing = $hFinance->CalculateTax($lastTaxesReprocessing, $rTax, 'refinery');
         if($lastTaxesReprocessing < 0.00) {
             $lastTaxesReprocessing = 0.00;
         }
