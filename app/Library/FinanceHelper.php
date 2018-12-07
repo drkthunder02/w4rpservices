@@ -118,7 +118,7 @@ class FinanceHelper {
             try {
                 $journals = $esi->page($currentPage)
                                 ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
-                    'corporation_id' => $character->corporation_id,
+                    'corporation_id' => $corpId,
                     'division'  => $division,
                 ]);
             } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
