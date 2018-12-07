@@ -51,7 +51,7 @@ class DumpFleets extends Command
         $job->save();
 
         //Dump all fleets from the table to start a new day
-        DB::table('fleets')->delete();
+        DB::table('Fleets')->delete();
 
         //Mark the job as finished
         $task->SetStopStatus();
