@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+
 use DB;
-use Commands\Library\Helper;
+use Commands\Library\CommandHelper;
 
 use App\Models\Logistics\Contract;
 use App\Models\ScheduledTask\ScheduleJob;
