@@ -33,6 +33,10 @@ class AdminController extends Controller
             $perm->character_id = $character->character_id;
             $perm->permission = $permission;
             $perm->save();
+
+            return view('admin.dashboard')->with('success', 'User udpated!');
+        } else {
+            return view('admin.dashboard')->with('error', 'User not updated.');
         }
     }
 

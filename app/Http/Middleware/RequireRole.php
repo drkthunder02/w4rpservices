@@ -25,7 +25,7 @@ class RequireRole
             'Director' => 3,
             'Admin' => 4,
         ];
-        $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
+        //Using eloquent let's get the roles for the character
         $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
         
         if(!isset($check[0]->role)) {
