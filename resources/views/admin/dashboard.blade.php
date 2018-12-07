@@ -51,7 +51,7 @@
                 Add Permission for User
             </div>
             <div class="card-body">
-                {!! Form::open(['action' => 'AdminController@addRole', 'method' => 'POST']) !!}
+                {!! Form::open(['action' => 'AdminController@addPermission', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{ Form::label('user', 'User') }}
                     {{ Form::text('user', '', ['class' => 'form-control', 'placeholder' => 'Character Name']) }}
