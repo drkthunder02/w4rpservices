@@ -49,15 +49,7 @@ class StructureController extends Controller
         //Get the number of structures registered to a corporation
         $citadelCount = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->count();
         $refineryCount = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])->count();
-        //$citadelCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' AND structure_type='Citadel'");
-        //$refineryCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' aND structure_type='Refinery'");
-
-        //Get the taxes for the corporation
-        //$monthTaxesMarket = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='brokers_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
-        //$lastTaxesMarket = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='brokers_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $startLast . "' AND '" . $endLast . "'");
-        //$monthTaxesReprocessing = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
-        //$lastTaxesReprocessing = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $startLast . "' AND '" . $endLast . "'");
-
+       
         $monthTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
                                         ->sum('amount');
@@ -76,31 +68,31 @@ class StructureController extends Controller
          */
         $fuelCost = $hFinances->CalculateFuelBlockCost('market');
 
-        $monthlyTaxesMarket = $monthTaxesMarket - $fuelCost;
+        $monthTaxesMarket = $monthTaxesMarket - $fuelCost;
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
 
-        $lastMonthTaxesMarket = $lastTaxesMarket - $fuelCost;
+        $lastTaxesMarket = $lastTaxesMarket - $fuelCost;
         if($lastTaxesMarket < 0.00) {
             $lastTaxesMarket = 0.00;
         }
 
-        $monthlyTaxesReprocessing = $monthTaxesReprocessing  - $fuelCost;
+        $monthTaxesReprocessing = $monthTaxesReprocessing  - $fuelCost;
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
 
-        $lastMonthTaxesReprocessing = $lastTaxesReprocessing  - $fuelCost;
+        $lastTaxesReprocessing = $lastTaxesReprocessing  - $fuelCost;
         if($lastTaxesReprocessing < 0.00) {
             $lastTaxesReprocessing = 0.00;
         }
 
         //Create the array to pass to the blade view
         $totalTaxes = [
-            'thisMonthReprocessing' => number_format($monthlyTaxesReprocessing, 2, '.', ','), 
+            'thisMonthReprocessing' => number_format($monthTaxesReprocessing, 2, '.', ','), 
             'lastMonthReprocessing' => number_format($lastMonthTaxesReprocessing, 2, '.', ','),
-            'thisMonthMarket' => number_format($monthlyTaxesMarket, 2, '.', ','),
+            'thisMonthMarket' => number_format($monthTaxesMarket, 2, '.', ','),
             'lastMonthMarket' => number_format($lastMonthTaxesMarket, 2, '.', ','),
         ];
 
