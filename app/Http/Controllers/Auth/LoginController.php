@@ -179,7 +179,7 @@ class LoginController extends Controller
      */
     private function SetRole($role, $charId) {
         //Insert the role into the database
-        $roles = new \App\Models\UserRole;
+        $roles = new UserRole;
         $roles->character_id = $charId;
         $roles->role = $role;
         $roles->save();
@@ -196,7 +196,7 @@ class LoginController extends Controller
         DB::table('EsiScopes')->where('character_id', $charId)->delete();
         $scopes = explode(' ', $scopes);
         foreach($scopes as $scope) {
-            $data = new \App\Models\EsiScope;
+            $data = new EsiScope;
             $data->character_id = $charId;
             $data->scope = $scope;
             $data->save();
