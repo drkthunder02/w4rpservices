@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use DB;
 use Carbon\Carbon;
 
-use App\Models\ScheduleJob;
+use App\Models\ScheduledTask\ScheduleJob;
 
 class DumpFleets extends Command
 {

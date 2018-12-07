@@ -7,8 +7,8 @@ use DB;
 use Carbon\Carbon;
 use Commands\Library\CommandHelper;
 
-use App\Models\AllianceCorp;
-use App\Models\ScheduleJob;
+use App\Models\Corporation\AllianceCorp;
+use App\Models\ScheduledTask\ScheduleJob;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;

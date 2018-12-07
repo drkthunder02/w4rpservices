@@ -7,9 +7,9 @@ use Carbon\Carbon;
 use DB;
 use Commands\Library\CommandHelper;
 
-use App\Library\Esi;
-use App\Library\Mail;
-use App\Models\ScheduleJob;
+use App\Library\Esi\EsiScope;
+use App\Library\Esi\EsiToken;
+use App\Models\ScheduledTask\ScheduleJob;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;

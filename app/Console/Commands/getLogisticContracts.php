@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Commands\Library\Helper;
 
 use App\Models\Logistics\Contract;
-use App\Models\ScheduleJob;
+use App\Models\ScheduledTask\ScheduleJob;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
