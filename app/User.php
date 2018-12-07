@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
 
 class User extends Authenticatable
 {
