@@ -26,12 +26,12 @@ class RequireRole
             'Director' => 3,
             'Admin' => 4,
         ];
-        $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
-        
-        if($ranking[$check[0]->role] === $ranking[$role]) {
+        $check = UserRole::where('character_id', auth()->user()->character_id)->get();
+
+        if($ranking[$check->role] === $ranking[$role]) {
             $confirmed = true;
         }
-        if($ranking[$check[0]->role] >= $ranking[$role]) {
+        if($ranking[$check->role] >= $ranking[$role]) {
             $confirmed = true;
         }
 
