@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use DB;
-use Carbon\Carbon;
+use Commands\Library\CommandHelper;
 
 use App\Models\ScheduledTask\ScheduleJob;
 
@@ -44,6 +44,8 @@ class DumpFleets extends Command
     {
         //Create the command helper container
         $task = new CommandHelper('DumpFleets');
+        //Add the entry into the jobs table saying the job is starting
+        $task->SetStartStatus();
 
         //Dump all fleets from the table to start a new day
         DB::table('Fleets')->delete();
