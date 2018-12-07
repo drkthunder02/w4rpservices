@@ -12,6 +12,7 @@ use App\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Corporation\CorpJournal;
+use App\Models\Corporation\CorpStructure;
 
 use App\Library\FinanceHelper;
 use App\Library\Esi;
@@ -46,21 +47,35 @@ class StructureController extends Controller
         $corpId = $helper->FindCorporationId(Auth::user()->character_id);
 
         //Get the number of structures registered to a corporation
-        $citadelCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' AND structure_type='Citadel'");
-        $refineryCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' aND structure_type='Refinery'");
+        $citadelCount = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->count();
+        $refineryCount = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])->count();
+        //$citadelCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' AND structure_type='Citadel'");
+        //$refineryCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' aND structure_type='Refinery'");
 
         //Get the taxes for the corporation
-        //SELECT SUM(amount) FROM CorpJournals WHERE ref_type='brokers_fee' AND date BETWEEN '2018-11-01 00:00:00' AND '2018-11-31 23:59:59'
-        $monthTaxesMarket = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='brokers_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
-        $lastTaxesMarket = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='brokers_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $startLast . "' AND '" . $endLast . "'");
-        $monthTaxesReprocessing = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
-        $lastTaxesReprocessing = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $startLast . "' AND '" . $endLast . "'");
+        //$monthTaxesMarket = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='brokers_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
+        //$lastTaxesMarket = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='brokers_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $startLast . "' AND '" . $endLast . "'");
+        //$monthTaxesReprocessing = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
+        //$lastTaxesReprocessing = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $startLast . "' AND '" . $endLast . "'");
+
+        $monthTaxesMarket = CorpJournals::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+                                        ->whereBetween('date', [$start, $end])
+                                        ->sum();
+        $lastTaxesMarket = CorpJournals::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+                                        ->whereBetween('date', [$startLast, $endLast])
+                                        ->sum();
+        $monthTaxesReprocessing = CorpJournals::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
+                                        ->whereBetween('date', [$start, $end])
+                                        ->sum();
+        $lastTaxesReprocessing = CorpJournals::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
+                                        ->whereBetween('date', [$startLast, $endLast])
+                                        ->sum();
 
         /**
          * In this next section we are removing the cost of fuel blocks from one structure
          */
         $fuelCost = $hFinances->CalculateFuelBlockCost('market');
-        
+
         $monthlyTaxesMarket = $monthTaxesMarket[0]["SUM(amount)"] - $fuelCost;
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
