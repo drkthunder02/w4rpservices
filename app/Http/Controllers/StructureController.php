@@ -76,22 +76,22 @@ class StructureController extends Controller
          */
         $fuelCost = $hFinances->CalculateFuelBlockCost('market');
 
-        $monthlyTaxesMarket = $monthTaxesMarket[0]["SUM(amount)"] - $fuelCost;
+        $monthlyTaxesMarket = $monthTaxesMarket - $fuelCost;
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
 
-        $lastMonthTaxesMarket = $lastTaxesMarket[0]["SUM(amount)"]  - $fuelCost;
+        $lastMonthTaxesMarket = $lastTaxesMarket - $fuelCost;
         if($lastTaxesMarket < 0.00) {
             $lastTaxesMarket = 0.00;
         }
 
-        $monthlyTaxesReprocessing = $monthTaxesReprocessing[0]["SUM(amount)"]  - $fuelCost;
+        $monthlyTaxesReprocessing = $monthTaxesReprocessing  - $fuelCost;
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
 
-        $lastMonthTaxesReprocessing = $lastTaxesReprocessing[0]["SUM(amount)"]  - $fuelCost;
+        $lastMonthTaxesReprocessing = $lastTaxesReprocessing  - $fuelCost;
         if($lastTaxesReprocessing < 0.00) {
             $lastTaxesReprocessing = 0.00;
         }
