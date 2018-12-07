@@ -59,6 +59,7 @@ class StructureController extends Controller
         /**
          * In this next section we are removing the cost of fuel blocks from one structure
          */
+        dd($hFinances->CalculateFuelBlockCost('market'));
         $monthTaxesMarket = $monthTaxesMarket - ($hFinances->CalculateFuelBlockCost('market') * $citadelCount);
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
