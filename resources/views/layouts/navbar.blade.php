@@ -52,7 +52,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Structures</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    <a class="dropdown-item" href="/structures/display/taxes">Structure Taxes</a>
+                    <a class="dropdown-item" href="/structures/taxes/display">Current Taxes</a>
+                    <a class="dropdown-item" href="/structures/taxes/history">Taxes History</a>
                     <a class="dropdown-item" href="/structures/register">Register Structure</a>
                 </div>
             </li>

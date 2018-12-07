@@ -62,7 +62,7 @@ Route::post('/admin/addPermission', 'AdminController@addPermission');
 Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
 Route::post('/structures/store', 'RegisterStructureController@storeStructure');
 //Structure Controller display pages
-Route::get('/structures/taxes', 'Structurecontroller@displayTaxes');
+Route::get('/structures/taxes/display', 'Structurecontroller@displayTaxes');
 Route::get('/structures/taxes/history', 'StructureController@displayTaxHistory');
 
 //AJAX Controller display pages
