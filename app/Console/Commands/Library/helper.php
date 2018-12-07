@@ -15,7 +15,7 @@ class CommandHelper {
 
     public function __construct($name) {
         $this->job_name = $name;
-        $this->job_status = 'Starting';
+        $this->job_state = 'Starting';
         $this->system_time = Carbon::now();
     }
 
@@ -23,7 +23,7 @@ class CommandHelper {
         //Add an entry into the jobs table
         $job = new ScheduleJob;
         $job->job_name = $this->job_name;
-        $job->state = $this->job_state;
+        $job->job_state = $this->job_state;
         $job->system_time = $this->system_time;
         $job->save();
     }
