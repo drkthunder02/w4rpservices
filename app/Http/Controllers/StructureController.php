@@ -59,22 +59,24 @@ class StructureController extends Controller
         /**
          * In this next section we are removing the cost of fuel blocks from one structure
          */
-        $monthTaxesMarket = $monthTaxesMarket - ($hFinances->CalculateFuelBlockCost('market'));
+        $fuelCost = $hFinances->CalculateFuelBlockCost('market');
+        dd($monthTaxesMarket);
+        $monthTaxesMarket = $monthTaxesMarket - $fuelCost;
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
 
-        $lastTaxesMarket = $lastTaxesMarket - ($hFinances->CalculateFuelBlocksCost('market'));
+        $lastTaxesMarket = $lastTaxesMarket - $fuelCost;
         if($lastTaxesMarket < 0.00) {
             $lastTaxesMarket = 0.00;
         }
 
-        $monthTaxesReprocessing = $monthTaxesReprocessing - ($hFinances->CalculateFuelBlockCost('reprocessing'));
+        $monthTaxesReprocessing = $monthTaxesReprocessing - $fuelCost;
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
 
-        $lastTaxesReprocessing = $lastTaxesReprocessing - ($hFinances->CalculateFuelBlockCost('reprocessing'));
+        $lastTaxesReprocessing = $lastTaxesReprocessing - $fuelCost;
         if($lastTaxesReprocessing < 0.00) {
             $lastTaxesReprocessing = 0.00;
         }
