@@ -38,7 +38,7 @@
                     <a class="dropdown-item" href="/fleets/register">Register</a>
                 </div>
             </li>
-            @if(Auth()->user()->hasPermission('logistics.minion'))
+            @if(auth()->user()->hasPermission('logistics.minion'))
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Logistics</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
@@ -48,7 +48,7 @@
                 </div>
             </li>
             @endif
-            @if(Auth()->user()->hasPermission('structure.operator'))
+            @if(auth()->user()->hasPermission('structure.operator'))
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Structures</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
