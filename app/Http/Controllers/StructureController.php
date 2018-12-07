@@ -60,33 +60,33 @@ class StructureController extends Controller
          * In this next section we are removing the cost of fuel blocks from one structure
          */
         $fuelCost = $hFinances->CalculateFuelBlockCost('market');
-        dd($monthTaxesMarket);
-        $monthTaxesMarket = $monthTaxesMarket - $fuelCost;
+        
+        $monthlyTaxesMarket = $monthTaxesMarket[0]["SUM(amount)"] - $fuelCost;
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
 
-        $lastTaxesMarket = $lastTaxesMarket - $fuelCost;
+        $lastMonthTaxesMarket = $lastTaxesMarket[0]["SUM(amount)"]  - $fuelCost;
         if($lastTaxesMarket < 0.00) {
             $lastTaxesMarket = 0.00;
         }
 
-        $monthTaxesReprocessing = $monthTaxesReprocessing - $fuelCost;
+        $monthlyTaxesReprocessing = $monthTaxesReprocessing[0]["SUM(amount)"]  - $fuelCost;
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
 
-        $lastTaxesReprocessing = $lastTaxesReprocessing - $fuelCost;
+        $lastMonthTaxesReprocessing = $lastTaxesReprocessing[0]["SUM(amount)"]  - $fuelCost;
         if($lastTaxesReprocessing < 0.00) {
             $lastTaxesReprocessing = 0.00;
         }
 
         //Create the array to pass to the blade view
         $totalTaxes = [
-            'thisMonthReprocessing' => number_format($monthTaxesReprocessing, 2, '.', ','), 
-            'lastMonthReprocessing' => number_format($lastTaxesReprocessing, 2, '.', ','),
-            'thisMonthMarket' => number_format($monthTaxesMarket, 2, '.', ','),
-            'lastMonthMarket' => number_format($lastTaxesMarket, 2, '.', ','),
+            'thisMonthReprocessing' => number_format($monthlyTaxesReprocessing, 2, '.', ','), 
+            'lastMonthReprocessing' => number_format($lastMonthTaxesReprocessing, 2, '.', ','),
+            'thisMonthMarket' => number_format($monthlyTaxesMarket, 2, '.', ','),
+            'lastMonthMarket' => number_format($lastMonthTaxesMarket, 2, '.', ','),
         ];
 
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
