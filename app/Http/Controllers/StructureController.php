@@ -60,16 +60,16 @@ class StructureController extends Controller
 
         $monthTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
-                                        ->sum();
+                                        ->sum('amount');
         $lastTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$startLast, $endLast])
-                                        ->sum();
+                                        ->sum('amount');
         $monthTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
-                                        ->sum();
+                                        ->sum('amount');
         $lastTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$startLast, $endLast])
-                                        ->sum();
+                                        ->sum('amount');
 
         /**
          * In this next section we are removing the cost of fuel blocks from one structure
