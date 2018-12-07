@@ -72,10 +72,10 @@ class StructureController extends Controller
          * Calculate the final taxes and send to display
          */
 
-        $tax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])
+        $tax = DB::table('CorpStructures')->where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])
                             ->avg('tax');
         dd($tax);
-        $rTax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])
+        $rTax = DB::table('CorpStructures')->where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])
                             ->avg('tax');
 
         $monthTaxesMarket = $monthTaxesMarket - $fuelCost;
