@@ -2,13 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Foundation\Http\Middleware;
-
 use Closure;
 use DB;
 use \App\Models\User\UserRole;
 
-class RequireRole extends Middleware
+class RequireRole
 {
     /**
      * Handle an incoming request.
@@ -28,6 +26,11 @@ class RequireRole extends Middleware
             'Admin' => 4,
         ];
         $check = DB::table('user_roles')->where('character_id', auth()->user()->character_id)->get(['role']);
+        $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
+        
+        if(!isset($check[0]->role)) {
+            abort(403, "You don't have permissions to access this area!");    
+        }
 
         if($ranking[$check[0]->role] === $ranking[$role]) {
             $confirmed = true;
