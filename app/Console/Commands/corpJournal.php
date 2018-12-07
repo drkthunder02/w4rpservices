@@ -56,7 +56,7 @@ class CorpJournal extends Command
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
         //Setup the Finances Container
-        $finance = new Finances();
+        $finance = new FinanceHelper();
         //Setup an array to store corporations which have been logged so we don't keep calling the same ones.  We need
         //this step in order to save time during the cronjob.
         $finishedCorps = array();
@@ -92,7 +92,7 @@ class CorpJournal extends Command
     }
 
     private function GetJournal($charId) {
-        $finances = new Finances();
+        $finances = new FinanceHelper();
         //Get the master wallet journal for the corporation for the character
         $finances->GetWalletJournal(1, $charId);
     }
