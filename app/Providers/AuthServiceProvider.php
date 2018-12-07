@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 use DB;
-use \App\Models\UserRole;
+use App\Models\User\UserRole;
 
 class AuthServiceProvider extends ServiceProvider
 {
