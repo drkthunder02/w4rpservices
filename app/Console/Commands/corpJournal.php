@@ -8,13 +8,13 @@ use DB;
 
 use Commands\Library\CommandHelper;
 
-use App\Library\Finances;
+use App\Library\FinanceHelper;
 use App\Library\Esi;
 
-use App\Models\EsiScope;
-use App\Models\EsiToken;
-use App\Models\Structure;
-use App\Models\ScheduleJob;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
+use App\Models\Corporation\Structure;
+use App\Models\ScheduledTask\ScheduleJob;
 
 use Carbon\Carbon;
 
