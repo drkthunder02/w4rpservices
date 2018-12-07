@@ -28,7 +28,7 @@ class AdminController extends Controller
         //Check to see if the character already has the permission
         $check = DB::table('user_permissions')->where(['character_id' => $character->character_id, 'permission' => $permission])->get();
         //If the user doesn't have the permission then add it into the table
-        if($check == null) {
+        if($check === null) {
             $perm = new UserPermission;
             $perm->character_id = $character->character_id;
             $perm->permission = $permission;
