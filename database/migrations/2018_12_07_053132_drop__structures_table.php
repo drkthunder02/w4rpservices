@@ -13,9 +13,7 @@ class DropStructuresTable extends Migration
      */
     public function up()
     {
-        Schema::table('Fleets', function($table) {
-            $table->dropColumn('fleet_end');
-        });
+        Schema::dropIfExists('Structures');
     }
 
     /**

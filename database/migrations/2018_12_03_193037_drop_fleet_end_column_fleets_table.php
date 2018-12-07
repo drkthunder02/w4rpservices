@@ -13,9 +13,11 @@ class DropFleetEndColumnFleetsTable extends Migration
      */
     public function up()
     {
-        Schema::table('Fleets', function($table) {
-            $table->dropColumn('fleet_end');
-        });
+        if(Schema::hasColumn('Fleets', 'fleet_end')) {
+            Schema::table('Fleets', function($table) {
+                $table->dropColumn('fleet_end');
+            });
+        }
     }
 
     /**
