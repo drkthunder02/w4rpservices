@@ -91,9 +91,9 @@ class StructureController extends Controller
         //Create the array to pass to the blade view
         $totalTaxes = [
             'thisMonthReprocessing' => number_format($monthTaxesReprocessing, 2, '.', ','), 
-            'lastMonthReprocessing' => number_format($lastMonthTaxesReprocessing, 2, '.', ','),
+            'lastMonthReprocessing' => number_format($lastTaxesReprocessing, 2, '.', ','),
             'thisMonthMarket' => number_format($monthTaxesMarket, 2, '.', ','),
-            'lastMonthMarket' => number_format($lastMonthTaxesMarket, 2, '.', ','),
+            'lastMonthMarket' => number_format($lastTaxesMarket, 2, '.', ','),
         ];
 
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
