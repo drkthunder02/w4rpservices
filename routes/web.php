@@ -58,14 +58,12 @@ Route::post('/admin/addRole', 'AdminController@addRole');
 Route::post('/admin/removeRole', 'AdminController@removeRole');
 Route::post('/admin/addPermission', 'AdminController@addPermission');
 
-//Finances Controller display pages
-Route::get('/finances/display', 'FinancesController@displayWallet');
-Route::get('/finances/taxes', 'FinancesController@displayTaxes')->name('structure_taxes');
-
-//Structures Controller display pages
+//Register Structures Controller display pages
 Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
 Route::post('/structures/store', 'RegisterStructureController@storeStructure');
-Route::get('/structures/taxes', 'FinancesController@displayTaxes');
+//Structure Controller display pages
+Route::get('/structures/taxes', 'Structurecontroller@displayTaxes');
+Route::get('/structures/taxes/history', 'StructureController@displayTaxHistory');
 
 //AJAX Controller display pages
 Route::get('ajax',function() {

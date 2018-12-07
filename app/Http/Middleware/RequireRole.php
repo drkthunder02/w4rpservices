@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use DB;
-use \App\Models\User\UserRole;
+use App\Models\User\UserRole;
 
 class RequireRole
 {
