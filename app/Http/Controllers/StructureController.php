@@ -60,22 +60,22 @@ class StructureController extends Controller
          * In this next section we are removing the cost of fuel blocks from one structure
          */
         dd($citadelCount);
-        $monthTaxesMarket = $monthTaxesMarket - ($hFinances->CalculateFuelBlockCost('market') * $citadelCount);
+        $monthTaxesMarket = $monthTaxesMarket - ($hFinances->CalculateFuelBlockCost('market'));
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
 
-        $lastTaxesMarket = $lastTaxesMarket - ($hFinances->CalculateFuelBlocksCost('market') * $citadelCount);
+        $lastTaxesMarket = $lastTaxesMarket - ($hFinances->CalculateFuelBlocksCost('market'));
         if($lastTaxesMarket < 0.00) {
             $lastTaxesMarket = 0.00;
         }
 
-        $monthTaxesReprocessing = $monthTaxesReprocessing - ($hFinances->CalculateFuelBlockCost('reprocessing') * $refineryCount);
+        $monthTaxesReprocessing = $monthTaxesReprocessing - ($hFinances->CalculateFuelBlockCost('reprocessing'));
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
 
-        $lastTaxesReprocessing = $lastTaxesReprocessing - ($hFinances->CalculateFuelBlockCost('reprocessing') * $refineryCount);
+        $lastTaxesReprocessing = $lastTaxesReprocessing - ($hFinances->CalculateFuelBlockCost('reprocessing'));
         if($lastTaxesReprocessing < 0.00) {
             $lastTaxesReprocessing = 0.00;
         }
