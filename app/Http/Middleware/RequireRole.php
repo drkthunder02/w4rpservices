@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Foundation\Http\Middleware;
+
 use Closure;
 use DB;
 use \App\Models\User\UserRole;
