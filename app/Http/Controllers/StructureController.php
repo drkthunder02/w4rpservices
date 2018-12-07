@@ -71,33 +71,29 @@ class StructureController extends Controller
         /**
          * Calculate the final taxes and send to display
          */
-
-        $tax = DB::table('CorpStructures')->where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])
-                            ->avg('tax');
-        dd($tax);
-        $rTax = DB::table('CorpStructures')->where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])
-                            ->avg('tax');
+        $tax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->avg('tax');
+        $rTax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])->avg('tax');
 
         $monthTaxesMarket = $monthTaxesMarket - $fuelCost;
-        $monthTaxesMarket = $hFinances->CalculateTax($monthTaxesMarket, $tax, 'market');
+        $monthTaxesMarket = $hFinances->CalculateTax($monthTaxesMarket, 2.5, 'market');
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
 
         $lastTaxesMarket = $lastTaxesMarket - $fuelCost;
-        $lastTaxesMarket = $hFinances->CalculateTax($lastTaxesMarket, $tax, 'market');
+        $lastTaxesMarket = $hFinances->CalculateTax($lastTaxesMarket, 2.5, 'market');
         if($lastTaxesMarket < 0.00) {
             $lastTaxesMarket = 0.00;
         }
 
         $monthTaxesReprocessing = $monthTaxesReprocessing  - $fuelCost;
-        $monthTaxesReprocessing = $hFinances->CalculateTax($monthTaxesReprocessing, $rTax, 'refinery');
+        $monthTaxesReprocessing = $hFinances->CalculateTax($monthTaxesReprocessing, 2.5, 'refinery');
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
 
         $lastTaxesReprocessing = $lastTaxesReprocessing  - $fuelCost;
-        $lastTaxesReprocessing = $hFinances->CalculateTax($lastTaxesReprocessing, $rTax, 'refinery');
+        $lastTaxesReprocessing = $hFinances->CalculateTax($lastTaxesReprocessing, 2.5, 'refinery');
         if($lastTaxesReprocessing < 0.00) {
             $lastTaxesReprocessing = 0.00;
         }
