@@ -42,13 +42,8 @@ class DumpFleets extends Command
      */
     public function handle()
     {
-        //Add an entry into the jobs table
-        $job = new ScheduleJob;
-        $time = Carbon::now();
-        $job->job_name = 'DumpFleets';
-        $job->job_state = 'Starting';
-        $job->system_time = $time;
-        $job->save();
+        //Create the command helper container
+        $task = new CommandHelper('DumpFleets');
 
         //Dump all fleets from the table to start a new day
         DB::table('Fleets')->delete();
