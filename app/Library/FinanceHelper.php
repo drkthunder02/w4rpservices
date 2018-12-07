@@ -152,7 +152,9 @@ class FinanceHelper {
      */
     private function GetCharCorp($charId) {
         //Check for the character the user_to_corporation table
-        $found = DB::table('user_to_corporation')->where('character_id', $charId)->get();
+        //$found = DB::table('user_to_corporation')->where('character_id', $charId)->get();
+        $found = UserToCorporation::where('character_id', $charId)->get();
+        dd($found);
         //If we don't find the character in the table, then let's retrieve the information from ESI
         if($found == null) {
             //Get the configuration for ESI from the environmental variables
