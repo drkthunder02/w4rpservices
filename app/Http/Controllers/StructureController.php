@@ -74,7 +74,7 @@ class StructureController extends Controller
          */
         $taxes = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->get(['tax']);
         $rTaxes = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])->get(['tax']);
-        dd($tax);
+        dd($taxes);
 
         $monthTaxesMarket = $tempMonthTaxesMarket - $marketFuelCost;
         $monthTaxesMarket = $hFinances->CalculateTax($monthTaxesMarket, 2.5, 'market');
