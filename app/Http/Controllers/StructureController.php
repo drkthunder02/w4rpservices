@@ -47,8 +47,8 @@ class StructureController extends Controller
         $corpId = $helper->FindCorporationId(Auth::user()->character_id);
 
         //Get the number of structures registered to a corporation
-        $citadelCount = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->count();
-        $refineryCount = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])->count();
+        $citadelCount = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Citadel'])->count();
+        $refineryCount = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Refinery'])->count();
        
         $tempMonthTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
@@ -73,6 +73,7 @@ class StructureController extends Controller
          * Calculate the final taxes and send to display
          */
         $mTax = DB::select('SELECT AVG(tax) FROM CorpStructures WHERE 1');
+        $mTax = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Citadel'])->avg('tax');
         dd($mTax);
 
         $monthTaxesMarket = $tempMonthTaxesMarket - $marketFuelCost;
