@@ -72,7 +72,7 @@ class StructureController extends Controller
         /**
          * Calculate the final taxes and send to display
          */
-        $mTax = DB::select('SELECT AVG(tax) FROM CorpStructures WHERE corporation_id = ? AND structure_type = ?', [$corporation, 'Citadel']);
+        $mTax = DB::select('SELECT AVG(tax) FROM CorpStructures WHERE 1');
         dd($mTax);
 
         $monthTaxesMarket = $tempMonthTaxesMarket - $marketFuelCost;
