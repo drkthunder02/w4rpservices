@@ -33,7 +33,7 @@ class FinanceHelper {
         //Calculate how many fuel blocks are used in a month by a structure type
         if($type === 'market') {
             $fuelBlocks = 24*30*32;
-        } else if ($type === 'reprocessing') {
+        } else if ($type === 'refinery') {
             $fuelBlocks = 24*30*8;
         } else {
             $fuelBlocks = 0;
