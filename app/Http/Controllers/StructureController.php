@@ -72,8 +72,7 @@ class StructureController extends Controller
         /**
          * Calculate the final taxes and send to display
          */
-        $mTax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])
-                             ->sum('tax');
+        $mTax = CorpStructure::where(['corporation_id' => $corporation])->sum('tax');
         $rTax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])
                              ->sum('tax');
         dd($mTax);
