@@ -65,7 +65,7 @@ class StructureController extends Controller
          */
         $mTax = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Citadel'])->avg('tax');
 
-        $monthTaxesMarket = $tempMonthTaxesMarket - $marketFuelCost;
+        $monthTaxesMarket = $tempMonthTaxesMarket - ($marketFuelCost * $citadelCount);
         $monthTaxesMarket = $hFinances->CalculateTax($monthTaxesMarket, $mTax, 'market');
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
