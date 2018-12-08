@@ -47,7 +47,7 @@ class StructureController extends Controller
 
         //Get the number of structures registered to a corporation
         $citadelCount = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Citadel'])->count();
-       
+        dd($citadelCount);
         $tempMonthTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
                                         ->sum('amount');
