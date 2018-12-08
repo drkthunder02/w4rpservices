@@ -56,10 +56,10 @@ class StructureController extends Controller
         $tempLastTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$startLast, $endLast])
                                         ->sum('amount');
-        $tempMonthTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
+        $tempMonthTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
                                         ->sum('amount');
-        $tempLastTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
+        $tempLastTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$startLast, $endLast])
                                         ->sum('amount');
 
