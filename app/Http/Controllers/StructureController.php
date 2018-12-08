@@ -16,7 +16,6 @@ use App\Models\Corporation\CorpStructure;
 
 use App\Library\FinanceHelper;
 use App\Library\Esi;
-use App\Library\SeatHelper;
 
 class StructureController extends Controller
 {
@@ -43,7 +42,7 @@ class StructureController extends Controller
         $endLast->second = 59;
 
         //Get the character's corporation from esi
-        $corporation = $helper->FindCorporationName(Auth::user()->character_id);
+        //$corporation = $helper->FindCorporationName(Auth::user()->character_id);
         $corpId = $helper->FindCorporationId(Auth::user()->character_id);
 
         //Get the number of structures registered to a corporation
@@ -72,30 +71,29 @@ class StructureController extends Controller
         /**
          * Calculate the final taxes and send to display
          */
-        $mTax = DB::select('SELECT AVG(tax) FROM CorpStructures WHERE 1');
         $mTax = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Citadel'])->avg('tax');
-        dd($mTax);
+        $rTax = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Refinery'])->avg('tax');
 
         $monthTaxesMarket = $tempMonthTaxesMarket - $marketFuelCost;
-        $monthTaxesMarket = $hFinances->CalculateTax($monthTaxesMarket, 2.5, 'market');
+        $monthTaxesMarket = $hFinances->CalculateTax($monthTaxesMarket, $mTax, 'market');
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
 
         $lastTaxesMarket = $tempLastTaxesMarket - $marketFuelCost;
-        $lastTaxesMarket = $hFinances->CalculateTax($lastTaxesMarket, 2.5, 'market');
+        $lastTaxesMarket = $hFinances->CalculateTax($lastTaxesMarket, $mTax, 'market');
         if($lastTaxesMarket < 0.00) {
             $lastTaxesMarket = 0.00;
         }
 
         $monthTaxesReprocessing = $tempMonthTaxesReprocessing  - $refineryFuelCost;
-        $monthTaxesReprocessing = $hFinances->CalculateTax($monthTaxesReprocessing, 2.5, 'refinery');
+        $monthTaxesReprocessing = $hFinances->CalculateTax($monthTaxesReprocessing, $rTax, 'refinery');
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
 
         $lastTaxesReprocessing = $tempLastTaxesReprocessing  - $refineryFuelCost;
-        $lastTaxesReprocessing = $hFinances->CalculateTax($lastTaxesReprocessing, 2.5, 'refinery');
+        $lastTaxesReprocessing = $hFinances->CalculateTax($lastTaxesReprocessing, $rTax, 'refinery');
         if($lastTaxesReprocessing < 0.00) {
             $lastTaxesReprocessing = 0.00;
         }

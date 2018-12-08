@@ -4,10 +4,6 @@
     <h2>Register Structure</h2>
     {!! Form::open(['action' => 'RegisterStructureController@storeStructure', 'method' => 'POST']) !!}
     <div class="form-group">
-        {{ Form::label('corporation_id', 'Corporation ID')}}
-        {{ Form::text('corporation_id', '', ['class' => 'form-control']) }}
-        {{ Form::label('corporation_name', 'Corporation Name') }}
-        {{ Form::text('corporation_name', '', ['class' => 'form-control']) }}
         {{ Form::label('region', 'Region') }}
         {{ Form::text('region', '', ['class' => 'form-control']) }}
         {{ Form::label('system', 'System') }}

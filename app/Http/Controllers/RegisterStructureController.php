@@ -28,20 +28,20 @@ class RegisterStructureController extends Controller
 
     public function storeStructure(Request $request) {
         $this->validate($request, [
-            'corporation_id' => 'required',
-            'corporation_name' => 'required',
             'system' => 'required',
             'structure_name' => 'required',
             'tax' => 'required',
             'structure_type' => 'required',
         ]);
 
+        $eHelper = new Esi;
+
         $tax = floatval($request->tax);
 
         $structure = new CorpStructure();
         $structure->character_id = Auth::user()->character_id;
-        $structure->corporation_id = $request->corporation_id;
-        $structure->corporation_name = $request->corporation_name;
+        $structure->corporation_id = $eHelper->FindCorporationId(Auth::user()->character_id);
+        $structure->corporation_name = $eHelper->FindCorporationName(Auth::user()->character_id);
         $structure->region = $request->region;
         $structure->system = $request->system;
         $structure->structure_name = $request->structure_name;
