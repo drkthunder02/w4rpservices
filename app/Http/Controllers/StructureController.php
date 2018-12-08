@@ -73,12 +73,8 @@ class StructureController extends Controller
          * Calculate the final taxes and send to display
          */
         $taxes = DB::table('CorpStructures')->where(['corporation_id' => $corporation])->get();
-        $cTax = 0.00;
-        $rTax = 0.00;
-        foreach($taxes as $tax) {
-            $cTax += $tax->tax;
-        }
-        $cTax = $cTax / sizeof($taxes->tax);
+        dd($taxes);
+        
         //$taxes = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->get(['tax']);
         //$rTaxes = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])->get(['tax']);
         dd($cTax);
