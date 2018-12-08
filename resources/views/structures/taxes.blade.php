@@ -10,7 +10,6 @@
             <table class="table table-striped">
                 <thead>
                     <th>Month</th>
-                    <th>Reprocessing Tax</th>
                     <th>Market Tax</th>
                 </thead>
                 <tbody>
