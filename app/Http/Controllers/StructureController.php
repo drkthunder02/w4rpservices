@@ -75,8 +75,8 @@ class StructureController extends Controller
         $taxes = DB::table('CorpStructures')->where(['corporation_id' => $corporation])->get();
         $cTax = 0.00;
         $rTax = 0.00;
-        foreach($taxes->tax as $tax) {
-            $cTax += $tax;
+        foreach($taxes as $tax) {
+            $cTax += $tax->tax;
         }
         $cTax = $cTax / sizeof($taxes->tax);
         //$taxes = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->get(['tax']);
