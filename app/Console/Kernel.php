@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdateMoonPricing::class,
         Commands\DumpFleets::class,
         Commands\CalculateMarketTax::class,
+        Commands\GetLogisticsContracts::class,
     ];
 
     /**
