@@ -14,7 +14,7 @@ use Seat\Eseye\Eseye;
 
 class Mail {
 
-    public function SendMail($charId, $taxAmount, $subject) {
+    public function SendMail($charId, $taxAmount, $subject, $body) {
         //Retrieve the token for Amund Risalo
         $token = DB::table('EsiTokens')->where('character_id', 93738489)->get();
         $configuration = Configuration::getInstance();

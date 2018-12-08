@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\sendMail::class,
         Commands\UpdateMoonPricing::class,
         Commands\DumpFleets::class,
+        Commands\CalculateMarketTax::class,
     ];
 
     /**
@@ -40,9 +41,12 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:dumpfleets')
                  ->dailyAt('05:00')
                  ->withoutOverlapping();
-        //$schedule->command('services:sendmail')
-        //         ->monthlyOn(1, '09:00')
-        //         ->withoutOverlapping();
+        $schedule->command('services:calculatemarkettax')
+                 ->monthlyOn(1, '08:00')
+                 ->withoutOverlapping();
+        $schedule->command('services:sendmail')
+                 ->monthlyOn(1, '09:00')
+                 ->withoutOverlapping();
     }
 
     /**

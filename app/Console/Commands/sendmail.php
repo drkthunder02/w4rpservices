@@ -7,10 +7,13 @@ use Carbon\Carbon;
 use DB;
 use Commands\Library\CommandHelper;
 
+use App\User;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
-use App\Library\Mail;
 use App\Models\ScheduledTask\ScheduleJob;
+use App\Models\Market\MonthlyMarketTax;
+
+use App\Library\Mail;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -58,8 +61,23 @@ class sendMail extends Command
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
 
-        //Put our task in this section
-        $mail = new Mail;
+        //Set the date
+        $date = Carbon::now()->subMonth();
+        //Set the mail helper variable
+        $mHelper = new Mail();
+
+        //Get the full list of bills to send out
+        $bills = MonthlyMarketTax::where(['month' => $date->monthName, 'year' => $date->year])->get();
+        //For each of the bills send a mail out
+        foreach($bills as $bill) {
+            $subject = 'Market Taxes Owed';
+            $body = 'Month: ' . 
+                    $bill->month .
+                    '<br>Market Taxes Owed: ' .
+                    $bills->tax_owed .
+                    '<br>Please remit to Spatial Forces';
+            $error = $mHelper->SendMail($bills->character_id, $bills->tax_owed, $subject, $body);
+        }
 
         //Mark the job as finished
         $task->SetStopStatus();
