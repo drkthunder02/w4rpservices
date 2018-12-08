@@ -50,16 +50,16 @@ class StructureController extends Controller
         $citadelCount = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->count();
         $refineryCount = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])->count();
        
-        $monthTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+        $tempMonthTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
                                         ->sum('amount');
-        $lastTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+        $tempLastTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$startLast, $endLast])
                                         ->sum('amount');
-        $monthTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
+        $tempMonthTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
                                         ->sum('amount');
-        $lastTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
+        $tempLastTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$startLast, $endLast])
                                         ->sum('amount');
 
@@ -74,25 +74,25 @@ class StructureController extends Controller
         $tax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->avg('tax');
         $rTax = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])->avg('tax');
 
-        $monthTaxesMarket = $monthTaxesMarket - $fuelCost;
+        $monthTaxesMarket = $tempMonthTaxesMarket - $fuelCost;
         $monthTaxesMarket = $hFinances->CalculateTax($monthTaxesMarket, 2.5, 'market');
         if($monthTaxesMarket < 0.00) {
             $monthTaxesMarket = 0.00;
         }
 
-        $lastTaxesMarket = $lastTaxesMarket - $fuelCost;
+        $lastTaxesMarket = $tempLastTaxesMarket - $fuelCost;
         $lastTaxesMarket = $hFinances->CalculateTax($lastTaxesMarket, 2.5, 'market');
         if($lastTaxesMarket < 0.00) {
             $lastTaxesMarket = 0.00;
         }
 
-        $monthTaxesReprocessing = $monthTaxesReprocessing  - $fuelCost;
+        $monthTaxesReprocessing = $tempMonthTaxesReprocessing  - $fuelCost;
         $monthTaxesReprocessing = $hFinances->CalculateTax($monthTaxesReprocessing, 2.5, 'refinery');
         if($monthTaxesReprocessing < 0.00) {
             $monthTaxesReprocessing = 0.00;
         }
 
-        $lastTaxesReprocessing = $lastTaxesReprocessing  - $fuelCost;
+        $lastTaxesReprocessing = $tempLastTaxesReprocessing  - $fuelCost;
         $lastTaxesReprocessing = $hFinances->CalculateTax($lastTaxesReprocessing, 2.5, 'refinery');
         if($lastTaxesReprocessing < 0.00) {
             $lastTaxesReprocessing = 0.00;
@@ -104,6 +104,10 @@ class StructureController extends Controller
             'lastMonthReprocessing' => number_format($lastTaxesReprocessing, 2, '.', ','),
             'thisMonthMarket' => number_format($monthTaxesMarket, 2, '.', ','),
             'lastMonthMarket' => number_format($lastTaxesMarket, 2, '.', ','),
+            'thisMoRepGeneration' => number_format($tempMonthTaxesReprocessing, 2, '.', ','),
+            'thisMoMarketGeneration' => number_format($tempMonthTaxesMarket, 2, '.', ','),
+            'lastMoRepGeneration' => number_format($tempLastTaxesReprocessing, 2, '.', ','),
+            'lastMoMarketGeneration' => number_format($tempLastTaxesMarket, 2, '.', ','),
         ];
 
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
