@@ -7,8 +7,9 @@ use Carbon\Carbon;
 use DB;
 use Commands\Library\CommandHelper;
 
-use App\Library\Esi\EsiScope;
-use App\Library\Esi\EsiToken;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
+use App\Library\Mail;
 use App\Models\ScheduledTask\ScheduleJob;
 
 use Seat\Eseye\Cache\NullCache;
@@ -30,7 +31,7 @@ class sendMail extends Command
      *
      * @var string
      */
-    protected $description = 'Send mail to a character';
+    protected $description = 'Send mail to a character for taxes owed.';
 
     /**
      * Create a new command instance.
@@ -58,6 +59,7 @@ class sendMail extends Command
         $task->SetStartStatus();
 
         //Put our task in this section
+        $mail = new Mail;
 
         //Mark the job as finished
         $task->SetStopStatus();
