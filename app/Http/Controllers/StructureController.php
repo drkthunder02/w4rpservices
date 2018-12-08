@@ -47,7 +47,6 @@ class StructureController extends Controller
 
         //Get the number of structures registered to a corporation
         $citadelCount = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Citadel'])->count();
-        $refineryCount = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Refinery'])->count();
        
         $tempMonthTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$start, $end])
@@ -55,24 +54,16 @@ class StructureController extends Controller
         $tempLastTaxesMarket = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                         ->whereBetween('date', [$startLast, $endLast])
                                         ->sum('amount');
-        $tempMonthTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
-                                        ->whereBetween('date', [$start, $end])
-                                        ->sum('amount');
-        $tempLastTaxesReprocessing = CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
-                                        ->whereBetween('date', [$startLast, $endLast])
-                                        ->sum('amount');
 
         /**
          * In this next section we are removing the cost of fuel blocks from one structure
          */
         $marketFuelCost = $hFinances->CalculateFuelBlockCost('market');
-        $refineryFuelCost = $hFinances->CalculateFuelBlockCost('refinery');
 
         /**
          * Calculate the final taxes and send to display
          */
         $mTax = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Citadel'])->avg('tax');
-        $rTax = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => 'Refinery'])->avg('tax');
 
         $monthTaxesMarket = $tempMonthTaxesMarket - $marketFuelCost;
         $monthTaxesMarket = $hFinances->CalculateTax($monthTaxesMarket, $mTax, 'market');
@@ -86,27 +77,11 @@ class StructureController extends Controller
             $lastTaxesMarket = 0.00;
         }
 
-        $monthTaxesReprocessing = $tempMonthTaxesReprocessing  - $refineryFuelCost;
-        $monthTaxesReprocessing = $hFinances->CalculateTax($monthTaxesReprocessing, $rTax, 'refinery');
-        if($monthTaxesReprocessing < 0.00) {
-            $monthTaxesReprocessing = 0.00;
-        }
-
-        $lastTaxesReprocessing = $tempLastTaxesReprocessing  - $refineryFuelCost;
-        $lastTaxesReprocessing = $hFinances->CalculateTax($lastTaxesReprocessing, $rTax, 'refinery');
-        if($lastTaxesReprocessing < 0.00) {
-            $lastTaxesReprocessing = 0.00;
-        }
-
         //Create the array to pass to the blade view
         $totalTaxes = [
-            'thisMonthReprocessing' => number_format($monthTaxesReprocessing, 2, '.', ','), 
-            'lastMonthReprocessing' => number_format($lastTaxesReprocessing, 2, '.', ','),
             'thisMonthMarket' => number_format($monthTaxesMarket, 2, '.', ','),
             'lastMonthMarket' => number_format($lastTaxesMarket, 2, '.', ','),
-            'thisMoRepGeneration' => number_format($tempMonthTaxesReprocessing, 2, '.', ','),
             'thisMoMarketGeneration' => number_format($tempMonthTaxesMarket, 2, '.', ','),
-            'lastMoRepGeneration' => number_format($tempLastTaxesReprocessing, 2, '.', ','),
             'lastMoMarketGeneration' => number_format($tempLastTaxesMarket, 2, '.', ','),
         ];
 
@@ -145,12 +120,10 @@ class StructureController extends Controller
 
             //Get the number of structures registered to a corporation
             $citadelCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' AND structure_type='Citadel'");
-            $refineryCount = DB::select("SELECT COUNT(structure_name) FROM CorpStructures WHERE corporation_id='" . $corporation . "' aND structure_type='Refinery'");
 
             //Get the taxes for each type from the database
             $marketTaxes = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='brokers_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
-            $reprocessingTaxes = DB::select("SELECT SUM(amount) FROM CorpJournals WHERE ref_type='reprocessing_fee' AND corporation_id='" . $corpId . "' AND date BETWEEN '" . $start . "' AND '" . $end . "'");
-
+           
             /**
              * In this next section we are going to remove the cost of fuel blocks from the structure taxes
              */
@@ -160,16 +133,9 @@ class StructureController extends Controller
                 $marketTaxes = 0.00;
             }
 
-            //Reprocessing Taxes with fuel blocks added in
-            $reprocessingTaxes = $reprocessingTaxes - ($hFinances->CalculateFuelBlockCost('reprocessing') * $refineryCount);
-            if($reprocessingTaxes < 0.00) {
-                $reprocessingTaxes = 0.00;
-            }
-
             //Add to the totalTaxes array to be sent out with the view
             $totalTaxes[$i] = [
                 'date' => $start,
-                'reprocessing' => number_format($reprocessingTaxes, 2, '.', ','),
                 'market' => number_format($marketTaxes, 2, '.', ','),
             ];
             //Increment $i for the next iteration
