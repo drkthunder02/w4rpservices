@@ -72,12 +72,8 @@ class StructureController extends Controller
         /**
          * Calculate the final taxes and send to display
          */
-        $taxes = DB::table('CorpStructures')->where(['corporation_id' => $corporation])->get();
+        $taxes = DB::table('CorpStructures')->where(['corporation_id' => $corporation])->get(['tax']);
         dd($taxes);
-        
-        //$taxes = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Citadel'])->get(['tax']);
-        //$rTaxes = CorpStructure::where(['corporation_id' => $corporation, 'structure_type' => 'Refinery'])->get(['tax']);
-        dd($cTax);
 
         $monthTaxesMarket = $tempMonthTaxesMarket - $marketFuelCost;
         $monthTaxesMarket = $hFinances->CalculateTax($monthTaxesMarket, 2.5, 'market');
