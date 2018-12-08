@@ -16,12 +16,10 @@
                 <tbody>
                     <tr>
                         <td>This Month</td>
-                        <td>{{ $totalTaxes['thisMonthReprocessing'] }}</td>
                         <td>{{ $totalTaxes['thisMonthMarket'] }}
                     </tr>
                     <tr>
                         <td>Last Month</td>
-                        <td>{{ $totalTaxes['lastMonthReprocessing'] }}</td>
                         <td>{{ $totalTaxes['lastMonthMarket'] }}</td>
                     </tr>
                 </tbody>
@@ -45,12 +43,10 @@
                 <tbody>
                     <tr>
                         <td>This Month So Far</td>
-                        <td>{{ $totalTaxes['thisMoRepGeneration'] }}</td>
                         <td>{{ $totalTaxes['thisMoMarketGeneration'] }}</td>
                     </tr>
                     <tr>
                         <td>Last Month</td>
-                        <td>{{ $totalTaxes['lastMoRepGeneration'] }}</td>
                         <td>{{ $totalTaxes['lastMoMarketGeneration'] }}</td>
                     </tr>
                 </tbody>
