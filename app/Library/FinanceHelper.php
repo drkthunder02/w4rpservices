@@ -8,7 +8,6 @@
 namespace App\Library;
 
 use DB;
-use Carbon\Carbon;
 
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
@@ -23,62 +22,6 @@ use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 
 class FinanceHelper {
-
-    private $ref_types = [
-        'brokers_fee',
-        'reprocessing_tax',
-    ];
-
-    public function CalculateFuelBlockCost($type) {
-        //Calculate how many fuel blocks are used in a month by a structure type
-        if($type === 'market') {
-            $fuelBlocks = 24*30*32;
-        } else if ($type === 'refinery') {
-            $fuelBlocks = 24*30*8;
-        } else {
-            $fuelBlocks = 0;
-        }
-
-        //Multiply the amount of fuel blocks used by the structure by 20,000.
-        $cost = $fuelBlocks * 20000.00;
-        //Return to the calling function
-        return $cost;
-    }
-
-    public function CalculateTax($taxAmount, $overallTax, $type) {
-        //The alliance will get a ratio of the tax.
-        //We need to calculate the correct ratio based on structure tax, 
-        //Then figure out what is owed to the alliance
-        if($type === 'market') {
-            $ratioType = 2.0;
-        } else {
-            $ratioType = 1.5;
-        }
-        //Calculate the ratio since we have the base percentage the alliance takes
-        $taxRatio = $overallTax / $ratioType;
-        //Calculate the tax owed to the alliance by taking the tax amount collected
-        //and divide by the tax ratio.
-        $amount = $taxAmount / $taxRatio;
-
-        //Return what is owed to the alliance
-        return $amount;
-    }
-
-    /**
-     * Helper function to calculate a particular type of tax from the database
-     * 
-     * @param corpId
-     * @param type
-     * 
-     * @return tax
-     */
-    public function GetMonthlyTax($corpId, $type) {
-        $monthly = CorpJournal::where(['corporation_id' => $corId, 'ref_type' => $type])
-                                ->whereBetween('date', [Carbon::now(), Carbon::now()->subMonth()])
-                                ->sum('tax');
-
-        return $monthly;
-    }
 
     public function GetWalletJournal($division, $charId) {
         //Get hte ESI token for the corporation to add new wallet journals into the database

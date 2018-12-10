@@ -13,7 +13,7 @@
         {{ Form::label('tax', 'Tax') }}
         {{ Form::text('tax', '', ['class' => 'form-control']) }}
         {{ Form::label('structure_type', 'Structure Type') }}
-        {{ Form::select('structure_type', ['Refinery' => 'Refinery', 'Citadel' => 'Citadel'], null, ['class' => 'form-control']) }}
+        {{ Form::select('structure_type', ['Refinery' => 'Refinery', 'Market' => 'Market'], null, ['class' => 'form-control']) }}
     </div>
     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}
