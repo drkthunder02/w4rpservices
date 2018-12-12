@@ -45,8 +45,6 @@ class StructureController extends Controller
             'lastMonthRevRefinery' => $this->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']),
         ];
 
-        dd($totalTaxes);
-
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
 
@@ -146,7 +144,7 @@ class StructureController extends Controller
             $taxOwed = 0.00;
         }
         //Return the amount
-        return $taxOwed;
+        return number_format($taxOwed,'2', '.', ',');
     }
 
     private function GetRevenue($corpId, $refType, $start, $end) {
@@ -154,8 +152,8 @@ class StructureController extends Controller
             return CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
-        } else if ($refType === 'Refinery'){
-            return CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
+        } else if($refType === 'Refinery'){
+            return CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else {
