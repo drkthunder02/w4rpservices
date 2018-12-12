@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>This Month</td>
+                        <td>{{ $totalTaxes['thisMonthStart'] }}</td>
                         <td>{{ $totalTaxes['thisMonthMarket'] }}</td>
                         <td>{{ $totalTaxes['thisMonthRevMarket'] }}</td>
                         <td>{{ $totalTaxes['thisMonthRefinery'] }}</td>
