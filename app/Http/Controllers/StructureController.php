@@ -69,9 +69,8 @@ class StructureController extends Controller
 
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
-        var_dump($revenue);   
-        dd($revenue);
-        $revenue = floatval($revenue) - floatval($fuelCost);
+        
+        $revenue = ($revenue* 1.00) - ($fuelCost * 1.00);
         
         //Calculate the tax owed which is revenue divided by ratio previously calculated
         $taxOwed = $revenue / $ratio;
