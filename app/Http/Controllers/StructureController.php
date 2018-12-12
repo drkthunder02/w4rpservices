@@ -66,10 +66,12 @@ class StructureController extends Controller
         //Calculate the tax ratio to later be divided against the tax to find the
         //actual tax owed to the alliance.  Revenue will be a separate function
         $ratio = $this->CalculateTaxRatio($tax, $refType, $start, $end);
-        dd($ratio);
+
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);        
 
+        $revenue = $revenue - $fuelCost;
+        dd($revenue);
         //Calculate the tax owed which is revenue divided by ratio previously calculated
         $taxOwed = floatval($revenue) / $ratio;
         //Check for negative number, and if negative, zero it out.
