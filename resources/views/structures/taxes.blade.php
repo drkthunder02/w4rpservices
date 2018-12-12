@@ -26,7 +26,7 @@
                     <tr>
                         <td>Last Month</td>
                         <td>{{ $totalTaxes['lastMonthMarket'] }}</td>
-                        <td>{{ $totalTaxes['lastMonthMarketRevenue'] }}</td>
+                        <td>{{ $totalTaxes['lastMonthRevMarket'] }}</td>
                         <td>{{ $totalTaxes['lastMonthRefinery'] }}</td>
                         <td>{{ $totalTaxes['lastMonthRevRefinery'] }}</td>
                     </tr>
