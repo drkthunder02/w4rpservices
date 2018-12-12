@@ -122,6 +122,7 @@ class StructureController extends Controller
     }
 
     private function GetTaxes($corpId, $refType, $start, $end) {
+        $taxOwed = 0.00;
         //Get the number of structures of a certain type
         $count = $this->GetStructureCount($corpId, $refType);
 
@@ -144,10 +145,12 @@ class StructureController extends Controller
             $taxOwed = 0.00;
         }
         //Return the amount
-        return number_format($taxOwed,'2', '.', ',');
+        $taxOwed = number_format($taxOwed,'2', '.', ',');
+        return $taxOwed;
     }
 
     private function GetRevenue($corpId, $refType, $start, $end) {
+        $revenue = 0.00;
         if($refType === 'Market') {
             $revenue = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
@@ -160,7 +163,8 @@ class StructureController extends Controller
             $revenue = 0.00;
         }
 
-        return number_format($revenue, 2, '.', ',');
+        $revenue = number_format($revenue, 2, '.', ',');
+        return $revenue;
     }
 
     private function CalculateTaxRatio($overallTax, $type) {
