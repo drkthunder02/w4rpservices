@@ -73,7 +73,7 @@ class StructureController extends Controller
             'thisMonthStart' => $dates['ThisMonthStart']->toFormattedDateString(),
             'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
         ];
-        
+
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
 
@@ -174,8 +174,8 @@ class StructureController extends Controller
 
         //Cycle through the for loop and build the array
         for($i = 1; $i <= 12; $i++) {
-            $start = $start->subMonth();
-            $end = $end->subMonth();
+            $start->month  --;
+            $end->month --;
             $dates[$i] = [
                 'start' => $start,
                 'end' => $end,
