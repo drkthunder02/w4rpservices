@@ -70,10 +70,10 @@ class StructureController extends Controller
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);        
 
-        $revenue = $revenue - $fuelCost;
+        $revenue = floatval($revenue) - floatval($fuelCost);
         dd($revenue);
         //Calculate the tax owed which is revenue divided by ratio previously calculated
-        $taxOwed = floatval($revenue) / $ratio;
+        $taxOwed = $revenue / $ratio;
         //Check for negative number, and if negative, zero it out.
         if($taxOwed < 0.00){
             $taxOwed = 0.00;
