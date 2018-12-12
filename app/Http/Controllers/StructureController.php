@@ -110,7 +110,7 @@ class StructureController extends Controller
             $ratioType = 1.0;
         }
         //Calculate the ratio since we have the base percentage the alliance takes
-        $taxRatio = float($overallTax / $ratioType);
+        $taxRatio = floatval($overallTax / $ratioType);
 
         //Return what is owed to the alliance
         return $taxRatio;
