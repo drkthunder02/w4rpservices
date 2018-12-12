@@ -23,6 +23,33 @@ class StructureController extends Controller
         $this->middleware('permission:structure.operator');
     }
 
+    public function displayTaxesHistory() {
+        //Make the helper esi class
+        $helper = new Esi();
+
+        //Get the character's corporation from esi
+        $corpId = $helper->FindCorporationId(Auth::user()->character_id);
+
+        //Get the dates we are working with
+        $dates = $this->GetLongTimeFrame();
+
+        //Create the totalTaxes array
+        $totalTaxes = [];
+
+        //Create the array for totalTaxes in order to send in the data to the view
+        for($i = 0; $i < 12; $i++) {
+            $totalTaxes[$i] = [
+                'MarketTax' => number_format($this->GetTaxes($corpId, 'Market', $dates[$i]['start'], $dates[$i]['end']), 2, '.', ','),
+                'MarketRevenue' => number_format($this->GetRevenue($corpId, 'Market', $dates[$i]['start'], $dates[$i]['end']), 2, '.', ','),
+                'RefineryTax' => number_format($this->GetTaxes($corpId, 'Refinery', $dates[$i]['start'], $dates[$i]['end']), 2, '.', ','),
+                'RefineryRevenue' => number_format($this->GetRevenue($corpId, 'Refinery', $dates[$i]['start'], $dates[$i]['end']), 2, '.', ','),
+                'start' => $dates[$i]['start']->toFormattedDateString(),
+            ];
+        }
+
+        return view('structures.taxhistory')->with('totalTaxes', $totalTaxes);
+    }
+
     public function displayTaxes() {
         //Make the helper esi class
         $helper = new Esi();
@@ -44,9 +71,7 @@ class StructureController extends Controller
             'lastMonthRevMarket' => number_format($this->GetRevenue($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
             'lastMonthRevRefinery' => number_format($this->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
             'thisMonthStart' => $dates['ThisMonthStart']->toFormattedDateString(),
-            'thisMonthEnd' => $dates['ThisMonthEnd']->toFormattedDateString(),
             'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
-            'lastMonthEnd' => $dates['LastMonthEnd']->toFormattedDateString(),
         ];
 
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
@@ -132,6 +157,32 @@ class StructureController extends Controller
         $cost = $fuelBlocks * 20000.00;
         //Return to the calling function
         return $cost;
+    }
+
+    private function GetLongTimeFrame() {
+        $start = Carbon::now()->startOfMonth();
+        $end = Carbon::now()->endOfMonth();
+        $end->hour = 23;
+        $end->minute = 59;
+        $end->second = 59;
+
+        $dates = array();
+        $dates[0] = [
+            'start' => $start,
+            'end' => $end,
+        ];
+
+        //Cycle through the for loop and build the array
+        for($i = 1; $i <= 12; $i++) {
+            $start = $start->subMonth();
+            $end = $end->subMonth();
+            $dates[$i] = [
+                'start' => $start,
+                'end' => $end,
+            ];
+        }
+
+        return $dates;
     }
 
     private function GetTimeFrame() {
