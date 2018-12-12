@@ -32,7 +32,7 @@ class StructureController extends Controller
 
         //Get the dates we are working with
         $dates = $this->GetLongTimeFrame();
-
+        dd($dates);
         //Create the totalTaxes array
         $totalTaxes = array();
 
@@ -173,9 +173,9 @@ class StructureController extends Controller
         ];
 
         //Cycle through the for loop and build the array
-        for($i = 1; $i <= 12; $i++) {
-            $start->month  --;
-            $end->month --;
+        for($i = 1; $i < 12; $i++) {
+            $start->subMonth();
+            $end->subMonth();
             $dates[$i] = [
                 'start' => $start,
                 'end' => $end,
