@@ -23,7 +23,7 @@ class StructureController extends Controller
         $this->middleware('permission:structure.operator');
     }
 
-    public function displayTaxesHistory() {
+    public function displayTaxHistory() {
         //Make the helper esi class
         $helper = new Esi();
 
