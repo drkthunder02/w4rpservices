@@ -153,11 +153,11 @@ class StructureController extends Controller
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else if($refType === 'Refinery'){
-            $revenu = CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
+            $revenue = CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else {
-            $revenu = 0.00;
+            $revenue = 0.00;
         }
 
         return number_format($revenue, 2, '.', ',');
