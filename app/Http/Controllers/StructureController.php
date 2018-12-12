@@ -73,7 +73,7 @@ class StructureController extends Controller
             'thisMonthStart' => $dates['ThisMonthStart']->toFormattedDateString(),
             'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
         ];
-
+        dd($totalTaxes);
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
 
