@@ -148,11 +148,11 @@ class StructureController extends Controller
     }
 
     private function GetRevenue($corpId, $refType, $start, $end) {
-        if($refType == 'Market') {
+        if($refType === 'Market') {
             return CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
-        } else if ($refType == 'Refinery'){
+        } else if ($refType === 'Refinery'){
             return CorpJournal::where(['ref_type' => 'reprocessing_fee', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
@@ -167,6 +167,8 @@ class StructureController extends Controller
         //Then figure out what is owed to the alliance
         if($type === 'Market') {
             $ratioType = 2.0;
+        } else if($type === 'Refinery') {
+            $ratioType = 1.0;
         } else {
             $ratioType = 1.0;
         }
