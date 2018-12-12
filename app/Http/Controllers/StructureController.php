@@ -152,17 +152,17 @@ class StructureController extends Controller
     private function GetRevenue($corpId, $refType, $start, $end) {
         $revenue = 0.00;
         if($refType === 'Market') {
-            $revenue = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+            $revenue = floatval(CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
-                                ->sum('amount');
+                                ->sum('amount'));
         } else if($refType === 'Refinery'){
-            $revenue = CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
+            $revenue = floatval(CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
-                                ->sum('amount');
+                                ->sum('amount'));
         } else {
             $revenue = 0.00;
         }
-        dd($revenue);
+
         $revenue = number_format($revenue, 2, '.', ',');
         return $revenue;
     }
