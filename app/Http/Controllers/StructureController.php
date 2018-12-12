@@ -45,6 +45,8 @@ class StructureController extends Controller
             'lastMonthRevRefinery' => $this->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']),
         ];
 
+        dd($totalTaxes);
+
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
 
