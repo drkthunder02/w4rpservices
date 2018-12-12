@@ -64,7 +64,6 @@ Route::get('/structures/register', 'RegisterStructureController@displayRegisters
 Route::post('/structures/store', 'RegisterStructureController@storeStructure');
 //Structure Controller display pages
 Route::get('/structures/taxes/display', 'StructureController@displayTaxes');
-Route::get('/structures/taxes/history', 'StructureController@displayTaxHistory');
 
 //AJAX Controller display pages
 Route::get('ajax',function() {

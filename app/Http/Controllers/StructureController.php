@@ -32,7 +32,6 @@ class StructureController extends Controller
 
         //Get the dates we are working with
         $dates = $this->GetLongTimeFrame();
-        dd($dates);
         //Create the totalTaxes array
         $totalTaxes = array();
 
