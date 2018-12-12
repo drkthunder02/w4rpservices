@@ -34,7 +34,7 @@ class StructureController extends Controller
         $dates = $this->GetLongTimeFrame();
 
         //Create the totalTaxes array
-        $totalTaxes = [];
+        $totalTaxes = array();
 
         //Create the array for totalTaxes in order to send in the data to the view
         for($i = 0; $i < 12; $i++) {
