@@ -16,6 +16,7 @@
                     <th>Refinery Revenue Minus Fuel Cost</th>
                 </thead>
                 <tbody>
+                    {{ dd($totalTaxes) }}
                     @foreach($i = 0; $i < 12; $i++)
                     <tr>
                         <td>{{ $totalTaxes[$i]['start'] }}</td>
