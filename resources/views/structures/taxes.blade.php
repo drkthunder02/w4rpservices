@@ -11,9 +11,9 @@
                 <thead>
                     <th>Month</th>
                     <th>Market Tax</th>
-                    <th>Market Revenue</th>
+                    <th>Market Revenue Minus Fuel Cost</th>
                     <th>Refinery Tax</th>
-                    <th>Refinery Revenue</th>
+                    <th>Refinery Revenue Minus Fuel Cost</th>
                 </thead>
                 <tbody>
                     <tr>
