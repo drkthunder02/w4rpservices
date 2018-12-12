@@ -16,8 +16,7 @@
                     <th>Refinery Revenue Minus Fuel Cost</th>
                 </thead>
                 <tbody>
-                    {{ dd($totalTaxes) }}
-                    @foreach($i = 0; $i < 12; $i++)
+                    @for($i = 0; $i < 12; $i++)
                     <tr>
                         <td>{{ $totalTaxes[$i]['start'] }}</td>
                         <td>{{ $totalTaxes[$i]['MarketTax'] }}</td>
@@ -25,7 +24,7 @@
                         <td>{{ $totalTaxes[$i]['RefineryTax'] }}</td>
                         <td>{{ $totalTaxes[$i]['RefineryRevenue'] }}</td>
                     </tr>
-                    @endforeach
+                    @endfor
                 </tbody>
             </table>
         </div>
