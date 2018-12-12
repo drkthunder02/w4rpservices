@@ -149,16 +149,18 @@ class StructureController extends Controller
 
     private function GetRevenue($corpId, $refType, $start, $end) {
         if($refType === 'Market') {
-            return CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+            $revenue = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else if($refType === 'Refinery'){
-            return CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
+            $revenu = CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else {
-            return 0.00;
+            $revenu = 0.00;
         }
+
+        return number_format($revenue, 2, '.', ',');
     }
 
     private function CalculateTaxRatio($overallTax, $type) {
