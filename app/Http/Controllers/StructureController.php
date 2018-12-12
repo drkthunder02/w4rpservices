@@ -70,7 +70,7 @@ class StructureController extends Controller
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
         //Calculate the tax owed which is revenue divided by ratio previously calculated
-        $taxOwed = floatval($revenue / $ratio);
+        $taxOwed = floatval($revenue) / $ratio;
         //Check for negative number, and if negative, zero it out.
         if($taxOwed < 0.00){
             $taxOwed = 0.00;
@@ -110,7 +110,7 @@ class StructureController extends Controller
             $ratioType = 1.0;
         }
         //Calculate the ratio since we have the base percentage the alliance takes
-        $taxRatio = $overallTax / $ratioType;
+        $taxRatio = float($overallTax / $ratioType);
 
         //Return what is owed to the alliance
         return $taxRatio;
