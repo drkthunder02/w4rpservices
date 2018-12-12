@@ -162,7 +162,7 @@ class StructureController extends Controller
         } else {
             $revenue = 0.00;
         }
-
+        dd($revenue);
         $revenue = number_format($revenue, 2, '.', ',');
         return $revenue;
     }
