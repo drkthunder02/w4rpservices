@@ -70,7 +70,7 @@ class StructureController extends Controller
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
         
-        $revenue = $revenue - $fuelCost;
+        $revenue = $revenue - ($fuelCost * $count);
         
         //Calculate the tax owed which is revenue divided by ratio previously calculated
         $taxOwed = $revenue / $ratio;
