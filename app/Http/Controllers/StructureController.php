@@ -35,14 +35,14 @@ class StructureController extends Controller
 
         //Get the market taxes for this month from the database
         $totalTaxes = [
-            'thisMonthMarket' => $this->GetTaxes($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']),
-            'thisMonthRefinery' => $this->GetTaxes($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']),
-            'lastMonthMarket' => $this->GetTaxes($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']),
-            'lastMonthRefinery' => $this->GetTaxes($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']),
-            'thisMonthRevMarket' => $this->GetRevenue($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']),
-            'thisMonthRevRefinery' => $this->GetRevenue($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']),
-            'lastMonthRevMarket' => $this->GetRevenue($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']),
-            'lastMonthRevRefinery' => $this->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']),
+            'thisMonthMarket' => number_format($this->GetTaxes($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
+            'thisMonthRefinery' => number_format($this->GetTaxes($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
+            'lastMonthMarket' => number_format($this->GetTaxes($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
+            'lastMonthRefinery' => number_format($this->GetTaxes($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
+            'thisMonthRevMarket' => number_format($this->GetRevenue($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
+            'thisMonthRevRefinery' => number_format($this->GetRevenue($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
+            'lastMonthRevMarket' => number_format($this->GetRevenue($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
+            'lastMonthRevRefinery' => number_format($this->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
             'thisMonthStart' => $dates['ThisMonthStart'],
             'thisMonthEnd' => $dates['ThisMonthEnd'],
             'lastMonthStart' => $dates['LastMonthStart'],
@@ -70,7 +70,7 @@ class StructureController extends Controller
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
         
-        $revenue = ($revenue* 1.00) - ($fuelCost * 1.00);
+        $revenue = $revenue - $fuelCost;
         
         //Calculate the tax owed which is revenue divided by ratio previously calculated
         $taxOwed = $revenue / $ratio;
@@ -79,7 +79,6 @@ class StructureController extends Controller
             $taxOwed = 0.00;
         }
         //Return the amount
-        $taxOwed = number_format($taxOwed,'2', '.', ',');
         return $taxOwed;
     }
 
@@ -97,7 +96,7 @@ class StructureController extends Controller
             $revenue = 0.00;
         }
 
-        $revenue = number_format($revenue, 2, '.', ',');
+    
         return $revenue;
     }
 
@@ -113,7 +112,7 @@ class StructureController extends Controller
             $ratioType = 1.0;
         }
         //Calculate the ratio since we have the base percentage the alliance takes
-        $taxRatio = floatval($overallTax / $ratioType);
+        $taxRatio = $overallTax / $ratioType;
 
         //Return what is owed to the alliance
         return $taxRatio;
@@ -158,10 +157,14 @@ class StructureController extends Controller
     }
 
     private function GetStructureTax($corpId, $structureType) {
-        return CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => $structureType])->avg('tax');
+        $tax = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => $structureType])->avg('tax');
+
+        return (float) $tax;
     }
 
     private function GetStructureCount($corpId, $structureType) {
-        return CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => $structureType])->count();
+        $count = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => $structureType])->count();
+
+        return (float) $count;
     }
 }
