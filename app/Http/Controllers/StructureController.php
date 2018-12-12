@@ -43,10 +43,10 @@ class StructureController extends Controller
             'thisMonthRevRefinery' => number_format($this->GetRevenue($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
             'lastMonthRevMarket' => number_format($this->GetRevenue($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
             'lastMonthRevRefinery' => number_format($this->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
-            'thisMonthStart' => $dates['ThisMonthStart'],
-            'thisMonthEnd' => $dates['ThisMonthEnd'],
-            'lastMonthStart' => $dates['LastMonthStart'],
-            'lastMonthEnd' => $dates['LastMonthEnd'],
+            'thisMonthStart' => $dates['ThisMonthStart']->toFormattedDateString(),
+            'thisMonthEnd' => $dates['ThisMonthEnd']->toFormattedDateString(),
+            'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
+            'lastMonthEnd' => $dates['LastMonthEnd']->toFormattedDateString(),
         ];
 
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
