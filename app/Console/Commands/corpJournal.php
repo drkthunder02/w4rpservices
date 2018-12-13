@@ -65,8 +65,7 @@ class CorpJournal extends Command
         $corps = DB::table('CorpStructures')->select('corporation_id')->groupBy('corporation_id')->get();
         foreach($corps as $corp) {
             $charId = DB::table('CorpStructures')->select('character_id')->where(['corporation_id' => $corp->corporation_id])->first();
-            dd($charId);
-            $this->GetJournal($charId);
+            $this->GetJournal($charId->character_id);
         }
 
         //Mark the job as finished
