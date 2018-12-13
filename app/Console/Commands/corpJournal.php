@@ -68,7 +68,7 @@ class CorpJournal extends Command
         foreach($structures as $structure) {
             foreach($finishedCorps as $finished) {
                 if($finished == $structure->corporation_id) {
-                    $this->line('Finished Journal for ' . $structure->corporation_name . '\n');
+                    $this->line('Finished Journal for ' . $structure->corporation_name);
                     $corpCompleted = true;
                     break;
                 } else {
@@ -80,7 +80,7 @@ class CorpJournal extends Command
             }
             //If we didn't find the corporation was already done, then complete it.
             if($corpCompleted === false) {
-                $this->line('Getting Journal for ' . $structure->corporation_name . '\n');
+                $this->line('Getting Journal for ' . $structure->corporation_name);
                 $this->GetJournal($structure->character_id);
                 $finishedCorps[sizeof($finishedCorps)] = $structure->corporation_id;
                 //After the corporation has been done set the variable back to false
