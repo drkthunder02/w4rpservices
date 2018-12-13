@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 
+use App\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 
@@ -16,7 +17,11 @@ class AdminController extends Controller
     }
 
     public function displayDashboard() {
-        return view('admin.dashboard');
+        //Get the users from the database to allow a selection of users for
+        //adding and removing roles and permissions
+        $users = User::orderBy('name')->all('name');
+
+        return view('admin.dashboard')->with('users', $users);
     }
 
     public function addPermission(Request $request) {

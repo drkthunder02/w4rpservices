@@ -14,12 +14,12 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\CorpJournal::class,
-        Commands\getCorps::class,
-        Commands\sendMail::class,
+        Commands\GetCorps::class,
+        Commands\SendMail::class,
         Commands\UpdateMoonPricing::class,
         Commands\DumpFleets::class,
         Commands\CalculateMarketTax::class,
-        Commands\GetLogisticsContracts::class,
+        //Commands\GetLogisticsContracts::class,
     ];
 
     /**

@@ -15,7 +15,7 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 
-class GetLogisticContracts extends Command
+class GetLogisticsContracts extends Command
 {
     /**
      * The name and signature of the console command.

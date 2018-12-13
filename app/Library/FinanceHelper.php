@@ -72,7 +72,10 @@ class FinanceHelper {
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
                 if($entry['amount'] > 0) {
-                    if($entry['ref_type'] == 'brokers_fee' || $entry['ref_type'] == 'reprocessing_tax' || $entry['ref_type'] == 'jumpgate_fee') {
+                    if($entry['ref_type'] == 'brokers_fee' || 
+                       $entry['ref_type'] == 'reprocessing_tax' || 
+                       $entry['ref_type'] == 'jumpgate_fee' || 
+                       $entry['ref_type'] == 'player_donation') {
                         $this->PutWalletJournal($entry, $corpId, $division);
                     }
                 }
@@ -134,46 +137,87 @@ class FinanceHelper {
         $esiHelper = new Esi;
         $date = $esiHelper->DecodeDate($journal['date']);
 
-        $check = DB::table('CorpJournals')->where('id', $journal['id'])->get();
-        //if we don't find the journal entry, add the journal entry to the database
-        if($check->count() === 0) {
-            $entry = new CorpJournal;
-            $entry->id = $journal['id'];
-            $entry->corporation_id = $corpId;
-            $entry->division = $division;
-            if(isset($journal['amount'])) {
-                $entry->amount = $journal['amount'];
-            }
-            if(isset($journal['balance'])) {
-                $entry->balance = $journal['balance'];
-            }
-            if(isset($journal['context_id'])) {
-                $entry->context_id = $journal['context_id'];
-            }
-            if(isset($journal['context_id_type'])) {
-                $entry->context_id_type = $journal['context_id_type'];
-            }
-            $entry->date = $date;
-            $entry->description = $journal['description'];
-            if(isset($journal['first_party_id'])) {
-                $entry->first_party_id = $journal['first_party_id'];
-            }
-            if(isset($journal['reason'])) {
-                $entry->reason = $journal['reason'];
-            }
-            $entry->ref_type = $journal['ref_type'];
-            if(isset($journal['second_party_id'])) {
-                $entry->second_party_id = $journal['second_party_id'];
-            }
-            if(isset($journal['tax'])) {
-                $entry->tax = $journal['tax'];
-            }
-            if(isset($journal['tax_receiver_id'])) {
-                $entry->tax_receiver_id = $journal['tax_receiver_id'];
-            }
-            $entry->save();
-        }     
-        
+        if($journal['ref_type'] == 'player_donation') {
+            $check = DB::table('PlayerDonationJournals')->where('id', $journal['id'])->get();
+            //if we don't find the journal entry, add the journal entry to the database
+            if($check->count() === 0) {
+                $entry = new CorpJournal;
+                $entry->id = $journal['id'];
+                $entry->corporation_id = $corpId;
+                $entry->division = $division;
+                if(isset($journal['amount'])) {
+                    $entry->amount = $journal['amount'];
+                }
+                if(isset($journal['balance'])) {
+                    $entry->balance = $journal['balance'];
+                }
+                if(isset($journal['context_id'])) {
+                    $entry->context_id = $journal['context_id'];
+                }
+                if(isset($journal['context_id_type'])) {
+                    $entry->context_id_type = $journal['context_id_type'];
+                }
+                $entry->date = $date;
+                $entry->description = $journal['description'];
+                if(isset($journal['first_party_id'])) {
+                    $entry->first_party_id = $journal['first_party_id'];
+                }
+                if(isset($journal['reason'])) {
+                    $entry->reason = $journal['reason'];
+                }
+                $entry->ref_type = $journal['ref_type'];
+                if(isset($journal['second_party_id'])) {
+                    $entry->second_party_id = $journal['second_party_id'];
+                }
+                if(isset($journal['tax'])) {
+                    $entry->tax = $journal['tax'];
+                }
+                if(isset($journal['tax_receiver_id'])) {
+                    $entry->tax_receiver_id = $journal['tax_receiver_id'];
+                }
+                $entry->save();
+            }   
+        } else {
+            $check = DB::table('CorpJournals')->where('id', $journal['id'])->get();
+            //if we don't find the journal entry, add the journal entry to the database
+            if($check->count() === 0) {
+                $entry = new CorpJournal;
+                $entry->id = $journal['id'];
+                $entry->corporation_id = $corpId;
+                $entry->division = $division;
+                if(isset($journal['amount'])) {
+                    $entry->amount = $journal['amount'];
+                }
+                if(isset($journal['balance'])) {
+                    $entry->balance = $journal['balance'];
+                }
+                if(isset($journal['context_id'])) {
+                    $entry->context_id = $journal['context_id'];
+                }
+                if(isset($journal['context_id_type'])) {
+                    $entry->context_id_type = $journal['context_id_type'];
+                }
+                $entry->date = $date;
+                $entry->description = $journal['description'];
+                if(isset($journal['first_party_id'])) {
+                    $entry->first_party_id = $journal['first_party_id'];
+                }
+                if(isset($journal['reason'])) {
+                    $entry->reason = $journal['reason'];
+                }
+                $entry->ref_type = $journal['ref_type'];
+                if(isset($journal['second_party_id'])) {
+                    $entry->second_party_id = $journal['second_party_id'];
+                }
+                if(isset($journal['tax'])) {
+                    $entry->tax = $journal['tax'];
+                }
+                if(isset($journal['tax_receiver_id'])) {
+                    $entry->tax_receiver_id = $journal['tax_receiver_id'];
+                }
+                $entry->save();
+            }    
+        }
     }
 
 }

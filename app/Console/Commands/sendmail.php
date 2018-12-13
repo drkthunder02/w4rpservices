@@ -20,7 +20,7 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 
-class sendMail extends Command
+class SendMail extends Command
 {
     /**
      * The name and signature of the console command.

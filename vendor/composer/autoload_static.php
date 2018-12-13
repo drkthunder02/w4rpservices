@@ -401,13 +401,13 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
-        'App\\Console\\Commands\\CorpJournal' => __DIR__ . '/../..' . '/app/Console/Commands/corpJournal.php',
-        'App\\Console\\Commands\\DumpFleets' => __DIR__ . '/../..' . '/app/Console/Commands/dumpFleets.php',
-        'App\\Console\\Commands\\GetCorps' => __DIR__ . '/../..' . '/app/Console/Commands/getCorps.php',
+        'App\\Console\\Commands\\CalculateMarketTax' => __DIR__ . '/../..' . '/app/Console/Commands/CalculateMarketTax.php',
+        'App\\Console\\Commands\\CorpJournal' => __DIR__ . '/../..' . '/app/Console/Commands/CorpJournal.php',
+        'App\\Console\\Commands\\DumpFleets' => __DIR__ . '/../..' . '/app/Console/Commands/DumpFleets.php',
+        'App\\Console\\Commands\\GetCorps' => __DIR__ . '/../..' . '/app/Console/Commands/GetCorps.php',
+        'App\\Console\\Commands\\GetLogisticsContracts' => __DIR__ . '/../..' . '/app/Console/Commands/GetLogisticContracts.php',
+        'App\\Console\\Commands\\SendMail' => __DIR__ . '/../..' . '/app/Console/Commands/SendMail.php',
         'App\\Console\\Commands\\UpdateMoonPricing' => __DIR__ . '/../..' . '/app/Console/Commands/UpdateMoonPricing.php',
-        'App\\Console\\Commands\\calculatemarkettax' => __DIR__ . '/../..' . '/app/Console/Commands/calculatemarkettax.php',
-        'App\\Console\\Commands\\getLogisticContracts' => __DIR__ . '/../..' . '/app/Console/Commands/getLogisticContracts.php',
-        'App\\Console\\Commands\\sendMail' => __DIR__ . '/../..' . '/app/Console/Commands/sendmail.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
@@ -460,6 +460,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Models\\Fleet\\FleetActivity' => __DIR__ . '/../..' . '/app/Models/Fleet/FleetActivity.php',
         'App\\Models\\Logistics\\Contract' => __DIR__ . '/../..' . '/app/Models/Logistics/Contract.php',
         'App\\Models\\Market\\MarketOrder' => __DIR__ . '/../..' . '/app/Models/Market/MarketOrder.php',
+        'App\\Models\\Market\\MonthlyMarketTax' => __DIR__ . '/../..' . '/app/Models/Market/MonthlyMarketTax.php',
         'App\\Models\\Moon\\ItemComposition' => __DIR__ . '/../..' . '/app/Models/Moon/ItemComposition.php',
         'App\\Models\\Moon\\Moon' => __DIR__ . '/../..' . '/app/Models/Moon/Moon.php',
         'App\\Models\\Moon\\OrePrice' => __DIR__ . '/../..' . '/app/Models/Moon/OrePrice.php',

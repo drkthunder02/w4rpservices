@@ -6,13 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\Console\\Commands\\CorpJournal' => $baseDir . '/app/Console/Commands/corpJournal.php',
-    'App\\Console\\Commands\\DumpFleets' => $baseDir . '/app/Console/Commands/dumpFleets.php',
-    'App\\Console\\Commands\\GetCorps' => $baseDir . '/app/Console/Commands/getCorps.php',
+    'App\\Console\\Commands\\CalculateMarketTax' => $baseDir . '/app/Console/Commands/CalculateMarketTax.php',
+    'App\\Console\\Commands\\CorpJournal' => $baseDir . '/app/Console/Commands/CorpJournal.php',
+    'App\\Console\\Commands\\DumpFleets' => $baseDir . '/app/Console/Commands/DumpFleets.php',
+    'App\\Console\\Commands\\GetCorps' => $baseDir . '/app/Console/Commands/GetCorps.php',
+    'App\\Console\\Commands\\GetLogisticsContracts' => $baseDir . '/app/Console/Commands/GetLogisticContracts.php',
+    'App\\Console\\Commands\\SendMail' => $baseDir . '/app/Console/Commands/SendMail.php',
     'App\\Console\\Commands\\UpdateMoonPricing' => $baseDir . '/app/Console/Commands/UpdateMoonPricing.php',
-    'App\\Console\\Commands\\calculatemarkettax' => $baseDir . '/app/Console/Commands/calculatemarkettax.php',
-    'App\\Console\\Commands\\getLogisticContracts' => $baseDir . '/app/Console/Commands/getLogisticContracts.php',
-    'App\\Console\\Commands\\sendMail' => $baseDir . '/app/Console/Commands/sendmail.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AdminController' => $baseDir . '/app/Http/Controllers/AdminController.php',
@@ -65,6 +65,7 @@ return array(
     'App\\Models\\Fleet\\FleetActivity' => $baseDir . '/app/Models/Fleet/FleetActivity.php',
     'App\\Models\\Logistics\\Contract' => $baseDir . '/app/Models/Logistics/Contract.php',
     'App\\Models\\Market\\MarketOrder' => $baseDir . '/app/Models/Market/MarketOrder.php',
+    'App\\Models\\Market\\MonthlyMarketTax' => $baseDir . '/app/Models/Market/MonthlyMarketTax.php',
     'App\\Models\\Moon\\ItemComposition' => $baseDir . '/app/Models/Moon/ItemComposition.php',
     'App\\Models\\Moon\\Moon' => $baseDir . '/app/Models/Moon/Moon.php',
     'App\\Models\\Moon\\OrePrice' => $baseDir . '/app/Models/Moon/OrePrice.php',
