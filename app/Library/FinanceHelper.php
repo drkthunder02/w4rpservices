@@ -139,7 +139,6 @@ class FinanceHelper {
         $date = $esiHelper->DecodeDate($journal['date']);
 
         if($journal['ref_type'] == 'player_donation') {
-            //$check = DB::table('PlayerDonationJournals')->where('id', $journal['id'])->get();
             //if we don't find the journal entry, add the journal entry to the database
             if(!PlayerDonationJournal::where('id', $journal['id'])->exists()) {
                 $entry = new CorpJournal;
@@ -179,9 +178,8 @@ class FinanceHelper {
                 $entry->save();
             }   
         } else {
-            //$check = DB::table('CorpJournals')->where('id', $journal['id'])->get();
             //if we don't find the journal entry, add the journal entry to the database
-            if(CorpJournal::where('id', $journal['id'])->exists()) {
+            if(!CorpJournal::where('id', $journal['id'])->exists()) {
                 $entry = new CorpJournal;
                 $entry->id = $journal['id'];
                 $entry->corporation_id = $corpId;
