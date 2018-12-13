@@ -141,7 +141,7 @@ class FinanceHelper {
         if($journal['ref_type'] == 'player_donation') {
             //if we don't find the journal entry, add the journal entry to the database
             if(!PlayerDonationJournal::where(['id' => $journal['id']])->exists()) {
-                $entry = new CorpJournal;
+                $entry = new PlayerDonationJournal;
                 $entry->id = $journal['id'];
                 $entry->corporation_id = $corpId;
                 $entry->division = $division;
