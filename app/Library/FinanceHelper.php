@@ -140,7 +140,7 @@ class FinanceHelper {
         if($journal['ref_type'] == 'player_donation') {
             $check = DB::table('PlayerDonationJournals')->where('id', $journal['id'])->get();
             //if we don't find the journal entry, add the journal entry to the database
-            if($check->count() === 0) {
+            if($check->count() == 0) {
                 $entry = new CorpJournal;
                 $entry->id = $journal['id'];
                 $entry->corporation_id = $corpId;
@@ -180,7 +180,7 @@ class FinanceHelper {
         } else {
             $check = DB::table('CorpJournals')->where('id', $journal['id'])->get();
             //if we don't find the journal entry, add the journal entry to the database
-            if($check->count() === 0) {
+            if($check->count() == 0) {
                 $entry = new CorpJournal;
                 $entry->id = $journal['id'];
                 $entry->corporation_id = $corpId;
