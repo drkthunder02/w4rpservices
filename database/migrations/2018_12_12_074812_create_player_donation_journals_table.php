@@ -15,7 +15,7 @@ class CreatePlayerDonationJournalsTable extends Migration
     {
         if(!Schema::hasTable('PlayerDonationJournals')) {
             Schema::create('PlayerDonationJournals', function(Blueprint $table) {
-                $table->integer('id')->unique();
+                $table->string('id')->unique();
                 $table->integer('corporation_id')->nullabe();
                 $table->integer('division')->default(0);
                 $table->decimal('amount', 20, 2)->nullable();
@@ -25,7 +25,7 @@ class CreatePlayerDonationJournalsTable extends Migration
                 $table->dateTime('date')->nullabe();
                 $table->string('description')->nullabe();
                 $table->integer('first_party_id')->nullable();
-                $table->string('reason')->nullabe();
+                $table->string('reason')->default(' ');
                 $table->string('ref_type')->nullabe();
                 $table->integer('second_party_id')->nullable();
                 $table->decimal('tax', 20, 2)->default(0.00);
