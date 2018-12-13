@@ -22,6 +22,7 @@ class PlayerDonationJournal extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'corporation_id',
         'division',
         'amount',

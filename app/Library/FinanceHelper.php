@@ -140,7 +140,7 @@ class FinanceHelper {
 
         if($journal['ref_type'] == 'player_donation') {
             //if we don't find the journal entry, add the journal entry to the database
-            if(!PlayerDonationJournal::where('id', $journal['id'])->exists()) {
+            if(!PlayerDonationJournal::where(['id' => $journal['id']])->exists()) {
                 $entry = new CorpJournal;
                 $entry->id = $journal['id'];
                 $entry->corporation_id = $corpId;
@@ -179,7 +179,7 @@ class FinanceHelper {
             }   
         } else {
             //if we don't find the journal entry, add the journal entry to the database
-            if(!CorpJournal::where('id', $journal['id'])->exists()) {
+            if(!CorpJournal::where(['id' => $journal['id']])->exists()) {
                 $entry = new CorpJournal;
                 $entry->id = $journal['id'];
                 $entry->corporation_id = $corpId;
