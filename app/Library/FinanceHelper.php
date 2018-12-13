@@ -13,6 +13,7 @@ use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\Corporation\CorpJournal;
 use App\Models\User\UserToCorporation;
+use App\Models\Finances\PlayerDonationJourna;
 
 use App\Library\Esi;
 
@@ -138,9 +139,9 @@ class FinanceHelper {
         $date = $esiHelper->DecodeDate($journal['date']);
 
         if($journal['ref_type'] == 'player_donation') {
-            $check = DB::table('PlayerDonationJournals')->where('id', $journal['id'])->get();
+            //$check = DB::table('PlayerDonationJournals')->where('id', $journal['id'])->get();
             //if we don't find the journal entry, add the journal entry to the database
-            if($check->count() == 0) {
+            if(!PlayerDonationJournal::where('id', $journal['id'])->exists()) {
                 $entry = new CorpJournal;
                 $entry->id = $journal['id'];
                 $entry->corporation_id = $corpId;
@@ -178,9 +179,9 @@ class FinanceHelper {
                 $entry->save();
             }   
         } else {
-            $check = DB::table('CorpJournals')->where('id', $journal['id'])->get();
+            //$check = DB::table('CorpJournals')->where('id', $journal['id'])->get();
             //if we don't find the journal entry, add the journal entry to the database
-            if($check->count() == 0) {
+            if(CorpJournal::where('id', $journal['id'])->exists()) {
                 $entry = new CorpJournal;
                 $entry->id = $journal['id'];
                 $entry->corporation_id = $corpId;
