@@ -63,6 +63,7 @@ class CorpJournal extends Command
         $corpCompleted = false;
         //Get the corps with structures logged in the database
         $corps = DB::table('CorpStructures')->select('corporation_id')->groupBy('corporation_id')->get();
+        dd($corps);
         foreach($corps as $corp) {
             $charId = DB::table('CorpStructures')->select('character_id')->where(['corporation_id' => $corp->corporation_id])->first();
             $this->GetJournal($charId);
