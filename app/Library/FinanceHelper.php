@@ -13,7 +13,7 @@ use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\Corporation\CorpJournal;
 use App\Models\User\UserToCorporation;
-use App\Models\Finances\PlayerDonationJourna;
+use App\Models\Finances\PlayerDonationJournal;
 
 use App\Library\Esi;
 
