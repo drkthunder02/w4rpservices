@@ -62,31 +62,9 @@ class CorpJournal extends Command
         $finishedCorps = array();
         $corpCompleted = false;
         //Get the corps with structures logged in the database
-        $structures = DB::table('CorpStructures')->get();
-        //For each structure get the corp journals from the corporation owning the structure
-        //After getting the corp journal for the corporation, let's not do the corporation again
-        foreach($structures as $structure) {
-            foreach($finishedCorps as $finished) {
-                if($finished == $structure->corporation_id) {
-                    $this->line('Finished Journal for ' . $structure->corporation_name);
-                    $corpCompleted = true;
-                    break;
-                } else {
-                    //If the corp wasn't completed yet ensure the variable is false
-                    //If the corp was completed, the variable will be true and this else
-                    //will be skipped
-                    $corpCompleted = false;
-                }
-            }
-            //If we didn't find the corporation was already done, then complete it.
-            if($corpCompleted === false) {
-                $this->line('Getting Journal for ' . $structure->corporation_name);
-                $this->GetJournal($structure->character_id);
-                $finishedCorps[sizeof($finishedCorps)] = $structure->corporation_id;
-                //After the corporation has been done set the variable back to false
-                $corpCompleted = false;
-            }
-           
+        $corps = DB::table('CorpStructures')->select('character_id', 'corporation_id')->groupBy('corporation_id')->get();
+        foreach($corps as $corp) {
+            $this->GetJournal($corp->character_id);
         }
 
         //Mark the job as finished
