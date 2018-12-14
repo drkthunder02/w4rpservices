@@ -34,7 +34,7 @@ class StructureTaxHelper {
         
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
-        
+        dd($fuelCost);
         $revenue = $revenue - ($fuelCost * $count);
         //Check to see if the revenue is greater than zero to avoid division by zero error.
         //Then calculate the tax owed which is revenue divided by ratio previously calcualted.
