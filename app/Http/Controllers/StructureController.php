@@ -26,13 +26,14 @@ class StructureController extends Controller
         //Make the helper esi class
         $helper = new Esi();
         
-
         //Get the character's corporation from esi
         $corpId = $helper->FindCorporationId(Auth::user()->character_id);
 
+        //Declare the structure tax helper class
+        $sHelper = new StructureTaxHelper();
         //Get the dates we are working with
         $dates = $sHelper->GetTimeFrame();
-        $sHelper = new StructureTaxHelper();
+        
 
         //Get the market taxes for this month from the database
         $totalTaxes = [
