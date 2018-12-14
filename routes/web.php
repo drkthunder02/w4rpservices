@@ -67,7 +67,7 @@ Route::post('/structures/store', 'RegisterStructureController@storeStructure');
 //Structure Controller display pages
 Route::get('/structures/taxes/display', 'StructureController@displayTaxes');
 Route::get('/structures/admin/taxes/display', 'StructureController@chooseCorpTaxes');
-Route::post('/structures/admin/taxes/display/execute', 'StructureController@displayCorpTaxes');
+Route::get('/structures/admin/taxes/display/execute', 'StructureController@displayCorpTaxes');
 
 //AJAX Controller display pages
 Route::get('ajax',function() {
