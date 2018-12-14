@@ -59,6 +59,8 @@ class StructureController extends Controller
             'thisMonthStart' => $dates['ThisMonthStart']->toFormattedDateString(),
             'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
         ];
+
+        return view('structures.choosecorptaxes')->with('totalTaxes', $totalTaxes);
     }
 
     public function displayTaxes() {
