@@ -28,7 +28,7 @@ class MoonsAdminController extends Controller
         $date = $dateInit->subDays(30);
 
         $journal = DB::select('SELECT amount, date, reason, description FROM PlayerDonationJournals WHERE corporation_id=9828766 AND date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)');
-        
+        dd($journal);
         return view('moons.moonjournal')->with('journal', $journal);
     }
 
