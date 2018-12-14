@@ -24,11 +24,10 @@ class MoonsAdminController extends Controller
     public function showJournalEntries() {
         $esi = new Esi();
 
-        $date = Carbon::today()->subDays(30);
+        $dateInit = Carbon::now();
+        $date = $dateInit->subDays(30);
 
-        $journal = PlayerDonationJournal::where(
-            ['corporation_id', '=', '98287666'],
-            ['date', '>=', $date->toDateTimeString()])->get([
+        $journal = PlayerDonationJournal::whereRaw('corporation_id=98297666 AND date BETWEEN ' . $dateInit->toDateTimeString() . ' AND ' . $date->toDateTimeString())->get([
             'amount',
             'date',
             'description',
