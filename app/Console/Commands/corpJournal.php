@@ -66,6 +66,7 @@ class CorpJournal extends Command
         foreach($corps as $corp) {
             $charId = DB::table('CorpStructures')->select('character_id')->where(['corporation_id' => $corp->corporation_id])->first();
             $this->GetJournal($charId->character_id);
+            $this->line('Received Corporation Journals for ' . $corp->corporation_id);
         }
 
         //Mark the job as finished
