@@ -99,6 +99,7 @@ class StructureTaxHelper {
 
         //Multiply the amount of fuel blocks used by the structure by 20,000.
         $cost = $fuelBlocks * 20000.00;
+        dd($cost);
         //Return to the calling function
         return $cost;
     }
@@ -133,7 +134,7 @@ class StructureTaxHelper {
 
     private function GetStructureCount($corpId, $structureType) {
         $count = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => $structureType])->count();
-        dd($count);
+
         return (int)$count;
     }
 }
