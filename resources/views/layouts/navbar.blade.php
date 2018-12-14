@@ -55,6 +55,9 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/structures/taxes/display">Current Taxes</a>
                     <a class="dropdown-item" href="/structures/register">Register Structure</a>
+                    @can('isAdmin')
+                    <a class="dropdown-item" href="/structures/admin/taxes/display">Corp Taxes</a>
+                    @endcan
                 </div>
             </li>
             @endif
