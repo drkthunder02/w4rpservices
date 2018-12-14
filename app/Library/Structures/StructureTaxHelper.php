@@ -49,7 +49,7 @@ class StructureTaxHelper {
         }
 
         //Return the amount
-        return floor($taxOwed);
+        return $taxOwed;
     }
 
     public function GetRevenue($corpId, $refType, $start, $end) {
@@ -133,8 +133,8 @@ class StructureTaxHelper {
 
     private function GetStructureCount($corpId, $structureType) {
         $count = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => $structureType])->count();
-
-        return (float) $count;
+        dd($count);
+        return (int)$count;
     }
 }
 
