@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 use Carbon\Carbon;
-use App\Library\Structures\StructureHelper;
+use App\Library\Structures\StructureTaxHelper;
 
 use App\User;
 use App\Models\User\UserRole;
