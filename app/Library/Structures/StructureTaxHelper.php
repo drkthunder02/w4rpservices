@@ -34,11 +34,9 @@ class StructureTaxHelper {
         
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
-        $revenue = (float)$revenue;
+
         $totalFuelCost = $fuelCost * $count;
-        var_dump($revenue);
-        var_dump($totalFuelCost);
-        die();
+
         $revenue = $revenue - $totalFuelCost;
         //Check to see if the revenue is greater than zero to avoid division by zero error.
         //Then calculate the tax owed which is revenue divided by ratio previously calcualted.
@@ -70,7 +68,7 @@ class StructureTaxHelper {
             $revenue = 0.00;
         }
 
-        return $revenue;
+        return (float)$revenue;
     }
 
     private function CalculateTaxRatio($overallTax, $type) {
