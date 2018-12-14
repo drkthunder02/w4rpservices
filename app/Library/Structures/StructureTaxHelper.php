@@ -49,7 +49,7 @@ class StructureTaxHelper {
         }
 
         //Return the amount
-        return $taxOwed;
+        return floor($taxOwed);
     }
 
     public function GetRevenue($corpId, $refType, $start, $end) {
