@@ -26,6 +26,7 @@ class StructureController extends Controller
     public function chooseCorpTaxes() {
         //$corps = DB::table('CorpStructures')->select('corporation_name')->groupBy('corporation_name')->get();
         $corps = CorpStructure::pluck('corporation_name', 'corporation_id')->groupBy('corporation_name');
+        dd($corps);
         return view('structures.choosecorporation')->with('corps', $corps);
     }
 
