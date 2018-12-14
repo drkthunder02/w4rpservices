@@ -2,7 +2,6 @@
 @section('content')
 
 <div class="container col-md-12">
-    {{ var_dump($journal) }}
     <table class="table table-striped">
         <thead>
             <th>Date</th>
@@ -16,7 +15,7 @@
                     <td>{{ $journ->date }}</td>
                     <td>{{ $journ->description }}</td>
                     <td>{{ $journ->reason }}</td>
-                    <td>{{ $journ->amount }}</td>
+                    <td>{{ number_format($journ->amount, 2, '.', ',') }}</td>
                 </tr>
             @endforeach
         </tbody>
