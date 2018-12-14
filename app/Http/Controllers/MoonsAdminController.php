@@ -27,7 +27,7 @@ class MoonsAdminController extends Controller
         $dateInit = Carbon::now();
         $date = $dateInit->subDays(30);
 
-        $journal = PlayerDonationJournal::whereRaw('corporation_id=98297666 AND date BETWEEN ' . $dateInit->toDateTimeString() . ' AND ' . $date->toDateTimeString())->get([
+        $journal = PlayerDonationJournal::whereRaw("corporation_id=98297666 AND date BETWEEN '" . $dateInit->toDateTimeString() . "' AND '" . $date->toDateTimeString())->get([
             'amount',
             'date',
             'description',
