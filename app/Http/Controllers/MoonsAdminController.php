@@ -27,10 +27,8 @@ class MoonsAdminController extends Controller
         $dateInit = Carbon::now();
         $date = $dateInit->subDays(30);
 
-        $journal = PlayerDonationJournal::select(['amount', 'date', 'description', 'first_party_id'])
-                                        ->whereRaw("corporation_id=98297666 AND date BETWEEN '" . $dateInit->toDateTimeString() . "' AND '" . $date->toDateTimeString())
-                                        ->get();
-
+        $journal = DB::select('SELECT amount, date, description, first_party_id FROM PlayerDonationJournals WHERE corporation_id=9829766 AND date >= DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH)');
+        
         foreach($journal as $journ) {
             $journ->first_party_id = $esi->GetCharacterName($journ->first_party_id);
         }
