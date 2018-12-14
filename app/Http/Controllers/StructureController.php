@@ -37,9 +37,6 @@ class StructureController extends Controller
 
         $corpId = $request->corpId;
         
-        //Get the character's corporation from esi
-        $corpId = $helper->FindCorporationId(Auth::user()->character_id);
-
         //Declare the structure tax helper class
         $sHelper = new StructureTaxHelper();
         //Get the dates we are working with
