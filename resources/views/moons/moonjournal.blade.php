@@ -13,10 +13,10 @@
         <tbody>
             @foreach($journal as $journ)
                 <tr>
-                    <td>{{ $journ['date'] }}</td>
-                    <td>{{ $journ['description'] }}</td>
-                    <td>{{ $journ['reason'] }}</td>
-                    <td>{{ $journ['amount'] }}</td>
+                    <td>{{ $journ->date }}</td>
+                    <td>{{ $journ->description }}</td>
+                    <td>{{ $journ->reason }}</td>
+                    <td>{{ $journ->amount }}</td>
                 </tr>
             @endforeach
         </tbody>
