@@ -33,7 +33,7 @@ class MoonsAdminController extends Controller
             $journ->first_party_id = $esi->GetCharacterName($journ->first_party_id);
         }
 
-        return view('moons.spatialjournal')->with('journal', $journal);
+        return view('moons.moonjournal')->with('journal', $journal);
     }
 
     public function updateMoon() {
