@@ -34,7 +34,10 @@ class StructureTaxHelper {
         
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
-        dd($fuelCost);
+        
+        $totalFuelCost = $fuelCost * $count;
+        dd($totalFuelCost);
+
         $revenue = $revenue - ($fuelCost * $count);
         //Check to see if the revenue is greater than zero to avoid division by zero error.
         //Then calculate the tax owed which is revenue divided by ratio previously calcualted.
@@ -99,7 +102,7 @@ class StructureTaxHelper {
 
         //Multiply the amount of fuel blocks used by the structure by 20,000.
         $cost = $fuelBlocks * 20000.00;
-        dd($cost);
+
         //Return to the calling function
         return $cost;
     }
