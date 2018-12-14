@@ -102,7 +102,7 @@ class StructureTaxHelper {
         }
 
         //Multiply the amount of fuel blocks used by the structure by 20,000.
-        $cost = $fuelBlocks * 20000.00;
+        $cost = $fuelBlocks * 20000;
 
         //Return to the calling function
         return $cost;
