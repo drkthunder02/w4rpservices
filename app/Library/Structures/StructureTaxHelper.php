@@ -38,13 +38,11 @@ class StructureTaxHelper {
         $revenue = $revenue - ($fuelCost * $count);
         //Check to see if the revenue is greater than zero to avoid division by zero error.
         //Then calculate the tax owed which is revenue divided by ratio previously calcualted.
-        //if($revenue > 0.00) {
-        //    $taxOwed = $revenue / $ratio;
-        //} else {
-        //    $taxOwed = 0.00;
-        //}
-        //Calculate the tax owed which is revenue divided by ratio previously calculated
-        $taxOwed = (float)$revenue / (float)$ratio;
+        if($revenue > 0.00) {
+            $taxOwed = $revenue / $ratio;
+        } else {
+            $taxOwed = 0.00;
+        }
         //Check for negative number, and if negative, zero it out.
         if($taxOwed < 0.00){
             $taxOwed = 0.00;
