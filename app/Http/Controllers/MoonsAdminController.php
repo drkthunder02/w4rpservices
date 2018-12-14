@@ -27,7 +27,7 @@ class MoonsAdminController extends Controller
         $dateInit = Carbon::now();
         $date = $dateInit->subDays(30);
 
-        $journal = DB::select('SELECT amount, date, reason, description FROM PlayerDonationJournals WHERE corporation_id=9829766');
+        $journal = DB::select('SELECT amount, date, reason, description FROM PlayerDonationJournals WHERE corporation_id=`9829766`');
         dd($journal);
         return view('moons.moonjournal')->with('journal', $journal);
     }
