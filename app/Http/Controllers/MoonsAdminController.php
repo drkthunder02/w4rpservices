@@ -6,14 +6,11 @@ use Illuminate\Http\Request;
 
 use Auth;
 use DB;
+use Carbon\Carbon;
 
 use App\Models\Moon\Moon;
 
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
-
+use App\Models\Finances\PlayerDonationJournal;
 use App\Library\MoonCalc;
 
 class MoonsAdminController extends Controller
@@ -21,6 +18,27 @@ class MoonsAdminController extends Controller
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('role:Admin');
+    }
+
+    public function showJournalEntries() {
+        $esi = new Esi();
+
+        $date = Carbon::today()->subDays(30);
+
+        $journal = PlayerDonationJournal::where(
+            ['corporation_id', '=', '98287666'],
+            ['date', '>=', $date->toDateTimeString()])->get([
+            'amount',
+            'date',
+            'description',
+            'first_party_id',
+        ]);
+
+        foreach($journal as $journ) {
+            $journ->first_party_id = $esi->GetCharacterName($journ->first_party_id);
+        }
+
+        return view('moons.spatialjournal')->with('journal', $journal);
     }
 
     public function updateMoon() {
@@ -38,16 +56,14 @@ class MoonsAdminController extends Controller
 
         $date = strtotime($request->date . '00:00:01');
         //Update the database entry
-        DB::table('Moons')
-            ->where([
-                ['System', '=',  $request->system], 
-                ['Planet', '=', $request->planet], 
-                ['Moon', '=', $request->moon]
-            ])
-            ->update([
-                'RentalCorp' => $request->renter,
-                'RentalEnd' => $date,
-            ]);
+        Moon::where([
+            'System' => $request->system,
+            'Planet' => $request->planet,
+            'Moon' => $request->moon,
+        ])->update([
+            'RentalCorp' => $request->renter,
+            'RentalEnd' => $date,
+        ]);
 
         return redirect('/moons/display')->with('success', 'Moon Updated');
     }
@@ -121,7 +137,8 @@ class MoonsAdminController extends Controller
         //Update the prices for the moon
         $moonCalc->FetchNewPrices();
         //get all of the moons from the database
-        $moons = DB::table('Moons')->orderBy('System', 'asc')->get();
+        $moons = Moon::orderBy('System', 'asc')->get();
+        //$moons = DB::table('Moons')->orderBy('System', 'asc')->get();
         //declare the html variable and set it to null
         $html = '';
         foreach($moons as $moon) {

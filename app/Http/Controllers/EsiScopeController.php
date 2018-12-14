@@ -10,11 +10,6 @@ use Auth;
 
 use App\User;
 
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
-
 class EsiScopeController extends Controller
 {
     public function __construct() {

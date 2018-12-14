@@ -36,6 +36,15 @@ class Esi {
         return false;
     }
 
+    public function GetCharacterName($charId) {
+        $esi = new Eseye();
+        $character = $esi->invoke('get', '/characters/{character_id}/', [
+            'character_id' => $charId,
+        ]);
+
+        return $character->name;
+    }
+
     public function FindCharacterId($name) {
         $config = config('esi');
         //Create the esi authentication container
