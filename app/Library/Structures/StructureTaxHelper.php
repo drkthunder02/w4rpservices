@@ -101,7 +101,7 @@ class StructureTaxHelper {
         return $cost;
     }
 
-    private function GetTimeFrame() {
+    public function GetTimeFrame() {
         $start = Carbon::now()->startOfMonth();
         $end = Carbon::now()->endOfMonth();
         $end->hour = 23;
