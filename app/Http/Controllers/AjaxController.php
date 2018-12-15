@@ -18,27 +18,4 @@ class AjaxController extends Controller {
         return response()->json(array('msg'=> $msg), 200);
     }
 
-    public function displayFleet() {
-        $fleets = Fleet::all();
-        $data = array();
-        $fc = array();
-        $fleet = array();
-        $description = array();
-        $i = 0;
-
-        foreach($fleets as $fl) {
-            $fc[$i] = $fl->character_id;
-            $fleet[$i] = $fl->fleet;
-            $description[$i] = $fl->description;
-            $i++;
-        }
-
-        $data = [
-            $fc,
-            $fleet,
-            $description,
-        ];
-
-        return response()->json(array('data' => $data), 200);
-    }
 }
