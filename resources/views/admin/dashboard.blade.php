@@ -1,7 +1,10 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
+    <br>
     <h2>Admin Dashboard</h2>
+</div>
+<div class="container">
     <div class="row">
         <div class="col-md-6 card">
             <div class="card-header">
