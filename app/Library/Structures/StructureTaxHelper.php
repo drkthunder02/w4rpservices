@@ -35,25 +35,17 @@ class StructureTaxHelper {
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
 
+        //Calculate the total fuel block cost
         $totalFuelCost = $fuelCost * $count;
-        var_dump($revenue);
-        printf("<br>");        
+
+        //Calculate the total revenue minus the fuel block cost
         $totalRevenue = $revenue - $totalFuelCost;
-        var_dump($totalRevenue);
-        printf("<br>"); 
-        var_dump($totalFuelCost);
-        printf("<br>"); 
-        var_dump($ratio);
-        printf("<br>"); 
+
         //Check to see if the revenue is greater than zero to avoid division by zero error.
         //Then calculate the tax owed which is revenue divided by ratio previously calcualted.
-        if($revenue > 0.00) {
+        if($totalRevenue > 0.00) {
             $taxOwed = $totalRevenue / $ratio;
         } else {
-            $taxOwed = 0.00;
-        }
-        //Check for negative number, and if negative, zero it out.
-        if($taxOwed < 0.00){
             $taxOwed = 0.00;
         }
 

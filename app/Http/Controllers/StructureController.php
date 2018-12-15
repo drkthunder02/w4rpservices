@@ -39,11 +39,10 @@ class StructureController extends Controller
         
         //Declare the structure tax helper class
         $sHelper = new StructureTaxHelper();
+        
         //Get the dates we are working with
         $dates = $sHelper->GetTimeFrame();
         
-        dd($sHelper->GetTaxes($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']));
-
         //Get the market taxes for this month from the database
         $totalTaxes = [
             'thisMonthMarket' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
@@ -58,6 +57,7 @@ class StructureController extends Controller
             'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
         ];
 
+        //Return the view with the data passed to it
         return view('structures.choosecorptaxes')->with('totalTaxes', $totalTaxes);
     }
 
