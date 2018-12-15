@@ -19,7 +19,7 @@ class AdminController extends Controller
     public function displayDashboard() {
         //Get the users from the database to allow a selection of users for
         //adding and removing roles and permissions
-        $users = User::orderBy('name')->all('name');
+        $users = User::pluck('name')->orderBy('name');
 
         return view('admin.dashboard')->with('users', $users);
     }
