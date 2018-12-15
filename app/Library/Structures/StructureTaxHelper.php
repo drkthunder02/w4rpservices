@@ -37,10 +37,14 @@ class StructureTaxHelper {
 
         $totalFuelCost = $fuelCost * $count;
         var_dump($revenue);
-        
+        printf("<br>");        
         $totalRevenue = $revenue - $totalFuelCost;
         var_dump($totalRevenue);
+        printf("<br>"); 
         var_dump($totalFuelCost);
+        printf("<br>"); 
+        var_dump($ratio);
+        printf("<br>"); 
         //Check to see if the revenue is greater than zero to avoid division by zero error.
         //Then calculate the tax owed which is revenue divided by ratio previously calcualted.
         if($revenue > 0.00) {
