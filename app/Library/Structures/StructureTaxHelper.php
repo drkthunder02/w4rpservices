@@ -36,12 +36,16 @@ class StructureTaxHelper {
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
 
         $totalFuelCost = $fuelCost * $count;
-
-        $revenue = $revenue - $totalFuelCost;
+        var_dump($revenue);
+        
+        $totalRevenue = $revenue - $totalFuelCost;
+        var_dump($totalRevenue);
+        var_dump($totalFuelCost);
+        die();
         //Check to see if the revenue is greater than zero to avoid division by zero error.
         //Then calculate the tax owed which is revenue divided by ratio previously calcualted.
         if($revenue > 0.00) {
-            $taxOwed = $revenue / $ratio;
+            $taxOwed = $totalRevenue / $ratio;
         } else {
             $taxOwed = 0.00;
         }
