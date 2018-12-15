@@ -11,7 +11,7 @@
                 {!! Form::open(['action' => 'AdminController@addRole', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{ Form::label('user', 'User') }}
-                    {{ Form::text('user', '', ['class' => 'form-control', 'placeholder' => 'Character Name']) }}
+                    {{ Form::select('user', $data['users'], null, ['class'=> 'form-control']) }}
                     {{ Form::select('role', [
                         'None' => 'None',
                         'Guest' => 'Guest',
@@ -31,7 +31,7 @@
                 {!! Form::open(['action' => 'AdminController@removeRole', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{ Form::label('user', 'User') }}
-                    {{ Form::text('user', '', ['class' => 'form-control', 'placeholder' => 'Character Name']) }}
+                    {{ Form::select('user', $data['users'], null, ['class' => 'form-control']) }}
                     {{ Form::select('role', [
                         'None' => 'None',
                         'Guest' => 'Guest',
@@ -54,12 +54,8 @@
                 {!! Form::open(['action' => 'AdminController@addPermission', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{ Form::label('user', 'User') }}
-                    {{ Form::text('user', '', ['class' => 'form-control', 'placeholder' => 'Character Name']) }}
-                    {{ Form::select('permission', [
-                        'None' => 'None',
-                        'logistics.minion' => 'logistics.minion',
-                        'structure.operator' => 'structure.operator',
-                        ], 'None') }}
+                    {{ Form::select('user', $data['users'], null, ['class' => 'form-control']) }}
+                    {{ Form::select('permission', $data['permissions'], null, ['class' => 'form-control']) }}
                 </div>
                 {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                 {!! Form::close() !!}
