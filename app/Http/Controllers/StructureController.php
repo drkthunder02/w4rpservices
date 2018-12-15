@@ -42,6 +42,7 @@ class StructureController extends Controller
         //Get the dates we are working with
         $dates = $sHelper->GetTimeFrame();
         
+        dd(number_format($sHelper->GetTaxes($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','));
 
         //Get the market taxes for this month from the database
         $totalTaxes = [
