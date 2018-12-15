@@ -83,7 +83,7 @@ class StructureTaxHelper {
         //We need to calculate the correct ratio based on structure tax, 
         //Then figure out what is owed to the alliance
         if($type == 'Market') {
-            $ratioType = 2.0;
+            $ratioType = 2.5;
         } else if($type == 'Refinery') {
             $ratioType = 1.0;
         } else {
