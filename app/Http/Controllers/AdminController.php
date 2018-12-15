@@ -20,7 +20,7 @@ class AdminController extends Controller
         //Get the users from the database to allow a selection of users for
         //adding and removing roles and permissions
         $users = User::pluck('name')->sortBy('name');
-        $permissions = UserPermission::pluck('permission')->sortBy('permission');
+        $permissions = AvailableUserPermission::pluck('permission')->sortBy('permission');
 
         $data = [
             'users' => $users,
