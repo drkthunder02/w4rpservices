@@ -12,6 +12,10 @@
 */
 
 Route::get('/', function () {
+    if(Auth::check()) {
+        return redirect('/dashboard');
+    }
+
     return view('welcome');
 })->name('/');
 
