@@ -8,6 +8,7 @@ use DB;
 use App\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
+use App\Models\User\AvailableUserPermission;
 
 class AdminController extends Controller
 {
