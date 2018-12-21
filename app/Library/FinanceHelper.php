@@ -53,7 +53,6 @@ class FinanceHelper {
 
         //If more than one page is found, decode the first set of wallet entries, then call for the next pages
         do {
-            $this->line($currentPage);
             //Call the first page of the wallet journal, as we are always going to get at least one page.
             //If we have more pages, then we will continue through the while loop.
             try {

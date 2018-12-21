@@ -64,8 +64,10 @@ class CorpJournal extends Command
         //Get the corps with structures logged in the database
         $corps = DB::table('CorpStructures')->select('corporation_id')->groupBy('corporation_id')->get();
         foreach($corps as $corp) {
+            $this->line('Retrieving Corporation Journals for ' . $corp->corporation_id);
             $charId = DB::table('CorpStructures')->select('character_id')->where(['corporation_id' => $corp->corporation_id])->first();
-            $this->GetJournal($charId->character_id);
+            $lastPage = $this->GetJournal($charId->character_id);
+            $this->line('Last Page recorded was ' . $lastPage);
             $this->line('Received Corporation Journals for ' . $corp->corporation_id);
         }
 
