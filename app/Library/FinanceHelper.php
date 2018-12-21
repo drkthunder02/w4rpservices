@@ -76,7 +76,8 @@ class FinanceHelper {
                     if($entry['ref_type'] == 'brokers_fee' || 
                        $entry['ref_type'] == 'reprocessing_tax' || 
                        $entry['ref_type'] == 'jumpgate_fee' || 
-                       $entry['ref_type'] == 'player_donation') {
+                       $entry['ref_type'] == 'player_donation' ||
+                       ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 99004116)) {
                         $this->PutWalletJournal($entry, $corpId, $division);
                     }
                 }
@@ -138,7 +139,7 @@ class FinanceHelper {
         $esiHelper = new Esi;
         $date = $esiHelper->DecodeDate($journal['date']);
 
-        if($journal['ref_type'] == 'player_donation') {
+        if($journal['ref_type'] == 'player_donation' || ($journal['ref_type'] == 'corporation_account_withdrawal' && $journal['second_party_id'] == 99004116)) {
             //if we don't find the journal entry, add the journal entry to the database
             if(!PlayerDonationJournal::where(['id' => $journal['id']])->exists()) {
                 $entry = new PlayerDonationJournal;
