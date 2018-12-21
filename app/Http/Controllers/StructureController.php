@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 use Carbon\Carbon;
+
 use App\Library\Structures\StructureTaxHelper;
+use App\Library\Esi\Esi;
 
 use App\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Corporation\CorpStructure;
-
-use App\Library\Esi;
 
 class StructureController extends Controller
 {

@@ -11,8 +11,8 @@ use Carbon\Carbon;
 use App\Models\Moon\Moon;
 
 use App\Models\Finances\PlayerDonationJournal;
-use App\Library\MoonCalc;
-use App\Library\Esi;
+use App\Library\Moons\MoonCalc;
+use App\Library\Esi\Esi;
 
 class MoonsAdminController extends Controller
 {

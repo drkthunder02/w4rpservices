@@ -7,7 +7,7 @@ use DB;
 use Carbon\Carbon;
 use Commands\Library\CommandHelper;
 
-use App\Library\MoonCalc;
+use App\Library\Moons\MoonCalc;
 
 class UpdateMoonPricing extends Command
 {

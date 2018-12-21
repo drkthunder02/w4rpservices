@@ -5,14 +5,16 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use DB;
+
 use Commands\Library\CommandHelper;
+use App\Library\Finances\FinanceHelper;
 
 use App\Models\Market\MonthlyMarketTax;
 use App\Models\ScheduledTask\ScheduleJob;
 use App\Models\Corporation\CorpJournal;
 use App\Models\Corporation\CorpStructure;
 
-use App\Library\FinanceHelper;
+
 
 class CalculateMarketTax extends Command
 {

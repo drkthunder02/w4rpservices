@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use DB;
-use App\Library\Fleets;
+use App\Library\Fleets\FleetHelper;
 
 use App\Models\Fleet\Fleet;
 

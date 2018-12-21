@@ -5,15 +5,15 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use DB;
+
 use Commands\Library\CommandHelper;
+use App\Library\Esi\Mail;
 
 use App\User;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\ScheduledTask\ScheduleJob;
 use App\Models\Market\MonthlyMarketTax;
-
-use App\Library\Mail;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;

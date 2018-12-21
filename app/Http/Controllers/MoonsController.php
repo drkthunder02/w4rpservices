@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Moon\Moon;
 
-use App\Library\MoonCalc;
+use App\Library\Moons\MoonCalc;
 
 class MoonsController extends Controller
 {

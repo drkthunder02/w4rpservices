@@ -8,8 +8,8 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
-use App\Library\FleetHelper;
-use App\Library\Esi;
+use App\Library\Fleets\FleetHelper;
+use App\Library\Esi\Esi;
 
 use App\Models\Fleet\Fleet;
 use App\Models\Fleet\FleetActivity;

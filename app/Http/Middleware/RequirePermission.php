@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use DB;
+
 use App\Models\User\UserPermission;
 
 class RequirePermission

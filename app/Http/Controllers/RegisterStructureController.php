@@ -8,7 +8,7 @@ use Auth;
 use DB;
 
 use App\Models\Corporation\CorpStructure;
-use App\Library\Esi;
+use App\Library\Esi\Esi;
 
 class RegisterStructureController extends Controller
 {
