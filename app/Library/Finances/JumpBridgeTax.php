@@ -7,12 +7,27 @@
 namespace App\Library\Finances;
 
 use DB;
+use Carbon\Carbon;
 
 use App\Library\Esi;
 
 use App\Models\Finances\JumpBridgeJournal;
+use App\Models\User\UserToCorporation;
 
 class JumpBridgeTax {
+    private $date;
+
+    public function __construct($days = null) {
+        if($days === null) {
+            $this->date = Carbon::now();
+        } else {
+            $this->date = Carbon::now()->subDays($days);
+        }
+    }
+
+    /**
+     * Function to insert journal entries into the database
+     */
     public function InsertJumpBridgeTax($journal, $corpId, $division) {
         //Create the ESI Helper class
         $esiHelper = new Esi;
@@ -57,4 +72,59 @@ class JumpBridgeTax {
             $entry->save();
         }
     }
+
+    /**
+     * Function to get the corporations using the jump bridge over a given time period
+     */
+    public function CorporationUsage() {
+        //Make an array for corporations, and amounts
+        $corps = array();
+        $amounts = array();
+
+        //Get all of the parties which have utilized the jump bridge
+        $parties = DB::table('jump_bridge_journal')
+                    ->select('first_party_id')
+                    ->groupBy('first_party_id')
+                    ->whereTime('date', '>', $this->date)
+                    ->get();
+
+        //Run through each party and assign them into a corporation, then add the corporation to the corporation array if they don't 
+        //exist in the array.
+        foreach($parties as $party) {
+
+        }            
+    }
+
+    /**
+     * Returns the overall usage for statistics
+     */
+    public function OverallTax() {
+        //Initalize the date
+        $dateInit = Carbon::now();
+        //Subtract the days from now
+        $date = $dateInit->subDays($days);
+
+        //Get the total usage
+        $usage = DB::table('jump_bridge_journal')
+                    ->select('amount')
+                    ->whereTime('date', '>', $this->date)
+                    ->sum(['amount']);
+        
+        //Return the usage
+        return $usage;
+    }
+
+    /**
+     * Returns a specific briddge usage statistics for overall usage
+     */
+    public function JBOverallUsage($structure) {
+        $usage = DB::table('jump_bridge_journal')
+                    ->select('amount')
+                    ->where('context_id', $structure)
+                    ->sum(['amount']);
+        
+        return $usage;
+    }
+
+
 }

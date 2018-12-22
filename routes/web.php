@@ -30,25 +30,30 @@ Route::group(['middleware' => ['auth']], function(){
 
     //Moon Admin Controller display pages
     Route::get('/moons/admin/addmoon', 'MoonsAdminController@addMoon');
-    Route::post('/moons/admin/storeMoon', 'MoonsAdminController@storeMoon');
+    Route::post('/moon/admin/addmoon', 'MoonsAdminController@storemoon');
+    //Route::post('/moons/admin/storeMoon', 'MoonsAdminController@storeMoon');
     Route::get('/moons/admin/display', 'MoonsAdminController@displayMoonsAdmin');
-    Route::post('/moons/admin/storeUpdateMoon', 'MoonsAdminController@storeUpdateMoon');
+    //Route::post('/moons/admin/storeUpdateMoon', 'MoonsAdminController@storeUpdateMoon');
     Route::get('/moons/admin/updatemoon', 'MoonsAdminController@updateMoon');
+    Route::post('/moons/admin/updatemoon', 'MoonsAdminController@storeUpdateMoon');
     Route::get('/moons/admin/journal', 'MoonsAdminController@showJournalEntries');
 
     //Wiki Controller display pages
     Route::get('/wiki/register', 'WikiController@displayRegister');
+    Route::post('/wiki/register', 'WikiController@storeRegister');
     Route::get('/wiki/changepassword', 'WikiController@displayChangePassword');
-    Route::post('/wiki/storeRegister', 'WikiController@storeRegister');
-    Route::post('/wiki/changePassword', 'WikiController@changePassword');
+    Route::post('/wiki/changepassword', 'WikiController@changePassword');
+    //Route::post('/wiki/storeRegister', 'WikiController@storeRegister');
+    //Route::post('/wiki/changePassword', 'WikiController@changePassword');
 
     //Fleet Controller display pages
     Route::get('/fleets/display', 'FleetsController@displayFleets');
     Route::get('/fleets/register', 'FleetsController@displayRegisterFleet');
+    Route::post('/fleets/register', 'Fleetscontroller@registerFleet');
     Route::get('/fleets/{fleet_id}/addpilot/{id}', 'FleetsController@addPilot')->name('addpilot');
     Route::get('/fleets/{fleet_id}/addpilot/{name}', 'Fleetscontroller@addPilotName');
     Route::get('/fleets/{fleet_id}/delete', 'FleetsController@deleteFleet')->name('deletefleet');
-    Route::post('/fleets/registerFleet', 'FleetsController@registerFleet');
+    //Route::post('/fleets/registerFleet', 'FleetsController@registerFleet');
 
     //Admin Controller display pages
     Route::get('/admin/dashboard', 'AdminController@displayDashboard');
@@ -58,7 +63,8 @@ Route::group(['middleware' => ['auth']], function(){
 
     //Register Structures Controller display pages
     Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
-    Route::post('/structures/store', 'RegisterStructureController@storeStructure');
+    Route::post('/structures/register', 'RegisterstructureController@storeStructure');
+    //Route::post('/structures/store', 'RegisterStructureController@storeStructure');
     //Structure Controller display pages
     Route::get('/structures/taxes/display', 'StructureController@displayTaxes');
     Route::get('/structures/admin/taxes/display', 'StructureController@chooseCorpTaxes');

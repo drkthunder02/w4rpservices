@@ -22,8 +22,6 @@ class MoonsAdminController extends Controller
     }
 
     public function showJournalEntries() {
-        $esi = new Esi();
-
         $dateInit = Carbon::now();
         $date = $dateInit->subDays(30);
 

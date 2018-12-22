@@ -139,6 +139,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         ),
         'F' => 
         array (
+            'Fx3costa\\LaravelChartJs\\' => 24,
             'Fideloper\\Proxy\\' => 16,
             'Faker\\' => 6,
         ),
@@ -376,6 +377,10 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Fx3costa\\LaravelChartJs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fx3costa/laravelchartjs/src',
+        ),
         'Fideloper\\Proxy\\' => 
         array (
             0 => __DIR__ . '/..' . '/fideloper/proxy/src',
@@ -455,6 +460,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
+        'App\\CharacterToCorporation' => __DIR__ . '/../..' . '/app/Models/Charcter/CharacterToCorporation.php',
         'App\\Console\\Commands\\CalculateMarketTax' => __DIR__ . '/../..' . '/app/Console/Commands/calculatemarkettax.php',
         'App\\Console\\Commands\\CorpJournal' => __DIR__ . '/../..' . '/app/Console/Commands/corpJournal.php',
         'App\\Console\\Commands\\DumpFleets' => __DIR__ . '/../..' . '/app/Console/Commands/dumpFleets.php',
@@ -494,16 +500,15 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Library\\Esi' => __DIR__ . '/../..' . '/app/Library/Esi.php',
         'App\\Library\\Esi\\Esi' => __DIR__ . '/../..' . '/app/Library/Esi/Esi.php',
         'App\\Library\\Esi\\Mail' => __DIR__ . '/../..' . '/app/Library/Esi/Mail.php',
-        'App\\Library\\FinanceHelper' => __DIR__ . '/../..' . '/app/Library/FinanceHelper.php',
-        'App\\Library\\Finances\\FinanceHelper' => __DIR__ . '/../..' . '/app/Library/Finances/FinanceHelper.php',
-        'App\\Library\\FleetHelper' => __DIR__ . '/../..' . '/app/Library/FleetHelper.php',
+        'App\\Library\\Finances\\Helper\\FinanceHelper' => __DIR__ . '/../..' . '/app/Library/Finances/Helper/FinanceHelper.php',
+        'App\\Library\\Finances\\JumpBridgeTax' => __DIR__ . '/../..' . '/app/Library/Finances/JumpBridgeTax.php',
+        'App\\Library\\Finances\\MarketTax' => __DIR__ . '/../..' . '/app/Library/Finances/MarketTax.php',
+        'App\\Library\\Finances\\PlayerDonation' => __DIR__ . '/../..' . '/app/Library/Finances/PlayerDonation.php',
+        'App\\Library\\Finances\\ReprocessingTax' => __DIR__ . '/../..' . '/app/Library/Finances/ReprocessingTax.php',
         'App\\Library\\Fleets\\FleetHelper' => __DIR__ . '/../..' . '/app/Library/Fleets/FleetHelper.php',
-        'App\\Library\\Mail' => __DIR__ . '/../..' . '/app/Library/Mail.php',
-        'App\\Library\\MoonCalc' => __DIR__ . '/../..' . '/app/Library/MoonCalc.php',
-        'App\\Library\\MoonMine' => __DIR__ . '/../..' . '/app/Library/MoonMine.php',
+        'App\\Library\\Lookups\\LookupHelper' => __DIR__ . '/../..' . '/app/Library/Lookups/LookupHelper.php',
         'App\\Library\\Moons\\MoonCalc' => __DIR__ . '/../..' . '/app/Library/Moons/MoonCalc.php',
         'App\\Library\\Moons\\MoonMine' => __DIR__ . '/../..' . '/app/Library/Moons/MoonMine.php',
         'App\\Library\\SeatHelper' => __DIR__ . '/../..' . '/app/Library/SeatHelper.php',
@@ -519,7 +524,10 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Models\\Doku\\DokuUser' => __DIR__ . '/../..' . '/app/Models/Doku/DokuUser.php',
         'App\\Models\\Esi\\EsiScope' => __DIR__ . '/../..' . '/app/Models/Esi/EsiScope.php',
         'App\\Models\\Esi\\EsiToken' => __DIR__ . '/../..' . '/app/Models/Esi/EsiToken.php',
+        'App\\Models\\Finances\\CorpMarketJournal' => __DIR__ . '/../..' . '/app/Models/Finances/CorpMarketJournal.php',
+        'App\\Models\\Finances\\JumpBridgeJournal' => __DIR__ . '/../..' . '/app/Models/Finances/JumpBridgeJournal.php',
         'App\\Models\\Finances\\PlayerDonationJournal' => __DIR__ . '/../..' . '/app/Models/Finances/PlayerDonationJournal.php',
+        'App\\Models\\Finances\\ReprocessingTaxJournal' => __DIR__ . '/../..' . '/app/Models/Finances/ReprocessingTaxJournal.php',
         'App\\Models\\Fleet\\Fleet' => __DIR__ . '/../..' . '/app/Models/Fleet/Fleet.php',
         'App\\Models\\Fleet\\FleetActivity' => __DIR__ . '/../..' . '/app/Models/Fleet/FleetActivity.php',
         'App\\Models\\Logistics\\Contract' => __DIR__ . '/../..' . '/app/Models/Logistics/Contract.php',
@@ -1116,6 +1124,8 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'Faker\\ValidGenerator' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/ValidGenerator.php',
         'Fideloper\\Proxy\\TrustProxies' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustProxies.php',
         'Fideloper\\Proxy\\TrustedProxyServiceProvider' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustedProxyServiceProvider.php',
+        'Fx3costa\\LaravelChartJs\\Builder' => __DIR__ . '/..' . '/fx3costa/laravelchartjs/src/Builder.php',
+        'Fx3costa\\LaravelChartJs\\Providers\\ChartjsServiceProvider' => __DIR__ . '/..' . '/fx3costa/laravelchartjs/src/Providers/ChartjsServiceProvider.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',
         'GuzzleHttp\\ClientInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/ClientInterface.php',
         'GuzzleHttp\\Cookie\\CookieJar' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Cookie/CookieJar.php',
