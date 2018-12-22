@@ -4,12 +4,12 @@ namespace App\Models\Finances;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PlayerDonationJournal extends Model
+class ReprocessingTaxJournal extends Model
 {
     /**
      * Table Name
      */
-    protected $table = 'player_donation_journal';
+    protected $table = 'reprocessing_tax_journal';
 
     /**
      * Timestamps
