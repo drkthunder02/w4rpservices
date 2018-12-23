@@ -80,6 +80,7 @@ class JumpBridgeTax {
         //Make an array for corporations, and amounts
         $corps = array();
         $amounts = array();
+        $esi = new Esi();
 
         //Get all of the parties which have utilized the jump bridge
         $parties = DB::table('jump_bridge_journal')
@@ -91,7 +92,19 @@ class JumpBridgeTax {
         //Run through each party and assign them into a corporation, then add the corporation to the corporation array if they don't 
         //exist in the array.
         foreach($parties as $party) {
+            //If the entry in the database lookup table isn't found, add it.
+            if(!CharacterToCorporation::where(['character_id' => $party->first_party_id])->exists()) {
+                $character = $esi->GetCharacterData($party->first_party_id);
+                $corporation = $esi->GetCorporationData($character->corporation_id);
+                $char = new CharacterToCorporation;
+                $char->character_id = $party->first_party_id;
+                $char->character_name = $character->name;
+                $char->corporation_id = $character->corporation_id;
+                $char->corporation_name = $corporation->name;
+                $char->save();
+            }
 
+            //Perform the lookup and add the user into the corps array, and the ammount to the amount array
         }            
     }
 

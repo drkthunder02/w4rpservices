@@ -11,6 +11,7 @@ use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 class Mail {
 
@@ -39,7 +40,7 @@ class Mail {
             ])->invoke('post', '/characters/{character_id}/mail/', [
                 'character_id' => 93738489,
             ]);
-        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
+        } catch(RequestFailedException $e) {
             return $e->getEsiResponse();
         }
     }

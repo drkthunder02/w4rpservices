@@ -10,6 +10,7 @@ use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 /**
  * This class represents a few ESI helper functions for the program
@@ -36,12 +37,29 @@ class Esi {
         return false;
     }
 
+    public function GetCharacterData($charId) {
+        $esi = new Eseye();
+        try {
+            $character = $esi->invoke('get', '/characters/{character_id}/', [
+                'character_id' => $charId,
+            ]);
+        } catch(RequestFailedException $e) {
+            return null;
+        }
+        
+        return $character;
+    }
+
     public function GetCharacterName($charId) {
         $esi = new Eseye();
-        $character = $esi->invoke('get', '/characters/{character_id}/', [
-            'character_id' => $charId,
-        ]);
-
+        try {
+            $character = $esi->invoke('get', '/characters/{character_id}/', [
+                'character_id' => $charId,
+            ]);
+        } catch(RequestFailedException $e) {
+            return null;
+        }
+        
         return $character->name;
     }
 
@@ -54,12 +72,17 @@ class Esi {
         ]);
         //Create the esi container
         $esi = new Eseye($authentication);
-        $character = $esi->setQueryString([
-            'categories' => 'character',
-            'language' => 'en-us',
-            'search' => $name,
-            'strict' => 'true',
-        ])->invoke('get', '/search/');
+        try {
+            $character = $esi->setQueryString([
+                'categories' => 'character',
+                'language' => 'en-us',
+                'search' => $name,
+                'strict' => 'true',
+            ])->invoke('get', '/search/');
+        } catch(RequestFailedException $e) {
+            return null;
+        }
+        
 
         $character = json_decode($character, true);
 
@@ -68,22 +91,31 @@ class Esi {
 
     public function FindCorporationId($charId) {
         $esi = new Eseye();
-        $character = $esi->invoke('get', '/characters/{character_id}/', [
-            'character_id' => $charId,
-        ]);
-
+        try {
+            $character = $esi->invoke('get', '/characters/{character_id}/', [
+                'character_id' => $charId,
+            ]);
+        } catch(RequestFailedException $e) {
+            return null;
+        }
+        
         return $character->corporation_id;
     }
 
     public function FindCorporationName($charId) {
         $esi = new Eseye();
-        $character = $esi->invoke('get', '/characters/{character_id}/', [
-            'character_id' => $charId,
-        ]);
-
-        $corporation = $esi->invoke('get', '/corporations/{corporation_id}/', [
-            'corporation_id' => $character->corporation_id,
-        ]);
+        try {
+            $character = $esi->invoke('get', '/characters/{character_id}/', [
+                'character_id' => $charId,
+            ]);
+    
+            $corporation = $esi->invoke('get', '/corporations/{corporation_id}/', [
+                'corporation_id' => $character->corporation_id,
+            ]);
+        } catch(RequestFailedException $e) {
+            return null;
+        }
+        
 
         return $corporation->name;
     }
