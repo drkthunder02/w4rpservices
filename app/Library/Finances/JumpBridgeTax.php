@@ -78,8 +78,9 @@ class JumpBridgeTax {
      */
     public function CorporationUsage() {
         //Make an array for corporations, and amounts
-        $corps = array();
         $amounts = array();
+        $characters = array();
+        $data = array();
         $esi = new Esi();
 
         //Get all of the parties which have utilized the jump bridge
@@ -105,7 +106,20 @@ class JumpBridgeTax {
             }
 
             //Perform the lookup and add the user into the corps array, and the ammount to the amount array
-        }            
+            $char = CharacterToCorporation::where(['character_id' => $party->first_party_id])->get();
+            
+            //Find the amount utilized from the jump bridge by the character
+            $isk = JumpBridgeJournal::where(['first_party_id' => $char->character_id])
+                                    ->whereBetween('date', [$this->date, $this->date->addDays(30)])
+                                    ->sum('amount');
+            
+            //We have the character and isk amount, so we need to build an array with these two values as key value pairs.
+            $data[$char->corporation_name] = $data[$char->corporation_name] + $isk;
+        }
+
+        //Return the data
+        return $data;
+
     }
 
     /**
