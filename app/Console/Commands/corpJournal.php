@@ -65,7 +65,6 @@ class CorpJournal extends Command
         $corps = CorpStructure::select('corporation_id')->groupBy('corporation_id')->get();
         foreach($corps as $corp) {
             $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
-            $this->line($charId);
             $finance->GetWalletJournal(1, $charId->character_id);
         }
 
