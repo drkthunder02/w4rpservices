@@ -26,7 +26,7 @@ class FinanceHelper {
 
     public function GetWalletJournal($division, $charId) {
         //Get hte ESI token for the corporation to add new wallet journals into the database
-        $token = EsiToken::where('character_id', $charId)->get();
+        $token = EsiToken::where(['character_id' => $charId])->get();
 
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $this->GetCharCorp($charId);
