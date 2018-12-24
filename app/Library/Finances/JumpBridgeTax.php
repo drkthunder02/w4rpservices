@@ -9,7 +9,7 @@ namespace App\Library\Finances;
 use DB;
 use Carbon\Carbon;
 
-use App\Library\Esi;
+use App\Library\Esi\Esi;
 
 use App\Models\Finances\JumpBridgeJournal;
 use App\Models\User\UserToCorporation;

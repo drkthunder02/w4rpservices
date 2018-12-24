@@ -9,7 +9,7 @@ namespace App\Library\Finances;
 
 use DB;
 
-use App\Library\Esi;
+use App\Library\Esi\Esi;
 
 use App\Library\Models\PlayerDonationJournal;
 
