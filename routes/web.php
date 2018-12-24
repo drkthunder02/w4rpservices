@@ -73,15 +73,17 @@ Route::group(['middleware' => ['auth']], function(){
     //Scopes Controller display pages
     Route::get('/scopes/select', 'EsiScopeController@displayScopes');
     Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
+
+    //Jump Bridge Controller display pages
+    Route::get('/jumpbridges/overall', 'JumpBridgeController@displayOverallUsage');
+    Route::post('/jumpbridges/getoverall', 'JumpBridgeController@ajaxOverallUsage');
+    Route::get('/jumpbridges/corps', 'JumpBridgeController@displayCorpUsage');
+    Route::post('/jumpbridges/getcorps', 'JumpBridgeController@ajaxCorpUsage');
+    Route::get('/jumpbridges/structures', 'JumpBridgeController@displayStructureUsage');
+    Route::get('/jumpbridges/getstructures', 'JumpBridgeController@ajaxStructureUsage');
 });
 
 //Login display pages
 Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('/callback', 'Auth\LoginController@handleProviderCallback')->name('callback');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-
-//AJAX Controller display pages
-Route::get('ajax',function() {
-    return view('/ajax/message');
- });
- Route::post('/getmsg','AjaxController@index');
