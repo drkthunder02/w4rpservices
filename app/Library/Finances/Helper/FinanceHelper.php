@@ -10,6 +10,7 @@ namespace App\Library\Finances\Helper;
 use DB;
 
 use App\Models\User\UserToCorporation;
+use App\Models\Esi\EsiToken;
 
 use App\Library\Esi;
 use App\Library\Finances\MarketTax;
@@ -25,7 +26,7 @@ class FinanceHelper {
 
     public function GetWalletJournal($division, $charId) {
         //Get hte ESI token for the corporation to add new wallet journals into the database
-        $token = DB::table('EsiTokens')->where('character_id', $charId)->get();
+        $token = EsiToken::where('character_id', $charId)->get();
 
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $this->GetCharCorp($charId);
@@ -39,7 +40,7 @@ class FinanceHelper {
         $authentication = new EsiAuthentication([
             'client_id'  => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token->refresh_token,
         ]);
 
         //Create the esi class varialble
