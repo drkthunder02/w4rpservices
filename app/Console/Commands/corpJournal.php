@@ -13,6 +13,7 @@ use App\Library\Esi\Esi;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\Corporation\Structure;
+use App\Models\Corpporation\CorpStructure;
 use App\Models\ScheduledTask\ScheduleJob;
 
 use Carbon\Carbon;
@@ -61,11 +62,10 @@ class CorpJournal extends Command
         $finishedCorps = array();
         $corpCompleted = false;
         //Get the corps with structures logged in the database
-        $corps = DB::table('CorpStructures')->select('corporation_id')->groupBy('corporation_id')->get();
+        $corps = CorpStructure::select('corporation_id')->groupBy('corporation_id')->get();
         foreach($corps as $corp) {
-            $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->select('character_id')->first();
-            $this->line($charId);
-            $finance->GetWalletJournal(1, $charId);
+            $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first(['character_id']);
+            $finance->GetWalletJournal(1, $charId[0]);
         }
 
         //Mark the job as finished
