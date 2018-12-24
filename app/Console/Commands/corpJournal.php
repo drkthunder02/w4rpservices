@@ -13,7 +13,7 @@ use App\Library\Esi\Esi;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\Corporation\Structure;
-use App\Models\Corpporation\CorpStructure;
+use App\Models\Corporation\CorpStructure;
 use App\Models\ScheduledTask\ScheduleJob;
 
 use Carbon\Carbon;
