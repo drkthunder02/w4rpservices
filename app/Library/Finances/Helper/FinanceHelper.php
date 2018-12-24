@@ -17,31 +17,25 @@ use App\Library\Finances\MarketTax;
 use App\Library\Finances\PlayerDonation;
 use App\Library\Finances\ReprocessingTax;
 
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 class FinanceHelper {
 
     public function GetWalletJournal($division, $charId) {
         //Get hte ESI token for the corporation to add new wallet journals into the database
-        $token = EsiToken::where(['character_id' => $charId])->get();
-        var_dump($token);
+        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
 
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $this->GetCharCorp($charId);
-
-        //Disable all caching by setting the NullCache as the preferred cache handler.
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
 
         //Create an ESI authentication container
         $config = config('esi');
         $authentication = new EsiAuthentication([
             'client_id'  => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token->refresh_token,
+            'refresh_token' => $token[0]->refresh_token,
         ]);
 
         //Create the esi class varialble
@@ -62,7 +56,7 @@ class FinanceHelper {
                     'corporation_id' => $corpId,
                     'division'  => $division,
                 ]);
-            } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
+            } catch(RequestFailedException $e) {
                 return $e->getEsiResponse();
             }
 
