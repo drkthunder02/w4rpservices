@@ -33,6 +33,7 @@ class CreatePlayerDonationJournal extends Migration
                 $table->timestamps();
             });
         }
+    }
 
     /**
      * Reverse the migrations.
