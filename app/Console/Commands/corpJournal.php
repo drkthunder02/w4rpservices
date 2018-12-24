@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use DB;
 
 use Commands\Library\CommandHelper;
-use App\Library\Finances\FinanceHelper;
+use App\Library\Finances\Helper\FinanceHelper;
 use App\Library\Esi\Esi;
 
 use App\Models\Esi\EsiScope;

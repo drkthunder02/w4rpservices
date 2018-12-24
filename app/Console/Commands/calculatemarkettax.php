@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use DB;
 
 use Commands\Library\CommandHelper;
-use App\Library\Finances\FinanceHelper;
+use App\Library\Finances\Helper\FinanceHelper;
 
 use App\Models\Market\MonthlyMarketTax;
 use App\Models\ScheduledTask\ScheduleJob;
