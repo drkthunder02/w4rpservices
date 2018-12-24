@@ -23,10 +23,6 @@ class CreateHelpDeskTicketResponsesTable extends Migration
 
             });
         }
-        Schema::create('help_desk_ticket_responses', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-        });
     }
 
     /**
