@@ -12,7 +12,7 @@ use DB;
 use App\Models\User\UserToCorporation;
 use App\Models\Esi\EsiToken;
 
-use App\Library\Esi;
+use App\Library\Esi\Esi;
 use App\Library\Finances\MarketTax;
 use App\Library\Finances\PlayerDonation;
 use App\Library\Finances\ReprocessingTax;
@@ -24,7 +24,7 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 class FinanceHelper {
 
     public function GetWalletJournal($division, $charId) {
-        //Get hte ESI token for the corporation to add new wallet journals into the database
+        //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
 
         //Reference to see if the character is in our look up table for corporations and characters
