@@ -11,7 +11,7 @@ use DB;
 
 use App\Library\Esi\Esi;
 
-use App\Library\Models\PlayerDonationJournal;
+use App\Models\Finances\PlayerDonationJournal;
 
 class PlayerDonation {
     public function InsertPlayerDonation($journal, $corpId, $division) {
