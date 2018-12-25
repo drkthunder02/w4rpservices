@@ -58,7 +58,7 @@ class StructureTaxHelper {
     public function GetRevenue($corpId, $refType, $start, $end) {
         $revenue = 0.00;
         if($refType == 'Market') { 
-            $revenue = MarketTaxJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+            $revenue = CorpMarketJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else if($refType == 'Refinery'){
