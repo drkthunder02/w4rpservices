@@ -75,7 +75,10 @@ class User extends Authenticatable
         } else {
             return false;
         }
-        
+    }
+
+    public function tickets() {
+        return $this->hasMany('App\Models\HelpDesk\HelpDeskTicket', 'character_id');
     }
 
     public function hasEsiScope($scope) {

@@ -57,15 +57,18 @@ class StructureTaxHelper {
 
     public function GetRevenue($corpId, $refType, $start, $end) {
         $revenue = 0.00;
-        if($refType == 'Market') { 
-            $revenue = CorpMarketJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+        if($refType == 'Market') {
+            //Get the revenue from the corp_market_journals table and add it up.
+            $revenue = CorpMarketJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId, 'second_party_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else if($refType == 'Refinery'){
-            $revenue = ReprocessingTaxJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
+            //Get the revenue from the reprocessing_tax_journal table and add it up.
+            $revenue = ReprocessingTaxJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId, 'second_party_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else {
+            //If it's not from one of the above tables, then it doesn't mean anything, so return nothing.
             $revenue = 0.00;
         }
 

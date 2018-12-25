@@ -15,8 +15,7 @@ class CreateHelpDeskTicketsTable extends Migration
     {
         if(!Schema::hasTable('help_desk_tickets')) {
             Schema::create('help_desk_tickets', function(Blueprint $table) {
-                $table->increments('id');
-                $table->integer('ticket_id');
+                $table->increments('ticket_id');
                 $table->string('user_id');
                 $table->string('assigned_id');
                 $table->string('department');
