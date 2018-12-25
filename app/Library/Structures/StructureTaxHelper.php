@@ -8,8 +8,9 @@ use Carbon\Carbon;
 use App\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
-use App\Models\Corporation\CorpJournal;
 use App\Models\Corporation\CorpStructure;
+use App\Models\Finances\CorpMarketJournal;
+use App\Models\Finances\ReprocessingTaxJournal;
 
 class StructureTaxHelper {
     private $corpId;
@@ -55,12 +56,12 @@ class StructureTaxHelper {
 
     public function GetRevenue($corpId, $refType, $start, $end) {
         $revenue = 0.00;
-        if($refType == 'Market') {
-            $revenue = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
+        if($refType == 'Market') { 
+            $revenue = MarketTaxJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else if($refType == 'Refinery'){
-            $revenue = CorpJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
+            $revenue = ReprocessingTaxJournal::where(['ref_type' => 'reprocessing_tax', 'corporation_id' => $corpId])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
         } else {
