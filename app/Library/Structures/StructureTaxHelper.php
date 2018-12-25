@@ -6,6 +6,7 @@ use DB;
 use Carbon\Carbon;
 
 use App\User;
+
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Corporation\CorpStructure;
