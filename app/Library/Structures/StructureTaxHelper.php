@@ -19,6 +19,13 @@ class StructureTaxHelper {
     private $start;
     private $end;
 
+    public function __construct($corp = null, $ref = null, $st = null, $en = null) {
+        $this->corpId = $corp;
+        $this->refType = $ref;
+        $this->start = $st;
+        $this->end = $en;
+    }
+
     public function GetTaxes($corpId, $refType, $start, $end) {
         $taxOwed = 0.00;
         //Get the number of structures of a certain type
