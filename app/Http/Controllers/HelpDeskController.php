@@ -36,7 +36,7 @@ class HelpDeskController extends Controller
      */
     public function displayMyTickets() {
         //Get the active tickets from the database
-        $tickets = HelpDeskTicket::where(['user_id' => auth()->user()->character_id, 'active' => 1])->get();
+        $tickets = HelpDeskTicket::where(['user_id' => auth()->user()->character_id])->get();
         
         //Return the view with the tickets variable
         return view('helpdesk.mytickets')->with('tickets', $tickets);

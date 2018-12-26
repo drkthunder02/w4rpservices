@@ -81,6 +81,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/jumpbridges/getcorps', 'JumpBridgeController@ajaxCorpUsage');
     Route::get('/jumpbridges/structures', 'JumpBridgeController@displayStructureUsage');
     Route::get('/jumpbridges/getstructures', 'JumpBridgeController@ajaxStructureUsage');
+
+    //Help Desk Controller display pages
+    Route::get('/helpdesk/tickets', 'HelpDeskController@displayMyTickets');
+    Route::get('/helpdesk/tickets/edit', 'HelpDeskController@editTicket');
+    Route::get('/helpdesk/tickets/new', 'HelpDeskController@displayNewTicket');
+    Route::post('/helpdesk/tickets/new', 'HelpDeskController@storeTicket');
 });
 
 //Login display pages
