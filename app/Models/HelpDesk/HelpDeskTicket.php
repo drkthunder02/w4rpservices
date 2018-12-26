@@ -27,5 +27,10 @@ class HelpDeskTicket extends Model
         'department',
         'subject',
         'body',
+        'active',
     ];
+
+    public function response()  {
+        return $this->hasMany('App\Models\HelpDesk\HelpDeskTicketResponse', 'ticket_id');
+    }
 }

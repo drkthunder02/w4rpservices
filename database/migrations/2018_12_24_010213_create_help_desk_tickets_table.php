@@ -17,10 +17,11 @@ class CreateHelpDeskTicketsTable extends Migration
             Schema::create('help_desk_tickets', function(Blueprint $table) {
                 $table->increments('ticket_id');
                 $table->string('user_id');
-                $table->string('assigned_id');
+                $table->string('assigned_id')->default(0);
                 $table->string('department');
                 $table->string('subject');
                 $table->text('body');
+                $table->boolean('active');
                 $table->timestamps();
             });
         }

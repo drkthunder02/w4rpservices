@@ -70,6 +70,7 @@ class StructureController extends Controller
 
         //Declare the structure tax helper class
         $sHelper = new StructureTaxHelper();
+        
         //Get the dates we are working with
         $dates = $sHelper->GetTimeFrame();
         
