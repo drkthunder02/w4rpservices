@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="card col-md-6">
+        <div class="card">
             <div class="card-header">
                 <h2>Overall Jump Bridge Usage</h2>
             </div>
