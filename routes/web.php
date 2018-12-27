@@ -75,8 +75,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
 
     //Jump Bridge Controller display pages
-    Route::get('/jumpbridges/overall', 'JumpBridgeController@displayOverallUsage');
-    Route::post('/jumpbridges/getoverall', 'JumpBridgeController@ajaxOverallUsage');
+    Route::get('/jumpbridges/overall', 'JumpBridgeController@displayAll');
     Route::get('/jumpbridges/corps', 'JumpBridgeController@displayCorpUsage');
     Route::post('/jumpbridges/getcorps', 'JumpBridgeController@ajaxCorpUsage');
     Route::get('/jumpbridges/structures', 'JumpBridgeController@displayStructureUsage');
