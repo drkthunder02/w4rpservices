@@ -132,7 +132,7 @@ class JumpBridgeTax {
 
         //Get the total usage
         $usage = JumpBridgeJournal::whereBetween('date', [$this->date, $this->date->addDays($this->days)])
-                    ->sum(['amount']);
+                    ->sum('amount');
         
         //Return the usage
         return $usage;
