@@ -113,7 +113,7 @@ class JumpBridgeTax {
             
             //Find the amount utilized from the jump bridge by the character
             $isk = JumpBridgeJournal::where(['first_party_id' => $char->character_id])
-                                    ->whereBetween('date', [$this->date, $this->date->addDays($this->days)])
+                                    ->whereBetween('date', [$this->date, $this->date->addDays(30)])
                                     ->sum('amount');
             
             //We have the character and isk amount, so we need to build an array with these two values as key value pairs.
@@ -131,7 +131,9 @@ class JumpBridgeTax {
     public function OverallTax() {
 
         //Get the total usage
-        $usage = JumpBridgeJournal::whereBetween('date', [$this->date, $this->date->addDays($this->days)])
+        $usage = DB::table('jump_bridge_journal')
+                    ->select('amount')
+                    ->whereTime('date', '>', $this->date)
                     ->sum('amount');
         
         //Return the usage
