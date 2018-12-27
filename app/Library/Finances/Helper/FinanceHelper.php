@@ -16,6 +16,7 @@ use App\Library\Esi\Esi;
 use App\Library\Finances\MarketTax;
 use App\Library\Finances\PlayerDonation;
 use App\Library\Finances\ReprocessingTax;
+use App\Library\Finances\JumpBridgeTax;
 
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
