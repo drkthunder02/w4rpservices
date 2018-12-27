@@ -132,7 +132,6 @@ class JumpBridgeTax {
 
         //Get the total usage
         $usage = DB::table('jump_bridge_journal')
-                    ->select('amount')
                     ->whereBetween('date', [$this->date, $this->date->addDays($this->days)])
                     ->sum(['amount']);
         
