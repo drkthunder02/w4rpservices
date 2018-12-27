@@ -7,9 +7,9 @@
                 <h2>Overall Jump Bridge Usage</h2>
             </div>
             <div class="card-body">
-                Last 30 Days: {{ $data['30days'] }}
-                Last 60 Days: {{ $data{'60days'} }}
-                Last 90 Days: {{ $data['90days'] }}
+                Last 30 Days: {{ $data['30days'] }}<br>
+                Last 60 Days: {{ $data{'60days'} }}<br>
+                Last 90 Days: {{ $data['90days'] }}<br>
             </div>
         </div>
     </div>

@@ -131,10 +131,9 @@ class JumpBridgeTax {
     public function OverallTax() {
 
         //Get the total usage
-        $usage = DB::table('jump_bridge_journal')
-                    ->select('amount')
-                    ->whereTime('date', '>', $this->date)
-                    ->sum('amount');
+        $usage = JumpBridgeJournal::select('amount')
+                                    ->whereTime('date', '>', $this->date)
+                                    ->sum('amount');
         
         //Return the usage
         return $usage;
@@ -147,7 +146,7 @@ class JumpBridgeTax {
         $usage = DB::table('jump_bridge_journal')
                     ->select('amount')
                     ->where('context_id', $structure)
-                    ->sum(['amount']);
+                    ->sum('amount');
         
         return $usage;
     }
