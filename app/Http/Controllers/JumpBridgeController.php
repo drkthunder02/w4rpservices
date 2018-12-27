@@ -18,9 +18,9 @@ class JumpBridgeController extends Controller
         $jbHelper90 = new JumpBridgeTax(90);
 
         $data = [
-            '30days' => $jbHelper30->OverallTax(),
-            '60days' => $jbHelper60->OverallTax(),
-            '90days' => $jbHelper90->OverallTax(),
+            '30days' => number_format($jbHelper30->OverallTax(), 2, '.', ','),
+            '60days' => number_format($jbHelper60->OverallTax(), 2, '.', ','),
+            '90days' => number_format($jbHelper90->OverallTax(), 2, '.', ','),
         ];
 
         return view('jumpbridges.all')->with('data', $data);

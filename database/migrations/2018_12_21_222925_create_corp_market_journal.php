@@ -20,7 +20,7 @@ class CreateCorpMarketJournal extends Migration
                 $table->integer('division')->default(0);
                 $table->decimal('amount', 20, 2)->nullable();
                 $table->decimal('balance', 20, 2)->nullable();
-                $table->integer('context_id')->nullable();
+                $table->bigInteger('context_id')->nullable();
                 $table->string('context_id_type')->nullable();
                 $table->dateTime('date')->nullabe();
                 $table->string('description')->nullabe();
