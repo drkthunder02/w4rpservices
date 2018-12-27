@@ -126,11 +126,6 @@ class JumpBridgeTax {
      * Returns the overall usage for statistics
      */
     public function OverallTax() {
-        //Initalize the date
-        $dateInit = Carbon::now();
-        //Subtract the days from now
-        $date = $dateInit->subDays($days);
-
         //Get the total usage
         $usage = DB::table('jump_bridge_journal')
                     ->select('amount')
