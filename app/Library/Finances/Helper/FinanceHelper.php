@@ -40,6 +40,7 @@ class FinanceHelper {
 
         //Create the esi class varialble
         $esi = new Eseye($authentication);
+        $esi->setVersion('v4');
         
         //Set our current page to 1 which is the one we are starting on.
         $currentPage = 1;
@@ -74,7 +75,7 @@ class FinanceHelper {
                     } else if($entry['ref_type'] == 'reprocessing_tax') {
                         $reprocessing = new ReprocessingTax();
                         $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'jumpgate_fee') {
+                    } else if($entry['ref_type'] == 'structure_gate_jump') {
                         $jb = new JumpBridgeTax();
                         $jb->InsertJumpBridgeTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'player_donation' ||
