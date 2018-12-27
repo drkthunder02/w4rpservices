@@ -16,12 +16,15 @@ use App\Models\User\UserToCorporation;
 
 class JumpBridgeTax {
     private $date;
+    private $days;
 
     public function __construct($days = null) {
         if($days === null) {
             $this->date = Carbon::now();
+            $this->days = 0;
         } else {
             $this->date = Carbon::now()->subDays($days);
+            $this->days = $days;
         }
     }
 
@@ -110,7 +113,7 @@ class JumpBridgeTax {
             
             //Find the amount utilized from the jump bridge by the character
             $isk = JumpBridgeJournal::where(['first_party_id' => $char->character_id])
-                                    ->whereBetween('date', [$this->date, $this->date->addDays(30)])
+                                    ->whereBetween('date', [$this->date, $this->date->addDays($this->days)])
                                     ->sum('amount');
             
             //We have the character and isk amount, so we need to build an array with these two values as key value pairs.
@@ -126,10 +129,11 @@ class JumpBridgeTax {
      * Returns the overall usage for statistics
      */
     public function OverallTax() {
+
         //Get the total usage
         $usage = DB::table('jump_bridge_journal')
                     ->select('amount')
-                    ->whereTime('date', '>', $this->date)
+                    ->whereBetween('date', [$this->date, $this->date->addDays($this->days)])
                     ->sum(['amount']);
         
         //Return the usage
