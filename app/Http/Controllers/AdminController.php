@@ -22,7 +22,7 @@ class AdminController extends Controller
         //adding and removing roles and permissions
         $users = User::pluck('name')->sortBy('name');
         dd($users);
-        $permissions = AvailableUserPermission::pluck('permission')->sortBy('permission');
+        $permissions = AvailableUserPermission::value('permission')->sortBy('permission');
 
         $data = [
             'users' => $users,
