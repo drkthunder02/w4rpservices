@@ -63,8 +63,8 @@ class SendMail extends Command
         $task->SetStartStatus();
 
         //Retrieve the token for main character to send mails from
-        $refresh = EsiToken::select('refresh_token')->where(['character_id' => 93738489])->get();
-
+        $refresh = EsiToken::where(['character_id' => 93738489])->get(['refresh_token']);
+        dd($refresh);
         //Set the date
         $date = Carbon::now()->subMonth();
         //Set the mail helper variable
