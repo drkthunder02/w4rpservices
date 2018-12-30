@@ -91,6 +91,18 @@ class SendMail extends Command
                     '<br>Please remit to Spatial Forces';
             try {
                 $esi->setBody([
+                    'mail' => [
+                        'body' => $body,
+                        'recipients' => [
+                            (int)$bill->character_id => 'character'
+                        ],
+                        'subject' => $subject,
+                    ]
+                ])->invoke('post', '/characters/{character_id}/mail/', [
+                    'character_id'=> 93738489,
+                ]);
+                /*
+                $esi->setBody([
                     'body' => $body,
                     'recipients' => [
                         (int)$bill->character_id => 'character'
@@ -99,6 +111,7 @@ class SendMail extends Command
                 ])->invoke('post', '/characters/{character_id}/mail/', [
                     'character_id'=> 93738489,
                 ]);
+                */
                 
             } catch(RequestFailedException $e) {
                 //
