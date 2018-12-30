@@ -94,8 +94,8 @@ class SendMail extends Command
                     'approved_cost' => 50000,
                     'body' => $body,
                     'recipients' => [
-                        'recipient_id' => $bill->character_id,
-                        'recipient_type' => 'character',
+                        'recipient_id' => [$bill->character_id],
+                        'recipient_type' => ['character'],
                     ],
                     'subject' => $subject,
                 ])->invoke('post', '/characters/{character_id}/mail/', [
