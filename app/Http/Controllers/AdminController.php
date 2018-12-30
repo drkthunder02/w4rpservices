@@ -30,6 +30,8 @@ class AdminController extends Controller
             $user[] = $value;
         }
 
+        dd($user);
+
         foreach($permissions as $key => $value) {
             $permission[] = $value;
         }
