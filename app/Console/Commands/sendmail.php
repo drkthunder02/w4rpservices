@@ -93,8 +93,7 @@ class SendMail extends Command
                 $esi->setBody([
                     'body' => $body,
                     'recipients' => [
-                        'recipient_id' => (int)$bill->character_id,
-                        'recipient_type' => 'character',
+                        (int)$bill->character_id => 'character'
                     ],
                     'subject' => $subject,
                 ])->invoke('post', '/characters/{character_id}/mail/', [
