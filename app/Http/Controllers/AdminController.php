@@ -28,11 +28,11 @@ class AdminController extends Controller
         $permission = array();
 
         foreach($users as $key => $value) {
-            $user = array_push($user, $value);
+            $user[] = $value;
         }
 
         foreach($permissions as $key => $value) {
-            $permission = array_push($permission, $value);
+            $permission[] = $value;
         }
 
         $data = [
