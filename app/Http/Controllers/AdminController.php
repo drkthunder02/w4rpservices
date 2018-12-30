@@ -51,9 +51,9 @@ class AdminController extends Controller
         $character = User::where(['name' => $user])->get(['character_id']);
 
         //Check to see if the character already has the permission
-        $check = UserPermission::where(['character_id' => $character[0]->character_id, 'permission' => $permission])->get();
-        dd($check);
-        if(!isset($check)) {
+        $check = UserPermission::where(['character_id' => $character[0]->character_id, 'permission' => $permission])->get(['permission']);
+        
+        if(!isset($check[0]->permission)) {
             $perm = new UserPermission;
             $perm->character_id = $character[0]->character_id;
             $perm->permission = $permission;
