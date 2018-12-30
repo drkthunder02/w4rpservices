@@ -10,10 +10,10 @@
             <table class="table table-striped">
                 <thead>
                     <th>Month</th>
-                    <th>Market Tax</th>
-                    <th>Market Revenue Minus Fuel Cost</th>
-                    <th>Refinery Tax</th>
-                    <th>Refinery Revenue Minus Fuel Cost</th>
+                    <th>Market Tax Minus Fuel Cost / Month</th>
+                    <th>Market Revenue</th>
+                    <th>Refinery Tax Minus Fuel Cost / Month</th>
+                    <th>Refinery Revenue</th>
                 </thead>
                 <tbody>
                     <tr>
