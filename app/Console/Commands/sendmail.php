@@ -64,7 +64,7 @@ class SendMail extends Command
 
         //Retrieve the token for main character to send mails from
         $refresh = EsiToken::where(['character_id' => 93738489])->get(['refresh_token']);
-        dd($refresh);
+        var_dump($refresh);
         //Set the date
         $date = Carbon::now()->subMonth();
         //Set the mail helper variable
