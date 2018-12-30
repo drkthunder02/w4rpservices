@@ -63,7 +63,7 @@ class SendMail extends Command
         $task->SetStartStatus();
 
         //Retrieve the token for main character to send mails from
-        $token = EsiToken::where(['character_id' => 93738489])->first();
+        $refresh = EsiToken::select('refresh_token')->where(['character_id' => 93738489])->get();
 
         //Set the date
         $date = Carbon::now()->subMonth();
@@ -74,7 +74,7 @@ class SendMail extends Command
         $authentication = new EsiAuthentication([
             'client_id'  => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token->refresh_token,
+            'refresh_token' => $refresh,
         ]);
         $esi = new Eseye($authentication);
 
