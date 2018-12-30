@@ -15,6 +15,7 @@ use App\Models\Market\MonthlyMarketTax;
 use App\Models\ScheduledTask\ScheduleJob;
 use App\Models\Finances\CorpMarketJournal;
 use App\Models\Corporation\CorpStructure;
+use App\Models\Character\CharacterToCorporation;
 
 
 
@@ -83,12 +84,15 @@ class CalculateMarketTax extends Command
 
             //Get the info about the structures from the database
             $info = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
+
+            $character = UserToCorporation::where(['character_id' => $info->character_id])->first();
+
             //Store the value in the database
             $bill = new MonthlyMarketTax;
             $bill->character_id = $info->character_id;
-            $bill->character_name = $info->character_name;
+            $bill->character_name = $character->character_name;
             $bill->corporation_id = $corp->corporation_id;
-            $bill->corporation_name = $info->corporation_name;
+            $bill->corporation_name = $character->corporation_name;
             $bill->tax_owed = $finalTaxes;
             $bill->month = $start->month;
             $bill->year = $start->year;
