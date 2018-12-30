@@ -11,7 +11,7 @@ use App\Library\Finances\Helper\FinanceHelper;
 
 use App\Models\Market\MonthlyMarketTax;
 use App\Models\ScheduledTask\ScheduleJob;
-use App\Models\Corporation\CorpJournal;
+use App\Models\Finances\CorpMarketJournal;
 use App\Models\Corporation\CorpStructure;
 
 
@@ -56,6 +56,7 @@ class CalculateMarketTax extends Command
 
         //Setup helper classes
         $hFinances = new FinanceHelper();
+        $sHelper = new StructureTaxHelper();
         $start = Carbon::now()->startOfMonth()->subMonth();
         $end = Carbon::now()->endOfMOnth()->subMonth();
         $end->hour = 23;
@@ -66,21 +67,8 @@ class CalculateMarketTax extends Command
         $corps = CorpStructure::where(['structure_type' => 'Citadel'])->distinct('corporation_id');
         
         foreach($corps as $corp) {
-            //Get the number of citadel counts to use in fuel block calculation
-            $citadelCount = CorpStructure::where(['corporation_id' => $corp->corporation_id, 'structure_type' => 'Citadel'])->count();
-            //From the corp journal add up the taxes from the last month
-            $marketTaxes = CorpJournal::where(['ref_type' => 'brokers_fee', 'corporation_id' => $corp->corporation_id])
-                                        ->whereBetween('date', [$start, $end])
-                                        ->sum('amount');
-            //Calculate the market fuel cost
-            $marketFuel = $hFinances->CalculateFuelBlockCost('market');
-            //Calculate the market tax
-            $mTax = CorpStructure::where(['corporation_id' => $corp->corporation_id, 'structure_type' => 'Citadel'])->avg('tax');
-            //Subtract the fuel cost from the market taxes
-            $tempTaxes = $marketTaxes - ($marketFuel * $citadelCount);
-            //Calculate the final tax in order to store in the database
-            $finalTaxes = $hFinancees->CalculateTax($tempTaxes, $mTax, 'market');
-            //Check for a negative number and zero out if negative
+            $finalTaxes = $sHelper->GetTaxes($corp->corporation_id, 'Market', $start, $end);
+
             if($finalTaxes < 0.00) {
                 $finalTaxes = 0.00;
             } else {
