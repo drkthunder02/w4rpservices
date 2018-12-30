@@ -50,7 +50,7 @@ class AdminController extends Controller
         var_dump($permission);
         //Get the character id from the username using the user table
         $character = DB::table('users')->where(['name'  => $user])->get();
-        dd($character);
+        
         //Check to see if the character already has the permission
         if(!UserPermission::where(['character_id' => $character->character_id, 'permission' => $permission])->exists()) {
             $perm = new UserPermission;
