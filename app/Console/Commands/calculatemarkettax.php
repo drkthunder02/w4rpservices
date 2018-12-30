@@ -73,9 +73,11 @@ class CalculateMarketTax extends Command
 
             if($finalTaxes < 0.00) {
                 $finalTaxes = 0.00;
-            } else {
-                $finalTaxes = number_format($finalTaxes, 2, '.', ',');
             }
+            
+            $finalTaxes = number_format($finalTaxes, 2, '.', ',');
+            $this->line('Final Taxes are: ' . $finalTaxes);
+
             //Get the info about the structures from the database
             $info = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
             //Store the value in the database
