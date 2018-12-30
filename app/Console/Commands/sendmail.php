@@ -68,7 +68,7 @@ class SendMail extends Command
         $mHelper = new Mail();
 
         //Get the full list of bills to send out
-        $bills = MonthlyMarketTax::where(['month' => $date->monthName, 'year' => $date->year])->get();
+        $bills = MonthlyMarketTax::where(['month' => $date->month, 'year' => $date->year])->get();
         //For each of the bills send a mail out
         foreach($bills as $bill) {
             //Send a mail out with the bill
