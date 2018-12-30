@@ -90,7 +90,7 @@ class CalculateMarketTax extends Command
             $bill->corporation_id = $corp->corporation_id;
             $bill->corporation_name = $info->corporation_name;
             $bill->taxed_owed = $finalTaxes;
-            $bill->month = $start->monthName;
+            $bill->month = $start->month;
             $bill->year = $start->year;
             $bill->save();
         }
