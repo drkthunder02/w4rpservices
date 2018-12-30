@@ -50,7 +50,8 @@ class AdminController extends Controller
         //Get the character id from the username using the user table
         $character = User::where(['name' => $user])->get();
         //Check to see if the character already has the permission
-        if(!UserPermission::where(['character_id' => $character->character_id, 'permission' => $permission])->exists()) {
+        $check = DB::table('user_permissions')->where(['character_id' => $character->character_id, 'permission' => $permission])->get();
+        if(!isset($check[0])) {
             $perm = new UserPermission;
             $perm->character_id = $character->character_id;
             $perm->permission = $permission;
@@ -59,8 +60,7 @@ class AdminController extends Controller
             return redirect('/admin/dashboard')->with('success', 'User udpated!');
         } else {
             return redirect('/admin/dashboard')->with('error', 'User not updated or already has the permission.');
-        }
-        
+        }   
     }
 
     public function removePermission(Request $request) {
