@@ -20,7 +20,7 @@ class AdminController extends Controller
     public function displayDashboard() {
         //Get the users from the database to allow a selection of users for
         //adding and removing roles and permissions
-        $users = User::lists('name');
+        $users = DB::table('users')->lists('name');
         dd($users);
         $permissions = AvailableUserPermission::lists('permission');
 
