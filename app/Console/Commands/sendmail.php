@@ -14,6 +14,7 @@ use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\ScheduledTask\ScheduleJob;
 use App\Models\Market\MonthlyMarketTax;
+use App\Models\Mail\EveMail;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -70,6 +71,7 @@ class SendMail extends Command
         $bills = MonthlyMarketTax::where(['month' => $date->monthName, 'year' => $date->year])->get();
         //For each of the bills send a mail out
         foreach($bills as $bill) {
+            //Send a mail out with the bill
             $subject = 'Market Taxes Owed';
             $body = 'Month: ' . 
                     $bill->month .

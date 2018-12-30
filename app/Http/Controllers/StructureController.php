@@ -91,4 +91,8 @@ class StructureController extends Controller
 
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
+
+    public function displayJumpBridgeFuel() {
+        
+    }
 }

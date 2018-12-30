@@ -104,6 +104,14 @@
             @break
             @endif
         @endforeach
+        @foreach($scopes as $scope)
+            @if($scope->scope == 'esi-assets.read_corporation_assets.v1')
+                <div class="form-group col-md-6">
+                    {{ Form::label('scopes[]', 'Corporation Assets') }}
+                    {{ Form::checkbox('scopes[]', 'esi-assets.read_corporation_assets.v1', 'true') }}
+                </div>
+            @endif
+        @endforeach
 
         @if($publicData == false)
         <div class="form-group col-md-6">
@@ -157,6 +165,12 @@
         <div class="form-group col-md-6">
             {{ Form::label('scopes[]', 'Structure Markets') }}
             {{ Form::checkbox('scopes[]', 'esi-markets.structure_markets.v1') }}
+        </div>
+        @endif
+        @if($corpAssets == false)
+        <div class="form-group col-md-6">
+            {{ Form::label('scopes[]', 'Corporation Assets') }}
+            {{ Form::checkbox('scopes[]', 'esi-assets.read_corporation_assets.v1') }}
         </div>
         @endif
         
