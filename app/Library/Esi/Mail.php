@@ -23,7 +23,7 @@ class Mail {
         $authentication = new EsiAuthentication([
             'client_id'  => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token->refresh_token,
         ]);
         $esi = new Eseye($authentication);
         try {
