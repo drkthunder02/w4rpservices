@@ -76,9 +76,9 @@ class SendMail extends Command
             $body = 'Month: ' . 
                     $bill->month .
                     '<br>Market Taxes Owed: ' .
-                    $bills->tax_owed .
+                    $bill->tax_owed .
                     '<br>Please remit to Spatial Forces';
-            $error = $mHelper->SendMail($bills->character_id, $bills->tax_owed, $subject, $body);
+            $error = $mHelper->SendMail($bill->character_id, $bill->tax_owed, $subject, $body);
         }
 
         //Mark the job as finished
