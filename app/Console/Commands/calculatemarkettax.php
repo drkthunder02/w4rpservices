@@ -8,6 +8,8 @@ use DB;
 
 use Commands\Library\CommandHelper;
 use App\Library\Finances\Helper\FinanceHelper;
+use App\Library\Structures\StructureTaxHelper;
+use App\Library\Esi\Esi;
 
 use App\Models\Market\MonthlyMarketTax;
 use App\Models\ScheduledTask\ScheduleJob;
