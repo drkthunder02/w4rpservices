@@ -15,7 +15,7 @@ use App\Models\Market\MonthlyMarketTax;
 use App\Models\ScheduledTask\ScheduleJob;
 use App\Models\Finances\CorpMarketJournal;
 use App\Models\Corporation\CorpStructure;
-use App\Models\Character\CharacterToCorporation;
+use App\Models\User\UserToCorporation;
 
 
 
