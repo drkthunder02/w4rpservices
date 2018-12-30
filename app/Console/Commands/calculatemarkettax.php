@@ -66,7 +66,7 @@ class CalculateMarketTax extends Command
         $end->second = 59;
 
         //Get the set of corporations from the structure table
-        $corps = CorpStructure::select('corporation_id')->get();
+        $corps = CorpStructure::select('corporation_id')->groupBy('corporation_id')->get();
         $this->line('Got all of the  corps with markets.' . sizeof($corps));
         foreach($corps as $corp) {
             $this->line('Entered foreach loop');
