@@ -10,6 +10,7 @@
     $readCorpWallets = false;
     $readStructures = false;
     $structureMarkets = false;
+    $corpAssets = false;
 ?>
 <div class="container">
     <h2>Select Scopes for ESI</h2>
