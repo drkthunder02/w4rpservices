@@ -122,7 +122,7 @@ class CalculateMarketTax extends Command
                     '<br>Please remit to Spatial Forces';
             try {
                 $this->line('Attemping to send the mail.');
-                $esi->setBody(['mail' => [
+                $esi->setBody([
                     'approved_cost' => 50000,
                     'body' => $body,
                     'recipients' => [
@@ -130,7 +130,7 @@ class CalculateMarketTax extends Command
                         'recipient_type' => 'character',
                     ],
                     'subject' => $subject,
-                ]])->invoke('post', '/characters/{character_id}/mail/', [
+                ])->invoke('post', '/characters/{character_id}/mail/', [
                     'character_id'=> 93738489,
                 ]);
                 $this->line('Mail sent.');
