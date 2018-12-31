@@ -104,10 +104,8 @@ class SendMail extends Command
                 
                 
             } catch(RequestFailedException $e) {
-                //
+                $this->line('Error is ' . $e);
             }
-            
-            $error = $mHelper->SendMail($bill->character_id, $bill->tax_owed, $subject, $body);
         }
 
         //Mark the job as finished
