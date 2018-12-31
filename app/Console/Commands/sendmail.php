@@ -90,7 +90,7 @@ class SendMail extends Command
                     $bill->tax_owed .
                     '<br>Please remit to Spatial Forces';
             try {
-                $esi->setBody([
+                $esi->setBody(['mail' => [
                     'approved_cost' => 0,
                     'body' => $body,
                     'recipients' => [
@@ -98,7 +98,7 @@ class SendMail extends Command
                         'recipient_type' => 'character',
                     ],
                     'subject' => $subject,
-                ])->invoke('post', '/characters/{character_id}/mail/', [
+                ]])->invoke('post', '/characters/{character_id}/mail/', [
                     'character_id'=> 93738489,
                 ]);
                 
