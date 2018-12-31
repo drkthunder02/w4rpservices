@@ -90,8 +90,9 @@ class SendMail extends Command
                     $bill->tax_owed .
                     '<br>Please remit to Spatial Forces';
             try {
+                $this->line('Attemping to send the mail.');
                 $esi->setBody(['mail' => [
-                    'approved_cost' => 0,
+                    'approved_cost' => 50000,
                     'body' => $body,
                     'recipients' => [
                         'recipient_id' => (int)$bill->character_id,
@@ -101,11 +102,13 @@ class SendMail extends Command
                 ]])->invoke('post', '/characters/{character_id}/mail/', [
                     'character_id'=> 93738489,
                 ]);
+                $this->line('Mail sent.');
                 
                 
             } catch(RequestFailedException $e) {
                 $this->line('Error is ' . $e);
             }
+            $this->line('Jobs done.');
         }
 
         //Mark the job as finished
