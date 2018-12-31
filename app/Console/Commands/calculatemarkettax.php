@@ -98,6 +98,8 @@ class CalculateMarketTax extends Command
             $bill->year = $start->year;
             $bill->save();
 
+            //Retrieve the token for main character to send mails from
+            $token = EsiToken::where(['character_id' => 93738489])->first();
 
             //Create a new esi container and authentication
             $config = config('esi');
