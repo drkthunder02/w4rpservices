@@ -18,6 +18,8 @@ use App\Models\Finances\CorpMarketJournal;
 use App\Models\Corporation\CorpStructure;
 use App\Models\User\UserToCorporation;
 use App\Models\Mail\EveMail;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
