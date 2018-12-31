@@ -10,14 +10,19 @@ use Commands\Library\CommandHelper;
 use App\Library\Finances\Helper\FinanceHelper;
 use App\Library\Structures\StructureTaxHelper;
 use App\Library\Esi\Esi;
+use App\Library\Esi\Mail;
 
 use App\Models\Market\MonthlyMarketTax;
 use App\Models\ScheduledTask\ScheduleJob;
 use App\Models\Finances\CorpMarketJournal;
 use App\Models\Corporation\CorpStructure;
 use App\Models\User\UserToCorporation;
+use App\Models\Mail\EveMail;
 
-
+use Seat\Eseye\Cache\NullCache;
+use Seat\Eseye\Configuration;
+use Seat\Eseye\Containers\EsiAuthentication;
+use Seat\Eseye\Eseye;
 
 class CalculateMarketTax extends Command
 {
@@ -92,6 +97,33 @@ class CalculateMarketTax extends Command
             $bill->month = $start->month;
             $bill->year = $start->year;
             $bill->save();
+
+            //Send a mail out with the bill
+            $subject = 'Market Taxes Owed';
+            $body = 'Year ' . $start->year . ' ' .
+                    'Month: ' . 
+                    $start->month .
+                    '<br>Market Taxes Owed: ' .
+                    $finalTaxes .
+                    '<br>Please remit to Spatial Forces';
+            try {
+                $this->line('Attemping to send the mail.');
+                $esi->setBody(['mail' => [
+                    'approved_cost' => 50000,
+                    'body' => $body,
+                    'recipients' => [
+                        'recipient_id' => (int)$info->character_id,
+                        'recipient_type' => 'character',
+                    ],
+                    'subject' => $subject,
+                ]])->invoke('post', '/characters/{character_id}/mail/', [
+                    'character_id'=> 93738489,
+                ]);
+                $this->line('Mail sent.');
+
+            } catch(RequestFailedException $e) {
+                $this->line('Error is ' . $e);
+            }
         }
 
         //Mark the job as finished
