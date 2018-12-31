@@ -98,6 +98,16 @@ class CalculateMarketTax extends Command
             $bill->year = $start->year;
             $bill->save();
 
+
+            //Create a new esi container and authentication
+            $config = config('esi');
+            $authentication = new EsiAuthentication([
+                'client_id'  => $config['client_id'],
+                'secret' => $config['secret'],
+                'refresh_token' => $token->refresh_token,
+            ]);
+            $esi = new Eseye($authentication);
+
             //Send a mail out with the bill
             $subject = 'Market Taxes Owed';
             $body = 'Year ' . $start->year . ' ' .
