@@ -82,7 +82,7 @@ class CalculateMarketTax extends Command
                 $finalTaxes = 0.00;
             }
 
-            $finalTaxes = number_format($finalTaxes, 2, '.', ',');
+            //$finalTaxes = number_format($finalTaxes, 2, '.', ',');
 
             //Get the info about the structures from the database
             $info = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
@@ -118,7 +118,7 @@ class CalculateMarketTax extends Command
                     'Month: ' . 
                     $start->month .
                     '<br>Market Taxes Owed: ' .
-                    $finalTaxes .
+                    number_format($finalTaxes, 2, '.', ',') .
                     '<br>Please remit to Spatial Forces';
             try {
                 $this->line('Attemping to send the mail.');
