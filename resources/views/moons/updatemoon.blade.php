@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <h2>Update Existing Moon</h2>
-    {!! Form::open(['action' => 'MoonsController@storeUpdateMoon', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'MoonsAdminController@storeUpdateMoon', 'method' => 'POST']) !!}
     <div class="form-group col-md-6">
         {{ Form::label('system', 'System') }}
         {{ Form::text('system', '', ['class' => 'form-control', 'placeholder' => 'System']) }}
