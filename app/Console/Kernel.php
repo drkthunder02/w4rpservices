@@ -45,9 +45,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:calculatemarkettax')
                  ->monthlyOn(1, '08:00')
                  ->withoutOverlapping();
-        $schedule->command('services:sendmail')
-                 ->monthlyOn(1, '09:00')
-                 ->withoutOverlapping();
     }
 
     /**

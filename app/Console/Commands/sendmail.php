@@ -58,7 +58,7 @@ class SendMail extends Command
     public function handle()
     {
         //Create the command helper container
-        $task = new CommandHelper('CorpJournal');
+        $task = new CommandHelper('SendMail');
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
 
@@ -78,38 +78,8 @@ class SendMail extends Command
         ]);
         $esi = new Eseye($authentication);
 
-        //Get the full list of bills to send out
-        $bills = MonthlyMarketTax::where(['month' => $date->month, 'year' => $date->year])->get();
-        //For each of the bills send a mail out
-        foreach($bills as $bill) {
-            //Send a mail out with the bill
-            $subject = 'Market Taxes Owed';
-            $body = 'Month: ' . 
-                    $bill->month .
-                    '<br>Market Taxes Owed: ' .
-                    $bill->tax_owed .
-                    '<br>Please remit to Spatial Forces';
-            try {
-                $this->line('Attemping to send the mail.');
-                $esi->setBody(['mail' => [
-                    'approved_cost' => 50000,
-                    'body' => $body,
-                    'recipients' => [
-                        'recipient_id' => (int)$bill->character_id,
-                        'recipient_type' => 'character',
-                    ],
-                    'subject' => $subject,
-                ]])->invoke('post', '/characters/{character_id}/mail/', [
-                    'character_id'=> 93738489,
-                ]);
-                $this->line('Mail sent.');
-                
-                
-            } catch(RequestFailedException $e) {
-                $this->line('Error is ' . $e);
-            }
-            $this->line('Jobs done.');
-        }
+        //Check for the correct tokens for each of the people holding structures.
+        //If the token is not found, then send a mail asking to have the token registered.
 
         //Mark the job as finished
         $task->SetStopStatus();
