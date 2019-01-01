@@ -35,7 +35,7 @@ class SendMail extends Command
      *
      * @var string
      */
-    protected $description = 'Send mail to a character for taxes owed.';
+    protected $description = 'Send mail to a character for not having the correct ESI scopes.';
 
     /**
      * Create a new command instance.
