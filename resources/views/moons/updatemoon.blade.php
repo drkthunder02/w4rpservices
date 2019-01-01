@@ -9,7 +9,7 @@
         {{ Form::label('planet', 'Planet') }}
         {{ Form::text('planet', '', ['class' => 'form-control', 'placeholder' => 'Planet']) }}
         {{ Form::label('moon', 'Moon') }}
-        {{ Form::text('moon', '', ['class' => 'form-control', 'placeholder' => 'Planet']) }}
+        {{ Form::text('moon', '', ['class' => 'form-control', 'placeholder' => 'Moon']) }}
         {{ Form::label('renter', 'Renter') }}
         {{ Form::text('renter', '', ['class' => 'form-control', 'placeholder' => 'Renter']) }}
         {{ Form::label('date', 'Rental End Date') }}
