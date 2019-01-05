@@ -29,7 +29,7 @@ class StructureController extends Controller
     }
 
     public function displayIndustryTaxes() {
-        $this->middelware('role:Admin');
+        $this->middleware('role:Admin');
 
         $corpId = 98287666;
         $months = 3;
