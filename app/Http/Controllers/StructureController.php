@@ -16,6 +16,7 @@ use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Corporation\CorpStructure;
 use App\Models\Finances\StructureIndustryTaxJournal;
+use App\Models\Esi\EsiToken;
 
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
