@@ -79,6 +79,37 @@ class StructureController extends Controller
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
 
+    public function displayTaxHistory(Request $request) {
+        //Get the months from the request
+        $months = $request->months;
+
+        //Make the helper esi class
+        $helper = new Esi();
+
+        //Get the character's corporation from esi
+        $corpId = $helper->FindCorporationId(Auth::user()->character_id);
+
+        //Declare the structure tax helper class
+        $sHelper = new StructureTaxHelper();
+
+        //Get the dates we are working with
+        $dates = $sHelper->GetTimeFrameInMonths($months);
+
+        //Build the array for displaying the data on the view
+        $totalTaxes = array();
+        
+        for($i = 0; $i < $months; $i++) {
+            $totalTaxes[$i] = [
+                'MarketTaxes' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates[$i]['start'], $dates[$i]['end']), 2, '.', ','),
+                'MarketRevenue' => number_format($Helper->GetRevenue($corpId, 'Market', $dates[$i]['start'], $dates[$i]['end']), 2, '.', ','),
+                'MonthStart' => $dates[$i]['start']->toFormattedDateString(),
+            ];
+        }
+
+        return view('structures.taxhistory')->with(compact('totalTaxes', 'months'));
+        //return view('structures.taxhistory')->with('totalTaxes', $totalTaxes);
+    }
+
     public function displayJumpBridgeFuel() {
         
     }

@@ -145,7 +145,7 @@ class StructureTaxHelper {
      * @var integer
      * @returns array
      */
-    public function GetTimeFrameMonths($months) {
+    public function GetTimeFrameInMonths($months) {
         //Declare an array of dates
         $dates = array();
         //Setup the start of the array as the basis of our start and end dates

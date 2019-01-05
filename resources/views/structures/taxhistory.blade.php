@@ -10,13 +10,13 @@
             <table class="table table-striped">
                 <thead>
                     <th>Month</th>
-                    <th>Market Tax</th>
-                    <th>Market Revenue Minus Fuel Cost</th>
+                    <th>Market Tax Minus Fuel Cost / Month</th>
+                    <th>Market Revenue</th>
                 </thead>
                 <tbody>
-                    @for($i = 0; $i < 12; $i++)
+                    @for($i = 0; $i < $months; $i++)
                     <tr>
-                        <td>{{ $totalTaxes[$i]['start'] }}</td>
+                        <td>{{ $totalTaxes[$i]['MonthStart'] }}</td>
                         <td>{{ $totalTaxes[$i]['MarketTax'] }}</td>
                         <td>{{ $totalTaxes[$i]['MarketRevenue'] }}</td>
                     </tr>
