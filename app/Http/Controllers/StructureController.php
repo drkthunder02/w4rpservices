@@ -43,7 +43,7 @@ class StructureController extends Controller
 
         //Get a list of structures
         $structures = StructureIndustryTaxJournal::select('context_id')
-                                ->whereBetween('date', [$date[0]['start'], $date[0]['end']])
+                                ->whereBetween('date', [$dates[0]['start'], $dates[0]['end']])
                                 ->groupBy('context_id')
                                 ->get();
 
