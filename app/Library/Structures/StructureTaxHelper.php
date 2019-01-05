@@ -12,6 +12,7 @@ use App\Models\User\UserPermission;
 use App\Models\Corporation\CorpStructure;
 use App\Models\Finances\CorpMarketJournal;
 use App\Models\Finances\ReprocessingTaxJournal;
+use App\Models\Finances\StructureIndustryTaxJournal;
 
 class StructureTaxHelper {
     private $corpId;
@@ -60,6 +61,16 @@ class StructureTaxHelper {
 
         //Return the amount
         return $taxOwed;
+    }
+
+    public function GetIndustryRevenue($start, $end) {
+        $revenue = 0.00;
+
+        $revenue = StructureIndustryTaxJournal::where(['ref_type' => 'facility_industry_tax', 'second_party_id'  => '98287666'])
+                                ->whereBetween('date', [$start, $end])
+                                ->sum('amount');
+
+        return $revenue;
     }
 
     public function GetRevenue($corpId, $refType, $start, $end) {
