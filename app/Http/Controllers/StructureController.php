@@ -24,7 +24,6 @@ class StructureController extends Controller
     }
 
     public function chooseCorpTaxes() {
-        //$corps = DB::table('CorpStructures')->select('corporation_name')->groupBy('corporation_name')->get();
         $corps = CorpStructure::pluck('corporation_name', 'corporation_id');
         return view('structures.choosecorporation')->with('corps', $corps);
     }
@@ -46,13 +45,13 @@ class StructureController extends Controller
         //Get the market taxes for this month from the database
         $totalTaxes = [
             'thisMonthMarket' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
-            'thisMonthRefinery' => number_format($sHelper->GetTaxes($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
+            //'thisMonthRefinery' => number_format($sHelper->GetTaxes($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
             'lastMonthMarket' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
-            'lastMonthRefinery' => number_format($sHelper->GetTaxes($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
+            //'lastMonthRefinery' => number_format($sHelper->GetTaxes($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
             'thisMonthRevMarket' => number_format($sHelper->GetRevenue($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
-            'thisMonthRevRefinery' => number_format($sHelper->GetRevenue($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
+            //'thisMonthRevRefinery' => number_format($sHelper->GetRevenue($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
             'lastMonthRevMarket' => number_format($sHelper->GetRevenue($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
-            'lastMonthRevRefinery' => number_format($sHelper->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
+            //'lastMonthRevRefinery' => number_format($sHelper->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
             'thisMonthStart' => $dates['ThisMonthStart']->toFormattedDateString(),
             'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
         ];
@@ -78,13 +77,13 @@ class StructureController extends Controller
         //Get the market taxes for this month from the database
         $totalTaxes = [
             'thisMonthMarket' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
-            'thisMonthRefinery' => number_format($sHelper->GetTaxes($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
+            //'thisMonthRefinery' => number_format($sHelper->GetTaxes($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
             'lastMonthMarket' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
-            'lastMonthRefinery' => number_format($sHelper->GetTaxes($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
+            //'lastMonthRefinery' => number_format($sHelper->GetTaxes($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
             'thisMonthRevMarket' => number_format($sHelper->GetRevenue($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
-            'thisMonthRevRefinery' => number_format($sHelper->GetRevenue($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
+            //'thisMonthRevRefinery' => number_format($sHelper->GetRevenue($corpId, 'Refinery', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
             'lastMonthRevMarket' => number_format($sHelper->GetRevenue($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
-            'lastMonthRevRefinery' => number_format($sHelper->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
+            //'lastMonthRevRefinery' => number_format($sHelper->GetRevenue($corpId, 'Refinery', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
             'thisMonthStart' => $dates['ThisMonthStart']->toFormattedDateString(),
             'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
         ];

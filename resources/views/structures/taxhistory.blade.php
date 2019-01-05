@@ -12,8 +12,6 @@
                     <th>Month</th>
                     <th>Market Tax</th>
                     <th>Market Revenue Minus Fuel Cost</th>
-                    <th>Refinery Tax</th>
-                    <th>Refinery Revenue Minus Fuel Cost</th>
                 </thead>
                 <tbody>
                     @for($i = 0; $i < 12; $i++)
@@ -21,8 +19,6 @@
                         <td>{{ $totalTaxes[$i]['start'] }}</td>
                         <td>{{ $totalTaxes[$i]['MarketTax'] }}</td>
                         <td>{{ $totalTaxes[$i]['MarketRevenue'] }}</td>
-                        <td>{{ $totalTaxes[$i]['RefineryTax'] }}</td>
-                        <td>{{ $totalTaxes[$i]['RefineryRevenue'] }}</td>
                     </tr>
                     @endfor
                 </tbody>
