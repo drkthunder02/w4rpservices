@@ -11,4 +11,14 @@ class EveMail extends Model
 
     //Timestamps
     public $timestamps = 'true';
+
+    protected $fillable = [
+        'sender',
+        'recipient',
+        'recipient_type',
+        'subject',
+        'body',
+        'created_at',
+        'updated_at',
+    ];
 }

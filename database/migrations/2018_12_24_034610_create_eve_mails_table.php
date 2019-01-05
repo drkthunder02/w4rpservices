@@ -18,12 +18,12 @@ class CreateEveMailsTable extends Migration
                 $table->increments('id');
                 $table->string('sender');
                 $table->string('recipient');
-                $table->string('subject');
-                $table->string('body');
+                $table->string('recipient_type');
+                $table->text('subject');
+                $table->text('body');
                 $table->timestamps();
             });
         }
-        
     }
 
     /**

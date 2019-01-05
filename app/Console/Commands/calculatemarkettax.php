@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 use DB;
 
+use App\Jobs\SendEveMail;
 use Commands\Library\CommandHelper;
 use App\Library\Finances\Helper\FinanceHelper;
 use App\Library\Structures\StructureTaxHelper;
@@ -82,8 +83,6 @@ class CalculateMarketTax extends Command
                 $finalTaxes = 0.00;
             }
 
-            //$finalTaxes = number_format($finalTaxes, 2, '.', ',');
-
             //Get the info about the structures from the database
             $info = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
 
@@ -99,6 +98,22 @@ class CalculateMarketTax extends Command
             $bill->month = $start->month;
             $bill->year = $start->year;
             $bill->save();
+
+            $mail = new EveMail;
+            $mail->sender = 93738489;
+            $mail->subject = 'Market Taxes Owed';
+            $mail->body = 'Year ' . $start->year . ' ' .
+                        'Month: ' . 
+                        $start->month .
+                        '<br>Market Taxes Owed: ' .
+                        number_format($finalTaxes, 2, '.', ',') .
+                        '<br>Please remit to Spatial Forces';
+            $mail->recipient = (int)$info->character_id;
+            $mail->recipient_type = 'character';
+
+            SendEveMail::dispatch($mail);
+
+            /*
 
             //Retrieve the token for main character to send mails from
             $token = EsiToken::where(['character_id' => 93738489])->first();
@@ -138,7 +153,10 @@ class CalculateMarketTax extends Command
             } catch(RequestFailedException $e) {
                 $this->line('Error is ' . $e);
             }
+
+            */
         }
+        
 
         //Mark the job as finished
         $task->SetStopStatus();

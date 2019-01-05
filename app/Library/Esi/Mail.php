@@ -15,7 +15,7 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 
 class Mail {
 
-    public function SendGeneralMail($recipient, $subject, $body) {
+    public function SendMail($recipient, $rType, $subject, $body) {
         //Retrieve the token for main character to send mails from
         $token = EsiToken::where(['character_id' => 93738489])->get();
         //Create the ESI authentication container
@@ -28,48 +28,21 @@ class Mail {
         $esi = new Eseye($authentication);
         try {
             $esi->setBody([
+                'approved_cost' => 0,
                 'body' => $body,
-                'receipients' => [
-                    'recipient_id'=> $recipient,
-                    'recipient_type' => 'character',
-                ],
+                'recipients' => [[
+                    'recipient_id' => (int)$recipient,
+                    'recipient_type' => $rType,
+                ]],
                 'subject' => $subject,
             ])->invoke('post', '/characters/{character_id}/mail/', [
-                'character_id' => 93738489,
+                'character_id'=> 93738489,
             ]);
         } catch(RequestFailedException $e) {
-            return null;
+            return 1;
         }
-    }
 
-    public function SendMail($charId, $taxAmount, $subject, $body) {
-        //Retrieve the token for Amund Risalo
-        $token = DB::table('EsiTokens')->where('character_id', 93738489)->get();
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-        //Create the ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-        //Create the esi class variable
-        $esi = new Eseye($authentication);
-        try {
-            $esi->setBody([
-                'body' => $body,
-                'receipients' => [
-                    'recipient_id'=> $charId,
-                    'recipient_type' => 'character',
-                ],
-                'subject' => $subject,
-            ])->invoke('post', '/characters/{character_id}/mail/', [
-                'character_id' => 93738489,
-            ]);
-        } catch(RequestFailedException $e) {
-            return $e->getEsiResponse();
-        }
+        return 0;
     }
 }
 

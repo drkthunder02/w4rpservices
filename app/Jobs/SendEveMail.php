@@ -8,7 +8,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use App\Library\Esi\Mail;
+use Seat\Eseye\Configuration;
+use Seat\Eseye\Containers\EsiAuthentication;
+use Seat\Eseye\Eseye;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 use App\Models\EveMail as EveMailModel;
 
@@ -20,6 +23,20 @@ class SendEveMail implements ShouldQueue
      * Class Variable for eve mail
      */
     protected $eveMail;
+
+    /**
+     * Timeout in seconds
+     * 
+     * @var int
+     */
+    public $timeout = 120;
+
+    /**
+     * Retries
+     * 
+     * @var int
+     */
+    public $retries = 3;
 
     /**
      * Create a new job instance.
@@ -43,21 +60,36 @@ class SendEveMail implements ShouldQueue
         //Access the model in the queue for processing
         $mail = $this->eveMail;
 
-        //Create a new Mail class variable
-        $esi = new Mail();
+        //Retrieve the token for main character to send mails from
+        $token = EsiToken::where(['character_id'=> 93738489])->get();
 
-        //Process the mail from the model to send a new mail
-        $esi->SendGeneralMail($mail->recepient, $mail->subject, $mail->body);
+        //Create the ESI authentication container
+        $config = config('esi');
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token->refresh_token,
+        ]);
 
-    }
+        //Setup the Eseye class
+        $esi = new Eseye($authentication);
 
-    /**
-     * Determine the time the job should timeout
-     * 
-     * @return \DateTime
-     */
-    public function retryUntil() {
-        return now()->addSeconds(5);
+        //Attemp to send the mail
+        try {
+            $esi->setBody([
+                'approved_cost' => 0,
+                'body' => $mail->body,
+                'recipients' => [[
+                    'recipient_id' => (int)$mail->recipient,
+                    'recipient_type' => $mail->recipient_type,
+                ]],
+                'subject' => $mail->subject,
+            ])->invoke('post', '/characters/{character_id}/mail/', [
+                'character_id'=> 93738489,
+            ]);
+        } catch(RequestFailedException $e) {
+            //
+        }
     }
 
     /**
