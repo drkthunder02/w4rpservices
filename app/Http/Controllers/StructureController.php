@@ -88,7 +88,8 @@ class StructureController extends Controller
         }
         
 
-        return view('structures.taxhistory')->with(compact('totalTaxes', 'months'));
+        return view('structures.taxhistory')->with('totalTaxes', $totalTaxes)
+                                            ->with('months', $months);
     }
 
     public function chooseCorpTaxes() {
