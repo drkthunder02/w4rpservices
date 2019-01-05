@@ -139,6 +139,34 @@ class StructureTaxHelper {
         return $dates;
     }
 
+    /**
+     * Returns a set of dates from now until the amount of months has passed
+     * 
+     * @var integer
+     * @returns array
+     */
+    public function GetTimeFrameMonths($months) {
+        //Declare an array of dates
+        $dates = array();
+        //Setup the start of the array as the basis of our start and end dates
+        $start = Carbon::now()->startOfMonth();
+        $end = Carbon::now()->endOfMonth();
+        $end->hour = 23;
+        $end->minute = 59;
+        $end->second = 59;
+
+        //Create an array of dates
+        for($i = 0; $i < $months; $i++) {
+            $dates[$i]['start'] = $start;
+            $dates[$i]['end'] = $end;
+            $start = $start->subMonth();
+            $end = $end->subMonth();
+        }
+
+        //Return the dates back to the calling function
+        return $dates;
+    }
+
     private function GetStructureTax($corpId, $structureType) {
         $tax = CorpStructure::where(['corporation_id' => $corpId, 'structure_type' => $structureType])->avg('tax');
 
