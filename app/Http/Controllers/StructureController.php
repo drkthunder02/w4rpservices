@@ -31,9 +31,6 @@ class StructureController extends Controller
     public function displayCorpTaxes(Request $request) {
         $this->middleware('role:Admin');
 
-        //Make the helper esi class
-        $helper = new Esi();
-
         $corpId = $request->corpId;
         
         //Declare the structure tax helper class
