@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/structures/taxes/display', 'StructureController@displayTaxes');
     Route::get('/structures/admin/taxes/display', 'StructureController@chooseCorpTaxes');
     Route::get('/structures/admin/taxes/display/execute', 'StructureController@displayCorpTaxes');
+    Route::get('/structures/admin/taxes/industry', 'StructureController@displayIndustryTaxes');
 
     //Scopes Controller display pages
     Route::get('/scopes/select', 'EsiScopeController@displayScopes');
