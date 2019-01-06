@@ -112,6 +112,7 @@
                     {{ Form::label('scopes[]', 'Corporation Assets') }}
                     {{ Form::checkbox('scopes[]', 'esi-assets.read_corporation_assets.v1', 'true') }}
                 </div>
+                <?php $corpAssets = true; ?>
             @endif
         @endforeach
         @foreach($scopes as $scope)
@@ -120,6 +121,7 @@
                     {{ Form::label('scopes[]', 'Corporation Assets') }}
                     {{ Form::checkbox('scopes[]', 'esi-universe.read_structures.v1', 'true') }}
                 </div>
+                <?php $universeStructures = true; ?>
             @endif
         @endforeach
 
