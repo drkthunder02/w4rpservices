@@ -92,8 +92,7 @@ class StructureController extends Controller
             $totalTaxes = array_push($totalTaxes, $tempTaxes);
         }
 
-        return view('structures.taxhistory')->with('totalTaxes', $totalTaxes)
-                                            ->with('months', $months);
+        //return view('structures.taxhistory')->with('totalTaxes', $totalTaxes)->with('months', $months);
     }
 
     public function chooseCorpTaxes() {
