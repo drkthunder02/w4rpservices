@@ -16,7 +16,7 @@
                 <tbody>
                     @for($i = 0; $i < $months; $i++)
                         <tr>
-                            {{ dd($totalTaxes) }}
+                            {{ var_dump($totalTaxes) }}
                             <td>{{ $totalTaxes[$i]['MonthStart'] }}</td>
                             <td>{{ $totalTaxes[$i]['Structure'] }}</td>
                             <td>{{ $totalTaxes[$i]['IndustryTaxes'] }}</td>
