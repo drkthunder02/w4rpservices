@@ -14,14 +14,12 @@
                     <th>Industry Taxes</th>
                 </thead>
                 <tbody>
-                    <?php var_dump($totalTaxes); ?>
-                    @for($i = 0; $i < $months; $i++)
+                    @foreach($taxes as $tax)
                         <tr>
-                            <td>{{ $totalTaxes[$i]['MonthStart'] }}</td>
-                            <td>{{ $totalTaxes[$i]['Structure'] }}</td>
-                            <td>{{ $totalTaxes[$i]['IndustryTaxes'] }}</td>
+                            <td>{{ $tax['date'] }}</td>
+                            <td>{{ $tax['tax'] }}</td>
                         </tr>
-                    @endfor
+                    @endforeach
                 </tbody>
             </table>
         </div>

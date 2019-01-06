@@ -35,8 +35,7 @@ class StructureController extends Controller
         $corpId = 98287666;
         $months = 3;
         $name = array();
-        $totalTaxes = array();
-        $tempTaxes = array();
+        $taxes = array();
 
         //Declare the structure tax helper class
         $sHelper = new StructureTaxHelper();
@@ -46,15 +45,14 @@ class StructureController extends Controller
 
         //Get a list of structures - context_id is not structure id, it's job id.
         dd($dates);
-        $taxes = StructureIndustryTaxJournal::select('amount')
-                                ->whereBetween('date', [$dates[0]['start'], $dates[0]['end']])
+        foreach($dates as $date) {
+            $tax = StructureIndustryTaxJournal::select('amount')
+                                ->whereBetween('date', [$date['start'], $date['end']])
                                 ->sum('amount');
-
+            $taxes = array_push($taxes, ['date' => $date['start'], 'tax' => $tax]);    
+        }
         
-
-        
-
-        //return view('structures.taxhistory')->with('totalTaxes', $totalTaxes)->with('months', $months);
+        return view('structures.taxhistory')->with('taxes', $taxes);
     }
 
     public function chooseCorpTaxes() {
