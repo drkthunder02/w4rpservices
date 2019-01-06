@@ -32,7 +32,6 @@ class StructureController extends Controller
     public function displayIndustryTaxes() {
         $this->middleware('role:Admin');
 
-        $corpId = 98287666;
         $months = 3;
         $taxes = array();
 
@@ -48,7 +47,7 @@ class StructureController extends Controller
                                 ->sum('amount');
             $taxes[] = ['date' => $date['start'], 'tax' => $tax];    
         }
-        
+        dd($taxes);
         return view('structures.industrytaxes')->with('taxes', $taxes);
     }
 

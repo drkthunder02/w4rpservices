@@ -10,7 +10,6 @@
             <table class="table table-striped">
                 <thead>
                     <th>Month</th>
-                    <th>Structure</th>
                     <th>Industry Taxes</th>
                 </thead>
                 <tbody>
