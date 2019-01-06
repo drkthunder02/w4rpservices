@@ -16,8 +16,6 @@ use App\Models\Finances\StructureIndustryTaxJournal;
 class StructureIndustryTax {
 
     public function InsertStructureIndustryTax($journal, $corpId, $division) {
-        //Create the ESI Helper class
-        $esiHelper = new Esi;
 
         //Check to see if we can find the entry in the database already.
         //If we don't then add it to the database
