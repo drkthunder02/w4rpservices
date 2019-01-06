@@ -65,6 +65,7 @@
                     <a class="dropdown-item" href="/structures/admin/taxes/display">Corp Taxes</a>
                     <a class="dropdown-item" href="/structures/admin/taxes/industry">Industry Taxes</a>
                     <a class="dropdown-item" href="/structures/admin/taxes/reprocessing">Reprocessing Taxes</a>
+                    <a class="dropdown-item" href="/finances/admin">Finances</a>
                     @endcan
                 </div>
             </li>
