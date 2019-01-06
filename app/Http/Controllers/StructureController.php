@@ -29,6 +29,30 @@ class StructureController extends Controller
         $this->middleware('permission:structure.operator');
     }
 
+    public function displayReprocessingTaxes() {
+        $this->middleware('role:Admin');
+
+        $months = 3;
+        $taxes = array();
+
+        //Declare the structure tax helper class
+        $sHelper = new StructureTaxHelper();
+
+        //Get the dates we are working with
+        $dates = $sHelper->GetTimeFrameInMonths($months);
+
+        foreach($dates as $date) {
+            $taxes[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'tax' => number_format($sHelper->GetTaxes($corpId, 'Refinery', $date['start'], $date['end']), 2, '.', ','),
+                'revenue' => number_format($sHelper->GetRevenue($corpId, 'Refinery', $date['start'], $date['end']), 2, '.', ',')
+            ];
+        }
+
+        //Return the view with the data passed to it
+        return view('structures.reprocessingtaxes')->with('taxes', $taxes);
+    }
+
     public function displayIndustryTaxes() {
         $this->middleware('role:Admin');
 

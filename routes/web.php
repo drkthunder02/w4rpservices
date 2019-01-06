@@ -31,9 +31,7 @@ Route::group(['middleware' => ['auth']], function(){
     //Moon Admin Controller display pages
     Route::get('/moons/admin/addmoon', 'MoonsAdminController@addMoon');
     Route::post('/moon/admin/addmoon', 'MoonsAdminController@storemoon');
-    //Route::post('/moons/admin/storeMoon', 'MoonsAdminController@storeMoon');
     Route::get('/moons/admin/display', 'MoonsAdminController@displayMoonsAdmin');
-    //Route::post('/moons/admin/storeUpdateMoon', 'MoonsAdminController@storeUpdateMoon');
     Route::get('/moons/admin/updatemoon', 'MoonsAdminController@updateMoon');
     Route::post('/moons/admin/updatemoon', 'MoonsAdminController@storeUpdateMoon');
     Route::get('/moons/admin/journal', 'MoonsAdminController@showJournalEntries');
@@ -43,8 +41,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/wiki/register', 'WikiController@storeRegister');
     Route::get('/wiki/changepassword', 'WikiController@displayChangePassword');
     Route::post('/wiki/changepassword', 'WikiController@changePassword');
-    //Route::post('/wiki/storeRegister', 'WikiController@storeRegister');
-    //Route::post('/wiki/changePassword', 'WikiController@changePassword');
 
     //Fleet Controller display pages
     Route::get('/fleets/display', 'FleetsController@displayFleets');
@@ -53,7 +49,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/fleets/{fleet_id}/addpilot/{id}', 'FleetsController@addPilot')->name('addpilot');
     Route::get('/fleets/{fleet_id}/addpilot/{name}', 'Fleetscontroller@addPilotName');
     Route::get('/fleets/{fleet_id}/delete', 'FleetsController@deleteFleet')->name('deletefleet');
-    //Route::post('/fleets/registerFleet', 'FleetsController@registerFleet');
 
     //Admin Controller display pages
     Route::get('/admin/dashboard', 'AdminController@displayDashboard');
@@ -64,12 +59,12 @@ Route::group(['middleware' => ['auth']], function(){
     //Register Structures Controller display pages
     Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
     Route::post('/structures/register', 'RegisterstructureController@storeStructure');
-    //Route::post('/structures/store', 'RegisterStructureController@storeStructure');
     //Structure Controller display pages
     Route::get('/structures/taxes/display', 'StructureController@displayTaxes');
     Route::get('/structures/admin/taxes/display', 'StructureController@chooseCorpTaxes');
     Route::get('/structures/admin/taxes/display/execute', 'StructureController@displayCorpTaxes');
     Route::get('/structures/admin/taxes/industry', 'StructureController@displayIndustryTaxes');
+    Route::get('/structures/admin/taxes/reprocessing', 'StructureController@displayReprocessingTaxes');
 
     //Scopes Controller display pages
     Route::get('/scopes/select', 'EsiScopeController@displayScopes');
