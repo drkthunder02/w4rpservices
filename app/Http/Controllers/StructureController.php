@@ -71,14 +71,13 @@ class StructureController extends Controller
                 $temp = $esi->invoke('get', '/universe/structures/{structure_id}/', [
                     'structure_id' => $structures[$j]->context_id,
                 ]);
-                var_dump($temp);
-                $name[$i] = $temp->name;
+                
             } catch(RequestFailedException $e) {
                 $name[$i] = ' ';
             }
-        }
 
-        dd($name);
+            $name[$i] = $temp->name;
+        }
 
         //Cycle through all of the structures and get the revenue
         for($j = 0; $j < sizeof($structures); $j++) {
@@ -91,8 +90,6 @@ class StructureController extends Controller
             }
             $totalTaxes = array_push($totalTaxes, $tempTaxes);
         }
-        
-        dd($totalTaxes);
 
         return view('structures.taxhistory')->with('totalTaxes', $totalTaxes)
                                             ->with('months', $months);

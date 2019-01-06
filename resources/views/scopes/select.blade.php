@@ -11,6 +11,7 @@
     $readStructures = false;
     $structureMarkets = false;
     $corpAssets = false;
+    $universeStructures = false;
 ?>
 <div class="container">
     <h2>Select Scopes for ESI</h2>
@@ -113,6 +114,14 @@
                 </div>
             @endif
         @endforeach
+        @foreach($scopes as $scope)
+            @if($scope->scope == 'esi-universe.read_structures.v1')
+                <div class="form-group col-md-6">
+                    {{ Form::label('scopes[]', 'Corporation Assets') }}
+                    {{ Form::checkbox('scopes[]', 'esi-universe.read_structures.v1', 'true') }}
+                </div>
+            @endif
+        @endforeach
 
         @if($publicData == false)
         <div class="form-group col-md-6">
@@ -172,6 +181,12 @@
         <div class="form-group col-md-6">
             {{ Form::label('scopes[]', 'Corporation Assets') }}
             {{ Form::checkbox('scopes[]', 'esi-assets.read_corporation_assets.v1') }}
+        </div>
+        @endif
+        @if($universeStructures == false)
+        <div class="form-group col-md-6">
+            {{ Form::label('scopes[]', 'Universe Structures') }}
+            {{ Form::checkbox('scopes[]', 'esi-universe.read_structures.v1') }}
         </div>
         @endif
         
