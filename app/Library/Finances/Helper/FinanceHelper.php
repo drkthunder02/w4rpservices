@@ -206,7 +206,7 @@ class FinanceHelper {
                         $industry->InsertStructureIndustryTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'planetary_import_tax' || $entry['ref_type'] == 'planetary_export_tax') {
                         $pi = new PlanetProductionTax();
-                        $pi->InsertPlanetaryProductionTax($entry, $corpId, $division);
+                        $pi->InsertPlanetProductionTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'office_rental_fee') {
                         $office = new OfficeFee();
                         $office->InsertOfficeFee($entry, $corpId, $division);
