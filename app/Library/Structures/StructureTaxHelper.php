@@ -168,10 +168,18 @@ class StructureTaxHelper {
 
         //Create an array of dates
         for($i = 0; $i < $months; $i++) {
+            if($i == 0) {
+                $dates[$i]['start'] = $start;
+                $dates[$i]['end'] = $end;
+            }
+            
+            $start = Carbon::now()->startOfMonth()->subMonths($i);
+            $end = Carbon::now()->endOfMonth()->subMonths($i);
+            $end->hour = 23;
+            $end->minute = 59;
+            $end->second = 59;
             $dates[$i]['start'] = $start;
             $dates[$i]['end'] = $end;
-            $start = $start->subMonth();
-            $end = $end->subMonth();
         }
 
         //Return the dates back to the calling function
