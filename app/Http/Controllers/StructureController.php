@@ -36,6 +36,7 @@ class StructureController extends Controller
         $months = 3;
         $name = array();
         $totalTaxes = array();
+        $tempTaxes = array();
 
         //Declare the structure tax helper class
         $sHelper = new StructureTaxHelper();
@@ -80,12 +81,13 @@ class StructureController extends Controller
         //Cycle through all of the structures and get the revenue
         for($j = 0; $j < sizeof($structures); $j++) {
             for($i = 0; $i < $months; $i++) {
-                $totalTaxes[$i] = [
+                $tempTaxes[$i] = [
                     'IndustryTaxes' => number_format($sHelper->GetIndustryTaxes($dates[$i]['start'], $dates[$i]['end'], $structures[$j])),
                     'MonthStart' => $dates[$i]['start']->toFormattedDateString(),
                     'Structure' => $name[$j],
                 ];
             }
+            $totalTaxes = array_push($totalTaxes, $tempTaxes);
         }
         
         dd($totalTaxes);
