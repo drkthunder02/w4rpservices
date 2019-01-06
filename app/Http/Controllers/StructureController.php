@@ -108,8 +108,6 @@ class StructureController extends Controller
             ];
         }
 
-        dd($totalTaxes);
-
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
 
