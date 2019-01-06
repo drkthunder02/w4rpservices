@@ -62,7 +62,7 @@
                     {{ Form::label('scopes[]', 'Write Mail') }}
                     {{ Form::checkbox('scopes[]', 'esi-mail.send_mail.v1', 'true') }}
                 </div>
-                <?php $sendMail = true; ?>
+                <?php $writeMail = true; ?>
             @break
             @endif
         @endforeach        
