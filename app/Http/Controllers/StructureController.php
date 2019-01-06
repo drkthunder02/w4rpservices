@@ -34,6 +34,7 @@ class StructureController extends Controller
 
         $corpId = 98287666;
         $months = 3;
+        $taxes = array();
 
         //Declare the structure tax helper class
         $sHelper = new StructureTaxHelper();
@@ -45,7 +46,7 @@ class StructureController extends Controller
             $tax = StructureIndustryTaxJournal::select('amount')
                                 ->whereBetween('date', [$date['start'], $date['end']])
                                 ->sum('amount');
-            $taxes = array_push($taxes, ['date' => $date['start'], 'tax' => $tax]);    
+            $taxes[] = ['date' => $date['start'], 'tax' => $tax];    
         }
         
         return view('structures.taxhistory')->with('taxes', $taxes);
