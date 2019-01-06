@@ -78,6 +78,8 @@ class StructureController extends Controller
             }
         }
 
+        dd($name);
+
         //Cycle through all of the structures and get the revenue
         for($j = 0; $j < sizeof($structures); $j++) {
             for($i = 0; $i < $months; $i++) {
