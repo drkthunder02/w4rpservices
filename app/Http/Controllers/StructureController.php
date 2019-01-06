@@ -49,7 +49,7 @@ class StructureController extends Controller
             $taxes[] = ['date' => $date['start'], 'tax' => $tax];    
         }
         
-        return view('structures.taxhistory')->with('taxes', $taxes);
+        return view('structures.industrytaxes')->with('taxes', $taxes);
     }
 
     public function chooseCorpTaxes() {
