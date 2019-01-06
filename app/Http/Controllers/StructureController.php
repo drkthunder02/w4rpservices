@@ -64,6 +64,8 @@ class StructureController extends Controller
         //Create the esi class varialble
         $esi = new Eseye($authentication);
 
+        dd($structures);
+
         //Cycle through all of the structures and build a list of names
         for($i = 0; $i < sizeof($structures); $i++) {
             //Get the structure name from the ESI API
@@ -77,7 +79,6 @@ class StructureController extends Controller
             }
 
             $name[$i] = $temp->name;
-            dd($name[$i]);
         }
 
         //Cycle through all of the structures and get the revenue
