@@ -16,7 +16,7 @@
                 <tbody>
                     @foreach($totalTaxes as $tax)
                         <tr>
-                            <td>{{ $tax['start'] }}</td>
+                            <td>{{ $tax['date'] }}</td>
                             <td>{{ $tax['tax'] }}</td>
                             <td>{{ $tax['revenue'] }}<td>
                         </tr>
