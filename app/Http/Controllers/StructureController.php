@@ -45,54 +45,14 @@ class StructureController extends Controller
         $dates = $sHelper->GetTimeFrameInMonths($months);
 
         //Get a list of structures - context_id is not structure id, it's job id.
-        
-        $structures = StructureIndustryTaxJournal::select('context_id')
+        dd($dates);
+        $taxes = StructureIndustryTaxJournal::select('amount')
                                 ->whereBetween('date', [$dates[0]['start'], $dates[0]['end']])
-                                ->groupBy('context_id')
-                                ->get();
+                                ->sum('amount');
 
-        //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $token = EsiToken::where(['character_id' => 93738489])->get(['refresh_token']);
+        
 
-        //Create an ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-
-        //Create the esi class varialble
-        $esi = new Eseye($authentication);
-
-        dd($structures);
-
-        //Cycle through all of the structures and build a list of names
-        for($i = 0; $i < sizeof($structures); $i++) {
-            //Get the structure name from the ESI API
-            try {
-                $temp = $esi->invoke('get', '/universe/structures/{structure_id}/', [
-                    'structure_id' => $structures[$j]->context_id,
-                ]);
-                
-            } catch(RequestFailedException $e) {
-                $name[$i] = ' ';
-            }
-
-            $name[$i] = $temp->name;
-        }
-
-        //Cycle through all of the structures and get the revenue
-        for($j = 0; $j < sizeof($structures); $j++) {
-            for($i = 0; $i < $months; $i++) {
-                $tempTaxes[$i] = [
-                    'IndustryTaxes' => number_format($sHelper->GetIndustryTaxes($dates[$i]['start'], $dates[$i]['end'], $structures[$j])),
-                    'MonthStart' => $dates[$i]['start']->toFormattedDateString(),
-                    'Structure' => $name[$j],
-                ];
-            }
-            $totalTaxes = array_push($totalTaxes, $tempTaxes);
-        }
+        
 
         //return view('structures.taxhistory')->with('totalTaxes', $totalTaxes)->with('months', $months);
     }
