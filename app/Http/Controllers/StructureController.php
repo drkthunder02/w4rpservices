@@ -77,6 +77,7 @@ class StructureController extends Controller
             }
 
             $name[$i] = $temp->name;
+            dd($name[$i]);
         }
 
         //Cycle through all of the structures and get the revenue
