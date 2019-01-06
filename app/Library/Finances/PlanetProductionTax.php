@@ -13,9 +13,9 @@ use App\Library\Esi\Esi;
 
 use App\Models\Finances\PlanetProductionTaxJournal;
 
-class OfficeFee {
+class PlanetProductionTax {
 
-    public function InsertOfficeFee($journal, $corpId, $division) {
+    public function InsertPlanetProductionTax($journal, $corpId, $division) {
         //Create the ESI Helper class
         $esiHelper = new Esi;
 

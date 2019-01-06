@@ -18,6 +18,8 @@ use App\Library\Finances\PlayerDonation;
 use App\Library\Finances\ReprocessingTax;
 use App\Library\Finances\JumpBridgeTax;
 use App\Library\Finances\StructureIndustryTax;
+use App\Library\Finances\OfficeFee;
+use App\Library\Finances\PlanetProductionTax;
 
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
@@ -203,7 +205,7 @@ class FinanceHelper {
                         $industry = new StructureIndustryTax();
                         $industry->InsertStructureIndustryTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'planetary_import_tax' || $entry['ref_type'] == 'planetary_export_tax') {
-                        $pi = new PlanetaryProductionTax();
+                        $pi = new PlanetProductionTax();
                         $pi->InsertPlanetaryProductionTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'office_rental_fee') {
                         $office = new OfficeFee();
