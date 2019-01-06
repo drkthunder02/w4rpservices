@@ -88,6 +88,7 @@ class StructureController extends Controller
         $helper = new Esi();
 
         $months = 3;
+        $totalTaxes = array();
         
         //Get the character's corporation from esi
         $corpId = $helper->FindCorporationId(Auth::user()->character_id);
@@ -106,6 +107,8 @@ class StructureController extends Controller
                 'revenue' => number_format($sHelper->GetRevenue($corpId, 'Market', $date['start'], $date['end']), 2, '.', ',')
             ];
         }
+
+        dd($totalTaxes);
 
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
@@ -129,11 +132,11 @@ class StructureController extends Controller
         //Build the array for displaying the data on the view
         $totalTaxes = array();
         
-        for($i = 0; $i < $months; $i++) {
-            $totalTaxes[$i] = [
-                'MarketTaxes' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates[$i]['start'], $dates[$i]['end']), 2, '.', ','),
-                'MarketRevenue' => number_format($Helper->GetRevenue($corpId, 'Market', $dates[$i]['start'], $dates[$i]['end']), 2, '.', ','),
-                'MonthStart' => $dates[$i]['start']->toFormattedDateString(),
+        foreach($dates as $date) {
+            $totalTaxes[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'tax' => number_format($sHelper->GetTaxes($corpId, 'Market', $date['start'], $date['end']), 2, '.', ','),
+                'revenue' => number_format($sHelper->GetRevenue($corpId, 'Market', $date['start'], $date['end']), 2, '.', ',')
             ];
         }
 
