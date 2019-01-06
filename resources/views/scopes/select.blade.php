@@ -118,7 +118,7 @@
         @foreach($scopes as $scope)
             @if($scope->scope == 'esi-universe.read_structures.v1')
                 <div class="form-group col-md-6">
-                    {{ Form::label('scopes[]', 'Corporation Assets') }}
+                    {{ Form::label('scopes[]', 'Universe Structures') }}
                     {{ Form::checkbox('scopes[]', 'esi-universe.read_structures.v1', 'true') }}
                 </div>
                 <?php $universeStructures = true; ?>
