@@ -47,7 +47,7 @@ class StructureController extends Controller
                                 ->sum('amount');
             $taxes[] = ['date' => $date['start'], 'tax' => $tax];    
         }
-        dd($taxes);
+        
         return view('structures.industrytaxes')->with('taxes', $taxes);
     }
 
