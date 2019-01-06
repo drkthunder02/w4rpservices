@@ -9,7 +9,7 @@ class PlanetProductionTaxJournal extends Model
     /**
      * Table Name
      */
-    protected $table = 'planet_production_journal';
+    protected $table = 'planet_production_tax_journal';
 
     /**
      * Timestamps
