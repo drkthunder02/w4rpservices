@@ -88,6 +88,7 @@ class StructureController extends Controller
             }
         }
         
+        dd($totalTaxes);
 
         return view('structures.taxhistory')->with('totalTaxes', $totalTaxes)
                                             ->with('months', $months);
