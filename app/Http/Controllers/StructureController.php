@@ -45,9 +45,9 @@ class StructureController extends Controller
             $tax = StructureIndustryTaxJournal::select('amount')
                                 ->whereBetween('date', [$date['start'], $date['end']])
                                 ->sum('amount');
-            $taxes[] = ['date' => $date['start'], 'tax' => $tax];    
+            $taxes[] = ['date' => $date['start'], 'tax' => number_format($tax, 2, '.', ',')];    
         }
-        
+
         return view('structures.industrytaxes')->with('taxes', $taxes);
     }
 
