@@ -14,13 +14,13 @@
                     <th>Market Revenue</th>
                 </thead>
                 <tbody>
-                    @for($i = 0; $i < $months; $i++)
-                    <tr>
-                        <td>{{ $totalTaxes[$i]['MonthStart'] }}</td>
-                        <td>{{ $totalTaxes[$i]['MarketTax'] }}</td>
-                        <td>{{ $totalTaxes[$i]['MarketRevenue'] }}</td>
-                    </tr>
-                    @endfor
+                    @foreach($totalTaxes as $tax)
+                        <tr>
+                            <td>{{ $tax['start'] }}</td>
+                            <td>{{ $tax['tax'] }}</td>
+                            <td>{{ $tax['revenue'] }}<td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

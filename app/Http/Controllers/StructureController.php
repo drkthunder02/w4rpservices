@@ -45,7 +45,10 @@ class StructureController extends Controller
             $tax = StructureIndustryTaxJournal::select('amount')
                                 ->whereBetween('date', [$date['start'], $date['end']])
                                 ->sum('amount');
-            $taxes[] = ['date' => $date['start'], 'tax' => number_format($tax, 2, '.', ',')];    
+            $taxes[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'tax' => number_format($tax, 2, '.', ',')
+            ];    
         }
 
         return view('structures.industrytaxes')->with('taxes', $taxes);
@@ -60,22 +63,21 @@ class StructureController extends Controller
         $this->middleware('role:Admin');
 
         $corpId = $request->corpId;
+        $months = 3;
         
         //Declare the structure tax helper class
         $sHelper = new StructureTaxHelper();
         
         //Get the dates we are working with
-        $dates = $sHelper->GetTimeFrame();
-        
-        //Get the market taxes for this month from the database
-        $totalTaxes = [
-            'thisMonthMarket' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
-            'lastMonthMarket' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
-            'thisMonthRevMarket' => number_format($sHelper->GetRevenue($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
-            'lastMonthRevMarket' => number_format($sHelper->GetRevenue($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
-            'thisMonthStart' => $dates['ThisMonthStart']->toFormattedDateString(),
-            'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
-        ];
+        $dates = $sHelper->GetTimeFrameInMonths($months);
+
+        foreach($dates as $date) {
+            $totalTaxes[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'tax' => number_format($sHelper->GetTaxes($corpId, 'Market', $date['start'], $date['end']), 2, '.', ','),
+                'revenue' => number_format($sHelper->GetRevenue($corpId, 'Market', $date['start'], $date['end']), 2, '.', ',')
+            ];
+        }
 
         //Return the view with the data passed to it
         return view('structures.choosecorptaxes')->with('totalTaxes', $totalTaxes);
@@ -84,6 +86,8 @@ class StructureController extends Controller
     public function displayTaxes() {
         //Make the helper esi class
         $helper = new Esi();
+
+        $months = 3;
         
         //Get the character's corporation from esi
         $corpId = $helper->FindCorporationId(Auth::user()->character_id);
@@ -92,17 +96,16 @@ class StructureController extends Controller
         $sHelper = new StructureTaxHelper();
         
         //Get the dates we are working with
-        $dates = $sHelper->GetTimeFrame();
+        $dates = $sHelper->GetTimeFrameInMonths($months);
         
         //Get the market taxes for this month from the database
-        $totalTaxes = [
-            'thisMonthMarket' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
-            'lastMonthMarket' => number_format($sHelper->GetTaxes($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
-            'thisMonthRevMarket' => number_format($sHelper->GetRevenue($corpId, 'Market', $dates['ThisMonthStart'], $dates['ThisMonthEnd']), 2, '.', ','),
-            'lastMonthRevMarket' => number_format($sHelper->GetRevenue($corpId, 'Market', $dates['LastMonthStart'], $dates['LastMonthEnd']), 2, '.', ','),
-            'thisMonthStart' => $dates['ThisMonthStart']->toFormattedDateString(),
-            'lastMonthStart' => $dates['LastMonthStart']->toFormattedDateString(),
-        ];
+        foreach($dates as $date) {
+            $totalTaxes[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'tax' => number_format($sHelper->GetTaxes($corpId, 'Market', $date['start'], $date['end']), 2, '.', ','),
+                'revenue' => number_format($sHelper->GetRevenue($corpId, 'Market', $date['start'], $date['end']), 2, '.', ',')
+            ];
+        }
 
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
