@@ -82,6 +82,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/helpdesk/tickets/edit', 'HelpDeskController@editTicket');
     Route::get('/helpdesk/tickets/new', 'HelpDeskController@displayNewTicket');
     Route::post('/helpdesk/tickets/new', 'HelpDeskController@storeTicket');
+
+    //Finances Controller display pages
+    Route::get('/finances/admin', 'FinancesController@displayFinances');
 });
 
 //Login display pages

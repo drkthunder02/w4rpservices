@@ -141,6 +141,84 @@ class FinanceHelper {
         }
     }
 
+    public function GetHoldingWalletJournal($division) {
+        //Get the ESI refresh token for the corporation to add new wallet journals into the database
+        $token = EsiToken::where(['character_id' => 93738489])->get(['refresh_token']);
+
+        $corpId = 98287666;
+
+        //Create an ESI authentication container
+        $config = config('esi');
+        $authentication = new EsiAuthentication([
+            'client_id'  => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+
+        //Create the esi class varialble
+        $esi = new Eseye($authentication);
+        $esi->setVersion('v4');
+        
+        //Set our current page to 1 which is the one we are starting on.
+        $currentPage = 1;
+        //Set our default total pages to 1 in case our try section fails out.
+        $totalPages = 1;
+
+        //If more than one page is found, decode the first set of wallet entries, then call for the next pages
+        do {
+            //Call the first page of the wallet journal, as we are always going to get at least one page.
+            //If we have more pages, then we will continue through the while loop.
+            try {
+                $journals = $esi->page($currentPage)
+                                ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                    'corporation_id' => $corpId,
+                    'division'  => $division,
+                ]);
+            } catch(RequestFailedException $e) {
+                return $e->getEsiResponse();
+            }
+
+            //Set the total pages we need to cycle through.
+            $totalPages = $journals->pages;
+            //Decode the wallet from json into an array
+            $wallet = json_decode($journals->raw, true);
+            //For each journal entry, attempt to store it in the database.
+            //The PutWalletJournal function checks to see if it's already in the database.
+            foreach($wallet as $entry) {
+                if($entry['amount'] > 0) {
+                    if($entry['ref_type'] == 'brokers_fee') {
+                        $market = new MarketTax();
+                        $market->InsertMarketTax($entry, $corpId, $division);
+                    } else if($entry['ref_type'] == 'reprocessing_tax') {
+                        $reprocessing = new ReprocessingTax();
+                        $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
+                    } else if($entry['ref_type'] == 'structure_gate_jump') {
+                        $jb = new JumpBridgeTax();
+                        $jb->InsertJumpBridgeTax($entry, $corpId, $division);
+                    } else if($entry['ref_type'] == 'player_donation' ||
+                              $entry['ref_type'] == 'corporation_account_withdrawal') {
+                        $other = new PlayerDonation();
+                        $other->InsertPlayerDonation($entry, $corpId, $division);
+                    } else if($entry['ref_type'] == 'industry_job_tax') {
+                        $industry = new StructureIndustryTax();
+                        $industry->InsertStructureIndustryTax($entry, $corpId, $division);
+                    } else if($entry['ref_type'] == 'planetary_import_tax' || $entry['ref_type'] == 'planetary_export_tax') {
+                        $pi = new PlanetaryProductionTax();
+                        $pi->InsertPlanetaryProductionTax($entry, $corpId, $division);
+                    } else if($entry['ref_type'] == 'office_rental_fee') {
+                        $office = new OfficeFee();
+                        $office->InsertOfficeFee($entry, $corpId, $division);
+                    }
+                }
+                
+            }
+            
+            //Increment the current page we are on.
+            $currentPage++;
+        //Continue looping through the do while loop until the current page is greater than or equal to the total pages.
+        } while ($currentPage < $totalPages);
+    }
+
 }
 
 ?>

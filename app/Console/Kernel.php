@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\DumpFleets::class,
         Commands\CalculateMarketTax::class,
         //Commands\GetLogisticsContracts::class,
+        Commands\holdingfinances::class,
     ];
 
     /**
@@ -44,6 +45,9 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
         $schedule->command('services:calculatemarkettax')
                  ->monthlyOn(1, '08:00')
+                 ->withoutOverlapping();
+        $schedule->command('services:holdingjournal')
+                 ->hourly()
                  ->withoutOverlapping();
     }
 

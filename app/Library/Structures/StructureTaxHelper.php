@@ -166,6 +166,15 @@ class StructureTaxHelper {
         $end->minute = 59;
         $end->second = 59;
 
+        if($months == 1) {
+            $dates = [
+                'start' => $start,
+                'end' => $end,
+            ];
+
+            return $dates;
+        }
+
         //Create an array of dates
         for($i = 0; $i < $months; $i++) {
             if($i == 0) {
