@@ -84,7 +84,7 @@ class FinanceHelper {
                              ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
                         $other = new PlayerDonation();
                         $other->InsertPlayerDonation($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'industry_facility_tax' && $entry['second_party_id'] == 98287666) {
+                    } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
                         $industry = new StructureIndustryTax();
                         $industry->InsertStructureIndustryTax($entry, $corpId, $division);
                     }

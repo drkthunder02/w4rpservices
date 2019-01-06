@@ -44,7 +44,8 @@ class StructureController extends Controller
         //Get the dates we are working with
         $dates = $sHelper->GetTimeFrameInMonths($months);
 
-        //Get a list of structures
+        //Get a list of structures - context_id is not structure id, it's job id.
+        
         $structures = StructureIndustryTaxJournal::select('context_id')
                                 ->whereBetween('date', [$dates[0]['start'], $dates[0]['end']])
                                 ->groupBy('context_id')
