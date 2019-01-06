@@ -34,7 +34,6 @@ class StructureController extends Controller
 
         $corpId = 98287666;
         $months = 3;
-        $taxes = [];
 
         //Declare the structure tax helper class
         $sHelper = new StructureTaxHelper();
