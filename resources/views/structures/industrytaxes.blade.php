@@ -14,7 +14,7 @@
                     <th>Industry Taxes</th>
                 </thead>
                 <tbody>
-                    {!! $totalTaxes !!}
+                    <?php var_dump($totalTaxes); ?>
                     @for($i = 0; $i < $months; $i++)
                         <tr>
                             <td>{{ $totalTaxes[$i]['MonthStart'] }}</td>
