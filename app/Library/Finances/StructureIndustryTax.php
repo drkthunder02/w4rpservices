@@ -21,8 +21,8 @@ class StructureIndustryTax {
 
         //Check to see if we can find the entry in the database already.
         //If we don't then add it to the database
-        if(!CorpMarketJournal::where(['id' => $journal['id']])->exists()) {
-            $entry = new CorpMarketJournal;
+        if(!StructureIndustryTaxJournal::where(['id' => $journal['id']])->exists()) {
+            $entry = new StructureIndustryTaxJournal;
             $entry->id = $journal['id'];
             $entry->corporation_id = $corpId;
             $entry->division = $division;
