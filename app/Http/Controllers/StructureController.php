@@ -71,7 +71,7 @@ class StructureController extends Controller
                 $temp = $esi->invoke('get', '/universe/structures/{structure_id}/', [
                     'structure_id' => $structures[$j]->context_id,
                 ]);
-
+                var_dump($temp);
                 $name[$i] = $temp->name;
             } catch(RequestFailedException $e) {
                 $name[$i] = ' ';
