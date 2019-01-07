@@ -117,4 +117,16 @@ class AdminController extends Controller
 
         return view('admin.dashboard')->with('error', 'User did not have the role.');
     }
+
+    public function displayAllowedLogins() {
+
+    }
+
+    public function addAllowedLogin() {
+
+    }
+
+    public function removeAllowedLogin() {
+        
+    }
 }
