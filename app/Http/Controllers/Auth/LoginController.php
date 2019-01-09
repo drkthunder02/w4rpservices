@@ -188,9 +188,9 @@ class LoginController extends Controller
      * @param charId
      */
     private function SetRole($role, $charId) {
-        $permission = new UserPermission;
+        $permission = new UserRole;
         $permission->character_id = $charId;
-        $permission->permission = $role;
+        $permission->role = $role;
         $permission->save();
     }
 
@@ -235,13 +235,13 @@ class LoginController extends Controller
     private function GetRole($refreshToken, $charId) {
         $accountType = $this->GetAccountType($refreshToken, $charId);
         if($accountType == 'Guest') {
-            $role = 'role.guest';
+            $role = 'Guest';
         } else if($accountType == 'Legacy'){
-            $role = 'role.user';
+            $role = 'User';
         } else if($accountType == 'W4RP') {
-            $role = 'role.user';
+            $role = 'User';
         } else {
-            $role = 'role.none';
+            $role = 'None';
         }
 
         return $role;

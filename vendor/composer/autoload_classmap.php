@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\AllowedLogin' => $baseDir . '/app/Models/Admin/AllowedLogin.php',
     'App\\Console\\Commands\\CalculateMarketTax' => $baseDir . '/app/Console/Commands/calculatemarkettax.php',
     'App\\Console\\Commands\\CorpJournal' => $baseDir . '/app/Console/Commands/corpJournal.php',
     'App\\Console\\Commands\\DumpFleets' => $baseDir . '/app/Console/Commands/dumpFleets.php',
@@ -67,7 +68,6 @@ return array(
     'App\\Library\\SeatHelper' => $baseDir . '/app/Library/SeatHelper.php',
     'App\\Library\\Structures\\JumpBridgeFuel' => $baseDir . '/app/Library/Structures/JumpBridgeFuel.php',
     'App\\Library\\Structures\\StructureTaxHelper' => $baseDir . '/app/Library/Structures/StructureTaxHelper.php',
-    'App\\Models\\Admin\\AllowedLogin' => $baseDir . '/app/Models/Admin/AllowedLogin.php',
     'App\\Models\\Character\\CharacterToCorporation' => $baseDir . '/app/Models/Charcter/CharacterToCorporation.php',
     'App\\Models\\Config' => $baseDir . '/app/Models/Config.php',
     'App\\Models\\Corporation\\AllianceCorp' => $baseDir . '/app/Models/Corporation/AllianceCorp.php',
@@ -100,7 +100,6 @@ return array(
     'App\\Models\\ScheduledTask\\ScheduleJob' => $baseDir . '/app/Models/ScheduledTask/ScheduleJob.php',
     'App\\Models\\User\\AvailableUserPermission' => $baseDir . '/app/Models/User/AvailableUserPermission.php',
     'App\\Models\\User\\UserPermission' => $baseDir . '/app/Models/User/UserPermission.php',
-    'App\\Models\\User\\UserRole' => $baseDir . '/app/Models/User/UserRole.php',
     'App\\Models\\User\\UserToCorporation' => $baseDir . '/app/Models/User/UserToCorporation.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
@@ -108,6 +107,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\UserRole' => $baseDir . '/app/UserRole.php',
     'AvailableUserPermissions' => $baseDir . '/database/seeds/AvailableUserPermissions.php',
     'BeyondCode\\DumpServer\\DumpServerCommand' => $vendorDir . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',
     'BeyondCode\\DumpServer\\DumpServerServiceProvider' => $vendorDir . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',

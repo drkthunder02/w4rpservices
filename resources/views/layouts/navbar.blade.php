@@ -8,14 +8,14 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moons</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    @if(auth()->user()->hasPermission('role.guest'))
+                    @if(auth()->user()->hasRole('Guest'))
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
                     @endif
-                    @if(auth()->user()->hasPermission('role.user'))
+                    @if(auth()->user()->hasRole('User'))
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     @endif
-                    @if(auth()->user()->hasPermission('role.admin'))
+                    @if(auth()->user()->hasRole('Admin'))
                     <a class="dropdown-item" href="/moons/admin/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     <a class="dropdown-item" href="/moons/admin/addmoon">Add Moon</a>
@@ -61,7 +61,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/structures/taxes/display">Current Taxes</a>
                     <a class="dropdown-item" href="/structures/register">Register Structure</a>
-                    @if(auth()->user()->hasPermission('role.admin'))
+                    @if(auth()->user()->hasRole('Admin'))
                     <a class="dropdown-item" href="/structures/admin/taxes/display">Corp Taxes</a>
                     <a class="dropdown-item" href="/structures/admin/taxes/industry">Industry Taxes</a>
                     <a class="dropdown-item" href="/structures/admin/taxes/reprocessing">Reprocessing Taxes</a>
@@ -75,7 +75,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/scopes/select">Add Esi Scopes</a>
             </li>
-            @if(auth()->user()->hasPermission('role.admin'))
+            @if(auth()->user()->hasRole('Admin'))
             <li class="nav-item">
                 <a class="nav-link" href="/admin/dashboard">Admin</a>
             </li>

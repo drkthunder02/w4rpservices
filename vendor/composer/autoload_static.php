@@ -460,6 +460,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
+        'App\\AllowedLogin' => __DIR__ . '/../..' . '/app/Models/Admin/AllowedLogin.php',
         'App\\Console\\Commands\\CalculateMarketTax' => __DIR__ . '/../..' . '/app/Console/Commands/calculatemarkettax.php',
         'App\\Console\\Commands\\CorpJournal' => __DIR__ . '/../..' . '/app/Console/Commands/corpJournal.php',
         'App\\Console\\Commands\\DumpFleets' => __DIR__ . '/../..' . '/app/Console/Commands/dumpFleets.php',
@@ -521,7 +522,6 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Library\\SeatHelper' => __DIR__ . '/../..' . '/app/Library/SeatHelper.php',
         'App\\Library\\Structures\\JumpBridgeFuel' => __DIR__ . '/../..' . '/app/Library/Structures/JumpBridgeFuel.php',
         'App\\Library\\Structures\\StructureTaxHelper' => __DIR__ . '/../..' . '/app/Library/Structures/StructureTaxHelper.php',
-        'App\\Models\\Admin\\AllowedLogin' => __DIR__ . '/../..' . '/app/Models/Admin/AllowedLogin.php',
         'App\\Models\\Character\\CharacterToCorporation' => __DIR__ . '/../..' . '/app/Models/Charcter/CharacterToCorporation.php',
         'App\\Models\\Config' => __DIR__ . '/../..' . '/app/Models/Config.php',
         'App\\Models\\Corporation\\AllianceCorp' => __DIR__ . '/../..' . '/app/Models/Corporation/AllianceCorp.php',
@@ -554,7 +554,6 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Models\\ScheduledTask\\ScheduleJob' => __DIR__ . '/../..' . '/app/Models/ScheduledTask/ScheduleJob.php',
         'App\\Models\\User\\AvailableUserPermission' => __DIR__ . '/../..' . '/app/Models/User/AvailableUserPermission.php',
         'App\\Models\\User\\UserPermission' => __DIR__ . '/../..' . '/app/Models/User/UserPermission.php',
-        'App\\Models\\User\\UserRole' => __DIR__ . '/../..' . '/app/Models/User/UserRole.php',
         'App\\Models\\User\\UserToCorporation' => __DIR__ . '/../..' . '/app/Models/User/UserToCorporation.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
@@ -562,6 +561,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\UserRole' => __DIR__ . '/../..' . '/app/UserRole.php',
         'AvailableUserPermissions' => __DIR__ . '/../..' . '/database/seeds/AvailableUserPermissions.php',
         'BeyondCode\\DumpServer\\DumpServerCommand' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',
         'BeyondCode\\DumpServer\\DumpServerServiceProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',

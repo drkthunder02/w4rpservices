@@ -52,6 +52,10 @@ class User extends Authenticatable
         return User::where('user_type')->get();
     }
 
+    public function role() {
+        return $this->hasOne('\App\Models\User\UserRole', 'character_id', 'character_id');
+    }
+
     public function permissions() {
         return $this->hasMany('App\Models\User\UserPermission', 'character_id');
     }
