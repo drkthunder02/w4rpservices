@@ -63,8 +63,10 @@ class RequirePermission
                 abort(403, "You don't have the correct role to view this area.");
             }
 
-            if($ranking[$check->permission] >= $ranking[$role]) {
-                $confirmed = true;
+            if(strpos($role, 'role.') !== false) {
+                if($ranking[$check->permission] >= $ranking[$role]) {
+                    $confirmed = true;
+                }
             }
         }
 
