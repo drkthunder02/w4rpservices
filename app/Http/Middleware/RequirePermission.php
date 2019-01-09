@@ -58,7 +58,7 @@ class RequirePermission
         //Using eloquent let's get the roles for the character
         $checks = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
 
-        foreach($check as $check) {
+        foreach($checks as $check) {
             if(!isset($check->permission)) {
                 abort(403, "You don't have the correct role to view this area.");
             }
