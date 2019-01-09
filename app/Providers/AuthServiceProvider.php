@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 use DB;
-use App\Models\User\UserRole;
+use App\Models\User\UserPermission;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -32,54 +32,53 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies($gate);
 
         $gate->define('isAdmin', function($user) {
-            //Get the roles the user has from the user_roles table and check against the gate we are creating
-            $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]->role === 'Admin') {
-                //User has the Admin role
+            
+            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check[0]-> role === 'role.admin') {
                 return true;
             } else {
                 return false;
             }
+            
         });
 
         $gate->define('isDirector', function($user) {
-            //Get the roles the user has from the user_roles table and check against the gate we are creating
-            $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]->role === 'Director') {
-                //User has the Director role
+           
+            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check[0]-> role === 'role.director') {
                 return true;
             } else {
                 return false;
             }
+           
         });
 
         $gate->define('isUser', function($user) {
-            //Get the roles the user has from the user_roles table and check against the gate we are creating
-            $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]->role === 'User') {
-                //User has the User role
+            
+            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check[0]-> role === 'role.user') {
                 return true;
             } else {
                 return false;
             }
+            
         });
 
         $gate->define('isGuest', function($user) {
-            //Get the roles the user has from the user_roles table and check against the gate we are creating
-            $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]->role === 'Guest') {
-                //User has the Guest role
+           
+            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check[0]-> role === 'role.guest') {
                 return true;
             } else {
                 return false;
             }
+            
         });
 
         $gate->define('isNone', function($user) {
-            //Get the roles the user has from the user_roles table and check against the gate we are creating
-            $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]->role === 'None') {
-                //User has no role
+            
+            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
+            if($check[0]-> role === 'role.none') {
                 return true;
             } else {
                 return false;

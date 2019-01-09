@@ -12,7 +12,7 @@ use DB;
 use App\User;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
-use App\Models\User\UserRole;
+use App\Models\user\Permission;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -111,6 +111,12 @@ class LoginController extends Controller
                         'owner_hash' => $eve_user->owner_hash,
                         'role' => $role,
                     ]);
+                    //Update the user's roles and permission
+                    UserPermission::where(['character_id' => $eve_user->id])->delete();
+                    $perm = new UserPermission();
+                    $perm->character_id = $eve_user->id;
+                    $perm->permission = $role;
+                    $perm->save();
                 } else {
                     //Update the user information never the less.
                     DB::table('users')->where('character_id', $eve_user->id)->update([
@@ -178,11 +184,10 @@ class LoginController extends Controller
      * @param charId
      */
     private function SetRole($role, $charId) {
-        //Insert the role into the database
-        $roles = new UserRole;
-        $roles->character_id = $charId;
-        $roles->role = $role;
-        $roles->save();
+        $permission = new UserPermission;
+        $permission->character_id = $charId;
+        $permission->permission = $role;
+        $permission->save();
     }
 
     /**
@@ -226,13 +231,13 @@ class LoginController extends Controller
     private function GetRole($refreshToken, $charId) {
         $accountType = $this->GetAccountType($refreshToken, $charId);
         if($accountType == 'Guest') {
-            $role = 'Guest';
+            $role = 'role.guest';
         } else if($accountType == 'Legacy'){
-            $role = 'User';
+            $role = 'role.user';
         } else if($accountType == 'W4RP') {
-            $role = 'User';
+            $role = 'role.user';
         } else {
-            $role = 'None';
+            $role = 'role.none';
         }
 
         return $role;

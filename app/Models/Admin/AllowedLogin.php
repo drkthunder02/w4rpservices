@@ -1,22 +1,17 @@
 <?php
 
-namespace App\Models\Admin;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
 class AllowedLogin extends Model
 {
-    // Table Name
-    public $table = 'allowed_login';
+    //Table Name
+    public $table = 'allowed_logins';
 
-    // Timestamps
+    //Timestamps
     public $timestamps = true;
 
-    /**
-     * The attributes that are mass assignable
-     * 
-     * @var array
-     */
     protected $fillable = [
         'entity_id',
         'entity_type',
