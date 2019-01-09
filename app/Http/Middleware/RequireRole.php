@@ -33,7 +33,7 @@ class RequireRole
             abort(403, "You don't any roles.  You don't belong here.");
         }
 
-        if($ranking[$check->role] >= $ranking[$role]) {
+        if($ranking[$check[0]->role] >= $ranking[$role]) {
             $confirmed = true;
         }
 
