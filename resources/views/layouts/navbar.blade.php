@@ -8,7 +8,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moons</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    @if(auth()->user()hasPermission('role.guest'))
+                    @if(auth()->user()->hasPermission('role.guest'))
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
                     @endif
                     @if(auth()->user()->hasPermission('role.user'))
