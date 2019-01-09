@@ -52,10 +52,6 @@ class User extends Authenticatable
         return User::where('user_type')->get();
     }
 
-    public function role() {
-        return $this->hasOne('App\Models\User\UserRole', 'character_id');
-    }
-
     public function permissions() {
         return $this->hasMany('App\Models\User\UserPermission', 'character_id');
     }
@@ -70,11 +66,13 @@ class User extends Authenticatable
 
     public function hasPermission($permission) {
         $found = UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get(['permission']);
-        if(isset($found[0]->permission) && $found[0]->permission == $permission) {
-            return true;
-        } else {
-            return false;
+        foreach($found as $foo) {
+            if($foo->permission === $permission) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     public function tickets() {

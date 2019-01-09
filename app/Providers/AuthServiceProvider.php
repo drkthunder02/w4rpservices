@@ -29,30 +29,30 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
+        
+        /*
         $this->registerPolicies($gate);
 
         $gate->define('isAdmin', function($user) {
-            $permission = false;
             $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
             foreach($perms as $perm) {
                 if($perm === 'role.admin') {
-                    $permission = true;
+                    return true;
                 }
             }
             
-            return $permission;
+            return false;
         });
 
         $gate->define('isDirector', function($user) {
-            $permission = false;
             $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
             foreach($perms as $perm) {
                 if($perm === 'role.director') {
-                    $permission = true;
+                    return true;
                 }
             }
             
-            return $permission;           
+            return false;        
         });
 
         $gate->define('isUser', function($user) {
@@ -90,5 +90,6 @@ class AuthServiceProvider extends ServiceProvider
             
             return $permission;
         });
+        */
     }
 }

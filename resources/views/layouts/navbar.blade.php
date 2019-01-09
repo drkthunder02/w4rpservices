@@ -8,20 +8,20 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moons</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    @can('isGuest')
+                    @if(User::hasPermission('role.guest'))
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
-                    @endcan
-                    @can('isUser')
+                    @endif
+                    @if(User::hasPermission('role.user'))
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
-                    @endcan
-                    @can('isAdmin')
+                    @endif
+                    @if(User::hasPermission('role.admin'))
                     <a class="dropdown-item" href="/moons/admin/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     <a class="dropdown-item" href="/moons/admin/addmoon">Add Moon</a>
                     <a class="dropdown-item" href="/moons/admin/updatemoon">Update Moon</a>
                     <a class="dropdown-item" href="/moons/admin/journal">Journal</a>
-                    @endcan
+                    @endif
                 </div>
             </li>
             <li class="nav-item dropdown">
