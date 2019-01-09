@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 
+use App\Models\User\UserRole;
+
 class RequireRole
 {
     /**
@@ -25,7 +27,7 @@ class RequireRole
             'SuperUser' => 4,
         ];
 
-        $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
+        $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
 
         if(!isset($check[0]->role)) {
             abort(403, "You don't any roles.  You don't belong here.");
