@@ -14,6 +14,7 @@ class RegisterStructureController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
+        $this->middleware('role:User');
         $this->middleware('permission:structure.operator');
     }
 

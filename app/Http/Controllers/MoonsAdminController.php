@@ -18,7 +18,7 @@ class MoonsAdminController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('permission:role.admin');
+        $this->middleware('role:Admin');
     }
 
     public function showJournalEntries() {
