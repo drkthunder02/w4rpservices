@@ -59,7 +59,7 @@ class RequirePermission
 
         foreach($check as $check) {
             if(!isset($check->permission)) {
-                abort(403, "You don't have permission to access this area!");
+                abort(403, "You don't have the correct role to view this area.");
             }
 
             if($ranking[$check->permission] >= $ranking[$role]) {
