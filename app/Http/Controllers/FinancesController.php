@@ -8,7 +8,7 @@ class FinancesController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('role:Admin');
+        $this->middleware('permission:role.admin');
     }
 
     public function displayFinances() {
