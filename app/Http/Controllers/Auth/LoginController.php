@@ -12,7 +12,7 @@ use DB;
 use App\User;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
-use App\Models\user\Permission;
+use App\Models\User\UserPermission;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
