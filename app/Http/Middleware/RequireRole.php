@@ -20,14 +20,14 @@ class RequireRole
     {
         $confirmed = false;
         $ranking = [
-            'None' => 0,
-            'Guest' => 1,
-            'User' => 2,
-            'Director' => 3,
-            'Admin' => 4,
+            'role.none' => 0,
+            'role.guest' => 1,
+            'role.user' => 2,
+            'role.director' => 3,
+            'role.admin' => 4,
         ];
         //Using eloquent let's get the roles for the character
-        $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
+        $check = UserPermission::where(['character_id' => auth()->user()->character_id, 'permission' => $permission])->get(['permission']);
         
         if(!isset($check[0]->role)) {
             abort(403, "You don't have permissions to access this area!");    
