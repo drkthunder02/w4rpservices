@@ -61,12 +61,12 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/structures/taxes/display">Current Taxes</a>
                     <a class="dropdown-item" href="/structures/register">Register Structure</a>
-                    @can('isAdmin')
+                    @if(auth()->user()->hasPermission('role.admin'))
                     <a class="dropdown-item" href="/structures/admin/taxes/display">Corp Taxes</a>
                     <a class="dropdown-item" href="/structures/admin/taxes/industry">Industry Taxes</a>
                     <a class="dropdown-item" href="/structures/admin/taxes/reprocessing">Reprocessing Taxes</a>
                     <a class="dropdown-item" href="/finances/admin">Finances</a>
-                    @endcan
+                    @endif
                 </div>
             </li>
             @endif
@@ -75,11 +75,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="/scopes/select">Add Esi Scopes</a>
             </li>
-            @can('isAdmin')
+            @if(auth()->user()->hasPermission('role.admin'))
             <li class="nav-item">
                 <a class="nav-link" href="/admin/dashboard">Admin</a>
             </li>
-            @endcan
+            @endif
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
             </li>
