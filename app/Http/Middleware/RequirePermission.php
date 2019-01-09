@@ -19,8 +19,7 @@ class RequirePermission
     public function handle($request, Closure $next, $permission)
     {
         $confirmed = false;
-        var_dump(strpos($permission, 'role.'));
-        if(strpos($permission, 'role.')) {
+        if(strpos($permission, 'role.')  !== false) {
             $confirmed = $this->CheckRole($permission);
         } else {
             $confirmed = $this->CheckPermission($permission);
@@ -36,12 +35,14 @@ class RequirePermission
     private function CheckPermission($permission) {
         $confirmed = false;
 
-        $check = UserPermission::where(['character_id' => auth()->user()->character_id, 'permission' => $permission])->get(['permission']);
-        if(!isset($check[0]->permission)) {
-            return false;
-        } else {
-            return true;
+        $checks = UserPermission::where(['character_id' => auth()->user()->character_id, 'permission' => $permission])->get(['permission']);
+        foreach($checks as $check) {
+            if($check === $permission) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     private function CheckRole($role) {
