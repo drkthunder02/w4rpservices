@@ -32,57 +32,63 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies($gate);
 
         $gate->define('isAdmin', function($user) {
-            
-            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]-> role === 'role.admin') {
-                return true;
-            } else {
-                return false;
+            $permission = false;
+            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
+            foreach($perms as $perm) {
+                if($perm === 'role.admin') {
+                    $permission = true;
+                }
             }
             
+            return $permission;
         });
 
         $gate->define('isDirector', function($user) {
-           
-            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]-> role === 'role.director') {
-                return true;
-            } else {
-                return false;
+            $permission = false;
+            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
+            foreach($perms as $perm) {
+                if($perm === 'role.director') {
+                    $permission = true;
+                }
             }
-           
+            
+            return $permission;           
         });
 
         $gate->define('isUser', function($user) {
-            
-            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]-> role === 'role.user') {
-                return true;
-            } else {
-                return false;
+            $permission = false;
+            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
+            foreach($perms as $perm) {
+                if($perm === 'role.user') {
+                    $permission = true;
+                }
             }
             
+            return $permission;            
         });
 
         $gate->define('isGuest', function($user) {
-           
-            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]-> role === 'role.guest') {
-                return true;
-            } else {
-                return false;
+            $permission = false;
+            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
+            foreach($perms as $perm) {
+                if($perm === 'role.guest') {
+                    $permission = true;
+                }
             }
             
+            return $permission;
         });
 
         $gate->define('isNone', function($user) {
-            
-            $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['role']);
-            if($check[0]-> role === 'role.none') {
-                return true;
-            } else {
-                return false;
+            $permission = false;
+            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
+            foreach($perms as $perm) {
+                if($perm === 'role.none') {
+                    $permission = true;
+                }
             }
+            
+            return $permission;
         });
     }
 }
