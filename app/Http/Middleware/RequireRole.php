@@ -27,7 +27,7 @@ class RequireRole
             'role.admin' => 4,
         ];
         //Using eloquent let's get the roles for the character
-        $check = UserPermission::where(['character_id' => auth()->user()->character_id, 'permission' => $permission])->get(['permission']);
+        $check = UserPermission::where(['character_id' => auth()->user()->character_id, 'permission' => $role])->get(['permission']);
         
         if(!isset($check[0]->role)) {
             abort(403, "You don't have permissions to access this area!");    
