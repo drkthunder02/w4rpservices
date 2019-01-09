@@ -18,15 +18,6 @@ class UserPermission extends Model
 
     protected $table = 'user_permissions';
 
-    /**
-     * The attributes that should be hidden for arrays
-     * 
-     * @var array
-     */
-    protected $hidden = [];
-
-    protected $guarded = [];
-
     public function user() {
         return $this->belongsTo(User::class);
     }

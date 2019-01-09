@@ -160,11 +160,9 @@ class LoginController extends Controller
         } else {
             //Get the role for the character to be stored in the database
             $role = $this->GetRole(null, $eve_user->id);
-            //Set the role for the user
-            $this->SetRole($role, $eve_user->id);
 
-            //Create a user account
-            return User::create([
+            //Create the user account
+            $user = User::create([
                 'name' => $eve_user->getName(),
                 'email' => null,
                 'avatar' => $eve_user->avatar,
@@ -174,6 +172,12 @@ class LoginController extends Controller
                 'access_token' => $eve_user->token,
                 'user_type' => $this->GetAccountType(null, $eve_user->id),
             ]);
+
+            //Set the role for the user
+            $this->SetRole($role, $eve_user->id);
+
+            //Create a user account
+            return $user;
         }
     }
 
