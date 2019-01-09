@@ -55,17 +55,16 @@ class RequirePermission
             'role.admin' => 4,
         ];
         //Using eloquent let's get the roles for the character
-        $check = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
-        
-        if(!isset($check[0]->role)) {
-            abort(403, "You don't have permissions to access this area!");    
-        }
+        $checks = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
 
-        if($ranking[$check[0]->role] === $ranking[$role]) {
-            $confirmed = true;
-        }
-        if($ranking[$check[0]->role] >= $ranking[$role]) {
-            $confirmed = true;
+        foreach($check as $check) {
+            if(!isset($check->permission)) {
+                abort(403, "You don't have permission to access this area!");
+            }
+
+            if($ranking[$check->permission] >= $ranking[$role]) {
+                $confirmed = true;
+            }
         }
 
         return $confirmed;
