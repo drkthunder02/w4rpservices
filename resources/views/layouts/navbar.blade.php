@@ -8,14 +8,14 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moons</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    @if(User::hasPermission('role.guest'))
+                    @if(auth()->user()hasPermission('role.guest'))
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
                     @endif
-                    @if(User::hasPermission('role.user'))
+                    @if(auth()->user()->hasPermission('role.user'))
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     @endif
-                    @if(User::hasPermission('role.admin'))
+                    @if(auth()->user()->hasPermission('role.admin'))
                     <a class="dropdown-item" href="/moons/admin/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     <a class="dropdown-item" href="/moons/admin/addmoon">Add Moon</a>
