@@ -13,7 +13,7 @@ use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
-use App\Models\EveMail as EveMailModel;
+use App\Models\Mail\EveMail as EveMailModel;
 
 class SendEveMail implements ShouldQueue
 {
