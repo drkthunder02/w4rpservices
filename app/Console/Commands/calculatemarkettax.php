@@ -112,7 +112,7 @@ class CalculateMarketTax extends Command
             $mail->recipient_type = 'character';
             $mail->save();
 
-            SendEveMail::dispatch($mail)->delay(now()->addSeconds(5));
+            SendEveMail::dispatch($mail);
 
             /*
 

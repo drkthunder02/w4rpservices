@@ -8,9 +8,11 @@
 namespace App\Library\Finances\Helper;
 
 use DB;
+use App\Jobs\SendEveMail;
 
 use App\Models\User\UserToCorporation;
 use App\Models\Esi\EsiToken;
+use App\Models\Mail\EveMail;
 
 use App\Library\Esi\Esi;
 use App\Library\Finances\MarketTax;
@@ -33,33 +35,16 @@ class FinanceHelper {
         $scope = EsiScope::where(['character_id' => $charId, 'scope' => 'esi-wallet.read_corporation_wallet.v1'])->get(['scope']);
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
-            //Retrieve the token for main character to send mails from
-            $token = EsiToken::where(['character_id' => 93738489])->first();
+            //Register a mail to be dispatched as a job
+            $mail = new EveMail;
+            $mail->sender = 93738489;
+            $mail->subject = 'W4RP Services ESI API';
+            $mail->body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
+            $mail->recipient = (int)$info->character_id;
+            $mail->recipient_type = 'character';
+            $mail->save();
 
-            $config = config('esi');
-            $authentication = new EsiAuthentication([
-                'client_id'  => $config['client_id'],
-                'secret' => $config['secret'],
-                'refresh_token' => $token->refresh_token,
-            ]);
-            $esi = new Eseye($authentication);
-            $subject = 'Services ESI API';
-            $body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
-            try {
-                $esi->setBody([
-                    'approved_cost' => 50000,
-                    'body' => $body,
-                    'recipients' => [[
-                        'recipient_id' => (int)$info->character_id,
-                        'recipient_type' => 'character',
-                    ]],
-                    'subject' => $subject,
-                ])->invoke('post', '/characters/{character_id}/mail/', [
-                    'character_id'=> 93738489,
-                ]);
-            } catch(RequestFailedException $e) {
-                return null;
-            }
+            SendEveMail::dispatch($mail);
 
             return null;
         }

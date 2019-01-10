@@ -91,7 +91,7 @@ class SendEveMail implements ShouldQueue
                 'character_id'=> 93738489,
             ]);
         } catch(RequestFailedException $e) {
-            //
+            return null;
         }
 
         $mail->delete();
