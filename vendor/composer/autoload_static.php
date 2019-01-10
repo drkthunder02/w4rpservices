@@ -519,7 +519,6 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Library\\Lookups\\LookupHelper' => __DIR__ . '/../..' . '/app/Library/Lookups/LookupHelper.php',
         'App\\Library\\Moons\\MoonCalc' => __DIR__ . '/../..' . '/app/Library/Moons/MoonCalc.php',
         'App\\Library\\Moons\\MoonMine' => __DIR__ . '/../..' . '/app/Library/Moons/MoonMine.php',
-        'App\\Library\\SeatHelper' => __DIR__ . '/../..' . '/app/Library/SeatHelper.php',
         'App\\Library\\Structures\\JumpBridgeFuel' => __DIR__ . '/../..' . '/app/Library/Structures/JumpBridgeFuel.php',
         'App\\Library\\Structures\\StructureTaxHelper' => __DIR__ . '/../..' . '/app/Library/Structures/StructureTaxHelper.php',
         'App\\Models\\Character\\CharacterToCorporation' => __DIR__ . '/../..' . '/app/Models/Charcter/CharacterToCorporation.php',

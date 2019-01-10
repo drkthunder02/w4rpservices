@@ -65,7 +65,6 @@ return array(
     'App\\Library\\Lookups\\LookupHelper' => $baseDir . '/app/Library/Lookups/LookupHelper.php',
     'App\\Library\\Moons\\MoonCalc' => $baseDir . '/app/Library/Moons/MoonCalc.php',
     'App\\Library\\Moons\\MoonMine' => $baseDir . '/app/Library/Moons/MoonMine.php',
-    'App\\Library\\SeatHelper' => $baseDir . '/app/Library/SeatHelper.php',
     'App\\Library\\Structures\\JumpBridgeFuel' => $baseDir . '/app/Library/Structures/JumpBridgeFuel.php',
     'App\\Library\\Structures\\StructureTaxHelper' => $baseDir . '/app/Library/Structures/StructureTaxHelper.php',
     'App\\Models\\Character\\CharacterToCorporation' => $baseDir . '/app/Models/Charcter/CharacterToCorporation.php',
