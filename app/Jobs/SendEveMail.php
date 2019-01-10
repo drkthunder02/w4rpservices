@@ -13,6 +13,9 @@ use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
+
 use App\Models\Mail\EveMail as EveMailModel;
 
 class SendEveMail implements ShouldQueue
