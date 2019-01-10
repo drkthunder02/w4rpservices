@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\Jobs\
 
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
@@ -98,8 +99,9 @@ class SendEveMail implements ShouldQueue
      * @param  Exception  $exception
      * @return void
      */
-    public function failed(Exception $exception)
+    public function failed($exception)
     {
         // Send user notification of failure, etc...
+        dd($exception);
     }
 }
