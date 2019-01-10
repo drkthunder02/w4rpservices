@@ -30,6 +30,39 @@ class FinanceHelper {
     public function GetWalletJournal($division, $charId) {
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $scope = EsiScope::where(['character_id' => $charId, 'scope' => 'esi-wallet.read_corporation_wallet.v1'])->get(['scope']);
+        //If the token is not found, send the user an eve mail, and just exit out of the function
+        if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
+            //Retrieve the token for main character to send mails from
+            $token = EsiToken::where(['character_id' => 93738489])->first();
+
+            $config = config('esi');
+            $authentication = new EsiAuthentication([
+                'client_id'  => $config['client_id'],
+                'secret' => $config['secret'],
+                'refresh_token' => $token->refresh_token,
+            ]);
+            $esi = new Eseye($authentication);
+            $subject = 'Services ESI API';
+            $body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
+            try {
+                $esi->setBody([
+                    'approved_cost' => 50000,
+                    'body' => $body,
+                    'recipients' => [[
+                        'recipient_id' => (int)$info->character_id,
+                        'recipient_type' => 'character',
+                    ]],
+                    'subject' => $subject,
+                ])->invoke('post', '/characters/{character_id}/mail/', [
+                    'character_id'=> 93738489,
+                ]);
+            } catch(RequestFailedException $e) {
+                return null;
+            }
+
+            return null;
+        }
 
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $this->GetCharCorp($charId);
