@@ -93,6 +93,8 @@ class SendEveMail implements ShouldQueue
         } catch(RequestFailedException $e) {
             //
         }
+
+        $mail->delete();
     }
 
     /**
