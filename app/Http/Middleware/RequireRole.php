@@ -33,11 +33,9 @@ class RequireRole
             abort(403, "You don't any roles.  You don't belong here.");
         }
 
-        if($ranking[$check[0]->role] >= $ranking[$role]) {
-            $confirmed = true;
+        if($ranking[$check[0]->role] < $ranking[$role]) {
+            abort(403, "You don't have the correct role to be in this area.");
         }
-
-        abort_unless(auth()->check() && $confirmed, 403, "You don't have the correct role to be in this area.");
 
         return $next($request);
     }
