@@ -20,7 +20,7 @@ use App\Models\Mail\EveMail as EveMailModel;
 
 class SendEveMail implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable;
 
     /**
      * Class Variable for eve mail
