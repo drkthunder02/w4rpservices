@@ -241,6 +241,8 @@ class LoginController extends Controller
             $role = 'User';
         } else if($accountType == 'W4RP') {
             $role = 'User';
+        } elseif($accountType == 'Renter') {
+            $role = 'User';
         } else {
             $role = 'None';
         }
@@ -277,18 +279,23 @@ class LoginController extends Controller
         if(isset($corp_info->alliance_id)) {
             if($corp_info->alliance_id == '99004116') {
                 return 'W4RP';
-            } else if(in_array($corp_info->alliance_id, array(99006297,   //Drone Walkers
-                                                              498125261,  //Test Alliance Please Ignore
-                                                              99003214,   //Brave Collective
-                                                              99004136,   //Dangerous Voltage
-                                                              99002367,   //Evictus    
-                                                              99001657,   //Rezada Regnum
-                                                              99006069,   //Tactical Supremacy
-                                                              99001099,   //The Watchmen.
-                                                              99006297,   //Drone Walkers
-                                                              99003838))  //Requiem Eternal
-                                                              ) {
+            } else if(in_array($corp_info->alliance_id, [
+                99006297,   //Drone Walkers
+                498125261,  //Test Alliance Please Ignore
+                99003214,   //Brave Collective
+                99004136,   //Dangerous Voltage
+                99002367,   //Evictus    
+                99001657,   //Rezada Regnum
+                99006069,   //Tactical Supremacy
+                99001099,   //The Watchmen.
+                99003838,   //Requiem Eternal
+                99007289,   //Federation Uprising
+            ])) {
                 return 'Legacy';
+            } else if(in_arry($corp_info->alliance_id, [
+                99007077,   //WYNX
+            ])) {
+                return 'Renter';
             } else {
                 return 'Guest';
             }

@@ -18,6 +18,7 @@ class CreateAllowedLoginsTable extends Migration
                 $table->increments('id');
                 $table->string('entity_id');
                 $table->string('entity_type');
+                $table->string('entity_name');
                 $table->timestamps();
             });
         }
