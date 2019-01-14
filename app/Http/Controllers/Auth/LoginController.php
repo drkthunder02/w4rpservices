@@ -242,7 +242,7 @@ class LoginController extends Controller
         } else if($accountType == 'W4RP') {
             $role = 'User';
         } elseif($accountType == 'Renter') {
-            $role = 'User';
+            $role = 'Renter';
         } else {
             $role = 'None';
         }
@@ -275,6 +275,9 @@ class LoginController extends Controller
         $corp_info = $esi->invoke('get', '/corporations/{corporation_id}/', [
             'corporation_id' => $character_info->corporation_id,
         ]);
+
+        //Send back the appropriate group 
+
         //Send back the appropriate group
         if(isset($corp_info->alliance_id)) {
             if($corp_info->alliance_id == '99004116') {

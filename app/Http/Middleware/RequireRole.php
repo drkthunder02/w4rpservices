@@ -22,9 +22,10 @@ class RequireRole
         $ranking = [
             'None' => 0,
             'Guest' => 1,
-            'User' => 2,
-            'Admin' => 3,
-            'SuperUser' => 4,
+            'Renter' => 2,
+            'User' => 3,
+            'Admin' => 4,
+            'SuperUser' => 5,
         ];
 
         $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
