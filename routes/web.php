@@ -43,12 +43,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/wiki/changepassword', 'WikiController@changePassword');
 
     //Fleet Controller display pages
-    Route::get('/fleets/display', 'FleetsController@displayFleets');
-    Route::get('/fleets/register', 'FleetsController@displayRegisterFleet');
-    Route::post('/fleets/register', 'Fleetscontroller@registerFleet');
-    Route::get('/fleets/{fleet_id}/addpilot/{id}', 'FleetsController@addPilot')->name('addpilot');
-    Route::get('/fleets/{fleet_id}/addpilot/{name}', 'Fleetscontroller@addPilotName');
-    Route::get('/fleets/{fleet_id}/delete', 'FleetsController@deleteFleet')->name('deletefleet');
+    //Route::get('/fleets/display', 'FleetsController@displayFleets');
+    //Route::get('/fleets/register', 'FleetsController@displayRegisterFleet');
+    //Route::post('/fleets/register', 'Fleetscontroller@registerFleet');
+    //Route::get('/fleets/{fleet_id}/addpilot/{id}', 'FleetsController@addPilot')->name('addpilot');
+    //Route::get('/fleets/{fleet_id}/addpilot/{name}', 'Fleetscontroller@addPilotName');
+    //Route::get('/fleets/{fleet_id}/delete', 'FleetsController@deleteFleet')->name('deletefleet');
 
     //Admin Controller display pages
     Route::get('/admin/dashboard', 'AdminController@displayDashboard');
@@ -71,20 +71,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
 
     //Jump Bridge Controller display pages
-    Route::get('/jumpbridges/overall', 'JumpBridgeController@displayAll');
-    Route::get('/jumpbridges/corps', 'JumpBridgeController@displayCorpUsage');
-    Route::post('/jumpbridges/getcorps', 'JumpBridgeController@ajaxCorpUsage');
-    Route::get('/jumpbridges/structures', 'JumpBridgeController@displayStructureUsage');
-    Route::get('/jumpbridges/getstructures', 'JumpBridgeController@ajaxStructureUsage');
 
     //Help Desk Controller display pages
-    Route::get('/helpdesk/tickets', 'HelpDeskController@displayMyTickets');
-    Route::get('/helpdesk/tickets/edit', 'HelpDeskController@editTicket');
-    Route::get('/helpdesk/tickets/new', 'HelpDeskController@displayNewTicket');
-    Route::post('/helpdesk/tickets/new', 'HelpDeskController@storeTicket');
-
-    //Finances Controller display pages
-    Route::get('/finances/admin', 'FinancesController@displayFinances');
+    //Route::get('/helpdesk/tickets', 'HelpDeskController@displayMyTickets');
+    //Route::get('/helpdesk/tickets/edit', 'HelpDeskController@editTicket');
+    //Route::get('/helpdesk/tickets/new', 'HelpDeskController@displayNewTicket');
+    //Route::post('/helpdesk/tickets/new', 'HelpDeskController@storeTicket');
 });
 
 //Login display pages

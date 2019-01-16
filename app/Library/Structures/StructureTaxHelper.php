@@ -40,7 +40,7 @@ class StructureTaxHelper {
 
         //Calculate the tax ratio to later be divided against the tax to find the
         //actual tax owed to the alliance.  Revenue will be a separate function
-        $ratio = $this->CalculateTaxRatio($tax, $refType, $start, $end);
+        $ratio = $this->CalculateTaxRatio($corpId, $tax, $refType);
         
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
@@ -93,7 +93,10 @@ class StructureTaxHelper {
         return (float)$revenue;
     }
 
-    private function CalculateTaxRatio($overallTax, $type) {
+    private function CalculateTaxRatio($corpId, $overallTax, $type) {
+        //Get the ratio based on what was decided upon for the ratio of taxes.
+        //Default rate is 2.5 ratio.
+
         //The alliance will get a ratio of the tax.
         //We need to calculate the correct ratio based on structure tax, 
         //Then figure out what is owed to the alliance
