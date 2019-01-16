@@ -17,6 +17,7 @@ class CreateCorpTaxRatiosTable extends Migration
             Schema::create('corp_tax_ratios', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('corporation_id');
+                $table->string('corporation_name');
                 $table->string('structure_type');
                 $table->string('ratio');
                 $table->timestamps();

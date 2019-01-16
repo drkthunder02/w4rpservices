@@ -96,6 +96,7 @@ class StructureTaxHelper {
     private function CalculateTaxRatio($corpId, $overallTax, $type) {
         //Get the ratio based on what was decided upon for the ratio of taxes.
         //Default rate is 2.5 ratio.
+        
 
         //The alliance will get a ratio of the tax.
         //We need to calculate the correct ratio based on structure tax, 
