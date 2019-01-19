@@ -22,11 +22,6 @@ use App\Models\Mail\EveMail;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
-
 class CalculateMarketTax extends Command
 {
     /**
@@ -113,49 +108,6 @@ class CalculateMarketTax extends Command
             //$mail->save();
 
             SendEveMail::dispatch($mail);
-
-            /*
-
-            //Retrieve the token for main character to send mails from
-            $token = EsiToken::where(['character_id' => 93738489])->first();
-
-            //Create a new esi container and authentication
-            $config = config('esi');
-            $authentication = new EsiAuthentication([
-                'client_id'  => $config['client_id'],
-                'secret' => $config['secret'],
-                'refresh_token' => $token->refresh_token,
-            ]);
-            $esi = new Eseye($authentication);
-
-            //Send a mail out with the bill
-            $subject = 'Market Taxes Owed';
-            $body = 'Year ' . $start->year . ' ' .
-                    'Month: ' . 
-                    $start->month .
-                    '<br>Market Taxes Owed: ' .
-                    number_format($finalTaxes, 2, '.', ',') .
-                    '<br>Please remit to Spatial Forces';
-            try {
-                $this->line('Attemping to send the mail.');
-                $esi->setBody([
-                    'approved_cost' => 50000,
-                    'body' => $body,
-                    'recipients' => [[
-                        'recipient_id' => (int)$info->character_id,
-                        'recipient_type' => 'character',
-                    ]],
-                    'subject' => $subject,
-                ])->invoke('post', '/characters/{character_id}/mail/', [
-                    'character_id'=> 93738489,
-                ]);
-                $this->line('Mail sent.');
-
-            } catch(RequestFailedException $e) {
-                $this->line('Error is ' . $e);
-            }
-
-            */
         }
         
 
