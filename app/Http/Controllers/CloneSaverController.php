@@ -7,12 +7,21 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
-use App\Models\User\UserPermission;
-use App\Models\User\UserRole;
-
-
 
 class CloneSaverController extends Controller
 {
-    //
+    //Register display, this will register new scopes and the old scopes as well
+    public function displayRegister()  {
+
+    }
+
+    //Remove display
+    public function removeRegister() {
+
+    }
+
+    //Display clones
+    public function displayClones() {
+
+    }
 }

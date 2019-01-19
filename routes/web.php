@@ -42,14 +42,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/wiki/changepassword', 'WikiController@displayChangePassword');
     Route::post('/wiki/changepassword', 'WikiController@changePassword');
 
-    //Fleet Controller display pages
-    //Route::get('/fleets/display', 'FleetsController@displayFleets');
-    //Route::get('/fleets/register', 'FleetsController@displayRegisterFleet');
-    //Route::post('/fleets/register', 'Fleetscontroller@registerFleet');
-    //Route::get('/fleets/{fleet_id}/addpilot/{id}', 'FleetsController@addPilot')->name('addpilot');
-    //Route::get('/fleets/{fleet_id}/addpilot/{name}', 'Fleetscontroller@addPilotName');
-    //Route::get('/fleets/{fleet_id}/delete', 'FleetsController@deleteFleet')->name('deletefleet');
-
     //Admin Controller display pages
     Route::get('/admin/dashboard', 'AdminController@displayDashboard');
     Route::post('/admin/addRole', 'AdminController@addRole');
@@ -72,11 +64,12 @@ Route::group(['middleware' => ['auth']], function(){
 
     //Jump Bridge Controller display pages
 
-    //Help Desk Controller display pages
-    //Route::get('/helpdesk/tickets', 'HelpDeskController@displayMyTickets');
-    //Route::get('/helpdesk/tickets/edit', 'HelpDeskController@editTicket');
-    //Route::get('/helpdesk/tickets/new', 'HelpDeskController@displayNewTicket');
-    //Route::post('/helpdesk/tickets/new', 'HelpDeskController@storeTicket');
+    //Clone Saver display pages
+    Route::get('/clones/register', 'CloneSaverController@displayRegister');
+    Route::get('/clones/display', 'CloneSaverController@displayClones');
+    Route::get('/clones/remove', 'CloneSaverController@displayRemove');
+    Route::post('/clones/register', 'CloneSaverController@storeRegister');
+    Route::post('/clones/remove', 'CloneSavercontroller@deleteRegister');
 });
 
 //Login display pages

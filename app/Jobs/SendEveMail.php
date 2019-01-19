@@ -20,7 +20,7 @@ use App\Models\Mail\EveMail as EveMailModel;
 
 class SendEveMail implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Class Variable for eve mail
@@ -60,9 +60,6 @@ class SendEveMail implements ShouldQueue
      */
     public function handle()
     {
-        //Access the model in the queue for processing
-        $mail = $this->eveMail;
-
         //Retrieve the token for main character to send mails from
         $token = EsiToken::where(['character_id'=> 93738489])->get();
 
@@ -81,12 +78,12 @@ class SendEveMail implements ShouldQueue
         try {
             $esi->setBody([
                 'approved_cost' => 0,
-                'body' => $mail->body,
+                'body' => $this->eveMail->body,
                 'recipients' => [[
-                    'recipient_id' => (int)$mail->recipient,
-                    'recipient_type' => $mail->recipient_type,
+                    'recipient_id' => (int)$this->eveMail->recipient,
+                    'recipient_type' => $this->eveMail->recipient_type,
                 ]],
-                'subject' => $mail->subject,
+                'subject' => $this->eveMail->subject,
             ])->invoke('post', '/characters/{character_id}/mail/', [
                 'character_id'=> 93738489,
             ]);

@@ -13,7 +13,7 @@ use App\Library\Clones\CloneSaver;
 
 use App\Models\Character\CharacterClone;
 
-class runclonesaver extends Command
+class RunCloneSaver extends Command
 {
     /**
      * The name and signature of the console command.
@@ -60,6 +60,9 @@ class runclonesaver extends Command
     }
 
     private function CloneSaverMail() {
+        //Setup time frame job has been sent so we don't send too many mails
+
+        
         //Store a new eve mail model for the job to dispatch
         $mail = new EveMail;
         $mail->sender = $self;
@@ -69,9 +72,6 @@ class runclonesaver extends Command
         $mail->recipient_type = 'character';
 
         //Dispatch the job
-        SendEveMail::dispatch($mail);
-
-        //Setup time frame job has been sent so we don't send too many mails all at once
-        
+        SendEveMail::dispatch($mail)->delay(Carbon::now()->addSeconds(1));
     }
 }

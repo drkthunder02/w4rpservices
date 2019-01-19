@@ -83,17 +83,6 @@ class CalculateMarketTax extends Command
 
             $character = UserToCorporation::where(['character_id' => $info->character_id])->first();
 
-            //Store the value in the database
-            $bill = new MonthlyMarketTax;
-            $bill->character_id = $info->character_id;
-            $bill->character_name = $character->character_name;
-            $bill->corporation_id = $corp->corporation_id;
-            $bill->corporation_name = $character->corporation_name;
-            $bill->tax_owed = $finalTaxes;
-            $bill->month = $start->month;
-            $bill->year = $start->year;
-            $bill->save();
-
             $mail = new EveMail;
             $mail->sender = 93738489;
             $mail->subject = 'Market Taxes Owed';
@@ -107,7 +96,7 @@ class CalculateMarketTax extends Command
             $mail->recipient_type = 'character';
             //$mail->save();
 
-            SendEveMail::dispatch($mail);
+            SendEveMail::dispatch($mail)->delay(Carbon::now()->addSeconds(15));
         }
         
 

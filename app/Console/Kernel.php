@@ -19,8 +19,8 @@ class Kernel extends ConsoleKernel
         Commands\UpdateMoonPricing::class,
         Commands\DumpFleets::class,
         Commands\CalculateMarketTax::class,
-        //Commands\GetLogisticsContracts::class,
         Commands\holdingfinances::class,
+        Commands\RunCloneSaver::class,
     ];
 
     /**
@@ -49,6 +49,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:holdingjournal')
                  ->hourly()
                  ->withoutOverlapping();
+        //$schedule->command('services:clonesaver')
+        //         ->everyMinute()
+        //         ->withoutOverlapping();
     }
 
     /**
