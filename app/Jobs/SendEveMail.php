@@ -91,7 +91,7 @@ class SendEveMail implements ShouldQueue
             return null;
         }
 
-        $mail->delete();
+        $this->eveMail->delete();
     }
 
     /**
