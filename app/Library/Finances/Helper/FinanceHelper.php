@@ -12,6 +12,7 @@ use App\Jobs\SendEveMail;
 
 use App\Models\User\UserToCorporation;
 use App\Models\Esi\EsiToken;
+use App\Models\Esi\EsiScope;
 use App\Models\Mail\EveMail;
 
 use App\Library\Esi\Esi;
@@ -32,7 +33,7 @@ class FinanceHelper {
     public function GetWalletJournal($division, $charId) {
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
-        $scope = EsiScope::where(['character_id' => $charId, 'scope' => 'esi-wallet.read_corporation_wallet.v1'])->get(['scope']);
+        $scope = EsiScope::where(['character_id' => $charId, 'scope' => 'esi-wallet.read_corporation_wallets.v1'])->get(['scope']);
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
             //Register a mail to be dispatched as a job
@@ -40,9 +41,9 @@ class FinanceHelper {
             $mail->sender = 93738489;
             $mail->subject = 'W4RP Services ESI API';
             $mail->body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
-            $mail->recipient = (int)$info->character_id;
+            $mail->recipient = (int)$charId;
             $mail->recipient_type = 'character';
-            //$mail->save();
+            $mail->save();
 
             SendEveMail::dispatch($mail);
 
