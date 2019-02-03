@@ -34,7 +34,7 @@
                 {!! Form::open(['action' => 'AdminController@removeUser', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{ Form::label('user', 'User') }}
-                    {{ Form::select('user', $date['users'], null, ['class' => 'form-control']) }}
+                    {{ Form::select('user', $data['users'], null, ['class' => 'form-control']) }}
                 </div>
                 {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                 {!! Form::close() !!}
