@@ -10,6 +10,7 @@ use Carbon\Carbon;
 
 use App\Library\Structures\StructureTaxHelper;
 use App\Library\Esi\Esi;
+use App\Library\Lookups\LookupHelper;
 
 use App\User;
 use App\Models\User\UserRole;
