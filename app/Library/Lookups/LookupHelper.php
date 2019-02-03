@@ -21,7 +21,7 @@ class LookupHelper {
     public function LookupCharacter($charId) {
         //Check for the character in the user_to_corporation table
         $found = CharacterToCorporation::where('character_id', $charId)->get(['corporation_id']);
-
+        dd($found);
         //If we don't find the character in the table, then we retrieve from ESI
         //and add the character to the table
         if(!isset($found[0]->corporation_id)) {
