@@ -139,14 +139,14 @@ class StructureController extends Controller
     }
 
     public function displayTaxHistory(Request $request) {
+        //Declare new Lookup helper
+        $helper = new LookupHelper();
+
         //Get the months from the request
         $months = $request->months;
 
-        //Make the helper esi class
-        $helper = new Esi();
-
-        //Get the character's corporation from esi
-        $corpId = $helper->FindCorporationId(Auth::user()->character_id);
+        //Get the character's corporation from the lookup table or esi
+        $corpId = $helper->LookupCharacter(Auth::user()->character_id);
 
         //Declare the structure tax helper class
         $sHelper = new StructureTaxHelper();
@@ -167,9 +167,5 @@ class StructureController extends Controller
 
         return view('structures.taxhistory')->with(compact('totalTaxes', 'months'));
         //return view('structures.taxhistory')->with('totalTaxes', $totalTaxes);
-    }
-
-    public function displayJumpBridgeFuel() {
-        
     }
 }
