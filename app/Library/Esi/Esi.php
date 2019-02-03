@@ -5,6 +5,7 @@ namespace App\Library\Esi;
 use DB;
 
 use App\Models\Esi\EsiScope;
+use App\Jobs\SendEveMail;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -33,6 +34,16 @@ class Esi {
                 return true;
             }
         }
+
+        $mail  = new EveMail;
+        $mail->sender = 93738489;
+        $mail->subject = 'W4RP Services - Incorrect ESI Scope';
+        $mail->body = "Please register on https://services.w4rp.space with the scope: " . $scope;
+        $mail->recipient = (int)$charId;
+        $mail->recipient_type = 'character';
+        $mail->save();
+
+        SendEveMail::dispatch($mail)->delay(Carbon::now()->addSeconds(5));
 
         return false;
     }
