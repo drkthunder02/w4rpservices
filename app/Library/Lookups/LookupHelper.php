@@ -43,6 +43,8 @@ class LookupHelper {
                 return $e->getEsiResponse();
             }
 
+            dd($character);
+
             //Save all of the data to the database
             $char = new UserToCorporation;
             $char->character_id = $charId;
