@@ -9,6 +9,9 @@ use App\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\User\AvailableUserPermission;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
+use App\Models\Corporation\CorpStructure;
 
 class AdminController extends Controller
 {
@@ -65,57 +68,30 @@ class AdminController extends Controller
         }   
     }
 
-    public function removePermission(Request $request) {
-        //Get the user and permission to be removed from the form
+    public function removeUser(Request $request) {
+        //Get the user from the form to delete
         $user = $request->user;
-        $permission = $request->permission;
-        //Get the character id from the username using the user table
-        $character = DB::table('users')->where('name', $user)->first();
-        //Check if the permission exists in the table
-        $check = DB::table('user_permissions')->where(['character_id' => $character->character_id, 'permission' => $permission])->get();
-        if($check !== null) {
-            DB::table('user_permissions')->where(['character_id' => $character->character_id,
-                                                  'permission' => $permission])
-                                         ->delete();
-            return view('admin.dashboard')->with('success', 'User Updated.');
-        } else {
-            return view('admin.dashboard')->with('error', 'User did not have the permission.');
-        }
-    }
 
-    public function addRole(Request $request) {
-        //Get the user and role from the form
-        $user = $request->user;
-        $role = $request->role;
-        //Get the character id from the username using the user table
-        $character = DB::table('users')->where('name', $user)->first();
-        //Delete the current roles from the database to start with a clean state
-        DB::table('user_roles')->where(['character_id' => $character->character_id])->delete();
+        //Get the user data from the table
+        $data = User::where(['name' => $user])->get();
 
-        $userRoles = new UserRole;
-        $userRoles->character_id = $character->character_id;
-        $userRoles->role = $role;
-        $userRoles->save();
+        //Delete the user's ESI Scopes
+        EsiScope::where(['character_id' => $data->character_id])->delete();
 
-        //Return the view and the message of user updated
-        return view('admin.dashboard')->with('success', 'User Updated.');
-    }
+        //Delete the user's ESI Token
+        EsiToken::where(['character_id' => $data->character_id])->delete();
 
-    public function removeRole(Request $request) {
-        //Get the user and role from the form
-        $user = $request->user;
-        $role = $request->role;
-        //Get the character id from teh username using the user table
-        $character = DB::table('users')->where('name', $user)->first();
-        $check = DB::table('user_roles')->where(['character_id' => $character->character_id, 'role' => $role])->get();
-        if($check !== null) {
-            DB::table('user_roles')->where(['character_id' => $character->character_id,
-                                            'role' => $role])
-                                            ->delete();
-            return view('admin.dashboard')->with('success', 'User Updated.');
-        }
+        //Delete the user's roles from the roles table
+        UserRole::where(['character_id' => $data->character_id])->delete();
 
-        return view('admin.dashboard')->with('error', 'User did not have the role.');
+        //Delete the user from the user table
+        User::where(['character_id' => $data->character_id])->delete();
+
+        //Delete the user's structures
+        CorpStructure::where(['character_id' => $data->character_id])->delete();
+
+
+        return redirect('/admin/dashboard')->with('success', 'User deleted from the site.');
     }
 
     public function displayAllowedLogins() {

@@ -24,4 +24,22 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 card">
+            <div class="card-header">
+                Remove User
+            </div>
+            <div class="card-body">
+                {!! Form::open(['action' => 'AdminController@removeUser', 'method' => 'POST']) !!}
+                <div class="form-group">
+                    {{ Form::label('user', 'User') }}
+                    {{ Form::select('user', $date['users'], null, ['class' => 'form-control']) }}
+                </div>
+                {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
