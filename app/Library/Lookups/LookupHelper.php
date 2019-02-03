@@ -40,7 +40,7 @@ class LookupHelper {
                     'corporation_id' => $character->corporation_id,
                 ]);
             } catch(RequestFailedException $e){
-                return $e->getEsiResponse();
+                return null;
             }
 
             //Save all of the data to the database
