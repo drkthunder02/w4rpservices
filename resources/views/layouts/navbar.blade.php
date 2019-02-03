@@ -38,13 +38,6 @@
                     <a class="dropdown-item" href="/jumpbridges/overall">Jump Bridge Usage</a>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fleet</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    <a class="dropdown-item" href="/fleets/display">Display</a>
-                    <a class="dropdown-item" href="/fleets/register">Register</a>
-                </div>
-            </li>
             @if(auth()->user()->hasPermission('logistics.minion') && 0)
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Logistics</a>
