@@ -29,67 +29,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
-        
-        /*
-        $this->registerPolicies($gate);
-
-        $gate->define('isAdmin', function($user) {
-            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
-            foreach($perms as $perm) {
-                if($perm === 'role.admin') {
-                    return true;
-                }
-            }
-            
-            return false;
-        });
-
-        $gate->define('isDirector', function($user) {
-            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
-            foreach($perms as $perm) {
-                if($perm === 'role.director') {
-                    return true;
-                }
-            }
-            
-            return false;        
-        });
-
-        $gate->define('isUser', function($user) {
-            $permission = false;
-            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
-            foreach($perms as $perm) {
-                if($perm === 'role.user') {
-                    $permission = true;
-                }
-            }
-            
-            return $permission;            
-        });
-
-        $gate->define('isGuest', function($user) {
-            $permission = false;
-            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
-            foreach($perms as $perm) {
-                if($perm === 'role.guest') {
-                    $permission = true;
-                }
-            }
-            
-            return $permission;
-        });
-
-        $gate->define('isNone', function($user) {
-            $permission = false;
-            $perms = UserPermission::where('character_id', auth()->user()->character_id)->get(['permission']);
-            foreach($perms as $perm) {
-                if($perm === 'role.none') {
-                    $permission = true;
-                }
-            }
-            
-            return $permission;
-        });
-        */
+        //
     }
 }
