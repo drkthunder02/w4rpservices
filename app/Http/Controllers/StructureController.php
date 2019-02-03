@@ -110,18 +110,18 @@ class StructureController extends Controller
     }
 
     public function displayTaxes() {
-        //Make the helper esi class
-        $helper = new Esi();
+        //Declare new Lookup helper
+        $helper = new LookupHelper();
+
+        //Declare the structure tax helper class
+        $sHelper = new StructureTaxHelper();
 
         $months = 3;
         $totalTaxes = array();
         
-        //Get the character's corporation from esi
-        $corpId = $helper->FindCorporationId(Auth::user()->character_id);
+        //Get the character's corporation from the lookup table or esi
+        $corpId = $helper->LookupCharacter(Auth::user()->character_id);
 
-        //Declare the structure tax helper class
-        $sHelper = new StructureTaxHelper();
-        
         //Get the dates we are working with
         $dates = $sHelper->GetTimeFrameInMonths($months);
         
