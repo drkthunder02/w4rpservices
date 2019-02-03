@@ -80,10 +80,6 @@ class RunCloneSaver extends Command
         SendEveMail::dispatch($mail)->delay(Carbon::now()->addMinutes(2));
     }
 
-    private function CheckClone() {
-        
-    }
-
     private function CloneSaverMail() {
         //Setup time frame job has been sent so we don't send too many mails
 
