@@ -12,6 +12,8 @@ use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException; 
 
+use App\Models\Character\CharacterToCorporation;
+
 class LookupHelper {
 
     //Add characters to the lookup table for quicker lookups without having
