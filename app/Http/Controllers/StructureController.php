@@ -133,6 +133,7 @@ class StructureController extends Controller
                 'revenue' => number_format($sHelper->GetRevenue($corpId, 'Market', $date['start'], $date['end']), 2, '.', ',')
             ];
         }
+        dd($totalTaxes);
 
         return view('structures.taxes')->with('totalTaxes', $totalTaxes);
     }
