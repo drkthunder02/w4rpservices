@@ -2,8 +2,6 @@
 @section('content')
 <?php
     $publicData = false;
-    $writeFleet = false;
-    $readFleet = false;
     $readLocation = false;
     $writeMail = false;
     $readMail = false;
@@ -25,27 +23,7 @@
                 <?php $publicData = true; ?>
                 @break
             @endif
-        @endforeach
-        @foreach($scopes as $scope)
-            @if($scope->scope == 'esi-fleets.write_fleet.v1')
-                <div class="form-group col-md-6">
-                    {{ Form::label('scopes[]', 'Write Fleet') }}
-                    {{ Form::checkbox('scopes[]', 'esi-fleets.write_fleet.v1', 'true') }}
-                </div>
-                <?php $writeFleet = true; ?>
-            @break
-            @endif
-        @endforeach        
-        @foreach($scopes as $scope)
-            @if($scope->scope == 'esi-fleets.read_fleet.v1')
-                <div class="form-group col-md-6">
-                    {{ Form::label('scopes[]', 'Read Fleet') }}
-                    {{ Form::checkbox('scopes[]', 'esi-fleets.read_fleet.v1', 'true') }}
-                </div>
-                <?php $readFleet = true; ?>
-            @break
-            @endif
-        @endforeach        
+        @endforeach       
         @foreach($scopes as $scope)
             @if($scope->scope == 'esi-location.read_location.v1')
                 <div class="form-group col-md-6">
@@ -129,18 +107,6 @@
         <div class="form-group col-md-6">
             {{ Form::label('scopes[]', 'Public Data') }}
             {{ Form::checkbox('scopes[]', 'publicData') }}
-        </div>
-        @endif
-        @if($writeFleet == false)
-        <div class="form-group col-md-6">
-            {{ Form::label('scopes[]', 'Write Fleet') }}
-            {{ Form::checkbox('scopes[]', 'esi-fleets.write_fleet.v1') }}
-        </div>
-        @endif
-        @if($readFleet == false)
-        <div class="form-group col-md-6">
-            {{ Form::label('scopes[]', 'Read Fleet') }}
-            {{ Form::checkbox('scopes[]', 'esi-fleets.read_fleet.v1') }}
         </div>
         @endif
         @if($readLocation == false)

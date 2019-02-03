@@ -75,40 +75,17 @@ class AdminController extends Controller
         //Get the user data from the table
         $data = User::where(['name' => $user])->get();
 
-        try {
-            //Delete the user's ESI Scopes
-            EsiScope::where(['character_id' => $data->character_id])->delete();
-        } catch(Exception $e) {
-            //Don't do anything.  Just continue on.
-        }
-        
-        try {
-            //Delete the user's ESI Token
-            EsiToken::where(['character_id' => $data->character_id])->delete();
-        } catch(Exception $e) {
-            //Don't do anything.  Just continue on.
-        }
+        //Delete the user's ESI Scopes
+        DB::table('EsiScopes')->where(['character_id' => $data->character_id])->delete();
 
-        try {
-            //Delete the user's roles from the roles table
-            UserRole::where(['character_id' => $data->character_id])->delete();
-        } catch(Exception $e) {
-            //Don't do anything.  Just continue on.
-        }
+        //Delete the user's ESI Token
+        DB::table('EsiTokens')->where(['character_id' => $data->character_id])->delete();
 
-        try {
-            //Delete the user from the user table
-            User::where(['character_id' => $data->character_id])->delete();
-        } catch(Exception $e) {
-            //Don't do anything.  Just continue on.
-        }
+        //Delete the user's role from the roles table
+        DB::table('user_roles')->where(['character_id' => $data->character_id])->delete();
 
-        try {
-            //Delete the user's structures
-            CorpStructure::where(['character_id' => $data->character_id])->delete();
-        } catch(Exception $e) {
-            //Don't do anything.  Just continue on.
-        }
+        //Delete the user from the user table
+        DB::table('users')->where(['character_id' => $data->character_id])->delete();
 
         return redirect('/admin/dashboard')->with('success', 'User deleted from the site.');
     }
