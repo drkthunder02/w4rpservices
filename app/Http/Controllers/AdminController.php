@@ -75,8 +75,10 @@ class AdminController extends Controller
         //Get the user data from the table
         $data = User::where(['name' => $user])->get();
 
+        dd($data);
+
         //Delete the user's ESI Scopes
-        //DB::table('EsiScopes')->where(['character_id' => $data->character_id])->delete();
+        DB::table('EsiScopes')->where(['character_id' => $data->character_id])->delete();
 
         //Delete the user's ESI Token
         DB::table('EsiTokens')->where(['character_id' => $data->character_id])->delete();
