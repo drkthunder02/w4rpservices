@@ -81,13 +81,13 @@ class AdminController extends Controller
         DB::table('EsiScopes')->where(['character_id' => $data[0]->character_id])->delete();
 
         //Delete the user's ESI Token
-        DB::table('EsiTokens')->where(['character_id' => $data->character_id])->delete();
+        DB::table('EsiTokens')->where(['character_id' => $data[0]->character_id])->delete();
 
         //Delete the user's role from the roles table
-        DB::table('user_roles')->where(['character_id' => $data->character_id])->delete();
+        DB::table('user_roles')->where(['character_id' => $data[0]->character_id])->delete();
 
         //Delete the user from the user table
-        DB::table('users')->where(['character_id' => $data->character_id])->delete();
+        DB::table('users')->where(['character_id' => $data[0]->character_id])->delete();
 
         return redirect('/admin/dashboard')->with('success', 'User deleted from the site.');
     }
