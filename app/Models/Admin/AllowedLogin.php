@@ -15,5 +15,6 @@ class AllowedLogin extends Model
     protected $fillable = [
         'entity_id',
         'entity_type',
+        'login_type',
     ];
 }
