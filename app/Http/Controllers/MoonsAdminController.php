@@ -8,7 +8,11 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
+use App\Models\Moon\Config;
+use App\Models\Moon\ItemComposition;
 use App\Models\Moon\Moon;
+use App\Models\Moon\OrePrice;
+use App\Models\Moon\Price;
 
 use App\Models\Finances\PlayerDonationJournal;
 use App\Library\Moons\MoonCalc;
@@ -25,8 +29,8 @@ class MoonsAdminController extends Controller
         $dateInit = Carbon::now();
         $date = $dateInit->subDays(30);
 
-        $journal = DB::select('SELECT amount,reason,description,date FROM `PlayerDonationJournals` WHERE corporation_id=98287666 AND date >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH) ORDER BY date DESC');
-
+        $journal = DB::select('SELECT amount,reason,description,date FROM `player_donation_journal` WHERE corporation_id=98287666 AND date >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH) ORDER BY date DESC');
+        
         return view('moons.moonjournal')->with('journal', $journal);
     }
 

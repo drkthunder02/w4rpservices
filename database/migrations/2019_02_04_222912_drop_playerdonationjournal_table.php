@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHelpDeskTicketTable extends Migration
+class DropPlayerdonationjournalTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,12 @@ class CreateHelpDeskTicketTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::dropIfExists('PlayerDonationJournal');
+        Schema::dropIfExists('MarketOrders');
+        Schema::dropIfExists('help_desk_ticket');
+        Schema::dropIfExists('help_desk_tickets');
+        Schema::dropIfExists('help_desk_ticket_responses');
+
     }
 
     /**
@@ -23,6 +28,6 @@ class CreateHelpDeskTicketTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('help_desk_ticket');
+        //
     }
 }

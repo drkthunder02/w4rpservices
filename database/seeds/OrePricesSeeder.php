@@ -3,10 +3,12 @@
 use Illuminate\Database\Seeder;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
-use App\Models\Config;
-use App\Models\Moon;
-use App\Models\Price;
-use App\Models\ItemComposition;
+
+use App\Models\Moon\Config;
+use App\Models\Moon\Moon;
+use App\Models\Moon\Price;
+use App\Models\Moon\ItemComposition;
+use App\Models\Moon\OrePrice;
 
 class OrePricesSeeder extends Seeder
 {

@@ -77,12 +77,12 @@ class RunCloneSaver extends Command
         $mail->recipient_type = 'character';
         $mail->save();
 
-        SendEveMail::dispatch($mail)->delay(Carbon::now()->addMinutes(2));
+        SendEveMail::dispatch($mail);
     }
 
     private function CloneSaverMail() {
         //Setup time frame job has been sent so we don't send too many mails
-
+        
         
         //Store a new eve mail model for the job to dispatch
         $mail = new EveMail;

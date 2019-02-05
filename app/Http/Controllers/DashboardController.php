@@ -41,10 +41,10 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function profile() {
-        $scopes = DB::table('EsiScopes')->where('character_id', Auth()->user()->character_id)->get();
-        $permissions = DB::table('user_permissions')->where('charcter_id', Auth()->user()->character_id)->get();
-        $roles = DB::table('user_roles')->where('character_id', Auth()->user()->character_id)->get();
-
+        $scopes = EsiScope::where('character_id', Auth()->user()->character_id)->get();
+        $permissions = UserPermission::where('character_id', Auth()->user()->characer_id)->get();
+        $roles = UserRole::where('character_id', Auth()->user()->character_id)->get();
+        
         $data = [
             'scopes' => $scopes,
             'permissions' => $permissions,

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Library\Finances\JumpBridgeTax;
 
-class JumpBridgeController extends Controller
+class FinancesController extends Controller
 {
     //
 }
