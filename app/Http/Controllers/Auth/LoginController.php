@@ -7,13 +7,13 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Socialite;
 use Auth;
-use DB;
 
 use App\User;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\User\UserPermission;
 use App\Models\User\UserRole;
+use App\Models\Admin\AllowedLogin;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -107,7 +107,7 @@ class LoginController extends Controller
                     $this->SetRole($role, $eve_user->id);
 
                     //Update the user information never the less.
-                    DB::table('users')->where('character_id', $eve_user->id)->update([
+                    User::where('character_id', $eve_user->id)->update([
                         'avatar' => $eve_user->avatar,
                         'owner_hash' => $eve_user->owner_hash,
                         'role' => $role,
@@ -120,7 +120,7 @@ class LoginController extends Controller
                     $perm->save();
                 } else {
                     //Update the user information never the less.
-                    DB::table('users')->where('character_id', $eve_user->id)->update([
+                    User::where('character_id', $eve_user->id)->update([
                         'avatar' => $eve_user->avatar,
                     ]);
                 }
@@ -130,7 +130,7 @@ class LoginController extends Controller
                 $token = EsiToken::where('character_id', $eve_user->id)->first();
                 if($token) {
                     //Update the ESI Token
-                    DB::table('EsiTokens')->where('character_id', $eve_user->id)->update([
+                    EsiToken::where('character_id', $eve_user->id)->update([
                         'character_id' => $eve_user->getId(),
                         'access_token' => $eve_user->token,
                         'refresh_token' => $eve_user->refreshToken,
@@ -152,7 +152,7 @@ class LoginController extends Controller
 
             } else {
                 //If the user is already in the database, but no refresh token was present in the callback, then just update the user
-                DB::table('users')->where('character_id', $eve_user->id)->update([
+                User::where('character_id', $eve_uesr->id)->update([
                     'avatar' => $eve_user->avatar,
                 ]);
             }
@@ -203,7 +203,7 @@ class LoginController extends Controller
      */
     private function SetScopes($scopes, $charId) {
         //Delete the current scopes, so we can add new scopes into the database
-        DB::table('EsiScopes')->where('character_id', $charId)->delete();
+        EsiScope::where('character_id', $charId)->delete();
         $scopes = explode(' ', $scopes);
         foreach($scopes as $scope) {
             $data = new EsiScope;
@@ -276,28 +276,16 @@ class LoginController extends Controller
             'corporation_id' => $character_info->corporation_id,
         ]);
 
-        //Send back the appropriate group 
+        $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->get(['entity_id']);
+        $renter = AllowedLogin::where(['login_type' => 'Renter'])->get(['entity_id']);
 
         //Send back the appropriate group
         if(isset($corp_info->alliance_id)) {
             if($corp_info->alliance_id == '99004116') {
                 return 'W4RP';
-            } else if(in_array($corp_info->alliance_id, [
-                99006297,   //Drone Walkers
-                498125261,  //Test Alliance Please Ignore
-                99003214,   //Brave Collective
-                99004136,   //Dangerous Voltage
-                99002367,   //Evictus    
-                99001657,   //Rezada Regnum
-                99006069,   //Tactical Supremacy
-                99001099,   //The Watchmen.
-                99003838,   //Requiem Eternal
-                99007289,   //Federation Uprising
-            ])) {
+            } else if(in_array($corp_info->alliance_id, $legacy)) {
                 return 'Legacy';
-            } else if(in_arry($corp_info->alliance_id, [
-                99007077,   //WYNX
-            ])) {
+            } else if(in_arry($corp_info->alliance_id, $renter)) {
                 return 'Renter';
             } else {
                 return 'Guest';
