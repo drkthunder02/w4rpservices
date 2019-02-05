@@ -152,7 +152,7 @@ class LoginController extends Controller
 
             } else {
                 //If the user is already in the database, but no refresh token was present in the callback, then just update the user
-                User::where('character_id', $eve_uesr->id)->update([
+                User::where('character_id', $eve_user->id)->update([
                     'avatar' => $eve_user->avatar,
                 ]);
             }
