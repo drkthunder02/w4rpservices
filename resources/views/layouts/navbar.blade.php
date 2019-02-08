@@ -32,13 +32,11 @@
                     <a class="dropdown-item" href="/wiki/changepassword">Change Password</a>
                 </div>
             </li>
-            @if(auth()->user()->hasPermission('logistics.minion') && 0)
+            @if(auth()->user()->hasRole('User'))
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Logistics</a>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Others</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    <a class="dropdown-item" href="/logistics/contracts/available">Available Contracts</a>
-                    <a class="dropdown-item" href="/logistics/contracts/completed">Completed Contracts</a>
-                    <a class="dropdown-item" href="/logistics/insurance/request">Insurance Request</a>
+                    <a class="dropdown-item" href="https://buyback.w4rp.space">Buyback Program</a>
                 </div>
             </li>
             @endif
