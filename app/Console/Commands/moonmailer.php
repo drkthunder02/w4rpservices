@@ -63,31 +63,7 @@ class MoonMailerCommand extends Command
         $total = 0.00;
         $entityType = '';
         foreach($contacts as $contact) {
-            if($contact != 0) {
-                //Get whether the contact is part of the alliance or an ally.
-                $corpId = $lookup->LookupCharacter($contact);
-                $allianceId = $lookup->LookupCorporation($corpId);
-                if($allianceId == 99004116) {
-                    $entityType = 'W4RP';
-                } else {
-                    $entityType = 'Other';
-                }
-                
-                //Get all of the moons a particular contact is renting.
-                $moons = Moon::where(['Contact' => $contact])->get();
-
-                //Price the moons based on whether the contact is of the alliance or an ally
-                foreach($moons as $moon) {
-                    $moon = $moontTotal->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                                             $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-
-                    if($entityType = 'W4RP') {
-                        $total += $moon['alliance'];
-                    } else {
-                        $total += $moon['outofalliance'];
-                    }
-                }
-            }
+            
         }
 
         //Send a mail to the contact listing the moons, and how much is owed

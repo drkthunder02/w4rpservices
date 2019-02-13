@@ -17,8 +17,11 @@ use App\Models\Character\CharacterToCorporation;
 class LookupHelper {
 
     //Create a character id from a character name
-    public function CharacterIdToName($character) {
+    public function CharacterNameToId($character) {
+        $esi = new Eseye();
 
+        
+        
     }
 
     //Add characters to the lookup table for quicker lookups without having

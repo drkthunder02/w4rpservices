@@ -13,10 +13,12 @@ use App\Models\Moon\ItemComposition;
 use App\Models\Moon\Moon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
+use App\Models\Moon\MoonRent;
 
 use App\Models\Finances\PlayerDonationJournal;
 use App\Library\Moons\MoonCalc;
 use App\Library\Esi\Esi;
+use App\Library\Lookups\LookupHelper;
 
 class MoonsAdminController extends Controller
 {
@@ -36,6 +38,59 @@ class MoonsAdminController extends Controller
 
     public function updateMoon() {
         return view('moons.updatemoon');
+    }
+
+    public function storeUpdateMoon2(Request $request) {
+        $moonCalc = MoonCalc();
+        $lookup = LookupHelper();
+
+        $this->validate($request, [
+            'system' => 'required',
+            'planet' => 'required',
+            'moon' => 'required',
+            'renter' => 'required',
+            'date' => 'required',
+            'contact' => 'required',
+        ]);
+
+        //Take the contact name and create a character id from it
+        $contact = $lookup->CharacterNameToId($request->contact);
+
+        //Create the date
+        $date = new Carbon($request->date . '00:00:01');
+        //Calculate the moon price
+        $moon = Moon::where([
+            'System' => $request->system,
+            'Planet' => $request->planet,
+            'Moon' => $request->moon,
+        ])->first();
+        $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
+                                                $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+        
+        $date = new Carbon($request->date . '00:00:01');
+        //Update the database entry
+        Moon::where([
+            'System' => $request->system,
+            'Planet' => $request->planet,
+            'Moon' => $request->moon,
+        ])->update([
+            'RentalCorp' => $request->renter,
+            'RentalEnd' => $date,
+            'Contact' => $contact,
+        ]);
+
+        //Going to store moon price in a table for future reference
+        MoonRent::insert([
+            'System' => $request->system,
+            'Planet' => $request->planet,
+            'Moon' => $request->moon,
+            'RentalCorp' => $request->renter,
+            'RentalEnd' => $date,
+            'Contact' => $request->contact,
+            'Price' => $price,
+        ]);
+
+        return redirect('/moons/display')->with('success', 'Moon Updated');
     }
 
     public function storeUpdateMoon(Request $request) {
