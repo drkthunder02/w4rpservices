@@ -32,7 +32,7 @@
                     <a class="dropdown-item" href="/wiki/changepassword">Change Password</a>
                 </div>
             </li>
-            @if(auth()->user()->hasRole('User'))
+            @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Others</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
