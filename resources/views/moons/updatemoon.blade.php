@@ -13,7 +13,7 @@
         {{ Form::label('renter', 'Renter') }}
         {{ Form::text('renter', '', ['class' => 'form-control', 'placeholder' => 'Renter']) }}
         {{ Form::label('date', 'Rental End Date') }}
-        {{ Form::text('date', '', ['class' => 'form-control', 'placeholder' => '01/01/1970'] )}}
+        {{ Form::text('date', '', ['class' => 'form-control', 'placeholder' => '1970-01-01'] )}}
     </div>
     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}
