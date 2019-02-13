@@ -16,6 +16,11 @@ use App\Models\Character\CharacterToCorporation;
 
 class LookupHelper {
 
+    //Create a character id from a character name
+    public function CharacterIdToName($character) {
+
+    }
+
     //Add characters to the lookup table for quicker lookups without having
     //to hit the ESI all the time
     public function LookupCharacter($charId) {
