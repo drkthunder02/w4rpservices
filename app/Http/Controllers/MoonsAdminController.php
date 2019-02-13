@@ -138,7 +138,9 @@ class MoonsAdminController extends Controller
         foreach($moons as $moon) {
             //Setup formats as needed
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
-            $rentalEnd = date('Y-m-d', $moon->RentalEnd);
+            $rentalEnd = new Carbon($moon->RentalEnd);
+            $rentalEnd = $rentalEnd->format('m-d');
+            //$rentalEnd = date('Y-m-d', $moon->RentalEnd);
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             //Add the data to the html string to be passed to the view
