@@ -44,7 +44,8 @@ class MoonsAdminController extends Controller
             'planet' => 'required',
             'moon' => 'required',
             'renter' => 'required',
-            'date' => 'required'
+            'date' => 'required',
+            'contact' => 'required',
         ]);
 
         $date = new Carbon($request->date . '00:00:01');
@@ -56,6 +57,7 @@ class MoonsAdminController extends Controller
         ])->update([
             'RentalCorp' => $request->renter,
             'RentalEnd' => $date,
+            'Contact' => $request->contact,
         ]);
 
         return redirect('/moons/display')->with('success', 'Moon Updated');
@@ -138,7 +140,7 @@ class MoonsAdminController extends Controller
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
             $rentalEnd = new Carbon($moon->RentalEnd);
             $rentalEnd = $rentalEnd->format('m-d');
-            
+
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             //Add the data to the html string to be passed to the view
