@@ -15,7 +15,7 @@
         {{ Form::label('date', 'Rental End Date') }}
         {{ Form::date('date', \Carbon\Carbon::now()->addMonth(), ['class' => 'form-control']) }}
         {{ Form::label('contact', 'Contact') }}
-        {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' -> 'Character']) }}
+        {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' => 'Character']) }}
     </div>
     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}
