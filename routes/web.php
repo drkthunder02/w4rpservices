@@ -58,12 +58,13 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/structures/admin/taxes/display/execute', 'StructureController@displayCorpTaxes');
     Route::get('/structures/admin/taxes/industry', 'StructureController@displayIndustryTaxes');
     Route::get('/structures/admin/taxes/reprocessing', 'StructureController@displayReprocessingTaxes');
+    Route::get('/structures/admin/display', 'StructureController@displayAdminPanel');
+    Route::get('/structures/admin/taxratio', 'StructureController@displayTaxRatioForm');
+    Route::post('/structures/admin/taxratio', 'StructureController@storeTaxRatio');
 
     //Scopes Controller display pages
     Route::get('/scopes/select', 'EsiScopeController@displayScopes');
     Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
-
-    //Jump Bridge Controller display pages
 
     //Clone Saver display pages
     Route::get('/clones/register', 'CloneSaverController@displayRegister');
