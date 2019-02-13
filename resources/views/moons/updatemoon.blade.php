@@ -13,7 +13,9 @@
         {{ Form::label('renter', 'Renter') }}
         {{ Form::text('renter', '', ['class' => 'form-control', 'placeholder' => 'Renter']) }}
         {{ Form::label('date', 'Rental End Date') }}
-        {{ Form::text('date', '', ['class' => 'form-control', 'placeholder' => '1970-01-01'] )}}
+        {{ Form::date('date', \Carbon\Carbon::now()->addMonth(), ['class' => 'form-control']) }}
+        {{ Form::label('contact', 'Contact') }}
+        {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' -> 'Character']) }}
     </div>
     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}
