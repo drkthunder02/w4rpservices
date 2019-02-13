@@ -19,7 +19,6 @@ class Kernel extends ConsoleKernel
         Commands\UpdateMoonPricing::class,
         Commands\CalculateMarketTax::class,
         Commands\holdingfinances::class,
-        Commands\RunCloneSaver::class,
     ];
 
     /**
@@ -45,9 +44,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:calculatemarkettax')
                  ->monthlyOn(1, '08:00')
                  ->withoutOverlapping();
-        //$schedule->command('services:clonesaver')
-        //         ->everyMinute()
-        //         ->withoutOverlapping();
     }
 
     /**
