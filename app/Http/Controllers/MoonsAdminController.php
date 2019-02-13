@@ -48,7 +48,6 @@ class MoonsAdminController extends Controller
         ]);
 
         $date = new Carbon($request->date . '00:00:01');
-        //$date = strtotime($request->date . '00:00:01');
         //Update the database entry
         Moon::where([
             'System' => $request->system,
@@ -132,7 +131,6 @@ class MoonsAdminController extends Controller
         $moonCalc->FetchNewPrices();
         //get all of the moons from the database
         $moons = Moon::orderBy('System', 'asc')->get();
-        //$moons = DB::table('Moons')->orderBy('System', 'asc')->get();
         //declare the html variable and set it to null
         $html = '';
         foreach($moons as $moon) {
@@ -140,7 +138,7 @@ class MoonsAdminController extends Controller
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
             $rentalEnd = new Carbon($moon->RentalEnd);
             $rentalEnd = $rentalEnd->format('m-d');
-            //$rentalEnd = date('Y-m-d', $moon->RentalEnd);
+            
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             //Add the data to the html string to be passed to the view
