@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Character;
+namespace App\Models\Lookups;
 
 use Illuminate\Database\Eloquent\Model;
 

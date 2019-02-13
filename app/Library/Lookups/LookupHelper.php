@@ -4,24 +4,36 @@ namespace App\Library\Lookups;
 
 use DB;
 
-use App\Models\User\UserToCorporation;
-
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException; 
 
-use App\Models\Character\CharacterToCorporation;
+use App\Models\Lookups\CharacterToCorporation;
+use App\Models\Lookups\CorporationToAlliance;
 
 class LookupHelper {
 
     //Create a character id from a character name
     public function CharacterNameToId($character) {
+        //Setup Eseye Configuration
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
+        //Setup class variables
         $esi = new Eseye();
 
-        
-        
+        //Attempt to find the character name in the LookupCharacter table to see if we can match it to an id
+        $charId = 
+
+        //Get the character id from the ESI API.
+        $response = $esi->setQueryString([
+            'categories' => 'character',
+            'search' => $character,
+            'strict' => 'true',
+        ])->invoke('get', '/search/');
+
+        return $reponse[0];
     }
 
     //Add characters to the lookup table for quicker lookups without having
@@ -52,7 +64,7 @@ class LookupHelper {
             }
 
             //Save all of the data to the database
-            $char = new UserToCorporation;
+            $char = new CharacterToCorporation;
             $char->character_id = $charId;
             $char->character_name = $character->name;
             $char->corporation_id = $character->corporation_id;
@@ -72,7 +84,7 @@ class LookupHelper {
         $esi = new Eseye();
         
         //Get all of the data from the database and start performing updates
-        $dbChars = UserToCorporation::all();
+        $dbChars = CharacterToCorporation::all();
         foreach($dbChars as $char) {
             //Attempt to get the data from the ESI API
             try{
@@ -92,7 +104,7 @@ class LookupHelper {
                 } catch(RequestFailedException $e) {
                     return $e->getEsiResponse();
                 }
-                UserToCorporation::where(['character_id' => $char->character_id])
+                CharacterToCorporation::where(['character_id' => $char->character_id])
                                     ->update([
                                         'corporation_id' => $character->corporation_id,
                                         'corporation_name' => $corporation->name,

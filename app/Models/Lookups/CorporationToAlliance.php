@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\User;
+namespace App\Models\Lookups;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserToCorporation extends Model
+class CorporationToAlliance extends Model
 {
-    // Table Name
-    public $table = 'user_to_corporation';
+    //Table Name
+    public $table = 'corporation_to_alliance';
 
-    // Timestamps
+    //Timestamps
     public $timestamps = false;
 
     /**
@@ -18,9 +18,9 @@ class UserToCorporation extends Model
      * @var array
      */
     protected $fillable = [
-        'character_id',
-        'character_name',
         'corporation_id',
         'corporation_name',
+        'alliance_id',
+        'alliance_name',
     ];
 }
