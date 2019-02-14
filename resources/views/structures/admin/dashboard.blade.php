@@ -31,9 +31,6 @@
                 {!! Form::close() !!}
             </div>
         </div>
-    </div>
-    <br>
-    <div class="row">
         <div class="col-md-6 card">
             <div class="card-header">
                 Update Tax Ratio for Structure

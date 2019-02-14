@@ -45,6 +45,8 @@
             'Zircon' => 'Zircon',
         ], 'None') }}
         {{ Form::text('firstQuantity', '', ['class' => 'form-control']) }}
+    </div>
+    <div class="form-group">
         {{ Form::label('secondOre', 'Second Ore') }}
         {{ Form::select('secondOre', [
             'None' => 'None',
@@ -85,6 +87,8 @@
             'Zircon' => 'Zircon',
         ], 'None') }}
         {{ Form::text('secondQuantity', '', ['class' => 'form-control']) }}
+    </div>
+    <div class="form-group">
         {{ Form::label('thirdOre', 'Third Ore') }}
         {{ Form::select('thirdOre', [
             'None' => 'None',
@@ -125,6 +129,8 @@
             'Zircon' => 'Zircon',
         ], 'None') }}
         {{ Form::text('thirdQuantity', '', ['class' => 'form-control']) }}
+    </div>
+    <div class="form-group">
         {{ Form::label('fourthOre', 'Fourth Ore') }}
         {{ Form::select('fourthOre', [
             'None' => 'None',
