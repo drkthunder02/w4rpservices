@@ -50,10 +50,6 @@ class StructureTaxHelper {
             'structure_type' => $refType,
         ])->get();
         dd($ratio);
-        $ratio = $ratio[0];
-        if($ratio == null) {
-            $ratio = 1.0;
-        }
         
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);
