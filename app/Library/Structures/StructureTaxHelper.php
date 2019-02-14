@@ -9,8 +9,10 @@ use App\User;
 
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
+
 use App\Models\Corporation\CorpStructure;
 use App\Models\Corporation\CorpTaxRatio;
+
 use App\Models\Finances\CorpMarketJournal;
 use App\Models\Finances\ReprocessingTaxJournal;
 use App\Models\Finances\StructureIndustryTaxJournal;
@@ -46,7 +48,7 @@ class StructureTaxHelper {
         $ratio = CorpTaxRatio::where([
             'corporation_id' => $corpId,
             'structure_type' => $refType,
-        ])->get(['ratio']);
+        ])->get();
         dd($ratio);
         $ratio = $ratio[0];
         if($ratio == null) {
