@@ -15,7 +15,6 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\CorpJournal::class,
         Commands\GetCorps::class,
-        Commands\SendMail::class,
         Commands\UpdateMoonPricing::class,
         Commands\CalculateMarketTax::class,
         Commands\holdingfinances::class,

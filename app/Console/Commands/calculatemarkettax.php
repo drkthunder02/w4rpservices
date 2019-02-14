@@ -99,7 +99,6 @@ class CalculateMarketTax extends Command
             SendEveMail::dispatch($mail)->delay(Carbon::now()->addSeconds(15));
         }
         
-
         //Mark the job as finished
         $task->SetStopStatus();
     }

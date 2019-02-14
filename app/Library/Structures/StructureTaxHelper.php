@@ -37,14 +37,9 @@ class StructureTaxHelper {
 
         //Calculate the fuel cost for one type of structure
         $fuelCost = $this->CalculateFuelBlockCost($refType);
-
-        //Calculate the average tax for a given structure type
-        $tax = $this->GetStructureTax($corpId, $refType);
-
-        //Calculate the tax ratio to later be divided against the tax to find the
-        //actual tax owed to the alliance.  Revenue will be a separate function
-        //$ratio = $this->CalculateTaxRatio($corpId, $tax, $refType);
-        //Get the ratio from the table
+        
+        //Get the ratio from the table to be divided against the tax to find the
+        //acutal tax owed to the alliance.  Revenue will be a separate function
         $ratio = CorpTaxRatio::where([
             'corporation_id' => $corpId,
             'structure_type' => $refType,
