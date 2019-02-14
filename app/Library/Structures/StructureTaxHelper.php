@@ -10,6 +10,7 @@ use App\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Corporation\CorpStructure;
+use App\Models\Corporation\CorpTaxRatio;
 use App\Models\Finances\CorpMarketJournal;
 use App\Models\Finances\ReprocessingTaxJournal;
 use App\Models\Finances\StructureIndustryTaxJournal;
@@ -40,7 +41,16 @@ class StructureTaxHelper {
 
         //Calculate the tax ratio to later be divided against the tax to find the
         //actual tax owed to the alliance.  Revenue will be a separate function
-        $ratio = $this->CalculateTaxRatio($corpId, $tax, $refType);
+        //$ratio = $this->CalculateTaxRatio($corpId, $tax, $refType);
+        //Get the ratio from the table
+        $ratio = CorpTaxRatio::where([
+            'corporation_id' => $corpId,
+            'structure_type' => $refType,
+        ])->get(['ratio']);
+        $ratio = $ratio[0];
+        if($ratio == null) {
+            $ratio = 1.0;
+        }
         
         //Get the total taxes produced by the structure(s) over a given set of dates
         $revenue = $this->GetRevenue($corpId, $refType, $start, $end);

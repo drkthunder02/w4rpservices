@@ -68,11 +68,11 @@ class MoonsController extends Controller
             $html .= '</tr>';
         }
 
-        return view('moons.moon')->with('html', $html);
+        return view('moons.user.moon')->with('html', $html);
     }
 
     public function displayTotalWorthForm() {
-        return view('moons.formTotalWorth');
+        return view('moons.user.formTotalWorth');
     }
 
     public function displayTotalWorth(Request $request) {
@@ -102,6 +102,6 @@ class MoonsController extends Controller
                                                         $fourthOre, $fourthQuantity);
         $totalWorth = number_format($totalWorth, 2, ".", ",");
 
-        return view('moons.displayTotalWorth')->with(['totalWorth' => $totalWorth, 'totalGoo' => $totalGoo]);
+        return view('moons.user.displayTotalWorth')->with(['totalWorth' => $totalWorth, 'totalGoo' => $totalGoo]);
     }
 }

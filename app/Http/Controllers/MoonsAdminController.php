@@ -33,11 +33,11 @@ class MoonsAdminController extends Controller
 
         $journal = DB::select('SELECT amount,reason,description,date FROM `player_donation_journal` WHERE corporation_id=98287666 AND date >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH) ORDER BY date DESC');
         
-        return view('moons.moonjournal')->with('journal', $journal);
+        return view('moons.admin.moonjournal')->with('journal', $journal);
     }
 
     public function updateMoon() {
-        return view('moons.updatemoon');
+        return view('moons.admin.updatemoon');
     }
 
     public function storeUpdateMoon2(Request $request) {
@@ -119,7 +119,7 @@ class MoonsAdminController extends Controller
     }
 
     public function addMoon() {
-        return view('moons.addmoon');
+        return view('moons.admin.addmoon');
     }
 
     /**
@@ -217,6 +217,6 @@ class MoonsAdminController extends Controller
             $html .= '</tr>';
         }
 
-        return view('moons.adminmoon')->with('html', $html);
+        return view('moons.admin.adminmoon')->with('html', $html);
     }
 }

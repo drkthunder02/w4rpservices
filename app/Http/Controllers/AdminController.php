@@ -12,6 +12,7 @@ use App\Models\User\AvailableUserPermission;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\Corporation\CorpStructure;
+use App\Models\Admin\AllowedLogin;
 
 class AdminController extends Controller
 {
@@ -91,14 +92,62 @@ class AdminController extends Controller
     }
 
     public function displayAllowedLogins() {
+        $logins = AllowedLogin::all();
 
+        return view('admin.allowedlogins')->with('logins', $logins);
     }
 
-    public function addAllowedLogin() {
+    public function addAllowedLogin(Request $request) {
+        //Set the parameters to validate the form
+        $this->validate($request, [
+            'entity_id' => 'required',
+            'entity_type' => 'required',
+            'entity_name' => 'required',
+            'login_type' => 'required',
+        ]);
 
+        //Check to see if the entity exists in the database already
+        $found = AllowedLogin::where([
+            'entity_type' => $request->entityType,
+            'entity_name' => $request->entityName,
+        ])->get();
+        if($found != null) {
+            AllowedLogin::where([
+                'entity_type' => $request->entityType,
+                'entity_name' => $request->entityName,
+            ])->update([
+                'entity_id' => $request->entityId,
+                'entity_type' => $request->entityType,
+                'entity_name' => $request->entityName,
+                'login_type' => $request->loginType,
+            ]);
+        } else {
+            $login = new AllowedLogin;
+            $login->entity_id = $request->entityId;
+            $login->entity_name = $request->entityName;
+            $login->entity_type = $request->entityType;
+            $login->login_type = $request->loginType;
+        }
+
+        return redirect('/admin/dashboard')->with('success', 'Entity added to allowed login list.');
     }
 
-    public function removeAllowedLogin() {
-        
+    public function removeAllowedLogin(Request $request) {
+        //Set the parameters to validate the form
+        $this->validate($request, [
+            'entity_id' => 'required',
+            'entity_type' => 'required',
+            'entity_name' => 'required',
+            'login_type' => 'required',
+        ]);
+
+        AllowedLogin::where([
+            'entity_id' => $request->entityId,
+            'entity_type' => $request->entityType,
+            'entity_name' => $request->entityName,
+            'login_type' => $request->loginType,
+        ])->delete();
+
+        return redirect('/admin/dashboard')->with('success', 'Entity removed from allowed login list.');
     }
 }

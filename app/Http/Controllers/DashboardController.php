@@ -51,6 +51,6 @@ class DashboardController extends Controller
             'roles' => $roles,
         ];
 
-        return view('/dashboard/profile')->with('data', $data);
+        return view('dashboard.profile')->with('data', $data);
     }
 }

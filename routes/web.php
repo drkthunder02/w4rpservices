@@ -52,6 +52,8 @@ Route::group(['middleware' => ['auth']], function(){
     //Register Structures Controller display pages
     Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
     Route::post('/structures/register', 'RegisterstructureController@storeStructure');
+    Route::get('/structures/admin/taxratio', 'RegisterStructureController@displayTaxRatioForm');
+    Route::post('/structures/admin/taxratio', 'RegisterStructureController@storeTaxRatio');
     //Structure Controller display pages
     Route::get('/structures/taxes/display', 'StructureController@displayTaxes');
     Route::get('/structures/admin/taxes/display', 'StructureController@chooseCorpTaxes');
@@ -59,8 +61,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/structures/admin/taxes/industry', 'StructureController@displayIndustryTaxes');
     Route::get('/structures/admin/taxes/reprocessing', 'StructureController@displayReprocessingTaxes');
     Route::get('/structures/admin/display', 'StructureController@displayAdminPanel');
-    Route::get('/structures/admin/taxratio', 'StructureController@displayTaxRatioForm');
-    Route::post('/structures/admin/taxratio', 'StructureController@storeTaxRatio');
 
     //Scopes Controller display pages
     Route::get('/scopes/select', 'EsiScopeController@displayScopes');

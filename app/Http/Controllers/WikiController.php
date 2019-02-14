@@ -30,7 +30,7 @@ class WikiController extends Controller
             return redirect('/dashboard')->with('error', 'Already registered for the wiki!');            
         }
 
-        return view('wiki.register')->with('name', $name);
+        return view('wiki.user.register')->with('name', $name);
     }
 
     public function storeRegister(Request $request) {
@@ -83,7 +83,7 @@ class WikiController extends Controller
             return redirect('/dashboard')->with('error', 'Login Not Found!');
         } 
 
-        return view('wiki.changepassword')->with('name', $name);
+        return view('wiki.user.changepassword')->with('name', $name);
     }
 
     public function changePassword(Request $request) {
