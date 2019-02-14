@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth']], function(){
 
     //Moon Admin Controller display pages
     Route::get('/moons/admin/addmoon', 'MoonsAdminController@addMoon');
-    Route::post('/moon/admin/addmoon', 'MoonsAdminController@storemoon');
+    Route::post('/moon/admin/addmoon', 'MoonsAdminController@storeMoon');
     Route::get('/moons/admin/display', 'MoonsAdminController@displayMoonsAdmin');
     Route::get('/moons/admin/updatemoon', 'MoonsAdminController@updateMoon');
     Route::post('/moons/admin/updatemoon', 'MoonsAdminController@storeUpdateMoon');
