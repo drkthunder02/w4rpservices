@@ -57,9 +57,9 @@ class MoonsController extends Controller
             $html .= '<td>' . $moon->FourthOre . '</td>';
             $html .= '<td>' . $moon->FourthQuantity . '</td>';
             if($type == 'W4RP') {
-                $html .= '<td>' . number_format($price['alliance'], 0, ".", ",") . '</td>';
+                $html .= '<td>' . $price['alliance'] . '</td>';
             } else if ($type == 'Legacy') {
-                $html .= '<td>' . number_format($price['outofalliance'], 0, ".", ",") . '</td>';
+                $html .= '<td>' . $price['outofalliance'] . '</td>';
             } else {
                 $html .= '<td>N/A</td>';
             }

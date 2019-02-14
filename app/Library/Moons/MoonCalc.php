@@ -213,8 +213,8 @@ class MoonCalc {
         $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
         $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
         //Format the rental price to the appropriate number
-        $rentalPrice['alliance'] = number_format($rentalPrice['alliance'], "2", ".", ",");
-        $rentalPrice['outofalliance'] = number_format($rentalPrice['outofalliance'], "2", ".", ",");
+        $rentalPrice['alliance'] = number_format($rentalPrice['alliance'], 0, ".", ",");
+        $rentalPrice['outofalliance'] = number_format($rentalPrice['outofalliance'], 0, ".", ",");
        
         //Return the rental price to the caller
         return $rentalPrice;
@@ -272,8 +272,8 @@ class MoonCalc {
         $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
         $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
         //Format the rental price to the appropriate number
-        $rentalPrice['alliance'] = number_format($rentalPrice['alliance'], "2", ".", ",");
-        $rentalPrice['outofalliance'] = number_format($rentalPrice['outofalliance'], "2", ".", ",");
+        $rentalPrice['alliance'] = number_format($rentalPrice['alliance'], 0, ".", ",");
+        $rentalPrice['outofalliance'] = number_format($rentalPrice['outofalliance'], 0, ".", ",");
        
         //Return the rental price to the caller
         return $rentalPrice;
