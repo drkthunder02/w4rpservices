@@ -1,7 +1,9 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
-    <p align="center"><h2>Structure Dashboard</h2></p>
+    <div class="row">
+        <p align="center"><h2>Structure Dashboard</h2></p>
+    </div>
 </div>
 <div class="container">
     <div class="row">
