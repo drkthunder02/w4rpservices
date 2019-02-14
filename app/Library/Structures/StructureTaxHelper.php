@@ -41,6 +41,8 @@ class StructureTaxHelper {
         //Calculate the average tax for a given structure type
         $tax = $this->GetStructureTax($corpId, $refType);
 
+        dd($corpId);
+
         //Calculate the tax ratio to later be divided against the tax to find the
         //actual tax owed to the alliance.  Revenue will be a separate function
         //$ratio = $this->CalculateTaxRatio($corpId, $tax, $refType);
@@ -48,7 +50,7 @@ class StructureTaxHelper {
         $ratio = CorpTaxRatio::where([
             'corporation_id' => $corpId,
             'structure_type' => $refType,
-        ])->get();
+        ])->get(['ratio']);
         dd($ratio);
 
         //Get the total taxes produced by the structure(s) over a given set of dates
