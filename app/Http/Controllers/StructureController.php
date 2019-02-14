@@ -125,7 +125,7 @@ class StructureController extends Controller
         //Get the character's corporation from the lookup table or esi
         $corpId = $helper->LookupCharacter(Auth::user()->character_id);
         $corpId = $corpId[0]->corporation_id;
-        dd($corpId);
+        
         //Get the dates we are working with
         $dates = $sHelper->GetTimeFrameInMonths($months);
         
