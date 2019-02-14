@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 
 class StructureAdminController extends Controller
 {
+    public function __construct() {
+        $this->middleware('role:Admin');
+    }
+
+    public function displayDashboard() {
+        return view('structures.admin.dashboard');
+    }
+
     public function storeTaxRatio(Request $request) {
         $this->validate($request, [
             'corpId',

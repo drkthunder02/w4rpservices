@@ -50,9 +50,11 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/remove/user', 'AdminController@removeUser');
 
     //Register Structures Controller display pages
-    Route::get('/structures/dashboard', 'StructureAdminController@displayDashboard');
     Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
     Route::post('/structures/register', 'RegisterstructureController@storeStructure');
+    
+    //Structure Admin Controller display pages
+    Route::get('/structures/dashboard', 'StructureAdminController@displayDashboard');
     Route::post('/structures/admin/add/taxratio', 'StructureAdminController@storeTaxRatio');
     Route::post('/structures/admin/update/taxratio', 'StructureAdminController@updateTaxRatio');
 
