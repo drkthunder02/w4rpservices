@@ -50,10 +50,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/remove/user', 'AdminController@removeUser');
 
     //Register Structures Controller display pages
+    Route::get('/structures/dashboard', 'StructureAdminController@displayDashboard');
     Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
     Route::post('/structures/register', 'RegisterstructureController@storeStructure');
-    Route::get('/structures/admin/taxratio', 'RegisterStructureController@displayTaxRatioForm');
-    Route::post('/structures/admin/taxratio', 'RegisterStructureController@storeTaxRatio');
+    Route::post('/structures/admin/add/taxratio', 'StructureAdminController@storeTaxRatio');
+    Route::post('/structures/admin/update/taxratio', 'StructureAdminController@updateTaxRatio');
+
     //Structure Controller display pages
     Route::get('/structures/taxes/display', 'StructureController@displayTaxes');
     Route::get('/structures/admin/taxes/display', 'StructureController@chooseCorpTaxes');
