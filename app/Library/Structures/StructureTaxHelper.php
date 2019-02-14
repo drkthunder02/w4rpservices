@@ -47,6 +47,7 @@ class StructureTaxHelper {
             'corporation_id' => $corpId,
             'structure_type' => $refType,
         ])->get(['ratio']);
+        dd($ratio);
         $ratio = $ratio[0];
         if($ratio == null) {
             $ratio = 1.0;
