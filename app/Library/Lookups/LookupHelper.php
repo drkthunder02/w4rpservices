@@ -37,6 +37,7 @@ class LookupHelper {
 
             return $response->character[0];
         } else {
+            dd($charId);
             return $charId[0]->character_id;
         }
     }
