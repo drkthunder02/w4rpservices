@@ -65,9 +65,15 @@ class MoonMailerCommand extends Command
 
         //Update the price for all moon rentals before sending out the mail
         foreach($rentals as $rental) {
+            //Get the contents of the moon to re-price it out
+            $moon = Moon::where([
+                'System' => $rental->System,
+                'Planet' => $rental->Planet,
+                'Moon' => $rental->Moon,
+            ]);
             //Get the updated price for the moon
-            $price = $moonCalc->SpatialMoonsOnlyGoo($rental->FirstOre, $rental->FirstQuantity, $rental->SecondOre, $rental->SecondQuantity, 
-                                                    $rental->ThirdOre, $rental->ThirdQuantity, $rental->FourthOre, $rental->FourthQuantity);
+            $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
+                                                    $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             dd($price);
             //Create the mail body depending on if the price should be in alliance or out  of alliance
             if($rental->Type == 'alliance') {
