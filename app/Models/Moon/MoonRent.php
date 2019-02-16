@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MoonRent extends Model
 {
     // Table Name
-    protected $table = 'MoonRent';
+    protected $table = 'moon_rents';
 
     //Primary Key
     public $primaryKey = 'id';
