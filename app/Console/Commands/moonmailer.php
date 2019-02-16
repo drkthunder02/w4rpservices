@@ -56,6 +56,8 @@ class MoonMailerCommand extends Command
 
         //Declare the moon calc class variable to utilize the library to update the price
         $moonCalc = new MoonCalc();
+        //Create other variables
+        $price = '';
 
         //Get all of the moons from the rental list
         $rentals = MoonRent::all();
@@ -64,20 +66,31 @@ class MoonMailerCommand extends Command
         foreach($rentals as $rental) {
             $price = $moonCalc->SpatialMoonsOnlyGoo($rental->FirstOre, $rental->FirstQuantity, $rental->SecondOre, $rental->SecondQuantity, 
                                                     $rental->ThirdOre, $rental->ThirdQuantity, $rental->FourthOre, $rental->FourthQuantity);
+            if($rental->Type == 'alliance') {
+                //Update the moon rental price
+                MoonRent::where([
+                    'System' => $rental->System,
+                    'Planet' => $rental->Planet,
+                    'Moon'  => $rental->Moon,
+                ])->update([
+                    'Price' => $price['alliance'],
+                ]);
+            } else {
+                //Update the moon rental price
+                MoonRent::where([
+                    'System' => $rental->System,
+                    'Planet' => $rental->Planet,
+                    'Moon'  => $rental->Moon,
+                ])->update([
+                    'Price' => $price['outofalliance'],
+                ]);
+            }    
             
-            //Update the moon rental price
-            MoonRent::where([
-                'System' => $rental->System,
-                'Planet' => $rental->Planet,
-                'Moon'  => $rental->Moon,
-            ])->update([
-                'Price' => $price[$rental->Type],
-            ]);
         }
         
         //Re-pull all of the rentals from the database
         $rentals = MoonRent::all();
-        dd($rentals);
+        
         //Cycle through each  rental and send a mail out
         foreach($rentals as $rental) {
             //Create the body for the mail to be sentout
