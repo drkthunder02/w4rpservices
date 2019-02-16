@@ -40,7 +40,7 @@ class MoonsAdminController extends Controller
         return view('moons.admin.updatemoon');
     }
 
-    public function storeUpdateMoon2(Request $request) {
+    public function storeUpdateMoon(Request $request) {
         $moonCalc = MoonCalc();
         $lookup = LookupHelper();
 
@@ -55,7 +55,7 @@ class MoonsAdminController extends Controller
 
         //Take the contact name and create a character id from it
         $contact = $lookup->CharacterNameToId($request->contact);
-
+        dd($contact);
         //Create the date
         $date = new Carbon($request->date . '00:00:01');
         //Calculate the moon price
@@ -86,14 +86,14 @@ class MoonsAdminController extends Controller
             'Moon' => $request->moon,
             'RentalCorp' => $request->renter,
             'RentalEnd' => $date,
-            'Contact' => $request->contact,
+            'Contact' => $contact,
             'Price' => $price,
         ]);
 
-        return redirect('/moons/display')->with('success', 'Moon Updated');
+        return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
     }
 
-    public function storeUpdateMoon(Request $request) {
+    public function storeUpdateMoon2(Request $request) {
         $this->validate($request, [
             'system' => 'required',
             'planet' => 'required',

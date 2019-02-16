@@ -6,12 +6,12 @@ use Illuminate\Console\Command;
 
 use Commands\Library\CommandHelper;
 use App\Library\Moons\MoonMailer;
-use App\Library\Moons\MoonCalc;
 use App\Library\Lookups\LookupHelper;
 use DB;
 use Carbon\Carbon;
 
 use App\Models\Moon\Moon;
+use App\Models\Moon\MoonRent;
 
 class MoonMailerCommand extends Command
 {
@@ -51,20 +51,9 @@ class MoonMailerCommand extends Command
         //Add the entry into the jobs table saying the job has started
         $task->SetStartStatus();
 
-        //Create class helpers
-        $lookup = new LookupHelper();
-        $moonTotal = new MoonCalc();
+        
 
-        //Get all of the moon rental contacts
-        $contacts = DB::table('Moons')->pluck('Contact');
-
-        //Cycle through each contact, and get all of the moons for the contact, then
-        //totalize the cost
-        $total = 0.00;
-        $entityType = '';
-        foreach($contacts as $contact) {
-            
-        }
+        
 
         //Send a mail to the contact listing the moons, and how much is owed
 
