@@ -9,14 +9,14 @@ use Commands\Library\CommandHelper;
 
 use App\Library\Moons\MoonCalc;
 
-class UpdateMoonPricing extends Command
+class UpdateMoonPriceCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'services:updatemoonprice';
+    protected $signature = 'services:UpdateMoonPrice';
 
     /**
      * The console command description.

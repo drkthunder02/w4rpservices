@@ -94,6 +94,7 @@ class MoonsAdminController extends Controller
                 'RentalEnd' => $date,
                 'Contact' => $contact,
                 'Price' => $price['alliance'],
+                'Type' => 'alliance',
             ]);
         } else {
             MoonRent::insert([
@@ -104,6 +105,7 @@ class MoonsAdminController extends Controller
                 'RentalEnd' => $date,
                 'Contact' => $contact,
                 'Price' => $price['outofalliance'],
+                'Type' => 'outofalliance',
             ]);
         }
         

@@ -22,14 +22,14 @@ use App\Models\Mail\EveMail;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 
-class CalculateMarketTax extends Command
+class CalculateMarketTaxCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'services:calculatemarkettax';
+    protected $signature = 'services:CalculateMarketTax';
 
     /**
      * The console command description.

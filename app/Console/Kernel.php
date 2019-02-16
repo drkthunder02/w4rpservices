@@ -13,11 +13,12 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\CorpJournal::class,
-        Commands\GetCorps::class,
-        Commands\UpdateMoonPricing::class,
-        Commands\CalculateMarketTax::class,
-        Commands\holdingfinances::class,
+        Commands\CorpJournalCommand::class,
+        Commands\GetCorpsCommand::class,
+        Commands\UpdateMoonPriceCommand::class,
+        Commands\CalculateMarketTaxCommand::class,
+        Commands\HoldingFinancesCommand::class,
+        Commands\MoonMailerCommand::class,
     ];
 
     /**
@@ -28,21 +29,24 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('services:corpjournal')
+        $schedule->command('services:CorpJournal')
                  ->hourly()
                  ->withoutOverlapping();
-        $schedule->command('services:holdingjournal')
+        $schedule->command('services:HoldingJournal')
                 ->hourly()
                 ->withoutOverlapping();
-        $schedule->command('services:updatemoonprice')
+        $schedule->command('services:UpdateMoonPrice')
                 ->hourly()
                 ->withoutOverlapping();
-        $schedule->command('services:getcorps')
+        $schedule->command('services:GetCorps')
                  ->monthlyOn(1, '09:00')
                  ->withoutOverlapping();
-        $schedule->command('services:calculatemarkettax')
+        $schedule->command('services:CalculateMarketTax')
                  ->monthlyOn(1, '08:00')
                  ->withoutOverlapping();
+        $schedule->command('services:MoonMailer')
+                ->monthlyOn(27, '00:01')
+                ->withoutOverlapping();
     }
 
     /**

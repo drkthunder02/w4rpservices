@@ -14,14 +14,14 @@ use App\Models\Corporation\CorpStructure;
 
 use Carbon\Carbon;
 
-class CorpJournal extends Command
+class CorpJournalCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'services:corpjournal';
+    protected $signature = 'services:CorpJournal';
 
     /**
      * The console command description.

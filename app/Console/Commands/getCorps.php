@@ -14,14 +14,14 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 
-class GetCorps extends Command
+class GetCorpsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'services:getcorps';
+    protected $signature = 'services:GetCorps';
 
     /**
      * The console command description.
@@ -51,9 +51,7 @@ class GetCorps extends Command
         $task = new CommandHelper('CorpJournal');
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
-        //Set the parameters for ESI
-        $configuration = Configuration::getInstance();
-        $configuration->logfile_location = 'var/www/w4rpservices/storage/logs/eseye';
+        
         //Create the ESI container
         $esi = new Eseye();
         //try the  esi call to get all of the corporations in the alliance
