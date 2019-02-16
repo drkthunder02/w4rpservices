@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\Jobs\SendEveMail;
+use Carbon\Carbon;
 
 use Commands\Library\CommandHelper;
 use App\Library\Moons\MoonMailer;
