@@ -33,9 +33,7 @@ class LookupHelper {
             'strict' => 'true',
         ])->invoke('get', '/search/');
 
-        dd($response->character[0]);
-
-        return $reponse[0];
+        return $reponse->character[0];
     }
 
     //Add characters to the lookup table for quicker lookups without having
