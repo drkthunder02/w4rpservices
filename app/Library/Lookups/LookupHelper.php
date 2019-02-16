@@ -33,7 +33,7 @@ class LookupHelper {
             'strict' => 'true',
         ])->invoke('get', '/search/');
 
-        dd($resposne->character);
+        dd($response->character);
 
         return $reponse[0];
     }
