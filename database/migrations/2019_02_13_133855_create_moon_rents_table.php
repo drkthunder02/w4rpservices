@@ -21,7 +21,7 @@ class CreateMoonRentsTable extends Migration
             $table->string('RentalCorp');
             $table->dateTime('RentalEnd');
             $table->string('Contact');
-            $table->float('Price', 20, 2);
+            $table->string('Price');
             $table->timestamps();
         });
     }
