@@ -90,7 +90,7 @@ class MoonMailerCommand extends Command
             $mail->sender = 93738489;
             $mail->subject = "Moon Rental";
             $mail->body = $body;
-            $mail->recipient = (int)$rental->contact;
+            $mail->recipient = (int)$rental->Contact;
             $mail->recipient_type = 'character';
             $mail->save();
 
