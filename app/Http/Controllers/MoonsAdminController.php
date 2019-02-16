@@ -41,8 +41,8 @@ class MoonsAdminController extends Controller
     }
 
     public function storeUpdateMoon(Request $request) {
-        $moonCalc = MoonCalc();
-        $lookup = LookupHelper();
+        $moonCalc = new MoonCalc();
+        $lookup = new LookupHelper();
 
         $this->validate($request, [
             'system' => 'required',
