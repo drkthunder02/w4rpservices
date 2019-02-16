@@ -55,7 +55,10 @@ class MoonsAdminController extends Controller
 
         //Take the contact name and create a character id from it
         $contact = $lookup->CharacterNameToId($request->contact);
-        
+        //Let's find the corporation and alliance information to ascertain whether they are in Warped Intentions or another Legacy Alliance
+        $corpId = LookupCharacter($contact);
+        $allianceId = LookupCorporation($corpId);
+
         //Create the date
         $date = new Carbon($request->date . '00:00:01');
         //Calculate the moon price
@@ -66,7 +69,7 @@ class MoonsAdminController extends Controller
         ])->first();
         $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                 $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-        dd($price);
+        
         $date = new Carbon($request->date . '00:00:01');
         //Update the database entry
         Moon::where([
@@ -80,16 +83,30 @@ class MoonsAdminController extends Controller
         ]);
 
         //Going to store moon price in a table for future reference
-        MoonRent::insert([
-            'System' => $request->system,
-            'Planet' => $request->planet,
-            'Moon' => $request->moon,
-            'RentalCorp' => $request->renter,
-            'RentalEnd' => $date,
-            'Contact' => $contact,
-            'Price' => $price,
-        ]);
-
+        //We need to insert a price based on whether part of Legacy or part of Warped Intentions
+        //Will need an if then else statement to complete this operation
+        if($allianceId = 99004116 || $allianceId = 99008072) {
+            MoonRent::insert([
+                'System' => $request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+                'RentalCorp' => $request->renter,
+                'RentalEnd' => $date,
+                'Contact' => $contact,
+                'Price' => $price['alliance'],
+            ]);
+        } else {
+            MoonRent::insert([
+                'System' =>$request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+                'RentalCorp' => $request->renter,
+                'RentalEnd' => $date,
+                'Contact' => $contact,
+                'Price' => $price['outofalliance'],
+            ]);
+        }
+        
         return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
     }
 
