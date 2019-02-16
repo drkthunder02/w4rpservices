@@ -87,7 +87,7 @@ class LookupHelper {
     //hit the ESI API all the time
     public function LookupCorporation($corpId) {
         //Check for the character in the user_to_corporation table
-        $found = CorporationToAlliance::where('corporation_id', $charId)->get(['alliance_id']);
+        $found = CorporationToAlliance::where('corporation_id', $corpId)->get(['alliance_id']);
 
         //If we don't find the character in the table, then we retrieve from ESI
         //and add the character to the table
