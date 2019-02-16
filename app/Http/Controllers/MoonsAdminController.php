@@ -55,7 +55,7 @@ class MoonsAdminController extends Controller
 
         //Take the contact name and create a character id from it
         $contact = $lookup->CharacterNameToId($request->contact);
-        dd($contact);
+        
         //Create the date
         $date = new Carbon($request->date . '00:00:01');
         //Calculate the moon price
