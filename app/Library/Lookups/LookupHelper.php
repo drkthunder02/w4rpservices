@@ -24,7 +24,7 @@ class LookupHelper {
         $esi = new Eseye();
 
         //Attempt to find the character name in the LookupCharacter table to see if we can match it to an id
-        $charId = CharacterToCorporation::where(['character_name' => $character])->get('character_id');
+        $charId = CharacterToCorporation::where(['character_name' => $character])->get(['character_id']);
         if($charId == null) {
             //Get the character id from the ESI API.
             $response = $esi->setQueryString([
