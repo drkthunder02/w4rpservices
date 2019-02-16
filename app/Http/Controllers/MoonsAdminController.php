@@ -66,7 +66,7 @@ class MoonsAdminController extends Controller
         ])->first();
         $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                 $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-        
+        dd($price);
         $date = new Carbon($request->date . '00:00:01');
         //Update the database entry
         Moon::where([
