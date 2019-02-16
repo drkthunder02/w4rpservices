@@ -4,15 +4,16 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use App\Jobs\SendEveMail;
+
 use Commands\Library\CommandHelper;
 use App\Library\Moons\MoonMailer;
-use App\Library\Lookups\LookupHelper;
 use App\Library\Moons\MoonCalc;
 use DB;
-use Carbon\Carbon;
 
 use App\Models\Moon\Moon;
 use App\Models\Moon\MoonRent;
+use App\Models\Mail\EveMail;
 
 class MoonMailerCommand extends Command
 {
