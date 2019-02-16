@@ -74,7 +74,7 @@ class MoonMailerCommand extends Command
             //Get the updated price for the moon
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-            dd($price);
+            
             //Create the mail body depending on if the price should be in alliance or out  of alliance
             if($rental->Type == 'alliance') {
                 $body = "Moon Rent is due for " . $rental->System . " Planet: " . $rental->Planet . " Moon: " . $rental->Moon . "<br>";
