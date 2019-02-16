@@ -64,7 +64,7 @@ class MoonMailerCommand extends Command
         foreach($rentals as $rental) {
             $price = $moonCalc->SpatialMoonsOnlyGoo($rental->FirstOre, $rental->FirstQuantity, $rental->SecondOre, $rental->SecondQuantity, 
                                                     $rental->ThirdOre, $rental->ThirdQuantity, $rental->FourthOre, $rental->FourthQuantity);
-            dd($price);
+            
             //Update the moon rental price
             MoonRent::where([
                 'System' => $rental->System,
@@ -74,9 +74,10 @@ class MoonMailerCommand extends Command
                 'Price' => $price[$rental->Type],
             ]);
         }
-
+        
         //Re-pull all of the rentals from the database
         $rentals = MoonRent::all();
+        dd($rentals);
         //Cycle through each  rental and send a mail out
         foreach($rentals as $rental) {
             //Create the body for the mail to be sentout
