@@ -64,7 +64,7 @@ class MoonsAdminController extends Controller
             'Planet' => $request->planet,
             'Moon' => $request->moon,
         ])->first();
-        $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
+        $price = (int)$moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                 $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
         
         $date = new Carbon($request->date . '00:00:01');
