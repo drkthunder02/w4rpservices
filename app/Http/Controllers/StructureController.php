@@ -53,7 +53,7 @@ class StructureController extends Controller
         }
 
         //Return the view with the data passed to it
-        return view('structures.user.reprocessingtaxes')->with('taxes', $taxes);
+        return view('structures/user/reprocessingtaxes')->with('taxes', $taxes);
     }
 
     public function displayIndustryTaxes() {
@@ -85,7 +85,7 @@ class StructureController extends Controller
         $this->middleware('role:Admin');
 
         $corps = CorpStructure::pluck('corporation_name', 'corporation_id');
-        return view('structures.admin.choosecorporation')->with('corps', $corps);
+        return view('structures/admin/choosecorporation')->with('corps', $corps);
     }
 
     public function displayCorpTaxes(Request $request) {
@@ -109,7 +109,7 @@ class StructureController extends Controller
         }
 
         //Return the view with the data passed to it
-        return view('structures.admin.choosecorptaxes')->with('totalTaxes', $totalTaxes);
+        return view('structures/admin/choosecorptaxes')->with('totalTaxes', $totalTaxes);
     }
 
     public function displayTaxes() {
@@ -138,7 +138,7 @@ class StructureController extends Controller
             ];
         }
 
-        return view('structures.user.taxes')->with('totalTaxes', $totalTaxes);
+        return view('structures/user/taxes')->with('totalTaxes', $totalTaxes);
     }
 
     public function displayTaxHistory(Request $request) {
@@ -168,6 +168,6 @@ class StructureController extends Controller
             ];
         }
 
-        return view('structures.user.taxhistory')->with(compact('totalTaxes', 'months'));
+        return view('structures/user/taxhistory')->with(compact('totalTaxes', 'months'));
     }
 }

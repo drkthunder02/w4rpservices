@@ -11,7 +11,7 @@ class StructureAdminController extends Controller
     }
 
     public function displayDashboard() {
-        return view('structures.admin.dashboard');
+        return view('structures/admin/dashboard');
     }
 
     public function storeTaxRatio(Request $request) {
@@ -29,7 +29,7 @@ class StructureAdminController extends Controller
         $ratio->ratio = $request->ratio;
         $ratio->save();
 
-        return redirect('structure.admin.dashboard');
+        return redirect('structure/admin/dashboard');
     }
 
     public function updateTaxRatio(Request $request) {
@@ -46,12 +46,12 @@ class StructureAdminController extends Controller
             'ratio' => $request->ratio,
         ]);
 
-        return redirect('structure.admin.dashboard')->with('success', 'Tax Ratio updated for structure type: ' . $request->type . ' and corporation: ' . $request->corporation);
+        return redirect('structure/admin/dashboard')->with('success', 'Tax Ratio updated for structure type: ' . $request->type . ' and corporation: ' . $request->corporation);
     }
 
     public function displayTaxRatios() {
         $taxRatios = CorpTaxRation::all();
 
-        return view('structure.admin.taxratios')->with('structures', $structures);
+        return view('structure/admin/taxratios')->with('structures', $structures);
     }
 }

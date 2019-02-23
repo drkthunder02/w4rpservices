@@ -22,7 +22,7 @@ class RegisterStructureController extends Controller
     public function displayRegisterStructure() {
         //Check to see if the user has the read corp journal esi scope before allowing to register a structure
         if(Auth()->user()->hasEsiScope('esi-wallet.read_corporation_wallets.v1')) {
-            return view('structures.register.register');
+            return view('structures/register/register');
         } else {
             return view('dashboard')->with('error', 'You need to setup your esi scope for read corporation wallets');
         }
