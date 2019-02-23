@@ -14,7 +14,7 @@
                 <th>Fourth Ore</th>
                 <th>Quantity</th>
                 <th>Rental Price</th>
-                <th>Renter</th>
+                <th>Moon Worth</th>
                 <th>Rental End</th>
             </thead>
             <tbody>

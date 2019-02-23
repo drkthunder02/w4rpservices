@@ -276,8 +276,8 @@ class LoginController extends Controller
             'corporation_id' => $character_info->corporation_id,
         ]);
 
-        $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->get(['entity_id']);
-        $renter = AllowedLogin::where(['login_type' => 'Renter'])->get(['entity_id']);
+        $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
+        $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
 
         //Send back the appropriate group
         if(isset($corp_info->alliance_id)) {

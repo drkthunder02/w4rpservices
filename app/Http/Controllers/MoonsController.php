@@ -44,6 +44,10 @@ class MoonsController extends Controller
             $rentalEnd = $rentalEnd->format('m-d');
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+
+            $worth = $moonCalc->SpatialMoonsTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
+                                                       $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
+            
             //Add the data to the html string to be passed to the view
             $html .= '<tr>';
             $html .= '<td>' . $spm . '</td>';
@@ -63,16 +67,16 @@ class MoonsController extends Controller
             } else {
                 $html .= '<td>N/A</td>';
             }
-            $html .= '<td>' . $moon->RentalCorp . '</td>';
+            $html .= '<td>' . number_format($worth, "2", ".", ",") . '</td>';
             $html .= '<td>' . $rentalEnd . '</td>';
             $html .= '</tr>';
         }
 
-        return view('moons.user.moon')->with('html', $html);
+        return view('moons/user/moon')->with('html', $html);
     }
 
     public function displayTotalWorthForm() {
-        return view('moons.user.formTotalWorth');
+        return view('moons/user/formTotalWorth');
     }
 
     public function displayTotalWorth(Request $request) {
@@ -90,16 +94,12 @@ class MoonsController extends Controller
         //Update the prices for the moon
         $moonCalc->FetchNewPrices();
 
-        $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity,
-                                                             $secondOre, $secondQuantity,
-                                                             $thirdOre, $thirdQuantity,
-                                                             $fourthOre, $fourthQuantity);
+        $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
+                                                             $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
         $totalGoo = number_format($totalGoo, 2, ".", ",");
 
-        $totalWorth = $moonCalc->SpatialMoonsTotalWorth($firstOre, $firstQuantity,
-                                                        $secondOre, $secondQuantity,
-                                                        $thirdOre, $thirdQuantity,
-                                                        $fourthOre, $fourthQuantity);
+        $totalWorth = $moonCalc->SpatialMoonsTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
+                                                        $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
         $totalWorth = number_format($totalWorth, 2, ".", ",");
 
         return view('moons.user.displayTotalWorth')->with(['totalWorth' => $totalWorth, 'totalGoo' => $totalGoo]);
