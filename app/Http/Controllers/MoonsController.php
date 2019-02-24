@@ -59,9 +59,9 @@ class MoonsController extends Controller
             }
 
             if($today > $rentalTemp) {
-                $color = 'success';
+                $color = 'table-success';
             } else {
-                $color = 'warning';
+                $color = 'table-danger';
             }
             
             //Add the data to the html string to be passed to the view
