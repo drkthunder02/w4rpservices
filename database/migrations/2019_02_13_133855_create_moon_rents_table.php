@@ -23,7 +23,6 @@ class CreateMoonRentsTable extends Migration
             $table->string('Contact');
             $table->string('Price');
             $table->string('Type');
-            $table->timestamps();
         });
     }
 

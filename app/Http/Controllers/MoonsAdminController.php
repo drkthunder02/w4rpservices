@@ -79,7 +79,6 @@ class MoonsAdminController extends Controller
         ])->update([
             'RentalCorp' => $request->renter,
             'RentalEnd' => $date,
-            'Contact' => $contact,
         ]);
 
         //Going to store moon price in a table for future reference
@@ -110,31 +109,6 @@ class MoonsAdminController extends Controller
         }
         
         return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
-    }
-
-    public function storeUpdateMoon2(Request $request) {
-        $this->validate($request, [
-            'system' => 'required',
-            'planet' => 'required',
-            'moon' => 'required',
-            'renter' => 'required',
-            'date' => 'required',
-            'contact' => 'required',
-        ]);
-
-        $date = new Carbon($request->date . '00:00:01');
-        //Update the database entry
-        Moon::where([
-            'System' => $request->system,
-            'Planet' => $request->planet,
-            'Moon' => $request->moon,
-        ])->update([
-            'RentalCorp' => $request->renter,
-            'RentalEnd' => $date,
-            'Contact' => $request->contact,
-        ]);
-
-        return redirect('/moons/display')->with('success', 'Moon Updated');
     }
 
     public function addMoon() {

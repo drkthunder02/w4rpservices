@@ -31,7 +31,6 @@ class CreateMoonsTable extends Migration
                 $table->integer('FourthQuantity')->default('0');
                 $table->string('RentalCorp')->default('Not Rented');
                 $table->integer('RentalEnd')->default('0');
-                $table->timestamp('created_at')->nullable();
             });
         }
     }
