@@ -20,8 +20,8 @@
             <tbody>
                 @foreach($table as $row)
                 <tr>
-                    <td class="{{ $row['RowColor'] }}">{{ $row['SPM'] }}</td>
-                    <td class="{{ $row['RowColor'] }}">{{ $row['StructureName'] }}</td>
+                    <td>{{ $row['SPM'] }}</td>
+                    <td>{{ $row['StructureName'] }}</td>
                     <td>{{ $row['FirstOre'] }}</td>
                     <td>{{ $row['FirstQuantity'] }}</td>
                     <td>{{ $row['SecondOre'] }}</td>
