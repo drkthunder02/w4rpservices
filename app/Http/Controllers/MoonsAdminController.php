@@ -214,6 +214,7 @@ class MoonsAdminController extends Controller
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
             $rentalTemp = new Carbon($moon->RentalEnd);
             $rentalEnd = $rentalTemp->format('m-d');
+            $today = Carbon::now();
 
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
