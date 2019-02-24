@@ -42,8 +42,9 @@ class MoonsController extends Controller
         foreach($moons as $moon) {
             //Setup formats as needed
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
-            $rentalEnd = new Carbon($moon->RentalEnd);
-            $rentalEnd = $rentalEnd->format('m-d');
+            $rentalTemp = new Carbon($moon->RentalEnd);
+            $rentalEnd = $rentalTemp->format('m-d');
+            $today = Carbon::now();
 
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
@@ -55,6 +56,12 @@ class MoonsController extends Controller
                 $moonprice = $price['alliance'];
             } else {
                 $moonprice = $price['outofalliance'];
+            }
+
+            if($today > $rentalTemp) {
+                $color = 'success';
+            } else {
+                $color = 'warning';
             }
             
             //Add the data to the html string to be passed to the view
@@ -72,6 +79,7 @@ class MoonsController extends Controller
                 'Price' => $moonprice,
                 'Worth' => number_format($worth, "2", ".", ","),
                 'RentalEnd' => $rentalEnd,
+                'RowColor' => $color,
             ]);
         }
 
