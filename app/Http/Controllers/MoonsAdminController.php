@@ -239,7 +239,7 @@ class MoonsAdminController extends Controller
                 'FourthQuantity' => $moon->FourthQuantity,
                 'AlliancePrice' => $price['alliance'],
                 'OutOfAlliancePrice' => $price['outofalliance'],
-                'Renter' => $moon->RenterCorp,
+                'Renter' => $moon->RentalCorp,
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
             ]);
