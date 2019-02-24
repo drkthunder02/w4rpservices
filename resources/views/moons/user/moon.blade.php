@@ -19,7 +19,7 @@
             </thead>
             <tbody>
                 @foreach($table as $row)
-                <tr class="{{ $color }}">
+                <tr class="{{ $row['RowColor'] }}">
                     <td>{{ $row['SPM'] }}</td>
                     <td>{{ $row['StructureName'] }}</td>
                     <td>{{ $row['FirstOre'] }}</td>
