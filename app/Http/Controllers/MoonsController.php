@@ -52,6 +52,12 @@ class MoonsController extends Controller
             $worth = $moonCalc->SpatialMoonsTotalWorth($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                        $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
+            if($type == 'W4RP') {
+                $moonprice = $price['alliance'];
+            } else {
+                $moonprice = $price['outofalliance'];
+            }
+
             if($today > $rentalTemp) {
                 $color = 'table-success';
             } else {
