@@ -36,7 +36,7 @@ class MoonsController extends Controller
         //get all of the moons from the database
         $moons = DB::table('Moons')->orderBy('System', 'asc')->get();
         //declare the html variable and set it to null
-        $html = '';
+       
         $table = array();
         $moonprice = null;
         foreach($moons as $moon) {

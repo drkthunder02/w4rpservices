@@ -208,34 +208,46 @@ class MoonsAdminController extends Controller
         //get all of the moons from the database
         $moons = Moon::orderBy('System', 'asc')->get();
         //declare the html variable and set it to null
-        $html = '';
+        $table = array();
         foreach($moons as $moon) {
             //Setup formats as needed
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
-            $rentalEnd = new Carbon($moon->RentalEnd);
-            $rentalEnd = $rentalEnd->format('m-d');
+            $rentalTemp = new Carbon($moon->RentalEnd);
+            $rentalEnd = $rentalTemp->format('m-d');
 
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+            if($type == 'W4RP') {
+                $moonprice = $price['alliance'];
+            } else {
+                $moonprice = $price['outofalliance'];
+            }
+
+            if($today > $rentalTemp) {
+                $color = 'table-success';
+            } else {
+                $color = 'table-danger';
+            }
+            
             //Add the data to the html string to be passed to the view
-            $html .= '<tr>';
-            $html .= '<td>' . $spm . '</td>';
-            $html .= '<td>' . $moon->StructureName . '</td>';
-            $html .= '<td>' . $moon->FirstOre . '</td>';
-            $html .= '<td>' . $moon->FirstQuantity . '</td>';
-            $html .= '<td>' . $moon->SecondOre . '</td>';
-            $html .= '<td>' . $moon->SecondQuantity . '</td>';
-            $html .= '<td>' . $moon->ThirdOre . '</td>';
-            $html .= '<td>' . $moon->ThirdQuantity . '</td>';
-            $html .= '<td>' . $moon->FourthOre . '</td>';
-            $html .= '<td>' . $moon->FourthQuantity . '</td>';
-            $html .= '<td>' . $price['alliance'] . '</td>';
-            $html .= '<td>' . $price['outofalliance'] . '</td>';
-            $html .= '<td>' . $moon->RentalCorp . '</td>';
-            $html .= '<td>' . $rentalEnd . '</td>';
-            $html .= '</tr>';
+            array_push($table, [
+                'SPM' => $spm,
+                'StructureName' => $moon->StructureName,
+                'FirstOre' => $moon->FirstOre,
+                'FirstQuantity' => $moon->FirstQuantity,
+                'SecondOre' => $moon->SecondOre,
+                'SecondQuantity' => $moon->SecondQuantity,
+                'ThirdOre' => $moon->ThirdOre,
+                'ThirdQuantity' => $moon->ThirdQuantity,
+                'FourthOre' => $moon->FourthOre,
+                'FourthQuantity' => $moon->FourthQuantity,
+                'Price' => $moonprice,
+                'Worth' => number_format($worth, "2", ".", ","),
+                'RentalEnd' => $rentalEnd,
+                'RowColor' => $color,
+            ]);
         }
 
-        return view('moons/admin/adminmoon')->with('html', $html);
+        return view('moons/admin/adminmoon')->with('table', $table);
     }
 }
