@@ -67,6 +67,7 @@ class MoonsController extends Controller
                 'SecondQuantity' => $moon->SecondQuantity,
                 'ThirdOre' => $moon->ThirdOre,
                 'ThirdQuantity' => $moon->ThirdQuantity,
+                'FourthOre' => $moon->FourthOre,
                 'FourthQuantity' => $moon->FourthQuantity,
                 'Price' => $moonprice,
                 'Worth' => number_format($worth, "2", ".", ","),
