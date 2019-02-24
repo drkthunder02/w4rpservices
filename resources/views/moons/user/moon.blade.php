@@ -18,7 +18,7 @@
                 <th>Rental End</th>
             </thead>
             <tbody>
-                @foreach($tables as $row)
+                @foreach($table as $row)
                 <tr>
                     <td>{{ $row['SPM'] }}</td>
                     <td>{{ $row['StructureName'] }}</td>
