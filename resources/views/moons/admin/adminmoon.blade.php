@@ -33,6 +33,7 @@
                     <td>{{ $row['FourthQuantity'] }}</td>
                     <td>{{ $row['AlliancePrice'] }}</td>
                     <td>{{ $row['OutOfAlliancePrice'] }}</td>
+                    <td>{{ $row['Renter'] }}</td>
                     <td>{{ $row['RentalEnd'] }}</td>
                 </tr>
                 @endforeach
