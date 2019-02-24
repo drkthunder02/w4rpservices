@@ -60,7 +60,7 @@ class MoonsController extends Controller
             //Add the data to the html string to be passed to the view
             array_push($table, [
                 'SPM' => $spm,
-                'StructureName' => $moon->StrucutreName,
+                'StructureName' => $moon->StructureName,
                 'FirstOre' => $moon->FirstOre,
                 'FirstQuantity' => $moon->FirstQuantity,
                 'SecondOre' => $moon->SecondOre,
