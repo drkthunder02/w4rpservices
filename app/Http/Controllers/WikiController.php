@@ -65,10 +65,8 @@ class WikiController extends Controller
 
         //Get the user from the table to get the uid
         $uid = DB::select('SELECT id FROM wiki_user WHERE login = ?', [$name]);
-        $gname = DB::select('SELECT gname FROM wiki_groupnames WHERE id = ?', [1]);
         $member->uid = $uid[0]->id;
         $member->gid = 1;
-        $member->groupname = $gname[0]->gname;
         $member->save();
         //Return to the dashboard view
         return redirect('/dashboard')->with('success', 'Registration successful.  Your username is: ' . $name);
