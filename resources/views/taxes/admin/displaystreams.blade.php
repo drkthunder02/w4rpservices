@@ -3,7 +3,8 @@
 
 
 <div class="container-fluid main-container">
-    <div class="row col-md-offset-1">
+    <div class="row">
+        <div class="container col-md-offset-1">
         <div class="card">
             <div class="card-header">
                 PI Taxes
@@ -87,6 +88,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
     </div>
 </div>
