@@ -2,9 +2,8 @@
 @section('content')
 
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="container col-md-3">
         <div class="card">
             <div class="card-header">
                 PI Taxes
@@ -26,8 +25,6 @@
                 </table>
             </div>
         </div>
-        </div>
-        <div class="container col-md-3">
         <div class="card">
             <div class="card-header">
                 Office Taxes
@@ -49,8 +46,6 @@
                 </table>
             </div>
         </div>
-        </div>
-        <div class="container col-md-3">
         <div class="card">
             <div class="card-header">
                 Industry Taxes
@@ -72,8 +67,6 @@
                 </table>
             </div>
         </div>
-        </div>
-        <div class="container col-md-3">
         <div class="card">
             <div class="card-header">
                 Reprocessing Taxes
@@ -95,11 +88,10 @@
                 </table>
             </div>
         </div>
-        </div>
     </div>
 </div>
 <br>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="card">
             <div class="card-header">
