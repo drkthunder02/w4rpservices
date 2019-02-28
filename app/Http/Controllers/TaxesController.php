@@ -34,7 +34,7 @@ class TaxesController extends Controller
         $tHelper = new TaxesHelper();
 
         //Get the dates we are working with
-        $dates = $tHelepr->GetTimeFrameInMonths($months);
+        $dates = $tHelper->GetTimeFrameInMonths($months);
 
         foreach($dates as $date) {
             $pis[] = [
