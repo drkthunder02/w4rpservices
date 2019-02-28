@@ -37,6 +37,7 @@ class TaxesController extends Controller
         $dates = $tHelper->GetTimeFrameInMonths($months);
 
         foreach($dates as $date) {
+            dd($date);
             $pis[] = [
                 'date' => $date['start']->toFormattedDateString(),
                 'gross' => number_format($tHelper->GetPIGross($start, $end), 2, ".", ","),
