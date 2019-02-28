@@ -90,5 +90,51 @@
         </div>
     </div>
 </div>
-
+<br>
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <div class="card-header">
+                Market Taxes
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <th>Month</th>
+                        <th>Market Taxes</th>
+                    </thead>
+                    <tbody>
+                        @foreach($markets as $market)
+                            <tr>
+                                <td>{{ $market['date'] }}</td>
+                                <td>{{ $market['gross'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Jump Gate Taxes
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <th>Month</th>
+                        <th>Jump Gate Taxes</th>
+                    </thead>
+                    <tbody>
+                        @foreach($jumpgates as $jumpgate)
+                            <tr>
+                                <td>{{ $jumpgate['date'] }}</td>
+                                <td>{{ $jumpgate['gross'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

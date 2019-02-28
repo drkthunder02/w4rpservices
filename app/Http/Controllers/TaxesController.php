@@ -57,12 +57,24 @@ class TaxesController extends Controller
                 'date' => $date['start']->toFormattedDateString(),
                 'gross' => number_format($tHelper->GetOfficeGross($date['start'], $date['end']), 2, ".", ","),
             ];
+
+            $markets[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetMarketGross($date['start'], $date['end']), 2, ".", ","),
+            ];
+
+            $jumpgates[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetJumpGateGross($date['start'], $date['end']), 2, ".", ","),
+            ];
         }
 
         //Return the view with the compact variable list
         return view('/taxes/admin/displaystreams')->with('pis', $pis)
                                            ->with('industrys', $industrys)
                                            ->with('reprocessings', $reprocessings)
-                                           ->with('offices', $offices);
+                                           ->with('offices', $offices)
+                                           ->with('markets', $markets)
+                                           ->with('jumpgates', $jumpgates);
     }
 }

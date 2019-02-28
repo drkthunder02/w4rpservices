@@ -14,6 +14,8 @@ use App\Models\Finances\ReprocessingTaxJournal;
 use App\Models\Finances\StructureIndustryTaxJournal;
 use App\Models\Finances\PlanetProductionTaxJournal;
 use App\Models\Finances\OfficeFeesJournal;
+use App\Models\Finances\CorpMarketJournal;
+use App\Models\Finances\JumpBridgeJournal;
 
 
 class TaxesHelper {
@@ -30,10 +32,30 @@ class TaxesHelper {
         $this->end = $en;
     }
 
+    public function GetJumpGateGross($start, $end) {
+        $revenue = 0.00;
+
+        $revenue = JumpBridgeJournal::where(['ref_type' => 'structure_gate_jump', 'second_party_id' => '98287666'])
+                                ->whereBetween('date', [$start, $end])
+                                ->sum('amount');
+
+        return $revenue;
+    }
+
+    public function GetMarketGross($start, $end) {
+        $revenue = 0.00;
+
+        $revenue = CorpMarketJournal::where(['ref_type' => 'brokers_fee', 'second_party_id' => '98287666'])
+                                ->whereBetween('date', [$start, $end])
+                                ->sum('amount');
+
+        return $revenue;
+    }
+
     public function GetIndustryGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = StructureIndustryTaxJournal::where(['ref_type' => 'facility_industry_tax', 'second_party_id'  => '98287666'])
+        $revenue = StructureIndustryTaxJournal::where(['ref_type' => 'industry_job_tax', 'second_party_id'  => '98287666'])
                                 ->whereBetween('date', [$start, $end])
                                 ->sum('amount');
 
