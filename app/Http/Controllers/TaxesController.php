@@ -14,7 +14,7 @@ use App\Library\Lookups\LookupHelper;
 use App\Library\Structures\StructureTaxHelper;
 use App\Library\Taxes\TaxesHelper;
 
-class FinancesController extends Controller
+class TaxesController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
