@@ -37,25 +37,25 @@ class TaxesController extends Controller
         $dates = $tHelper->GetTimeFrameInMonths($months);
 
         foreach($dates as $date) {
-            
+
             $pis[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetPIGross($start, $end), 2, ".", ","),
+                'gross' => number_format($tHelper->GetPIGross($date['start'], $date['end']), 2, ".", ","),
             ];
 
             $industrys[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'tax' => number_format($tHelper->GetIndustryGross($start, $end), 2, ".", ","),
+                'tax' => number_format($tHelper->GetIndustryGross($date['start'], $date['end']), 2, ".", ","),
             ];
 
             $reprocessings[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'tax' => number_format($tHelper->GetReprocessingGross($start, $end), 2, ".", ","),
+                'tax' => number_format($tHelper->GetReprocessingGross($date['start'], $date['end']), 2, ".", ","),
             ];
 
             $offices[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'tax' => number_format($tHelper->GetOfficeGross($start, $end), 2, ".", ","),
+                'tax' => number_format($tHelper->GetOfficeGross($date['start'], $date['end']), 2, ".", ","),
             ];
         }
 
