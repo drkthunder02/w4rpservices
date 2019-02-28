@@ -59,7 +59,7 @@ class MoonsController extends Controller
             }
 
             if($today > $rentalTemp) {
-                $color = 'table-success';
+                $color = 'table-primary';
             } else {
                 $color = 'table-danger';
             }

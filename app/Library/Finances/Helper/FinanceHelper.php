@@ -108,6 +108,9 @@ class FinanceHelper {
                     } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
                         $industry = new StructureIndustryTax();
                         $industry->InsertStructureIndustryTax($entry, $corpId, $division);
+                    } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
+                        $office = new OfficeFee();
+                        $office->InsertOfficeFee($entry, $corpId, $division);
                     }
                 }
                 
