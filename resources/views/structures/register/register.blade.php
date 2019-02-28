@@ -10,8 +10,6 @@
         {{ Form::text('system', '', ['class' => 'form-control']) }}
         {{ Form::label('structure_name', 'Structure Name') }}
         {{ Form::text('structure_name', '', ['class' => 'form-control']) }}
-        {{ Form::label('tax', 'Tax') }}
-        {{ Form::text('tax', '', ['class' => 'form-control']) }}
         {{ Form::label('structure_type', 'Structure Type') }}
         {{ Form::select('structure_type', ['Refinery' => 'Refinery', 'Market' => 'Market'], null, ['class' => 'form-control']) }}
     </div>
