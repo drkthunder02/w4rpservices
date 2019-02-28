@@ -2,8 +2,8 @@
 @section('content')
 
 
-<div class="container">
-    <div class="row">
+<div class="row">
+    <div class="container">
         <div class="card">
             <div class="card-header">
                 PI Taxes
@@ -91,8 +91,8 @@
     </div>
 </div>
 <br>
-<div class="container">
-    <div class="row">
+<div class="row">
+    <div class="container">
         <div class="card">
             <div class="card-header">
                 Market Taxes
