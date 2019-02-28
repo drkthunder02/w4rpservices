@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row">
-    <div class="container">
+    <div class="container col-md-4">
         <div class="card-header">
             PI Taxes
         </div>
@@ -23,7 +23,7 @@
             </table>
         </div>
     </div>
-    <div class="container">
+    <div class="container col-md-4">
             <div class="card-header">
                 Office Taxes
             </div>
@@ -48,47 +48,46 @@
 </div>
 <br><br>
 <div class="row">
-        <div class="container">
+    <div class="container col-md-4">
+        <div class="card-header">
+            Industry Taxes
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <th>Month</th>
+                    <th>Industry Taxes</th>
+                </thead>
+                <tbody>
+                    @foreach($industrys as $industry)
+                        <tr>
+                            <td>{{ $industry['date'] }}</td>
+                            <td>{{ $industry['gross'] }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container col-md-4">
             <div class="card-header">
-                Industry Taxes
+                Reprocessing Taxes
             </div>
             <div class="card-body">
                 <table class="table table-striped">
                     <thead>
                         <th>Month</th>
-                        <th>Industry Taxes</th>
+                        <th>Reprocessing Taxes</th>
                     </thead>
                     <tbody>
-                        @foreach($industrys as $industry)
+                        @foreach($reprocessings as $reprocessing)
                             <tr>
-                                <td>{{ $industry['date'] }}</td>
-                                <td>{{ $industry['gross'] }}</td>
+                                <td>{{ $reprocessing['date'] }}</td>
+                                <td>{{ $reprocessing['gross'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="container">
-                <div class="card-header">
-                    Reprocessing Taxes
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <th>Month</th>
-                            <th>Reprocessing Taxes</th>
-                        </thead>
-                        <tbody>
-                            @foreach($reprocessings as $reprocessing)
-                                <tr>
-                                    <td>{{ $reprocessing['date'] }}</td>
-                                    <td>{{ $reprocessing['gross'] }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
