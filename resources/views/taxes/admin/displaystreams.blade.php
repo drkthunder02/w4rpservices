@@ -1,8 +1,8 @@
 @extends('layouts.b4')
 @section('content')
 
-
-    <div class="container col-md-4">
+<div class="row">
+    <div class="container col-md-3">
         <div class="card-header">
             PI Taxes
         </div>
@@ -23,7 +23,7 @@
             </table>
         </div>
     </div>
-    <div class="container col-md-4">
+    <div class="container col-md-3">
             <div class="card-header">
                 Office Taxes
             </div>
@@ -45,10 +45,7 @@
             </div>
         </div>
     </div>
-
-<br><br>
-
-    <div class="container col-md-4">
+    <div class="container col-md-3">
         <div class="card-header">
             Industry Taxes
         </div>
@@ -69,7 +66,7 @@
             </table>
         </div>
     </div>
-    <div class="container col-md-4">
+    <div class="container col-md-3">
             <div class="card-header">
                 Reprocessing Taxes
             </div>
@@ -91,6 +88,6 @@
             </div>
         </div>
     </div>
-
+</div>
 
 @endsection
