@@ -4,6 +4,7 @@
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col">
         <div class="card">
             <div class="card-header">
                 PI Taxes
@@ -25,6 +26,8 @@
                 </table>
             </div>
         </div>
+        </div>
+        <div class="col">
         <div class="card">
             <div class="card-header">
                 Office Taxes
@@ -46,6 +49,8 @@
                 </table>
             </div>
         </div>
+        </div>
+        <div class="col">
         <div class="card">
             <div class="card-header">
                 Industry Taxes
@@ -67,6 +72,8 @@
                 </table>
             </div>
         </div>
+        </div>
+        <div class="col">
         <div class="card">
             <div class="card-header">
                 Reprocessing Taxes
@@ -87,6 +94,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
     </div>
 </div>
