@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth']], function(){
 
     //Register Structures Controller display pages
     Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
-    Route::post('/structures/register', 'RegisterstructureController@storeStructure');
+    Route::post('/structures/register', 'RegisterStructureController@storeStructure');
     
     //Structure Admin Controller display pages
     Route::get('/structures/admin/dashboard', 'StructureAdminController@displayDashboard');

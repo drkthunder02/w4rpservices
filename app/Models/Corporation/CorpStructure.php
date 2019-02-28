@@ -28,7 +28,6 @@ class CorpStructure extends Model
         'region',
         'system',
         'structure_name',
-        'tax',
         'structure_type',
     ];
 }

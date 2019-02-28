@@ -47,7 +47,6 @@ class RegisterStructureController extends Controller
         $structure->region = $request->region;
         $structure->system = $request->system;
         $structure->structure_name = $request->structure_name;
-        $structure->tax = $tax;
         $structure->structure_type = $request->structure_type;
         $structure->save();
 
