@@ -60,10 +60,10 @@ class TaxesController extends Controller
         }
 
         //Return the view with the compact variable list
-        return view('/taxes/admin/displaystreams')->with('pi', $pi)
-                                           ->with('industry', $industry)
-                                           ->with('reprocessing', $reprocessing)
-                                           ->with('office', $office);
+        return view('/taxes/admin/displaystreams')->with('pis', $pis)
+                                           ->with('industrys', $industrys)
+                                           ->with('reprocessings', $reprocessings)
+                                           ->with('offices', $offices);
 
     }
 }
