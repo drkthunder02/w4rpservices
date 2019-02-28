@@ -45,17 +45,17 @@ class TaxesController extends Controller
 
             $industrys[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'tax' => number_format($tHelper->GetIndustryGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetIndustryGross($date['start'], $date['end']), 2, ".", ","),
             ];
 
             $reprocessings[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'tax' => number_format($tHelper->GetReprocessingGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetReprocessingGross($date['start'], $date['end']), 2, ".", ","),
             ];
 
             $offices[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'tax' => number_format($tHelper->GetOfficeGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetOfficeGross($date['start'], $date['end']), 2, ".", ","),
             ];
         }
 
@@ -64,6 +64,5 @@ class TaxesController extends Controller
                                            ->with('industrys', $industrys)
                                            ->with('reprocessings', $reprocessings)
                                            ->with('offices', $offices);
-
     }
 }

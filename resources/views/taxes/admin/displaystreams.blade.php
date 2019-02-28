@@ -16,7 +16,7 @@
                     @foreach($pis as $pi)
                         <tr>
                             <td>{{ $pi['date'] }}</td>
-                            <td>{{ $pi['tax'] }}</td>
+                            <td>{{ $pi['gross'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -37,7 +37,7 @@
                         @foreach($offices as $office)
                             <tr>
                                 <td>{{ $office['date'] }}</td>
-                                <td>{{ $office['tax'] }}</td>
+                                <td>{{ $office['gross'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -62,7 +62,7 @@
                         @foreach($industrys as $industry)
                             <tr>
                                 <td>{{ $industry['date'] }}</td>
-                                <td>{{ $industry['tax'] }}</td>
+                                <td>{{ $industry['gross'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -83,7 +83,7 @@
                             @foreach($reprocessings as $reprocessing)
                                 <tr>
                                     <td>{{ $reprocessing['date'] }}</td>
-                                    <td>{{ $reprocessing['tax'] }}</td>
+                                    <td>{{ $reprocessing['gross'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
