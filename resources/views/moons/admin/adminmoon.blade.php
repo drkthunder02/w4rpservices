@@ -43,22 +43,22 @@
     </div>
 </div>
 
-<div class="container col-md-3">
-        <table class="table table-striped">
-            <thead>
-                <th>Legend</tH>
-            </thead>
-            <tbody>
-                <tr class="table-primary">
-                    <td>Moon Available</td>
-                </tr>
-                <tr class="table-danger">
-                    <td>Moon Rented</td>
-                </tr>
-                <tr class="table-warning">
-                    <td>Moon Rent Due</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="container-fluid col-md-3">
+    <table class="table table-striped">
+        <thead>
+            <th>Legend</tH>
+        </thead>
+        <tbody>
+            <tr class="table-primary">
+                <td>Moon Available</td>
+            </tr>
+            <tr class="table-danger">
+                <td>Moon Rented</td>
+            </tr>
+            <tr class="table-warning">
+                <td>Moon Rent Due</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 @endsection
