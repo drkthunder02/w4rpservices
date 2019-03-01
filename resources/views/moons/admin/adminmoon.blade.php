@@ -43,7 +43,7 @@
     </div>
 </div>
 
-<div class="container col-md-3">
+<div class="container-fluid col-md-2 col-md-offset-1">
 <div class="card">
     <div class="card-header">
         Legend
