@@ -43,27 +43,37 @@
     </div>
 </div>
 
-<div class="container-fluid col-md-2 col-md-offset-1">
-<div class="card">
-    <div class="card-header">
-        Legend
-    </div>
-    <div class="card-body">
-        <table class="table table-striped">
-            <tbody>
-                <tr class="table-primary">
-                    <td>Moon Available</td>
-                </tr>
-                <tr class="table-danger">
-                    <td>Moon Rented</td>
-                </tr>
-                <tr class="table-warning">
-                    <td>Moon Rent Due</td>
-                </tr>
-            </tbody>
-        </table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Legend
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr class="table-primary">
+                                <td>Moon Available</td>
+                            </tr>
+                            <tr class="table-danger">
+                                <td>Moon Rented</td>
+                            </tr>
+                            <tr class="table-warning">
+                                <td>Moon Rent Due</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
     </div>
 </div>
-</div>
+
 
 @endsection
