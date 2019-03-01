@@ -43,7 +43,8 @@
     </div>
 </div>
 
-<div class="container-fluid col-md-3">
+<p align="right">
+<div class="container col-md-3">
     <table class="table table-striped">
         <thead>
             <th>Legend</tH>
@@ -61,4 +62,5 @@
         </tbody>
     </table>
 </div>
+</p>
 @endsection
