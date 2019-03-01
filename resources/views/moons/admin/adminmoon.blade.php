@@ -43,7 +43,8 @@
     </div>
 </div>
 
-<div class="container col-md-3" align="left">
+<div class="card">
+<div class="container col-md-3">
     <table class="table table-striped">
         <thead>
             <th>Legend</tH>
@@ -60,5 +61,6 @@
             </tr>
         </tbody>
     </table>
+</div>
 </div>
 @endsection
