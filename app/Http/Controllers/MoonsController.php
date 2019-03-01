@@ -58,7 +58,9 @@ class MoonsController extends Controller
                 $moonprice = $price['outofalliance'];
             }
 
-            if($today > $rentalTemp) {
+            if($rentalTemp->diffInDays($today) < 3 ) {
+                $color = 'table-warning';
+            } else if( $today > $rentalTemp) {
                 $color = 'table-primary';
             } else {
                 $color = 'table-danger';

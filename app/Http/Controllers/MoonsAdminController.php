@@ -193,7 +193,9 @@ class MoonsAdminController extends Controller
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
-            if($today > $rentalTemp) {
+            if($rentalTemp->diffInDays($today) < 3 ) {
+                $color = 'table-warning';
+            } else if( $today > $rentalTemp) {
                 $color = 'table-primary';
             } else {
                 $color = 'table-danger';
