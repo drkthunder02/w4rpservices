@@ -8,10 +8,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moons</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    @if(auth()->user()->hasRole('Guest'))
-                    <a class="dropdown-item" href="/moons/display">Display Moons</a>
-                    @endif
-                    @if(auth()->user()->hasRole('User'))
+                    @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Renter'))
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
                     @endif
@@ -24,6 +21,7 @@
                     @endif
                 </div>
             </li>
+            @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Renter'))
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wiki</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
@@ -32,6 +30,7 @@
                     <a class="dropdown-item" href="/wiki/changepassword">Change Password</a>
                 </div>
             </li>
+            @endif
             @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Others</a>

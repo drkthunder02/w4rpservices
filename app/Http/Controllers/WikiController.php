@@ -48,6 +48,12 @@ class WikiController extends Controller
             $password = md5($request->password);
         }
 
+        if(Auth::user()->hasRole('User')) {
+            $role = 1; //User role id from wiki_groupname table
+        } else if(Auth::user()->hasRole('Renter')) {
+            $role = 8; //Renter role id from wiki_groupname table
+        }
+
         //Load the model
         $user = new DokuUser;
         $member = new DokuMember;
@@ -66,7 +72,7 @@ class WikiController extends Controller
         //Get the user from the table to get the uid
         $uid = DB::select('SELECT id FROM wiki_user WHERE login = ?', [$name]);
         $member->uid = $uid[0]->id;
-        $member->gid = 1;
+        $member->gid = $role;
         $member->save();
         //Return to the dashboard view
         return redirect('/dashboard')->with('success', 'Registration successful.  Your username is: ' . $name);
