@@ -194,7 +194,7 @@ class MoonsAdminController extends Controller
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
             if($today > $rentalTemp) {
-                $color = 'table-success';
+                $color = 'table-primary';
             } else {
                 $color = 'table-danger';
             }

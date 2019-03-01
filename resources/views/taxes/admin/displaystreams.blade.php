@@ -73,6 +73,11 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<br>
+<div class="container-fluid">
+    <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-header">
@@ -96,11 +101,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<br>
-<div class="container-fluid">
-    <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-header">
