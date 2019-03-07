@@ -44,11 +44,12 @@ Route::group(['middleware' => ['auth']], function(){
 
     //Admin Controller display pages
     Route::get('/admin/dashboard', 'AdminController@displayDashboard');
-    Route::post('/admin/addRole', 'AdminController@addRole');
-    Route::post('/admin/removeRole', 'AdminController@removeRole');
+    Route::post('/admin/add/role', 'AdminController@addRole');
+    Route::post('/admin/remove/role', 'AdminController@removeRole');
     Route::post('/admin/add/permission', 'AdminController@addPermission');
     Route::post('/admin/remove/user', 'AdminController@removeUser');
     Route::post('/admin/modify/role', 'AdminController@modifyRole');
+    Route::post('/admin/add/allowedlogin', 'AdminController@addAllowedLogin');
 
     //Register Structures Controller display pages
     Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
