@@ -93,9 +93,9 @@ class AdminController extends Controller
         ];
 
         /** Entities for allowed logins */
-        $legacys = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
-        $renters = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
-
+        $legacys = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_name')->toArray();
+        $renters = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_name')->toArray();
+        //Compile a list of entities by their entity_id
         foreach($legacys as $legacy) {
             $entities[] = $legacy;
         }
