@@ -109,6 +109,7 @@ class AdminController extends Controller
                                       ->with('offices', $offices)
                                       ->with('markets', $markets)
                                       ->with('jumpgates', $jumpgates)
+                                      ->with('reprocessings', $reprocessings)
                                       ->with('entities', $entities);
     }
 
