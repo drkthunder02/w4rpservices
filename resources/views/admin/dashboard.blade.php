@@ -5,13 +5,13 @@
     <h2> Admin Dashboard</h2>
 </div>
 
-<ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a data-toggle="tab" href="#user">User</a></li>
-    <li><a data-toggle="tab" href="#permissions">Permissions</a></li>
-    <li><a data-toggle="tab" href="#roles">Roles</a></li>
-    <li><a data-toggle="tab" href="#logins">Login</a></li>
-    <li><a data-toggle="tab" href="#wiki">Wiki</a></li>
-    <li><a data-toggle="tab" href="#taxes">Taxes</a></li>
+<ul class="nav nav-tabs">
+    <li class="nav-item active"><a data-toggle="tab" href="#user">User</a></li>
+    <li class="nav-item"><a data-toggle="tab" href="#permissions">Permissions</a></li>
+    <li class="nav-item"><a data-toggle="tab" href="#roles">Roles</a></li>
+    <li class="nav-item"><a data-toggle="tab" href="#logins">Login</a></li>
+    <li class="nav-item"><a data-toggle="tab" href="#wiki">Wiki</a></li>
+    <li class="nav-item"><a data-toggle="tab" href="#taxes">Taxes</a></li>
 </ul>
 
 <div class="tab-content">
