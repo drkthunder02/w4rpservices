@@ -2,20 +2,51 @@
 
 namespace App\Http\Controllers;
 
+//Laravel libraries
 use Illuminate\Http\Request;
-
 use DB;
 use Auth;
 
+//User Libraries
+use App\Library\Lookups\LookupHelper;
+
+//Models
 use App\Models\Doku\DokuGroupNames;
 use App\Models\Doku\DokuMember;
 use App\Models\Doku\DokuUser;
+use App\Models\Admin\AllowedLogin;
 
 class WikiController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('role:User');
+    }
+
+    public function purgeUsers() {
+        //Declare helper classes
+        $helper = new LookupHelper;
+
+        //Get all the users from the database
+        $users = DokuUser::pluck('name')->all();
+
+        $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
+        $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
+
+        //Search the names and verify against the lookup table
+        //to find the corporation and / or alliance they belong to.
+        foreach($users as $user) {
+            $charId = $helper->CharacterNameToId($user);
+            $corpId = $helper->LookupCharacter($charId);
+            $allianceId = $helper->LookupCorporation($corpId);
+            if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {
+                //Do nothing
+            } else {
+                DokuUser::where(['name' => $user])->delete();
+            }
+        }
+
+        return view('/admin/dashboard')->with('success', 'Wiki has been purged.');
     }
     
     public function displayRegister() {

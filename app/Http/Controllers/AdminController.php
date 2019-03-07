@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 
+//Libraries
+use App\Library\Taxes\TaxesHelper;
+
+//Models
 use App\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\User\AvailableUserPermission;
-use App\Models\Esi\EsiScope;
-use App\Models\Esi\EsiToken;
-use App\Models\Corporation\CorpStructure;
 use App\Models\Admin\AllowedLogin;
 
 class AdminController extends Controller
@@ -22,28 +23,81 @@ class AdminController extends Controller
     }
 
     public function displayDashboard() {
-        //Get the users from the database to allow a selection of users for
-        //adding and removing roles and permissions
-        $users = User::pluck('name')->all();
-        $permissions = AvailableUserPermission::pluck('permission')->all();
-
+        //Declare variables needed for displaying items on the page
+        $months = 3;
+        $pi = array();
+        $industry = array();
+        $reprocessing = array();
+        $office = array();
         $user = array();
         $permission = array();
+        $corpId = 98287666;
 
+        /** Taxes Pane */
+        //Declare classes needed for displaying items on the page
+        $tHelper = new TaxesHelper();
+        //Get the dates for the tab panes
+        $dates = $tHelper->GetTimeFrameInMonths($months);
+        //Get the data for the Taxes Pane
+        foreach($dates as $date) {
+            //Get the pi taxes for the date range
+            $pis[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetPIGross($date['start'], $date['end']), 2, ".", ","),
+            ];
+            //Get the industry taxes for the date range
+            $industrys[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetIndustryGross($date['start'], $date['end']), 2, ".", ","),
+            ];
+            //Get the reprocessing taxes for the date range
+            $reprocessings[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetReprocessingGross($date['start'], $date['end']), 2, ".", ","),
+            ];
+            //Get the office taxes for the date range
+            $offices[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetOfficeGross($date['start'], $date['end']), 2, ".", ","),
+            ];
+            //Get the market taxes for the date range
+            $markets[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetMarketGross($date['start'], $date['end']), 2, ".", ","),
+            ];
+            //Get the jump gate taxes for the date range
+            $jumpgates[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetJumpGateGross($date['start'], $date['end']), 2, ".", ","),
+            ];
+        }
+
+        /** Users & Permissions Pane  */
+        //Get the users from the database to allow a selection of users for various parts of the webpage
+        $users = User::pluck('name')->all();
+        //Get the available permissions from the database to allow a selection of permissions
+        $permissions = AvailableUserPermission::pluck('permission')->all();
+        //Create the user key value pairs 
         foreach($users as $key => $value) {
             $user[$value] = $value;
         }
-
+        //Create the permission key value pairs
         foreach($permissions as $key => $value) {
             $permission[$value] = $value;
         }
-
+        //Create the data array
         $data = [
             'users' => $user,
             'permissions' => $permission,
         ];
 
-        return view('admin.dashboard')->with('data', $data);
+        return view('admin.dashboard')->with('data', $data)
+                                      ->with('pis', $pis)
+                                      ->with('industrys', $industrys)
+                                      ->with('offices', $offices)
+                                      ->with('markets', $markets)
+                                      ->with('jumpgates', $jumpgates)
+                                      ->with('entities', $entities);
     }
 
     public function addPermission(Request $request) {
@@ -100,33 +154,33 @@ class AdminController extends Controller
     public function addAllowedLogin(Request $request) {
         //Set the parameters to validate the form
         $this->validate($request, [
-            'entity_id' => 'required',
-            'entity_type' => 'required',
-            'entity_name' => 'required',
-            'login_type' => 'required',
+            'allowedEntityId' => 'required',
+            'allowedEntityType' => 'required',
+            'allowedEntityName' => 'required',
+            'allowedLoginType' => 'required',
         ]);
 
         //Check to see if the entity exists in the database already
         $found = AllowedLogin::where([
-            'entity_type' => $request->entityType,
-            'entity_name' => $request->entityName,
+            'entity_type' => $request->allowedentityType,
+            'entity_name' => $request->allowedEntityName,
         ])->get();
         if($found != null) {
             AllowedLogin::where([
-                'entity_type' => $request->entityType,
-                'entity_name' => $request->entityName,
+                'entity_type' => $request->allowedEntityType,
+                'entity_name' => $request->allowedEntityName,
             ])->update([
-                'entity_id' => $request->entityId,
-                'entity_type' => $request->entityType,
-                'entity_name' => $request->entityName,
-                'login_type' => $request->loginType,
+                'entity_id' => $request->allowedEntityId,
+                'entity_type' => $request->allowedEntityType,
+                'entity_name' => $request->allowedEntityName,
+                'login_type' => $request->allowedLoginType,
             ]);
         } else {
             $login = new AllowedLogin;
-            $login->entity_id = $request->entityId;
-            $login->entity_name = $request->entityName;
-            $login->entity_type = $request->entityType;
-            $login->login_type = $request->loginType;
+            $login->entity_id = $request->allowedEntityId;
+            $login->entity_name = $request->allowedEntityName;
+            $login->entity_type = $request->allowedEntityType;
+            $login->login_type = $request->allowedLoginType;
         }
 
         return redirect('/admin/dashboard')->with('success', 'Entity added to allowed login list.');
@@ -135,17 +189,11 @@ class AdminController extends Controller
     public function removeAllowedLogin(Request $request) {
         //Set the parameters to validate the form
         $this->validate($request, [
-            'entity_id' => 'required',
-            'entity_type' => 'required',
-            'entity_name' => 'required',
-            'login_type' => 'required',
+            'removeAllowedLogin' => 'required',
         ]);
 
         AllowedLogin::where([
-            'entity_id' => $request->entityId,
-            'entity_type' => $request->entityType,
-            'entity_name' => $request->entityName,
-            'login_type' => $request->loginType,
+            'entity_name' => $request->removeAllowedLogin,
         ])->delete();
 
         return redirect('/admin/dashboard')->with('success', 'Entity removed from allowed login list.');

@@ -8,10 +8,6 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
-use App\Library\Esi\Esi;
-use App\Library\Lookups\LookupHelper;
-
-use App\Library\Structures\StructureTaxHelper;
 use App\Library\Taxes\TaxesHelper;
 
 class TaxesController extends Controller
@@ -19,7 +15,7 @@ class TaxesController extends Controller
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('role:Admin');
-        $this->middleware('permission:structure.operator');
+        $this->middleware('permission:admin.finance');
     }
 
     public function displayTaxSummary() {
