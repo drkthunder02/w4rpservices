@@ -112,6 +112,10 @@ class AdminController extends Controller
                                       ->with('entities', $entities);
     }
 
+    public function modifyRole(Request $request) {
+        return redirect('/admin/dashboard')->with('error', 'Not implemented yet.');
+    }
+
     public function addPermission(Request $request) {
         //Get the user and permission from the form
         $user = $request->user;
