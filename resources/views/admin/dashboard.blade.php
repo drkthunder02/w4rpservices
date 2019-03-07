@@ -80,7 +80,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="col-md-6 card">
+                    <div class="card">
                         <div class="card-header">
                             Add Allowed Login
                         </div>
@@ -108,7 +108,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="col-md-6 card">
+                    <div class="card">
                         <div class="card-header">
                             Remove Allowed Login
                         </div>
