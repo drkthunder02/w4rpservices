@@ -31,6 +31,7 @@ class AdminController extends Controller
         $office = array();
         $user = array();
         $permission = array();
+        $entities = array();
         $corpId = 98287666;
 
         /** Taxes Pane */
@@ -90,6 +91,17 @@ class AdminController extends Controller
             'users' => $user,
             'permissions' => $permission,
         ];
+
+        /** Entities for allowed logins */
+        $legacys = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
+        $renters = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
+
+        foreach($legacys as $legacy) {
+            $entities[] = $legacy;
+        }
+        foreach($renters as $renter) {
+            $entities[] = $renter;
+        }
 
         return view('admin.dashboard')->with('data', $data)
                                       ->with('pis', $pis)
