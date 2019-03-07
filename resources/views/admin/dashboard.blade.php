@@ -5,7 +5,7 @@
     <h2> Admin Dashboard</h2>
 </div>
 
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" role="tablist">
     <li class="active"><a data-toggle="tab" href="#user">User</a></li>
     <li><a data-toggle="tab" href="#permissions">Permissions</a></li>
     <li><a data-toggle="tab" href="#roles">Roles</a></li>
