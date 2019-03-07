@@ -15,7 +15,7 @@
 </ul>
 
 <div class="tab-content">
-    <div id="user" class="tab-pane fade in active">
+    <div id="user" class="tab-pane active">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 card">
