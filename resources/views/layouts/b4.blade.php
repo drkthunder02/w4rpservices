@@ -9,12 +9,10 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Bootstrap CSS -->
+        <!-- Bootstrap CSS
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-        
-        <!--
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         -->
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     </head>
     <body>
         @include('layouts.navbar')
@@ -27,5 +25,6 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+    <script src="{{ asset('bootstrap.js') }}"></script>
     </body>
 </html>
