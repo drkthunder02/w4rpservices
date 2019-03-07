@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/remove/user', 'AdminController@removeUser');
     Route::post('/admin/modify/role', 'AdminController@modifyRole');
     Route::post('/admin/add/allowedlogin', 'AdminController@addAllowedLogin');
+    Route::post('/admin/rmoeve/allowedlogin', 'AdminController@removeAllowedLogin');
 
     //Register Structures Controller display pages
     Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
