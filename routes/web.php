@@ -46,8 +46,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/admin/dashboard', 'AdminController@displayDashboard');
     Route::post('/admin/addRole', 'AdminController@addRole');
     Route::post('/admin/removeRole', 'AdminController@removeRole');
-    Route::post('/admin/addPermission', 'AdminController@addPermission');
+    Route::post('/admin/add/permission', 'AdminController@addPermission');
     Route::post('/admin/remove/user', 'AdminController@removeUser');
+    Route::post('/admin/modify/role', 'AdminController@modifyRole');
 
     //Register Structures Controller display pages
     Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
