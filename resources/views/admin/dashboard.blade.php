@@ -4,14 +4,14 @@
 <div class="container">
     <h2> Admin Dashboard</h2>
 </div>
-
+<br>
 <ul class="nav nav-tabs">
-    <li class="nav-item active"><a data-toggle="tab" href="#user">User</a></li>
-    <li class="nav-item"><a data-toggle="tab" href="#permissions">Permissions</a></li>
-    <li class="nav-item"><a data-toggle="tab" href="#roles">Roles</a></li>
-    <li class="nav-item"><a data-toggle="tab" href="#logins">Login</a></li>
-    <li class="nav-item"><a data-toggle="tab" href="#wiki">Wiki</a></li>
-    <li class="nav-item"><a data-toggle="tab" href="#taxes">Taxes</a></li>
+    <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#user">User</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#permissions">Permissions</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#roles">Roles</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#logins">Login</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#wiki">Wiki</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#taxes">Taxes</a></li>
 </ul>
 
 <div class="tab-content">
