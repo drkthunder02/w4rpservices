@@ -13,7 +13,7 @@
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#wiki">Wiki</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#taxes">Taxes</a></li>
 </ul>
-
+<br>
 <div class="tab-content">
     <div id="user" class="tab-pane active">
         <div class="container">
@@ -79,48 +79,48 @@
     <div id="logins" class="tab-pane fade">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 card">
-                    <div class="card-header">
-                        Add Allowed Login
-                    </div>
-                    <div class="card-body">
-                        {!! Form::open(['action' => 'AdminController@addAllowedLogin', 'method' => 'POST']) !!}
-                        <div class="form-group">
-                            {{ Form::label('allowedEntityId', 'Allowed Entity ID') }}
-                            {{ Form::text('allowedEntityId', '', ['class' => 'form-control']) }}
+                <div class="col">
+                    <div class="col-md-6 card">
+                        <div class="card-header">
+                            Add Allowed Login
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('allowedEntityType', 'Allowed Entity Type') }}
-                            {{ Form::select('allowedEtntityType', ['Corporation' => 'Corporation', 'Alliance' => 'Alliance'], null, ['class' => 'form-control']) }}
+                        <div class="card-body">
+                            {!! Form::open(['action' => 'AdminController@addAllowedLogin', 'method' => 'POST']) !!}
+                            <div class="form-group">
+                                {{ Form::label('allowedEntityId', 'Allowed Entity ID') }}
+                                {{ Form::text('allowedEntityId', '', ['class' => 'form-control']) }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('allowedEntityType', 'Allowed Entity Type') }}
+                                {{ Form::select('allowedEtntityType', ['Corporation' => 'Corporation', 'Alliance' => 'Alliance'], null, ['class' => 'form-control']) }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('allowedEntityName', 'Allowed Entity Name') }}
+                                {{ Form::text('allowedEntityName', '', ['class' => 'form-control']) }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('allowedLoginType', 'Allowed Login Type') }}
+                                {{ Form::select('allowedLoginType', ['Legacy' => 'Legacy', 'Renter' => 'Renter'], null, ['class' => 'form-control']) }}
+                            </div>
+                            {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+                            {!! Form::close() !!}
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('allowedEntityName', 'Allowed Entity Name') }}
-                            {{ Form::text('allowedEntityName', '', ['class' => 'form-control']) }}
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('allowedLoginType', 'Allowed Login Type') }}
-                            {{ Form::select('allowedLoginType', ['Legacy' => 'Legacy', 'Renter' => 'Renter'], null, ['class' => 'form-control']) }}
-                        </div>
-                        {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
-                        {!! Form::close() !!}
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 card">
-                    <div class="card-header">
-                        Remove Allowed Login
-                    </div>
-                    <div class="card-body">
-                        {!! Form::open(['action' => 'AdminController@removeAllowedLogin', 'method' => 'POST']) !!}
-                        <div class="form-group">
-                            {{ Form::label('removeAllowedLogin', 'Remove Entity') }}
-                            {{ Form::select('removeAllowedLogin', $entities, null, ['class' => 'form-control']) }}
+                <div class="col">
+                    <div class="col-md-6 card">
+                        <div class="card-header">
+                            Remove Allowed Login
                         </div>
-                        {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
-                        {!! Form::close() !!}
+                        <div class="card-body">
+                            {!! Form::open(['action' => 'AdminController@removeAllowedLogin', 'method' => 'POST']) !!}
+                            <div class="form-group">
+                                {{ Form::label('removeAllowedLogin', 'Remove Entity') }}
+                                {{ Form::select('removeAllowedLogin', $entities, null, ['class' => 'form-control']) }}
+                            </div>
+                            {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+                            {!! Form::close() !!}
+                        </div>
                     </div>
                 </div>
             </div>
