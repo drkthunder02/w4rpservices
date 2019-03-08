@@ -45,7 +45,7 @@ class Kernel extends ConsoleKernel
                  ->monthlyOn(1, '08:00')
                  ->withoutOverlapping();
         $schedule->command('services:MoonMailer')
-                ->monthlyOn(27, '00:01')
+                ->monthlyOn(1, '00:01')
                 ->withoutOverlapping();
     }
 
