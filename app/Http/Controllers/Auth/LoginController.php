@@ -285,7 +285,7 @@ class LoginController extends Controller
                 return 'W4RP';
             } else if(in_array($corp_info->alliance_id, $legacy)) {
                 return 'Legacy';
-            } else if(in_arry($corp_info->alliance_id, $renter)) {
+            } else if(in_array($corp_info->alliance_id, $renter)) {
                 return 'Renter';
             } else {
                 return 'Guest';
