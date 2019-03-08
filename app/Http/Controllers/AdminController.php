@@ -162,12 +162,6 @@ class AdminController extends Controller
         return redirect('/admin/dashboard')->with('success', 'User deleted from the site.');
     }
 
-    public function displayAllowedLogins() {
-        $logins = AllowedLogin::all();
-
-        return view('admin.allowedlogins')->with('logins', $logins);
-    }
-
     public function addAllowedLogin(Request $request) {
         //Set the parameters to validate the form
         $this->validate($request, [
