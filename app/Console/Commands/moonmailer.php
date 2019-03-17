@@ -15,6 +15,7 @@ use DB;
 use App\Models\Moon\Moon;
 use App\Models\Moon\MoonRent;
 use App\Models\Mail\EveMail;
+use App\Models\Mail\SentMail;
 
 class MoonMailerCommand extends Command
 {
@@ -63,6 +64,9 @@ class MoonMailerCommand extends Command
         //Get all of the moons from the rental list
         $rentals = MoonRent::all();
 
+        //Get today's date.
+        $today = Carbon::now();
+
         //Update the price for all moon rentals before sending out the mail
         foreach($rentals as $rental) {
             //Get the contents of the moon to re-price it out
@@ -71,21 +75,22 @@ class MoonMailerCommand extends Command
                 'Planet' => $rental->Planet,
                 'Moon' => $rental->Moon,
             ])->first();
+
             //Get the updated price for the moon
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-            
+
             //Create the mail body depending on if the price should be in alliance or out  of alliance
             if($rental->Type == 'alliance') {
                 $body = "Moon Rent is due for " . $rental->System . " Planet: " . $rental->Planet . " Moon: " . $rental->Moon . "<br>";
                 $body .= "The price for next month's rent is " . $price['alliance'] . "<br>";
-                $body .= "Please remite payment to Spatial Forces by the 1st should you continue to wish to rent the moon.<br>";
+                $body .= "Please remit payment to Spatial Forces on the 1st should you continue to wish to rent the moon.<br>";
                 $body .= "Sincerely,<br>";
                 $body .= "Spatial Forces<br>";
             } else {
                 $body = "Moon Rent is due for " . $rental->System . " Planet: " . $rental->Planet . " Moon: " . $rental->Moon . "<br>";
                 $body .= "The price for next month's rent is " . $price['outofalliance'] . "<br>";
-                $body .= "Please remite payment to Spatial Forces by the 1st should you continue to wish to rent the moon.<br>";
+                $body .= "Please remit payment to Spatial Forces on the 1st should you continue to wish to rent the moon.<br>";
                 $body .= "Sincerely,<br>";
                 $body .= "Spatial Forces<br>";
             }    
@@ -100,11 +105,20 @@ class MoonMailerCommand extends Command
             $mail->save();
 
             //Dispatch the job and cycle to the next moon rental
-            SendEveMail::dispatch($mail)->delay(Carbon::now()->addseconds(15)); 
-        }
+            SendEveMail::dispatch($mail)->delay(Carbon::now());
 
-        //Remove all moon rentals from the database
-        DB::table('moon_rents')->delete();
+            //After the mail is dispatched, saved the sent mail record, 
+            $sentmail = new SentMail;
+            $sentmail = $mail->sender;
+            $sentmail = $mail->subject;
+            $sentmail = $mail->body;
+            $sentmail = $mail->recipient;
+            $sentmail = $mail->recipient_type;
+            $sentmail->save();
+
+            //After saving the record, delete the record from the database
+            MoonRent::where(['id' => $rental->id])->delete();
+        }
 
         //Mark the job as finished
         $task->SetStopStatus();

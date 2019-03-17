@@ -84,7 +84,7 @@ class MoonsAdminController extends Controller
         //Going to store moon price in a table for future reference
         //We need to insert a price based on whether part of Legacy or part of Warped Intentions
         //Will need an if then else statement to complete this operation
-        if($allianceId = 99004116 || $allianceId = 99008072) {
+        if($allianceId = 99004116) {
             MoonRent::insert([
                 'System' => $request->system,
                 'Planet' => $request->planet,
