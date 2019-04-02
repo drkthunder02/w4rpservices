@@ -30,6 +30,6 @@ class Moon extends Model
         'FourthOre',
         'FourthQuantity',
         'RentalCorp',
-        'RentalEnd'
-    ]
+        'RentalEnd',
+    ];
 }
