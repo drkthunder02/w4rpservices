@@ -14,4 +14,22 @@ class Moon extends Model
 
     // Timestamps
     public $timestamps = false;
+
+    protected $fillable = [
+        'Region',
+        'System',
+        'Planet',
+        'Moon',
+        'StructureName',
+        'FirstOre',
+        'FirstQuantity',
+        'SecondOre',
+        'SecondQuantity',
+        'ThirdOre',
+        'ThirdQuantity',
+        'FourthOre',
+        'FourthQuantity',
+        'RentalCorp',
+        'RentalEnd'
+    ]
 }
