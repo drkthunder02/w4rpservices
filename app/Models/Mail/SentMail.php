@@ -10,7 +10,7 @@ class SentMail extends Model
     protected $table = 'sent_mails';
 
     //Timestamps
-    public $timestamps = 'false';
+    public $timestamps = false;
 
     protected $fillable = [
         'sender',
