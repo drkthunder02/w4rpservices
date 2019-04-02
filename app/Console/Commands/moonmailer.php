@@ -79,6 +79,8 @@ class MoonMailerCommand extends Command
                 'Moon' => $rental->Moon,
             ])->first();
 
+            dd($moon->FirstOre);
+
             //Get the updated price for the moon
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
