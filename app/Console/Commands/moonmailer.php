@@ -66,6 +66,9 @@ class MoonMailerCommand extends Command
 
         //Get today's date.
         $today = Carbon::now();
+        $today->second = 1;
+        $today->minute = 0;
+        $today->hour = 0;
 
         //Update the price for all moon rentals before sending out the mail
         foreach($rentals as $rental) {
@@ -109,15 +112,18 @@ class MoonMailerCommand extends Command
 
             //After the mail is dispatched, saved the sent mail record, 
             $sentmail = new SentMail;
-            $sentmail = $mail->sender;
-            $sentmail = $mail->subject;
-            $sentmail = $mail->body;
-            $sentmail = $mail->recipient;
-            $sentmail = $mail->recipient_type;
+            $sentmail->sender = $mail->sender;
+            $sentmail->subject = $mail->subject;
+            $sentmail->body = $mail->body;
+            $sentmail->recipient = $mail->recipient;
+            $sentmail->recipient_type = $mail->recipient_type;
             $sentmail->save();
 
             //After saving the record, delete the record from the database
-            MoonRent::where(['id' => $rental->id])->delete();
+            if($today->equalTo($rental->RentalEnd)) {
+                MoonRent::where(['id' => $rental->id])->delete();
+            }
+            
         }
 
         //Mark the job as finished
