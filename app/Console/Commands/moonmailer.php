@@ -120,7 +120,7 @@ class MoonMailerCommand extends Command
             $sentmail->save();
 
             //After saving the record, delete the record from the database
-            if($today->equalTo($rental->RentalEnd)) {
+            if($today->greaterThanOrEqualTo($rental->RentalEnd)) {
                 MoonRent::where(['id' => $rental->id])->delete();
             }
             
