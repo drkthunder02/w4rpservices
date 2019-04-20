@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\CalculateMarketTaxCommand::class,
         Commands\HoldingFinancesCommand::class,
         Commands\MoonMailerCommand::class,
+        Commands\PiTransactionsCommand::class,
     ];
 
     /**
@@ -46,6 +47,9 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
         $schedule->command('services:MoonMailer')
                 ->monthlyOn(1, '00:01')
+                ->withoutOverlapping();
+        $schedule->command('services:PiTransactions')
+                ->hourly()
                 ->withoutOverlapping();
     }
 

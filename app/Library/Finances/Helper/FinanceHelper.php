@@ -32,32 +32,23 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 class FinanceHelper {
 
     public function GetWalletTransaction($division, $charId) {
-        //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
-        $scope = EsiScope::where(['character_id' => $charId, 'scope' => 'esi-wallet.read_corporation_wallets.v1'])->get(['scope']);
-        //Declare the Lookup Helper Class
+        //Declare the lookup class helper
         $lookups = new LookupHelper;
+        
+        //Get the ESI refresh token for the corporation to add new wallet journals into the database
+        $tokenData = $this->TokenInfo($charId);
+        $token = $tokenData['token'];
+        $scope = $tokenData['scope'];
+
+        //If the token is not found, send the user an eve mail, and just exit out of the function
+        if($this->TokenNotFound($token, $scope)) {
+            return null;
+        }
 
         //Setup array for PI items
         $pi_items = [
 
         ];
-
-        //If the token is not found, send the user an eve mail, and just exit out of the function
-        if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
-            //Register a mail to be dispatched as a job
-            $mail = new EveMail;
-            $mail->sender = 93738489;
-            $mail->subject = 'W4RP Services ESI API';
-            $mail->body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
-            $mail->recipient = (int)$charId;
-            $mail->recipient_type = 'character';
-            $mail->save();
-
-            SendEveMail::dispatch($mail);
-
-            return null;
-        }
 
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $lookups->LookupCharacter($charId);
@@ -72,7 +63,6 @@ class FinanceHelper {
 
         //Create the esi class varialble
         $esi = new Eseye($authentication);
-        $esi->setVersion('v4');
         
         //Set our current page to 1 which is the one we are starting on.
         $currentPage = 1;
@@ -86,8 +76,8 @@ class FinanceHelper {
             try {
                 $journals = $esi->page($currentPage)
                                 ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
-                    'corporation_id' => $corpId,
-                    'division'  => $division,
+                    'corporation_id' => 98251577,
+                    'division'  => 3,
                 ]);
             } catch(RequestFailedException $e) {
                 return $e->getEsiResponse();
@@ -117,35 +107,20 @@ class FinanceHelper {
         } while ($currentPage < $totalPages);
     }
 
-    private function TokenInfo($charId) {
-        //Get the ESI refresh token for the corporation to add a new wallet jouranls into the database
-        //send the token and scope back to the calling function
-        
-    }
-
     public function GetWalletJournal($division, $charId) {
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
-        $scope = EsiScope::where(['character_id' => $charId, 'scope' => 'esi-wallet.read_corporation_wallets.v1'])->get(['scope']);
-        //Declare the Lookup Helper Class
+        $tokenData = $this->TokenInfo($charId);
+        $token = $tokenData['token'];
+        $scope = $tokenData['scope'];
+
+        //Declare the lookup class helper
         $lookups = new LookupHelper;
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
-        if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
-            //Register a mail to be dispatched as a job
-            $mail = new EveMail;
-            $mail->sender = 93738489;
-            $mail->subject = 'W4RP Services ESI API';
-            $mail->body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
-            $mail->recipient = (int)$charId;
-            $mail->recipient_type = 'character';
-            $mail->save();
-
-            SendEveMail::dispatch($mail);
-
+        if($this->TokenNotFound($token, $scope)) {
             return null;
         }
-
+        
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $lookups->LookupCharacter($charId);
 
@@ -293,6 +268,39 @@ class FinanceHelper {
             $currentPage++;
         //Continue looping through the do while loop until the current page is greater than or equal to the total pages.
         } while ($currentPage < $totalPages);
+    }
+
+    private function TokenInfo($charId) {
+        //Get the ESI refresh token for the corporation to add a new wallet jouranls into the database
+        //send the token and scope back to the calling function
+        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $scope = EsiScope::where(['character_id' => $charId, 'scope' => 'esi-wallet.read_corporation_wallets.v1'])->get(['scope']);
+
+        $data = [
+            'token' => $token,
+            'scope' => $scope,
+        ];
+
+        return $data;
+    }
+
+    private function TokenNotFound($token, $scope) {
+        if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
+            //Register a mail to be dispatched as a job
+            $mail = new EveMail;
+            $mail->sender = 93738489;
+            $mail->subject = 'W4RP Services ESI API';
+            $mail->body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
+            $mail->recipient = (int)$charId;
+            $mail->recipient_type = 'character';
+            $mail->save();
+
+            SendEveMail::dispatch($mail);
+
+            return true;
+        } 
+
+        return false;
     }
 
 }
