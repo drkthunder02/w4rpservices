@@ -66,7 +66,7 @@ class TaxesController extends Controller
 
             $pigross[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetPiGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetPiSalesGross($date['start'], $date['end']), 2, ".", ","),
             ]
         }
 

@@ -98,7 +98,7 @@ class TaxesHelper {
         return $revenue;
     }
 
-    public function GetPiGross($start, $end) {
+    public function GetPiSalesGross($start, $end) {
         $revenue = 0.00;
 
         $grosses = PISaleJournal::whereBetween('date', [$start, $end]);
