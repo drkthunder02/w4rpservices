@@ -69,9 +69,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/structures/admin/taxes/reprocessing', 'StructureController@displayReprocessingTaxes');
     Route::get('/structures/admin/display', 'StructureController@displayAdminPanel');
 
-    //Taxes Controller display pages
-    Route::get('/taxes/display', 'TaxesController@displayTaxSummary');
-
     //Scopes Controller display pages
     Route::get('/scopes/select', 'EsiScopeController@displayScopes');
     Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
