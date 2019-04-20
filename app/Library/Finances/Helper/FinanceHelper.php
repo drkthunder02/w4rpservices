@@ -90,15 +90,12 @@ class FinanceHelper {
             //For each journal entry, attempt to store it in the database.
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
-                if($entry['amount'] > 0) {
-                    if($division == 3 && $charId == 94415555) {
-                        if(in_array($entry['type_id'], $pi_items, true)) {
-                            $pi = new PISale();
-                            $pi->InsertPISale($entry);
-                        }
+                if($division == 3 && $charId == 94415555) {
+                    if(in_array($entry['type_id'], $pi_items, true)) {
+                        $pi = new PISale();
+                        $pi->InsertPISale($entry);
                     }
-                }
-                
+                }                
             }
             
             //Increment the current page we are on.
