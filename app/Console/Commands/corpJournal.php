@@ -64,6 +64,8 @@ class CorpJournalCommand extends Command
             $finance->GetWalletJournal(1, $charId->character_id);
         }
 
+        $finance->GetWalletJournal(3, $charId->94415555);
+
         //Mark the job as finished
         $task->SetStopStatus();
     }
