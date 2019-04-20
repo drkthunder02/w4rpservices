@@ -64,7 +64,7 @@ class TaxesController extends Controller
                 'gross' => number_format($tHelper->GetJumpGateGross($date['start'], $date['end']), 2, ".", ","),
             ];
 
-            $pitransactions[] = [
+            $pigross[] = [
                 'date' => $date['start']->toFormattedDateString(),
                 'gross' => number_format($tHelper->GetPiGross($date['start'], $date['end']), 2, ".", ","),
             ]
@@ -77,6 +77,6 @@ class TaxesController extends Controller
                                            ->with('offices', $offices)
                                            ->with('markets', $markets)
                                            ->with('jumpgates', $jumpgates)
-                                           ->with('pigross', $pitransactions);
+                                           ->with('pigross', $pigross);
     }
 }
