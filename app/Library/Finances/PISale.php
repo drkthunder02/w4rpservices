@@ -9,46 +9,48 @@
 
  use DB;
 
+ use App\Library\Esi\Esi;
+
  use App\Models\Finances\PISaleJournal;
 
  class PISale {
     
     public InsertPISale($journal, $corpId) {
+        //Create the ESI Helper class
+        $esiHelper = new Esi;
+
         //Insert the PI Sale into the database
         if(!PISaleJournal::where(['id' => $journal['id']])->exists()) {
             $entry = new PISaleJournal;
             $entry->id = $journal['id'];
             $entry->corporation_id = $corpId;
             $entry->division = $division;
-            if(isset($journal['amount'])) {
-                $entry->amount = $journal['amount'];
+            if(isset($journal['client_id'])) {
+                $entry->client_id = $journal['client_id'];
             }
-            if(isset($journal['balance'])) {
-                $entry->balance = $journal['balance'];
+            if(isset($journal['date'])) {
+                $entry->date = $esiHelper->DecoateDate($journal['date']);
             }
-            if(isset($journal['context_id'])) {
-                $entry->context_id = $journal['context_id'];
+            if(isset($journal['is_buy'])) {
+                $entry->is_buy = $journal['is_buy'];
             }
-            if(isset($journal['context_id_type'])) {
-                $entry->context_id_type = $journal['context_id_type'];
+            if(isset($journal['journal_ref_id'])) {
+                $entry->journal_ref_id = $journal['journal_ref_id'];
             }
-            $entry->date = $esiHelper->DecodeDate($journal['date']);
-            $entry->description = $journal['description'];
-            if(isset($journal['first_party_id'])) {
-                $entry->first_party_id = $journal['first_party_id'];
+            if(isset($journal['location_id'])) {
+                $entry->location_id = $journal['location_id'];
             }
-            if(isset($journal['reason'])) {
-                $entry->reason = $journal['reason'];
+            if(isset($journal['quantity'])) {
+                $entry->quantity = $journal['quantity'];
             }
-            $entry->ref_type = $journal['ref_type'];
-            if(isset($journal['second_party_id'])) {
-                $entry->second_party_id = $journal['second_party_id'];
+            if(isset($journal['transaction_id'])) {
+                $entry->transaction_id = $journal['transaction_id'];
             }
-            if(isset($journal['tax'])) {
-                $entry->tax = $journal['tax'];
+            if(isset($journal['type_id'])) {
+                $entry->type_id = $journal['type_id'];
             }
-            if(isset($journal['tax_receiver_id'])) {
-                $entry->tax_receiver_id = $journal['tax_receiver_id'];
+            if(isset($journal['unit_price'])) {
+                $entry->unit_price = $journal['unit_price'];
             }
             $entry->save();
         }

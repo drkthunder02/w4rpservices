@@ -63,6 +63,11 @@ class TaxesController extends Controller
                 'date' => $date['start']->toFormattedDateString(),
                 'gross' => number_format($tHelper->GetJumpGateGross($date['start'], $date['end']), 2, ".", ","),
             ];
+
+            $pitransactions[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetPiGross($date['start'], $date['end']), 2, ".", ","),
+            ]
         }
 
         //Return the view with the compact variable list
@@ -71,6 +76,7 @@ class TaxesController extends Controller
                                            ->with('reprocessings', $reprocessings)
                                            ->with('offices', $offices)
                                            ->with('markets', $markets)
-                                           ->with('jumpgates', $jumpgates);
+                                           ->with('jumpgates', $jumpgates)
+                                           ->with('pigross', $pitransactions);
     }
 }

@@ -98,6 +98,18 @@ class TaxesHelper {
         return $revenue;
     }
 
+    public function GetPiGross($start, $end) {
+        $revenue = 0.00;
+
+        $grosses = PISaleJournal::whereBetween('date', [$start, $end]);
+
+        foreach($grosses as $gross) {
+            $revenue += ($gross['quantity'] * $gross['unit_price']);
+        }
+
+        return $revenue;
+    }
+
     /**
      * Returns a set of dates from now until the amount of months has passed
      * 

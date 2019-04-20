@@ -23,19 +23,16 @@ class PISaleJournal extends Model
      */
     protected $fillable = [
         'id',
-        'corporation_id',
+        'corp_id',
         'division',
-        'amount',
-        'balance',
-        'context_id',
-        'context_id_type',
+        'client_id',
         'date',
-        'description',
-        'first_party_id',
-        'reason',
-        'ref_type',
-        'second_party_id',
-        'tax',
-        'tax_receiver_id',
+        'is_buy',
+        'journal_ref_id',
+        'location_id',
+        'quantity',
+        'transaction_id',
+        'type_id',
+        'unit_price',
     ];
 }
