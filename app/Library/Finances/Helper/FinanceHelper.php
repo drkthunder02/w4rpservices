@@ -23,6 +23,7 @@ use App\Library\Finances\JumpBridgeTax;
 use App\Library\Finances\StructureIndustryTax;
 use App\Library\Finances\OfficeFee;
 use App\Library\Finances\PlanetProductionTax;
+use App\Library\Finances\PISale;
 
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
@@ -34,6 +35,12 @@ class FinanceHelper {
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
         $scope = EsiScope::where(['character_id' => $charId, 'scope' => 'esi-wallet.read_corporation_wallets.v1'])->get(['scope']);
+
+        //Setup array for PI items
+        $pi_items = [
+
+        ];
+
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
             //Register a mail to be dispatched as a job
@@ -92,25 +99,32 @@ class FinanceHelper {
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
                 if($entry['amount'] > 0) {
-                    if($entry['ref_type'] == 'brokers_fee') {
-                        $market = new MarketTax();
-                        $market->InsertMarketTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'reprocessing_tax') {
-                        $reprocessing = new ReprocessingTax();
-                        $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'structure_gate_jump') {
-                        $jb = new JumpBridgeTax();
-                        $jb->InsertJumpBridgeTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'player_donation' ||
-                             ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
-                        $other = new PlayerDonation();
-                        $other->InsertPlayerDonation($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
-                        $industry = new StructureIndustryTax();
-                        $industry->InsertStructureIndustryTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
-                        $office = new OfficeFee();
-                        $office->InsertOfficeFee($entry, $corpId, $division);
+                    if($division == 3 && $charId == 94415555) {
+                        if(in_array($entry['type_id'], $pi_items, true)) {
+                            $pi = new PISale();
+                            $pi->InsertPISale($entry);
+                        }
+                    } else  {
+                        if($entry['ref_type'] == 'brokers_fee') {
+                            $market = new MarketTax();
+                            $market->InsertMarketTax($entry, $corpId, $division);
+                        } else if($entry['ref_type'] == 'reprocessing_tax') {
+                            $reprocessing = new ReprocessingTax();
+                            $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
+                        } else if($entry['ref_type'] == 'structure_gate_jump') {
+                            $jb = new JumpBridgeTax();
+                            $jb->InsertJumpBridgeTax($entry, $corpId, $division);
+                        } else if($entry['ref_type'] == 'player_donation' ||
+                                 ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
+                            $other = new PlayerDonation();
+                            $other->InsertPlayerDonation($entry, $corpId, $division);
+                        } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
+                            $industry = new StructureIndustryTax();
+                            $industry->InsertStructureIndustryTax($entry, $corpId, $division);
+                        } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
+                            $office = new OfficeFee();
+                            $office->InsertOfficeFee($entry, $corpId, $division);
+                        }
                     }
                 }
                 
