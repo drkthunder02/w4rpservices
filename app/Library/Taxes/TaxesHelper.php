@@ -16,7 +16,7 @@ use App\Models\Finances\PlanetProductionTaxJournal;
 use App\Models\Finances\OfficeFeesJournal;
 use App\Models\Finances\CorpMarketJournal;
 use App\Models\Finances\JumpBridgeJournal;
-
+use App\Models\Finances\PISalesJournal;
 
 class TaxesHelper {
 
