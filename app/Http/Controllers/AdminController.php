@@ -75,7 +75,7 @@ class AdminController extends Controller
             $pigross[] = [
                 'date' => $date['start']->toFormattedDateString(),
                 'gross' => number_format($tHelper->GetPiSalesGross($date['start'], $date['end']), 2, ".", ","),
-            ]
+            ];
         }
 
         /** Users & Permissions Pane  */
