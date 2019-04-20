@@ -71,6 +71,11 @@ class AdminController extends Controller
                 'date' => $date['start']->toFormattedDateString(),
                 'gross' => number_format($tHelper->GetJumpGateGross($date['start'], $date['end']), 2, ".", ","),
             ];
+
+            $pigross[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetPiSalesGross($date['start'], $date['end']), 2, ".", ","),
+            ]
         }
 
         /** Users & Permissions Pane  */
@@ -110,7 +115,8 @@ class AdminController extends Controller
                                       ->with('markets', $markets)
                                       ->with('jumpgates', $jumpgates)
                                       ->with('reprocessings', $reprocessings)
-                                      ->with('entities', $entities);
+                                      ->with('entities', $entities)
+                                      ->with('pigross', $pigross);
     }
 
     public function modifyRole(Request $request) {
