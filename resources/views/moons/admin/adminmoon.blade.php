@@ -25,7 +25,7 @@
                     <td>
                     @if ($row['Paid'] == 'Yes')
                         {{ Form::radio('paid', $row['SPM'], true, ['class' => 'form-control']) }}
-                    @elseif
+                    @else
                         {{ Form::radio('paid', null, false, ['class' => 'form-control']) }}
                     @endif
                     </td>
