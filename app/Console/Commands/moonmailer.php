@@ -123,6 +123,15 @@ class MoonMailerCommand extends Command
             if($today->greaterThanOrEqualTo($rental->RentalEnd)) {
                 MoonRent::where(['id' => $rental->id])->delete();
             }
+
+            //Mark the moon as not paid for the next month
+            Moon::where([
+                'System' => $rental->System,
+                'Planet' => $rental->Planet,
+                'Moon' => $rental->Moon,
+            ])->update([
+                'Paid' => 'No',
+            ]);
             
         }
 

@@ -1,47 +1,42 @@
 @extends('layouts.b4')
 @section('content')
 
+{!! Form::open(['action' => 'MoonsAdminController@updateMoonPaid', 'method' => 'POST']) !!}
 <div class="container col-md-12">
         <table class="table table-striped">
             <thead>
                 <th>System</th>
                 <th>Name</th>
-                <th>First Ore</th>
-                <th>Quantity</th>
-                <th>Second Ore</th>
-                <th>Quantity</th>
-                <th>Third Ore</th>
-                <th>Quantity</th>
-                <th>Fourth Ore</th>
-                <th>Quantity</th>
                 <th>Rental Price</th>
                 <th>Ally Rental Price</th>
                 <th>Renter</th>
                 <th>Rental End</th>
+                <th>Paid?</th>
             </thead>
             <tbody>
                 @foreach($table as $row)
                 <tr class="{{ $row['RowColor'] }}">
                     <td>{{ $row['SPM'] }}</td>
                     <td>{{ $row['StructureName'] }}</td>
-                    <td>{{ $row['FirstOre'] }}</td>
-                    <td>{{ $row['FirstQuantity'] }}</td>
-                    <td>{{ $row['SecondOre'] }}</td>
-                    <td>{{ $row['SecondQuantity'] }}</td>
-                    <td>{{ $row['ThirdOre'] }}</td>
-                    <td>{{ $row['ThirdQuantity'] }}</td>
-                    <td>{{ $row['FourthOre'] }}</td>
-                    <td>{{ $row['FourthQuantity'] }}</td>
                     <td>{{ $row['AlliancePrice'] }}</td>
                     <td>{{ $row['OutOfAlliancePrice'] }}</td>
                     <td>{{ $row['Renter'] }}</td>
                     <td>{{ $row['RentalEnd'] }}</td>
+                    <td>
+                    @if ($row['Paid'] == 'Yes')
+                        {{ Form::radio('paid', $row['SPM'], true, ['class' => 'form-control']) }}
+                    @elseif
+                        {{ Form::radio('paid', null, false, ['class' => 'form-control']) }}
+                    @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 </div>
+{{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
+{!! Form::close() !!}
 
 <div class="container-fluid">
     <div class="row">

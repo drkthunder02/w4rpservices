@@ -186,13 +186,21 @@ class MoonsAdminController extends Controller
         foreach($moons as $moon) {
             //Setup formats as needed
             $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
+            //Set the rental end date
             $rentalTemp = new Carbon($moon->RentalEnd);
+            //Set the rental end date as month / day
             $rentalEnd = $rentalTemp->format('m-d');
+            //Get today's date in order to create color later on in the table
             $today = Carbon::now();
 
+            //Calculate the prices of the moon based on what is in the moon
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
+            //Set the paid as yes or no for the check box in the blade template
+            $paid = $moon->Paid;
+
+            //Set the color for the table
             if($rentalTemp->diffInDays($today) < 3 ) {
                 $color = 'table-warning';
             } else if( $today > $rentalTemp) {
@@ -205,22 +213,40 @@ class MoonsAdminController extends Controller
             array_push($table, [
                 'SPM' => $spm,
                 'StructureName' => $moon->StructureName,
-                'FirstOre' => $moon->FirstOre,
-                'FirstQuantity' => $moon->FirstQuantity,
-                'SecondOre' => $moon->SecondOre,
-                'SecondQuantity' => $moon->SecondQuantity,
-                'ThirdOre' => $moon->ThirdOre,
-                'ThirdQuantity' => $moon->ThirdQuantity,
-                'FourthOre' => $moon->FourthOre,
-                'FourthQuantity' => $moon->FourthQuantity,
                 'AlliancePrice' => $price['alliance'],
                 'OutOfAlliancePrice' => $price['outofalliance'],
                 'Renter' => $moon->RentalCorp,
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
+                'Paid' => $paid,
             ]);
         }
 
         return view('moons/admin/adminmoon')->with('table', $table);
+    }
+
+    public function UpdateMoonPaid(Request $request) {
+        $this->validate($request, [
+            'paid' => 'required',
+        ]);
+
+        $str_array = explode(" - ", $request->paid);
+
+        //Decode the value for the SPM into a system, planet, and moon for the database to update
+        $system = $str_array[0];
+        $planet = $str_array[1];
+        $moon = $str_array[2];
+
+        //Update the paid status of the moon
+        MoonRent::where([
+            'System' => $system,
+            'Planet' => $planet,
+            'Moon' => $moon,
+        ])->update([
+            'Paid' => 'Yes',
+        ]);
+
+        //Redirect back to the moon page, which should call the page to be displayed correctly
+        return redirect('moons/admin/adminmoon');
     }
 }
