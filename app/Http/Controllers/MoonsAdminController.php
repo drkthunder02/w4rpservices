@@ -231,14 +231,14 @@ class MoonsAdminController extends Controller
         ]);
 
         $str_array = explode(" - ", $request->paid);
-        
+
         //Decode the value for the SPM into a system, planet, and moon for the database to update
         $system = $str_array[0];
         $planet = $str_array[1];
         $moon = $str_array[2];
 
         //Update the paid status of the moon
-        MoonRent::where([
+        Moon::where([
             'System' => $system,
             'Planet' => $planet,
             'Moon' => $moon,
@@ -247,6 +247,6 @@ class MoonsAdminController extends Controller
         ]);
 
         //Redirect back to the moon page, which should call the page to be displayed correctly
-        return redirect('moons/admin/adminmoon');
+        return redirect('/moons/admin/display');
     }
 }
