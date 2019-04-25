@@ -1,0 +1,28 @@
+@extends('layouts.b4')
+@section('content')
+<div class="container">
+    <h2>Test Page - Enter Bid</h2>
+</div>
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Enter Bid
+                </div>
+                <div class="card-body">
+                    {!! Form::open(['action' => 'ContractController@storeBid', 'method' => 'POST']) !!}
+                    <div class="form-group">
+                        {{ Form::label('bid', 'Bid') }}
+                        {{ Form::text('bid', '', ['class' => 'form-control', 'placeholder' => '1.0B']) }}
+                    </div>
+                    {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection

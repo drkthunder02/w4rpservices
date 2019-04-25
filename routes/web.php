@@ -74,12 +74,18 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/scopes/select', 'EsiScopeController@displayScopes');
     Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
 
-    //Clone Saver display pages
-    Route::get('/clones/register', 'CloneSaverController@displayRegister');
-    Route::get('/clones/display', 'CloneSaverController@displayClones');
-    Route::get('/clones/remove', 'CloneSaverController@displayRemove');
-    Route::post('/clones/register', 'CloneSaverController@storeRegister');
-    Route::post('/clones/remove', 'CloneSavercontroller@deleteRegister');
+    //Contract Controller display pages
+    Route::get('/contracts/display', 'ContractController@displayContracts');
+    Route::post('/contracts/bids/store', 'ContractController@storeBid');
+    Route::post('/contracts/bids/delete', 'ContractController@deleteBid');
+
+    //Contract Admin Controller display pages
+    Route::get('/contracts/admin/display', 'ContractAdminConotroller@displayContractDashboard');
+    Route::get('/contracts/admin/new', 'ContractAdminController@displayNewContract');
+    Route::post('/contracts/admin/new', 'ContractAdminController@storeNewConotract');
+    Route::post('/contracts/admin/store', 'ContractAdminController@storeAcceptContract');
+    Route::post('/contracts/admin/delete', 'ContractAdminController@deleteContract');
+    
 });
 
 //Login display pages

@@ -16,7 +16,7 @@ class ContractController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('permission:ContractAdmin');
+        $this->middleware('role:User');
     }
 
     public function displayContracts() {
@@ -24,12 +24,12 @@ class ContractController extends Controller
         return view('contracts/display');
     }
 
-    public function displayEnterBid() {
+    public function storeBid(Request $request) {
 
         return redirect('contracts/display');
     }
 
-    public function storeBid(Request $request) {
+    public function deleteBid(Request $request) {
 
         return redirect('contracts/display');
     }
