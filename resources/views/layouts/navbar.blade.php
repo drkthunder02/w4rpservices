@@ -56,7 +56,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contracts</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    <a class="dropdown-item" href="/contracts/display">Display Contracts</a>
+                    <a class="dropdown-item" href="/contracts/display/public">Display Public Contracts</a>
+                    <a class="dropdown-item" href="/contracts/display/private">Display Private Contracts</a>
                     @if(auth()->user()->hasPermission('contract.admin'))
                     <a class="dropdown-item" href="/contracts/admin/display">Admin Dashboard</a>
                     <a class="dropdown-item" href="/contracts/admin/new">New Contract</a>

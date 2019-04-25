@@ -21,12 +21,12 @@ class ContractAdminController extends Controller
 
     public function displayContractDashboard() {
 
-        return view('contracts/admin/display');
+        return view('contracts/admin/contractpanel');
     }
 
     public function displayNewContract() {
 
-        return view('contracts/admin/new');
+        return view('contracts/admin/newcontract');
     }
 
     public function storeNewContract() {

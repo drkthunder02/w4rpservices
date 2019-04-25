@@ -19,18 +19,23 @@ class ContractController extends Controller
         $this->middleware('role:User');
     }
 
-    public function displayContracts() {
+    public function displayPublicContracts() {
 
-        return view('contracts/display');
+        return view('contracts/publiccontract');
+    }
+
+    public function displayPrivateContracts() {
+
+        return view ('contracts/privatecontract');
     }
 
     public function storeBid(Request $request) {
 
-        return redirect('contracts/display');
+        return redirect('contracts/publiccontract');
     }
 
     public function deleteBid(Request $request) {
 
-        return redirect('contracts/display');
+        return redirect('contracts/publiccontract');
     }
 }
