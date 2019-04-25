@@ -22,6 +22,11 @@
                     <td>{{ $row['OutOfAlliancePrice'] }}</td>
                     <td>{{ $row['Renter'] }}</td>
                     <td>{{ $row['RentalEnd'] }}</td>
+                        @if($row['Paid'] == 'Yes')
+                            <td>Yes</td>
+                        @else
+                            <td>No</td>
+                        @endif
                     <td>
                     @if ($row['Paid'] == 'Yes')
                         {{ Form::radio('paid', $row['SPM'], true, ['class' => 'form-control']) }}
