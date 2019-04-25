@@ -23,6 +23,23 @@ class CreateWikiUsers extends Migration
                 $table->unique('login', 'user');
             });
         }
+
+        if(!Schema::hasTable('wiki_member')) {
+            Schema::create('wiki_member', function(Blueprint $table) {
+                $table->integer('uid');
+                $table->integer('gid');
+                $table->string('groupname');
+                $table->primary(['uid', 'gid']);
+            });
+        }
+
+        if(!Schema::hasTable('wiki_groupnames')) {
+            Schema::create('wiki_groupnames', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('gname');
+                $table->unique('id', 'id');
+            });
+        }
     }
 
     /**
@@ -33,5 +50,7 @@ class CreateWikiUsers extends Migration
     public function down()
     {
         Schema::dropIfExists('wiki_user');
+        Schema::dropIfExists('wiki_member');
+        Schema::dropIfExists('wiki_groupname');
     }
 }

@@ -31,6 +31,22 @@ class CreateMoonsTable extends Migration
                 $table->integer('FourthQuantity')->default('0');
                 $table->string('RentalCorp')->default('Not Rented');
                 $table->integer('RentalEnd')->default('0');
+                $table->string('Paid')->default('No');
+            });
+        }
+
+        if(!Schema::hasTable('moon_rents')) {
+            Schema::create('moon_rents', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('System');
+                $table->string('Planet');
+                $table->string('Moon');
+                $table->string('RentalCorp');
+                $table->dateTime('RentalEnd');
+                $table->string('Contact');
+                $table->string('Price');
+                $table->string('Type');
+                $table->string('Paid');
             });
         }
     }
@@ -43,5 +59,6 @@ class CreateMoonsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('Moons');
+        Schema::dropIfExists('moon_rents');
     }
 }

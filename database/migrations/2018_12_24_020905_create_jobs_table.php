@@ -24,7 +24,27 @@ class CreateJobsTable extends Migration
                 $table->unsignedInteger('created_at');
             });
         }
-        
+
+        if(!Schema::hasTable('failed_jobs')) {
+            Schema::create('failed_jobs', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->text('connection');
+                $table->text('queue');
+                $table->longText('payload');
+                $table->longText('exception');
+                $table->timestamp('failed_at')->useCurrent();
+            });
+        }
+
+        if(!Schema::hasTable('schedule_jobs')) {
+            Schema::create('schedule_jobs', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('job_name');
+                $table->string('job_state');
+                $table->dateTime('system_time');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -35,5 +55,7 @@ class CreateJobsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('jobs');
+        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('schedule_jobs');
     }
 }

@@ -24,6 +24,17 @@ class CreateEveMailsTable extends Migration
                 $table->timestamps();
             });
         }
+
+        if(!Schema::hasTable('sent_mails')) {
+            Schema::create('sent_mails', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('sender');
+                $table->string('subject');
+                $table->text('body');
+                $table->string('recipient');
+                $table->string('recipient_type');
+            });
+        }
     }
 
     /**
@@ -34,5 +45,6 @@ class CreateEveMailsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('eve_mails');
+        Schema::dropIfExists('sent_mails');
     }
 }

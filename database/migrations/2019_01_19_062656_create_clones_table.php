@@ -22,6 +22,14 @@ class CreateClonesTable extends Migration
             });
         }
         
+        if(!Schema::hasTable('clones_mailing')) {
+            Schema::create('clones_mailing', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('character_id');
+                $table->integer('time_sent');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -32,5 +40,6 @@ class CreateClonesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('clones');
+        Schema::dropIfExists('clones_mailing');
     }
 }
