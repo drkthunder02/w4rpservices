@@ -12,6 +12,7 @@
                 <th>Renter</th>
                 <th>Rental End</th>
                 <th>Paid?</th>
+                <th>Mark Paid</th>
             </thead>
             <tbody>
                 @foreach($table as $row)
