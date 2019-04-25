@@ -4,7 +4,7 @@
     <h2>Test Page</h2>
 </div>
 <br>
-<div class="container col-md-12">
+<div class="container">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
