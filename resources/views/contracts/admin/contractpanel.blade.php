@@ -18,6 +18,7 @@
                             <th>Name</th>
                             <th>Items</th>
                             <th>End Date</th>
+                            <th>Top Bid</th>
                         </thead>
                         <tbody>
                             <tr>
@@ -25,22 +26,12 @@
                                 <td>Name</td>
                                 <td>2 Nags</td>
                                 <td>24-04-2019</td>
+                                <td>Corporation</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<br>
-<div class="container col-md-12">
-    <div class="card">
-        <div class="card-header">
-            Current Top Bid
-        </div>
-        <div class="card-body">
-            Some corporation and the price
         </div>
     </div>
 </div>
