@@ -19,7 +19,7 @@
                         </div>
                         <div class="form-group">
                             {{ Form::label('description', 'Description') }}
-                            {{ Form::textbox('description', '', ['class' => 'form-control']) }}
+                            {{ Form::textarea('description', '', ['class' => 'form-control']) }}
                         </div>
                         <div class="form-group">
                             {{ Form::label('date', 'End Date') }}
