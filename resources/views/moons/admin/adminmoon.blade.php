@@ -28,7 +28,7 @@
                         @else
                             <td>No</td>
                         @endif
-                    <td>{{ Form::radio('paid', $row['SPM'], true, ['class' => 'form-control']) }}</td>
+                    <td>{{ Form::radio('paid', $row['SPM'], false, ['class' => 'form-control']) }}</td>
                 </tr>
                 @endforeach
             </tbody>
