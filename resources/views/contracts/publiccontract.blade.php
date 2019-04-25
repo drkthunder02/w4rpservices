@@ -35,12 +35,14 @@
 </div>
 <br>
 <div class="container col-md-12">
-    <div class="card">
-        <div class="card-header">
-            Current Top Bid
-        </div>
-        <div class="card-body">
-            Some corporation and the price
+    <div class="row justify-content-center">
+        <div class="card">
+            <div class="card-header">
+                Current Top Bid
+            </div>
+            <div class="card-body">
+                Some corporation and the price
+            </div>
         </div>
     </div>
 </div>
