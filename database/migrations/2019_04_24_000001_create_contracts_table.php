@@ -15,7 +15,7 @@ class CreateContractsTable extends Migration
     {
         if(!Schema::hasTable('contracts')) {
             Schema::create('contracts', function(Blueprint $table) {
-                $table->increment('id')->unique();
+                $table->increments('id')->unique();
                 $table->string('title');
                 $table->date('date');
                 $table->text('body');
@@ -25,7 +25,7 @@ class CreateContractsTable extends Migration
 
         if(!Schema::hasTable('contract_bids')) {
             Schema::create('contract_bids', function(Blueprint $table) {
-                $table->increment('id')->unique();
+                $table->increments('id')->unique();
                 $table->integer('contract_id');
                 $table->decimal('bid');
                 $table->boolean('accepted');
