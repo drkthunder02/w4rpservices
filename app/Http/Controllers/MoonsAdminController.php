@@ -232,6 +232,7 @@ class MoonsAdminController extends Controller
 
         $str_array = explode(" - ", $request->paid);
 
+        dd($str_array);
         //Decode the value for the SPM into a system, planet, and moon for the database to update
         $system = $str_array[0];
         $planet = $str_array[1];
