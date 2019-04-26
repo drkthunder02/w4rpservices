@@ -23,9 +23,13 @@ class Contract extends Model
          'body',
      ];
 
-     protected $guarded = [];
-
+     //One-to-Many relationship for the bids on a contract
      public function Bids() {
          return $this->hasMany('App\Models\Contracts\Bid', 'contract_id', 'id');
+     }
+
+     //One-to-One relationship for the accepted bid.
+     public function AcceptedBid() {
+         return $this->hasOne('App\Models\Contracts\AcceptedBid', 'contract_id', 'id');
      }
 }

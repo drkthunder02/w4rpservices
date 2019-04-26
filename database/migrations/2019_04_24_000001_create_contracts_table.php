@@ -36,12 +36,12 @@ class CreateContractsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('accepted_bid')) {
-            Schema::create('accepted_bid', function(Blueprint $table) {
+        if(!Schema::hasTable('accepted_bids')) {
+            Schema::create('accepted_bids', function(Blueprint $table) {
                 $table->increments('id');
                 $table->integer('contract_id');
                 $table->integer('bid_id');
-                $table->decimal('amount');
+                $table->decimal('bid_amount');
                 $table->timestamps();
             });
         }
@@ -56,6 +56,6 @@ class CreateContractsTable extends Migration
     {
         Schema::dropIfExists('contracts');
         Schema::dropIfExists('contract_bids');
-        Schema::dropIfExists('contract_bid_accepted');
+        Schema::dropIfExists('accepted_bids');
     }
 }

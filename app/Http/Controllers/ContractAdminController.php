@@ -28,12 +28,12 @@ class ContractAdminController extends Controller
 
         $contracts = Contract::where(['date', '>=', $today])->get();
 
-        return view('contracts/admin/contractpanel');
+        return view('contracts.admin.contractpanel');
     }
 
     public function displayNewContract() {
 
-        return view('contracts/admin/newcontract');
+        return view('contracts.admin.newcontract');
     }
 
     public function storeNewContract() {
@@ -42,6 +42,11 @@ class ContractAdminController extends Controller
     }
 
     public function storeAcceptContract(Request $request) {
+        $this->validate($request, [
+            'contract_id',
+            'character_id',
+            'bid_amount',
+        ]);
 
         return redirect('/contracts/admin/display');
     }
