@@ -37,17 +37,6 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    protected $guarded = [];
-
     public function getUserType() {
         return User::where('user_type')->get();
     }
@@ -77,10 +66,6 @@ class User extends Authenticatable
         }
 
         return false;
-    }
-
-    public function tickets() {
-        return $this->hasMany('App\Models\HelpDesk\HelpDeskTicket', 'character_id');
     }
 
     public function hasEsiScope($scope) {
@@ -116,5 +101,13 @@ class User extends Authenticatable
         } else {
             return false;
         }
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getId() {
+        return $this->character_id;
     }
 }

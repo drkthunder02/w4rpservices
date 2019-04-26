@@ -10,7 +10,7 @@ class Bid extends Model
     public $table = 'contract_bids';
 
     // Timestamps
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable
@@ -19,7 +19,7 @@ class Bid extends Model
      */
     protected $fillable = [
         'contract_id',
-        'bid',
+        'bid_amount',
         'accepted',
     ];
 
