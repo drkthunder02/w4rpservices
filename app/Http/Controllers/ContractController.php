@@ -63,7 +63,8 @@ class ContractController extends Controller
         $data = array();
 
         //Fetch all of the current contracts from the database
-        $contracts = Contract::where(['end_date', '>=', $today])->get();
+        $contracts = Contract::where(['end_date', '>=', $today])
+                             ->where(['type' => 'public'])->get();
 
         //Check if no contracts were pulled from the database
         if($contracts != null) {
@@ -96,9 +97,24 @@ class ContractController extends Controller
         $today = Carbon::now();
 
         //Fetch all of the current contracts from the database
-        $contracts = Contract::where(['end_date', '>=', $today])->get();
+        $contracts = Contract::where(['end_date', '>=', $today])
+                             ->where(['type' => 'private'])->get();
 
         return view ('contracts.privatecontracts')->with('contracts', $contracts);
+    }
+
+    /**
+     * Controller function to display a page to allow a bid
+     * 
+     */
+    public function displayBid(Request $request) {
+        $this->validate($request, [
+            'contract_id',
+        ]);
+
+        $contractId = $request->contract_id;
+
+        return view('contracts.enterbid')->with('contractId', $contractId);
     }
 
     /**
@@ -139,5 +155,19 @@ class ContractController extends Controller
         ])->delete();
 
         return redirect('contracts/display/public')->with('success', 'Bid deleted.');
+    }
+
+    /**
+     * Controller function to display modify bid page
+     */
+    public function displayModifyBid(Request $request) {
+        
+    }
+
+    /**
+     * Controller function to modify a bid
+     */
+    public function modifyBid(Request $request) {
+
     }
 }

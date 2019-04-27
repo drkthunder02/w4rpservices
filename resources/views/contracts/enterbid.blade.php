@@ -1,7 +1,7 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
-    <h2>Test Page - Enter Bid</h2>
+    <h2>Bid on Contract</h2>
 </div>
 <br>
 <div class="container">
@@ -16,6 +16,7 @@
                     <div class="form-group">
                         {{ Form::label('bid', 'Bid') }}
                         {{ Form::text('bid', '', ['class' => 'form-control', 'placeholder' => '1.0B']) }}
+                        {{ Form::hidden('contract_id', $contractId) }}
                     </div>
                     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                     {!! Form::close() !!}

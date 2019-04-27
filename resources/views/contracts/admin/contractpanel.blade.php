@@ -14,6 +14,9 @@
                     <p align="text-left">
                         {{ $contract['title'] }}
                     </p>
+                    <p align="text-center">
+                        Type: {{ $contract['type'] }}
+                    </p>
                     <p align="text-right">
                         {!! Form::open(['action' => 'ContractAdminController@deleteContract', 'method' => 'POST']) !!}
                         {{ Form::hidden('contract_id', $contract['contract_id']) }}

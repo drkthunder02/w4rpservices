@@ -17,6 +17,7 @@ class CreateContractsTable extends Migration
             Schema::create('contracts', function(Blueprint $table) {
                 $table->increments('contract_id')->unique();
                 $table->string('title');
+                $table->string('type');
                 $table->date('end_date');
                 $table->text('body');
                 $table->boolean('finished');
