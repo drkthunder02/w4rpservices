@@ -27,7 +27,7 @@ class ContractController extends Controller
      * Controller function to display the bids placed on contracts
      */
     public function displayBids($contractId) {
-        $bids = Bids::where(['contract_id' => $contractId, 'character_name' => auth()->user()->getname()])->get();
+        $bids = Bids::where(['contract_id' => $contractId, 'character_name' => auth()->user()->getName()])->get();
 
         return view('contracts.bids')->with('bids', $bids);
     }

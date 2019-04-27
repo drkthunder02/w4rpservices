@@ -19,6 +19,8 @@ class CreateContractsTable extends Migration
                 $table->string('title');
                 $table->date('end_date');
                 $table->text('body');
+                $table->boolean('finished');
+                $table->decimal('final_cost');
                 $table->timestamps();
             });
         }
@@ -42,6 +44,7 @@ class CreateContractsTable extends Migration
                 $table->integer('contract_id');
                 $table->integer('bid_id');
                 $table->decimal('bid_amount');
+                $table->text('notes');
                 $table->timestamps();
             });
         }

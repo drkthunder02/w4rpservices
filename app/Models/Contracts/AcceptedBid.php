@@ -21,6 +21,7 @@ class AcceptedBid extends Model
         'contract_id',
         'bid_id',
         'bid_amount',
+        'notes',
     ];
 
     public function Contract() {

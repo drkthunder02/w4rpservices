@@ -28,31 +28,67 @@ class ContractAdminController extends Controller
 
         $contracts = Contract::where(['date', '>=', $today])->get();
 
-        return view('contracts.admin.contractpanel');
+        return view('contracts.admin.contractpanel')->with('contracts', $contracts);
     }
 
     public function displayNewContract() {
-
         return view('contracts.admin.newcontract');
     }
 
-    public function storeNewContract() {
+    public function storeNewContract(Request $request) {
+        $this->validate($request, [
+            'title',
+            'end_date',
+            'body',
+        ]);
 
-        return redirect('/contracts/admin/display');
+        $date = new Carbon($request->date);
+
+        //Store the contract in the database
+        $contract = new Contract;
+        $contract->title = $request->title;
+        $contract->end_date = $request->end_date;
+        $contract->body = $request->body;
+        $contract->save();
+
+        return redirect('/contracts/admin/display')->with('success', 'Contract written.');
     }
 
     public function storeAcceptContract(Request $request) {
         $this->validate($request, [
             'contract_id',
+            'bid_id',
             'character_id',
             'bid_amount',
         ]);
 
-        return redirect('/contracts/admin/display');
+        //Update the contract
+        Contract::where([
+            'contract_id' => $request->contract_id,
+        ])->update([
+            'finished' => true,
+            'final_cost' => $request->bid_amount,
+        ]);
+
+        //Save the accepted bid in the database
+        $accepted = new AcceptedBid;
+        $accepted->contract_id = $request->contract_id;
+        $accepted->bid_id = $request->bid_id;
+        $accepted->bid_amount = $request->bid_amount;
+        $accepted->save();
+
+        return redirect('/contracts/admin/display')->with('success', 'Contract accepted and closed.');
     }
 
     public function deleteContract(Request $request) {
+        $this->validate($request, [
+            'contract_id',
+        ]);
 
-        return redirect('/contracts/admin/display');
+        Contract::where([
+            'contract_id' => $request->contract_id,
+        ])->delete();
+
+        return redirect('/contracts/admin/display')->with('success', 'Contract has been deleted.');
     }
 }

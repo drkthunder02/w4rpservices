@@ -20,7 +20,10 @@ class Bid extends Model
     protected $fillable = [
         'contract_id',
         'bid_amount',
-        'accepted',
+        'character_name',
+        'character_id',
+        'corporation_name',
+        'corporation_id',
     ];
 
     protected $guarded = [];

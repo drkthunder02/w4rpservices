@@ -21,6 +21,8 @@ class Contract extends Model
          'title',
          'end_date',
          'body',
+         'final_cost',
+         'finished',
      ];
 
      //One-to-Many relationship for the bids on a contract
