@@ -4,35 +4,52 @@
     <h2>Test Dashboard</h2>
 </div>
 <br>
+@if($contracts != null)
+@foreach($contracts as $contract)
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    New Contracts
+                    <p align="text-left">
+                        {{ $contract['title'] }}
+                    </p>
+                    <p align="text-right">
+                        {!! Form::open(['action' => 'ContractAdminController@deleteContract', 'method' => 'POST']) !!}
+                        {{ Form::hidden('contract_id', $contract['contract_id']) }}
+                        {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+                        {!! Form::close() !!}
+                    </p>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <th>Number</th>
-                            <th>Name</th>
-                            <th>Items</th>
-                            <th>End Date</th>
-                            <th>Top Bid</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Name</td>
-                                <td>2 Nags</td>
-                                <td>24-04-2019</td>
-                                <td>Corporation</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="container">
+                        End Date: {{ $contract['end_date'] }}
+                    </div>
+                    <span class="border-dark">
+                        <div class="container">
+                            {{ $contract['body'] }}
+                        </div>
+                    </span
                 </div>
             </div>
         </div>
     </div>
 </div>
+<br>
+@endforeach
+@else
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    No Contracts Issued
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 @endsection
