@@ -29,7 +29,7 @@
                         <div class="container">
                             {{ $contract['body'] }}
                         </div>
-                    </span
+                    </span>
                 </div>
             </div>
         </div>
