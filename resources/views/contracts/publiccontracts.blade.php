@@ -6,7 +6,7 @@
     </div>
 </div>
 <br>
-{{ dd(count($data)) }}
+{{ dd($data) }}
 @if(count($data))
 
 <br>
