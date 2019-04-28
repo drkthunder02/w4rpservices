@@ -36,7 +36,7 @@
                         </span>
                         <hr>
                         <span class="border-dark">
-                            @if(count($data['bids']))
+                            @if(count($contract['bids']))
                             <table class="table table-striped">
                                     <thead>
                                         <th>Corporation</th>
