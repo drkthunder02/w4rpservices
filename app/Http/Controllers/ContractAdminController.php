@@ -27,7 +27,7 @@ class ContractAdminController extends Controller
     public function displayContractDashboard() {
         $today = Carbon::now();
 
-        $contracts = Contract::where(['date', '>=', $today])->get();
+        $contracts = Contract::where('date', '>=', $today)->get();
 
         return view('contracts.admin.contractpanel')->with('contracts', $contracts);
     }
