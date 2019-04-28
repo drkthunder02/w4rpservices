@@ -7,7 +7,7 @@
 </div>
 <br>
 @if(count($contracts))
-    @include('contracts.includes.contractsdisplay')
+    @include('contracts.includes.private')
 @else
     @include('contracts.includes.nocontracts')
 @endif
