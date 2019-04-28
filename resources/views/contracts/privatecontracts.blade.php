@@ -7,8 +7,8 @@
 </div>
 <br>
 @if(count($contracts))
-    @include('contracts.include.contractsdisplay')
+    @include('contracts.includes.contractsdisplay')
 @else
-    @include('contracts.include.nocontracts')
+    @include('contracts.includes.nocontracts')
 @endif
 @endsection
