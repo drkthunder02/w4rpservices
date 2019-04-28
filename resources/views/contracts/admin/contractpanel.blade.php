@@ -1,9 +1,10 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
-    <h2>Test Dashboard</h2>
+    <h2>Contract Dashboard</h2>
 </div>
 <br>
+{{ dd($contracts) }}
 @if($contracts != null)
 @foreach($contracts as $contract)
 <div class="container">
