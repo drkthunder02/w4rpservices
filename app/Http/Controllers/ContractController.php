@@ -73,18 +73,16 @@ class ContractController extends Controller
                 //Get all of the bids for the current contract
                 $bids = Bid::where(['contract_id' => $contract->id])->get();
                 //Build the data structure
-                $temp = [
-                    'contract' => [
-                        'con' => $contract,
-                        'bids' => $bids,
-                    ],
-                ];
-                /*
-                $temp = [
-                    'contract' => $contract,
-                    'bids' => $bids,
-                ];
-                */
+                if(count($bids)) {
+                    $temp = [
+                        'contract' => $contract,
+                        'bids' =>$bids,
+                    ];
+                } else {
+                    $temp = [
+                        'contract' => $contract,
+                    ];
+                }
 
                 //Push the new contract onto the stack
                 array_push($data, $temp);
