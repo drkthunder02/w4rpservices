@@ -6,7 +6,21 @@
     </div>
 </div>
 <br>
-@if(count($data['contracts']))
+@if(count($data['contracts']) == false)
+<div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        No Contracts Issued
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@else
 @foreach($data['contracts'] as $contract)
 <div class="container">
         <div class="row justify-content-center">
@@ -80,19 +94,5 @@
         </div>
     </div>
 <br>
-@elseif(count($data['contracts']) == false)
-<div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        No Contracts Issued
-                    </div>
-                    <div class="card-body">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endif
 @endsection
