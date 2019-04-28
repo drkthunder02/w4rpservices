@@ -1,10 +1,13 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
-    <h2>Contract Dashboard</h2>
+    <div class="row justify-content-center">
+        <h2>Contract Dashboard</h2>
+    </div>
 </div>
 <br>
-
+<button href="{{ route('/contracts/admin/new') }}" type="button" class="btn btn-primary">Create New Contract</button>
+<br>
 @if(count($contracts))
 @foreach($contracts as $contract)
 <div class="container">

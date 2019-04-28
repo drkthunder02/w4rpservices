@@ -154,20 +154,42 @@ class ContractController extends Controller
             'contract_id' => $request->contract_id,
         ])->delete();
 
-        return redirect('contracts/display/public')->with('success', 'Bid deleted.');
+        return redirect('/contracts/display/public')->with('success', 'Bid deleted.');
     }
 
     /**
      * Controller function to display modify bid page
      */
-    public function displayModifyBid(Request $request) {
+    public function displayModifyBid($id) {
+        $contract_id = $id;
         
+        return view('contracts.modifybid')->with('contract_id', $contract_id);
     }
 
     /**
      * Controller function to modify a bid
      */
     public function modifyBid(Request $request) {
+        $this->validate($request, [
+            'bid_amount',
+        ]);
 
+        $type = $request->type;
+        $contractId = $request->contract_id;
+        $bidAmount = $request->bid_amount;
+        
+        Bid::where([
+            'character_id' => auth()->user()->getId(),
+            'contract_id' => $contractId,
+        ])->update([
+            'bid_amount' => $bidAmount,
+        ]);
+
+        if($type == 'public') {
+            return redirect('/contracts/display/public')->with('success', 'Bid modified.');
+        } else {
+            return redirect('/contracts/display/private')->with('success', 'Bid modified');
+        }
+        
     }
 }
