@@ -85,7 +85,7 @@ class ContractController extends Controller
             $data = null;
         }
 
-
+        //Call for the view to be displayed
         return view('contracts.publiccontracts')->with('data', $data);
     }
 

@@ -47,6 +47,7 @@
         </div>
     </div>
 </div>
+@endforeach
 <br>
 @else
     @include('contracts.includes.nocontracts')
