@@ -6,7 +6,7 @@
     </div>
 </div>
 <br>
-@if(count($contracts))
+@if(count($data['contracts']))
     @include('contracts.includes.contractsdisplay')
 @else
     @include('contracts.includes.nocontracts')
