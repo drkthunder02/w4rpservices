@@ -7,7 +7,7 @@
 </div>
 <br>
 
-
+@if(count($data['contracts']))
 @foreach($data['contracts'] as $contract)
 <div class="container">
         <div class="row justify-content-center">
@@ -49,7 +49,7 @@
         </div>
     </div>
 <br>
-
+@else
     @include('contracts.includes.nocontracts')
-
+@endif
 @endsection
