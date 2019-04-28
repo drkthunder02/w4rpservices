@@ -16,29 +16,29 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm" align="left">
-                                {{ $contract['title'] }}
+                                Title
                             </div>
                             <div class="col-sm" align="center">
                                 Type: Public
                             </div>
                             <div class="col-sm" align="right">
-                                <a href="/contracts/display/newbid/{{ $contract['contract_id'] }}" class="btn btn-primary" role="button">Bid on Contract</a>
+                                Button
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="container">
-                            End Date: {{ $contract['end_date'] }}
+                            End Date: 
                         </div>
                         <span class="border-dark">
                             <div class="container">
-                                {{ $contract['body'] }}
+                                Body
                             </div>
                         </span>
                         <hr>
                         <span class="border-dark">
                             @if(count($data['bids']))
-                                @include('contracts.includes.biddisplay')
+                                Bids
                             @else
                                 No Bids have been entered.
                             @endif
