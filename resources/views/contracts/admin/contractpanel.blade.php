@@ -20,10 +20,10 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                    <div class="col-sm">
+                    <div class="col-sm" align="left">
                         {{ $contract['title'] }}
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm" align="center">
                         Type: {{ $contract['type'] }}
                     </div>
                     <div class="col-sm" align="right">
