@@ -6,7 +6,7 @@
     </div>
 </div>
 <br>
-<button href="{{ link_to_route('displayNewContract', 'Create New Contract') }}" type="button" class="btn btn-primary" role="button">Create New Contract</button>
+<button href="/contracts/admin/new" type="button" class="btn btn-primary" role="button">Create New Contract</button>
 <br>
 @if(count($contracts))
 @foreach($contracts as $contract)
