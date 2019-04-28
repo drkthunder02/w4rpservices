@@ -36,14 +36,14 @@
                         </span>
                         <hr>
                         <span class="border-dark">
-                            @if(count($contract['bids']))
+                            @if(isset($contract['bids']))
                             <table class="table table-striped">
                                     <thead>
                                         <th>Corporation</th>
                                         <th>Amount</th>
                                     </thead>
                                     <tbody>
-                                    @foreach($data['bids'] as $bid)
+                                    @foreach($contract['bids'] as $bid)
                                         <tr>
                                             <td>{{ $bid['corporation_name'] }}</td>
                                             <td>{{ $bid['bid_amount'] }}</td>
