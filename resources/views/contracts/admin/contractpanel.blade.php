@@ -19,18 +19,20 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <p align="text-left">
-                        {{ $contract['title'] }}
-                    </p>
-                    <p align="text-center">
-                        Type: {{ $contract['type'] }}
-                    </p>
-                    <p align="text-right">
-                        {!! Form::open(['action' => 'ContractAdminController@deleteContract', 'method' => 'POST']) !!}
-                        {{ Form::hidden('contract_id', $contract['contract_id']) }}
-                        {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
-                        {!! Form::close() !!}
-                    </p>
+                    <div class="container">
+                        <p align="text-left">
+                            {{ $contract['title'] }}
+                        </p>
+                        <p align="text-center">
+                            Type: {{ $contract['type'] }}
+                        </p>
+                        <p align="text-right">
+                            {!! Form::open(['action' => 'ContractAdminController@deleteContract', 'method' => 'POST']) !!}
+                            {{ Form::hidden('contract_id', $contract['contract_id']) }}
+                            {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+                            {!! Form::close() !!}
+                        </p>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="container">
