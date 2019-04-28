@@ -6,6 +6,7 @@
     </div>
 </div>
 <br>
+{{ dd(count($data['contracts'])) }}
 @if(count($data['contracts']))
 @foreach($data['contracts'] as $contract)
 <div class="container">
