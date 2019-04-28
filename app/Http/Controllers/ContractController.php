@@ -63,7 +63,7 @@ class ContractController extends Controller
         $data = array();
 
         //Fetch all of the current contracts from the database
-        $contracts = Contract::where(['end_date', '>=', $today])
+        $contracts = Contract::where('end_date', '>=', $today)
                              ->where(['type' => 'public'])->get();
 
         //Check if no contracts were pulled from the database
@@ -97,7 +97,7 @@ class ContractController extends Controller
         $today = Carbon::now();
 
         //Fetch all of the current contracts from the database
-        $contracts = Contract::where(['end_date', '>=', $today])
+        $contracts = Contract::where('end_date', '>=', $today)
                              ->where(['type' => 'private'])->get();
 
         return view ('contracts.privatecontracts')->with('contracts', $contracts);
