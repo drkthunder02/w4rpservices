@@ -4,7 +4,7 @@
     <h2>Test Page</h2>
 </div>
 <br>
-@if($contracts != null)
+@if(count($contracts))
 <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">

@@ -4,7 +4,7 @@
     <h2>All Contracts</h2>
 </div>
 <br>
-@if($contracts != null)
+@if(count($contracts))
 @foreach($contracts as $contract)
 <div class="container">
     <div class="row justify-content-center">
