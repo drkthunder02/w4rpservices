@@ -38,7 +38,7 @@ class ContractAdminController extends Controller
 
     public function storeNewContract(Request $request) {
         $this->validate($request, [
-            'title',
+            'name',
             'end_date',
             'body',
             'type',
@@ -48,7 +48,7 @@ class ContractAdminController extends Controller
 
         //Store the contract in the database
         $contract = new Contract;
-        $contract->title = $request->title;
+        $contract->title = $request->name;
         $contract->end_date = $request->end_date;
         $contract->body = $request->body;
         $contract->type = $request->type;

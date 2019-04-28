@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             {{ Form::label('date', 'End Date') }}
-                            {{ Form::text('date', '', ['class' => 'form-control', 'placeholder' => '4/24/2019']) }}
+                            {{ Form::date('date', \Carbon\Carbon::now()->addWeek(), ['class' => 'form-control', 'placeholder' => '4/24/2019']) }}
                         </div>
                         <div class="form-group">
                             {{ Form::label('type', 'Public Contract') }}
