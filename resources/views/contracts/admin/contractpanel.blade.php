@@ -19,13 +19,16 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <div class="container">
+                    <div class="container col-md-3" align="text-left">
                         <p align="text-left">
                             {{ $contract['title'] }}
                         </p>
+                    </div>
+                    <div class="container col-md-2" align="text-center">
                         <p align="text-center">
                             Type: {{ $contract['type'] }}
                         </p>
+                    </div>
                         <p align="text-right">
                             {!! Form::open(['action' => 'ContractAdminController@deleteContract', 'method' => 'POST']) !!}
                             {{ Form::hidden('contract_id', $contract['contract_id']) }}
