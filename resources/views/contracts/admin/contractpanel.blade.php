@@ -26,7 +26,7 @@
                     <div class="col-sm">
                         Type: {{ $contract['type'] }}
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm" align="right">
                         {!! Form::open(['action' => 'ContractAdminController@deleteContract', 'method' => 'POST']) !!}
                         {{ Form::hidden('contract_id', $contract['contract_id']) }}
                         {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
