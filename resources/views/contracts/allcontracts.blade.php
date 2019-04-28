@@ -13,18 +13,20 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <p align="text-left">
-                        {{ $contract['title'] }}
-                    </p>
-                    <p align="text-center">
-                        Type: {{ $contract['type'] }}
-                    </p>
-                    <p align="text-right">
-                        {!! Form::open(['action' => 'ContractController@displayBid', 'method' => 'POST']) !!}
-                        {{ Form::hidden('contract_id', $contract['contract_id']) }}
-                        {{ Form::submit('Bid', ['class' => 'btn btn-primary']) }}
-                        {!! Form::close() !!}
-                    </p>
+                    <div class="row">
+                        <div class="col-sm" align="left">
+                            {{ $contract['title'] }}
+                        </div>
+                        <div class="col-sm" align="center">
+                            Type: {{ $contract['type'] }}
+                        </div>
+                        <div class="col-sm" align="right">
+                            {!! Form::open(['action' => 'ContractController@displayBid', 'method' => 'POST']) !!}
+                            {{ Form::hidden('contract_id', $contract['contract_id']) }}
+                            {{ Form::submit('Bid', ['class' => 'btn btn-primary']) }}
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="container">
