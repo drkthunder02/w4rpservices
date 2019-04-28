@@ -41,6 +41,7 @@ class ContractAdminController extends Controller
             'title',
             'end_date',
             'body',
+            'type',
         ]);
 
         $date = new Carbon($request->date);
@@ -50,6 +51,7 @@ class ContractAdminController extends Controller
         $contract->title = $request->title;
         $contract->end_date = $request->end_date;
         $contract->body = $request->body;
+        $contract->type = $request->type;
         $contract->save();
 
         return redirect('/contracts/admin/display')->with('success', 'Contract written.');
