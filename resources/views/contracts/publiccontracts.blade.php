@@ -6,9 +6,10 @@
     </div>
 </div>
 <br>
-{{ dd($data) }}
 @if(count($data))
-
+@foreach($data as $contract)
+    @include('contracts.includes.public')
+@endforeach
 <br>
 @else
     @include('contracts.includes.nocontracts')
