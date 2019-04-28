@@ -46,7 +46,7 @@ class WikiController extends Controller
             }
         }
 
-        return view('/admin/dashboard')->with('success', 'Wiki has been purged.');
+        return view('admin.dashboard')->with('success', 'Wiki has been purged.');
     }
     
     public function displayRegister() {
@@ -61,7 +61,7 @@ class WikiController extends Controller
             return redirect('/dashboard')->with('error', 'Already registered for the wiki!');            
         }
 
-        return view('wiki/user/register')->with('name', $name);
+        return view('wiki.user.register')->with('name', $name);
     }
 
     public function storeRegister(Request $request) {
@@ -118,7 +118,7 @@ class WikiController extends Controller
             return redirect('/dashboard')->with('error', 'Login Not Found!');
         } 
 
-        return view('wiki/user/changepassword')->with('name', $name);
+        return view('wiki.user.changepassword')->with('name', $name);
     }
 
     public function changePassword(Request $request) {
@@ -152,7 +152,7 @@ class WikiController extends Controller
      * Displays the page to add a user to a certain group
      */
     public function displayAddUserToGroup() {
-        return view('wiki/displayaddug');
+        return view('wiki.displayaddug');
     }
 
     /**

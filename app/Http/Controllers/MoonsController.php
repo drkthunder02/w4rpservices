@@ -85,11 +85,11 @@ class MoonsController extends Controller
             ]);
         }
 
-        return view('moons/user/moon')->with('table', $table);
+        return view('moons.user.moon')->with('table', $table);
     }
 
     public function displayTotalWorthForm() {
-        return view('moons/user/formTotalWorth');
+        return view('moons.user.formTotalWorth');
     }
 
     public function displayTotalWorth(Request $request) {
