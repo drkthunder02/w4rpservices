@@ -8,6 +8,7 @@
 <br>
 @if(count($data))
 @foreach($data as $contract)
+{{ dd($contract) }}
 <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
