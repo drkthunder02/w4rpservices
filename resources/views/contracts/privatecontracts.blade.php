@@ -26,15 +26,6 @@
                                 {!! Form::close() !!}
                             </div>
                         </div>
-                        <p align="text-left">
-                            
-                        </p>
-                        <p align="text-center">
-                            
-                        </p>
-                        <p align="text-right">
-                            
-                        </p>
                     </div>
                     <div class="card-body">
                         <div class="container">

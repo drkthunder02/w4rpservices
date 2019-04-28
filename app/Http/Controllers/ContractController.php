@@ -26,8 +26,8 @@ class ContractController extends Controller
     /**
      * Controller function to display the bids placed on contracts
      */
-    public function displayBids($contractId) {
-        $bids = Bids::where(['contract_id' => $contractId, 'character_name' => auth()->user()->getName()])->get();
+    public function displayBids($id) {
+        $bids = Bids::where(['contract_id' => $id, 'character_name' => auth()->user()->getName()])->get();
 
         return view('contracts.bids')->with('bids', $bids);
     }
@@ -107,12 +107,9 @@ class ContractController extends Controller
      * Controller function to display a page to allow a bid
      * 
      */
-    public function displayBid(Request $request) {
-        $this->validate($request, [
-            'contract_id',
-        ]);
+    public function displayNewBid($id) {
 
-        $contractId = $request->contract_id;
+        $contractId = $id;
 
         return view('contracts.enterbid')->with('contractId', $contractId);
     }

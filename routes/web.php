@@ -78,8 +78,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/contracts/display/all', 'ContractController@displayContracts');
     Route::get('/contracts/display/public', 'ContractController@displayPublicContracts');
     Route::get('/contracts/display/private', 'ContractController@displayPrivateContracts');
-    Route::get('/contracts/display/bid/{id}', 'ContractController@displayBid');
+    Route::get('/contracts/display/newbid/{id}', 'ContractController@displayNewBid');
     Route::get('/contracts/modify/bid/{id}', 'ContractController@displayModifyBid');
+    Route::get('/contracts/display/bids/{id}', 'ContractController@displayBids');
     Route::post('/contracts/modify/bid', 'ContractController@modifyBid');
     Route::post('/contracts/bids/store', 'ContractController@storeBid');
     Route::post('/contracts/bids/delete', 'ContractController@deleteBid');
