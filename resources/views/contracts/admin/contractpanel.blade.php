@@ -6,7 +6,13 @@
     </div>
 </div>
 <br>
-<button href="/contracts/admin/new" type="button" class="btn btn-primary" role="button">Create New Contract</button>
+<div class="container">
+    <div class="row justify-content-center">
+        <button type="button" class="btn btn-primary">
+            <a href="/contracts/admin/new" style="color:inherit">Create New Contract</a>
+        </button>
+    </div>
+</div>
 <br>
 @if(count($contracts))
 @foreach($contracts as $contract)
