@@ -1,7 +1,9 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
-    <h2>Bid on Contract</h2>
+    <div class="row justify-content-center">
+        <h2>Bid on Contract</h2>
+    </div>
 </div>
 <br>
 <div class="container">
