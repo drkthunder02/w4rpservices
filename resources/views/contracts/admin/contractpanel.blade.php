@@ -8,9 +8,7 @@
 <br>
 <div class="container">
     <div class="row justify-content-center">
-        <button type="link" class="btn btn-primary">
             <a href="/contracts/admin/new" style="color:inherit">Create New Contract</a>
-        </button>
     </div>
 </div>
 <br>
