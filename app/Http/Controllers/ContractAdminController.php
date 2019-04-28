@@ -14,6 +14,7 @@ use App\User;
 use App\Models\User\UserPermission;
 use App\Models\Contracts\Contract;
 use App\Models\Contracts\Bid;
+use App\Models\Contracts\AcceptedBid;
 
 class ContractAdminController extends Controller
 {

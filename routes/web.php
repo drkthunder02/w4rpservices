@@ -75,8 +75,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
 
     //Contract Controller display pages
+    Route::get('/contracts/display/all', 'ContractController@displayContracts');
     Route::get('/contracts/display/public', 'ContractController@displayPublicContracts');
     Route::get('/contracts/display/private', 'ContractController@displayPrivateContracts');
+    Route::get('/contracts/display/bid', 'ContractController@displayBid');
+    Route::get('/contracts/modify/bid/{id}', 'ContractController@displayModifyBid');
+    Route::post('/contracts/modify/bid', 'ContractController@modifyBid');
     Route::post('/contracts/bids/store', 'ContractController@storeBid');
     Route::post('/contracts/bids/delete', 'ContractController@deleteBid');
 
