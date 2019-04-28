@@ -6,7 +6,7 @@
     </div>
 </div>
 <br>
-<button href="{{ url('/contracts/admin/new') }}" type="button" class="btn btn-primary" role="button">Create New Contract</button>
+<button href="{{ route('displayNewContract') }}" type="button" class="btn btn-primary" role="button">Create New Contract</button>
 <br>
 @if(count($contracts))
 @foreach($contracts as $contract)

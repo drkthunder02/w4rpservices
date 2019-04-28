@@ -28,6 +28,8 @@
                         <div class="form-group">
                             {{ Form::label('type', 'Public Contract') }}
                             {{ Form::radio('type', 'public', true) }}
+                        </div>
+                        <div class="form-group">
                             {{ Form::label('type', 'Private Contract') }}
                             {{ Form::radio('type', 'private', false) }}
                         </div>

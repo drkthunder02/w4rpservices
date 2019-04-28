@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth']], function(){
 
     //Contract Admin Controller display pages
     Route::get('/contracts/admin/display', 'ContractAdminController@displayContractDashboard');
-    Route::get('/contracts/admin/new', 'ContractAdminController@displayNewContract');
+    Route::get('/contracts/admin/new', 'ContractAdminController@displayNewContract')->name('displayNewContract');
     Route::post('/contracts/admin/new', 'ContractAdminController@storeNewContract');
     Route::post('/contracts/admin/store', 'ContractAdminController@storeAcceptContract');
     Route::post('/contracts/admin/delete', 'ContractAdminController@deleteContract');
