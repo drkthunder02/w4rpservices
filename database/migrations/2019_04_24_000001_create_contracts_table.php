@@ -21,7 +21,7 @@ class CreateContractsTable extends Migration
                 $table->date('end_date');
                 $table->text('body');
                 $table->boolean('finished')->default(false);
-                $table->decimal('final_cost');
+                $table->decimal('final_cost')->nullable();
                 $table->timestamps();
             });
         }
