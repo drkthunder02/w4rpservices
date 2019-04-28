@@ -6,6 +6,7 @@
     </div>
 </div>
 <br>
+
 @if(count($data['contracts']))
 @foreach($data['contracts'] as $contract)
 <div class="container">
@@ -52,7 +53,8 @@
         </div>
     </div>
 <br>
-@else
+@endif
+@if($data['contracts'] == false)
     @include('contracts.includes.nocontracts')
 @endif
 @endsection
