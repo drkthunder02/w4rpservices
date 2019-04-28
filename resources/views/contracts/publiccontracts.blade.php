@@ -6,7 +6,8 @@
     </div>
 </div>
 <br>
-@if(count($contracts))
+@if(count($data['contracts']))
+@foreach($data['contracts'] as $contract)
 <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
