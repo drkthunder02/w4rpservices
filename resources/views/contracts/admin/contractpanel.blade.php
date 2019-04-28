@@ -4,8 +4,8 @@
     <h2>Contract Dashboard</h2>
 </div>
 <br>
-{{ dd($contracts) }}
-@if($contracts != null)
+
+@if(count($contracts))
 @foreach($contracts as $contract)
 <div class="container">
     <div class="row justify-content-center">
