@@ -49,7 +49,7 @@
                                         <th>Amount</th>
                                     </thead>
                                     <tbody>
-                                @foreach($data['bids'] as $bid)
+                                    @foreach($data['bids'] as $bid)
                                         <tr>
                                             <td>{{ $bid['corporation_name'] }}</td>
                                             <td>{{ $bid['bid_amount'] }}</td>
@@ -67,7 +67,7 @@
                                                 {!! Form::close() !!}
                                             @endif
                                         </tr>
-                                @endforeach
+                                    @endforeach
                                     </tbody>
                                 </table>
                             @else
@@ -79,8 +79,8 @@
             </div>
         </div>
     </div>
-    <br>
-@else
+<br>
+@elseif(count($data['contracts']) == false)
 <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
