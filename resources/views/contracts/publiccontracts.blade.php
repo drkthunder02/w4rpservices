@@ -23,10 +23,6 @@
                             </div>
                             <div class="col-sm" align="right">
                                 <a href="/contracts/display/newbid/{{$contract['contract_id']}}" class="btn btn-primary" role="button">Bid on Contract</a>
-                                {!! Form::open(['action' => 'ContractController@displayBid', 'method' => 'POST']) !!}
-                                {{ Form::hidden('contract_id', $contract['contract_id']) }}
-                                {{ Form::submit('Bid', ['class' => 'btn btn-primary']) }}
-                                {!! Form::close() !!}
                             </div>
                         </div>
                     </div>
