@@ -39,17 +39,30 @@ class ContractController extends Controller
      * 
      */
     public function displayContracts() {
-        //Caluclate today's date to know which contracts to display
+        //Calculate today's date to know which contracts to display
         $today = Carbon::now();
 
-        //Declare array variables
+        //Declare our array variables
         $bids = array();
-        $data = array();
         $contracts = array();
+        $i = 0;
 
-        $contracts = Contract::where(['end_date', '>=', $today])->get();
+        //Fetch all of the current contracts from the database
+        $contractsTemp = Contract::where('end_date', '>=', $today)->get()->toArray();
 
-        return view('contracts.allcontracts');
+        //Count the number of bids, and add them to the arrays
+        for($i = 0; $i < sizeof($contractsTemp); $i++) {
+            $tempCount = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->count('contract_id');
+            $bids = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->get()->toArray();
+
+            //Assemble the finaly array
+            $contracts[$i] = $contractsTemp[$i];
+            $contracts[$i]['bid_count'] = $tempCount;
+            $contracts[$i]['bids'] = $bids;
+        }        
+
+        //Call for the view to be displayed
+        return view('contracts.allcontracts')->with('contracts', $contracts);
     }
 
     /**
