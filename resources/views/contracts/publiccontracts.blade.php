@@ -42,6 +42,7 @@
                                 <thead>
                                     <th>Corporation</th>
                                     <th>Amount</th>
+                                    <th></th>
                                 </thead>
                                 <tbody>
                                 @foreach($contract['bids'] as $bid)
