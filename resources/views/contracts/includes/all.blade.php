@@ -54,10 +54,12 @@
                                 </tbody>
                             </table>
                             @else
+                                @foreach($contract['bids'] as $bid)
                                 @if(auth()->user()->character_id == $bid['character_id'])
                                     <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
                                     <a href="/contracts/delete/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Delete Bid</a>
                                 @endif
+                                @endforeach
                             @endif
                         </span>
                     @endif
