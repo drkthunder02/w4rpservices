@@ -44,6 +44,7 @@
                                     <th>Amount</th>
                                 </thead>
                                 <tbody>
+                                    {{ dd($contracts['bids']) }}
                                 @foreach($contracts['bids'] as $bid)
                                     <tr>
                                         <td>{{ $bid['corporation_name'] }}</td>
