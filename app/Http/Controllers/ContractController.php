@@ -68,6 +68,7 @@ class ContractController extends Controller
 
         //Count the number of bids, and add them to the arrays
         foreach($contracts as $contract) {
+            dd($contract);
             $tempCount = Bid::where(['contract_id' => $contract['id']])->count('contract_id');
             $bids = Bid::where(['contract_id' => $contract['id']])->get()->toArray();
 
