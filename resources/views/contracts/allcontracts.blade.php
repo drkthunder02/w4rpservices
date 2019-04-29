@@ -10,4 +10,5 @@
     @include('contracts.includes.all')
 @else
     @include('contracts.includes.nocontracts')
+@endif
 @endsection
