@@ -168,19 +168,29 @@ class ContractController extends Controller
         //Use the lookup helper in order to find the user's corporation id and name
         $corporationId = $lookup->LookupCharacter($characterId);
         $corporationName = $lookup->LookupCorporationName($corporationId);
-        
-        //Create the model object to save data to
-        $bid = new Bid;
-        $bid->contract_id = $request->contract_id;
-        $bid->bid_amount = $amount;
-        $bid->character_id = $characterId;
-        $bid->character_name = $characterName;
-        $bid->corporation_id = $corporationId;
-        $bid->corporation_name = $corporationName;
-        $bid->save();
 
-        //Redirect to the correct page
-        return redirect('/contracts/display/public')->with('success', 'Bid accepted.');
+        //Before saving a bid let's check to see if the user already placed a bid on the contract
+        $found = Bid::where([
+            'contract_id' => $request->contract_id,
+            'character_id' => $characterId,
+        ])->first();
+
+        if(isset($found->contract_id)) {
+            return redirect('/contracts/display/all')->with('error', 'You have already placed a bid for this contract.  Please modify the existing bid.');
+        } else {
+            //Create the model object to save data to
+            $bid = new Bid;
+            $bid->contract_id = $request->contract_id;
+            $bid->bid_amount = $amount;
+            $bid->character_id = $characterId;
+            $bid->character_name = $characterName;
+            $bid->corporation_id = $corporationId;
+            $bid->corporation_name = $corporationName;
+            $bid->save();
+
+            //Redirect to the correct page
+            return redirect('/contracts/display/all')->with('success', 'Bid accepted.');
+        }
     }
 
     /**
