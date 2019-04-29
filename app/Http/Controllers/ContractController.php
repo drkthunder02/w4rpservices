@@ -7,6 +7,7 @@ use DB;
 use Carbon\Carbon;
 
 //Libraries
+use App\Library\Lookups\LookupHelper;
 //use App\Library\Contracts\ContractHelper;
 
 //Models
@@ -130,6 +131,9 @@ class ContractController extends Controller
             'bid' => 'required',
         ]);
 
+        //Delcare some class variables we will need
+        $lookup = new LookupHelper;
+
         $amount = 0.00;
 
         //Convert the amount to a whole number from abbreviations
@@ -141,11 +145,22 @@ class ContractController extends Controller
             $amount = $request->bid;
         }
 
+        //Get the character id and character name from the auth of the user calling
+        //this function
+        $characterId = auth()->user()->getId();
+        $characterName = auth()->user()->getName();
+        //Use the lookup helper in order to find the user's corporation id and name
+        $corporationId = $lookup->LookupCharacter($characterId);
+        $corporationName = $lookup->LookupCorporationName($corporationId);
+
         //Create the model object to save data to
         $bid = new Bid;
         $bid->contract_id = $request->contract_id;
         $bid->bid_amount = $amount;
-        $bid->accepted = false;
+        $bid->character_id = $characterId;
+        $bid->character_name = $characterName;
+        $bid->corporation_id = $corporationId;
+        $bid->corporation_name = $corporationName;
         $bid->save();
 
         //Redirect to the correct page

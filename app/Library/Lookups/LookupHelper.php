@@ -83,6 +83,47 @@ class LookupHelper {
         }
     }
 
+    /**
+     * Function to retrieve a corporation name from the lookup tables
+     * or add the details of the corporation if it's not found
+     * 
+     */
+    public function LookupCorporationName($corpId) {
+        //check for the character in the user_to_corporation table
+        $found = CorporationToAlliance::where('corporation_id', $corpId)->get(['corporation_name']);
+
+        //If we don't find the corporation in the table, then we need to retrieve it from ESI
+        //and add the corporation to the table
+        if(!isset($found[0]->corporation_name)) {
+            //Get the configuration for ESI from the environmental variables
+            $config = config('esi');
+
+            //Setup a new ESI container
+            $esi = new Eseye();
+
+            try {
+                $corporation = $esi->invoke('get', '/corporations/{corporation_id}/', [
+                    'corporation_id' => $corpId,
+                ]);
+            } catch(\Seat\Eseye\Exceptions\RequestFailedException $e){
+                return $e->getEsiResponse();
+            }
+
+            //Save all of the data to the database
+            $corp = new CorporationToAlliance;
+            $corp->corporation_id = $corporation->corporation_id;
+            $corp->corporation_name = $corporation->name;
+            $corp->alliance_id = $corporation->alliance_id;
+            $corp->alliance_name = $alliance->name;
+            $corp->save();
+
+            //Return the corporation name
+            return $corporation->name;
+        } else {
+            return $found[0]->corporation_name;
+        }
+    }
+
     //Add corporations to the lookup table for quicker lookups without having to
     //hit the ESI API all the time
     public function LookupCorporation($corpId) {
