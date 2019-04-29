@@ -211,6 +211,8 @@ class MoonsAdminController extends Controller
                 'RentalEnd' => $moon->RentalEnd,
             ])->first();
 
+            dd($contact);
+
             if(!isset($contact->Contact)) {
                 $contact = 'None';
             } else {
