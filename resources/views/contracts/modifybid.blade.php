@@ -26,7 +26,8 @@
                         {{ Form::label('suffix', 'B') }}
                         {{ Form::radio('suffix', 'B', false) }}
                         {{ Form::hidden('type', $contract['type']) }}
-                        {{ dd($contract) }}
+                        {{ Form::hidden('contract_id', $contract['contract_id']) }}
+                        
                     </div>
                     {{ Form::submit('Modify Bid', ['class' => 'btn btn-primary']) }}
                     {!! Form::close() !!}
