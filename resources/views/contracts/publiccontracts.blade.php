@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm" align="left">
-                            {{ $contract['contract']->title }}
+                            {{ $contract['title'] }}
                         </div>
                         <div class="col-sm" align="center">
                             Type: Public
