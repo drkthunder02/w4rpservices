@@ -151,6 +151,7 @@ class ContractController extends Controller
         $characterName = auth()->user()->getName();
         //Use the lookup helper in order to find the user's corporation id and name
         $corporationId = $lookup->LookupCharacter($characterId);
+        dd($corporationId);
         $corporationName = $lookup->LookupCorporationName($corporationId);
         dd($corporationName);
         //Create the model object to save data to
