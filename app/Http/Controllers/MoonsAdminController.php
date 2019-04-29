@@ -206,7 +206,7 @@ class MoonsAdminController extends Controller
                 'Planet' => $moon->Planet,
                 'Moon' => $moon->Moon,
                 'RentalEnd' => $moon->RentalEnd,
-            ])->get('Contact');
+            ])->get(['Contact'])->toArray();
 
             dd($contact);
 
