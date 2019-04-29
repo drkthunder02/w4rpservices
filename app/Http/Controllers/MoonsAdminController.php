@@ -208,10 +208,10 @@ class MoonsAdminController extends Controller
                 'RentalEnd' => $moon->RentalEnd,
             ])->get(['Contact']);
 
-            if($contact[0] == null) {
+            if(!isset($contact)) {
                 $contact = 'None';
             } else {
-                $contact = $contact[0];
+                $contact = $contact->contact;
             }
 
             //Set the color for the table
