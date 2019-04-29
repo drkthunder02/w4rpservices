@@ -94,4 +94,14 @@ class ContractAdminController extends Controller
 
         return redirect('/contracts/admin/display')->with('success', 'Contract has been deleted.');
     }
+
+    public function displayEndContract($id) {
+        $contractId = $id;
+
+        return view('contracts.admin.endcontract')->with('contractId', $contractId);
+    }
+
+    public function storeEndContract(Request $request) {
+
+    }
 }
