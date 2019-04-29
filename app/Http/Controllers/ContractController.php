@@ -61,34 +61,37 @@ class ContractController extends Controller
 
         //Declare our array variables
         $bids = array();
+        $contracts = array();
+        $i = 0;
 
         //Fetch all of the current contracts from the database
-        $contracts = Contract::where('end_date', '>=', $today)
+        $contractsTemp = Contract::where('end_date', '>=', $today)
                              ->where(['type' => 'public'])->get()->toArray();
 
         //Count the number of bids, and add them to the arrays
+        for($i = 0; $i < sizeof($contractsTemp); $i++) {
+            $tempCount = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->count('contract_id');
+            $bids = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->get()->toArray();
+
+            //Assemble the finaly array
+            $contracts[$i] = $contractsTemp;
+            $contracts[$i]['bid_count'] = $tempCount;
+            $contracts[$i]['bids'] = $bids;
+        }
+        /*
         foreach($contracts as $contract) {
             $tempCount = Bid::where(['contract_id' => $contract['contract_id']])->count('contract_id');
             $bids = Bid::where(['contract_id' => $contract['contract_id']])->get()->toArray();
-
+            
+            //Setup new indexes in the variable memory space
             $contract['bid_count'] = $tempCount;
             $contract['bids'] = $bids;
-            dd($contract);
-        }        
 
-        /*
-        if($count($contract->contract_id) > 0) {
-            foreach($contract->contract_id as $id) {
-                //Get the bid data
-                $temp = Bid::where(['contract_id' => $id])->get();
-    
-                //Push the new data onto the array stack
-                array_push($bids, $temp);
-            }
-        } else {
-            $bids = null;
-        }
-        */
+            //Assemble the final array
+
+            //increment the counter;
+        } 
+        */ 
         
 
         //Call for the view to be displayed
