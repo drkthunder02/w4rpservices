@@ -61,39 +61,27 @@ class ContractController extends Controller
 
         //Declare our array variables
         $bids = array();
-        $data = array();
 
         //Fetch all of the current contracts from the database
         $contracts = Contract::where('end_date', '>=', $today)
                              ->where(['type' => 'public'])->get();
 
-        //Check if no contracts were pulled from the database
-        if($contracts != null) {
-            //Foreach each contract we need to gather all of the bids
-            foreach($contracts as $contract) {
-                //Get all of the bids for the current contract
-                $bids = Bid::where(['contract_id' => $contract->id])->get();
-                //Build the data structure
-                if(count($bids)) {
-                    $temp = [
-                        'contract' => $contract,
-                        'bids' =>$bids,
-                    ];
-                } else {
-                    $temp = [
-                        'contract' => $contract,
-                    ];
-                }
-
-                //Push the new contract onto the stack
-                array_push($data, $temp);
+        if($count($contract->contract_id) > 0) {
+            foreach($contract->contract_id as $id) {
+                //Get the bid data
+                $temp = Bid::where(['contract_id' => $id])->get();
+    
+                //Push the new data onto the array stack
+                array_push($bids, $temp);
             }
         } else {
-            $data = null;
+            $bids = null;
         }
+        
 
         //Call for the view to be displayed
-        return view('contracts.publiccontracts')->with('data', $data);
+        return view('contracts.publiccontracts')->with('contracts', $contracts)
+                                                ->with('bids', $bids);
     }
 
     /**
@@ -108,6 +96,20 @@ class ContractController extends Controller
                              ->where(['type' => 'private'])->get();
 
         return view ('contracts.privatecontracts')->with('contracts', $contracts);
+    }
+
+    /**
+     * Controller function to display expired contracts
+     * 
+     */
+    public function displayExpiredContracts() {
+        //Calculate today's date to know which contracts to display
+        $today = Carbon::now();
+
+        //Retrieve the contracts from the database
+        $contracts = Contract::where('end_date', '<', $today)->get();
+
+        return view('contracts.expiredcontracts')->with('contracts', $contracts);
     }
 
     /**
