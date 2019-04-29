@@ -7,9 +7,7 @@
 </div>
 <br>
 @if(count($contracts))
-@foreach($contracts as $contract)
     @include('contracts.includes.public')
-@endforeach
 @else
     @include('contracts.includes.nocontracts')
 @endif

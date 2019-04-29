@@ -29,6 +29,7 @@
                     <!--  Count the number of bids for the current contract -->
                     @if($contract['bid_count'] > 0)
                         <span class="border-dark">
+                            @if($contract['type'] == 'Public')
                             <table class="table table-striped">
                                 <thead>
                                     <th>Corporation</th>
@@ -52,6 +53,12 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            @else
+                                @if(auth()->user()->character_id == $bid['character_id'])
+                                    <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
+                                    <a href="/contracts/delete/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Delete Bid</a>
+                                @endif
+                            @endif
                         </span>
                     @endif
                 </div>
