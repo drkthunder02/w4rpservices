@@ -204,6 +204,7 @@ class ContractController extends Controller
 
         $amount = $request->bid;
         $type = $request->type;
+        $contractId = $request->contract_id;
 
         if($request->suffix == 'B') {
             $amount = $amount * 1000000000.00;
