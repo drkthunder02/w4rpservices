@@ -142,7 +142,7 @@ class LookupHelper {
             } catch(\Seat\Eseye\Exceptions\RequestFailedException $e){
                 return $e->getEsiResponse();
             }
-
+            dd($corporation);
             //Save all of the data to the database
             $corp = new CorporationToAlliance;
             $corp->corporation_id = $corporation->corporation_id;
