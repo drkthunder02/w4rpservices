@@ -16,7 +16,7 @@ use App\Models\Lookups\CorporationToAlliance;
 class LookupHelper {
 
     public function CharacterName($charId) {
-        $esi = new Esye();
+        $esi = new Eseye();
 
         try {
             $character = $esi->invoke('get', '/characters/{character_id}/', [
