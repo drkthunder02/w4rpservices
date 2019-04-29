@@ -19,6 +19,10 @@
                         {{ Form::label('bid', 'Bid') }}
                         {{ Form::text('bid', '', ['class' => 'form-control', 'placeholder' => '1.0B']) }}
                         {{ Form::hidden('contract_id', $contractId) }}
+                        {{ Form::label('suffix', 'M') }}
+                        {{ Form::radio('suffix', 'M', false) }}
+                        {{ Form::label('suffix', 'B') }}
+                        {{ Form::radio('suffix', 'B', false) }}
                     </div>
                     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                     {!! Form::close() !!}

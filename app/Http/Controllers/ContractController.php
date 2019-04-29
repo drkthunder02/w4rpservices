@@ -130,10 +130,21 @@ class ContractController extends Controller
             'bid' => 'required',
         ]);
 
+        $amount = 0.00;
+
+        //Convert the amount to a whole number from abbreviations
+        if($request->suffix == 'B') {
+            $amount = $request->bid * 1000000000.00;
+        } else if($request->suffix == 'M') {
+            $amount = $request->bid * 1000000.00;
+        } else {
+            $amount = $request->bid;
+        }
+
         //Create the model object to save data to
         $bid = new Bid;
         $bid->contract_id = $request->contract_id;
-        $bid->bid = $request->bid;
+        $bid->bid_amount = $amount;
         $bid->accepted = false;
         $bid->save();
 
