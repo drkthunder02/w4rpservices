@@ -79,7 +79,7 @@ class LookupHelper {
             return $character->corporation_id;
         } else {
             //Return the corporation_id if it was found in the database as it is what the calling function is looking for
-            return $found;
+            return $found[0]->corporation_id;
         }
     }
 
