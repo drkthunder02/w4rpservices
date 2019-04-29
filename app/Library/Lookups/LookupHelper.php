@@ -109,14 +109,6 @@ class LookupHelper {
                 return $e->getEsiResponse();
             }
 
-            //Save all of the data to the database
-            $corp = new CorporationToAlliance;
-            $corp->corporation_id = $corporation->corporation_id;
-            $corp->corporation_name = $corporation->name;
-            $corp->alliance_id = $corporation->alliance_id;
-            $corp->alliance_name = $alliance->name;
-            $corp->save();
-
             //Return the corporation name
             return $corporation->name;
         } else {
