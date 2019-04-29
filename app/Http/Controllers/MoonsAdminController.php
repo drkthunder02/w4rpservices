@@ -200,6 +200,14 @@ class MoonsAdminController extends Controller
             //Set the paid as yes or no for the check box in the blade template
             $paid = $moon->Paid;
 
+            //We need the contact information in character name format for the view
+            $contact = MoonRent::where([
+                'System' => $moon->System,
+                'Planet' => $moon->Planet,
+                'Moon' => $moon->Moon,
+                'RentalEnd' => $moon->RentalEnd,
+            ])->get(['Contact']);
+
             //Set the color for the table
             if($rentalTemp->diffInDays($today) < 3 ) {
                 $color = 'table-warning';
@@ -219,6 +227,7 @@ class MoonsAdminController extends Controller
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
                 'Paid' => $paid,
+                'Contact' => $contact,
             ]);
         }
 

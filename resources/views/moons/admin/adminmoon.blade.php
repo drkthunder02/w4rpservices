@@ -10,6 +10,7 @@
                 <th>Rental Price</th>
                 <th>Ally Rental Price</th>
                 <th>Renter</th>
+                <th>Contact</th>
                 <th>Rental End</th>
                 <th>Paid?</th>
                 <th>Mark Paid</th>
@@ -22,6 +23,7 @@
                     <td>{{ $row['AlliancePrice'] }}</td>
                     <td>{{ $row['OutOfAlliancePrice'] }}</td>
                     <td>{{ $row['Renter'] }}</td>
+                    <td>{{ $row['Contact'] }}</td>
                     <td>{{ $row['RentalEnd'] }}</td>
                         @if($row['Paid'] == 'Yes')
                             <td>Yes</td>
