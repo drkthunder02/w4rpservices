@@ -81,9 +81,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/contracts/display/newbid/{id}', 'ContractController@displayNewBid');
     Route::get('/contracts/modify/bid/{id}', 'ContractController@displayModifyBid');
     Route::get('/contracts/display/bids/{id}', 'ContractController@displayBids');
+    Route::get('/contracts/delete/bid/{id}', 'ContractController@deleteBid');
     Route::post('/contracts/modify/bid', 'ContractController@modifyBid');
     Route::post('/contracts/bids/store', 'ContractController@storeBid');
-    Route::post('/contracts/bids/delete', 'ContractController@deleteBid');
 
     //Contract Admin Controller display pages
     Route::get('/contracts/admin/display', 'ContractAdminController@displayContractDashboard');

@@ -49,6 +49,7 @@
                                         <td>{{ $bid['corporation_name'] }}</td>
                                         <td>{{ $bid['bid_amount'] }}</td>
                                         @if(auth()->user()->character_id == $bid['character_id'])
+                                            
                                             {{ Form::open(['action' => 'ContractController@displayModifyBid', 'method' => 'POST']) }}
                                                 {{ Form::hidden('id', $bid['id']) }}
                                                 {{ Form::hidden('contract_id', $bid['contract_id']) }}
