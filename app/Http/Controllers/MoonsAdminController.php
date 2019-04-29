@@ -209,7 +209,11 @@ class MoonsAdminController extends Controller
                 'Planet' => $moon->Planet,
                 'Moon' => $moon->Moon,
                 'RentalEnd' => $moon->RentalEnd,
-            ])->first()->toArray();
+            ])->first();
+
+            if($contact != null) {
+                $contact = $contact->toArray();
+            }
 
             if(!isset($contact['Contact'])) {
                 $contact = 'None';
