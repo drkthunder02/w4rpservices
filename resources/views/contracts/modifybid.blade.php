@@ -11,7 +11,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{ dd($contract) }}
                     {{ $contract['title'] }}
                 </div>
                 <div class="card-body">

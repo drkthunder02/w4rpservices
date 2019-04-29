@@ -188,6 +188,8 @@ class ContractController extends Controller
         
         $contract = Contract::where(['contract_id' => $contractId])->get()->toArray();
 
+        dd($contract);
+
         return view('contracts.modifybid')->with('contract', $contract);
     }
 
