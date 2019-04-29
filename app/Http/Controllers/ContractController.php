@@ -64,12 +64,12 @@ class ContractController extends Controller
 
         //Fetch all of the current contracts from the database
         $contracts = Contract::where('end_date', '>=', $today)
-                             ->where(['type' => 'public'])->toArray()->get();
+                             ->where(['type' => 'public'])->get()->toArray();
 
         //Count the number of bids, and add them to the arrays
         foreach($contracts as $contract) {
             $tempCount = Bid::where(['contract_id' => $contract['id']])->count('contract_id');
-            $bids = Bid::where(['contract_id' => $contract['id']])->toArray()->get();
+            $bids = Bid::where(['contract_id' => $contract['id']])->get()->toArray();
 
             $contract['bid_count'] = $tempCount;
             $contract['bids'] = $bids;
