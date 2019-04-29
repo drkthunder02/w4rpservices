@@ -74,25 +74,10 @@ class ContractController extends Controller
             $bids = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->get()->toArray();
 
             //Assemble the finaly array
-            $contracts[$i] = $contractsTemp;
+            $contracts[$i]['contract'] = $contractsTemp;
             $contracts[$i]['bid_count'] = $tempCount;
             $contracts[$i]['bids'] = $bids;
-        }
-        /*
-        foreach($contracts as $contract) {
-            $tempCount = Bid::where(['contract_id' => $contract['contract_id']])->count('contract_id');
-            $bids = Bid::where(['contract_id' => $contract['contract_id']])->get()->toArray();
-            
-            //Setup new indexes in the variable memory space
-            $contract['bid_count'] = $tempCount;
-            $contract['bids'] = $bids;
-
-            //Assemble the final array
-
-            //increment the counter;
-        } 
-        */ 
-        
+        }        
 
         //Call for the view to be displayed
         return view('contracts.publiccontracts')->with('contracts', $contracts);
