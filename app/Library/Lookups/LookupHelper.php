@@ -145,7 +145,7 @@ class LookupHelper {
             dd($corporation);
             //Save all of the data to the database
             $corp = new CorporationToAlliance;
-            $corp->corporation_id = $corporation->corporation_id;
+            $corp->corporation_id = $corpId;
             $corp->corporation_name = $corporation->name;
             $corp->alliance_id = $corporation->alliance_id;
             $corp->alliance_name = $alliance->name;
