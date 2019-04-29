@@ -16,16 +16,17 @@ use App\Models\Lookups\CorporationToAlliance;
 class LookupHelper {
 
     public function CharacterName($charId) {
-        $name = '';
-        $temp = CharacterToCorporation::where(['character_id' => $charId])->get(['character_name']);
+        $esi = new Esye();
 
-        if(!isset($temp->character_name)) {
-            $name = 'None';
-        } else {
-            $name = $temp->character_name;
+        try {
+            $character = $esi->invoke('get', '/characters/{character_id}/', [
+                'character_id' => $charId,
+            ]);
+        } catch(RequestFailedException $e){
+            return null;
         }
 
-        return $name;
+        return $character->name;
     }
 
     //Create a character id from a character name

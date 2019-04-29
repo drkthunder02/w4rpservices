@@ -213,13 +213,9 @@ class MoonsAdminController extends Controller
 
             if($contact != null) {
                 $contact = $contact->toArray();
-            }
-
-            if(!isset($contact['Contact'])) {
-                $contact = 'None';
-            } else {
-                //Get the name of the character
                 $contact = $lookup->CharacterName($contact['Contact']);
+            } else {
+                $contact = 'None';
             }
 
             //Set the color for the table
