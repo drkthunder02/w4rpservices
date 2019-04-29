@@ -209,11 +209,11 @@ class MoonsAdminController extends Controller
                 'Planet' => $moon->Planet,
                 'Moon' => $moon->Moon,
                 'RentalEnd' => $moon->RentalEnd,
-            ])->first();
+            ])->first()->toArray();
 
             dd($contact);
 
-            if(!isset($contact->Contact)) {
+            if(!isset($contact['Contact'])) {
                 $contact = 'None';
             } else {
                 //Get the name of the character
