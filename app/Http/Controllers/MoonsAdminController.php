@@ -208,6 +208,12 @@ class MoonsAdminController extends Controller
                 'RentalEnd' => $moon->RentalEnd,
             ])->get(['Contact']);
 
+            if($contact[0] == null) {
+                $contact = 'None';
+            } else {
+                $contact = $contact[0];
+            }
+
             //Set the color for the table
             if($rentalTemp->diffInDays($today) < 3 ) {
                 $color = 'table-warning';
