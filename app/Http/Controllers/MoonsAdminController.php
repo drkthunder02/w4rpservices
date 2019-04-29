@@ -211,13 +211,11 @@ class MoonsAdminController extends Controller
                 'RentalEnd' => $moon->RentalEnd,
             ])->first()->toArray();
 
-            dd($contact);
-
             if(!isset($contact['Contact'])) {
                 $contact = 'None';
             } else {
                 //Get the name of the character
-                $contact = $lookup->CharacterName($contact->Contact);
+                $contact = $lookup->CharacterName($contact['Contact']);
             }
 
             //Set the color for the table
