@@ -74,7 +74,7 @@ class ContractController extends Controller
             $bids = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->get()->toArray();
 
             //Assemble the finaly array
-            $contracts[$i]['contract'] = $contractsTemp;
+            $contracts[$i]['contract'] = $contractsTemp[$i];
             $contracts[$i]['bid_count'] = $tempCount;
             $contracts[$i]['bids'] = $bids;
         }        
