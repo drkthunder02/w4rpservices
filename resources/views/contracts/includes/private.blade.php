@@ -1,3 +1,4 @@
+@foreach($contracts as $contract)
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -24,9 +25,17 @@
                             {{ $contract['body'] }}
                         </div>
                     </span>
+                    <br>
+                    @foreach($contract['bids'] as $bid)
+                    @if(auth()->user()->character_id == $bid['character_id'])
+                        <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
+                        <a href="/contracts/delete/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Delete Bid</a>
+                    @endif
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </div>
 <br>
+@endforeach

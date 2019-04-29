@@ -87,12 +87,27 @@ class ContractController extends Controller
      * Controller function to display current private contracts
      */
     public function displayPrivateContracts() {
+        //Declare our array variables
+        $bids = array();
+        $contracts = array();
+
         //Calucate today's date to know which contracts to display
         $today = Carbon::now();
 
         //Fetch all of the current contracts from the database
-        $contracts = Contract::where('end_date', '>=', $today)
+        $contractTemp = Contract::where('end_date', '>=', $today)
                              ->where(['type' => 'private'])->get();
+        
+        //Count the number of bids, and add them to the arrays
+        for($i = 0; $i < sizeof($contractsTemp); $i++) {
+            $tempCount = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->count('contract_id');
+            $bids = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->get()->toArray();
+
+            //Assemble the finaly array
+            $contracts[$i] = $contractsTemp[$i];
+            $contracts[$i]['bid_count'] = $tempCount;
+            $contracts[$i]['bids'] = $bids;
+        }
 
         return view ('contracts.privatecontracts')->with('contracts', $contracts);
     }
