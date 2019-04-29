@@ -142,7 +142,7 @@ class ContractController extends Controller
         } else if($request->suffix == 'M') {
             $amount = $request->bid * 1000000.00;
         } else {
-            $amount = $request->bid;
+            $amount = $request->bid * 1.00;
         }
 
         //Get the character id and character name from the auth of the user calling
