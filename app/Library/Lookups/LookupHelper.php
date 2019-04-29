@@ -15,6 +15,19 @@ use App\Models\Lookups\CorporationToAlliance;
 
 class LookupHelper {
 
+    public function CharacterName($charId) {
+        $name = '';
+        $temp = CharacterToCorporation::where(['character_id' => $charId])->get(['character_name']);
+
+        if(!isset($temp->character_name)) {
+            $name = 'None';
+        } else {
+            $name = $temp->character_name;
+        }
+
+        return $name;
+    }
+
     //Create a character id from a character name
     public function CharacterNameToId($character) {
         //Setup Eseye Configuration

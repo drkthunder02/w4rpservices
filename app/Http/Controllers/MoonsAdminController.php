@@ -175,6 +175,9 @@ class MoonsAdminController extends Controller
      * Function to display the moons to admins
      */
     public function displayMoonsAdmin() {
+        $lookup = new LookupHelper;
+        $contact = '';
+
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
         //Update the prices for the moon
@@ -211,7 +214,8 @@ class MoonsAdminController extends Controller
             if(!isset($contact->Contact)) {
                 $contact = 'None';
             } else {
-                $contact = $contact->Contact;
+                //Get the name of the character
+                $contact = $lookup->CharacterName($contact->Contact);
             }
 
             //Set the color for the table
