@@ -152,7 +152,7 @@ class ContractController extends Controller
         //Use the lookup helper in order to find the user's corporation id and name
         $corporationId = $lookup->LookupCharacter($characterId);
         $corporationName = $lookup->LookupCorporationName($corporationId);
-        dd($corporationName);
+        
         //Create the model object to save data to
         $bid = new Bid;
         $bid->contract_id = $request->contract_id;
