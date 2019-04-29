@@ -49,18 +49,9 @@
                                         <td>{{ $bid['corporation_name'] }}</td>
                                         <td>{{ $bid['bid_amount'] }}</td>
                                         @if(auth()->user()->character_id == $bid['character_id'])
-                                            
-                                            {{ Form::open(['action' => 'ContractController@displayModifyBid', 'method' => 'POST']) }}
-                                                {{ Form::hidden('id', $bid['id']) }}
-                                                {{ Form::hidden('contract_id', $bid['contract_id']) }}
-                                                {{ Form::submit('Modify Bid', ['class' => 'btn btn-primary']) }}
-                                            {!! Form::close() !!}
+                                            <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
                             
-                                            {{ Form::open(['action' => 'ContractController@deleteBid', 'method' => 'POST']) }}
-                                                {{ Form::hidden('id', $bid['id']) }}
-                                                {{ Form::hidden('contract_id', $bid['contract_id']) }}
-                                                {{ Form::submit('Delete Bid', ['class' => 'btn btn-primary']) }}
-                                            {!! Form::close() !!}
+                                            <a href="contracts/delete/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Delete Bid</a>
                                         @endif
                                     </tr>
                                 @endforeach
