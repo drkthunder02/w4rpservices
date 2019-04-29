@@ -171,17 +171,11 @@ class ContractController extends Controller
     /**
      * Controller function to delete a bid
      */
-    public function deleteBid(Request $request) {
-        //Validate the request from the previous page
-        $this->validate($request, [
-            'id' => 'required',
-            'contract_id' => 'required',
-        ]);
+    public function deleteBid($id) {
 
         //Delete the bid entry from the database
         Bid::where([
-            'id' => $request->id,
-            'contract_id' => $request->contract_id,
+            'id' => $id,
         ])->delete();
 
         return redirect('/contracts/display/public')->with('success', 'Bid deleted.');
