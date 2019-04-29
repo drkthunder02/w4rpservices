@@ -73,6 +73,7 @@ class ContractController extends Controller
 
             $contract['bid_count'] = $tempCount;
             $contract['bids'] = $bids;
+            dd($contract);
         }        
 
         /*
