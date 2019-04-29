@@ -52,7 +52,7 @@
                                         @if(auth()->user()->character_id == $bid['character_id'])
                                         <td>
                                             <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
-                                            <a href="contracts/delete/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Delete Bid</a>
+                                            <a href="/contracts/delete/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Delete Bid</a>
                                         </td>
                                         @else
                                         <td></td>
