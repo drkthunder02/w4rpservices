@@ -172,7 +172,6 @@ class ContractController extends Controller
      * Controller function to delete a bid
      */
     public function deleteBid($id) {
-
         //Delete the bid entry from the database
         Bid::where([
             'id' => $id,
