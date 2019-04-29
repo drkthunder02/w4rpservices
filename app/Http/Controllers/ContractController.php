@@ -184,9 +184,11 @@ class ContractController extends Controller
      * Controller function to display modify bid page
      */
     public function displayModifyBid($id) {
-        $contract_id = $id;
+        $contractId = $id;
         
-        return view('contracts.modifybid')->with('contract_id', $contract_id);
+        $contract = Contract::where(['contract_id' => $contractId])->get()->toArray();
+
+        return view('contracts.modifybid')->with('contract', $contract);
     }
 
     /**
@@ -194,18 +196,25 @@ class ContractController extends Controller
      */
     public function modifyBid(Request $request) {
         $this->validate($request, [
-            'bid_amount',
+            'bid',
         ]);
 
+        $amount = $request->bid;
         $type = $request->type;
-        $contractId = $request->contract_id;
-        $bidAmount = $request->bid_amount;
+
+        if($request->suffix == 'B') {
+            $amount = $amount * 1000000000.00;
+        } else if($request->suffix == 'M') {
+            $amount = $amount * 1000000.00;
+        } else {
+            $amount = $amount * 1.00;
+        }
         
         Bid::where([
             'character_id' => auth()->user()->getId(),
             'contract_id' => $contractId,
         ])->update([
-            'bid_amount' => $bidAmount,
+            'bid_amount' => $amount,
         ]);
 
         if($type == 'public') {
