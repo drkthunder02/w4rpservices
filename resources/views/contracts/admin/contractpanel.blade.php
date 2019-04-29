@@ -27,10 +27,13 @@
                             Type: {{ $contract['type'] }}
                         </div>
                         <div class="col-sm" align="right">
+                            <!-- Change the form below to just a hyperlink -->
                             {!! Form::open(['action' => 'ContractAdminController@deleteContract', 'method' => 'POST']) !!}
                             {{ Form::hidden('contract_id', $contract['contract_id']) }}
                             {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                             {!! Form::close() !!}
+
+                            <!-- Add a hyperlink button for ending the contract -->
                         </div>
                     </div>
                 </div>
