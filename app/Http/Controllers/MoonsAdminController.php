@@ -206,14 +206,12 @@ class MoonsAdminController extends Controller
                 'Planet' => $moon->Planet,
                 'Moon' => $moon->Moon,
                 'RentalEnd' => $moon->RentalEnd,
-            ])->first(['Contact']);
+            ])->first();
 
-            dd($contact);
-
-            if(!isset($contact)) {
+            if(!isset($contact->Contact)) {
                 $contact = 'None';
             } else {
-                $contact = $contact->contact;
+                $contact = $contact->Contact;
             }
 
             //Set the color for the table
