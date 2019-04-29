@@ -108,7 +108,7 @@ class ContractController extends Controller
         $today = Carbon::now();
 
         //Fetch all of the current contracts from the database
-        $contractTemp = Contract::where('end_date', '>=', $today)
+        $contractsTemp = Contract::where('end_date', '>=', $today)
                              ->where(['type' => 'private'])->get();
         
         //Count the number of bids, and add them to the arrays
