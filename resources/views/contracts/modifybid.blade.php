@@ -20,7 +20,7 @@
                     {!! Form::open(['action' => 'ContractController@modifyBid', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('bid', 'Bid') }}
-                        {{ Form::text('bid', '', ['class' => 'form-control', 'placeholder' = '1.0']) }}
+                        {{ Form::text('bid', '', ['class' => 'form-control', 'placeholder' => '1.0']) }}
                         {{ Form::label('suffix', 'M') }}
                         {{ Form::radio('suffix', 'M', false) }}
                         {{ Form::label('suffix', 'B') }}
