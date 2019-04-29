@@ -21,7 +21,7 @@ class CreateContractsTable extends Migration
                 $table->date('end_date');
                 $table->text('body');
                 $table->boolean('finished')->default(false);
-                $table->decimal('final_cost')->nullable();
+                $table->decimal('final_cost', 20, 2)->nullable();
                 $table->timestamps();
             });
         }
@@ -30,7 +30,7 @@ class CreateContractsTable extends Migration
             Schema::create('contract_bids', function(Blueprint $table) {
                 $table->increments('id')->unique();
                 $table->integer('contract_id');
-                $table->decimal('bid_amount');
+                $table->decimal('bid_amount', 20, 2);
                 $table->string('character_name');
                 $table->string('character_id');
                 $table->string('corporation_name');
@@ -44,7 +44,7 @@ class CreateContractsTable extends Migration
                 $table->increments('id');
                 $table->integer('contract_id');
                 $table->integer('bid_id');
-                $table->decimal('bid_amount');
+                $table->decimal('bid_amount', 20, 2);
                 $table->text('notes')->default(null);
                 $table->timestamps();
             });
