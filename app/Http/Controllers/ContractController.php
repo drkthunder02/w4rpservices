@@ -185,7 +185,7 @@ class ContractController extends Controller
      */
     public function displayModifyBid($id) {
         //With the bid id number, look up the bid in the database to get the contract information
-        $bid = Bid::where(['id' => $id])->get();
+        $bid = Bid::where(['id' => $id])->first();
         dd($bid);
         //Retrieve the contract from the database
         $contract = Contract::where(['id' => $bid->contract_id])->get()->toArray();
