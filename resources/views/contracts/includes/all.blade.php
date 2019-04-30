@@ -9,7 +9,7 @@
                             {{ $contract['title'] }}
                         </div>
                         <div class="col-sm" align="center">
-                            Type:%20 {{ $contract['type'] }}
+                            Type: {{ $contract['type'] }}
                         </div>
                         <div class="col-sm" align="right">
                             <a href="/contracts/display/newbid/{{ $contract['contract_id'] }}" class="btn btn-primary" role="button">Bid on Contract</a>
