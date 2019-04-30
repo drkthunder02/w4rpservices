@@ -28,7 +28,7 @@
                     <hr>
                     <span class="border-dark">
                         <div class="container">
-                            Lowest Bid:  {{ $contract['lowestbid'] }}<br>
+                            Lowest Bid:  {{ number_format($contract['lowestbid'], 2, '.', ',') }}<br>
                             Lowest Bid Corp: {{ $contract['lowestcorp'] }}<br>
                         </div>
                     </span>
@@ -46,7 +46,7 @@
                                 @foreach($contract['bids'] as $bid)
                                     <tr>
                                         <td>{{ $bid['corporation_name'] }}</td>
-                                        <td>{{ number_format($bid['bid_amount'], 2, ',', '.') }}</td>
+                                        <td>{{ number_format($bid['bid_amount'], 2, '.', ',') }}</td>
                                         @if(auth()->user()->character_id == $bid['character_id'])
                                         <td>
                                             <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
