@@ -95,7 +95,7 @@ class ContractController extends Controller
                     $contracts[$i]['lowestbid']['amount'] = $bid['bid_amount'];
                     $contracts[$i]['lowestbid']['corporation_name'] = $bid['corporation_name'];
                 } else {
-                    if($bid->amount < $contract[$i]['lowestbid']['bid_amount']) {
+                    if($bid['bid_amount'] < $contract[$i]['lowestbid']['bid_amount']) {
                         $contracts[$i]['lowestbid']['amount'] = $bid['bid_amount'];
                         $contracts[$i]['lowestbid']['corporation_name'] = $bid['corporation_name'];
                     }
@@ -136,7 +136,7 @@ class ContractController extends Controller
                 if(!isset($contracts[$i]['lowestbid'])) {
                     $contracts[$i]['lowestbid']['amount'] = $bid['bid_amount'];
                 } else {
-                    if($bid->amount < $contract[$i]['lowestbid']['bid_amount']) {
+                    if($bid['bid_amount'] < $contract[$i]['lowestbid']['bid_amount']) {
                         $contracts[$i]['lowestbid']['amount'] = $bid['bid_amount'];
                     }
                 }
