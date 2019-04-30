@@ -90,8 +90,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/contracts/admin/new', 'ContractAdminController@displayNewContract');
     Route::post('/contracts/admin/new', 'ContractAdminController@storeNewContract');
     Route::post('/contracts/admin/store', 'ContractAdminController@storeAcceptContract');
-    Route::post('/contracts/admin/delete', 'ContractAdminController@deleteContract');
-    Route::get('/contracts/admin/end/{id}', 'ContractAdminController@endContract');
+    Route::get('/contracts/admin/delete/{id}', 'ContractAdminController@deleteContract');
+    Route::get('/contracts/admin/end/{id}', 'ContractAdminController@displayEndContract');
     
 });
 

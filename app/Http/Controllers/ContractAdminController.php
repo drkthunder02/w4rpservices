@@ -96,9 +96,12 @@ class ContractAdminController extends Controller
     }
 
     public function displayEndContract($id) {
-        $contractId = $id;
+        //Gather the information for the contract, and all bids on the contract
+        $contract = Contract::where(['id' => $id])->first()->toArray();
+        $bids = Bid::where(['contract_id' => $id])-get()->toArray();
 
-        return view('contracts.admin.endcontract')->with('contractId', $contractId);
+        return view('contracts.admin.endcontract')->with('contract', $contract)
+                                                  ->with('bids', $bids);
     }
 
     public function storeEndContract(Request $request) {
