@@ -28,7 +28,7 @@
                     <hr>
                     <span class="border-dark">
                         <div class="container">
-                            Lowest Bid:  {{ number_format($contract['lowestbid']['amount'], 2, '.', ',') }}
+                            Lowest Bid:  {{ number_format($contract['lowestbid'], 2, ',', '.') }}
                         </div>
                     </span>
                     <hr>
