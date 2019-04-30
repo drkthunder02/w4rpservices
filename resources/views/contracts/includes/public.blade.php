@@ -8,9 +8,11 @@
                         <div class="col-sm" align="left">
                             {{ $contract['title'] }}
                         </div>
+                        <hr>
                         <div class="col-sm" align="center">
                             Type: Public
                         </div>
+                        <hr>
                         <div class="col-sm" align="right">
                             <a href="/contracts/display/newbid/{{ $contract['contract_id'] }}" class="btn btn-primary" role="button">Bid on Contract</a>
                         </div>
@@ -20,7 +22,8 @@
                     <div class="container">
                         End Date: {{ $contract['end_date'] }}
                     </div>
-                    <div class="container border-dark">
+                    <hr>
+                    <div class="container">
                         {{ $contract['body'] }}
                     </div>
                     <hr>
@@ -31,31 +34,29 @@
                     <hr>
                     <!--  Count the number of bids for the current contract -->
                     @if($contract['bid_count'] > 0)
-                        <span class="border-dark">
-                            <table class="table table-striped">
-                                <thead>
-                                    <th>Corporation</th>
-                                    <th>Amount</th>
-                                    <th></th>
-                                </thead>
-                                <tbody>
-                                @foreach($contract['bids'] as $bid)
-                                    <tr>
-                                        <td>{{ $bid['corporation_name'] }}</td>
-                                        <td>{{ number_format($bid['bid_amount'], 2, '.', ',') }}</td>
-                                        @if(auth()->user()->character_id == $bid['character_id'])
-                                        <td>
-                                            <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
-                                            <a href="/contracts/delete/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Delete Bid</a>
-                                        </td>
-                                        @else
-                                        <td></td>
-                                        @endif
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </span>
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Corporation</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                            @foreach($contract['bids'] as $bid)
+                                <tr>
+                                    <td>{{ $bid['corporation_name'] }}</td>
+                                    <td>{{ number_format($bid['bid_amount'], 2, '.', ',') }}</td>
+                                    @if(auth()->user()->character_id == $bid['character_id'])
+                                    <td>
+                                        <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
+                                        <a href="/contracts/delete/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Delete Bid</a>
+                                    </td>
+                                    @else
+                                    <td></td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     @endif
                 </div>
             </div>

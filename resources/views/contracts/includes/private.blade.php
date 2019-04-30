@@ -20,17 +20,14 @@
                     <div class="container">
                         End Date: {{ $contract['end_date'] }}
                     </div>
-                    <span class="border-dark">
-                        <div class="container">
-                            {{ $contract['body'] }}
-                        </div>
-                    </span>
                     <hr>
-                    <span class="border-dark">
-                        <div class="container">
-                            Lowest Bid:  {{ number_format($contract['lowestbid'], 2, '.', ',') }}
-                        </div>
-                    </span>
+                    <div class="container">
+                        {{ $contract['body'] }}
+                    </div>
+                    <hr>
+                    <div class="container">
+                        Lowest Bid:  {{ number_format($contract['lowestbid'], 2, '.', ',') }}
+                    </div>
                     <hr>
                     @foreach($contract['bids'] as $bid)
                     @if(auth()->user()->character_id == $bid['character_id'])
