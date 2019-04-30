@@ -76,6 +76,8 @@ class ContractController extends Controller
         $bids = array();
         $contracts = array();
         $i = 0;
+        $lowestBid = null;
+        $lowestCorp = null;
 
         //Fetch all of the current contracts from the database
         $contractsTemp = Contract::where('end_date', '>=', $today)
@@ -86,21 +88,30 @@ class ContractController extends Controller
             $tempCount = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->count('contract_id');
             $bids = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->get()->toArray();
 
+            foreach($bids as $bid) {
+                if($lowestBid == null) {
+                    $lowestBid = $bid['bid_amount'];
+                    $lowestCorp = $bid['corporation_name'];
+                } else {
+                    if($bid['bid_amount'] < $lowestBid) {
+                        $lowestBid = $bid['bid_amount'];
+                        $lowestCorp = $bid['corporation_name'];
+                    }
+                }
+            }
+
+            if($lowestBid == null) {
+                $lowestBid = 'No Bids Placed.';
+                $lowestCorp = 'No Corporation has placed a bid.';
+            }
+
             //Assemble the finaly array
             $contracts[$i] = $contractsTemp[$i];
             $contracts[$i]['bid_count'] = $tempCount;
             $contracts[$i]['bids'] = $bids;
-            foreach($bids as $bid) {
-                if(!isset($contracts[$i]['lowestbid'])) {
-                    $contracts[$i]['lowestbid']['amount'] = $bid['bid_amount'];
-                    $contracts[$i]['lowestbid']['corporation_name'] = $bid['corporation_name'];
-                } else {
-                    if($bid['bid_amount'] < $contract[$i]['lowestbid']['bid_amount']) {
-                        $contracts[$i]['lowestbid']['amount'] = $bid['bid_amount'];
-                        $contracts[$i]['lowestbid']['corporation_name'] = $bid['corporation_name'];
-                    }
-                }
-            }
+            $contracts[$i]['lowestbid'] = $lowestBid;
+            $contracts[$i]['lowestcorp'] = $lowestCorp;
+            
         }        
 
         //Call for the view to be displayed
@@ -128,19 +139,25 @@ class ContractController extends Controller
             $tempCount = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->count('contract_id');
             $bids = Bid::where(['contract_id' => $contractsTemp[$i]['contract_id']])->get()->toArray();
 
+            foreach($bids as $bid) {
+                if($lowestBid == null) {
+                    $lowestBid = $bid['bid_amount']; 
+                } else {
+                    if($bid['bid_amount'] < $lowestBid) {
+                        $lowestBid = $bid['bid_amount'];
+                    }
+                }
+            }
+
+            if($lowestBid == null) {
+                $lowestBid = 'No Bids Placed.';
+            }
+
             //Assemble the finaly array
             $contracts[$i] = $contractsTemp[$i];
             $contracts[$i]['bid_count'] = $tempCount;
             $contracts[$i]['bids'] = $bids;
-            foreach($bids as $bid) {
-                if(!isset($contracts[$i]['lowestbid'])) {
-                    $contracts[$i]['lowestbid']['amount'] = $bid['bid_amount'];
-                } else {
-                    if($bid['bid_amount'] < $contract[$i]['lowestbid']['bid_amount']) {
-                        $contracts[$i]['lowestbid']['amount'] = $bid['bid_amount'];
-                    }
-                }
-            }
+            $contracts[$i]['lowestbid'] = $lowestBid;            
         }
 
         return view ('contracts.privatecontracts')->with('contracts', $contracts);

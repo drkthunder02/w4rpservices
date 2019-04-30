@@ -28,8 +28,8 @@
                     <hr>
                     <span class="border-dark">
                         <div class="container">
-                            Lowest Bid:  {{ $contract['lowestbid']['amount'] }}<br>
-                            Lowest Bid Corp: {{ $contract['lowestbid']['corporation_name'] }}<br>
+                            Lowest Bid:  {{ $contract['lowestbid'] }}<br>
+                            Lowest Bid Corp: {{ $contract['lowestcorp'] }}<br>
                         </div>
                     </span>
                     <hr>
