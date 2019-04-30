@@ -29,11 +29,11 @@
                         </div>
                         <div class="form-group">
                             {{ Form::label('type', 'Public Contract') }}
-                            {{ Form::radio('type', 'public', true) }}
+                            {{ Form::radio('type', 'Public', true) }}
                         </div>
                         <div class="form-group">
                             {{ Form::label('type', 'Private Contract') }}
-                            {{ Form::radio('type', 'private', false) }}
+                            {{ Form::radio('type', 'Private', false) }}
                         </div>
                     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                     {!! Form::close() !!}
