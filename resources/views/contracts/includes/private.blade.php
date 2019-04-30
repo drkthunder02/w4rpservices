@@ -34,6 +34,7 @@
                     <hr>
                     @foreach($contract['bids'] as $bid)
                     @if(auth()->user()->character_id == $bid['character_id'])
+                        Your Bid:  {{ number_format($bid['bid_amount'], 2, '.', ',') }}<br>
                         <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
                         <a href="/contracts/delete/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Delete Bid</a>
                     @endif
