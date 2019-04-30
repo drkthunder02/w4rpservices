@@ -20,20 +20,14 @@
                     <div class="container">
                         End Date: {{ $contract['end_date'] }}
                     </div>
-                    <span class="border-dark">
-                        <div class="container">
-                            {{ $contract['body'] }}
-                        </div>
-                    </span>
+                    <div class="container border-dark">
+                        {{ $contract['body'] }}
+                    </div>
                     <hr>
-                    
-                        <div class="container">
-                                <span class="border-dark">
-                            Lowest Bid:  {{ number_format($contract['lowestbid'], 2, '.', ',') }}<br>
-                            Lowest Bid Corp: {{ $contract['lowestcorp'] }}<br>
-                        </span>
-                        </div>
-                    
+                    <div class="container">
+                        Lowest Bid:  {{ number_format($contract['lowestbid'], 2, '.', ',') }}<br>
+                        Lowest Bid Corp: {{ $contract['lowestcorp'] }}<br>
+                    </div>
                     <hr>
                     <!--  Count the number of bids for the current contract -->
                     @if($contract['bid_count'] > 0)
