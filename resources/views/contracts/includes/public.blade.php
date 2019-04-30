@@ -26,6 +26,13 @@
                         </div>
                     </span>
                     <hr>
+                    <span class="border-dark">
+                        <div class="container">
+                            Lowest Bid:  {{ $contract['lowestbid']['amount'] }}<br>
+                            Lowest Bid Corp: {{ $contract['lowestbid']['corporation_name'] }}<br>
+                        </div>
+                    </span>
+                    <hr>
                     <!--  Count the number of bids for the current contract -->
                     @if($contract['bid_count'] > 0)
                         <span class="border-dark">

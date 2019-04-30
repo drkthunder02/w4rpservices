@@ -25,7 +25,13 @@
                             {{ $contract['body'] }}
                         </div>
                     </span>
-                    <br>
+                    <hr>
+                    <span class="border-dark">
+                        <div class="container">
+                            Lowest Bid:  {{ $contract['lowestbid']['amount'] }}
+                        </div>
+                    </span>
+                    <hr>
                     @foreach($contract['bids'] as $bid)
                     @if(auth()->user()->character_id == $bid['character_id'])
                         <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>

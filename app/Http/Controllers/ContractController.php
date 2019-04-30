@@ -90,6 +90,17 @@ class ContractController extends Controller
             $contracts[$i] = $contractsTemp[$i];
             $contracts[$i]['bid_count'] = $tempCount;
             $contracts[$i]['bids'] = $bids;
+            foreach($bids as $bid) {
+                if(!isset($contracts[$i]['lowestbid'])) {
+                    $contracts[$i]['lowestbid']['amount'] = $bid->amount;
+                    $contracts[$i]['lowestbid']['corporation_name'] = $bid->corporation_name;
+                } else {
+                    if($bid->amount < $contract[$i]['lowestbid']['amount']) {
+                        $contracts[$i]['lowestbid']['amount'] = $bid->amount;
+                        $contracts[$i]['lowestbid']['corporation_name'] = $bid->corporation_name;
+                    }
+                }
+            }
         }        
 
         //Call for the view to be displayed
@@ -103,6 +114,7 @@ class ContractController extends Controller
         //Declare our array variables
         $bids = array();
         $contracts = array();
+        $lowestBid = null;
 
         //Calucate today's date to know which contracts to display
         $today = Carbon::now();
@@ -120,6 +132,15 @@ class ContractController extends Controller
             $contracts[$i] = $contractsTemp[$i];
             $contracts[$i]['bid_count'] = $tempCount;
             $contracts[$i]['bids'] = $bids;
+            foreach($bids as $bid) {
+                if(!isset($contracts[$i]['lowestbid'])) {
+                    $contracts[$i]['lowestbid']['amount'] = $bid->amount;
+                } else {
+                    if($bid->amount < $contract[$i]['lowestbid']['amount']) {
+                        $contracts[$i]['lowestbid']['amount'] = $bid->amount;
+                    }
+                }
+            }
         }
 
         return view ('contracts.privatecontracts')->with('contracts', $contracts);
