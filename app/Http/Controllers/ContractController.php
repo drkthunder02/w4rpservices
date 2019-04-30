@@ -91,7 +91,6 @@ class ContractController extends Controller
             $contracts[$i]['bid_count'] = $tempCount;
             $contracts[$i]['bids'] = $bids;
             foreach($bids as $bid) {
-                dd($bid);
                 if(!isset($contracts[$i]['lowestbid'])) {
                     $contracts[$i]['lowestbid']['amount'] = $bid['bid_amount'];
                     $contracts[$i]['lowestbid']['corporation_name'] = $bid['corporation_name'];
