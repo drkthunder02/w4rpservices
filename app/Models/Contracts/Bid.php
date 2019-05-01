@@ -24,6 +24,7 @@ class Bid extends Model
         'character_id',
         'corporation_name',
         'corporation_id',
+        'notes',
     ];
 
     protected $guarded = [];

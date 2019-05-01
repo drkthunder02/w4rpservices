@@ -35,6 +35,7 @@ class CreateContractsTable extends Migration
                 $table->string('character_id');
                 $table->string('corporation_name');
                 $table->string('corporation_id');
+                $table->text('notes');
                 $table->timestamps();
             });
         }
