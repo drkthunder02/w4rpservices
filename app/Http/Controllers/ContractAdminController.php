@@ -105,6 +105,19 @@ class ContractAdminController extends Controller
     }
 
     public function storeEndContract(Request $request) {
+        $this->validate($request, [
+            'contract_id',
+            'bid_id',
+        ]);
 
+        $contract = Contract::where(['id' => $request->contract_id])->first()->toArray();
+        $bid = Bid::where(['id' => $request->bid_id, 'contract_id' => $request->contract_id])->first()->toArray();
+
+        //Update the contract to mark it as finished
+        Contract::where(['id' => $request->contract_id])->update([
+            'finished' => true,
+        ]);
+
+        //Create the accepted contract entry into the table
     }
 }
