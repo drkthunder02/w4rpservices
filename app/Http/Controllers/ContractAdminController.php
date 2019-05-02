@@ -7,7 +7,7 @@ use DB;
 use Carbon\Carbon;
 
 //Libraries
-//use App\Library\Contracts\ContractHelper;
+use App\Library\Esi;
 
 //Models
 use App\User;
@@ -110,6 +110,10 @@ class ContractAdminController extends Controller
             'bid_id',
         ]);
 
+        //Declare class variables
+        $mail = new Mail;
+        $tries = 0;
+
         $contract = Contract::where(['id' => $request->contract_id])->first()->toArray();
         $bid = Bid::where(['id' => $request->bid_id, 'contract_id' => $request->contract_id])->first()->toArray();
 
@@ -119,5 +123,26 @@ class ContractAdminController extends Controller
         ]);
 
         //Create the accepted contract entry into the table
+        $accepted = new AcceptedBid;
+        $accepted->contract_id = $contract['id'];
+        $accepted->bid_id = $bid['id'];
+        $accepted->bid_amount = $bid['bid_amount'];
+        $accepted->notes = $bid['notes'];
+        $accepted->save();
+
+        //Send mail out to winner of the contract
+        $subject = 'Contract Won';
+        $body = 'You have been accepted to perform the following contract:<br>';
+        $body .= $contract['id'] . ' : ' . $contract['title'] . '<br>';
+        $body .= 'Notes:<br>';
+        $body .= $contract['description'] . '<br>';
+        $body .= 'Please remit contract when the items are ready to Spatial Forces.  Description should be the contract identification number.  Request ISK should be the bid amount.';
+        $body .= 'Sincerely,<br>Spatial Forces Contracting Department';
+        while($mail->SendMail($bid['character_id'], 'character', $subject, $body)) {
+            $tries++;
+        }
+        
+        return redirect('/contracts/admin/display')->with('success', 'Contract finalized.  Mail took ' . $tries . ' to send to the winner.');
+        
     }
 }
