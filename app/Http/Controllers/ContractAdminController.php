@@ -112,7 +112,7 @@ class ContractAdminController extends Controller
 
         //Declare class variables
         $mail = new Mail;
-        $tries = 0;
+        $tries = 1;
 
         $contract = Contract::where(['id' => $request->contract_id])->first()->toArray();
         $bid = Bid::where(['id' => $request->bid_id, 'contract_id' => $request->contract_id])->first()->toArray();
@@ -143,6 +143,6 @@ class ContractAdminController extends Controller
         }
         
         return redirect('/contracts/admin/display')->with('success', 'Contract finalized.  Mail took ' . $tries . ' to send to the winner.');
-        
+
     }
 }
