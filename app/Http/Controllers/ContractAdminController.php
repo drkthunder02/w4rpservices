@@ -140,6 +140,9 @@ class ContractAdminController extends Controller
         $body .= 'Sincerely,<br>Spatial Forces Contracting Department';
         while($mail->SendMail($bid['character_id'], 'character', $subject, $body)) {
             $tries++;
+            if($tries == 5) {
+                return redirect('/contracts/admin/display')->with('error', 'Could not deliver mail.  Please manually send the mail to the winner.');
+            }
         }
         
         return redirect('/contracts/admin/display')->with('success', 'Contract finalized.  Mail took ' . $tries . ' to send to the winner.');
