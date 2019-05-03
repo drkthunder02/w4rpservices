@@ -26,7 +26,7 @@
             $entry = new PISaleJournal;
             $entry->id = $journal['journal_ref_id'];
             $entry->corporation_id = $corpId;
-            $entry->division = $division;
+            //$entry->division = $division;
             if(isset($journal['client_id'])) {
                 $entry->client_id = $journal['client_id'];
             }
