@@ -101,7 +101,7 @@ class TaxesHelper {
     public function GetPiSalesGross($start, $end) {
         $revenue = 0.00;
 
-        $grosses = PISaleJournal::whereBetween('date', [$start, $end]);
+        $grosses = PISaleJournal::whereBetween('date', [$start, $end])->get()->toArray();
 
         foreach($grosses as $gross) {
             $revenue += ($gross['quantity'] * $gross['unit_price']);

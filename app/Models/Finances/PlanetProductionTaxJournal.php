@@ -22,6 +22,9 @@ class PlanetProductionTaxJournal extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
+        'corporation_id',
+        'division',
         'amount',
         'balance',
         'context_id',

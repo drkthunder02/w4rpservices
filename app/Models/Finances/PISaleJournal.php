@@ -22,8 +22,6 @@ class PISaleJournal extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
-        'corp_id',
         'division',
         'client_id',
         'date',
