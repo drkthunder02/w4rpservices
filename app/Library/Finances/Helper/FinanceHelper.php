@@ -42,6 +42,7 @@ class FinanceHelper {
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if($this->TokenNotFound($token, $scope)) {
+            printr("Token not found\n");
             return null;
         }
 
@@ -178,7 +179,7 @@ class FinanceHelper {
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
                 if($division == 3 && $charId == 94415555) {
-                    if(in_array($entry['type_id'], $pi_items, true)) {
+                    if(in_array($entry['type_id'], $pi_items, false)) {
                         $pi = new PISale();
                         $pi->InsertPISale($entry);
                     }
