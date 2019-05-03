@@ -17,8 +17,7 @@ class Mail {
 
     public function SendMail($recipient, $rType, $subject, $body) {
         //Retrieve the token for main character to send mails from
-        $token = EsiToken::where(['character_id' => 93738489])->get();
-        dd($token);
+        $token = EsiToken::where(['character_id' => 93738489])->first();
         //Create the ESI authentication container
         $config = config('esi');
         $authentication = new EsiAuthentication([
