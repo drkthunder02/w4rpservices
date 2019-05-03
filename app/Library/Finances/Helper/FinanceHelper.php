@@ -181,7 +181,7 @@ class FinanceHelper {
                 if($division == 3 && $charId == 94415555) {
                     if(in_array($entry['type_id'], $pi_items, false)) {
                         $pi = new PISale();
-                        $pi->InsertPISale($entry);
+                        $pi->InsertPISale($entry, 98287666);
                     }
                 }                
             }
