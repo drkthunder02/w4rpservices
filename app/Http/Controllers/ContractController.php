@@ -81,7 +81,7 @@ class ContractController extends Controller
 
         //Fetch all of the current contracts from the database
         $contractsTemp = Contract::where('end_date', '>=', $today)
-                             ->where(['type' => 'Public'])->get()->toArray();
+                             ->where(['type' => 'Public', 'finished' => false])->get()->toArray();
 
         //Count the number of bids, and add them to the arrays
         for($i = 0; $i < sizeof($contractsTemp); $i++) {
@@ -132,7 +132,7 @@ class ContractController extends Controller
 
         //Fetch all of the current contracts from the database
         $contractsTemp = Contract::where('end_date', '>=', $today)
-                             ->where(['type' => 'Private'])->get();
+                             ->where(['type' => 'Private', 'finished' => false])->get();
         
         //Count the number of bids, and add them to the arrays
         for($i = 0; $i < sizeof($contractsTemp); $i++) {
