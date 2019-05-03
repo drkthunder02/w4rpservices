@@ -48,7 +48,8 @@ class ContractController extends Controller
         $i = 0;
 
         //Fetch all of the current contracts from the database
-        $contractsTemp = Contract::where('end_date', '>=', $today)->get()->toArray();
+        $contractsTemp = Contract::where('end_date', '>=', $today)
+                                 ->where(['finished' => false])->get()->toArray();
 
         //Count the number of bids, and add them to the arrays
         for($i = 0; $i < sizeof($contractsTemp); $i++) {
