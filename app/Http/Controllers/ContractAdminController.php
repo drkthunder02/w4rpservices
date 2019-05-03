@@ -126,6 +126,8 @@ class ContractAdminController extends Controller
             'bid_id',
         ]);
 
+        dd($request);
+
         //Declare class variables
         $mail = new Mail;
         $tries = 1;
