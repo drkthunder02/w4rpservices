@@ -22,11 +22,8 @@
         //dd($journal);
 
         //Insert the PI Sale into the database
-        if(!PISaleJournal::where(['id' => $journal['journal_ref_id']])->exists()) {
+        if(!PISaleJournal::where(['journal_ref_id' => $journal['journal_ref_id']])->exists()) {
             $entry = new PISaleJournal;
-            $entry->id = $journal['journal_ref_id'];
-            //$entry->corporation_id = $corpId;
-            //$entry->division = $division;
             if(isset($journal['client_id'])) {
                 $entry->client_id = $journal['client_id'];
             }
