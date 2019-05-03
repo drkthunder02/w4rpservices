@@ -92,6 +92,8 @@ class ContractAdminController extends Controller
             'contract_id' => $request->contract_id,
         ])->delete();
 
+        Bid::where(['contract_id' => $request->contract_id])->delete();
+
         return redirect('/contracts/admin/display')->with('success', 'Contract has been deleted.');
     }
 
