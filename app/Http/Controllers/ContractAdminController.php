@@ -116,7 +116,7 @@ class ContractAdminController extends Controller
         $contract = Contract::where(['contract_id' => $id])->first()->toArray();
         $bids = Bid::where(['contract_id' => $id])->get()->toArray();
 
-        return view('contracts.admin.endcontract')->with('contract', $contract)
+        return view('contracts.admin.displayend')->with('contract', $contract)
                                                   ->with('bids', $bids);
     }
 
@@ -130,17 +130,17 @@ class ContractAdminController extends Controller
         $mail = new Mail;
         $tries = 1;
 
-        $contract = Contract::where(['id' => $request->contract_id])->first()->toArray();
+        $contract = Contract::where(['contract_id' => $request->contract_id])->first()->toArray();
         $bid = Bid::where(['id' => $request->bid_id, 'contract_id' => $request->contract_id])->first()->toArray();
 
         //Update the contract to mark it as finished
-        Contract::where(['id' => $request->contract_id])->update([
+        Contract::where(['contract_id' => $request->contract_id])->update([
             'finished' => true,
         ]);
 
         //Create the accepted contract entry into the table
         $accepted = new AcceptedBid;
-        $accepted->contract_id = $contract['id'];
+        $accepted->contract_id = $contract['contract_id'];
         $accepted->bid_id = $bid['id'];
         $accepted->bid_amount = $bid['bid_amount'];
         $accepted->notes = $bid['notes'];
