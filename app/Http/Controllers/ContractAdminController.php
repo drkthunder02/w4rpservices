@@ -123,17 +123,15 @@ class ContractAdminController extends Controller
     public function storeEndContract(Request $request) {
         $this->validate($request, [
             'contract_id',
-            'bid_id',
+            'accept',
         ]);
-
-        dd($request);
 
         //Declare class variables
         $mail = new Mail;
         $tries = 1;
 
         $contract = Contract::where(['contract_id' => $request->contract_id])->first()->toArray();
-        $bid = Bid::where(['id' => $request->bid_id, 'contract_id' => $request->contract_id])->first()->toArray();
+        $bid = Bid::where(['id' => $request->accept, 'contract_id' => $request->contract_id])->first()->toArray();
 
         //Update the contract to mark it as finished
         Contract::where(['contract_id' => $request->contract_id])->update([
