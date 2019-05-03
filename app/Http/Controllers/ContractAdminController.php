@@ -88,7 +88,7 @@ class ContractAdminController extends Controller
             'contract_id',
         ]);
 
-        Contract::where(['id' => $request->contract_id])->delete();
+        Contract::where(['contract_id' => $request->contract_id])->delete();
 
         Bid::where(['contract_id' => $request->contract_id])->delete();
 
