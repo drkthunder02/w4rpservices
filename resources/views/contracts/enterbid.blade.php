@@ -23,9 +23,9 @@
                         {{ Form::radio('suffix', 'M', false) }}
                         {{ Form::label('suffix', 'B') }}
                         {{ Form::radio('suffix', 'B', false) }}
-                        {{ Form::label('notes', 'Notes') }}
                     </div>
                     <div class="form-group">
+                        {{ Form::label('notes', 'Notes') }}
                         {{ Form::textarea('notes', '', ['class' => 'form-control']) }}
                     </div>
                     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
