@@ -15,7 +15,7 @@
 
  class PISale {
     
-    public InsertPISale($journal, $corpId) {
+    public function InsertPISale($journal, $corpId) {
         //Create the ESI Helper class
         $esiHelper = new Esi;
 
