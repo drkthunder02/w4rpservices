@@ -7,7 +7,7 @@ use DB;
 use Carbon\Carbon;
 
 //Libraries
-use App\Library\Esi;
+use App\Library\Esi\Mail;
 
 //Models
 use App\User;
