@@ -93,6 +93,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/contracts/admin/store', 'ContractAdminController@storeAcceptContract');
     Route::get('/contracts/admin/delete/{id}', 'ContractAdminController@deleteContract');
     Route::get('/contracts/admin/end/{id}', 'ContractAdminController@displayEndContract');
+    Route::post('/contracts/admin/end', 'ContractAdminController@endContract');
     
 });
 
