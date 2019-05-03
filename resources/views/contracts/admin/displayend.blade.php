@@ -20,7 +20,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ $contract['id'] }}</td>
+                                <td>{{ $contract['contract_id'] }}</td>
                                 <td>{{ $contract['type'] }}</td>
                                 <td>{{ $contract['title'] }}</td>
                                 <td>{{ $contract['end_date'] }}</td>
