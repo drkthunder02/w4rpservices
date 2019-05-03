@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-sm" align="right">
                             <a href="/contracts/admin/delete/{{ $contract['contract_id'] }}" class="btn btn-primary" role="button">Delete Contract</a>
-                            <br>
+                            <br><br>
                             <a href="/contracts/admin/end/{{ $contract['contract_id'] }}" class="btn btn-primary" role="button">End Contract</a>
                         </div>
                     </div>

@@ -24,14 +24,24 @@ class ContractAdminController extends Controller
         $this->middleware('permission:contract.admin');
     }
 
+    /**
+     * Contract display functions
+     */
     public function displayContractDashboard() {
-        $today = Carbon::now();
-
-        $contracts = Contract::where('end_date', '>=', $today)->get();
+        $contracts = Contract::where(['finished' => false])->get();
 
         return view('contracts.admin.contractpanel')->with('contracts', $contracts);
     }
 
+    public function displayPastContracts() {
+        $contracts = Contract::where(['finished' => true])->get();
+
+        return view('contracs.admin.past')->with('contracts', $contracts);
+    }
+
+    /**
+     * New contract functionality
+     */
     public function displayNewContract() {
         return view('contracts.admin.newcontract');
     }
@@ -57,6 +67,9 @@ class ContractAdminController extends Controller
         return redirect('/contracts/admin/display')->with('success', 'Contract written.');
     }
 
+    /**
+     * Used to store a finished contract in the database
+     */
     public function storeAcceptContract(Request $request) {
         $this->validate($request, [
             'contract_id',
@@ -83,6 +96,9 @@ class ContractAdminController extends Controller
         return redirect('/contracts/admin/display')->with('success', 'Contract accepted and closed.');
     }
 
+    /**
+     * Delete a contract from every user
+     */
     public function deleteContract($id) {
 
         Contract::where(['contract_id' => $id])->delete();
@@ -92,6 +108,9 @@ class ContractAdminController extends Controller
         return redirect('/contracts/admin/display')->with('success', 'Contract has been deleted.');
     }
 
+    /**
+     * End Contract Functionality
+     */
     public function displayEndContract($id) {
         //Gather the information for the contract, and all bids on the contract
         $contract = Contract::where(['contract_id' => $id])->first()->toArray();
