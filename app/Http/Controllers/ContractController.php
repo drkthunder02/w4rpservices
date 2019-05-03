@@ -197,6 +197,7 @@ class ContractController extends Controller
         $this->validate($request, [
             'contract_id' => 'required',
             'bid' => 'required',
+            'notes' => 'required',
         ]);
 
         //Delcare some class variables we will need
@@ -212,6 +213,8 @@ class ContractController extends Controller
         } else {
             $amount = $request->bid * 1.00;
         }
+
+        $notes = nl2br($request->notes);
 
         //Get the character id and character name from the auth of the user calling
         //this function
@@ -238,7 +241,7 @@ class ContractController extends Controller
             $bid->character_name = $characterName;
             $bid->corporation_id = $corporationId;
             $bid->corporation_name = $corporationName;
-            $bid->notes = $request->notes;
+            $bid->notes = $notes;
             $bid->save();
 
             //Redirect to the correct page
@@ -277,7 +280,7 @@ class ContractController extends Controller
      */
     public function modifyBid(Request $request) {
         $this->validate($request, [
-            'bid',
+            'bid' => 'required',
         ]);
 
         $amount = $request->bid;

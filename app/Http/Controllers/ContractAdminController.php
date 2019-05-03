@@ -48,10 +48,10 @@ class ContractAdminController extends Controller
 
     public function storeNewContract(Request $request) {
         $this->validate($request, [
-            'name',
-            'date',
-            'body',
-            'type',
+            'name' => 'required',
+            'date' => 'required',
+            'body' => 'required',
+            'type' => 'required',
         ]);
 
         $date = new Carbon($request->date);
@@ -73,10 +73,10 @@ class ContractAdminController extends Controller
      */
     public function storeAcceptContract(Request $request) {
         $this->validate($request, [
-            'contract_id',
-            'bid_id',
-            'character_id',
-            'bid_amount',
+            'contract_id' => 'required',
+            'bid_id' => 'required',
+            'character_id' => 'required',
+            'bid_amount' => 'required',
         ]);
 
         //Update the contract
@@ -123,8 +123,8 @@ class ContractAdminController extends Controller
 
     public function storeEndContract(Request $request) {
         $this->validate($request, [
-            'contract_id',
-            'accept',
+            'contract_id' => 'required',
+            'accept' => 'required',
         ]);
 
         //Declare class variables
