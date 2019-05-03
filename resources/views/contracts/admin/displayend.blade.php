@@ -53,7 +53,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ Form::submit('End Contract', ['class' => 'form-control']) }}
+                    {{ Form::submit('End Contract', ['class' => 'btn btn-primary']) }}
                     {!! Form::close() !!}
                 </div>
             </div>
