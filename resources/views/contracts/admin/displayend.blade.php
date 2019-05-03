@@ -47,7 +47,7 @@
                                 <td>{{ $bid['bid_amount'] }}</td>
                                 <td>{{ $bid['character_name'] }}</td>
                                 <td>{{ $bid['corporation_name'] }}</td>
-                                <td>{{ $bid['notes'] }}</td>
+                                <td><pre>{{ $bid['notes'] }}</pre></td>
                                 <td>{{ Form::radio('accept', $bid['id'], false, ['class' => 'form-control']) }}</td>
                             </tr>
                         @endforeach

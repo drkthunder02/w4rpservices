@@ -145,25 +145,19 @@ class ContractAdminController extends Controller
         while($mail->SendMail($bid['character_id'], 'character', $subject, $body)) {
             $tries++;
             if($tries == 5) {
-                //Update the contract to mark it as finished
-                Contract::where(['contract_id' => $request->contract_id])->update([
-                    'finished' => true,
-                ]);
-
-                //Create the accepted contract entry into the table
-                $accepted = new AcceptedBid;
-                $accepted->contract_id = $contract['contract_id'];
-                $accepted->bid_id = $bid['id'];
-                $accepted->bid_amount = $bid['bid_amount'];
-                $accepted->notes = $bid['notes'];
-                $accepted->save();
+                TidyContract($contract, $bid);
 
                 return redirect('/contracts/admin/display')->with('error', 'Could not deliver mail.  Please manually send the mail to the winner.');
             }
         }
+        
+        TidyContract($contract, $bid);
+        
+        return redirect('/contracts/admin/display')->with('success', 'Contract finalized.  Mail took ' . $tries . ' attempt to send to the winner.');
+    }
 
-        //Update the contract to mark it as finished
-        Contract::where(['contract_id' => $request->contract_id])->update([
+    private function TidyContract($contract, $bid) {
+        Contract::where(['contract_id' => $contract['contract_id']])->update([
             'finished' => true,
         ]);
 
@@ -174,8 +168,5 @@ class ContractAdminController extends Controller
         $accepted->bid_amount = $bid['bid_amount'];
         $accepted->notes = $bid['notes'];
         $accepted->save();
-        
-        return redirect('/contracts/admin/display')->with('success', 'Contract finalized.  Mail took ' . $tries . ' to send to the winner.');
-
     }
 }
