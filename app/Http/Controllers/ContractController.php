@@ -237,6 +237,7 @@ class ContractController extends Controller
             $bid->character_name = $characterName;
             $bid->corporation_id = $corporationId;
             $bid->corporation_name = $corporationName;
+            $bid->notes = $request->notes;
             $bid->save();
 
             //Redirect to the correct page
