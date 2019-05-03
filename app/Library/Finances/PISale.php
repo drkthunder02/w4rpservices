@@ -19,6 +19,8 @@
         //Create the ESI Helper class
         $esiHelper = new Esi;
 
+        dd($journal);
+
         //Insert the PI Sale into the database
         if(!PISaleJournal::where(['id' => $journal['id']])->exists()) {
             $entry = new PISaleJournal;
