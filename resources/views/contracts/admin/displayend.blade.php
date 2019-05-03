@@ -40,7 +40,7 @@
                             <th>Accept?</th>
                         </thead>
                         <tbody>
-                            {!! Form::open(['action' => 'ContractAdminController@endContract', 'method' => 'POST']) !!}
+                            {!! Form::open(['action' => 'ContractAdminController@storeEndContract', 'method' => 'POST']) !!}
                             {{ Form::hidden('contract_id', $contract['contract_id']) }}
                         @foreach($bids as $bid)
                             <tr>
