@@ -41,7 +41,7 @@
                         </thead>
                         <tbody>
                             {!! Form::open(['action' => 'ContractAdminController@endContract', 'method' => 'POST']) !!}
-                            {{ Form::hidden('contract_id', $contract['id']) }}
+                            {{ Form::hidden('contract_id', $contract['contract_id']) }}
                         @foreach($bids as $bid)
                             <tr>
                                 <td>{{ $bid['bid_amount'] }}</td>
