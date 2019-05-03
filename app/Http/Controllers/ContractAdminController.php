@@ -83,16 +83,11 @@ class ContractAdminController extends Controller
         return redirect('/contracts/admin/display')->with('success', 'Contract accepted and closed.');
     }
 
-    public function deleteContract(Request $request) {
-        $this->validate($request, [
-            'contract_id',
-        ]);
+    public function deleteContract($id) {
 
-        dd($request->contract_id);
+        Contract::where(['contract_id' => $id])->delete();
 
-        Contract::where(['contract_id' => $request->contract_id])->delete();
-
-        Bid::where(['contract_id' => $request->contract_id])->delete();
+        Bid::where(['contract_id' => $id])->delete();
 
         return redirect('/contracts/admin/display')->with('success', 'Contract has been deleted.');
     }
