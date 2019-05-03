@@ -55,12 +55,13 @@ class ContractAdminController extends Controller
         ]);
 
         $date = new Carbon($request->date);
+        $body = nl2br($request->body);
 
         //Store the contract in the database
         $contract = new Contract;
         $contract->title = $request->name;
         $contract->end_date = $request->date;
-        $contract->body = $request->body;
+        $contract->body = $body;
         $contract->type = $request->type;
         $contract->save();
 
