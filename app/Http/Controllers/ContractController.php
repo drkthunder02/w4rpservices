@@ -197,7 +197,6 @@ class ContractController extends Controller
         $this->validate($request, [
             'contract_id' => 'required',
             'bid' => 'required',
-            'notes' => 'required',
         ]);
 
         //Delcare some class variables we will need
@@ -214,7 +213,11 @@ class ContractController extends Controller
             $amount = $request->bid * 1.00;
         }
 
-        $notes = nl2br($request->notes);
+        if(isset($request->notes)) {
+            $notes = nl2br($request->notes);
+        } else {
+            $notes = null;
+        }
 
         //Get the character id and character name from the auth of the user calling
         //this function
