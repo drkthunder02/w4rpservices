@@ -134,6 +134,34 @@ class ContractAdminController extends Controller
         $contract = Contract::where(['contract_id' => $request->contract_id])->first()->toArray();
         $bid = Bid::where(['id' => $request->accept, 'contract_id' => $request->contract_id])->first()->toArray();
 
+        //Send mail out to winner of the contract
+        $subject = 'Contract Won';
+        $body = 'You have been accepted to perform the following contract:<br>';
+        $body .= $contract['contract_id'] . ' : ' . $contract['title'] . '<br>';
+        $body .= 'Notes:<br>';
+        $body .= $contract['body'] . '<br>';
+        $body .= 'Please remit contract when the items are ready to Spatial Forces.  Description should be the contract identification number.  Request ISK should be the bid amount.';
+        $body .= 'Sincerely,<br>Spatial Forces Contracting Department';
+        while($mail->SendMail($bid['character_id'], 'character', $subject, $body)) {
+            $tries++;
+            if($tries == 5) {
+                //Update the contract to mark it as finished
+                Contract::where(['contract_id' => $request->contract_id])->update([
+                    'finished' => true,
+                ]);
+
+                //Create the accepted contract entry into the table
+                $accepted = new AcceptedBid;
+                $accepted->contract_id = $contract['contract_id'];
+                $accepted->bid_id = $bid['id'];
+                $accepted->bid_amount = $bid['bid_amount'];
+                $accepted->notes = $bid['notes'];
+                $accepted->save();
+
+                return redirect('/contracts/admin/display')->with('error', 'Could not deliver mail.  Please manually send the mail to the winner.');
+            }
+        }
+
         //Update the contract to mark it as finished
         Contract::where(['contract_id' => $request->contract_id])->update([
             'finished' => true,
@@ -146,21 +174,6 @@ class ContractAdminController extends Controller
         $accepted->bid_amount = $bid['bid_amount'];
         $accepted->notes = $bid['notes'];
         $accepted->save();
-
-        //Send mail out to winner of the contract
-        $subject = 'Contract Won';
-        $body = 'You have been accepted to perform the following contract:<br>';
-        $body .= $contract['contract_id'] . ' : ' . $contract['title'] . '<br>';
-        $body .= 'Notes:<br>';
-        $body .= $contract['body'] . '<br>';
-        $body .= 'Please remit contract when the items are ready to Spatial Forces.  Description should be the contract identification number.  Request ISK should be the bid amount.';
-        $body .= 'Sincerely,<br>Spatial Forces Contracting Department';
-        while($mail->SendMail($bid['character_id'], 'character', $subject, $body)) {
-            $tries++;
-            if($tries == 5) {
-                return redirect('/contracts/admin/display')->with('error', 'Could not deliver mail.  Please manually send the mail to the winner.');
-            }
-        }
         
         return redirect('/contracts/admin/display')->with('success', 'Contract finalized.  Mail took ' . $tries . ' to send to the winner.');
 
