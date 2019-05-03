@@ -31,7 +31,7 @@
                 $entry->client_id = $journal['client_id'];
             }
             if(isset($journal['date'])) {
-                $entry->date = $esiHelper->DecoateDate($journal['date']);
+                $entry->date = $esiHelper->DecodeDate($journal['date']);
             }
             if(isset($journal['is_buy'])) {
                 $entry->is_buy = $journal['is_buy'];
