@@ -5,7 +5,7 @@ namespace App\Library\Esi;
 use DB;
 
 use App\Models\Esi\EsiScope;
-use App\Models\Esi\Esitoken;
+use App\Models\Esi\EsiToken;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
