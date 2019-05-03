@@ -88,6 +88,8 @@ class ContractAdminController extends Controller
             'contract_id',
         ]);
 
+        dd($request->contract_id);
+
         Contract::where(['contract_id' => $request->contract_id])->delete();
 
         Bid::where(['contract_id' => $request->contract_id])->delete();
@@ -97,7 +99,7 @@ class ContractAdminController extends Controller
 
     public function displayEndContract($id) {
         //Gather the information for the contract, and all bids on the contract
-        $contract = Contract::where(['id' => $id])->first()->toArray();
+        $contract = Contract::where(['contract_id' => $id])->first()->toArray();
         $bids = Bid::where(['contract_id' => $id])-get()->toArray();
 
         return view('contracts.admin.endcontract')->with('contract', $contract)
