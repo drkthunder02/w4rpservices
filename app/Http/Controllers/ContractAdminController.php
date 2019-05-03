@@ -149,7 +149,7 @@ class ContractAdminController extends Controller
         //Send mail out to winner of the contract
         $subject = 'Contract Won';
         $body = 'You have been accepted to perform the following contract:<br>';
-        $body .= $contract['id'] . ' : ' . $contract['title'] . '<br>';
+        $body .= $contract['contract_id'] . ' : ' . $contract['title'] . '<br>';
         $body .= 'Notes:<br>';
         $body .= $contract['description'] . '<br>';
         $body .= 'Please remit contract when the items are ready to Spatial Forces.  Description should be the contract identification number.  Request ISK should be the bid amount.';
