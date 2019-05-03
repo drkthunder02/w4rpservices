@@ -28,8 +28,13 @@
                     </div>
                     <hr>
                     <div class="container">
+                        @if($contract['lowestbid'] == 'No Bids Placed.')
+                            No Bids Placed.<br>
+                            No Corproation has placed a bid.<br>
+                        @else
                         Lowest Bid:  {{ number_format($contract['lowestbid'], 2, '.', ',') }}<br>
                         Lowest Bid Corp: {{ $contract['lowestcorp'] }}<br>
+                        @endif
                     </div>
                     <hr>
                     <!--  Count the number of bids for the current contract -->

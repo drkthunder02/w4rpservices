@@ -26,7 +26,11 @@
                     </div>
                     <hr>
                     <div class="container">
-                        Lowest Bid:  {{ number_format($contract['lowestbid'], 2, '.', ',') }}
+                        @if($contract['lowestbid'] == 'No Bids Placed.')
+                        No Bids Placed.<br>
+                        @else
+                        Lowest Bid:  {{ number_format($contract['lowestbid'], 2, '.', ',') }}<br>
+                        @endif
                     </div>
                     <hr>
                     @foreach($contract['bids'] as $bid)
