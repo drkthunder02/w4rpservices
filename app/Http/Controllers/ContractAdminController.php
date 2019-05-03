@@ -151,7 +151,7 @@ class ContractAdminController extends Controller
         $body = 'You have been accepted to perform the following contract:<br>';
         $body .= $contract['contract_id'] . ' : ' . $contract['title'] . '<br>';
         $body .= 'Notes:<br>';
-        $body .= $contract['description'] . '<br>';
+        $body .= $contract['body'] . '<br>';
         $body .= 'Please remit contract when the items are ready to Spatial Forces.  Description should be the contract identification number.  Request ISK should be the bid amount.';
         $body .= 'Sincerely,<br>Spatial Forces Contracting Department';
         while($mail->SendMail($bid['character_id'], 'character', $subject, $body)) {
