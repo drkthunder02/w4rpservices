@@ -25,14 +25,7 @@ class ProcessWalletJournalJob implements ShouldQueue
      * @var int
      */
     public $timeout = 600;
-
-    /**
-     * Delay time for job
-     * 
-     * @var int
-     */
-    public $delay = 15;
-
+    
     /**
      * Create a new job instance.
      *
@@ -40,6 +33,8 @@ class ProcessWalletJournalJob implements ShouldQueue
      */
     public function __construct(JobModel $pwj) {
         $this->pwj = $pwj;
+        $this->delay = 15;
+        $this->connection = 'database';
     }
 
     /**
