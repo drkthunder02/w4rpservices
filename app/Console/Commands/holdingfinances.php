@@ -48,7 +48,8 @@ class HoldingFinancesCommand extends Command
         //Setup the Finances container
         $finance = new FinanceHelper();
 
-        $finance->GetHoldingWalletJournal(1);
+        //$finance->GetHoldingWalletJournal(1, 93738489);
+        $finance->GetWalletJournal(1, 93738489);
 
         //Mark the job as finished
         $task->SetStopStatus();

@@ -193,6 +193,14 @@ class FinanceHelper {
     }
 
     public function GetWalletJournal($division, $charId) {
+        //Declare new class variables
+        $market = new MarketTax();
+        $reprocessing = new ReprocessingTax();
+        $jb = new JumpBridgeTax();
+        $other = new PlayerDonation();
+        $industry = new StructureIndustryTax();
+        $office = new OfficeFee();
+
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $tokenData = $this->TokenInfo($charId);
         $token = $tokenData['token'];
@@ -249,23 +257,17 @@ class FinanceHelper {
             foreach($wallet as $entry) {
                 if($entry['amount'] > 0) {
                     if($entry['ref_type'] == 'brokers_fee') {
-                        $market = new MarketTax();
                         $market->InsertMarketTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'reprocessing_tax') {
-                        $reprocessing = new ReprocessingTax();
                         $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'structure_gate_jump') {
-                        $jb = new JumpBridgeTax();
                         $jb->InsertJumpBridgeTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'player_donation' ||
-                                ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
-                        $other = new PlayerDonation();
+                             ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
                         $other->InsertPlayerDonation($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
-                        $industry = new StructureIndustryTax();
                         $industry->InsertStructureIndustryTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
-                        $office = new OfficeFee();
                         $office->InsertOfficeFee($entry, $corpId, $division);
                     }
                 }
@@ -278,6 +280,15 @@ class FinanceHelper {
     }
 
     public function GetHoldingWalletJournal($division) {
+        //Declare new class variables
+        $market = new MarketTax();
+        $reprocessing = new ReprocessingTax();
+        $jb = new JumpBridgeTax();
+        $other = new PlayerDonation();
+        $industry = new StructureIndustryTax();
+        $pi = new PlanetProductionTax();
+        $office = new OfficeFee();
+        
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = EsiToken::where(['character_id' => 93738489])->get(['refresh_token']);
 
@@ -318,31 +329,24 @@ class FinanceHelper {
             $totalPages = $journals->pages;
             //Decode the wallet from json into an array
             $wallet = json_decode($journals->raw, true);
+
             //For each journal entry, attempt to store it in the database.
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
                 if($entry['amount'] > 0) {
                     if($entry['ref_type'] == 'brokers_fee') {
-                        $market = new MarketTax();
                         $market->InsertMarketTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'reprocessing_tax') {
-                        $reprocessing = new ReprocessingTax();
                         $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'structure_gate_jump') {
-                        $jb = new JumpBridgeTax();
                         $jb->InsertJumpBridgeTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'player_donation' ||
-                              $entry['ref_type'] == 'corporation_account_withdrawal') {
-                        $other = new PlayerDonation();
+                    } else if($entry['ref_type'] == 'player_donation' || $entry['ref_type'] == 'corporation_account_withdrawal') {
                         $other->InsertPlayerDonation($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'industry_job_tax') {
-                        $industry = new StructureIndustryTax();
                         $industry->InsertStructureIndustryTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'planetary_import_tax' || $entry['ref_type'] == 'planetary_export_tax') {
-                        $pi = new PlanetProductionTax();
                         $pi->InsertPlanetProductionTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'office_rental_fee') {
-                        $office = new OfficeFee();
                         $office->InsertOfficeFee($entry, $corpId, $division);
                     }
                 }
