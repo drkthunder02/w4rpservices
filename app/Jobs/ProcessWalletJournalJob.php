@@ -25,7 +25,7 @@ class ProcessWalletJournalJob implements ShouldQueue
      * @var int
      */
     public $timeout = 600;
-    
+
     /**
      * Create a new job instance.
      *
@@ -53,7 +53,7 @@ class ProcessWalletJournalJob implements ShouldQueue
         $finance->GetWalletJournalPage($pwj->division, $pwj->charId, $pwj->page);
 
         //After the job is completed, delete the job
-        $this->pwj->delete();
+        $this->delete();
     }
 
     /**
