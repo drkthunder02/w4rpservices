@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class JobProcessWaletJournal extends Migration
+class CreateJobProcessWaletJournal extends Migration
 {
     /**
      * Run the migration
