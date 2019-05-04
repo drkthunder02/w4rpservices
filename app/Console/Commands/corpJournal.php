@@ -77,7 +77,7 @@ class CorpJournalCommand extends Command
             for($i = 1; $i <= $pages; $i++) {
                 $job = new JobProcessWalletJournal;
                 $job->division = 1;
-                $job->charId = $charId;
+                $job->charId = $charId->character_id;
                 $job->page = $i;
                 $job->save();
                 ProcessWalletJournalJob::dispatch($job);
