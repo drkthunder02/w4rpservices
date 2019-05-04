@@ -338,14 +338,9 @@ class FinanceHelper {
 
         //Declare the lookup class helper
         $lookups = new LookupHelper;
-
-        //If the token is not found, send the user an eve mail, and just exit out of the function
-        if($this->TokenNotFound($token, $scope, $charId)) {
-            return null;
-        }
         
         //Reference to see if the character is in our look up table for corporations and characters
-        $corpId = $lookups->LookupCharacter($charId);
+        $corpId = $lookups->LookupCorporation($charId);
 
         //Create an ESI authentication container
         $config = config('esi');

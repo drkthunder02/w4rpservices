@@ -97,6 +97,46 @@ class LookupHelper {
         }
     }
 
+    public function LookupCorporation($charId) {
+        //Check for the character in the user_to_corporation table
+        $found = CharacterToCorporation::where('character_id', $charId)->get(['corporation_id']);
+        
+        //If we don't find the character in the table, then we retrieve from ESI
+        //and add the character to the table
+        if(!isset($found[0]->corporation_id)) {
+            //Get the configuration for ESI from the environmental variables
+            $config = config('esi');
+
+            //Setup a new ESI container
+            $esi = new Eseye();
+
+            //Try to get the character information, then the corporation information
+            try {
+                $character = $esi->invoke('get', '/characters/{character_id}/', [
+                    'character_id' => $charId,
+                ]);
+                $corporation = $esi->invoke('get', '/corporations/{corporation_id}/', [
+                    'corporation_id' => $character->corporation_id,
+                ]);
+            } catch(RequestFailedException $e){
+                return null;
+            }
+
+            //Save all of the data to the database
+            $char = new CharacterToCorporation;
+            $char->character_id = $charId;
+            $char->character_name = $character->name;
+            $char->corporation_id = $character->corporation_id;
+            $char->corporation_name = $corporation->name;
+            $char->save();
+            //Return the corporation_id which is what the calling function is looking for
+            return $character->corporation_id;
+        } else {
+            //Return the corporation_id if it was found in the database as it is what the calling function is looking for
+            return $found[0]->corporation_id;
+        }
+    }
+
     /**
      * Function to retrieve a corporation name from the lookup tables
      * or add the details of the corporation if it's not found
