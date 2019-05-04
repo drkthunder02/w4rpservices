@@ -3,16 +3,20 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
 use DB;
+use Carbon\Carbon;
 
+//Libraries
 use Commands\Library\CommandHelper;
 use App\Library\Finances\Helper\FinanceHelper;
 use App\Library\Esi\Esi;
 
-use App\Models\Corporation\CorpStructure;
+//Jobs
+use App\Jobs\ProcessWalletJournalJob;
 
-use Carbon\Carbon;
+//Models
+use App\Models\Corporation\CorpStructure;
+use App\Models\Jobs\JobProcessWalletJournal;
 
 class CorpJournalCommand extends Command
 {
@@ -62,6 +66,20 @@ class CorpJournalCommand extends Command
         foreach($corps as $corp) {
             $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
             $finance->GetWalletJournal(1, $charId->character_id);
+        }
+
+        //Get the corps with structures, and dispatch jobs accordingly
+        foreach($corps as $corp) {
+            $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
+            $pages = $finance->GetJournalPageCount(1, $charId->character_id);
+            for($i = 1; $i <= $pages; $i++) {
+                $job = new JobProcessWalletJournal;
+                $job->division = $division;
+                $job->charId = $charId;
+                $job->page = $i;
+                $job->save();
+                ProcessWalletJournalJob::dispatch($job);
+            }
         }
 
         //Mark the job as finished

@@ -4,7 +4,7 @@ namespace App\Models\Jobs;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProcessWalletJournalJob extends Model
+class JobProcessWalletJournal extends Model
 {
     //Table Name
     public $table = 'job_process_wallet_journal';
