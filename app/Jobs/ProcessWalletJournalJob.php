@@ -24,7 +24,9 @@ class ProcessWalletJournalJob implements ShouldQueue
      * 
      * @var int
      */
-    public $timeout = 600;
+    public $timeout = 300;
+
+    public $tries = 3;
 
     /**
      * Create a new job instance.

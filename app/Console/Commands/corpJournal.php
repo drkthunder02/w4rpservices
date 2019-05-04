@@ -79,7 +79,6 @@ class CorpJournalCommand extends Command
                 $job->division = 1;
                 $job->charId = $charId->character_id;
                 $job->page = $i;
-                $job->save();
                 ProcessWalletJournalJob::dispatch($job);
             }
         }
