@@ -15,7 +15,6 @@ use App\Jobs\ProcessWalletJournalJob;
 
 //Models
 use App\Models\Corporation\CorpStructure;
-use App\Models\Jobs\JobProcessWalletJournal;
 
 class CorpJournalCommand extends Command
 {

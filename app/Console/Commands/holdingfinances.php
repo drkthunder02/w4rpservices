@@ -10,6 +10,9 @@ use App\Library\Finances\Helper\FinanceHelper;
 //Jobs
 use App\Jobs\ProcessWalletJournalJob;
 
+//Models
+use App\Models\Jobs\JobProcessWalletJournal;
+
 class HoldingFinancesCommand extends Command
 {
     /**
