@@ -13,7 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Library\Finances\Helper\FinanceHelper;
 
 //App Models
-use App\Models\Jobs\JobProcessWalletJournal as JobModel;
+use App\Models\Jobs\JobProcessWalletJournal;
 
 class ProcessWalletJournalJob implements ShouldQueue
 {
@@ -37,7 +37,7 @@ class ProcessWalletJournalJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(JobModel $pwj) {
+    public function __construct(JobProcessWalletJournal $pwj) {
         dd($pwj);
 
         $this->division = $pwj->division;
