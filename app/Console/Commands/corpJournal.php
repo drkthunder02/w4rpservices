@@ -9,7 +9,6 @@ use Carbon\Carbon;
 //Libraries
 use Commands\Library\CommandHelper;
 use App\Library\Finances\Helper\FinanceHelper;
-use App\Library\Esi\Esi;
 
 //Jobs
 use App\Jobs\ProcessWalletJournalJob;
@@ -63,23 +62,11 @@ class CorpJournalCommand extends Command
         $corpCompleted = false;
         //Get the corps with structures logged in the database
         $corps = CorpStructure::select('corporation_id')->groupBy('corporation_id')->get();
-        /*
+        
         foreach($corps as $corp) {
-            $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
-            $finance->GetWalletJournal(1, $charId->character_id);
-        }
-        */
-
-        //Get the corps with structures, and dispatch jobs accordingly
-        foreach($corps as $corp) {
-            $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
-            $pages = $finance->GetJournalPageCount(1, $charId->character_id);
-            for($i = 1; $i <= $pages; $i++) {
-                $job = new JobProcessWalletJournal;
-                $job->division = 1;
-                $job->charId = $charId->character_id;
-                $job->page = $i;
-                ProcessWalletJournalJob::dispatch($job);
+            if($charId->character_id != 93738489) {
+                $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
+                $finance->GetWalletJournal(1, $charId->character_id);
             }
         }
 

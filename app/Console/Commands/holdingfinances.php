@@ -7,6 +7,9 @@ use Illuminate\Console\Command;
 use Commands\Library\CommandHelper;
 use App\Library\Finances\Helper\FinanceHelper;
 
+//Jobs
+use App\Jobs\ProcessWalletJournalJob;
+
 class HoldingFinancesCommand extends Command
 {
     /**
@@ -49,7 +52,16 @@ class HoldingFinancesCommand extends Command
         $finance = new FinanceHelper();
 
         //$finance->GetHoldingWalletJournal(1, 93738489);
-        $finance->GetWalletJournal(1, 93738489);
+        //$finance->GetWalletJournal(1, 93738489);
+
+        $pages = $finance->GetJournalPageCount(1, 93738489);
+        for($i = 1; $i <= $pages; $i++) {
+            $job = new JobProcessWalletJournal;
+            $job->division = 1;
+            $job->charId = $charId->character_id;
+            $job->page = $i;
+            ProcessWalletJournalJob::dispatch($job);
+        }
 
         //Mark the job as finished
         $task->SetStopStatus();
