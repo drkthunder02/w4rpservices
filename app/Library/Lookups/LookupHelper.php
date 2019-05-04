@@ -97,7 +97,7 @@ class LookupHelper {
         }
     }
 
-    public function LookupCorporation($charId) {
+    public function LookupCorporationId($charId) {
         //Check for the character in the user_to_corporation table
         $found = CharacterToCorporation::where('character_id', $charId)->get(['corporation_id']);
         
