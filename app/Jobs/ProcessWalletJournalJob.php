@@ -34,7 +34,10 @@ class ProcessWalletJournalJob implements ShouldQueue
      * @return void
      */
     public function __construct(JobModel $pwj) {
-        $this->pwj = $pwj;
+        $this->division = $pwj->division;
+        $this->charId = $pwj->charId;
+        $this->page = $pwj->page;
+
         $this->delay = 15;
         $this->connection = 'database';
     }
@@ -52,7 +55,7 @@ class ProcessWalletJournalJob implements ShouldQueue
         //Declare the class variable we need
         $finance = new FinanceHelper();
 
-        $finance->GetWalletJournalPage($pwj->division, $pwj->charId, $pwj->page);
+        $finance->GetWalletJournalPage($this->division, $this->charId, $this->page);
 
         //After the job is completed, delete the job
         $this->delete();
