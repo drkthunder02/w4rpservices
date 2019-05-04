@@ -13,7 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Library\Finances\Helper\FinanceHelper;
 
 //App Models
-use App\Models\Jobs\ProcessWalletJournalJobModel as JobModel;
+use App\Models\Jobs\JobProcessWalletJournal as JobModel;
 
 class ProcessWalletJournalJob implements ShouldQueue
 {
