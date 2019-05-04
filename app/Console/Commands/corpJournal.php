@@ -76,7 +76,7 @@ class CorpJournalCommand extends Command
             $pages = $finance->GetJournalPageCount(1, $charId->character_id);
             for($i = 1; $i <= $pages; $i++) {
                 $job = new JobProcessWalletJournal;
-                $job->division = $division;
+                $job->division = 1;
                 $job->charId = $charId;
                 $job->page = $i;
                 $job->save();
