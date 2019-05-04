@@ -27,13 +27,6 @@ class ProcessWalletJournalJob implements ShouldQueue
     public $timeout = 600;
 
     /**
-     * Connection to utilize
-     * 
-     * @var string
-     */
-    public $connection = 'database';
-
-    /**
      * Delay time for job
      * 
      * @var int
