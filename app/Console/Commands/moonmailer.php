@@ -105,10 +105,10 @@ class MoonMailerCommand extends Command
             $mail->body = $body;
             $mail->recipient = (int)$rental->Contact;
             $mail->recipient_type = 'character';
-            $mail->save();
+            //$mail->save();
 
             //Dispatch the job and cycle to the next moon rental
-            SendEveMail::dispatch($mail)->delay(Carbon::now());
+            SendEveMail::dispatch($mail);
 
             //After the mail is dispatched, saved the sent mail record, 
             $sentmail = new SentMail;
