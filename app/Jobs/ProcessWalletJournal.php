@@ -47,13 +47,13 @@ class ProcessWalletJournal implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(EveMailModel $mail) {
-        $this->eveMail = $mail;
+    public function __construct() {
+        
     }
 
     /**
      * Execute the job.
-     * Utilized by using SendEveMail::dispatch($mail);
+     * Utilized by using ProcessWalletJournal::dispatch()
      * The model is passed into the dispatch function, then added to the queue
      * for processing.
      *
