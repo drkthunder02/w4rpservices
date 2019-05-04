@@ -61,7 +61,7 @@ class HoldingFinancesCommand extends Command
         for($i = 1; $i <= $pages; $i++) {
             $job = new JobProcessWalletJournal;
             $job->division = 1;
-            $job->charId = $charId->character_id;
+            $job->charId = 93738489;
             $job->page = $i;
             ProcessWalletJournalJob::dispatch($job);
         }
