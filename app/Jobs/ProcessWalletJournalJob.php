@@ -28,6 +28,10 @@ class ProcessWalletJournalJob implements ShouldQueue
 
     public $tries = 3;
 
+    private $division;
+    private $charId;
+    private $page;
+
     /**
      * Create a new job instance.
      *
