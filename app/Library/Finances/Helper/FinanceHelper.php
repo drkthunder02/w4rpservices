@@ -34,17 +34,6 @@ class FinanceHelper {
     public function GetWalletTransaction($division, $charId) {
         //Declare the lookup class helper
         $lookups = new LookupHelper;
-        
-        //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $tokenData = $this->TokenInfo($charId);
-        $token = $tokenData['token'];
-        $scope = $tokenData['scope'];
-
-        //If the token is not found, send the user an eve mail, and just exit out of the function
-        if($this->TokenNotFound($token, $scope)) {
-            printr("Token not found\n");
-            return null;
-        }
 
         //Setup array for PI items
         $pi_items = [
@@ -137,6 +126,17 @@ class FinanceHelper {
             '2875',
             '2876',
         ];
+
+        //Get the ESI refresh token for the corporation to add new wallet journals into the database
+        $tokenData = $this->TokenInfo($charId);
+        $token = $tokenData['token'];
+        $scope = $tokenData['scope'];
+
+        //If the token is not found, send the user an eve mail, and just exit out of the function
+        if($this->TokenNotFound($token, $scope)) {
+            printr("Token not found\n");
+            return null;
+        }
 
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $lookups->LookupCharacter($charId);
