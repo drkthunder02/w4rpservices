@@ -36,16 +36,6 @@ class ProcessWalletJournal implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Class Variables for journals
-     */
-    protected $market;
-    protected $reprocessing;
-    protected $jb;
-    protected $other;
-    protected $industry;
-    protected $office;
-
-    /**
      * Timeout in seconds
      * 
      * @var int
@@ -71,38 +61,7 @@ class ProcessWalletJournal implements ShouldQueue
      */
     public function handle()
     {
-        //Retrieve the token for main character to send mails from
-        $token = EsiToken::where(['character_id'=> 93738489])->get();
 
-        //Create the ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-
-        //Setup the Eseye class
-        $esi = new Eseye($authentication);
-
-        //Attemp to send the mail
-        try {
-            $esi->setBody([
-                'approved_cost' => 0,
-                'body' => $this->eveMail->body,
-                'recipients' => [[
-                    'recipient_id' => (int)$this->eveMail->recipient,
-                    'recipient_type' => $this->eveMail->recipient_type,
-                ]],
-                'subject' => $this->eveMail->subject,
-            ])->invoke('post', '/characters/{character_id}/mail/', [
-                'character_id'=> 93738489,
-            ]);
-        } catch(RequestFailedException $e) {
-            return null;
-        }
-
-        $this->eveMail->delete();
     }
 
     /**
