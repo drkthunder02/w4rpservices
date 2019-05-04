@@ -279,6 +279,122 @@ class FinanceHelper {
         } while ($currentPage < $totalPages);
     }
 
+    public function GetJournalPageCount($division, $charId) {
+        //Declare class variables
+        $lookups = new LookupHelper;
+        
+        //Get the ESI refresh token for the corporation
+        $tokenData = $this->TokenInfo($charId);
+        $token = $tokenData['token'];
+        $scope = $tokdenData['scope'];
+
+        if($this->TokenNotFound($token, $scope)) {
+            return null;
+        }
+
+        //Refrence to see if the character is in our look up table for corporation and characters
+        $corpId = $lookups->LookupCharacter($charId);
+
+        //Create the ESI authentication container
+        $config = config('esi');
+        $authentication = new EsiAuthentication([
+            'client_id'  => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+
+        //Create the esi class variable
+        $esi = new Eseye($authentication);
+        $esi->setVersion('v4');
+
+        //Call the first page so we can get the header data for the number of pages
+        try {
+            $journals = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                'corporation_id' => $corpId,
+                'division'  => $division,
+            ]);
+        } catch(RequestFailedException $e) {
+            return $e->getEsiResponse();
+        }
+
+        $pages = $journals->pages;
+
+        return $pages;
+    }
+
+    public function GetWalletJournalPage($division, $charId, $page = 1) {
+        //Declare new class variables
+        $market = new MarketTax();
+        $reprocessing = new ReprocessingTax();
+        $jb = new JumpBridgeTax();
+        $other = new PlayerDonation();
+        $industry = new StructureIndustryTax();
+        $office = new OfficeFee();
+
+        //Get the ESI refresh token for the corporation to add new wallet journals into the database
+        $tokenData = $this->TokenInfo($charId);
+        $token = $tokenData['token'];
+        $scope = $tokenData['scope'];
+
+        //Declare the lookup class helper
+        $lookups = new LookupHelper;
+
+        //If the token is not found, send the user an eve mail, and just exit out of the function
+        if($this->TokenNotFound($token, $scope)) {
+            return null;
+        }
+        
+        //Reference to see if the character is in our look up table for corporations and characters
+        $corpId = $lookups->LookupCharacter($charId);
+
+        //Create an ESI authentication container
+        $config = config('esi');
+        $authentication = new EsiAuthentication([
+            'client_id'  => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+
+        //Create the esi class varialble
+        $esi = new Eseye($authentication);
+        $esi->setVersion('v4');
+
+        //Call the first page of the wallet journal, as we are always going to get at least one page.
+        //If we have more pages, then we will continue through the while loop.
+        try {
+            $journals = $esi->page($page)
+                            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                'corporation_id' => $corpId,
+                'division'  => $division,
+            ]);
+        } catch(RequestFailedException $e) {
+            return $e->getEsiResponse();
+        }
+
+        //Decode the wallet from json into an array
+        $wallet = json_decode($journals->raw, true);
+        //For each journal entry, attempt to store it in the database.
+        //The PutWalletJournal function checks to see if it's already in the database.
+        foreach($wallet as $entry) {
+            if($entry['amount'] > 0) {
+                if($entry['ref_type'] == 'brokers_fee') {
+                    $market->InsertMarketTax($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'reprocessing_tax') {
+                    $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'structure_gate_jump') {
+                    $jb->InsertJumpBridgeTax($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'player_donation' ||
+                         ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
+                    $other->InsertPlayerDonation($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
+                    $industry->InsertStructureIndustryTax($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
+                    $office->InsertOfficeFee($entry, $corpId, $division);
+                }
+            }
+        }
+    }
+
     private function TokenInfo($charId) {
         //Get the ESI refresh token for the corporation to add a new wallet jouranls into the database
         //send the token and scope back to the calling function

@@ -10,28 +10,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 //App Library
-use App\Library\Finances\MarketTax;
-use App\Library\Finances\PlayerDonation;
-use App\Library\Finances\ReprocessingTax;
-use App\Library\Finances\JumpBridgeTax;
-use App\Library\Finances\StructureIndustryTax;
-use App\Library\Finances\OfficeFee;
-use App\Library\Finances\PlanetProductionTax;
-use App\Library\Finances\PISale;
-use App\Library\Lookups\LookupHelper;
+use App\Library\Finances\Helper\FinanceHelper;
 
 //App Models
-use App\Models\User\UserToCorporation;
-use App\Models\Finances\CorpMarketJournal;
-use App\Models\Finances\JumpBridgeJournal;
-use App\Models\Finances\OfficeFeesJournal;
-use App\Models\Finances\PISaleJournal;
-use App\Models\Finances\PlanetProductionTaxJournal;
-use App\Models\Finances\PlayerDonationJournal;
-use App\Models\Finances\REprocessingTaxJournal;
-use App\Models\Finances\StructureIndustryTaxJournal;
+use App\Models\Jobs\ProcessWalletJournalJob as JobModel;
 
-class ProcessWalletJournal implements ShouldQueue
+class ProcessWalletJournalJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -43,17 +27,31 @@ class ProcessWalletJournal implements ShouldQueue
     public $timeout = 600;
 
     /**
+     * Connection to utilize
+     * 
+     * @var string
+     */
+    public $connection = 'database';
+
+    /**
+     * Delay time for job
+     * 
+     * @var int
+     */
+    public $delay = 15;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct() {
-        
+    public function __construct(JobModel $pwj) {
+        $this->pwj = $pwj;
     }
 
     /**
      * Execute the job.
-     * Utilized by using ProcessWalletJournal::dispatch()
+     * Utilized by using ProcessWalletJournalJob::dispatch()
      * The model is passed into the dispatch function, then added to the queue
      * for processing.
      *
@@ -61,7 +59,13 @@ class ProcessWalletJournal implements ShouldQueue
      */
     public function handle()
     {
+        //Declare the class variable we need
+        $finance = new FinanceHelper();
 
+        $finance->GetWalletJournalPage($pwj->division, $pwj->charId, $pwj->page);
+
+        //After the job is completed, delete the job
+        $this->pwj->delete();
     }
 
     /**
