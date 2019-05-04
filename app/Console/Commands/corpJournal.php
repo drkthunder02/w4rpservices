@@ -63,10 +63,12 @@ class CorpJournalCommand extends Command
         $corpCompleted = false;
         //Get the corps with structures logged in the database
         $corps = CorpStructure::select('corporation_id')->groupBy('corporation_id')->get();
+        /*
         foreach($corps as $corp) {
             $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
             $finance->GetWalletJournal(1, $charId->character_id);
         }
+        */
 
         //Get the corps with structures, and dispatch jobs accordingly
         foreach($corps as $corp) {

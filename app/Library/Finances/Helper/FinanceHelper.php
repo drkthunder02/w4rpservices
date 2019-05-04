@@ -286,7 +286,7 @@ class FinanceHelper {
         //Get the ESI refresh token for the corporation
         $tokenData = $this->TokenInfo($charId);
         $token = $tokenData['token'];
-        $scope = $tokdenData['scope'];
+        $scope = $tokenData['scope'];
 
         if($this->TokenNotFound($token, $scope)) {
             return null;
