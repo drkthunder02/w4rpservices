@@ -16,7 +16,7 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 
-use App\Models\Mail\EveMail as EveMailModel;
+use App\Models\Mail\EveMail;
 
 class SendEveMail implements ShouldQueue
 {
@@ -41,13 +41,23 @@ class SendEveMail implements ShouldQueue
      */
     public $retries = 3;
 
+    private $body;
+    private $recipient;
+    private $recipient_type;
+    private $subject;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(EveMailModel $mail) {
-        $this->eveMail = $mail;
+    public function __construct(EveMail $mail) {
+        $this->body = $mail->body;
+        $this->recipient = $mail->recipient;
+        $this->recipient_type = $mail->recipient_type;
+        $this->subject = $mail->subject;
+        
+        $this->connection = 'database';
     }
 
     /**
@@ -78,12 +88,12 @@ class SendEveMail implements ShouldQueue
         try {
             $esi->setBody([
                 'approved_cost' => 0,
-                'body' => $this->eveMail->body,
+                'body' => $this->body,
                 'recipients' => [[
-                    'recipient_id' => (int)$this->eveMail->recipient,
-                    'recipient_type' => $this->eveMail->recipient_type,
+                    'recipient_id' => (int)$this->recipient,
+                    'recipient_type' => $this->recipient_type,
                 ]],
-                'subject' => $this->eveMail->subject,
+                'subject' => $this->subject,
             ])->invoke('post', '/characters/{character_id}/mail/', [
                 'character_id'=> 93738489,
             ]);
