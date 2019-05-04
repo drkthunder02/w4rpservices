@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class JobProcessWalletJournal extends Model
 {
     //Table Name
-    public $table = 'job_process_wallet_journal';
+    //public $table = 'job_process_wallet_journal';
 
     //Timestamps
     public $timestamps = true;
