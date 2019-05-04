@@ -38,6 +38,8 @@ class ProcessWalletJournalJob implements ShouldQueue
      * @return void
      */
     public function __construct(JobModel $pwj) {
+        dd($pwj);
+
         $this->division = $pwj->division;
         $this->charId = $pwj->charId;
         $this->page = $pwj->page;

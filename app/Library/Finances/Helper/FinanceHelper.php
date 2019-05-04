@@ -133,7 +133,7 @@ class FinanceHelper {
         $scope = $tokenData['scope'];
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
-        if($this->TokenNotFound($token, $scope)) {
+        if($this->TokenNotFound($token, $scope, $charId)) {
             printr("Token not found\n");
             return null;
         }
@@ -210,7 +210,7 @@ class FinanceHelper {
         $lookups = new LookupHelper;
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
-        if($this->TokenNotFound($token, $scope)) {
+        if($this->TokenNotFound($token, $scope, $charId)) {
             return null;
         }
         
@@ -288,7 +288,7 @@ class FinanceHelper {
         $token = $tokenData['token'];
         $scope = $tokenData['scope'];
 
-        if($this->TokenNotFound($token, $scope)) {
+        if($this->TokenNotFound($token, $scope, $charId)) {
             return null;
         }
 
@@ -340,7 +340,7 @@ class FinanceHelper {
         $lookups = new LookupHelper;
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
-        if($this->TokenNotFound($token, $scope)) {
+        if($this->TokenNotFound($token, $scope, $charId)) {
             return null;
         }
         
@@ -409,7 +409,7 @@ class FinanceHelper {
         return $data;
     }
 
-    private function TokenNotFound($token, $scope) {
+    private function TokenNotFound($token, $scope, $charId) {
         if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
             //Register a mail to be dispatched as a job
             $mail = new EveMail;
