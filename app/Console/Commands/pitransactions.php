@@ -58,7 +58,7 @@ class PiTransactionsCommand extends Command
 
         //Get the total pages for the transactions
         $pages = $finance->GetTransactionPageCount(3, 94415555);
-
+        dd($pages);
         //Dispatch a single job for each page to process
         for($i = 1; $i <= $pages; $i++) {
             $job = new JobProcessWalletTransaction;
