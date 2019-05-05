@@ -31,49 +31,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 
 class FinanceHelper {
 
-    public function GetTransactionPageCount($division, $charId) {
-        //Declare the class variables
-        $lookups = new LookupHelper;
-
-        //Get the ESI refresh token for the data
-        $tokenData = $this->TokenInfo($charId);
-        $token = $tokenData['token'];
-        $scope = $tokenData['scope'];
-
-        //If the token is not found, send the user an eve mail, and just exit out of the function
-        if($this->TokenNotFound($token, $scope, $charId)) {
-            printr("Token not found\n");
-            return null;
-        }
-
-        //Reference to see if the character is in our look up table for corporations and characters
-        $corpId = $lookups->LookupCharacter($charId);
-
-        //Create an ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-
-        //Create the esi class varialble
-        $esi = new Eseye($authentication);
-
-        //Call the first page so we can get the header data for the number of pages
-        try {
-            $journals = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
-                'corporation_id' => 98251577,
-                'division'  => 3,
-            ]);
-        } catch(RequestFailedException $e) {
-            return $e->getEsiResponse();
-        }
-
-        //Return the number of pages needed to be handled
-        return $journals->pages;
-    }
-
     public function GetWalletTransaction($division, $charId) {
         //Declare the lookup class helper
         $lookups = new LookupHelper;
@@ -108,8 +65,7 @@ class FinanceHelper {
 
         //Get the entries of the journal for transactions
         try {
-            $journals = $esi->page($currentPage)
-                            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
+            $journals = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
                 'corporation_id' => 98251577,
                 'division'  => 3,
             ]);
