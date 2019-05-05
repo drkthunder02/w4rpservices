@@ -63,12 +63,6 @@ class ProcessWalletJournalJob implements ShouldQueue
 
         $finance->GetWalletJournalPage($this->division, $this->charId, $this->page);
 
-        //If the job is completed, mark down the completed job in the status table for jobs
-        $job = new JobStatus;
-        $job->job_name = $this->getName();
-        $job->complete = true;
-        $job->save();
-
         //After the job is completed, delete the job
         $this->delete();
     }
@@ -81,17 +75,6 @@ class ProcessWalletJournalJob implements ShouldQueue
      */
     public function failed($exception)
     {
-        //Save the error in the database
-        $job = new JobStatus;
-        $job->job_name = $this->getName();
-        $job->complete = false;
-        $job->save();
-
-        //Save the job error
-        $error = new JobError;
-        $error->job_id = $job->id;
-        $error->job_name = $this->getName();
-        $error->error = $exception;
-        $error->save();
+        dd($exception);
     }
 }
