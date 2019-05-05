@@ -22,6 +22,10 @@ use App\Models\Jobs\JobSendEveMail;
 class MoonMailerCommand extends Command
 {
     /**
+     * Next update will include checking for if the moon has been paid in advance.
+     */
+
+    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -78,6 +82,8 @@ class MoonMailerCommand extends Command
             //Get the moons the renter is renting
             $rentals = $moonMailer->GetRentalMoons($contact);
 
+            //Retrieve the date for each moon for when the moon is rented until
+            
             //Totalize the cost of the moons
             $cost = $moonMailer->TotalizeMoonCost($rentals);
 
