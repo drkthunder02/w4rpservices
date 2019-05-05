@@ -7,13 +7,18 @@
 
 namespace App\Library\Finances\Helper;
 
+//Internal Library
 use DB;
-use App\Jobs\SendEveMail;
 
+//Job
+use App\Jobs\SendEveMailJob;
+
+//Models
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 use App\Models\Mail\EveMail;
 
+//Library
 use App\Library\Esi\Esi;
 use App\Library\Finances\MarketTax;
 use App\Library\Finances\PlayerDonation;
@@ -25,6 +30,7 @@ use App\Library\Finances\PlanetProductionTax;
 use App\Library\Finances\PISale;
 use App\Library\Lookups\LookupHelper;
 
+//Seat Stuff
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
@@ -311,7 +317,7 @@ class FinanceHelper {
             $mail->recipient_type = 'character';
             $mail->save();
 
-            SendEveMail::dispatch($mail);
+            SendEveMailJob::dispatch($mail);
 
             return true;
         } 

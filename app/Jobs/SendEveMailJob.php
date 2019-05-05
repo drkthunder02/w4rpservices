@@ -2,21 +2,25 @@
 
 namespace App\Jobs;
 
+//Internal Library
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
+//Seat stuff
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
+//Models
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
-
 use App\Models\Mail\EveMail;
+use App\Models\Jobs\JobError;
+use App\Models\Jobs\JobStatus;
 
 class SendEveMailJob implements ShouldQueue
 {
@@ -57,7 +61,7 @@ class SendEveMailJob implements ShouldQueue
 
     /**
      * Execute the job.
-     * Utilized by using SendEveMail::dispatch($mail);
+     * Utilized by using SendEveMailJob::dispatch($mail);
      * The model is passed into the dispatch function, then added to the queue
      * for processing.
      *
@@ -96,7 +100,13 @@ class SendEveMailJob implements ShouldQueue
             return null;
         }
 
-        $this->eveMail->delete();
+        $this->delete();
+
+        //If the job is completed, mark down the completed job in the status table for jobs
+        $job = new JobStatus;
+        $job->job_name = $this->getName();
+        $job->complete = true;
+        $job->save();
     }
 
     /**
@@ -107,7 +117,17 @@ class SendEveMailJob implements ShouldQueue
      */
     public function failed($exception)
     {
-        // Send user notification of failure, etc...
-        dd($exception);
+        //Save the error in the database
+        $job = new JobStatus;
+        $job->job_name = $this->getName();
+        $job->complete = false;
+        $job->save();
+
+        //Save the job error
+        $error = new JobError;
+        $error->job_id = $job->id;
+        $error->job_name = $this->getName();
+        $error->error = $exception;
+        $error->save();
     }
 }

@@ -2,11 +2,17 @@
 
 namespace App\Library\Esi;
 
+//Internal Libraries
 use DB;
 
+//Models
 use App\Models\Esi\EsiScope;
-use App\Jobs\SendEveMail;
+use App\Models\Jobs\JobSendEveMail;
 
+//Jobs
+use App\Jobs\SendEveMailJob;
+
+//Seat Stuff
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
@@ -43,7 +49,7 @@ class Esi {
         $mail->recipient_type = 'character';
         $mail->save();
 
-        SendEveMail::dispatch($mail)->delay(Carbon::now()->addSeconds(5));
+        SendEveMailJob::dispatch($mail)->delay(Carbon::now()->addSeconds(5));
 
         return false;
     }

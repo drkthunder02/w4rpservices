@@ -14,6 +14,8 @@ use App\Library\Finances\Helper\FinanceHelper;
 
 //App Models
 use App\Models\Jobs\JobProcessWalletJournal;
+use App\Models\Jobs\JobError;
+use App\Models\Jobs\JobStatus;
 
 class ProcessWalletJournalJob implements ShouldQueue
 {
@@ -63,6 +65,12 @@ class ProcessWalletJournalJob implements ShouldQueue
 
         //After the job is completed, delete the job
         $this->delete();
+
+        //If the job is completed, mark down the completed job in the status table for jobs
+        $job = new JobStatus;
+        $job->job_name = $this->getName();
+        $job->complete = true;
+        $job->save();
     }
 
     /**
@@ -73,7 +81,17 @@ class ProcessWalletJournalJob implements ShouldQueue
      */
     public function failed($exception)
     {
-        // Send user notification of failure, etc...
-        dd($exception);
+        //Save the error in the database
+        $job = new JobStatus;
+        $job->job_name = $this->getName();
+        $job->complete = false;
+        $job->save();
+
+        //Save the job error
+        $error = new JobError;
+        $error->job_id = $job->id;
+        $error->job_name = $this->getName();
+        $error->error = $exception;
+        $error->save();
     }
 }

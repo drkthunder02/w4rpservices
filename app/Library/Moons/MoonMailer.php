@@ -2,7 +2,11 @@
 
 namespace App\Library\Moons;
 
-use App\Models\Mail\EveMail;
+//Jobs
+use App\Jobs\SendEveMailJob;
+
+//Models
+use App\Models\Jobs\JobSendEveMail;
 
 class MoonMailer {
 
@@ -26,7 +30,7 @@ class MoonMailer {
         $mail->recipient_type = 'character';
         $mail->save();
 
-        SendEveMail::dispatch($mail);
+        SendEveMailJob::dispatch($mail);
     }
 }
 
