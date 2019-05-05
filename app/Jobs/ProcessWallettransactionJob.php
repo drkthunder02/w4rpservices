@@ -32,7 +32,6 @@ class ProcessWalletTransactionJob implements ShouldQueue
 
     private $division;
     private $charId;
-    private $page;
 
     /**
      * Create a new job instance.
@@ -43,7 +42,6 @@ class ProcessWalletTransactionJob implements ShouldQueue
     {
         $this->division = $pwt->division;
         $this->charId = $pwt->charId;
-        $this->page = $pwt->page;
 
         $this->delay = 10;
         $this->connection = 'database';
