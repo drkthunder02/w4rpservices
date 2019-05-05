@@ -18,12 +18,7 @@ class JobStatus extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
         'job_name',
         'complete',
     ];
-
-    public function Error() {
-        $this->hasOne('\App\Models\Jobs\JobError', 'job_id', 'id');
-    }
 }

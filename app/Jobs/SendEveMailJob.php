@@ -101,6 +101,11 @@ class SendEveMailJob implements ShouldQueue
         }
 
         $this->delete();
+
+        $status = new JobStatus;
+        $status->job_name = 'Send Eve Mail';
+        $status->complete = true;
+        $status->save();
     }
 
     /**
