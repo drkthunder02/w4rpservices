@@ -59,19 +59,84 @@ class MoonMailerCommand extends Command
         $task->SetStartStatus();
 
         //Declare the moon calc class variable to utilize the library to update the price
-        $moonCalc = new MoonCalc();
+        $moonCalc = new MoonCalc;
+        $mailer = new MoonMailer;
+
         //Create other variables
         $price = null;
         $body = null;
-
-        //Get all of the moons from the rental list
-        $rentals = MoonRent::all();
 
         //Get today's date.
         $today = Carbon::now();
         $today->second = 1;
         $today->minute = 0;
         $today->hour = 0;
+
+        //Get all contacts from the rentals group
+        $contacts = MoonRent::select('Contact')->groupBy('Contact')->get();
+
+        //For each of the contacts totalize the moon rental, and create the mail to send to them,
+        //then update parameters of the moon
+        foreach($contacts as $contact) {
+            //Get the moons the renter is renting
+            $rentals = $moonMailer->GetRentalMoons($contact);
+
+            //Totalize the cost of the moons
+            $cost = $moonMailer->TotalizeMoonCost($rentals);
+
+            //Get the list of moons in a list format
+            $listItems = $moonMailer->GetMoonList($rentals);
+
+            //Build the mail body
+            $body = "Moon Rent is due for the following moons:<br>";
+            foreach($listItems as $item) {
+                $body .= $item . "<br>";
+            }
+            $body .= "The price for the next month's rent is " . $cost . "<br>";
+            $body .= "Please remit payment to Spatial Forces on the 1st should you continue to wish to rent the moon.<br>";
+            $body .= "Sincerely,<br>";
+            $body .= "Warped Intentions Leadership<br>";
+
+            //Dispatch the mail job
+            $mail = new JobSendEveMail;
+            $mail->sender = 93738489;
+            $mail->subject = "Warped Intentions Moon Rental Payment Due";
+            $mail->body = $body;
+            $mail->recipient = (int)$contact;
+            $mail->recipient_type = 'character';
+
+            //Dispatch the job and cycle to the next moon rental
+            SendEveMailJob::dispatch($mail);
+
+            //After the mail is dispatched, saved the sent mail record, 
+            $sentmail = new SentMail;
+            $sentmail->sender = $mail->sender;
+            $sentmail->subject = $mail->subject;
+            $sentmail->body = $mail->body;
+            $sentmail->recipient = $mail->recipient;
+            $sentmail->recipient_type = $mail->recipient_type;
+            $sentmail->save();
+
+            //Delete the record from the database
+            foreach($rentals as $rental) {
+                if($today->greaterThanOrEqualTo($rental->RentalEnd)) {
+                    MoonRent::where(['id' => $rental->id])->delete();
+                }
+
+                //Mark the moon as not paid for the next month
+                Moon::where([
+                    'System' => $rental->System,
+                    'Planet' => $rental->Planet,
+                    'Moon' => $rental->Moon,
+                ])->update([
+                    'Paid' => 'No',
+                ]);
+            }
+        }
+
+        /*
+        //Get all of the moons from the rental list
+        $rentals = MoonRent::all();
 
         //Update the price for all moon rentals before sending out the mail
         foreach($rentals as $rental) {
@@ -136,6 +201,7 @@ class MoonMailerCommand extends Command
             ]);
             
         }
+        */
 
         //Mark the job as finished
         $task->SetStopStatus();

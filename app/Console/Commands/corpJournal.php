@@ -84,15 +84,6 @@ class CorpJournalCommand extends Command
             }
         }
 
-        /*
-        foreach($corps as $corp) {
-            if($corp->corporation_id != 98287666) {
-                $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
-                $finance->GetWalletJournal(1, $charId->character_id);
-            }
-        }
-        */
-
         //Mark the job as finished
         $task->SetStopStatus();
     }
