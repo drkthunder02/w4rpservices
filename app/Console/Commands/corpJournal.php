@@ -72,12 +72,12 @@ class CorpJournalCommand extends Command
             //If the corporation isn't the holding corporation, then process the data.
             //We process holding corporation data elsewhere.
             if($corp->corporation_id != 98287666) {
-                $charId = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
-                $pages = $finance->GetJournalPageCount(1, $charId);
+                $structure = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
+                $pages = $finance->GetJournalPageCount(1, $structure->character_id);
                 for($i = 1; $i <= $pages; $i++) {
                     $job = new JobProcessWalletJournal;
                     $job->division = 1;
-                    $job->charId = $charId;
+                    $job->charId = $structure->character_id;
                     $job->page = $i;
                     ProcessWalletJournalJob::dispatch($job);
                 }
