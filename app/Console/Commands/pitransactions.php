@@ -56,17 +56,10 @@ class PiTransactionsCommand extends Command
         //Setup the Finances container
         $finance = new FinanceHelper();
 
-        //Get the total pages for the transactions
-        $pages = $finance->GetTransactionPageCount(3, 94415555);
-        dd($pages);
-        //Dispatch a single job for each page to process
-        for($i = 1; $i <= $pages; $i++) {
-            $job = new JobProcessWalletTransaction;
-            $job->division = 3;
-            $job->charId = 94415555;
-            $job->page = $i;
-            ProcessWalletTransactionJob::dispatch($job);
-        }
+        $job = new JobProcessWalletTransaction;
+        $job->division = 3;
+        $job->charId = 94415555;
+        ProcessWalletTransactionJob::dispatch($job);
 
         //Mark the job as finished
         $task->SetStopStatus();

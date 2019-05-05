@@ -105,103 +105,22 @@ class FinanceHelper {
 
         //Create the esi class varialble
         $esi = new Eseye($authentication);
-        
-        //Set our current page to 1 which is the one we are starting on.
-        $currentPage = 1;
-        //Set our default total pages to 1 in case our try section fails out.
-        $totalPages = 1;
 
-        //If more than one page is found, decode the first set of wallet entries, then call for the next pages
-        do {
-            //Call the first page of the wallet journal, as we are always going to get at least one page.
-            //If we have more pages, then we will continue through the while loop.
-            try {
-                $journals = $esi->page($currentPage)
-                                ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
-                    'corporation_id' => 98251577,
-                    'division'  => 3,
-                ]);
-            } catch(RequestFailedException $e) {
-                return $e->getEsiResponse();
-            }
-
-            //Set the total pages we need to cycle through.
-            $totalPages = $journals->pages;
-            //Decode the wallet from json into an array
-            $wallet = json_decode($journals->raw, true);
-            //For each journal entry, attempt to store it in the database.
-            //The PutWalletJournal function checks to see if it's already in the database.
-            foreach($wallet as $entry) {
-                if($division == 3 && $charId == 94415555) {
-                    if(in_array($entry['type_id'], $pi_items, false)) {
-                        $pi = new PISale();
-                        $pi->InsertPISale($entry, 98287666);
-                    }
-                }                
-            }
-            
-            //Increment the current page we are on.
-            $currentPage++;
-        //Continue looping through the do while loop until the current page is greater than or equal to the total pages.
-        } while ($currentPage < $totalPages);
-    }
-
-    public function GetWalletTransactionPage($division, $charId, $page = 1) {
-        //Declare the lookup class helper
-        $lookups = new LookupHelper;
-
-        //Setup array for PI items
-        $pi_items = $this->GetPIMaterialsArray();
-
-        //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $tokenData = $this->TokenInfo($charId);
-        $token = $tokenData['token'];
-        $scope = $tokenData['scope'];
-
-        //If the token is not found, send the user an eve mail, and just exit out of the function
-        if($this->TokenNotFound($token, $scope, $charId)) {
-            printr("Token not found\n");
-            return null;
+        //Get the entries of the journal for transactions
+        try {
+            $journals = $esi->page($currentPage)
+                            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
+                'corporation_id' => 98251577,
+                'division'  => 3,
+            ]);
+        } catch(RequestFailedException $e) {
+            return $e->getEsiResponse();
         }
 
-        //Reference to see if the character is in our look up table for corporations and characters
-        $corpId = $lookups->LookupCharacter($charId);
+        //Decode the wallet from json into an array
+        $wallet = json_decode($journals->raw, true);
 
-        //Create an ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-
-        //Create the esi class varialble
-        $esi = new Eseye($authentication);
-        
-        //Set our current page to 1 which is the one we are starting on.
-        $currentPage = 1;
-        //Set our default total pages to 1 in case our try section fails out.
-        $totalPages = 1;
-
-        //If more than one page is found, decode the first set of wallet entries, then call for the next pages
-        do {
-            //Call the first page of the wallet journal, as we are always going to get at least one page.
-            //If we have more pages, then we will continue through the while loop.
-            try {
-                $journals = $esi->page($currentPage)
-                                ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
-                    'corporation_id' => 98251577,
-                    'division'  => 3,
-                ]);
-            } catch(RequestFailedException $e) {
-                return $e->getEsiResponse();
-            }
-
-            //Set the total pages we need to cycle through.
-            $totalPages = $journals->pages;
-            //Decode the wallet from json into an array
-            $wallet = json_decode($journals->raw, true);
-            //For each journal entry, attempt to store it in the database.
+        //For each transactional entry, attempt to store it in the database.
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
                 if($division == 3 && $charId == 94415555) {
@@ -211,11 +130,6 @@ class FinanceHelper {
                     }
                 }                
             }
-            
-            //Increment the current page we are on.
-            $currentPage++;
-        //Continue looping through the do while loop until the current page is greater than or equal to the total pages.
-        } while ($currentPage < $totalPages);
     }
 
     public function GetWalletJournal($division, $charId) {

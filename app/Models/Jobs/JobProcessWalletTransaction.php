@@ -17,7 +17,6 @@ class JobProcessWalletTransaction extends Model
     protected $fillable = [
         'charId',
         'division',
-        'page',
     ];
 }
 

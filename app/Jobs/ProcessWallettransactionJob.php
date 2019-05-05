@@ -15,7 +15,7 @@ use App\Library\Finances\Helper\FinanceHelper;
 //App Models
 use App\Models\Jobs\JobProcessWalletTransaction;
 
-class ProcessWallettransactionJob implements ShouldQueue
+class ProcessWalletTransactionJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -57,7 +57,7 @@ class ProcessWallettransactionJob implements ShouldQueue
         //Declare the class variables
         $finance = new FinanceHelper();
 
-        $finance->GetWalletTransactionPage($this->division, $this->charId, $this->page);
+        $finance->GetWalletTransaction($this->division, $this->charId);
 
         //After the job is completed, delete the job
         $this->delete();
