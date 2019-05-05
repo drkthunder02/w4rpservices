@@ -99,14 +99,14 @@ class SendEveMailJob implements ShouldQueue
         } catch(RequestFailedException $e) {
             return null;
         }
-
-        $this->delete();
-
+        
         //If the job is completed, mark down the completed job in the status table for jobs
         $job = new JobStatus;
         $job->job_name = $this->getName();
         $job->complete = true;
         $job->save();
+
+        $this->delete();
     }
 
     /**

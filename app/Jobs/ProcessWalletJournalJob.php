@@ -63,14 +63,14 @@ class ProcessWalletJournalJob implements ShouldQueue
 
         $finance->GetWalletJournalPage($this->division, $this->charId, $this->page);
 
-        //After the job is completed, delete the job
-        $this->delete();
-
         //If the job is completed, mark down the completed job in the status table for jobs
         $job = new JobStatus;
         $job->job_name = $this->getName();
         $job->complete = true;
         $job->save();
+
+        //After the job is completed, delete the job
+        $this->delete();
     }
 
     /**
