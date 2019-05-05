@@ -2,9 +2,11 @@
 
 namespace Commands\Library;
 
+//Internal Libraries
 use DB;
 use Carbon\Carbon;
 
+//Models
 use App\Models\ScheduledTask\ScheduleJob;
 
 class CommandHelper {
@@ -38,6 +40,9 @@ class CommandHelper {
         ]);
     }
 
+    public function CleanJobStatusTable() {
+        DB::table('schedule_jobs')->where('system_time', '<', Carbon::now()->subMonths(6))->delete();
+    }
 }
 
 ?>

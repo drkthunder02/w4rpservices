@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 use DB;
 
-use App\Jobs\SendEveMail;
+//Jobs
+use App\Jobs\SendEveMailJob;
+
+//Libraries
 use Commands\Library\CommandHelper;
 use App\Library\Finances\Helper\FinanceHelper;
 use App\Library\Structures\StructureTaxHelper;
 use App\Library\Esi\Esi;
-use App\Library\Esi\Mail;
 
+//Models
 use App\Models\Market\MonthlyMarketTax;
 use App\Models\ScheduledTask\ScheduleJob;
-use App\Models\Finances\CorpMarketJournal;
 use App\Models\Corporation\CorpStructure;
 use App\Models\User\UserToCorporation;
-use App\Models\Mail\EveMail;
-use App\Models\Esi\EsiScope;
-use App\Models\Esi\EsiToken;
+use App\Models\Jobs\JobSendEveMail;
 
 class CalculateMarketTaxCommand extends Command
 {
@@ -73,29 +73,31 @@ class CalculateMarketTaxCommand extends Command
         $corps = CorpStructure::select('corporation_id')->groupBy('corporation_id')->get();
         $this->line('Got all of the  corps with markets.' . sizeof($corps));
         foreach($corps as $corp) {
-            $finalTaxes = $sHelper->GetTaxes($corp->corporation_id, 'Market', $start, $end);
-            if($finalTaxes < 0.00) {
-                $finalTaxes = 0.00;
+            if($corp->corporation_id != 98287666) {
+                $finalTaxes = $sHelper->GetTaxes($corp->corporation_id, 'Market', $start, $end);
+                if($finalTaxes < 0.00) {
+                    $finalTaxes = 0.00;
+                }
+
+                //Get the info about the structures from the database
+                $info = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
+
+                $character = UserToCorporation::where(['character_id' => $info->character_id])->first();
+
+                $mail = new JobSendEveMail;
+                $mail->sender = 93738489;
+                $mail->subject = 'Market Taxes Owed';
+                $mail->body = 'Year ' . $start->year . ' ' .
+                            'Month: ' . 
+                            $start->month .
+                            '<br>Market Taxes Owed: ' .
+                            number_format($finalTaxes, 2, '.', ',') .
+                            '<br>Please remit to Spatial Forces';
+                $mail->recipient = (int)$info->character_id;
+                $mail->recipient_type = 'character';
+                SendEveMailJob::dispatch($mail);
             }
-
-            //Get the info about the structures from the database
-            $info = CorpStructure::where(['corporation_id' => $corp->corporation_id])->first();
-
-            $character = UserToCorporation::where(['character_id' => $info->character_id])->first();
-
-            $mail = new EveMail;
-            $mail->sender = 93738489;
-            $mail->subject = 'Market Taxes Owed';
-            $mail->body = 'Year ' . $start->year . ' ' .
-                        'Month: ' . 
-                        $start->month .
-                        '<br>Market Taxes Owed: ' .
-                        number_format($finalTaxes, 2, '.', ',') .
-                        '<br>Please remit to Spatial Forces';
-            $mail->recipient = (int)$info->character_id;
-            $mail->recipient_type = 'character';
-            //$mail->save();
-            SendEveMail::dispatch($mail);
+            
         }
         
         //Mark the job as finished

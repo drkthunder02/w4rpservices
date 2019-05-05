@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Models\Jobs;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class JobProcessWalletJournal extends Model
+class JobProcessWalletTransaction extends Model
 {
-    //Table Name
-    //public $table = 'job_process_wallet_journal';
-
     //Timestamps
     public $timestamps = false;
 

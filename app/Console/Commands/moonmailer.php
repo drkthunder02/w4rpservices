@@ -3,19 +3,22 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
-use App\Jobs\SendEveMail;
 use Carbon\Carbon;
+use DB;
 
+//Jobs
+use App\Jobs\SendEveMailJob;
+
+//Library
 use Commands\Library\CommandHelper;
 use App\Library\Moons\MoonMailer;
 use App\Library\Moons\MoonCalc;
-use DB;
 
+//Models
 use App\Models\Moon\Moon;
 use App\Models\Moon\MoonRent;
-use App\Models\Mail\EveMail;
 use App\Models\Mail\SentMail;
+use App\Models\Jobs\JobSendEveMail;
 
 class MoonMailerCommand extends Command
 {
@@ -99,16 +102,15 @@ class MoonMailerCommand extends Command
             }    
 
             //Send a mail to the contact listing for the moon
-            $mail = new EveMail;
+            $mail = new JobSendEveMail;
             $mail->sender = 93738489;
             $mail->subject = "Moon Rental";
             $mail->body = $body;
             $mail->recipient = (int)$rental->Contact;
             $mail->recipient_type = 'character';
-            //$mail->save();
 
             //Dispatch the job and cycle to the next moon rental
-            SendEveMail::dispatch($mail);
+            SendEveMailJob::dispatch($mail);
 
             //After the mail is dispatched, saved the sent mail record, 
             $sentmail = new SentMail;
