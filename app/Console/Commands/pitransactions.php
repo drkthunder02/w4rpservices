@@ -9,10 +9,10 @@ use Commands\Library\CommandHelper;
 use App\Library\Finances\Helper\FinanceHelper;
 
 //Jobs
-use App\Jobs\ProcessWalletJournalJob;
+use App\Jobs\ProcessWalletTransactionJob;
 
 //Models
-use App\Models\Jobs\JobProcessWalletJournal;
+use App\Models\Jobs\JobProcessWalletTransaction;
 
 class PiTransactionsCommand extends Command
 {
