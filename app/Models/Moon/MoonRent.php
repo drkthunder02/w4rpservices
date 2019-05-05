@@ -24,5 +24,6 @@ class MoonRent extends Model
         'RentalEnd',
         'Contact',
         'Price',
+        'Paid_Until',
     ];
 }

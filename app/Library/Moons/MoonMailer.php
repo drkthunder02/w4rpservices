@@ -2,6 +2,9 @@
 
 namespace App\Library\Moons;
 
+//Internal Library
+use Carbon\Carbon;
+
 //Jobs
 use App\Jobs\SendEveMailJob;
 
@@ -15,6 +18,35 @@ use App\Models\Moon\Moon;
 use App\Models\Moon\MoonRent;
 
 class MoonMailer {
+    public function DeleteMoonRent(MoonRent $rental, Carbon $today) {
+        if($today->greaterThanOrEqualTo($rental->RentalEnd)) {
+            MoonRent::where(['id' => $rental->id])->delete();
+        }
+    }
+
+    public function PaidUntil(MoonRent $rental) {
+        return $rental->paid_until;
+    }
+
+    public function UpdateNotPaid(MoonRent $rental) {
+        Moon::where([
+            'System' => $rental->System,
+            'Planet'=> $rental->Planet,
+            'Moon'=> $rental->Moon,
+        ])->update([
+            'Paid' => 'No',
+        ]);
+    }
+
+    public function SaveSentRecord($sender, $subject, $body, $recipient, $recipientType) {
+        $sentmail = new SentMail;
+        $sentmail->sender = $sender;
+        $sentmail->subject = $subject;
+        $sentmail->body = $body;
+        $sentmail->recipient = $recipient;
+        $sentmail->recipient_type = $recipientType;
+        $sentmail->save();
+    }
 
     public function GetMoonList(MoonRent $moons) {
         //Declare the variable to be used as a global part of the function

@@ -17,7 +17,6 @@ use App\Library\Moons\MoonCalc;
 //Models
 use App\Models\Moon\Moon;
 use App\Models\Moon\MoonRent;
-use App\Models\Mail\SentMail;
 use App\Models\Jobs\JobSendEveMail;
 
 class MoonMailerCommand extends Command
@@ -59,11 +58,9 @@ class MoonMailerCommand extends Command
         $task->SetStartStatus();
 
         //Declare the moon calc class variable to utilize the library to update the price
-        $moonCalc = new MoonCalc;
         $mailer = new MoonMailer;
 
         //Create other variables
-        $price = null;
         $body = null;
 
         //Get today's date.
@@ -104,33 +101,18 @@ class MoonMailerCommand extends Command
             $mail->body = $body;
             $mail->recipient = (int)$contact;
             $mail->recipient_type = 'character';
-
-            //Dispatch the job and cycle to the next moon rental
             SendEveMailJob::dispatch($mail);
 
-            //After the mail is dispatched, saved the sent mail record, 
-            $sentmail = new SentMail;
-            $sentmail->sender = $mail->sender;
-            $sentmail->subject = $mail->subject;
-            $sentmail->body = $mail->body;
-            $sentmail->recipient = $mail->recipient;
-            $sentmail->recipient_type = $mail->recipient_type;
-            $sentmail->save();
+            //After the mail is dispatched, saved the sent mail record
+            $moonMailer->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
 
             //Delete the record from the database
             foreach($rentals as $rental) {
-                if($today->greaterThanOrEqualTo($rental->RentalEnd)) {
-                    MoonRent::where(['id' => $rental->id])->delete();
-                }
+                //Delete the moon rental
+                $moonMailer->DeleteMoonRental($rental, $today);
 
                 //Mark the moon as not paid for the next month
-                Moon::where([
-                    'System' => $rental->System,
-                    'Planet' => $rental->Planet,
-                    'Moon' => $rental->Moon,
-                ])->update([
-                    'Paid' => 'No',
-                ]);
+                $moonMailer->UpdateNotPaid($rental);
             }
         }
 

@@ -47,6 +47,7 @@ class CreateMoonsTable extends Migration
                 $table->string('Price');
                 $table->string('Type');
                 $table->string('Paid');
+                $table->string('Paid_Until')->nullable();
             });
         }
     }

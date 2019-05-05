@@ -31,5 +31,7 @@ class Moon extends Model
         'FourthQuantity',
         'RentalCorp',
         'RentalEnd',
+        'Paid',
+        'Paid_Until',
     ];
 }
