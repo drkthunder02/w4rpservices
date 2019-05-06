@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <h2>Register Structure</h2>
-    {!! Form::open(['action' => 'RegisterStructureController@storeStructure', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'Structures\RegisterStructureController@storeStructure', 'method' => 'POST']) !!}
     <div class="form-group">
         {{ Form::label('region', 'Region') }}
         {{ Form::text('region', '', ['class' => 'form-control']) }}

@@ -13,7 +13,7 @@
 ?>
 <div class="container">
     <h2>Select Scopes for ESI</h2>
-    {!! Form::open(['action' => 'EsiScopeController@redirectToProvider', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'Auth\EsiScopeController@redirectToProvider', 'method' => 'POST']) !!}
         @foreach($scopes as $scope)
             @if($scope->scope == 'publicData')
                 <div class="form-group col-md-6">

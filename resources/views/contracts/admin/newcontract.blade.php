@@ -14,7 +14,7 @@
                     New Contracts
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['action' => 'ContractAdminController@storeNewContract', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Contracts\ContractAdminController@storeNewContract', 'method' => 'POST']) !!}
                         <div class="form-group">
                             {{ Form::label('name', 'Contract Name') }}
                             {{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Some Name']) }}

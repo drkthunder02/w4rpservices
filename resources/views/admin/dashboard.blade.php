@@ -23,7 +23,7 @@
                         Remove User
                     </div>
                     <div class="card-body">
-                        {!! Form::open(['action' => 'AdminController@removeUser', 'method' => 'POST']) !!}
+                        {!! Form::open(['action' => 'Dashboard\AdminController@removeUser', 'method' => 'POST']) !!}
                         <div class="form-group">
                             {{ Form::label('user', 'User') }}
                             {{ Form::select('user', $data['users'], null, ['class' => 'form-control']) }}
@@ -43,7 +43,7 @@
                         Add Permission for User
                     </div>
                     <div class="card-body">
-                        {!! Form::open(['action' => 'AdminController@addPermission', 'method' => 'POST']) !!}
+                        {!! Form::open(['action' => 'Dashboard\AdminController@addPermission', 'method' => 'POST']) !!}
                         <div class="form-group">
                             {{ Form::label('user', 'User') }}
                             {{ Form::select('user', $data['users'], null, ['class' => 'form-control']) }}
@@ -64,7 +64,7 @@
                         Modify User Role
                     </div>
                     <div class="card-body">
-                        {!! Form::open(['action' => 'AdminController@modifyRole', 'method' => 'POST']) !!}
+                        {!! Form::open(['action' => 'Dashboard\AdminController@modifyRole', 'method' => 'POST']) !!}
                         <div class="form-group">
                             {{ Form::label('user', 'User') }}
                             {{ Form::select('user', $data['users'], null, ['class' => 'form-control']) }}
@@ -85,7 +85,7 @@
                             Add Allowed Login
                         </div>
                         <div class="card-body">
-                            {!! Form::open(['action' => 'AdminController@addAllowedLogin', 'method' => 'POST']) !!}
+                            {!! Form::open(['action' => 'Dashboard\AdminController@addAllowedLogin', 'method' => 'POST']) !!}
                             <div class="form-group">
                                 {{ Form::label('allowedEntityId', 'Allowed Entity ID') }}
                                 {{ Form::text('allowedEntityId', '', ['class' => 'form-control']) }}
@@ -113,7 +113,7 @@
                             Remove Allowed Login
                         </div>
                         <div class="card-body">
-                            {!! Form::open(['action' => 'AdminController@removeAllowedLogin', 'method' => 'POST']) !!}
+                            {!! Form::open(['action' => 'Dashboard\AdminController@removeAllowedLogin', 'method' => 'POST']) !!}
                             <div class="form-group">
                                 {{ Form::label('removeAllowedLogin', 'Remove Entity') }}
                                 {{ Form::select('removeAllowedLogin', $entities, null, ['class' => 'form-control']) }}

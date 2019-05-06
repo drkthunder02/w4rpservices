@@ -1,7 +1,7 @@
 @extends('layouts.b4')
 @section('content')
 
-{!! Form::open(['action' => 'MoonsAdminController@updateMoonPaid', 'method' => 'POST']) !!}
+{!! Form::open(['action' => 'Moons\MoonsAdminController@updateMoonPaid', 'method' => 'POST']) !!}
 <div class="container col-md-12">
         <table class="table table-striped">
             <thead>

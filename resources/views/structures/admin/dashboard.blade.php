@@ -12,7 +12,7 @@
                 Add Tax Ratio for Structure
             </div>
             <div class="card-body">
-                {!! Form::open(['action' => 'StructureAdminController@storeTaxRatio', 'method' => 'POST']) !!}
+                {!! Form::open(['action' => 'Structures\StructureAdminController@storeTaxRatio', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{ Form::label('corpId', 'Corporation ID:') }}
                     {{ Form::text('corpId', '', ['class' => 'form-control']) }}
@@ -38,7 +38,7 @@
                 Update Tax Ratio for Structure
             </div>
             <div class="card-body">
-                {!! Form::open(['action' => 'StructureAdminController@updateTaxRatio', 'method' => 'POST']) !!}
+                {!! Form::open(['action' => 'Structures\StructureAdminController@updateTaxRatio', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{ Form::label('corporation', 'Corporation Name') }}
                     {{ Form::text('corporation', '', ['class' => 'form-control']) }}

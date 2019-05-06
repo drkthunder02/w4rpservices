@@ -17,7 +17,7 @@
                     Type: {{ $contract['type'] }}<br>
                     End Date:  {{ $contract['end_date'] }}<br>
                     Description:  {{ $contract['body'] }}<br>
-                    {!! Form::open(['action' => 'ContractController@modifyBid', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Contracts\ContractController@modifyBid', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('bid', 'Bid') }}
                         {{ Form::text('bid', '', ['class' => 'form-control', 'placeholder' => '1.0']) }}

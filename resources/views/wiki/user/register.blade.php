@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <h3>Your Username is: {{ $name }} </h3><br>
-                    {!! Form::open(['action' => 'WikiController@storeRegister', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Wiki\WikiController@storeRegister', 'method' => 'POST']) !!}
                     <div class="form-group col-md-6">
                         {{ Form::label('password', 'Password') }}
                         {{ Form::password('password', ['class' => 'form-control']) }}

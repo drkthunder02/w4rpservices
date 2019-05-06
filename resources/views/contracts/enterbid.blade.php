@@ -14,7 +14,7 @@
                     Enter Bid
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['action' => 'ContractController@storeBid', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Contracts\ContractController@storeBid', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('bid', 'Bid') }}
                         {{ Form::text('bid', '', ['class' => 'form-control', 'placeholder' => '1.0']) }}
