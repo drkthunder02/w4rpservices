@@ -14,8 +14,7 @@ use App\Models\Moon\ItemComposition;
 use App\Models\Moon\Moon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
-use App\Models\MoonRent\MoonRent;
-use App\Models\Finances\PlayerDonationJournal;
+use App\Models\MoonRent\MoonRental;
 
 //Library
 use App\Library\Moons\MoonCalc;
@@ -39,6 +38,7 @@ class MoonsAdminController extends Controller
     }
 
     public function updateMoon() {
+        //Return the view and the form from the blade display
         return view('moons.admin.updatemoon');
     }
 
@@ -70,7 +70,7 @@ class MoonsAdminController extends Controller
 
         //Insert or update the moon rental database entry
         if($allianceId = 99004116) {
-            MoonRent::insert([
+            MoonRental::insert([
                 'System' => $request->system,
                 'Planet' => $request->planet,
                 'Moon' => $request->moon,
@@ -82,7 +82,7 @@ class MoonsAdminController extends Controller
                 'Paid' => 'No',
             ]);
         } else {
-            MoonRent::insert([
+            MoonRental::insert([
                 'System' =>$request->system,
                 'Planet' => $request->planet,
                 'Moon' => $request->moon,
@@ -148,7 +148,7 @@ class MoonsAdminController extends Controller
         //We need to insert a price based on whether part of Legacy or part of Warped Intentions
         //Will need an if then else statement to complete this operation
         if($allianceId = 99004116) {
-            MoonRent::insert([
+            MoonRental::insert([
                 'System' => $request->system,
                 'Planet' => $request->planet,
                 'Moon' => $request->moon,
@@ -159,7 +159,7 @@ class MoonsAdminController extends Controller
                 'Type' => 'alliance',
             ]);
         } else {
-            MoonRent::insert([
+            MoonRental::insert([
                 'System' =>$request->system,
                 'Planet' => $request->planet,
                 'Moon' => $request->moon,
@@ -207,7 +207,7 @@ class MoonsAdminController extends Controller
             $paid = $moon->Paid;
 
             //We need the contact information in character name format for the view
-            $contact = MoonRent::where([
+            $contact = MoonRental::where([
                 'System' => $moon->System,
                 'Planet' => $moon->Planet,
                 'Moon' => $moon->Moon,

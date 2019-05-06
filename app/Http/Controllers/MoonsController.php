@@ -13,7 +13,7 @@ use App\Models\Moon\ItemComposition;
 use App\Models\Moon\Moon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
-use App\Models\MoonRent\MoonRent;
+use App\Models\MoonRent\MoonRental;
 
 use App\Library\Moons\MoonCalc;
 
