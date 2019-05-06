@@ -63,12 +63,6 @@ class MoonsController extends Controller
             $worth = $moonCalc->SpatialMoonsTotalWorth($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                        $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
-            $rental = MoonRent::where([
-                'System' => $moon->System,
-                'Planet' => $moon->Planet,
-                'Moon' => $moon->Moon,
-            ])->first();
-
             if($type == 'W4RP') {
                 $moonprice = $price['alliance'];
             } else {
