@@ -180,6 +180,8 @@ class MoonsAdminController extends Controller
     public function displayMoonsAdmin() {
         $lookup = new LookupHelper;
         $contact = '';
+        $paid = '';
+        $rentalEnd = '';
 
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
@@ -197,18 +199,28 @@ class MoonsAdminController extends Controller
                 'Moon' => $moon->Moon,
             ])->first();
 
-            dd($rental);
+            //Check if their is a current rental for a moon going on
+            if($rental == false) {
+                //If we don't find a rental record, mark the moon as not paid
+                $paid = 'No';
 
-            //Calculate hte price of the moon based on what is in the moon
-            $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+                //If we don't find a rental record, set the rental date as last month
+                $rentalTemp = Carbon::now()->subMonth();
+                $rentalEnd = $rentalTemp->format('m-d');
 
-            //Set the rental end date
-            $rentalTemp = new Carbon($rental->RentalEnd);
-            //Set the rental end date as month / day
-            $rentalEnd = $rentalTemp->format('m-d');                        
+                //Set the contact info
+                $contact = 'None';
+            } else {
+                //If we find a rental record, mark the moon as whether it's paid or not
+                $paid = $rental->Paid;
 
-            //Set the paid as yes or no for the check box in the blade template
-            $paid = $moon->Paid;
+                //Set the rental date up
+                $rentalTemp = new Carbon($rental->RentalEnd);
+                $rentalEnd = $rentalTemp->format('m-d');
+
+                //Set the contact name
+                $contact = $lookup->CharacterName($rental->Contact);
+            }
 
             //We need the contact information in character name format for the view
             $contact = MoonRental::where([
@@ -234,6 +246,9 @@ class MoonsAdminController extends Controller
             } else {
                 $color = 'table-danger';
             }
+
+            //Calculate hte price of the moon based on what is in the moon
+            $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             
             //Add the data to the html string to be passed to the view
             array_push($table, [
