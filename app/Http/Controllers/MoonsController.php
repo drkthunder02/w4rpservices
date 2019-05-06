@@ -30,6 +30,8 @@ class MoonsController extends Controller
      * Function to display the moons and pass data to the blade template
      */
     public function displayMoons() {
+        $rentalEnd = '';
+
         //Get the user type from the user Auth class
         $type = Auth::user()->user_type;
         //Setup calls to the MoonCalc class
@@ -43,9 +45,15 @@ class MoonsController extends Controller
         $table = array();
         $moonprice = null;
         foreach($moons as $moon) {
+            //get the rental data for the moon
+            $rental = MoonRent::where([
+                'System' => $moon->System,
+                'Planet' => $moon->Planet,
+                'Moon' => $moon->Moon,
+            ])->first();
+
             //Setup formats as needed
-            $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
-            $rentalTemp = new Carbon($moon->RentalEnd);
+            $rentalTemp = new Carbon($rental->RentalEnd);
             $rentalEnd = $rentalTemp->format('m-d');
             $today = Carbon::now();
 
@@ -77,7 +85,7 @@ class MoonsController extends Controller
             
             //Add the data to the html string to be passed to the view
             array_push($table, [
-                'SPM' => $spm,
+                'SPM' => $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon,
                 'StructureName' => $moon->StructureName,
                 'FirstOre' => $moon->FirstOre,
                 'FirstQuantity' => $moon->FirstQuantity,
