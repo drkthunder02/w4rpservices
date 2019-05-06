@@ -10,12 +10,16 @@
         {{ Form::text('planet', '', ['class' => 'form-control', 'placeholder' => 'Planet']) }}
         {{ Form::label('moon', 'Moon') }}
         {{ Form::text('moon', '', ['class' => 'form-control', 'placeholder' => 'Moon']) }}
+    </div>
+    <div class="form-group col-md-6">
         {{ Form::label('renter', 'Renter') }}
         {{ Form::text('renter', '', ['class' => 'form-control', 'placeholder' => 'Renter']) }}
+        {{ Form::label('contact', 'Contact') }}
+    </div>
+    <div class="form-group col-md-6">
+        {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' => 'Character']) }}
         {{ Form::label('date', 'Rental End Date') }}
         {{ Form::date('date', \Carbon\Carbon::now()->addMonth(), ['class' => 'form-control']) }}
-        {{ Form::label('contact', 'Contact') }}
-        {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' => 'Character']) }}
     </div>
     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}

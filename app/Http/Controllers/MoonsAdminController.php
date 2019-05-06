@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+//Internal Library
 use Illuminate\Http\Request;
-
 use Auth;
 use DB;
 use Carbon\Carbon;
 
+//Models
 use App\Models\Moon\Config;
 use App\Models\Moon\ItemComposition;
 use App\Models\Moon\Moon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
-use App\Models\Moon\MoonRent;
-
+use App\Models\MoonRent\MoonRent;
 use App\Models\Finances\PlayerDonationJournal;
+
+//Library
 use App\Library\Moons\MoonCalc;
 use App\Library\Esi\Esi;
 use App\Library\Lookups\LookupHelper;
@@ -38,6 +40,63 @@ class MoonsAdminController extends Controller
 
     public function updateMoon() {
         return view('moons.admin.updatemoon');
+    }
+
+    public function storeUpdateMoonRental(Request $request) {
+        $moonCalc = new MoonCalc;
+        $lookup = new LookupHelper;
+
+        $this->validate($request, [
+            'system' => 'required',
+            'planet' => 'required',
+            'moon' => 'required',
+            'renter' => 'required',
+            'date' => 'required',
+            'contact' => 'required',
+        ]);
+
+        //Take the  contact name and create a character_id from it
+        if($request->contact == 'None') {
+            $contact = 'None';
+        } else {
+            $contact = $lookup->CharacterNameToId($request->contact);
+        }
+
+        //Let's find the corporation and alliance information to ascertain whethery they are in Warped Intentions or another Legacy Alliance
+        $allianceId = $lookup->LookupCorporation($lookup->LookupCharacter($contact));
+
+        //Create the date
+        $date = new Carbon($request->date . '00:00:01');
+
+        //Insert or update the moon rental database entry
+        if($allianceId = 99004116) {
+            MoonRent::insert([
+                'System' => $request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+                'RentalCorp' => $request->renter,
+                'RentalEnd' => $date,
+                'Contact' => $contact,
+                'Price' => $price['alliance'],
+                'Type' => 'alliance',
+                'Paid' => 'No',
+            ]);
+        } else {
+            MoonRent::insert([
+                'System' =>$request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+                'RentalCorp' => $request->renter,
+                'RentalEnd' => $date,
+                'Contact' => $contact,
+                'Price' => $price['outofalliance'],
+                'Type' => 'outofalliance',
+                'Paid' => 'No',
+            ]);
+        }
+
+        //Redirect to the update moon page
+        return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
     }
 
     public function storeUpdateMoon(Request $request) {
@@ -113,66 +172,6 @@ class MoonsAdminController extends Controller
         }
         
         return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
-    }
-
-    public function addMoon() {
-        return view('moons.admin.addmoon');
-    }
-
-    /**
-     * Add a new moon into the database
-     * 
-     * @return \Illuminate\Http\Reponse
-     */
-    public function storeMoon(Request $request) {
-        $this->validate($request, [
-            'region' => 'required',
-            'system' => 'required',
-            'structure' => 'required',
-        ]);
-
-        if($request->input('firstquan') < 1.00) {
-            $firstQuan = $request->input('firstquan') * 100.00;
-        } else {
-            $firstQuan = $request->input('firstquan');
-        }
-
-        if($request->input('secondquan') < 1.00) {
-            $firstQuan = $request->input('secondquan') * 100.00;
-        } else {
-            $firstQuan = $request->input('secondquan');
-        }
-
-        if($request->input('thirdquan') < 1.00) {
-            $firstQuan = $request->input('thirdquan') * 100.00;
-        } else {
-            $firstQuan = $request->input('thirdquan');
-        }
-
-        if($request->input('fourthquan') < 1.00) {
-            $firstQuan = $request->input('fourthquan') * 100.00;
-        } else {
-            $firstQuan = $request->input('fourthquan');
-        }
-
-        // Add new moon
-        $moon = new Moon;
-        $moon->Region = $request->input('region');
-        $moon->System = $request->input('system');
-        $moon->Planet = $request->input('planet');
-        $moon->Moon = $request->input('moon');
-        $moon->StructureName = $request->input('structure');
-        $moon->FirstOre = $request->input('firstore');
-        $moon->FirstQuantity = $request->input('firstquan');
-        $moon->SecondOre = $request->input('secondore');
-        $moon->SecondQuantity = $request->input('secondquan');
-        $moon->ThirdOre = $request->input('thirdore');
-        $moon->ThirdQuantity = $request->input('thirdquan');
-        $moon->FourthOre = $request->input('fourthore');
-        $moon->FourthQuantity = $request->input('fourthquan');
-        $moon->save();
-
-        return redirect('/dashboard')->with('success', 'Moon Added');
     }
 
     /**
@@ -271,5 +270,69 @@ class MoonsAdminController extends Controller
 
         //Redirect back to the moon page, which should call the page to be displayed correctly
         return redirect('/moons/admin/display');
+    }
+
+    /**
+     * Display function for adding a new rental moon to the pool
+     * 
+     */
+    public function addMoon() {
+        return view('moons.admin.addmoon');
+    }
+
+    /**
+     * Add a new moon into the database
+     * 
+     * @return \Illuminate\Http\Reponse
+     */
+    public function storeMoon(Request $request) {
+        $this->validate($request, [
+            'region' => 'required',
+            'system' => 'required',
+            'structure' => 'required',
+        ]);
+
+        if($request->input('firstquan') < 1.00) {
+            $firstQuan = $request->input('firstquan') * 100.00;
+        } else {
+            $firstQuan = $request->input('firstquan');
+        }
+
+        if($request->input('secondquan') < 1.00) {
+            $firstQuan = $request->input('secondquan') * 100.00;
+        } else {
+            $firstQuan = $request->input('secondquan');
+        }
+
+        if($request->input('thirdquan') < 1.00) {
+            $firstQuan = $request->input('thirdquan') * 100.00;
+        } else {
+            $firstQuan = $request->input('thirdquan');
+        }
+
+        if($request->input('fourthquan') < 1.00) {
+            $firstQuan = $request->input('fourthquan') * 100.00;
+        } else {
+            $firstQuan = $request->input('fourthquan');
+        }
+
+        // Add new moon
+        $moon = new Moon;
+        $moon->Region = $request->input('region');
+        $moon->System = $request->input('system');
+        $moon->Planet = $request->input('planet');
+        $moon->Moon = $request->input('moon');
+        $moon->StructureName = $request->input('structure');
+        $moon->FirstOre = $request->input('firstore');
+        $moon->FirstQuantity = $request->input('firstquan');
+        $moon->SecondOre = $request->input('secondore');
+        $moon->SecondQuantity = $request->input('secondquan');
+        $moon->ThirdOre = $request->input('thirdore');
+        $moon->ThirdQuantity = $request->input('thirdquan');
+        $moon->FourthOre = $request->input('fourthore');
+        $moon->FourthQuantity = $request->input('fourthquan');
+        $moon->save();
+
+        return redirect('/dashboard')->with('success', 'Moon Added');
     }
 }

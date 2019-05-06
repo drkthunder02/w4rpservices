@@ -13,6 +13,7 @@ use App\Models\Moon\ItemComposition;
 use App\Models\Moon\Moon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
+use App\Models\MoonRent\MoonRent;
 
 use App\Library\Moons\MoonCalc;
 
@@ -52,6 +53,12 @@ class MoonsController extends Controller
             $worth = $moonCalc->SpatialMoonsTotalWorth($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                        $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
+            $rental = MoonRent::where([
+                'System' => $moon->System,
+                'Planet' => $moon->Planet,
+                'Moon' => $moon->Moon,
+            ])->first();
+
             if($type == 'W4RP') {
                 $moonprice = $price['alliance'];
             } else {
@@ -80,7 +87,7 @@ class MoonsController extends Controller
                 'FourthQuantity' => $moon->FourthQuantity,
                 'Price' => $moonprice,
                 'Worth' => number_format($worth, "2", ".", ","),
-                'RentalEnd' => $rentalEnd,
+                'RentalEnd' => $rental->RentalEnd,
                 'RowColor' => $color,
             ]);
         }

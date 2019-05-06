@@ -16,7 +16,7 @@ use App\Library\Moons\MoonCalc;
 
 //Models
 use App\Models\Moon\Moon;
-use App\Models\Moon\MoonRent;
+use App\Models\MoonRent\MoonRent;
 use App\Models\Jobs\JobSendEveMail;
 
 class MoonMailerCommand extends Command
@@ -81,8 +81,6 @@ class MoonMailerCommand extends Command
         foreach($contacts as $contact) {
             //Get the moons the renter is renting
             $rentals = $moonMailer->GetRentalMoons($contact);
-
-            //Retrieve the date for each moon for when the moon is rented until
             
             //Totalize the cost of the moons
             $cost = $moonMailer->TotalizeMoonCost($rentals);

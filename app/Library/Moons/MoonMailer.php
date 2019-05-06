@@ -15,7 +15,7 @@ use App\Library\Moons\MoonCalc;
 use App\Models\Jobs\JobSendEveMail;
 use App\Models\Mail\SentMail;
 use App\Models\Moon\Moon;
-use App\Models\Moon\MoonRent;
+use App\Models\MoonRent\MoonRent;
 
 class MoonMailer {
     public function DeleteMoonRent(MoonRent $rental, Carbon $today) {
@@ -29,7 +29,7 @@ class MoonMailer {
     }
 
     public function UpdateNotPaid(MoonRent $rental) {
-        Moon::where([
+        MoonRent::where([
             'System' => $rental->System,
             'Planet'=> $rental->Planet,
             'Moon'=> $rental->Moon,
@@ -89,6 +89,7 @@ class MoonMailer {
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
+            //Check the type and figure out which price to add in
             if($rental->Type == 'alliance') {
                 $totalCost += $price['alliance'];
             } else{

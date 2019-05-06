@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Moon;
+namespace App\Models\MoonRent;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +23,9 @@ class MoonRent extends Model
         'RentalCorp',
         'RentalEnd',
         'Contact',
+        'Type',
         'Price',
+        'Paid',
         'Paid_Until',
     ];
 }

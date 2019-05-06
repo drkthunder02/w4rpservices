@@ -29,9 +29,5 @@ class Moon extends Model
         'ThirdQuantity',
         'FourthOre',
         'FourthQuantity',
-        'RentalCorp',
-        'RentalEnd',
-        'Paid',
-        'Paid_Until',
     ];
 }
