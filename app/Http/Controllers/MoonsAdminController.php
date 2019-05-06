@@ -201,7 +201,7 @@ class MoonsAdminController extends Controller
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
             //Set the rental end date
-            $rentalEnd = new Carbon($rental->RentalEnd);
+            $rentalTemp = new Carbon($rental->RentalEnd);
             //Set the rental end date as month / day
             $rentalEnd = $rentalTemp->format('m-d');                        
 
