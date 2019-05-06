@@ -182,6 +182,8 @@ class MoonsAdminController extends Controller
         $contact = '';
         $paid = '';
         $rentalEnd = '';
+        $renter = '';
+        $ticker = '';
 
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
@@ -210,6 +212,11 @@ class MoonsAdminController extends Controller
 
                 //Set the contact info
                 $contact = 'None';
+
+                //Set the renter info
+                $renter = 'None';
+
+                $ticker = 'N/A';
             } else {
                 //If we find a rental record, mark the moon as whether it's paid or not
                 $paid = $rental->Paid;
@@ -220,6 +227,11 @@ class MoonsAdminController extends Controller
 
                 //Set the contact name
                 $contact = $lookup->CharacterName($rental->Contact);
+
+                //Set up the renter whether it's W4RP or another corporation
+                $corpId = $lookup->LookupCorporationId($contact);
+                $allianceId = $lookup->LookupCorporation($corpId);
+                $ticker = $lookup->LookupAllianceTicker($allianceId);
             }
 
             //Set the color for the table
@@ -241,11 +253,12 @@ class MoonsAdminController extends Controller
                 'StructureName' => $moon->StructureName,
                 'AlliancePrice' => $price['alliance'],
                 'OutOfAlliancePrice' => $price['outofalliance'],
-                'Renter' => $moon->RentalCorp,
+                'Renter' => $ticker,
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
                 'Paid' => $paid,
                 'Contact' => $contact,
+                'Renter' => $renter,
             ]);
         }
 

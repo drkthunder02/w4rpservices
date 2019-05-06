@@ -213,6 +213,24 @@ class LookupHelper {
         }
     }
 
+    public function LookupAllianceTicker($allianceId) {
+        //Get the configuration for ESI from the environmental variable
+        $config = config('esi');
+
+        //Setup a new ESI container
+        $esi = new Eseye();
+
+        try {
+            $alliance = $esi->invoke('get', '/alliances/{alliance_id}/', [
+                'alliance_id' => $allianceId,
+            ]);
+        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e){
+            return $e->getEsiResponse();
+        }
+
+        return $alliance->ticker;
+    }
+
     //Update the character lookup table as often as necessary
     public function UpdateLookupCharacter() {
         //Create a new ESI container
