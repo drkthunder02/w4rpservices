@@ -62,37 +62,98 @@ class MoonsAdminController extends Controller
             $contact = $lookup->CharacterNameToId($request->contact);
         }
 
+        if(isset($request->Paid_Until)) {
+            $paidUntil = $request->Paid_Until;
+        } else {
+            $paidUntil = null;
+        }
+
         //Let's find the corporation and alliance information to ascertain whethery they are in Warped Intentions or another Legacy Alliance
         $allianceId = $lookup->LookupCorporation($lookup->LookupCharacter($contact));
 
         //Create the date
         $date = new Carbon($request->date . '00:00:01');
 
-        //Insert or update the moon rental database entry
-        if($allianceId = 99004116) {
-            MoonRental::insert([
+        $found = MoonRental::where([
+            'System' => $request->system,
+            'Planet' => $request->planet,
+            'Moon' => $request->moon,
+            'Contact' => $contact,
+        ])->first();
+
+        //If the entry is found, we are most likely just updating an entry to include new paid until data
+        if($found) {
+            if($allianceId = 99004116) {
+                MoonRental::where([
+                    'System' => $request->system,
+                    'Planet' => $request->planet,
+                    'Moon' => $request->moon,
+                    'Contact' => $contact,
+                ])->update([
+                    'System' => $request->system,
+                    'Planet' => $request->planet,
+                    'Moon' => $request->moon,
+                    'RentalCorp' => $request->renter,
+                    'RentalEnd' => $date,
+                    'Contact' => $contact,
+                    'Price' => $price['alliance'],
+                    'Type' => 'alliance',
+                    'Paid' => $paid,
+                    'Paid_Until' => $request->paid_until,
+                ]);
+            } else {
+                MoonRental::where([
+                    'System' => $request->system,
+                    'Planet' => $request->planet,
+                    'Moon' => $request->moon,
+                    'Contact' => $contact,
+                ])->update([
+                    'System' => $request->system,
+                    'Planet' => $request->planet,
+                    'Moon' => $request->moon,
+                    'RentalCorp' => $request->renter,
+                    'RentalEnd' => $date,
+                    'Contact' => $contact,
+                    'Price' => $price['outofalliance'],
+                    'Type' => 'alliance',
+                    'Paid' => $paid,
+                    'Paid_Until' => $request->paid_until,
+                ]);
+            }
+        } else {
+            //If the entry is not found, then attempt to delete whatever existing data is there, then 
+            //insert the new data
+            MoonRental::where([
                 'System' => $request->system,
                 'Planet' => $request->planet,
                 'Moon' => $request->moon,
-                'RentalCorp' => $request->renter,
-                'RentalEnd' => $date,
-                'Contact' => $contact,
-                'Price' => $price['alliance'],
-                'Type' => 'alliance',
-                'Paid' => 'No',
-            ]);
-        } else {
-            MoonRental::insert([
-                'System' =>$request->system,
-                'Planet' => $request->planet,
-                'Moon' => $request->moon,
-                'RentalCorp' => $request->renter,
-                'RentalEnd' => $date,
-                'Contact' => $contact,
-                'Price' => $price['outofalliance'],
-                'Type' => 'outofalliance',
-                'Paid' => 'No',
-            ]);
+            ])->delete();
+            
+            if($allianceId = 99004116) {
+                MoonRental::insert([
+                    'System' => $request->system,
+                    'Planet' => $request->planet,
+                    'Moon' => $request->moon,
+                    'RentalCorp' => $request->renter,
+                    'RentalEnd' => $date,
+                    'Contact' => $contact,
+                    'Price' => $price['alliance'],
+                    'Type' => 'alliance',
+                    'Paid' => 'No',
+                ]);
+            } else {
+                MoonRental::insert([
+                    'System' =>$request->system,
+                    'Planet' => $request->planet,
+                    'Moon' => $request->moon,
+                    'RentalCorp' => $request->renter,
+                    'RentalEnd' => $date,
+                    'Contact' => $contact,
+                    'Price' => $price['outofalliance'],
+                    'Type' => 'outofalliance',
+                    'Paid' => 'No',
+                ]);
+            }
         }
 
         //Redirect to the update moon page

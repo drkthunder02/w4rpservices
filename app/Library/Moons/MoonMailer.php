@@ -29,13 +29,17 @@ class MoonMailer {
     }
 
     public function UpdateNotPaid(MoonRent $rental) {
-        MoonRent::where([
-            'System' => $rental->System,
-            'Planet'=> $rental->Planet,
-            'Moon'=> $rental->Moon,
-        ])->update([
-            'Paid' => 'No',
-        ]);
+        $today = Carbon::now();
+
+        if($today >= $rental->Paid_Until) {
+            MoonRent::where([
+                'System' => $rental->System,
+                'Planet'=> $rental->Planet,
+                'Moon'=> $rental->Moon,
+            ])->update([
+                'Paid' => 'No',
+            ]);
+        }
     }
 
     public function SaveSentRecord($sender, $subject, $body, $recipient, $recipientType) {
