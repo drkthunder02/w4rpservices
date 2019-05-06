@@ -16,8 +16,9 @@ use App\Library\Moons\MoonCalc;
 
 //Models
 use App\Models\Moon\Moon;
-use App\Models\MoonRent\MoonRent;
+use App\Models\MoonRent\MoonRental;
 use App\Models\Jobs\JobSendEveMail;
+use App\Models\Mail\SentMail;
 
 class MoonMailerCommand extends Command
 {
@@ -74,19 +75,19 @@ class MoonMailerCommand extends Command
         $today->hour = 0;
 
         //Get all contacts from the rentals group
-        $contacts = MoonRent::select('Contact')->groupBy('Contact')->get();
+        $contacts = MoonRental::select('Contact')->groupBy('Contact')->get();
 
         //For each of the contacts totalize the moon rental, and create the mail to send to them,
         //then update parameters of the moon
         foreach($contacts as $contact) {
             //Get the moons the renter is renting
-            $rentals = $moonMailer->GetRentalMoons($contact);
+            $rentals = $this->GetRentalMoons($contact);
             
             //Totalize the cost of the moons
-            $cost = $moonMailer->TotalizeMoonCost($rentals);
+            $cost = $this->TotalizeMoonCost($rentals);
 
             //Get the list of moons in a list format
-            $listItems = $moonMailer->GetMoonList($rentals);
+            $listItems = $this->GetMoonList($rentals);
 
             //Build the mail body
             $body = "Moon Rent is due for the following moons:<br>";
@@ -108,19 +109,128 @@ class MoonMailerCommand extends Command
             SendEveMailJob::dispatch($mail);
 
             //After the mail is dispatched, saved the sent mail record
-            $moonMailer->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
+            $this->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
 
             //Delete the record from the database
             foreach($rentals as $rental) {
                 //Delete the moon rental
-                $moonMailer->DeleteMoonRental($rental, $today);
+                $this->DeleteMoonRental($rental, $today);
 
                 //Mark the moon as not paid for the next month
-                $moonMailer->UpdateNotPaid($rental);
+                $this->UpdateNotPaid($rental);
             }
         }
 
         //Mark the job as finished
         $task->SetStopStatus();
+    }
+
+    private function DeleteMoonRent(MoonRental $rental, Carbon $today) {
+        if($today->greaterThanOrEqualTo($rental->RentalEnd)) {
+            MoonRental::where(['id' => $rental->id])->delete();
+        }
+    }
+
+    private function PaidUntil(MoonRental $rental) {
+        return $rental->paid_until;
+    }
+
+    private function UpdateNotPaid(MoonRental $rental) {
+        $today = Carbon::now();
+
+        if($today >= $rental->Paid_Until) {
+            MoonRental::where([
+                'System' => $rental->System,
+                'Planet'=> $rental->Planet,
+                'Moon'=> $rental->Moon,
+            ])->update([
+                'Paid' => 'No',
+            ]);
+        }
+    }
+
+    private function SaveSentRecord($sender, $subject, $body, $recipient, $recipientType) {
+        $sentmail = new SentMail;
+        $sentmail->sender = $sender;
+        $sentmail->subject = $subject;
+        $sentmail->body = $body;
+        $sentmail->recipient = $recipient;
+        $sentmail->recipient_type = $recipientType;
+        $sentmail->save();
+    }
+
+    private function GetMoonList(MoonRent $moons) {
+        //Declare the variable to be used as a global part of the function
+        $list = array();
+
+        //For each of the moons, build the System Planet and Moon.
+        foreach($moons as $moon) {
+            $temp = 'System: ' . $moon->System;
+            $temp .= 'Planet: ' . $moon->Planet;
+            $temp .= 'Moon: ' . $moon->Moon;
+            //Push the new string onto the array list
+            array_push($list, $temp);
+        }
+
+        //Return the list
+        return $list;
+    }
+
+    private function GetRentalMoons($contact) {
+        $rentals = MoonRental::where([
+            'Contact' => $contact,
+        ])->get();
+
+        return $rentals;
+    }
+
+    private function TotalizeMoonCost($rentals) {
+        //Delcare variables and classes
+        $moonCalc = new MoonCalc;
+        $totalCost = 0.00;
+
+        foreach($rentals as $rental) {
+            $moon = Moon::where([
+                'System' => $rental->System,
+                'Planet' => $rental->Planet,
+                'Moon' => $rental->Moon,
+            ])->first();
+
+            //Get the updated price for the moon
+            $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
+                                                    $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+
+            //Check the type and figure out which price to add in
+            if($rental->Type == 'alliance') {
+                $totalCost += $price['alliance'];
+            } else{
+                $totalCost += $price['outofalliance'];
+            }
+        }
+
+        //Return the total cost back to the calling function
+        return $totalCost;
+    }
+
+    private function GetRentalType($rentals) {
+        $alliance = 0;
+        $outofalliance = 0;
+  
+        //Go through the data and log whether the renter is in the alliance,
+        //or the renter is out of the alliance
+        foreach($rentals as $rental) {
+            if($rental->Type == 'alliance') {
+                $alliance++;
+            } else {
+                $outofalliance++;
+            }
+        }
+
+        //Return the rental type
+        if($alliance > $outofalliance) {
+            return 'alliance';
+        } else {
+            return 'outofalliance';
+        }
     }
 }
