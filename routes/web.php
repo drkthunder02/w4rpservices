@@ -24,76 +24,76 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard', 'DashboardController@index');
 
     //Moon Controller display pages
-    Route::get('/moons/display', 'MoonsController@displayMoons');
-    Route::get('/moons/display/worth', 'MoonsController@displayTotalWorthForm');
-    Route::post('displayTotalWorth', 'MoonsController@displayTotalWorth');
+    Route::get('/moons/display', 'Moons\MoonsController@displayMoons');
+    Route::get('/moons/display/worth', 'Moons\MoonsController@displayTotalWorthForm');
+    Route::post('displayTotalWorth', 'Moons\MoonsController@displayTotalWorth');
 
     //Moon Admin Controller display pages
-    Route::get('/moons/admin/addmoon', 'MoonsAdminController@addMoon');
-    Route::post('/moon/admin/addmoon', 'MoonsAdminController@storeMoon');
-    Route::get('/moons/admin/display', 'MoonsAdminController@displayMoonsAdmin');
-    Route::get('/moons/admin/updatemoon', 'MoonsAdminController@updateMoon');
-    Route::post('/moons/admin/updatemoon', 'MoonsAdminController@storeUpdateMoon');
-    Route::get('/moons/admin/journal', 'MoonsAdminController@showJournalEntries');
-    Route::post('/moons/admin/display', 'MoonsAdminController@updateMoonPaid');
+    Route::get('/moons/admin/addmoon', 'Moons\MoonsAdminController@addMoon');
+    Route::post('/moon/admin/addmoon', 'Moons\MoonsAdminController@storeMoon');
+    Route::get('/moons/admin/display', 'Moons\MoonsAdminController@displayMoonsAdmin');
+    Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
+    Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
+    Route::get('/moons/admin/journal', 'Moons\MoonsAdminController@showJournalEntries');
+    Route::post('/moons/admin/display', 'Moons\MoonsAdminController@updateMoonPaid');
 
     //Wiki Controller display pages
-    Route::get('/wiki/register', 'WikiController@displayRegister');
-    Route::post('/wiki/register', 'WikiController@storeRegister');
-    Route::get('/wiki/changepassword', 'WikiController@displayChangePassword');
-    Route::post('/wiki/changepassword', 'WikiController@changePassword');
+    Route::get('/wiki/register', 'Wiki\WikiController@displayRegister');
+    Route::post('/wiki/register', 'Wiki\WikiController@storeRegister');
+    Route::get('/wiki/changepassword', 'Wiki\WikiController@displayChangePassword');
+    Route::post('/wiki/changepassword', 'Wiki\WikiController@changePassword');
 
     //Admin Controller display pages
-    Route::get('/admin/dashboard', 'AdminController@displayDashboard');
-    Route::post('/admin/add/role', 'AdminController@addRole');
-    Route::post('/admin/remove/role', 'AdminController@removeRole');
-    Route::post('/admin/add/permission', 'AdminController@addPermission');
-    Route::post('/admin/remove/user', 'AdminController@removeUser');
-    Route::post('/admin/modify/role', 'AdminController@modifyRole');
-    Route::post('/admin/add/allowedlogin', 'AdminController@addAllowedLogin');
-    Route::post('/admin/rmoeve/allowedlogin', 'AdminController@removeAllowedLogin');
+    Route::get('/admin/dashboard', 'Dashboard\AdminController@displayDashboard');
+    Route::post('/admin/add/role', 'Dashboard\AdminController@addRole');
+    Route::post('/admin/remove/role', 'Dashboard\AdminController@removeRole');
+    Route::post('/admin/add/permission', 'Dashboard\AdminController@addPermission');
+    Route::post('/admin/remove/user', 'Dashboard\AdminController@removeUser');
+    Route::post('/admin/modify/role', 'Dashboard\AdminController@modifyRole');
+    Route::post('/admin/add/allowedlogin', 'Dashboard\AdminController@addAllowedLogin');
+    Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminController@removeAllowedLogin');
 
     //Register Structures Controller display pages
-    Route::get('/structures/register', 'RegisterStructureController@displayRegisterstructure');
-    Route::post('/structures/register', 'RegisterStructureController@storeStructure');
+    Route::get('/structures/register', 'Structures\RegisterStructureController@displayRegisterstructure');
+    Route::post('/structures/register', 'Structures\RegisterStructureController@storeStructure');
     
     //Structure Admin Controller display pages
-    Route::get('/structures/admin/dashboard', 'StructureAdminController@displayDashboard');
-    Route::post('/structures/admin/add/taxratio', 'StructureAdminController@storeTaxRatio');
-    Route::post('/structures/admin/update/taxratio', 'StructureAdminController@updateTaxRatio');
+    Route::get('/structures/admin/dashboard', 'Structures\StructureAdminController@displayDashboard');
+    Route::post('/structures/admin/add/taxratio', 'Strutures\StructureAdminController@storeTaxRatio');
+    Route::post('/structures/admin/update/taxratio', 'Structures\StructureAdminController@updateTaxRatio');
 
     //Structure Controller display pages
-    Route::get('/structures/taxes/display', 'StructureController@displayTaxes');
-    Route::get('/structures/admin/taxes/display', 'StructureController@chooseCorpTaxes');
-    Route::get('/structures/admin/taxes/display/execute', 'StructureController@displayCorpTaxes');
-    Route::get('/structures/admin/taxes/industry', 'StructureController@displayIndustryTaxes');
-    Route::get('/structures/admin/taxes/reprocessing', 'StructureController@displayReprocessingTaxes');
-    Route::get('/structures/admin/display', 'StructureController@displayAdminPanel');
+    Route::get('/structures/taxes/display', 'Structures\StructureController@displayTaxes');
+    Route::get('/structures/admin/taxes/display', 'Structures\StructureController@chooseCorpTaxes');
+    Route::get('/structures/admin/taxes/display/execute', 'Structures\StructureController@displayCorpTaxes');
+    Route::get('/structures/admin/taxes/industry', 'Structures\StructureController@displayIndustryTaxes');
+    Route::get('/structures/admin/taxes/reprocessing', 'Structures\StructureController@displayReprocessingTaxes');
+    Route::get('/structures/admin/display', 'Structures\StructureController@displayAdminPanel');
 
     //Scopes Controller display pages
-    Route::get('/scopes/select', 'EsiScopeController@displayScopes');
-    Route::post('redirectToProvider', 'EsiScopeController@redirectToProvider');
+    Route::get('/scopes/select', 'Auth\EsiScopeController@displayScopes');
+    Route::post('redirectToProvider', 'Auth\EsiScopeController@redirectToProvider');
 
     //Contract Controller display pages
-    Route::get('/contracts/display/all', 'ContractController@displayContracts');
-    Route::get('/contracts/display/public', 'ContractController@displayPublicContracts');
-    Route::get('/contracts/display/private', 'ContractController@displayPrivateContracts');
-    Route::get('/contracts/display/newbid/{id}', 'ContractController@displayNewBid');
-    Route::get('/contracts/modify/bid/{id}', 'ContractController@displayModifyBid');
-    Route::get('/contracts/display/bids/{id}', 'ContractController@displayBids');
-    Route::get('/contracts/delete/bid/{id}', 'ContractController@deleteBid');
-    Route::post('/contracts/modify/bid', 'ContractController@modifyBid');
-    Route::post('/contracts/bids/store', 'ContractController@storeBid');
+    Route::get('/contracts/display/all', 'Contracts\ContractController@displayContracts');
+    Route::get('/contracts/display/public', 'Contracts\ContractController@displayPublicContracts');
+    Route::get('/contracts/display/private', 'Contracts\ContractController@displayPrivateContracts');
+    Route::get('/contracts/display/newbid/{id}', 'Contracts\ContractController@displayNewBid');
+    Route::get('/contracts/modify/bid/{id}', 'Contracts\ContractController@displayModifyBid');
+    Route::get('/contracts/display/bids/{id}', 'Contracts\ContractController@displayBids');
+    Route::get('/contracts/delete/bid/{id}', 'Contracts\ContractController@deleteBid');
+    Route::post('/contracts/modify/bid', 'Contracts\ContractController@modifyBid');
+    Route::post('/contracts/bids/store', 'Contracts\ContractController@storeBid');
 
     //Contract Admin Controller display pages
-    Route::get('/contracts/admin/display', 'ContractAdminController@displayContractDashboard');
-    Route::get('/contracts/admin/past', 'ContractAdminController@displayPastContracts');
-    Route::get('/contracts/admin/new', 'ContractAdminController@displayNewContract');
-    Route::post('/contracts/admin/new', 'ContractAdminController@storeNewContract');
-    Route::post('/contracts/admin/store', 'ContractAdminController@storeAcceptContract');
-    Route::get('/contracts/admin/delete/{id}', 'ContractAdminController@deleteContract');
-    Route::get('/contracts/admin/end/{id}', 'ContractAdminController@displayEndContract');
-    Route::post('/contracts/admin/end', 'ContractAdminController@storeEndContract');
+    Route::get('/contracts/admin/display', 'Contracts\ContractAdminController@displayContractDashboard');
+    Route::get('/contracts/admin/past', 'Contracts\ContractAdminController@displayPastContracts');
+    Route::get('/contracts/admin/new', 'Contracts\ContractAdminController@displayNewContract');
+    Route::post('/contracts/admin/new', 'Contracts\ContractAdminController@storeNewContract');
+    Route::post('/contracts/admin/store', 'Contracts\ContractAdminController@storeAcceptContract');
+    Route::get('/contracts/admin/delete/{id}', 'Contracts\ContractAdminController@deleteContract');
+    Route::get('/contracts/admin/end/{id}', 'Contracts\ContractAdminController@displayEndContract');
+    Route::post('/contracts/admin/end', 'Contracts\ContractAdminController@storeEndContract');
     
 });
 

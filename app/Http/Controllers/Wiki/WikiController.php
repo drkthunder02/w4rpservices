@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Wiki;
 
 //Laravel libraries
 use Illuminate\Http\Request;
