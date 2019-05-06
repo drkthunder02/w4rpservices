@@ -110,6 +110,7 @@ class MoonsAdminController extends Controller
             'renter' => 'required',
             'date' => 'required',
             'contact' => 'required',
+            'paid' => 'required',
         ]);
 
         //Take the contact name and create a character id from it
@@ -157,6 +158,7 @@ class MoonsAdminController extends Controller
                 'Contact' => $contact,
                 'Price' => $price['alliance'],
                 'Type' => 'alliance',
+                'Paid' => $request->paid,
             ]);
         } else {
             MoonRental::insert([
@@ -168,6 +170,7 @@ class MoonsAdminController extends Controller
                 'Contact' => $contact,
                 'Price' => $price['outofalliance'],
                 'Type' => 'outofalliance',
+                'Paid' => $request->paid,
             ]);
         }
         
@@ -277,7 +280,7 @@ class MoonsAdminController extends Controller
         $moon = $str_array[2];
 
         //Update the paid status of the moon
-        Moon::where([
+        MoonRental::where([
             'System' => $system,
             'Planet' => $planet,
             'Moon' => $moon,

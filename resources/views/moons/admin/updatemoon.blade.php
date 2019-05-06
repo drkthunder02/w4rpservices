@@ -14,12 +14,21 @@
     <div class="form-group col-md-6">
         {{ Form::label('renter', 'Renter') }}
         {{ Form::text('renter', '', ['class' => 'form-control', 'placeholder' => 'Renter']) }}
-        {{ Form::label('contact', 'Contact') }}
     </div>
     <div class="form-group col-md-6">
+        {{ Form::label('contact', 'Contact') }}
         {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' => 'Character']) }}
+    </div>
+    <div class="form-group col-md-6">
         {{ Form::label('date', 'Rental End Date') }}
         {{ Form::date('date', \Carbon\Carbon::now()->addMonth(), ['class' => 'form-control']) }}
+    </div>
+    <div class="form-group">
+        Paid?<br>
+        {{ Form::label('paid', 'No') }}
+        {{ Form::radio('paid', 'No', true) }}
+        {{ Form::label('paid', 'Yes') }}
+        {{ Form::radio('paid', 'Yes') }}
     </div>
     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}
