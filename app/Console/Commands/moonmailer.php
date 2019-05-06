@@ -113,6 +113,7 @@ class MoonMailerCommand extends Command
 
             //Update the moon as not being paid for the next month?
             foreach($rentals as $rental) {
+                if($today > $rental->Paid_Until)
                 $this->UpdateNotPaid($rental);
             }
             
