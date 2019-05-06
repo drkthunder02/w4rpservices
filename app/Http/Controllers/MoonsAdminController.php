@@ -246,19 +246,18 @@ class MoonsAdminController extends Controller
 
             //Calculate hte price of the moon based on what is in the moon
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-            dd($ticker);
+            
             //Add the data to the html string to be passed to the view
             array_push($table, [
                 'SPM' => $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon,
                 'StructureName' => $moon->StructureName,
                 'AlliancePrice' => $price['alliance'],
                 'OutOfAlliancePrice' => $price['outofalliance'],
-                'Renter' => $ticker,
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
                 'Paid' => $paid,
                 'Contact' => $contact,
-                'Renter' => $renter,
+                'Renter' => $ticker,
             ]);
         }
 
