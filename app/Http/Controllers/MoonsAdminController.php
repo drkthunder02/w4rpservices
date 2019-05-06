@@ -190,18 +190,20 @@ class MoonsAdminController extends Controller
         //declare the html variable and set it to null
         $table = array();
         foreach($moons as $moon) {
-            //Setup formats as needed
-            $spm = $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
-            //Set the rental end date
-            $rentalTemp = new Carbon($moon->RentalEnd);
-            //Set the rental end date as month / day
-            $rentalEnd = $rentalTemp->format('m-d');
-            //Get today's date in order to create color later on in the table
-            $today = Carbon::now();
+            //Get the rental data for the moon
+            $rental = MoonRent::where([
+                'System' => $moon->System,
+                'Planet' => $moon->Planet,
+                'Moon' => $moon->Moon,
+            ])->first();
 
-            //Calculate the prices of the moon based on what is in the moon
-            $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                                    $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+            //Calculate hte price of the moon based on what is in the moon
+            $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+
+            //Set the rental end date
+            $rentalEnd = new Carbon($rental->RentalEnd);
+            //Set the rental end date as month / day
+            $rentalEnd = $rentalTemp->format('m-d');                        
 
             //Set the paid as yes or no for the check box in the blade template
             $paid = $moon->Paid;
@@ -222,7 +224,7 @@ class MoonsAdminController extends Controller
             }
 
             //Set the color for the table
-            if($rentalTemp->diffInDays($today) < 3 ) {
+            if($rentalTemp->diffInDays(Carbon::now()) < 3 ) {
                 $color = 'table-warning';
             } else if( $today > $rentalTemp) {
                 $color = 'table-primary';
@@ -232,7 +234,7 @@ class MoonsAdminController extends Controller
             
             //Add the data to the html string to be passed to the view
             array_push($table, [
-                'SPM' => $spm,
+                'SPM' => $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon,
                 'StructureName' => $moon->StructureName,
                 'AlliancePrice' => $price['alliance'],
                 'OutOfAlliancePrice' => $price['outofalliance'],
