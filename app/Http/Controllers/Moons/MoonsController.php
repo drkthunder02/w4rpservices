@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Moons;
 
 //Internal Library
+use App\Http\Controllers\Controller;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
