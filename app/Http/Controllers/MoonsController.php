@@ -62,9 +62,7 @@ class MoonsController extends Controller
                 $rentalEnd = $rentalTemp->format('m-d');
             }
 
-            //Setup formats as needed
-            $rentalTemp = new Carbon($rental->RentalEnd);
-            $rentalEnd = $rentalTemp->format('m-d');
+            //mark today's date in carbon format
             $today = Carbon::now();
 
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
