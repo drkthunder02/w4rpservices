@@ -52,6 +52,16 @@ class MoonsController extends Controller
                 'Moon' => $moon->Moon,
             ])->first();
 
+            if($rental == false) {
+                //If we don't find a rental record, set the rental date as last month
+                $rentalTemp = Carbon::now()->subMonth();
+                $rentalEnd = $rentalTemp->format('m-d');
+            } else {
+                //Set the rental date up
+                $rentalTemp = new Carbon($rental->RentalEnd);
+                $rentalEnd = $rentalTemp->format('m-d');
+            }
+
             //Setup formats as needed
             $rentalTemp = new Carbon($rental->RentalEnd);
             $rentalEnd = $rentalTemp->format('m-d');
