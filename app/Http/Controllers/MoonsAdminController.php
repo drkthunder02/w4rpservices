@@ -230,8 +230,8 @@ class MoonsAdminController extends Controller
                 
                 //Set up the renter whether it's W4RP or another corporation
                 $corpId = $lookup->LookupCorporationId($rental->Contact);
-                dd($corpId);
                 $allianceId = $lookup->LookupCorporation($corpId);
+                dd($allianceId);
                 $ticker = $lookup->LookupAllianceTicker($allianceId);
             }
 
