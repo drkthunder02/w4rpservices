@@ -46,7 +46,7 @@ class MoonsController extends Controller
         $moonprice = null;
         foreach($moons as $moon) {
             //get the rental data for the moon
-            $rental = MoonRent::where([
+            $rental = MoonRental::where([
                 'System' => $moon->System,
                 'Planet' => $moon->Planet,
                 'Moon' => $moon->Moon,
