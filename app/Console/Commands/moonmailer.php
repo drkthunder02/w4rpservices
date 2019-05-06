@@ -111,28 +111,15 @@ class MoonMailerCommand extends Command
             //After the mail is dispatched, saved the sent mail record
             $this->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
 
-            //Delete the record from the database
+            //Update the moon as not being paid for the next month?
             foreach($rentals as $rental) {
-                //Delete the moon rental
-                $this->DeleteMoonRental($rental, $today);
-
-                //Mark the moon as not paid for the next month
                 $this->UpdateNotPaid($rental);
             }
+            
         }
 
         //Mark the job as finished
         $task->SetStopStatus();
-    }
-
-    private function DeleteMoonRent(MoonRental $rental, Carbon $today) {
-        if($today->greaterThanOrEqualTo($rental->RentalEnd)) {
-            MoonRental::where(['id' => $rental->id])->delete();
-        }
-    }
-
-    private function PaidUntil(MoonRental $rental) {
-        return $rental->paid_until;
     }
 
     private function UpdateNotPaid(MoonRental $rental) {
