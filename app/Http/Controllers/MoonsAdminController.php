@@ -191,7 +191,7 @@ class MoonsAdminController extends Controller
         $table = array();
         foreach($moons as $moon) {
             //Get the rental data for the moon
-            $rental = MoonRent::where([
+            $rental = MoonRental::where([
                 'System' => $moon->System,
                 'Planet' => $moon->Planet,
                 'Moon' => $moon->Moon,
