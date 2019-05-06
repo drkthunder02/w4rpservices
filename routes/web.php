@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']], function(){
     //Dashboard Controller Display pages
-    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/dashboard', 'Dashboard\DashboardController@index');
 
     //Moon Controller display pages
     Route::get('/moons/display', 'Moons\MoonsController@displayMoons');
