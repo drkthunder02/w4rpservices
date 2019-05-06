@@ -199,6 +199,8 @@ class MoonsAdminController extends Controller
                 'Moon' => $moon->Moon,
             ])->first();
 
+            dd($rental);
+
             //Check if their is a current rental for a moon going on
             if($rental == false) {
                 //If we don't find a rental record, mark the moon as not paid
@@ -220,21 +222,6 @@ class MoonsAdminController extends Controller
 
                 //Set the contact name
                 $contact = $lookup->CharacterName($rental->Contact);
-            }
-
-            //We need the contact information in character name format for the view
-            $contact = MoonRental::where([
-                'System' => $moon->System,
-                'Planet' => $moon->Planet,
-                'Moon' => $moon->Moon,
-                'RentalEnd' => $moon->RentalEnd,
-            ])->first();
-
-            if($contact != null) {
-                $contact = $contact->toArray();
-                $contact = $lookup->CharacterName($contact['Contact']);
-            } else {
-                $contact = 'None';
             }
 
             //Set the color for the table
