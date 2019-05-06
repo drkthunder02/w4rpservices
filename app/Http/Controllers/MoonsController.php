@@ -99,7 +99,7 @@ class MoonsController extends Controller
                 'FourthQuantity' => $moon->FourthQuantity,
                 'Price' => $moonprice,
                 'Worth' => number_format($worth, "2", ".", ","),
-                'RentalEnd' => $rental->RentalEnd,
+                'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
             ]);
         }
