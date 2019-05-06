@@ -197,6 +197,8 @@ class MoonsAdminController extends Controller
                 'Moon' => $moon->Moon,
             ])->first();
 
+            dd($rental);
+
             //Calculate hte price of the moon based on what is in the moon
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
