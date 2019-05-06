@@ -224,7 +224,8 @@ class MoonsAdminController extends Controller
             }
 
             //Set the color for the table
-            if($rentalTemp->diffInDays(Carbon::now()) < 3 ) {
+            $today = Carbon::now();
+            if($rentalTemp->diffInDays($today) < 3 ) {
                 $color = 'table-warning';
             } else if( $today > $rentalTemp) {
                 $color = 'table-primary';
