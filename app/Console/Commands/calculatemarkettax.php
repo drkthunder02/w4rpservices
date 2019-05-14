@@ -95,7 +95,7 @@ class CalculateMarketTaxCommand extends Command
                             '<br>Please remit to Spatial Forces';
                 $mail->recipient = (int)$info->character_id;
                 $mail->recipient_type = 'character';
-                SendEveMailJob::dispatch($mail);
+                SendEveMailJob::dispatch($mail)->onQueue('default');
             }
             
         }

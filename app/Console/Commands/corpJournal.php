@@ -79,7 +79,7 @@ class CorpJournalCommand extends Command
                     $job->division = 1;
                     $job->charId = $structure->character_id;
                     $job->page = $i;
-                    ProcessWalletJournalJob::dispatch($job);
+                    ProcessWalletJournalJob::dispatch($job)->onQueue('default');
                 }
             }
         }

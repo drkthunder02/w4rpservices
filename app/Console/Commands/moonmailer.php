@@ -106,7 +106,7 @@ class MoonMailerCommand extends Command
             $mail->body = $body;
             $mail->recipient = (int)$contact;
             $mail->recipient_type = 'character';
-            SendEveMailJob::dispatch($mail);
+            SendEveMailJob::dispatch($mail)->onQueue('default');
 
             //After the mail is dispatched, saved the sent mail record
             $this->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
