@@ -51,6 +51,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:PiTransactions')
                 ->hourly()
                 ->withoutOverlapping();
+
+        //Horizon Graph Schedule
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
     /**
