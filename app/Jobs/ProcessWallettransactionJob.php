@@ -53,15 +53,15 @@ class ProcessWalletTransactionJob implements ShouldQueue
      */
     public function handle()
     {
+        $status = new JobHelper('Process Wallet Transaction');
+        $status->SetStartStatus();
+
         //Declare the class variables
         $finance = new FinanceHelper();
 
         $finance->GetWalletTransaction($this->division, $this->charId);
 
-        $status = new JobStatus;
-        $status->job_name = 'Process Wallet Transaction';
-        $status->complete = true;
-        $status->save();
+        $status->SetStopStatus();
 
         //After the job is completed, delete the job
         $this->delete();

@@ -18,6 +18,7 @@ class CreateJobStatusTable extends Migration
                 $table->increments('id');
                 $table->string('job_name');
                 $table->boolean('complete');
+                $table->datetime('system_time');
                 $table->timestamps();
             });
         }

@@ -20,5 +20,6 @@ class JobStatus extends Model
     protected $fillable = [
         'job_name',
         'complete',
+        'system_time',
     ];
 }

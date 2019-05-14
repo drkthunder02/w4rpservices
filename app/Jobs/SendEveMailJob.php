@@ -69,6 +69,9 @@ class SendEveMailJob implements ShouldQueue
      */
     public function handle()
     {
+        $status = new JobHelper('Send EveMail');
+        $status->SetStartStatus();
+
         //Retrieve the token for main character to send mails from
         $token = EsiToken::where(['character_id'=> 93738489])->get();
 
@@ -100,10 +103,7 @@ class SendEveMailJob implements ShouldQueue
             return null;
         }
 
-        $status = new JobStatus;
-        $status->job_name = 'Send Eve Mail';
-        $status->complete = true;
-        $status->save();
+        $status->SetStopStatus();
 
         $this->delete();
     }

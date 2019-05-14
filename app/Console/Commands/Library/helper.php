@@ -41,7 +41,7 @@ class CommandHelper {
     }
 
     public function CleanJobStatusTable() {
-        DB::table('schedule_jobs')->where('system_time', '<', Carbon::now()->subMonths(6))->delete();
+        DB::table('schedule_jobs')->where('system_time', '<', Carbon::now()->subMonths(3))->delete();
     }
 }
 
