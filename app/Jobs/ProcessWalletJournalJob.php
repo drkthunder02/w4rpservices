@@ -43,6 +43,8 @@ class ProcessWalletJournalJob implements ShouldQueue
         $this->division = $pwj->division;
         $this->charId = $pwj->charId;
         $this->page = $pwj->page;
+
+        $this->connection = 'redis';
     }
 
     /**

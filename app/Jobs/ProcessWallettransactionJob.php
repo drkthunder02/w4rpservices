@@ -43,6 +43,8 @@ class ProcessWalletTransactionJob implements ShouldQueue
     {
         $this->division = $pwt->division;
         $this->charId = $pwt->charId;
+
+        $this->connection = 'redis';
     }
 
     /**
