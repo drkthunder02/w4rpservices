@@ -26,8 +26,6 @@ class JobHelper {
         $this->jobStatus->job_name = $this->job_name;
         $this->jobStatus->complete = $this->complete;
         $this->jobStatus->system_time = $this->system_time;
-
-        $job->save();
     }
 
     public function SetStopStatus() {
