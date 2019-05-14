@@ -15,6 +15,8 @@ use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
+use App\Jobs\Library;
+
 //Models
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;

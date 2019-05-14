@@ -1,6 +1,6 @@
 <?php
 
-namespace Jobs\Library;
+namespace App\Jobs\Library;
 
 //Inertnal Libraries
 use DB;

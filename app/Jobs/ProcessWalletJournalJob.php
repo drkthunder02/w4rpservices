@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 //App Library
 use App\Library\Finances\Helper\FinanceHelper;
+use App\Jobs\Library;
 
 //App Models
 use App\Models\Jobs\JobProcessWalletJournal;
