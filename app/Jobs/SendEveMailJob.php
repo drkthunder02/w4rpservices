@@ -15,8 +15,6 @@ use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
-use App\Jobs\Library\JobHelper;
-
 //Models
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
@@ -71,9 +69,6 @@ class SendEveMailJob implements ShouldQueue
      */
     public function handle()
     {
-        $status = new JobHelper('Send EveMail');
-        $status->SetStartStatus();
-
         //Retrieve the token for main character to send mails from
         $token = EsiToken::where(['character_id'=> 93738489])->get();
 
@@ -104,9 +99,7 @@ class SendEveMailJob implements ShouldQueue
         } catch(RequestFailedException $e) {
             return null;
         }
-
-        $status->SetStopStatus();
-
+        
         $this->delete();
     }
 
