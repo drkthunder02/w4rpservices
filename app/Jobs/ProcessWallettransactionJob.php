@@ -58,13 +58,13 @@ class ProcessWalletTransactionJob implements ShouldQueue
 
         $finance->GetWalletTransaction($this->division, $this->charId);
 
-        //After the job is completed, delete the job
-        $this->delete();
-
         $status = new JobStatus;
         $status->job_name = 'Process Wallet Transaction';
         $status->complete = true;
         $status->save();
+
+        //After the job is completed, delete the job
+        $this->delete();
     }
 
     /**
