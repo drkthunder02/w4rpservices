@@ -6,7 +6,7 @@ namespace App\Jobs\Library;
 use DB;
 use Carbon\Carbon;
 
-use App\Models\Jos\JobStatus;
+use App\Models\Jobs\JobStatus;
 
 class JobHelper {
     private $job_name;
