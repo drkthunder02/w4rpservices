@@ -1,0 +1,4 @@
+[2019-05-08 00:19:57] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/characters/2112731724/?datasource=tranquility [t/e: 0.07s/100]
+[2019-05-08 00:19:57] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/corporations/98429796/?datasource=tranquility [t/e: 0.02s/100]
+[2019-05-08 00:19:57] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/characters/2112731724/?datasource=tranquility [t/e: 0.07s/100]
+[2019-05-08 00:19:57] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/corporations/98429796/?datasource=tranquility [t/e: 0.02s/100]
