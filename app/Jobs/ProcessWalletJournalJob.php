@@ -45,7 +45,6 @@ class ProcessWalletJournalJob implements ShouldQueue
         $this->page = $pwj->page;
 
         $this->delay = 15;
-        $this->connection = 'database';
     }
 
     /**

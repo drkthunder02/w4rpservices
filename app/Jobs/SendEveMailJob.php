@@ -55,8 +55,6 @@ class SendEveMailJob implements ShouldQueue
         $this->recipient = $mail->recipient;
         $this->recipient_type = $mail->recipient_type;
         $this->subject = $mail->subject;
-        
-        $this->connection = 'database';
     }
 
     /**
