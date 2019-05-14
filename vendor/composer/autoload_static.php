@@ -572,6 +572,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
+        'App\\Providers\\HorizonServiceProvider' => __DIR__ . '/../..' . '/app/Providers/HorizonServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'AvailableUserPermissions' => __DIR__ . '/../..' . '/database/seeds/AvailableUserPermissions.php',
