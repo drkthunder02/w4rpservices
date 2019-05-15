@@ -64,7 +64,7 @@ class HoldingFinancesCommand extends Command
             $job->division = 1;
             $job->charId = 93738489;
             $job->page = $i;
-            ProcessWalletJournalJob::dispatch($job);
+            ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
         }
 
         //Mark the job as finished
