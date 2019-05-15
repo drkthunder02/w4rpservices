@@ -1,4 +1,0 @@
-[2018-10-24 23:54:31] eseye.INFO: [http 200, ok] post -> https://login.eveonline.com/oauth/token/?grant_type=refresh_token [t/e: 0.04s/]
-[2018-10-24 23:54:31] eseye.INFO: [http 200, ok] get -> https://login.eveonline.com/oauth/verify/ [t/e: 0.02s/]
-[2018-10-24 23:54:31] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/characters/92626011/?datasource=tranquility [t/e: 0.18s/100]
-[2018-10-24 23:54:31] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/corporations/98287666/?datasource=tranquility [t/e: 0.02s/100]

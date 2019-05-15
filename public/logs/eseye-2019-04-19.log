@@ -1,2 +1,0 @@
-[2019-04-19 03:46:41] eseye.INFO: [http 200, ok] get -> https://esi.evetech.net/latest/search/?datasource=tranquility&categories=character&search=Raj+Nakrar&strict=true [t/e: 0.15s/100]
-[2019-04-19 03:46:41] eseye.ERROR: [http 404, not found] get -> https://esi.evetech.net/latest/corporations/%5B%7B%22corporation_id%22:%2298432934%22%7D%5D/?datasource=tranquility [t/e: 0.07s/99]
