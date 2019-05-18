@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobSendEveMail extends Model
 {
-    //Table Name
-    //protected $table = 'eve_mails';
-
     //Timestamps
     public $timestamps = true;
 

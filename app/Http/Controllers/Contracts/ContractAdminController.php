@@ -10,12 +10,17 @@ use Carbon\Carbon;
 //Libraries
 use App\Library\Esi\Mail;
 
+//Jobs
+use App\Jobs\SendEveMailJob;
+
 //Models
 use App\User;
 use App\Models\User\UserPermission;
 use App\Models\Contracts\Contract;
 use App\Models\Contracts\Bid;
 use App\Models\Contracts\AcceptedBid;
+use App\Models\Mail\EveMail;
+use App\Models\Jobs\JobSendEveMail;
 
 class ContractAdminController extends Controller
 {
@@ -65,6 +70,9 @@ class ContractAdminController extends Controller
         $contract->body = $body;
         $contract->type = $request->type;
         $contract->save();
+
+        //Send a mail out to all of the people who can bid on a contract
+        $this->NewContractMail();
 
         return redirect('/contracts/admin/display')->with('success', 'Contract written.');
     }
@@ -143,18 +151,22 @@ class ContractAdminController extends Controller
         $body .= $contract['body'] . '<br>';
         $body .= 'Please remit contract when the items are ready to Spatial Forces.  Description should be the contract identification number.  Request ISK should be the bid amount.';
         $body .= 'Sincerely,<br>Spatial Forces Contracting Department';
-        while($mail->SendMail($bid['character_id'], 'character', $subject, $body)) {
-            $tries++;
-            if($tries == 5) {
-                TidyContract($contract, $bid);
 
-                return redirect('/contracts/admin/display')->with('error', 'Could not deliver mail.  Please manually send the mail to the winner.');
-            }
-        }
+        //Setup the mail job
+        $mail = new EveMail;
+        $mail->subject = $subject;
+        $mail->recipient_type = 'character';
+        $mail->recipient = $bid['character_id'];
+        $mail->body = $body;
+        $mail->sender = 93738489;
+        //Dispatch the mail job
+        SendEveMailJob::dispatch($mail)->onQueue('mail');
         
+        //Tidy up the contract by doing a few things.
         TidyContract($contract, $bid);
         
-        return redirect('/contracts/admin/display')->with('success', 'Contract finalized.  Mail took ' . $tries . ' attempt to send to the winner.');
+        //Redirect back to the contract admin dashboard.
+        return redirect('/contracts/admin/display')->with('success', 'Contract finalized.  Mail has been sent to the queue for processing.');
     }
 
     private function TidyContract($contract, $bid) {
@@ -169,5 +181,23 @@ class ContractAdminController extends Controller
         $accepted->bid_amount = $bid['bid_amount'];
         $accepted->notes = $bid['notes'];
         $accepted->save();
+    }
+
+    private function NewContractMail() {
+        //Get all the users with a specific permission set
+        $users = User::all(['name', 'character_id'])->toArray();
+
+        foreach($users as $user) {
+            if($user->hasPermission('contract.canbid')) {
+                $mail = new EveMail;
+                $mail->sender = 93738489;
+                $mail->subject = 'New Alliance Contract Available';
+                $mail->recipient = $user['character_id'];
+                $mail->recipient_type = 'character';
+                $mail->body = "A new contract is available for the alliance contracting system.  Please check out <a href='https://services.w4rp.space'>Services Site</a>.";
+                SendEveMailJob::dispatch($mail)->onQueue('mail');
+                $mail->delete();
+            }
+        }
     }
 }

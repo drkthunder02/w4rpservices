@@ -47,9 +47,8 @@ class Esi {
         $mail->body = "Please register on https://services.w4rp.space with the scope: " . $scope;
         $mail->recipient = (int)$charId;
         $mail->recipient_type = 'character';
-        $mail->save();
 
-        SendEveMailJob::dispatch($mail)->delay(Carbon::now()->addSeconds(5));
+        SendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
 
         return false;
     }

@@ -315,9 +315,8 @@ class FinanceHelper {
             $mail->body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
             $mail->recipient = (int)$charId;
             $mail->recipient_type = 'character';
-            $mail->save();
 
-            SendEveMailJob::dispatch($mail);
+            SendEveMailJob::dispatch($mail)->onQueue('mail');
 
             return true;
         } 
