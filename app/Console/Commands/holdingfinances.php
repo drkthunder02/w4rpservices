@@ -66,7 +66,6 @@ class HoldingFinancesCommand extends Command
             $job->charId = 93738489;
             $job->page = $i;
             ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
-            Log::info('Process Wallet Journal Job dispatched.');
         }
 
         //Mark the job as finished

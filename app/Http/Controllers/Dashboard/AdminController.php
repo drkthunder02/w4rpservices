@@ -80,11 +80,18 @@ class AdminController extends Controller
         }
 
         /** Users & Permissions Pane  */
+        $userArr = array();
+        $userArrs = array();
         //Get the users from the database to allow a selection of users for various parts of the webpage
         $users = User::pluck('name')->all();
         //Get the available permissions from the database to allow a selection of permissions
         $permissions = AvailableUserPermission::pluck('permission')->all();
-        //Create the user key value pairs 
+        
+        //For each user we need to build their username and permissions array into one array
+        /**
+         * Example:  userArrs[0]['name'] = Minerva Arbosa
+         *           userArrs[0]['permissions'] = ['admin', 'contract.admin', superuser]
+         */
         foreach($users as $key => $value) {
             $user[$value] = $value;
         }

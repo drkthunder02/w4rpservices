@@ -51,7 +51,7 @@ class FinanceHelper {
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if($this->TokenNotFound($token, $scope, $charId)) {
-            Log::info('Token not found. Character Id: ' . $charId);
+            Log::critical('Token not found. Character Id: ' . $charId);
             return null;
         }
 
@@ -114,7 +114,7 @@ class FinanceHelper {
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if($this->TokenNotFound($token, $scope, $charId)) {
-            Log::info('Token not found.' . 'Character Id: ' . $charId);
+            Log::critical('Token not found.' . 'Character Id: ' . $charId);
             return null;
         }
         
