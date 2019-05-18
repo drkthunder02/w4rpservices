@@ -98,6 +98,7 @@ class SendEveMailJob implements ShouldQueue
                 'character_id'=> 93738489,
             ]);
         } catch(RequestFailedException $e) {
+            Log::warning($e);
             return null;
         }
         
@@ -112,6 +113,6 @@ class SendEveMailJob implements ShouldQueue
      */
     public function failed($exception)
     {
-        dd($exception);
+        Log::critical($exception);
     }
 }

@@ -51,7 +51,7 @@ class FinanceHelper {
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if($this->TokenNotFound($token, $scope, $charId)) {
-            printr("Token not found\n");
+            Log::info('Token not found. Character Id: ' . $charId);
             return null;
         }
 
@@ -76,7 +76,8 @@ class FinanceHelper {
                 'division'  => 3,
             ]);
         } catch(RequestFailedException $e) {
-            return $e->getEsiResponse();
+            Log::warning($e->getEsiResponse());
+            return null;
         }
 
         //Decode the wallet from json into an array
@@ -113,6 +114,7 @@ class FinanceHelper {
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if($this->TokenNotFound($token, $scope, $charId)) {
+            Log::info('Token not found.' . 'Character Id: ' . $charId);
             return null;
         }
         
@@ -147,7 +149,8 @@ class FinanceHelper {
                     'division'  => $division,
                 ]);
             } catch(RequestFailedException $e) {
-                return $e->getEsiResponse();
+                Log::warning($e->getEsiResponse());
+                return null;
             }
 
             //Set the total pages we need to cycle through.
@@ -216,7 +219,8 @@ class FinanceHelper {
                 'division'  => $division,
             ]);
         } catch(RequestFailedException $e) {
-            return $e->getEsiResponse();
+            Log::warning($e->getEsiResponse());
+            return null;
         }
 
         $pages = $journals->pages;
@@ -265,7 +269,8 @@ class FinanceHelper {
                 'division'  => $division,
             ]);
         } catch(RequestFailedException $e) {
-            return $e->getEsiResponse();
+            Log::warning($e->getEsiResponse());
+            return null;
         }
 
         //Decode the wallet from json into an array

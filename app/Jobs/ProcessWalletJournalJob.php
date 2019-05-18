@@ -75,6 +75,6 @@ class ProcessWalletJournalJob implements ShouldQueue
      */
     public function failed($exception)
     {
-        dd($exception);
+        Log::critical($exception);
     }
 }
