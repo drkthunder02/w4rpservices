@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,8 +179,8 @@ class FileCache implements CacheInterface
         // Get the data from the file and unserialize it
         $file = unserialize(file_get_contents($cache_file_path));
 
-        // If the cached entry is expired, remove it.
-        if ($file->expired()) {
+        // If the cached entry is expired and does not have any ETag, remove it.
+        if ($file->expired() && ! $file->hasHeader('ETag')) {
 
             $this->forget($uri, $query);
 

@@ -15,6 +15,7 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\SlackWebhookHandler;
+use Monolog\Handler\WhatFailureGroupHandler;
 
 class LogManager implements LoggerInterface
 {
@@ -23,7 +24,7 @@ class LogManager implements LoggerInterface
     /**
      * The application instance.
      *
-     * @var \Illuminate\Foundation\Application
+     * @var \Illuminate\Contracts\Foundation\Application
      */
     protected $app;
 
@@ -44,7 +45,7 @@ class LogManager implements LoggerInterface
     /**
      * Create a new Log manager instance.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function __construct($app)
@@ -216,6 +217,10 @@ class LogManager implements LoggerInterface
             return $this->channel($channel)->getHandlers();
         })->all();
 
+        if ($config['ignore_exceptions'] ?? false) {
+            $handlers = [new WhatFailureGroupHandler($handlers)];
+        }
+
         return new Monolog($this->parseChannel($config), $handlers);
     }
 
@@ -287,7 +292,8 @@ class LogManager implements LoggerInterface
     {
         return new Monolog($this->parseChannel($config), [
             $this->prepareHandler(new SyslogHandler(
-                $this->app['config']['app.name'], $config['facility'] ?? LOG_USER, $this->level($config)
+                Str::snake($this->app['config']['app.name'], '-'),
+                $config['facility'] ?? LOG_USER, $this->level($config)
             ), $config),
         ]);
     }
@@ -325,6 +331,7 @@ class LogManager implements LoggerInterface
         }
 
         $with = array_merge(
+            ['level' => $this->level($config)],
             $config['with'] ?? [],
             $config['handler_with'] ?? []
         );
