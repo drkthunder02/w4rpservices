@@ -2,3 +2,4 @@
 /logs
 .editorconfig
 /cache
+/public/logs
