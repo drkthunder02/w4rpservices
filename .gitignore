@@ -3,3 +3,4 @@
 .editorconfig
 /cache
 /public/logs
+worker.log
