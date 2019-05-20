@@ -7,7 +7,7 @@
 <br>
 <ul class="nav nav-tabs">
     <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#user">User</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#userTable">User Table</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#table">User Table</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#permissions">Permissions</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#roles">Roles</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#logins">Login</a></li>
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div id="userTable" class="tab-pane fade">
+    <div id="table" class="tab-pane fade">
         <div class="container">
             <div class="row">
                 <table class="table table-striped">

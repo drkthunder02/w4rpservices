@@ -89,13 +89,13 @@ class AdminController extends Controller
          */
         $usersTable = User::orderBy('name', 'desc')->get()->toArray();
         foreach($usersTable as $user) {
-            $permissions = UserPermission::where([
+            $perms = UserPermission::where([
                 'character_id' => $user['character_id'],
-            ])->get()->toArray();
+            ])->get('permission')->toArray();
 
             $tempUser['name'] = $user['name'];
             $tempUser['role'] = $user['user_type'];
-            $tempUser['permissions'] = $permissions;
+            $tempUser['permissions'] = $perms;
 
             array_push($userArr, $tempUser);
         }
