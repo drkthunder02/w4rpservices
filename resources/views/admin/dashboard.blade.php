@@ -37,7 +37,7 @@
         </div>
     </div>
     <div id="userTable" class="tab-pane fade">
-        <div class="table table-striped">
+        <table class="table table-striped">
             <thead>
                 <th>Name</th>
                 <th>Role</th>
@@ -58,7 +58,7 @@
                 </tr>
                 @endforeach
             </tbody>
-        </div>
+        <table>
     </div>
     <div id="permissions" class="tab-pane fade">
         <div class="container">
