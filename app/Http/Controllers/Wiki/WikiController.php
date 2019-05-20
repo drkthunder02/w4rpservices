@@ -43,6 +43,18 @@ class WikiController extends Controller
             if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {
                 //Do nothing
             } else {
+                //Get the uid of the user as we will need to purge them from the member table as well.
+                //the member table holds their permissions.
+                $uid = DokuUser::where([
+                    'name' => $user,
+                ])->value('id');
+
+                //Delete the permissions of the user first.
+                DokuMember::where([
+                    'uid' => $uid,
+                ])->delete();
+
+                //Delete the user from the user table
                 DokuUser::where(['name' => $user])->delete();
             }
         }

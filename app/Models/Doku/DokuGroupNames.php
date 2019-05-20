@@ -10,4 +10,8 @@ class DokuGroupNames extends Model
     protected $table = 'wiki_groupnames';
 
     public $timestamps = false;
+
+    protected $fillable = [
+        'gname',
+    ];
 }

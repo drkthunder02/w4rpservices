@@ -11,4 +11,11 @@ class DokuUser extends Model
 
     // Timestamps
     public $timestamps = false;
+
+    protected $fillable = [
+        'login',
+        'pass',
+        'name',
+        'mail',
+    ];
 }

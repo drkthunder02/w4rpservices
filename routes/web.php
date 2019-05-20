@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/wiki/register', 'Wiki\WikiController@storeRegister');
     Route::get('/wiki/changepassword', 'Wiki\WikiController@displayChangePassword');
     Route::post('/wiki/changepassword', 'Wiki\WikiController@changePassword');
+    Route::post('/wiki/purge', 'Wiki\WikiController@purgeeUsers');
 
     //Admin Controller display pages
     Route::get('/admin/dashboard', 'Dashboard\AdminController@displayDashboard');

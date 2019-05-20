@@ -7,6 +7,7 @@
 <br>
 <ul class="nav nav-tabs">
     <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#user">User</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#userTable">User Table</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#permissions">Permissions</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#roles">Roles</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#logins">Login</a></li>
@@ -33,6 +34,30 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="userTable" class="tab-pane fade">
+        <div class="table table-striped">
+            <thead>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Permissions</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                @foreach($userArr as $user)
+                <tr>
+                    <td>{{ $user['name'] }}</td>
+                    <td>{{ $user['role'] }}</td>
+                    <td>
+                    @foreach($user['permissions'] as $perm)
+                        {{ $perm . ", " }} 
+                    @endforeach
+                    </td>
+                    <td>Remove, Modify</td>
+                </tr>
+                @endforeach
+            </tbody>
         </div>
     </div>
     <div id="permissions" class="tab-pane fade">
@@ -127,7 +152,13 @@
         </div>
     </div>
     <div id="wiki" class="tab-pane fade">
-        Placeholder for when a button is available 
+        {!! Form::open(['action' => 'Wiki\WikiController@purgeUsers', 'method' => 'POST']) !!}
+        <div class="form-group">
+            {{ Form::label('admin', 'This action will log the administrator who peformed the action.') }}
+            {{ Form::hidden('admin', auth()->user()->character_id) }}
+        </div>
+        {{ Form::submit('Purge Wiki', ['class' => 'btn btn-primary']) }}
+        {!! Form::close() !!}
     </div>
     <div id="taxes" class="tab-pane fade">
         <div class="container-fluid">

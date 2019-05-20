@@ -10,4 +10,10 @@ class DokuMember extends Model
     protected $table = 'wiki_member';
 
     public $timestamps = false;
+
+    protected $fillable = [
+        'uid',
+        'gid',
+        'groupname',
+    ];
 }

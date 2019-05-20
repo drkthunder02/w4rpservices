@@ -81,17 +81,30 @@ class AdminController extends Controller
 
         /** Users & Permissions Pane  */
         $userArr = array();
-        $userArrs = array();
+        /**
+         * For each user we want to build their name and permission set into one array
+         * Having all of the data in one array will allow us to build the table for the admin page more fluently.
+         * Example:  userArrs[0]['name'] = Minerva Arbosa
+         *           userArrs[0]['permissions'] = ['admin', 'contract.admin', superuser]
+         */
+        $users = User::all()->orderBy('name', 'desc')->toArray();
+        foreach($users as $user) {
+            $permissions = UserPermission::where([
+                'character_id' => $user['character_id'],
+            ])->get()->toArray();
+
+            $tempUser['name'] =  $user['name'];
+            $tempUser['role'] = $user['role'];
+            $tempUser['permissions'] = $permissions;
+
+            array_push($userArry, $tempUser);
+        }
+
         //Get the users from the database to allow a selection of users for various parts of the webpage
         $users = User::pluck('name')->all();
         //Get the available permissions from the database to allow a selection of permissions
         $permissions = AvailableUserPermission::pluck('permission')->all();
         
-        //For each user we need to build their username and permissions array into one array
-        /**
-         * Example:  userArrs[0]['name'] = Minerva Arbosa
-         *           userArrs[0]['permissions'] = ['admin', 'contract.admin', superuser]
-         */
         foreach($users as $key => $value) {
             $user[$value] = $value;
         }
@@ -117,6 +130,7 @@ class AdminController extends Controller
         }
 
         return view('admin.dashboard')->with('data', $data)
+                                      ->with('userArr', $userArr)
                                       ->with('pis', $pis)
                                       ->with('industrys', $industrys)
                                       ->with('offices', $offices)
