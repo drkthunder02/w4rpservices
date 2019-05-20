@@ -97,7 +97,7 @@ class AdminController extends Controller
             $tempUser['role'] = $user['user_type'];
             $tempUser['permissions'] = $permissions;
 
-            array_push($userArry, $tempUser);
+            array_push($userArr, $tempUser);
         }
 
         //Get the users from the database to allow a selection of users for various parts of the webpage
