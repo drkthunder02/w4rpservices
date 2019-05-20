@@ -17,42 +17,29 @@
 <br>
 <div class="tab-content">
     <div id="user" class="tab-pane active">
-        <div class="card">
-            <div class="card-header">
-                User Information
-            </div>
-            <div class="card-body">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Permissions</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                    @foreach($userArr as $user)
-                    <tr>
-                        <td>{{ $user['name'] }}</td>
-                        <td>{{ $user['role'] }}</td>
-                        <td>
-                        @if($user['permissions'])
-                        @foreach($user['permissions'] as $perm)
-                            {{ implode(', ', $perm) }}
-                        @endforeach
-                        @else
-                            None
-                        @endif
-                        </td>
-                        <td>
-                            {!! Form::open(['action' => 'Dashboard\AdminController@removeUser', 'method' => 'POST']) !!}
-                            {{ Form::hidden('user', $user['name']) }}
-                            {{ Form::submit('Remove User', ['class' => 'btn btn-primary']) }}
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            <table>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="card">
+                    <div class="card-header">
+                        PI Taxes
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <th>Month</th>
+                                <th>PI Taxes</th>
+                            </thead>
+                            <tbody>
+                                @foreach($pis as $pi)
+                                    <tr>
+                                        <td>{{ $pi['date'] }}</td>
+                                        <td>{{ $pi['gross'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
