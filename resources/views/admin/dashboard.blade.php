@@ -37,28 +37,30 @@
         </div>
     </div>
     <div id="userTable" class="tab-pane fade">
-        <table class="table table-striped">
-            <thead>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Permissions</th>
-                <th>Action</th>
-            </thead>
-            <tbody>
-                @foreach($userArr as $user)
-                <tr>
-                    <td>{{ $user['name'] }}</td>
-                    <td>{{ $user['role'] }}</td>
-                    <td>
-                    @foreach($user['permissions'] as $perm)
-                        {{ implode(', ', $perm) }}
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Permissions</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    @foreach($userArr as $user)
+                    <tr>
+                        <td>{{ $user['name'] }}</td>
+                        <td>{{ $user['role'] }}</td>
+                        <td>
+                        @foreach($user['permissions'] as $perm)
+                            {{ implode(', ', $perm) }}
+                        @endforeach
+                        </td>
+                        <td>Remove, Modify</td>
+                    </tr>
                     @endforeach
-                    </td>
-                    <td>Remove, Modify</td>
-                </tr>
-                @endforeach
-            </tbody>
-        <table>
+                </tbody>
+            <table>
+        </div>
     </div>
     <div id="permissions" class="tab-pane fade">
         <div class="container">
