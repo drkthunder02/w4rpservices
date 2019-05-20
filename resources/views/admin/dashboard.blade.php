@@ -15,7 +15,7 @@
 </ul>
 <br>
 <div class="tab-content">
-    <div id="user" class="tab-pane fade">
+    <div id="user" class="tab-pane active">
         <div class="container">
             <div class="row">
                 <table class="table table-striped">

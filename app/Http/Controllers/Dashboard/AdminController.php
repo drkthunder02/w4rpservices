@@ -100,24 +100,6 @@ class AdminController extends Controller
             array_push($userArr, $tempUser);
         }
 
-        //Get the users from the database to allow a selection of users for various parts of the webpage
-        $users = User::pluck('name')->all();
-        //Get the available permissions from the database to allow a selection of permissions
-        $permissions = AvailableUserPermission::pluck('permission')->all();
-        
-        foreach($users as $key => $value) {
-            $user[$value] = $value;
-        }
-        //Create the permission key value pairs
-        foreach($permissions as $key => $value) {
-            $permission[$value] = $value;
-        }
-        //Create the data array
-        $data = [
-            'users' => $user,
-            'permissions' => $permission,
-        ];
-
         /** Entities for allowed logins */
         $legacys = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_name')->toArray();
         $renters = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_name')->toArray();
@@ -129,8 +111,7 @@ class AdminController extends Controller
             $entities[] = $renter;
         }
 
-        return view('admin.dashboard')->with('data', $data)
-                                      ->with('userArr', $userArr)
+        return view('admin.dashboard')->with('userArr', $userArr)
                                       ->with('pis', $pis)
                                       ->with('industrys', $industrys)
                                       ->with('offices', $offices)
