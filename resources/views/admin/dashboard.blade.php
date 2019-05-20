@@ -17,7 +17,39 @@
 <br>
 <div class="tab-content">
     <div id="user" class="tab-pane active">
-        placeholder
+        <div class="container">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Permissions</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    @foreach($userArr as $user)
+                    <tr>
+                        <td>{{ $user['name'] }}</td>
+                        <td>{{ $user['role'] }}</td>
+                        <td>
+                        @if($user['permissions'])
+                        @foreach($user['permissions'] as $perm)
+                            {{ implode(', ', $perm) }}
+                        @endforeach
+                        @else
+                            None
+                        @endif
+                        </td>
+                        <td>
+                            {!! Form::open(['action' => 'Dashboard\AdminController@removeUser', 'method' => 'POST']) !!}
+                            {{ Form::hidden('user', $user['name']) }}
+                            {{ Form::submit('Remove User', ['class' => 'btn btn-primary']) }}
+                            {!! Form::close() !!}
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            <table>
+        </div>
     </div>
     <div id="permissions" class="tab-pane fade">
         <div class="container">
