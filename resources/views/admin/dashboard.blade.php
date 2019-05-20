@@ -17,7 +17,11 @@
 <br>
 <div class="tab-content">
     <div id="user" class="tab-pane active">
-        <div class="container">
+        <div class="card">
+            <div class="card-header">
+                User Information
+            </div>
+            <div class="card-body">
             <table class="table table-striped table-bordered">
                 <thead>
                     <th>Name</th>
@@ -49,6 +53,7 @@
                     @endforeach
                 </tbody>
             <table>
+            </div>
         </div>
     </div>
     <div id="permissions" class="tab-pane fade">
@@ -164,7 +169,7 @@
                             PI Taxes
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                     <th>Month</th>
                                     <th>PI Taxes</th>
@@ -187,7 +192,7 @@
                             Office Taxes
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                     <th>Month</th>
                                     <th>Office Taxes</th>
@@ -210,7 +215,7 @@
                             Industry Taxes
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                     <th>Month</th>
                                     <th>Industry Taxes</th>
@@ -238,7 +243,7 @@
                             Reprocessing Taxes
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                     <th>Month</th>
                                     <th>Reprocessing Taxes</th>
@@ -261,7 +266,7 @@
                             Market Taxes
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                     <th>Month</th>
                                     <th>Market Taxes</th>
@@ -284,7 +289,7 @@
                             Jump Gate Taxes
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                     <th>Month</th>
                                     <th>Jump Gate Taxes</th>
@@ -311,7 +316,7 @@
                             PI Transactions
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                     <th>Month</th>
                                     <th>PI Transactions</th>
