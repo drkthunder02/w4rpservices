@@ -59,8 +59,8 @@
                         {!! Form::open(['action' => 'Dashboard\AdminController@addPermission', 'method' => 'POST']) !!}
                         <div class="form-group">
                             {{ Form::label('user', 'User') }}
-                            {{ Form::select('user', $data['users'], null, ['class' => 'form-control']) }}
-                            {{ Form::select('permission', $data['permissions'], null, ['class' => 'form-control']) }}
+                            {{ Form::select('user', $users, null, ['class' => 'form-control']) }}
+                            {{ Form::select('permission', $permissions, null, ['class' => 'form-control']) }}
                         </div>
                         {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                         {!! Form::close() !!}
@@ -80,7 +80,7 @@
                         {!! Form::open(['action' => 'Dashboard\AdminController@modifyRole', 'method' => 'POST']) !!}
                         <div class="form-group">
                             {{ Form::label('user', 'User') }}
-                            {{ Form::select('user', $data['users'], null, ['class' => 'form-control']) }}
+                            {{ Form::select('user', $users, null, ['class' => 'form-control']) }}
                         </div>
                         {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                         {!! Form::close() !!}
@@ -140,13 +140,17 @@
         </div>
     </div>
     <div id="wiki" class="tab-pane fade">
-        {!! Form::open(['action' => 'Wiki\WikiController@purgeUsers', 'method' => 'POST']) !!}
-        <div class="form-group">
-            {{ Form::label('admin', 'This action will log the administrator who peformed the action.') }}
-            {{ Form::hidden('admin', auth()->user()->character_id) }}
+        <div class="container">
+            <div class="row">
+                {!! Form::open(['action' => 'Wiki\WikiController@purgeUsers', 'method' => 'POST']) !!}
+                <div class="form-group">
+                    {{ Form::label('admin', 'This action will log the administrator who peformed the action.') }}
+                    {{ Form::hidden('admin', auth()->user()->character_id) }}
+                </div>
+                {{ Form::submit('Purge Wiki', ['class' => 'btn btn-primary']) }}
+                {!! Form::close() !!}
+            </div>
         </div>
-        {{ Form::submit('Purge Wiki', ['class' => 'btn btn-primary']) }}
-        {!! Form::close() !!}
     </div>
     <div id="taxes" class="tab-pane fade">
         <div class="container-fluid">

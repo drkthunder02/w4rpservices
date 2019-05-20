@@ -100,6 +100,13 @@ class AdminController extends Controller
             array_push($userArr, $tempUser);
         }
 
+        /**
+         * Miscellaneous data for populating arrays
+         * 
+         */
+        $users = User::pluck('name')->all();
+        $permissions = AvailableUserPermission::pluck('permission')->all();
+
         /** Entities for allowed logins */
         $legacys = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_name')->toArray();
         $renters = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_name')->toArray();
@@ -111,7 +118,9 @@ class AdminController extends Controller
             $entities[] = $renter;
         }
 
-        return view('admin.dashboard')->with('userArr', $userArr)
+        return view('admin.dashboard')->with('users', $users)
+                                      ->with('permissions', $permissions)
+                                      ->with('userArr', $userArr)
                                       ->with('pis', $pis)
                                       ->with('industrys', $industrys)
                                       ->with('offices', $offices)
