@@ -84,8 +84,9 @@ class AdminController extends Controller
         /**
          * For each user we want to build their name and permission set into one array
          * Having all of the data in one array will allow us to build the table for the admin page more fluently.
-         * Example:  userArrs[0]['name'] = Minerva Arbosa
-         *           userArrs[0]['permissions'] = ['admin', 'contract.admin', superuser]
+         * Example:  userArr[0]['name'] = Minerva Arbosa
+         *           userArr[0]['role'] = W4RP
+         *           userArr[0]['permissions'] = ['admin', 'contract.admin', superuser]
          */
         $usersTable = User::orderBy('name', 'asc')->get()->toArray();
         foreach($usersTable as $user) {
