@@ -7,7 +7,6 @@
 <br>
 <ul class="nav nav-tabs">
     <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#user">User</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#table">User Table</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#permissions">Permissions</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#roles">Roles</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#logins">Login</a></li>
@@ -16,27 +15,7 @@
 </ul>
 <br>
 <div class="tab-content">
-    <div id="user" class="tab-pane active">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 card">
-                    <div class="card-header">
-                        Remove User
-                    </div>
-                    <div class="card-body">
-                        {!! Form::open(['action' => 'Dashboard\AdminController@removeUser', 'method' => 'POST']) !!}
-                        <div class="form-group">
-                            {{ Form::label('user', 'User') }}
-                            {{ Form::select('user', $data['users'], null, ['class' => 'form-control']) }}
-                        </div>
-                        {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="table" class="tab-pane fade">
+    <div id="user" class="tab-pane fade">
         <div class="container">
             <div class="row">
                 <table class="table table-striped">
@@ -56,7 +35,12 @@
                                 {{ implode(', ', $perm) }}
                             @endforeach
                             </td>
-                            <td>Remove, Modify</td>
+                            <td>
+                                {!! Form::open(['action' => 'Dashboard\AdminController@removeUser', 'method' => 'POST']) !!}
+                                {{ Form::hidden('user', $user['name']) }}
+                                {{ Form::submit('Remove User', ['class' => 'btn btn-primary']) }}
+                                {!! Form::close() !!}
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
