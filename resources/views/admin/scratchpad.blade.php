@@ -13,9 +13,13 @@
                     <td>{{ $user['name'] }}</td>
                     <td>{{ $user['role'] }}</td>
                     <td>
+                    @if($user['permissions'])
                     @foreach($user['permissions'] as $perm)
                         {{ implode(', ', $perm) }}
                     @endforeach
+                    @else
+                        None
+                    @endif
                     </td>
                     <td>
                         {!! Form::open(['action' => 'Dashboard\AdminController@removeUser', 'method' => 'POST']) !!}
