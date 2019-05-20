@@ -51,7 +51,7 @@
                     <td>{{ $user['role'] }}</td>
                     <td>
                     @foreach($user['permissions'] as $perm)
-                        {{ $perm . ", " }} 
+                        {{ implode(', ', $perm) }}
                     @endforeach
                     </td>
                     <td>Remove, Modify</td>
