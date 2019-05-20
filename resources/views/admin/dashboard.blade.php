@@ -17,7 +17,7 @@
 <br>
 <div class="tab-content">
     <div id="user" class="tab-pane active">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
                 <div class="card">
                     <div class="card-header">
