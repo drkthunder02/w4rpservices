@@ -87,7 +87,7 @@ class AdminController extends Controller
          * Example:  userArrs[0]['name'] = Minerva Arbosa
          *           userArrs[0]['permissions'] = ['admin', 'contract.admin', superuser]
          */
-        $users = User::all()->soryByDesc('name')->toArray();
+        $users = User::orderBy('name', 'desc')->all()->toArray();
         foreach($users as $user) {
             $permissions = UserPermission::where([
                 'character_id' => $user['character_id'],
