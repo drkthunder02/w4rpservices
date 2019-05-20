@@ -6,18 +6,17 @@
 </div>
 <br>
 <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="true">User</a>
-        <a class="nav-item nav-link" id="permissions-tab" data-toggle="tab" href="#permissions" role="tab" aria-controls="permissions" aria-selected="false">Permissions</a>
-        <a class="nav-item nav-link" id="roles-tab" data-toggle="tab" href="#roles" role="tab" aria-controls="roles" aria-selected="false">Roles</a>
-        <a class="nav-item nav-link" id="logins-tab" data-toggle="tab" href="#logins" role="tab" aria-controls="logins" aria-selected="false">Logins</a>
-        <a class="nav-item nav-link" id="wiki-tab" data-toggle="tab" href="#wiki" role="tab" aria-controls="wiki" aria-selected="false">Wiki</a>
-        <a class="nav-item nav-link" id="taxes-tab" data-toggle="tab" href="#taxes" role="tab" aria-controls="taxes" aria-selected="false">Taxes</a>
-    </div>
-</nav>
+<ul class="nav nav-tabs">
+    <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#user">User</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#permissions">Permissions</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#roles">Roles</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#logins">Login</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#wiki">Wiki</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#taxes">Taxes</a></li>
+</ul>
 <br>
 <div class="tab-content">
-    <div class="tab-pane fade show active" id="user" role="tabpanel" aria-labelledby="user-tab">
+    <div id="user" class="tab-pane active">
         <div class="container">
             <div class="row">
                 <table class="table table-striped">
@@ -50,7 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
+    <div id="permissions" class="tab-pane fade">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 card">
@@ -71,7 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="roles" role="tabpanel" aria-labelledby="roles-tab">
+    <div id="roles" class="tab-pane fade">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 card">
@@ -91,7 +90,7 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="logins" role="tabpanel" aria-labelledby="logins-tab">
+    <div id="logins" class="tab-pane fade">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -141,7 +140,7 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="wiki" role="tabpanel" aria-labelledby="wiki-tab">
+    <div id="wiki" class="tab-pane fade">
         <div class="container">
             <div class="row">
                 {!! Form::open(['action' => 'Wiki\WikiController@purgeUsers', 'method' => 'POST']) !!}
@@ -154,7 +153,7 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="taxes" role="tabpanel" aria-labelledby="taxes-tab">
+    <div id="taxes" class="tab-pane fade">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
