@@ -313,35 +313,36 @@
             </div>
         </div>
         <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        PI Transactions
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <th>Month</th>
-                                <th>PI Transactions</th>
-                            </thead>
-                            <tbody>
-                                @foreach($pigross as $pi)
-                                    <tr>
-                                        <td>{{ $pi['date'] }}</td>
-                                        <td>{{ $pi['gross'] }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            PI Transactions
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th>Month</th>
+                                    <th>PI Transactions</th>
+                                </thead>
+                                <tbody>
+                                    @foreach($pigross as $pi)
+                                        <tr>
+                                            <td>{{ $pi['date'] }}</td>
+                                            <td>{{ $pi['gross'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
+                <div class="col">
 
-            </div>
-            <div class="col">
+                </div>
+                <div class="col">
 
+                </div>
             </div>
         </div>
     </div>
