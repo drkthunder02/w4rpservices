@@ -98,9 +98,6 @@ class AdminController extends Controller
             $tempUser['permissions'] = $permissions;
 
             array_push($userArr, $tempUser);
-
-            $permissions->delete();
-            $tempUser->delete();
         }
 
         //Get the users from the database to allow a selection of users for various parts of the webpage
