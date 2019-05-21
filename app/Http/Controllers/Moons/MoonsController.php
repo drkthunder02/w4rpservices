@@ -41,6 +41,11 @@ class MoonsController extends Controller
         $moonCalc->FetchNewPrices();
         //get all of the moons from the database
         $moons = DB::table('Moons')->orderBy('System', 'asc')->get();
+        //Set the rental date as last month for moons not rented
+        $lastMonth = Carbon::now()->subMonth();
+        //Set a variable for today's date
+        $today = Carbon::now();
+
         //declare the html variable and set it to null
        
         $table = array();
@@ -55,16 +60,13 @@ class MoonsController extends Controller
 
             if($rental == false) {
                 //If we don't find a rental record, set the rental date as last month
-                $rentalTemp = Carbon::now()->subMonth();
+                $rentalTemp = $lastMonth;
                 $rentalEnd = $rentalTemp->format('m-d');
             } else {
                 //Set the rental date up
                 $rentalTemp = new Carbon($rental->RentalEnd);
                 $rentalEnd = $rentalTemp->format('m-d');
             }
-
-            //mark today's date in carbon format
-            $today = Carbon::now();
 
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
