@@ -56,6 +56,11 @@ class MoonsAdminController extends Controller
             'contact' => 'required',
         ]);
 
+        if($request->removal == true) {
+            $this->RemoveRenter($request->system, $request->planet, $request->moon);
+            return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated and Renter Removed.');
+        }
+
         //Take the  contact name and create a character_id from it
         if($request->contact == 'None') {
             $contact = 'None';
@@ -82,22 +87,7 @@ class MoonsAdminController extends Controller
             'Contact' => $contact,
         ])->first();
 
-        if($found && $request->removal == true) {
-            MoonRental::where([
-                'System' => $request->system,
-                'Planet' => $request->planet,
-                'Moon' => $request->moon,
-            ])->delete();
-
-            MoonRental::insert([
-                'System' => $request->system,
-                'Planet' => $request->planet,
-                'Moon' => $request->moon,
-                'Contact' => 'None',
-                'Paid' => 'No',
-                'Paid_Until' => Carbon::now()->endOfMonth(),
-            ]);
-        } else if($found && $request->removal != true) {
+        if($found && $request->removal != true) {
             if($allianceId = 99004116) {
                 MoonRental::where([
                     'System' => $request->system,
@@ -430,5 +420,40 @@ class MoonsAdminController extends Controller
         $moon->save();
 
         return redirect('/dashboard')->with('success', 'Moon Added');
+    }
+
+    private function RemoveRenter($system, $planet, $moon) {
+        $found = MoonRental::where([
+            'System' => $request->system,
+            'Planet' => $request->planet,
+            'Moon' => $request->moon,
+            'Contact' => $contact,
+        ])->first();
+
+        if($found) {
+            MoonRental::where([
+                'System' => $request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+            ])->delete();
+
+            MoonRental::insert([
+                'System' => $request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+                'Contact' => 'None',
+                'Paid' => 'No',
+                'Paid_Until' => Carbon::now()->endOfMonth(),
+            ]);
+        } else {
+            MoonRental::insert([
+                'System' => $request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+                'Contact' => 'None',
+                'Paid' => 'No',
+                'Paid_Until' => Carbon::now()->endOfMonth(),
+            ]);
+        }
     }
 }
