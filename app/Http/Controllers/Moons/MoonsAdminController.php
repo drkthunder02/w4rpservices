@@ -82,8 +82,22 @@ class MoonsAdminController extends Controller
             'Contact' => $contact,
         ])->first();
 
-        //If the entry is found, we are most likely just updating an entry to include new paid until data
-        if($found) {
+        if($found && $request->removal == true) {
+            MoonRental::where([
+                'System' => $request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+            ])->delete();
+
+            MoonRental::insert([
+                'System' => $request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+                'Contact' => 'None',
+                'Paid' => 'No',
+                'Paid_Until' => Carbon::now()->endOfMonth(),
+            ]);
+        } else if($found && $request->removal != true) {
             if($allianceId = 99004116) {
                 MoonRental::where([
                     'System' => $request->system,
@@ -116,7 +130,7 @@ class MoonsAdminController extends Controller
                     'RentalEnd' => $date,
                     'Contact' => $contact,
                     'Price' => $price['outofalliance'],
-                    'Type' => 'alliance',
+                    'Type' => 'outofalliance',
                     'Paid' => $paid,
                     'Paid_Until' => $request->paid_until,
                 ]);

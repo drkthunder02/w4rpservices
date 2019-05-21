@@ -116,7 +116,6 @@ class MoonMailerCommand extends Command
                 if($today > $rental->Paid_Until)
                 $this->UpdateNotPaid($rental);
             }
-            
         }
 
         //Mark the job as finished
