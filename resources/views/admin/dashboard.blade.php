@@ -1,4 +1,4 @@
-@extends('layouts.b4')
+@extends('admin.layouts.b4')
 @section('content')
 
 <div class="container">
@@ -22,7 +22,7 @@
                     User Information
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-bordered" id="userTable">
                         <thead>
                             <th>Name</th>
                             <th>Role</th>
