@@ -15,6 +15,13 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
         <link ref="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
+        <!-- DataTables Javascript -->
+        <script type="text/javascript" class="init">
+            $(document).ready(function() {
+                $('userTable').DataTable();
+            })
+        </script>
     </head>
     <body>
         @include('layouts.navbar')
@@ -22,13 +29,6 @@
             @include('inc.messages')
         </div>
         @yield('content')
-
-        <!-- DataTables Javascript -->
-        <script>
-            $(document).ready(function() {
-                $('userTable').DataTable();
-            })
-        </script>
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
