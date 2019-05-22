@@ -22,7 +22,7 @@
                     User Information
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped table-bordered" id="userTable">
+                    <table class="table table-striped table-bordered display" id="userTable">
                         <thead>
                             <th>Name</th>
                             <th>Role</th>
