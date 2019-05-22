@@ -13,10 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\CorpJournalCommand::class,
         Commands\GetCorpsCommand::class,
         Commands\UpdateMoonPriceCommand::class,
-        Commands\CalculateMarketTaxCommand::class,
         Commands\HoldingFinancesCommand::class,
         Commands\MoonMailerCommand::class,
         Commands\PiTransactionsCommand::class,
