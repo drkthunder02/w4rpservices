@@ -132,7 +132,15 @@ class AdminController extends Controller
                                       ->with('pigross', $pigross);
     }
 
-    public function modifyRole(Request $request) {
+    public function displayModifyUser($name) {
+        //Get the user information from the name
+        $user = User::where(['name' => $name])->get()->toArray();
+
+        //Pass the user information to the page for hidden text entries
+        return view('admin.user.modify')->with('user', $user);
+    }
+
+    public function modifyUser(Request $request) {
         return redirect('/admin/dashboard')->with('error', 'Not implemented yet.');
     }
 

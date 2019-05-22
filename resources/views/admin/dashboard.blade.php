@@ -45,9 +45,13 @@
                                 @endif
                                 </td>
                                 <td>
+                                    {!! Form::open(['action' => 'Dashboard\AdminController@displayModifyUser', 'method' => 'POST']) !!}
+                                    {{ Form::hidden('user', $user['name']) }}
+                                    {{ Form::submit('Modify User', ['class' => 'btn btn-primary']) }}
+                                    {!! Form::close() !!}
                                     {!! Form::open(['action' => 'Dashboard\AdminController@removeUser', 'method' => 'POST']) !!}
                                     {{ Form::hidden('user', $user['name']) }}
-                                    {{ Form::submit('Remove User', ['class' => 'btn btn-primary']) }}
+                                    {{ Form::submit('Remove User', ['class' => 'btn btn-danger']) }}
                                     {!! Form::close() !!}
                                 </td>
                             </tr>
