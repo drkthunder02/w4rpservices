@@ -32,7 +32,7 @@
     </div>
     <div class="form-group">
         {{ Form::label('removal', 'Remove Renter') }}
-        {{ Form::checkbox('removal', true, false, ['class' => 'form-control']) }}
+        {{ Form::checkbox('removal', true, false) }}
     </div>
     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}
