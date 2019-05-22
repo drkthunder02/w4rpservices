@@ -2,7 +2,9 @@
 @section('content')
 
 <div class="container">
-    <h2> Admin Dashboard</h2>
+    <div class="row justify-content-center">
+        <h2> Admin Dashboard</h2>
+    </div>
 </div>
 <br>
 <nav>
