@@ -9,7 +9,6 @@
 <ul class="nav nav-tabs">
     <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#user">User</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#permissions">Permissions</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#roles">Roles</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#logins">Login</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#wiki">Wiki</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#taxes">Taxes</a></li>
@@ -75,26 +74,6 @@
                             {{ Form::label('user', 'User') }}
                             {{ Form::select('user', $users, null, ['class' => 'form-control']) }}
                             {{ Form::select('permission', $permissions, null, ['class' => 'form-control']) }}
-                        </div>
-                        {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="roles" class="tab-pane fade">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 card">
-                    <div class="card-header">
-                        Modify User Role
-                    </div>
-                    <div class="card-body">
-                        {!! Form::open(['action' => 'Dashboard\AdminController@modifyRole', 'method' => 'POST']) !!}
-                        <div class="form-group">
-                            {{ Form::label('user', 'User') }}
-                            {{ Form::select('user', $users, null, ['class' => 'form-control']) }}
                         </div>
                         {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                         {!! Form::close() !!}
