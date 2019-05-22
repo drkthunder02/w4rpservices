@@ -35,8 +35,6 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Moon Admin Controller display pages
      */
-    Route::get('/moons/admin/addmoon', 'Moons\MoonsAdminController@addMoon');
-    Route::post('/moon/admin/addmoon', 'Moons\MoonsAdminController@storeMoon');
     Route::get('/moons/admin/display', 'Moons\MoonsAdminController@displayMoonsAdmin');
     Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
     Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');

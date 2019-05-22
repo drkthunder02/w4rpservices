@@ -43,7 +43,7 @@ class MoonsAdminController extends Controller
         return view('moons.admin.updatemoon');
     }
 
-    public function storeUpdateMoonRental(Request $request) {
+    public function storeUpdateMoon(Request $request) {
         $moonCalc = new MoonCalc;
         $lookup = new LookupHelper;
 
@@ -165,7 +165,7 @@ class MoonsAdminController extends Controller
         return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
     }
 
-    public function storeUpdateMoon(Request $request) {
+    public function storeUpdateMoonOld(Request $request) {
         $moonCalc = new MoonCalc();
         $lookup = new LookupHelper();
 
@@ -178,6 +178,12 @@ class MoonsAdminController extends Controller
             'contact' => 'required',
             'paid' => 'required',
         ]);
+
+        //If the moon rental is being cancelled, let's update it.
+        if($request->removal == true) {
+            $this->RemoveRenter($request->system, $request->planet, $request->moon);
+            return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated and Renter Removed.');
+        }
 
         //Take the contact name and create a character id from it
         if($request->contact == 'None') {

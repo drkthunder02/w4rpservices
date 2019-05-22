@@ -15,7 +15,6 @@
                     @if(auth()->user()->hasRole('Admin'))
                     <a class="dropdown-item" href="/moons/admin/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/display/worth">Moon Worth</a>
-                    <a class="dropdown-item" href="/moons/admin/addmoon">Add Moon</a>
                     <a class="dropdown-item" href="/moons/admin/updatemoon">Update Moon</a>
                     <a class="dropdown-item" href="/moons/admin/journal">Journal</a>
                     @endif

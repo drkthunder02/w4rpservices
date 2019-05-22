@@ -1,6 +1,6 @@
 @extends('layouts.b4')
 @section('content')
-
+<br>
 <div class="container col-md-12">
     <table class="table table-striped">
         <thead>
