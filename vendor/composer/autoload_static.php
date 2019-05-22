@@ -437,12 +437,12 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
-        'App\\Console\\Commands\\CalculateMarketTaxCommand' => __DIR__ . '/../..' . '/app/Console/Commands/calculatemarkettax.php',
-        'App\\Console\\Commands\\CorpJournalCommand' => __DIR__ . '/../..' . '/app/Console/Commands/corpJournal.php',
-        'App\\Console\\Commands\\GetCorpsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/getCorps.php',
-        'App\\Console\\Commands\\HoldingFinancesCommand' => __DIR__ . '/../..' . '/app/Console/Commands/holdingfinances.php',
-        'App\\Console\\Commands\\MoonMailerCommand' => __DIR__ . '/../..' . '/app/Console/Commands/moonmailer.php',
-        'App\\Console\\Commands\\PiTransactionsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/pitransactions.php',
+        'App\\Console\\Commands\\CalculateMarketTaxCommand' => __DIR__ . '/../..' . '/app/Console/Commands/CalculateMarketTax.php',
+        'App\\Console\\Commands\\CorpJournalCommand' => __DIR__ . '/../..' . '/app/Console/Commands/CorpJournal.php',
+        'App\\Console\\Commands\\GetCorpsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/GetCorps.php',
+        'App\\Console\\Commands\\HoldingFinancesCommand' => __DIR__ . '/../..' . '/app/Console/Commands/HoldingFinances.php',
+        'App\\Console\\Commands\\MoonMailerCommand' => __DIR__ . '/../..' . '/app/Console/Commands/MoonMailer.php',
+        'App\\Console\\Commands\\PiTransactionsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/PITransactions.php',
         'App\\Console\\Commands\\UpdateMoonPriceCommand' => __DIR__ . '/../..' . '/app/Console/Commands/UpdateMoonPricing.php',
         'App\\Console\\Commands\\UpdateMoonRental' => __DIR__ . '/../..' . '/app/Console/Commands/UpdateMoonRental.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',

@@ -6,12 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\Console\\Commands\\CalculateMarketTaxCommand' => $baseDir . '/app/Console/Commands/calculatemarkettax.php',
-    'App\\Console\\Commands\\CorpJournalCommand' => $baseDir . '/app/Console/Commands/corpJournal.php',
-    'App\\Console\\Commands\\GetCorpsCommand' => $baseDir . '/app/Console/Commands/getCorps.php',
-    'App\\Console\\Commands\\HoldingFinancesCommand' => $baseDir . '/app/Console/Commands/holdingfinances.php',
-    'App\\Console\\Commands\\MoonMailerCommand' => $baseDir . '/app/Console/Commands/moonmailer.php',
-    'App\\Console\\Commands\\PiTransactionsCommand' => $baseDir . '/app/Console/Commands/pitransactions.php',
+    'App\\Console\\Commands\\CalculateMarketTaxCommand' => $baseDir . '/app/Console/Commands/CalculateMarketTax.php',
+    'App\\Console\\Commands\\CorpJournalCommand' => $baseDir . '/app/Console/Commands/CorpJournal.php',
+    'App\\Console\\Commands\\GetCorpsCommand' => $baseDir . '/app/Console/Commands/GetCorps.php',
+    'App\\Console\\Commands\\HoldingFinancesCommand' => $baseDir . '/app/Console/Commands/HoldingFinances.php',
+    'App\\Console\\Commands\\MoonMailerCommand' => $baseDir . '/app/Console/Commands/MoonMailer.php',
+    'App\\Console\\Commands\\PiTransactionsCommand' => $baseDir . '/app/Console/Commands/PITransactions.php',
     'App\\Console\\Commands\\UpdateMoonPriceCommand' => $baseDir . '/app/Console/Commands/UpdateMoonPricing.php',
     'App\\Console\\Commands\\UpdateMoonRental' => $baseDir . '/app/Console/Commands/UpdateMoonRental.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
