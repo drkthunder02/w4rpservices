@@ -66,30 +66,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminController@removeAllowedLogin');
 
     /**
-     * Register structure controller display pages
-     */
-    Route::get('/structures/register', 'Structures\RegisterStructureController@displayRegisterstructure');
-    Route::post('/structures/register', 'Structures\RegisterStructureController@storeStructure');
-    
-    /**
-     * Structure Admin Controller display pages
-     */
-    Route::get('/structures/admin/dashboard', 'Structures\StructureAdminController@displayDashboard');
-    Route::post('/structures/admin/add/taxratio', 'Strutures\StructureAdminController@storeTaxRatio');
-    Route::post('/structures/admin/update/taxratio', 'Structures\StructureAdminController@updateTaxRatio');
-
-    /**
-     * Structure Controller display pages
-     * To be removed in future release.  Functionality will be removed as well.
-     */
-    Route::get('/structures/taxes/display', 'Structures\StructureController@displayTaxes');
-    Route::get('/structures/admin/taxes/display', 'Structures\StructureController@chooseCorpTaxes');
-    Route::get('/structures/admin/taxes/display/execute', 'Structures\StructureController@displayCorpTaxes');
-    Route::get('/structures/admin/taxes/industry', 'Structures\StructureController@displayIndustryTaxes');
-    Route::get('/structures/admin/taxes/reprocessing', 'Structures\StructureController@displayReprocessingTaxes');
-    Route::get('/structures/admin/display', 'Structures\StructureController@displayAdminPanel');
-
-    /**
      * Scopes Controller display pages
      */
     Route::get('/scopes/select', 'Auth\EsiScopeController@displayScopes');

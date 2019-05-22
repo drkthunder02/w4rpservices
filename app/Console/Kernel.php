@@ -30,9 +30,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('services:CorpJournal')
-                 ->hourly()
-                 ->withoutOverlapping();
         $schedule->command('services:HoldingJournal')
                 ->hourly()
                 ->withoutOverlapping();
@@ -41,9 +38,6 @@ class Kernel extends ConsoleKernel
                 ->withoutOverlapping();
         $schedule->command('services:GetCorps')
                  ->monthlyOn(1, '09:00')
-                 ->withoutOverlapping();
-        $schedule->command('services:CalculateMarketTax')
-                 ->monthlyOn(1, '08:00')
                  ->withoutOverlapping();
         $schedule->command('services:MoonMailer')
                 ->monthlyOn(1, '00:01')
