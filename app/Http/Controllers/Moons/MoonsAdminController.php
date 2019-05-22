@@ -165,90 +165,6 @@ class MoonsAdminController extends Controller
         return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
     }
 
-    public function storeUpdateMoonOld(Request $request) {
-        $moonCalc = new MoonCalc();
-        $lookup = new LookupHelper();
-
-        $this->validate($request, [
-            'system' => 'required',
-            'planet' => 'required',
-            'moon' => 'required',
-            'renter' => 'required',
-            'date' => 'required',
-            'contact' => 'required',
-            'paid' => 'required',
-        ]);
-
-        //If the moon rental is being cancelled, let's update it.
-        if($request->removal == true) {
-            $this->RemoveRenter($request->system, $request->planet, $request->moon);
-            return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated and Renter Removed.');
-        }
-
-        //Take the contact name and create a character id from it
-        if($request->contact == 'None') {
-            $contact = 'None';
-        } else {
-            $contact = $lookup->CharacterNameToId($request->contact);
-        }
-        //Let's find the corporation and alliance information to ascertain whether they are in Warped Intentions or another Legacy Alliance
-        $corpId = $lookup->LookupCharacter($contact);
-        $allianceId = $lookup->LookupCorporation($corpId);
-
-        //Create the date
-        $date = new Carbon($request->date . '00:00:01');
-        //Calculate the moon price
-        $moon = Moon::where([
-            'System' => $request->system,
-            'Planet' => $request->planet,
-            'Moon' => $request->moon,
-        ])->first();
-        $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                                $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-        
-        $date = new Carbon($request->date . '00:00:01');
-        //Update the database entry
-        Moon::where([
-            'System' => $request->system,
-            'Planet' => $request->planet,
-            'Moon' => $request->moon,
-        ])->update([
-            'RentalCorp' => $request->renter,
-            'RentalEnd' => $date,
-        ]);
-
-        //Going to store moon price in a table for future reference
-        //We need to insert a price based on whether part of Legacy or part of Warped Intentions
-        //Will need an if then else statement to complete this operation
-        if($allianceId = 99004116) {
-            MoonRental::insert([
-                'System' => $request->system,
-                'Planet' => $request->planet,
-                'Moon' => $request->moon,
-                'RentalCorp' => $request->renter,
-                'RentalEnd' => $date,
-                'Contact' => $contact,
-                'Price' => $price['alliance'],
-                'Type' => 'alliance',
-                'Paid' => $request->paid,
-            ]);
-        } else {
-            MoonRental::insert([
-                'System' =>$request->system,
-                'Planet' => $request->planet,
-                'Moon' => $request->moon,
-                'RentalCorp' => $request->renter,
-                'RentalEnd' => $date,
-                'Contact' => $contact,
-                'Price' => $price['outofalliance'],
-                'Type' => 'outofalliance',
-                'Paid' => $request->paid,
-            ]);
-        }
-        
-        return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
-    }
-
     /**
      * Function to display the moons to admins
      */
@@ -264,10 +180,14 @@ class MoonsAdminController extends Controller
         $moonCalc = new MoonCalc();
         //Update the prices for the moon
         $moonCalc->FetchNewPrices();
-        //get all of the moons from the database
+        //Get all of the moons from the database
         $moons = Moon::orderBy('System', 'asc')->get();
-        //declare the html variable and set it to null
+        //Declare the html variable and set it to null
         $table = array();
+        //Set carbon dates as needed
+        $lastMonth = Carbon::now()->subMonth();
+        $today = Carbon::now();
+
         foreach($moons as $moon) {
             //Get the rental data for the moon
             $rental = MoonRental::where([
@@ -282,7 +202,7 @@ class MoonsAdminController extends Controller
                 $paid = 'No';
 
                 //If we don't find a rental record, set the rental date as last month
-                $rentalTemp = Carbon::now()->subMonth();
+                $rentalTemp = $lastMonth;
                 $rentalEnd = $rentalTemp->format('m-d');
 
                 //Set the contact info
@@ -291,6 +211,7 @@ class MoonsAdminController extends Controller
                 //Set the renter info
                 $renter = 'None';
 
+                //Set the ticker info
                 $ticker = 'N/A';
             } else {
                 //If we find a rental record, mark the moon as whether it's paid or not
@@ -310,7 +231,6 @@ class MoonsAdminController extends Controller
             }
 
             //Set the color for the table
-            $today = Carbon::now();
             if($rentalTemp->diffInDays($today) < 3 ) {
                 $color = 'table-warning';
             } else if( $today > $rentalTemp) {
