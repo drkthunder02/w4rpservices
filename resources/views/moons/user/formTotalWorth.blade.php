@@ -3,7 +3,7 @@
 <div class="container">
     <h2>Total Worth Calculator</h2><br>
     <h3>Enter the moon composition</h3><br>
-    {!! Form::open(['action' => 'MoonsController@displayTotalWorth', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'Moons\MoonsController@displayTotalWorth', 'method' => 'POST']) !!}
     <div class="form-group col-md-6">
         {{ Form::label('firstOre', 'First Ore') }}
         {{ Form::select('firstOre', [
