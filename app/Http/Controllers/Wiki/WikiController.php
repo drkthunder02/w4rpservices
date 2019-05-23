@@ -48,7 +48,6 @@ class WikiController extends Controller
                 $uid = DokuUser::where([
                     'name' => $user,
                 ])->value('id');
-                dd($uid);
                 //Delete the permissions of the user first.
                 DokuMember::where([
                     'uid' => $uid,
