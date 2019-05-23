@@ -31,8 +31,6 @@ class WikiController extends Controller
         //Get all the users from the database
         $users = DokuUser::pluck('name')->all();
 
-        dd($users);
-
         $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
         $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
 
@@ -50,7 +48,7 @@ class WikiController extends Controller
                 $uid = DokuUser::where([
                     'name' => $user,
                 ])->value('id');
-
+                dd($uid);
                 //Delete the permissions of the user first.
                 DokuMember::where([
                     'uid' => $uid,
