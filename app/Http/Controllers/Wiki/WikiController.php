@@ -39,6 +39,7 @@ class WikiController extends Controller
         foreach($users as $user) {
             $charId = $helper->CharacterNameToId($user);
             $corpId = $helper->LookupCharacter($charId);
+            dd($corpId);
             $allianceId = $helper->LookupCorporation($corpId);
             if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {
                 //Do nothing
