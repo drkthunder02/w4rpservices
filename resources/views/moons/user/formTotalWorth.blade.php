@@ -172,7 +172,9 @@
         ], 'None') }}
         {{ Form::text('fourthQuantity', '', ['class' => 'form-control']) }}
     </div>
-    {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
-    {!! Form::close() !!}
+    <div class="form-group col-md-1">
+        {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+        {!! Form::close() !!}
+    </div>
 </div>
 @endsection
