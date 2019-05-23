@@ -190,9 +190,14 @@ class LookupHelper {
                 $corporation = $esi->invoke('get', '/corporations/{corporation_id}/', [
                     'corporation_id' => $corpId,
                 ]);
-                $alliance = $esi->invoke('get', '/alliances/{alliance_id}/', [
-                    'alliance_id' => $corporation->alliance_id,
-                ]);
+                if(isset($corporation->alliance_id)) {
+                    $alliance = $esi->invoke('get', '/alliances/{alliance_id}/', [
+                        'alliance_id' => $corporation->alliance_id,
+                    ]);
+                } else {
+                    return -1;
+                }
+                
             } catch(\Seat\Eseye\Exceptions\RequestFailedException $e){
                 return -1;
             }
