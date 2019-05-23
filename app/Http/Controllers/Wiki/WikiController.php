@@ -31,6 +31,8 @@ class WikiController extends Controller
         //Get all the users from the database
         $users = DokuUser::pluck('name')->all();
 
+        dd($users);
+
         $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
         $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
 
