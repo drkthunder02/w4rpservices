@@ -10,11 +10,11 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Renter'))
                     <a class="dropdown-item" href="/moons/display">Display Moons</a>
-                    <a class="dropdown-item" href="/moons/display/worth/form">Moon Worth</a>
+                    <a class="dropdown-item" href="/moons/display/form/worth">Moon Worth</a>
                     @endif
                     @if(auth()->user()->hasRole('Admin'))
                     <a class="dropdown-item" href="/moons/admin/display">Display Moons</a>
-                    <a class="dropdown-item" href="/moons/display/worth/form">Moon Worth</a>
+                    <a class="dropdown-item" href="/moons/display/form/worth">Moon Worth</a>
                     <a class="dropdown-item" href="/moons/admin/updatemoon">Update Moon</a>
                     <a class="dropdown-item" href="/moons/admin/journal">Journal</a>
                     @endif
