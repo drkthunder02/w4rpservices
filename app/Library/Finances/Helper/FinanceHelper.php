@@ -9,6 +9,7 @@ namespace App\Library\Finances\Helper;
 
 //Internal Library
 use DB;
+use Log;
 
 //Job
 use App\Jobs\SendEveMailJob;
