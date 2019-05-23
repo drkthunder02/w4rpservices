@@ -46,7 +46,7 @@
         ], 'None') }}
         {{ Form::text('firstQuantity', '', ['class' => 'form-control']) }}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-6">
         {{ Form::label('secondOre', 'Second Ore') }}
         {{ Form::select('secondOre', [
             'None' => 'None',
@@ -88,7 +88,7 @@
         ], 'None') }}
         {{ Form::text('secondQuantity', '', ['class' => 'form-control']) }}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-6">
         {{ Form::label('thirdOre', 'Third Ore') }}
         {{ Form::select('thirdOre', [
             'None' => 'None',
@@ -130,7 +130,7 @@
         ], 'None') }}
         {{ Form::text('thirdQuantity', '', ['class' => 'form-control']) }}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-6">
         {{ Form::label('fourthOre', 'Fourth Ore') }}
         {{ Form::select('fourthOre', [
             'None' => 'None',
