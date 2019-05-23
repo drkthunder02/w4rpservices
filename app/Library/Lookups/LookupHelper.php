@@ -194,7 +194,7 @@ class LookupHelper {
                     'alliance_id' => $corporation->alliance_id,
                 ]);
             } catch(\Seat\Eseye\Exceptions\RequestFailedException $e){
-                return $e->getEsiResponse();
+                return -1;
             }
             
             //Save all of the data to the database
