@@ -9,7 +9,7 @@ namespace App\Library\Finances\Helper;
 
 //Internal Library
 use DB;
-use Log;
+//use Log;
 
 //Job
 use App\Jobs\SendEveMailJob;
@@ -52,7 +52,7 @@ class FinanceHelper {
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if($this->TokenNotFound($token, $scope, $charId)) {
-            Log::critical('Token not found. Character Id: ' . $charId);
+            //Log::critical('Token not found. Character Id: ' . $charId);
             return null;
         }
 
@@ -115,7 +115,7 @@ class FinanceHelper {
 
         //If the token is not found, send the user an eve mail, and just exit out of the function
         if($this->TokenNotFound($token, $scope, $charId)) {
-            Log::critical('Token not found.' . 'Character Id: ' . $charId);
+            //Log::critical('Token not found.' . 'Character Id: ' . $charId);
             return null;
         }
         
@@ -150,7 +150,7 @@ class FinanceHelper {
                     'division'  => $division,
                 ]);
             } catch(RequestFailedException $e) {
-                Log::warning($e->getEsiResponse());
+                //Log::warning($e->getEsiResponse());
                 return null;
             }
 
@@ -220,7 +220,7 @@ class FinanceHelper {
                 'division'  => $division,
             ]);
         } catch(RequestFailedException $e) {
-            Log::warning($e->getEsiResponse());
+            //Log::warning($e->getEsiResponse());
             return null;
         }
 
@@ -270,7 +270,7 @@ class FinanceHelper {
                 'division'  => $division,
             ]);
         } catch(RequestFailedException $e) {
-            Log::warning($e->getEsiResponse());
+            //Log::warning($e->getEsiResponse());
             return null;
         }
 
