@@ -77,7 +77,7 @@ class FinanceHelper {
                 'division'  => 3,
             ]);
         } catch(RequestFailedException $e) {
-            Log::critical($e->getEsiResponse());
+            //Log::critical($e->getEsiResponse());
             return null;
         }
 
