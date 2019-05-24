@@ -59,7 +59,7 @@ class PiTransactionsCommand extends Command
         $job = new JobProcessWalletTransaction;
         $job->division = 3;
         $job->charId = 94415555;
-        ProcessWalletTransactionJob::dispatch($job)->onQueue('default');
+        ProcessWalletTransactionJob::dispatch($job)->onQueue('journal');
 
         //Mark the job as finished
         $task->SetStopStatus();
