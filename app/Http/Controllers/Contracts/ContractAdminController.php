@@ -63,9 +63,6 @@ class ContractAdminController extends Controller
         $date = new Carbon($request->date);
         $body = nl2br($request->body);
 
-        //Send a mail out to all of the people who can bid on a contract
-        $this->NewContractMail();
-
         //Store the contract in the database
         $contract = new Contract;
         $contract->title = $request->name;
@@ -74,7 +71,8 @@ class ContractAdminController extends Controller
         $contract->type = $request->type;
         $contract->save();
 
-        
+        //Send a mail out to all of the people who can bid on a contract
+        $this->NewContractMail();
 
         return redirect('/contracts/admin/display')->with('success', 'Contract written.');
     }
@@ -188,9 +186,9 @@ class ContractAdminController extends Controller
     private function NewContractMail() {
         //Get all the users with a specific permission set
         $users = UserPermission::where(['permission' => 'contract.canbid'])->get()->toArray();
-        dd($users);
+
+        //Cycle through the users with the correct permission and send a mail to go out with the queue system.
         foreach($users as $user) {
-            if($user->hasPermission('contract.canbid')) {
                 $mail = new EveMail;
                 $mail->sender = 93738489;
                 $mail->subject = 'New Alliance Contract Available';
@@ -198,8 +196,6 @@ class ContractAdminController extends Controller
                 $mail->recipient_type = 'character';
                 $mail->body = "A new contract is available for the alliance contracting system.  Please check out <a href='https://services.w4rp.space'>Services Site</a>.";
                 SendEveMailJob::dispatch($mail)->onQueue('mail');
-                $mail->delete();
-            }
         }
     }
 }
