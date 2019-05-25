@@ -63,6 +63,9 @@ class ContractAdminController extends Controller
         $date = new Carbon($request->date);
         $body = nl2br($request->body);
 
+        //Send a mail out to all of the people who can bid on a contract
+        $this->NewContractMail();
+
         //Store the contract in the database
         $contract = new Contract;
         $contract->title = $request->name;
@@ -71,8 +74,7 @@ class ContractAdminController extends Controller
         $contract->type = $request->type;
         $contract->save();
 
-        //Send a mail out to all of the people who can bid on a contract
-        $this->NewContractMail();
+        
 
         return redirect('/contracts/admin/display')->with('success', 'Contract written.');
     }
@@ -186,7 +188,7 @@ class ContractAdminController extends Controller
     private function NewContractMail() {
         //Get all the users with a specific permission set
         $users = User::all(['name', 'character_id'])->toArray();
-
+        dd($users);
         foreach($users as $user) {
             if($user->hasPermission('contract.canbid')) {
                 $mail = new EveMail;
