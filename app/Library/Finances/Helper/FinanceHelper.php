@@ -9,7 +9,7 @@ namespace App\Library\Finances\Helper;
 
 //Internal Library
 use DB;
-//use Log;
+use Log;
 
 //Job
 use App\Jobs\SendEveMailJob;
@@ -77,8 +77,8 @@ class FinanceHelper {
                 'division'  => 3,
             ]);
         } catch(RequestFailedException $e) {
-            //Log::critical($e->getEsiResponse());
-            return null;
+            Log::critical($e->getEsiResponse());
+            return -1;
         }
 
         //Decode the wallet from json into an array

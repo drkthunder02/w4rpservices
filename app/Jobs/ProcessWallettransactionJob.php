@@ -58,7 +58,7 @@ class ProcessWalletTransactionJob implements ShouldQueue
         //Declare the class variables
         $finance = new FinanceHelper();
 
-        $finance->GetWalletTransaction($this->division, $this->charId);
+        $exception = $finance->GetWalletTransaction($this->division, $this->charId);
 
         //After the job is completed, delete the job
         $this->delete();
