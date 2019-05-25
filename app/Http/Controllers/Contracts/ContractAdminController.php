@@ -187,7 +187,7 @@ class ContractAdminController extends Controller
 
     private function NewContractMail() {
         //Get all the users with a specific permission set
-        $users = User::all(['name', 'character_id'])->toArray();
+        $users = UserPermission::where(['permission' => 'contract.canbid'])->get()->toArray();
         dd($users);
         foreach($users as $user) {
             if($user->hasPermission('contract.canbid')) {
