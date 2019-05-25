@@ -73,7 +73,7 @@ class FinanceHelper {
         //Get the entries of the journal for transactions
         try {
             $journals = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
-                'corporation_id' => 98251577,
+                'corporation_id' => 98287666,
                 'division'  => 3,
             ]);
         } catch(RequestFailedException $e) {
