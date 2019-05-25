@@ -23,7 +23,7 @@
                     <hr>
                     <div class="container">
                         <pre>
-                            {{ $contract['body'] }}
+                            {!! $contract['body'] !!}
                         </pre>
                     </div>
                     <hr>

@@ -39,7 +39,7 @@
                     </div>
                     <span class="border-dark">
                         <div class="container">
-                            {{ $contract['body'] }}
+                            {!! $contract['body'] !!}
                         </div>
                     </span>
                 </div>
