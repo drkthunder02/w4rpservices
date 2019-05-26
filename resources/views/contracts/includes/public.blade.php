@@ -24,9 +24,7 @@
                     </div>
                     <hr>
                     <div class="container">
-                        <pre>
-                            {!! $contract['body'] !!}
-                        </pre>
+                        {!! $contract['body'] !!}
                     </div>
                     <hr>
                     <div class="container">
