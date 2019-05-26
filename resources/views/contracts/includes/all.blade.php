@@ -40,7 +40,7 @@
                                 @foreach($contract['bids'] as $bid)
                                     <tr>
                                         <td>{{ $bid['corporation_name'] }}</td>
-                                        <td>{{ $bid['bid_amount'] }}</td>
+                                        <td>{{ number_format($bid['bid_amount'], 2, '.', ',') }}</td>
                                         @if(auth()->user()->character_id == $bid['character_id'])
                                         <td>
                                             <a href="/contracts/modify/bid/{{ $bid['id'] }}" class="btn btn-primary" role="button">Modify Bid</a>
