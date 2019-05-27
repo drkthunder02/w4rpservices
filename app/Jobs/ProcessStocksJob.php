@@ -19,7 +19,7 @@ class ProcessStocksJob implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        $this->connection = 'redis';
     }
 
     /**
@@ -29,6 +29,9 @@ class ProcessStocksJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        //Delcare the class variable we need for processing
+        $stock = new StructureStockHelper;
+
+        
     }
 }
