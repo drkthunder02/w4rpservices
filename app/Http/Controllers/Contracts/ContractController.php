@@ -80,10 +80,11 @@ class ContractController extends Controller
         $i = 0;
         $lowestBid = null;
         $lowestCorp = null;
+        $lowestChar = null;
 
         //Fetch all of the current contracts from the database
         $contractsTemp = Contract::where('end_date', '>=', $today)
-                             ->where(['type' => 'Public', 'finished' => false])->get()->toArray();
+                                 ->where(['type' => 'Public', 'finished' => false])->get()->toArray();
 
         //Count the number of bids, and add them to the arrays
         for($i = 0; $i < sizeof($contractsTemp); $i++) {
@@ -94,10 +95,12 @@ class ContractController extends Controller
                 if($lowestBid == null) {
                     $lowestBid = $bid['bid_amount'];
                     $lowestCorp = $bid['corporation_name'];
+                    $lowestChar = $bid['character_name'];
                 } else {
                     if($bid['bid_amount'] < $lowestBid) {
                         $lowestBid = $bid['bid_amount'];
                         $lowestCorp = $bid['corporation_name'];
+                        $lowestChar = $bid['character_name'];
                     }
                 }
             }
@@ -113,6 +116,7 @@ class ContractController extends Controller
             $contracts[$i]['bids'] = $bids;
             $contracts[$i]['lowestbid'] = $lowestBid;
             $contracts[$i]['lowestcorp'] = $lowestCorp;
+            $contracts[$i]['lowestchar'] = $lowestChar;
             
         }        
 
