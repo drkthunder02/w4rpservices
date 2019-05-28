@@ -45,6 +45,9 @@ class StructureStockHelper {
         $this->structureInfo = $structure;
     }
 
+    public function StoreStructureInfo() {
+        
+    }
 }
 
 ?>
