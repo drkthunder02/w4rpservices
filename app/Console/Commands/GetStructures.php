@@ -7,7 +7,7 @@ use DB;
 use Log;
 
 //Job
-
+use App\Jobs\ProcessStructureJob;
 
 //Library
 use App\Library\Esi\Esi;
@@ -16,6 +16,9 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 
+//Models
+use App\Models\Jobs\JobProcessStructure;
+
 class GetStructures extends Command
 {
     /**
@@ -23,7 +26,7 @@ class GetStructures extends Command
      *
      * @var string
      */
-    protected $signature = 'command:GetStructures';
+    protected $signature = 'services:GetStructures';
 
     /**
      * The console command description.
@@ -103,7 +106,7 @@ class GetStructures extends Command
                 $job->charId = 93738489;
                 $job->corpId = 98287666;
                 $job->structure = $structure;
-                JobProcessStructure::dispatch($job)->onQueue('default');
+                ProcessStructureJob::dispatch($job)->onQueue('default');
             }
             
         } while ($currentPage < $totalPages);

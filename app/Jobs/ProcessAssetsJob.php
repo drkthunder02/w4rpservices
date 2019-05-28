@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class ProcessStocksJob implements ShouldQueue
+class ProcessAssetsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -19,7 +19,7 @@ class ProcessStocksJob implements ShouldQueue
      */
     public function __construct()
     {
-        $this->connection = 'redis';
+        //
     }
 
     /**
@@ -29,9 +29,6 @@ class ProcessStocksJob implements ShouldQueue
      */
     public function handle()
     {
-        //Delcare the class variable we need for processing
-        $stock = new StructureStockHelper;
-
-        
+        //
     }
 }
