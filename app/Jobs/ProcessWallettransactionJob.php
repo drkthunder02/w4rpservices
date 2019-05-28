@@ -16,7 +16,6 @@ use App\Jobs\Library\JobHelper;
 
 //App Models
 use App\Models\Jobs\JobProcessWalletTransaction;
-use App\Models\Jobs\JobError;
 use App\Models\Jobs\JobStatus;
 
 class ProcessWalletTransactionJob implements ShouldQueue

@@ -15,7 +15,7 @@ class Asset extends Model
     public $table = 'alliance_asset';
 
     //Timestamps
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable

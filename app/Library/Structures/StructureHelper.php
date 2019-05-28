@@ -5,12 +5,13 @@
  * GNU Public License
  */
 
-namespace App\Library\Stock\Helper;
+namespace App\Library\Structures\Helper;
 
 //Internal Library
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Log;
 
 //Job
 use App\Jobs\ProcessStocksJob;
@@ -29,26 +30,21 @@ class StructureStockHelper {
 
     private $scopeCheck;
 
-    public function __construct() {
-        $esi = new Esi();
+    private $structureInfo;
 
-        $assetScope = $esi->HaveEsiScope($charId, 'esi-assets.read_corporation_assets.v1');
+    public function __construct($structure) {
+        $esi = new Esi();
         $structureScope = $esi->HaveEsiScope($charId, 'esi-universe.read_structurs.v1');
         
-        if($assetScope == false || $structureScope == false) {
-            $scopeCheck = false;
+        if($structureScope == false) {
+            $this->scopeCheck = false;
         } else {
-            $scopeCheck = true;
-        }
-    }
-    
-    public function GetStructures() {
-        if($this->scopeCheck == false) {
-            return null;
+            $this->scopeCheck = true;
         }
 
-
+        $this->structureInfo = $structure;
     }
+
 }
 
 ?>

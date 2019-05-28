@@ -20,7 +20,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\Mail\EveMail;
-use App\Models\Jobs\JobError;
 use App\Models\Jobs\JobStatus;
 
 class SendEveMailJob implements ShouldQueue
