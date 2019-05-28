@@ -30,7 +30,7 @@ class Structure extends Model
         'type_id',
         'corporation_id',
         'services',             //True or false on whether it has services which are held in a different table
-        'state'
+        'state',
         'state_timer_start',
         'state_timer_end',
         'fuel_expires',
