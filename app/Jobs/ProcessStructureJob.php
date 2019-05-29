@@ -70,9 +70,6 @@ class ProcessStructureJob implements ShouldQueue
      */
     public function handle()
     {
-        //Declare the structure helper class.
-        $structureHelper = new StructureHelper();
-
         //Get the page of structures
         $structures = $this->GetListOfStructures();
 
