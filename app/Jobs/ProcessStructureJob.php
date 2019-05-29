@@ -15,7 +15,7 @@ use App\Jobs\Library\JobHelper;
 
 //App Models
 use App\Models\Jobs\JobProcessStructure;
-use App\Models\Job\JobStatus;
+use App\Models\Jobs\JobStatus;
 use App\Models\Structure\Structure;
 
 class ProcessStructureJob implements ShouldQueue
@@ -40,6 +40,7 @@ class ProcessStructureJob implements ShouldQueue
     private $charId;
     private $corpId;
     private $page;
+    private $esi;
 
 
     /**
@@ -51,7 +52,6 @@ class ProcessStructureJob implements ShouldQueue
     {
         $this->charId = $jps->charId;
         $this->corpId = $jps->corpId;
-        $this->structure = $jps->structure;
         $this->page = $jps->page;
         $this->esi = $jps->esi;
 
@@ -72,12 +72,6 @@ class ProcessStructureJob implements ShouldQueue
     {
         //Declare the structure helper class.
         $structureHelper = new StructureHelper();
-
-        //Using our private function make sure we have the necessrary ESI scope
-        if($this->HasEsiScope() == false) {
-            Log::critical("Job couldn't be completed because of ESI Scopes.");
-            return null;
-        }
 
         //Get the page of structures
         $structures = $this->GetListOfStructures();
@@ -254,17 +248,5 @@ class ProcessStructureJob implements ShouldQueue
         $dateTime = $esiHelper->DecodeDate($date);
 
         return $dateTime;
-    }
-
-    private function HasEsiScope() {
-        $esiHelper = new Esi();
-
-        $universe = $esi->HaveEsiScope($this->charId, 'esi-universe.read_structures.v1');
-        
-        if($universe == true) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
