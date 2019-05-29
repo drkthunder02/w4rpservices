@@ -42,6 +42,17 @@ class ProcessAssetsJob implements ShouldQueue
     private $page;
     private $esi;
 
+    protected $location_array = [
+        'CorpDeliveres',
+        'CorpSAG1',
+        'CorpSAG3',
+        'CorpSAG4',
+        'CorpSAG5',
+        'CorpSAG6',
+        'CorpSAG7',
+        'StructureFuel',
+    ];
+
     /**
      * Create a new job instance.
      *
@@ -73,8 +84,56 @@ class ProcessAssetsJob implements ShouldQueue
         $assets = $this->GePageOfAssets();
 
         foreach($assets as $asset) {
-            
+            $found = Asset::where([
+                'item_id' => $asset['item_id'],
+            ])->get();
+
+            //Update the asset if we found it, otherwise add the asset to the database
+            if(!$found) {
+                if(in_array($asset['location_flag'], $this->location_array)) {
+                    $this->StoreNewAsset($asset);
+                }
+            } else {
+                $this->UpdateAsset($asset);
+            }
         }
+    }
+
+    private function UpdateAsset($asset) {
+        if(isset($asset['is_blueprint_copy'])) {
+            Asset::where([
+                'item_id' => $asset['item_id'],
+            ])->update([
+                'is_blueprint_copy' => $asset['is_blueprint_copy'],
+            ]);
+        }
+
+        Asset::where([
+            'item_id' => $asset['item_id'],
+        ])->update([
+            'is_singleton' => $asset['is_singleton'],
+            'item_id' => $asset['item_id'],
+            'location_flag' => $asset['location_flag'],
+            'location_id' => $asset['location_id'],
+            'location_type' => $asset['location_type'],
+            'quantity' => $asset['quantity'],
+            'type_id' => $asset['type_id'],
+        ]);
+    }
+
+    private function StoreNewAsset($asset) {
+        $new = new Asset;
+        if(isset($asset['is_blueprint_copy'])) {
+            $new->is_blueprint_copy = $asset['is_blueprint_copy'];
+        }        
+        $new->is_singleton = $asset['is_singleton'];
+        $new->item_id = $asset['item_id'];
+        $new->location_flag = $asset['location_flag'];
+        $new->location_id = $asset['location_id'];
+        $new->location_type = $asset['location_type'];
+        $new->quantity = $asset['quantity'];
+        $new->type_id = $asset['type_id'];
+        $new->save();
     }
 
     private function GetPageOfAssets() {
