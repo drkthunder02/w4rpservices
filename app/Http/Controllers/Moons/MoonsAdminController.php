@@ -92,7 +92,7 @@ class MoonsAdminController extends Controller
             'System' => $request->system,
             'Planet' => $request->planet,
             'Moon' => $request->moon,
-        ])->get()->toArray();
+        ])->get();
 
         $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
