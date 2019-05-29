@@ -96,7 +96,7 @@ class MoonsAdminController extends Controller
 
         $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-        dd($price);
+        
         if($found && $request->removal != true) {
             if($allianceId = 99004116) {
                 MoonRental::where([
