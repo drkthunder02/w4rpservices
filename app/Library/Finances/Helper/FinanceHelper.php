@@ -237,6 +237,7 @@ class FinanceHelper {
         $other = new PlayerDonation();
         $industry = new StructureIndustryTax();
         $office = new OfficeFee();
+        $pi = new PlanetProductionTax();
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $tokenData = $this->TokenInfo($charId);
@@ -293,6 +294,8 @@ class FinanceHelper {
                     $industry->InsertStructureIndustryTax($entry, $corpId, $division);
                 } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
                     $office->InsertOfficeFee($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'planetary_export_tax' || $entry['ref_type'] == 'planetary_import_tax') {
+                    $pi->InsertPlanetProductionTax($entry, $corpId, $division);
                 }
             }
         }
