@@ -12,7 +12,7 @@ class Structure extends Model
      */
 
     //Table Name
-    public $table = 'structures';
+    public $table = 'alliance_structures';
 
     //Timestamps
     public $timestamps = false;

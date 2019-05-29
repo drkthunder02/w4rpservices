@@ -12,7 +12,7 @@ class Asset extends Model
      */
 
     //Table Name
-    public $table = 'alliance_asset';
+    public $table = 'alliance_assets';
 
     //Timestamps
     public $timestamps = true;
