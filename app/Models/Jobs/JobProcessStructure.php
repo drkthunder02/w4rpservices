@@ -19,7 +19,8 @@ class JobProcessStructure extends Model
      */
     protected $fillable = [
         'charId',
-        'corporationId',
-        'structure',
+        'corpId',
+        'page',
+        'esi',
     ];
 }

@@ -39,7 +39,7 @@ class ProcessStructureJob implements ShouldQueue
      */
     private $charId;
     private $corpId;
-    private $structure;
+    private $page;
 
 
     /**
@@ -52,6 +52,8 @@ class ProcessStructureJob implements ShouldQueue
         $this->charId = $jps->charId;
         $this->corpId = $jps->corpId;
         $this->structure = $jps->structure;
+        $this->page = $jps->page;
+        $this->esi = $jps->esi;
 
         //Set the connection for the job
         $this->connection = 'redis';
@@ -77,96 +79,146 @@ class ProcessStructureJob implements ShouldQueue
             return null;
         }
 
-        //Setup the Eseye container and authenticate it.
-        $config = config('esi');
-        $token = EsiToken::where(['character_id' => 93738489])->get(['refresh_token']);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
+        //Get the page of structures
+        $structures = $this->GetListOfStructures();
 
-        //Declare the esi variable
-        $esi = new Eseye($authentication);
+        foreach($structures as $structure) {
+            $info = $this->GetStructureInfo($structure['structure_id']);
 
-        try {
-            $info = $esi->invoke('get', '/universe/structures/{structure_id}/', [
-                'structure_id' => $this->structure['structure_id'],
-            ]);
-        } catch(RequestFailedException $e) {
-            return null;
+            $solarName = $this->GetSolarSystemName($info['solar_system_id']);
+
+
+            //Record the structure information into the database
+            //Find if the structure exists
+            $found = Structure::where(['structure_id' => $structure['structure_id']])->get();
+            if($found) {
+                $this->UpdateExistingStructure($structure, $info, $solarName);
+            } else {
+                $this->StoreNewStructure($structure, $info, $solarName);
+            }
+        }
+    }
+
+    private function UpdateExistingStructure($structure, $info, $solarName) {
+        //For each line see if it is part of the structure array, and attempt to modify each variable
+        //This will be implemented in the near future.
+
+        if(isset($structures['services'])) {
+            foreach($structure['service'] as $service) {
+                //Search for the service, and if found, update it, else add it.
+                $serviceFound = Service::where([
+                    'structure_id' => $structure['structure_id'],
+                    'name' => $service['name'],
+                ])->get();
+                if($serviceFound) {
+                    Service::where([
+                        'structure_id' => $structure['structure_id'],
+                        'name' => $service['name'],
+                    ])->update([
+                        'state' => $service['state'],
+                    ]);
+                } else {
+                    $newService = new Service;
+                    $newService->structure_id = $structure['structure_id'];
+                    $newService->name = $service['name'];
+                    $newService->state = $service['state'];
+                }
+                
+            }
+        }
+    }
+
+    private function StoreNewStructure($structure, $info, $solarName) {
+        $structure = new Structure;
+        $structure->structure_id = $structure['structure_id'];
+        $structure->structure_name = $info['name'];
+        $structure->corporation_id = $info['owner_id'];
+        $structure->solar_system_id = $info['solar_system_id'];
+        $structure->solary_system_name = $solarName;
+        if(isset($info['type_id'])) {
+            $structure->type_id = $info['type_id'];
+        }
+        $structure->corporation_id = $structure['corporation_id'];
+        if(isset($structures['services'])) {
+            $structure->services = true;
+        } else {
+            $structure->services = false;
+        }
+        if(isset($structure['state_timer_start'])) {
+            $structure->state_timer_start = $this->DecodeDate($structure['state_timer_start']);
+        }
+        if(isset($structure['state_timer_end'])) {
+            $structure->state_timer_end = $this->DecodeDate($structure['state_timer_end']);
+        }
+        if(isset($structure['fuel_expires'])) {
+            $structure->fuel_expires = $structure['fuel_expires'];
+        }
+        $structure->profile_id = $structure['profile_id'];
+        $structure->position_x = $info['position']['x'];
+        $structure->position_y = $info['position']['y'];
+        $structure->position_z = $info['position']['z'];
+        if(isset($structure['next_reinforce_apply'])) {
+            $structure->next_reinforce_apply = $structure['next_reinforce_apply'];
+        }
+        if(isset($structure['next_reinforce_hour'])) {
+            $structure->next_reinforce_hour = $structure['next_reinforce_hour'];
+        }
+        if(isset($structure['next_reinforce_weekday'])) {
+            $structure->next_reinforce_weekday = $structure['next_reinforce_weekday'];
+        }
+        $structure->reinforce_hour = $structure['reinforce_hour'];
+        if(isset($structure['reinforce_weekday'])) {
+            $structure->reinforce_weekday = $structure['reinforce_weekday'];
+        }
+        if(isset($structure['unanchors_at'])) {
+            $structure->unanchors_at = $structure['unanchors_at'];
+        }            
+        //If we set the structure services to true, let's save the services
+        if($structure->services == true) {
+            $this->StorestructureServices($structure['services'], $structure['structure_id']);
         }
 
+        //Save the database record
+        $structure->save();
+    }
+
+    private function GetSolarSystemName($systemId) {
         //Attempt to get the solar system name from ESI
         try {
-            $solarName = $esi->invoke('get', '/universe/systems/{system_id}/', [
-                'system_id' => $info['solary_system_id'],
+            $solarName = $this->esi->invoke('get', '/universe/systems/{system_id}/', [
+                'system_id' => $systemId,
             ]);
         } catch(RequestFailedException $e) {
             $solarName = null;
         }
 
-        //Record the structure information into the database
-        //Find if the structure exists
-        $found = Structure::where(['structure_id' => $this->structure['structure_id']])->get();
-        if($found) {
+        return $solarName;
+    }
 
-        } else {
-            $structure = new Structure;
-            $structure->structure_id = $this->structure['structure_id'];
-            $structure->structure_name = $info['name'];
-            $structure->corporation_id = $info['owner_id'];
-            $structure->solar_system_id = $info['solar_system_id'];
-            $structure->solary_system_name = $solarName;
-            if(isset($info['type_id'])) {
-                $structure->type_id = $info['type_id'];
-            }
-            $structure->corporation_id = $this->structure['corporation_id'];
-            if(isset($this->structures['services'])) {
-                $structure->services = true;
-            } else {
-                $structure->services = false;
-            }
-            if(isset($this->structure['state_timer_start'])) {
-                $structure->state_timer_start = $this->DecodeDate($this->structure['state_timer_start']);
-            }
-            if(isset($this->structure['state_timer_end'])) {
-                $structure->state_timer_end = $this->DecodeDate($this->structure['state_timer_end']);
-            }
-            if(isset($this->structure['fuel_expires'])) {
-                $structure->fuel_expires = $this->structure['fuel_expires'];
-            }
-            $structure->profile_id = $this->structure['profile_id'];
-            $structure->position_x = $info['position']['x'];
-            $structure->position_y = $info['position']['y'];
-            $structure->position_z = $info['position']['z'];
-            if(isset($this->structure['next_reinforce_apply'])) {
-                $structure->next_reinforce_apply = $this->structure['next_reinforce_apply'];
-            }
-            if(isset($this->structure['next_reinforce_hour'])) {
-                $structure->next_reinforce_hour = $this->structure['next_reinforce_hour'];
-            }
-            if(isset($this->structure['next_reinforce_weekday'])) {
-                $structure->next_reinforce_weekday = $this->structure['next_reinforce_weekday'];
-            }
-            $structure->reinforce_hour = $this->structure['reinforce_hour'];
-            if(isset($this->structure['reinforce_weekday'])) {
-                $structure->reinforce_weekday = $this->structure['reinforce_weekday'];
-            }
-            if(isset($this->structure['unanchors_at'])) {
-                $structure->unanchors_at = $this->structure['unanchors_at'];
-            }            
-            //If we set the structure services to true, let's save the services
-            if($structure->services == true) {
-                $this->StorestructureServices($this->structure['services'], $this->structure['structure_id']);
-            }
-
-            //Save the database record
-            $structure->save();
+    private function GetStructureInfo($structureId) {
+        try {
+            $info = $this->esi->invoke('get', '/universe/structures/{structure_id}/', [
+                'structure_id' => $structureId,
+            ]);
+        } catch(RequestFailedException $e) {
+            $info = null;
         }
 
-        //Record the structure's services information into the database
+        return $info;
+    }
 
+    private function GetListOfStructures() {
+        try {
+            $structures = $this->esi->page($this->page)
+                              ->invoke('get', '/corporations/{corporation_id}/structures/', [
+                                'corporation_id' => $this->corpId,
+                                ]);
+        } catch (RequestFailedException $e) {
+            Log::critical("Failed to get structure list.");
+            $structures = null;
+        }
+
+        return $structures;
     }
 
     private function StoreStructureServices($services, $structureId) {

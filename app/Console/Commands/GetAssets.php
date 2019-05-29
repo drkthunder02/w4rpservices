@@ -53,6 +53,58 @@ class GetAssets extends Command
      */
     public function handle()
     {
-        //
+        //Create the command helper container
+        $task = new CommandHelper('GetAssets');
+        //Add the entry into the jobs table saying the job is starting
+        $task->SetStartStatus();
+
+        //Declare some variables
+        $charId = 93738849;
+        $corpId = 98287666;
+
+        //ESI Scope Check
+        $esiHelper = new Esi();
+        $assetScope = $esiHelper->HaveEsiScope(93738489, 'esi-assets.read_corporation_assets.v1');
+
+        if($assetScope == false) {
+            Log::critical("Scope check for esi failed.");
+            return null;
+        }
+
+        //Setup the esi authentication container
+        $config = config('esi');
+        //Get the refresh token from the database
+        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+
+        $esi = new Eseye($authentication);
+
+        //Set the current page
+        $currentPage = 1;
+        //Set our default total pages, and we will refresh this later
+        $totalPages = 1;
+
+        try {
+            $assets = $esi->page($currentPage)
+                          ->invoke('get', '/corporations/{corporation_id}/assets/', [
+                              'corporation_id' => $corpId,
+                          ]);
+        } catch (RequestFailedException $e) {
+            //
+        }
+
+        $totalPages = $assets->pages;
+
+        for($i = 1; $i <= $totalPages; $i++) {
+            $job = new JobProcessAsset;
+            $job->charId = $charId;
+            $job->corpId = $corpId;
+            $job->page = $i;
+            ProcessAssetJob::dispatch($job)->onQueue('default');
+        }
     }
 }
