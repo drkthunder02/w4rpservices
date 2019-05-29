@@ -94,6 +94,8 @@ class MoonsAdminController extends Controller
             'Moon' => $request->moon,
         ])->get();
 
+        dd($moon);
+
         $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
