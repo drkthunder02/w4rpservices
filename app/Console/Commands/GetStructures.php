@@ -98,9 +98,7 @@ class GetStructures extends Command
             return null;
         }
 
-        $totalPages = $structures->pages;
-
-        for($i  = 1; $i <= $totalPages; $i++) {
+        for($i  = 1; $i <= $structures->pages; $i++) {
             $job = new JobProcessStructure;
             $job->charId = $charId;
             $job->corpId = $corpId;

@@ -83,27 +83,20 @@ class GetAssets extends Command
 
         $esi = new Eseye($authentication);
 
-        //Set the current page
-        $currentPage = 1;
-        //Set our default total pages, and we will refresh this later
-        $totalPages = 1;
-
         try {
-            $assets = $esi->page($currentPage)
-                          ->invoke('get', '/corporations/{corporation_id}/assets/', [
+            $assets = $esi->invoke('get', '/corporations/{corporation_id}/assets/', [
                               'corporation_id' => $corpId,
                           ]);
         } catch (RequestFailedException $e) {
             //
         }
 
-        $totalPages = $assets->pages;
-
-        for($i = 1; $i <= $totalPages; $i++) {
+        for($i = 1; $i <= $assets->pages; $i++) {
             $job = new JobProcessAsset;
             $job->charId = $charId;
             $job->corpId = $corpId;
             $job->page = $i;
+            $job->esi = $esi;
             ProcessAssetJob::dispatch($job)->onQueue('default');
         }
     }
