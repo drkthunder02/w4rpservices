@@ -37,8 +37,6 @@ class MoonsController extends Controller
         $type = Auth::user()->user_type;
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
-        //Update the prices for the moon
-        $moonCalc->FetchNewPrices();
         //get all of the moons from the database
         $moons = DB::table('Moons')->orderBy('System', 'asc')->get();
         //Set the rental date as last month for moons not rented
@@ -126,8 +124,6 @@ class MoonsController extends Controller
 
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
-        //Update the prices for the moon
-        $moonCalc->FetchNewPrices();
 
         $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
                                                              $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);

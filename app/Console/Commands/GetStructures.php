@@ -19,7 +19,7 @@ use Seat\Eseye\Eseye;
 //Models
 use App\Models\Jobs\JobProcessStructure;
 
-class GetStructures extends Command
+class GetStructuresCommand extends Command
 {
     /**
      * The name and signature of the console command.

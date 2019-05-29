@@ -20,7 +20,7 @@ use Seat\Eseye\Eseye;
 use App\Models\Jobs\JobProcessAssets;
 
 
-class GetAssets extends Command
+class GetAssetsCommand extends Command
 {
     /**
      * The name and signature of the console command.
