@@ -8,6 +8,7 @@ use DB;
 //Models
 use App\Models\Esi\EsiScope;
 use App\Models\Jobs\JobSendEveMail;
+use App\Models\Mail\EveMail;
 
 //Jobs
 use App\Jobs\SendEveMailJob;
