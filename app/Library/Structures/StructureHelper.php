@@ -68,7 +68,7 @@ class StructureHelper {
                 $st->structure_name = $info->name;
                 $st->corporation_id = $info->owner_id;
                 $st->solar_system_id = $info->solar_system_id;
-                $st->solary_system_name = $solarName;
+                $st->solar_system_name = $solarName;
                 if(isset($info->type_id)) {
                     $st->type_id = $info->type_id;
                 }
