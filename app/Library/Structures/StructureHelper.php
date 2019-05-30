@@ -12,7 +12,6 @@ use Log;
 use DB;
 
 //App Library
-use App\Library\Structures\StructureHelper;
 use App\Jobs\Library\JobHelper;
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;

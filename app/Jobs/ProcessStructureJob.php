@@ -7,25 +7,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Log;
-use DB;
+
 
 //App Library
 use App\Library\Structures\StructureHelper;
-use App\Jobs\Library\JobHelper;
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
-use Seat\Eseye\Exceptions\RequestFailedException;
-
-//App Models
-use App\Models\Jobs\JobProcessStructure;
-use App\Models\Jobs\JobStatus;
-use App\Models\Structure\Structure;
-use App\Models\Structure\Service;
-use App\Models\Esi\EsiToken;
-use App\Models\Esi\EsiScope;
 
 class ProcessStructureJob implements ShouldQueue
 {
