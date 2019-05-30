@@ -63,9 +63,53 @@ class StructureHelper {
                     $solarName = null;
                 }
 
-                $this->StoreNewStructure($structure, $info, $solarName);
-            } else {
-                $this->UpdateExistingStructure($structure, $info, $solarName);
+                $struct = new Structure;
+                $struct->structure_id = $structure->structure_id;
+                $struct->structure_name = $info->name;
+                $struct->corporation_id = $info->owner_id;
+                $struct->solar_system_id = $info->solar_system_id;
+                $struct->solary_system_name = $solarName;
+                if(isset($info->type_id)) {
+                    $struct->type_id = $info->type_id;
+                }
+                $struct->corporation_id = $structure->corporation_id;
+                if(isset($structure->services)) {
+                    $struct->services = true;
+                } else {
+                    $struct->services = false;
+                }
+                if(isset($structure->state_timer_start)) {
+                    $struct->state_timer_start = $this->DecodeDate($structure->state_timer_start);
+                }
+                if(isset($structure->state_timer_end)) {
+                    $struct->state_timer_end = $this->DecodeDate($structure->state_timer_end);
+                }
+                if(isset($structure->fuel_expires)) {
+                    $struct->fuel_expires = $structure->fuel_expires;
+                }
+                $struct->profile_id = $structure->profile_id;
+                $struct->position_x = $info->position->x;
+                $struct->position_y = $info->position->y;
+                $struct->position_z = $info->position->z;
+                if(isset($structure->next_reinforce_apply)) {
+                    $struct->next_reinforce_apply = $structure->next_reinforce_apply;
+                }
+                if(isset($structure->next_reinforce_hour)) {
+                    $struct->next_reinforce_hour = $structure->next_reinforce_hour;
+                }
+                if(isset($structure->next_reinforce_weekday)) {
+                    $struct->next_reinforce_weekday = $structure->next_reinforce_weekday;
+                }
+                $struct->reinforce_hour = $structure->reinforce_hour;
+                if(isset($structure->reinforce_weekday)) {
+                    $struct->reinforce_weekday = $structure->reinforce_weekday;
+                }
+                if(isset($structure->unanchors_at)) {
+                    $struct->unanchors_at = $structure->unanchors_at;
+                } 
+
+                //Save the database record
+                $struct->save();
             }
         }
     }
