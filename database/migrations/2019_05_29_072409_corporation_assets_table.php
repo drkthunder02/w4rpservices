@@ -19,7 +19,7 @@ class CorporationAssetsTable extends Migration
                 $table->string('structure_id');
                 $table->string('structure_name');
                 $table->string('solar_system_id');
-                $table->string('solar_system_name');
+                $table->string('solar_system_name')->nullable();
                 $table->string('type_id');
                 $table->string('corporation_id');
                 $table->boolean('services');
