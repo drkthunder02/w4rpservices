@@ -66,8 +66,8 @@ class ProcessStructureJob implements ShouldQueue
      */
     public function handle()
     {
-        $sHelper = new StructureHelper;
+        $sHelper = new StructureHelper($this->charId, $this->corpId, $this->page);
 
-        $sHelper->Start($this->charId, $this->corpId, $this->page);
+        $sHelper->Start();
     }
 }

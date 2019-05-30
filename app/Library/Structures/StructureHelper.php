@@ -30,9 +30,19 @@ use App\Models\Esi\EsiScope;
 
 class StructureHelper {
 
-    public function Start($charId, $corpId, $page) {
+    private $charId;
+    private $corpId;
+    private $page;
 
-        $structures = $this->GetListOfStructures($page, $corpId);
+    public function __construct($charId, $corpId, $page) {
+        $this->charId = $charId;
+        $this->corpId = $corpId;
+        $this->page = $page;
+    }
+
+    public function Start() {
+
+        $structures = $this->GetListOfStructures();
 
         foreach($structures as $structure) {
             $info = $this->GetStructureInfo($structure->structure_id);
@@ -143,7 +153,7 @@ class StructureHelper {
         //Setup the esi authentication container
         $config = config('esi');
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
         $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
@@ -172,7 +182,7 @@ class StructureHelper {
         //Setup the esi authentication container
         $config = config('esi');
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
         $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
@@ -197,11 +207,11 @@ class StructureHelper {
         return $info;
     }
 
-    private function GetListOfStructures($page, $corpId) {
+    private function GetListOfStructures() {
         //Setup the esi authentication container
         $config = config('esi');
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
         $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
@@ -211,9 +221,9 @@ class StructureHelper {
         $esi = new Eseye($authentication);
 
         try {
-            $structures = $esi->page($page)
+            $structures = $esi->page($this->page)
                               ->invoke('get', '/corporations/{corporation_id}/structures/', [
-                                'corporation_id' => $corpId,
+                                'corporation_id' => $this->corpId,
                                 ]);
         } catch (RequestFailedException $e) {
             Log::critical("Failed to get structure list.");
