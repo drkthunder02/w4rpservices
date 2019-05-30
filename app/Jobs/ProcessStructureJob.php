@@ -236,6 +236,10 @@ class ProcessStructureJob implements ShouldQueue
             $info = null;
         }
 
+        Log::warning($info->response_code);
+        Log::warning($info->error_message);
+        Log::warning($info->raw);
+
         return $info;
     }
 
