@@ -97,7 +97,9 @@ class ProcessStructureJob implements ShouldQueue
             if(isset($info->solar_system_id)) {
                 $solarName = $this->GetSolarSystemName($info->solar_system_id);
             } else {
-                Log::warning("Couldn't get solar system name for structure " . $structure->structure_id . " with solar system id " . $info->solar_system_id);
+                Log::warning("Couldn't get solar system name for structure " . $structure->structure_id);
+                Log::warning(var_dump($info));
+                return null;
             }
             
 
@@ -197,6 +199,7 @@ class ProcessStructureJob implements ShouldQueue
     }
 
     private function GetSolarSystemName($systemId) {
+
         //Attempt to get the solar system name from ESI
         try {
             $solar = $this->esi->invoke('get', '/universe/systems/{system_id}/', [
@@ -220,6 +223,7 @@ class ProcessStructureJob implements ShouldQueue
             ]);
         } catch(RequestFailedException $e) {
             Log::warning("Failed to get structure information for structure with id " . $structureId);
+            Log::warning(var_dump($info));
             $info = null;
         }
 
