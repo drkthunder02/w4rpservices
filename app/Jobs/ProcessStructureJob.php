@@ -95,6 +95,8 @@ class ProcessStructureJob implements ShouldQueue
      */
     public function handle()
     {
+        $sHelper = new StructureHelper;
+
         //Get the page of structures
         $structures = $this->GetListOfStructures();
 
@@ -113,9 +115,9 @@ class ProcessStructureJob implements ShouldQueue
             //Find if the structure exists
             $found = Structure::where(['structure_id' => $structure->structure_id])->get();
             if(!$found) {
-                $this->StoreNewStructure($structure, $info, $solarName);
+                $sHelper->StoreNewStructure($structure, $info, $solarName);
             } else {
-                $this->UpdateExistingStructure($structure, $info, $solarName);
+                $sHelper->UpdateExistingStructure($structure, $info, $solarName);
             }
         }
     }

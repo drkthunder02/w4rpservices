@@ -5,7 +5,7 @@
  * GNU Public License
  */
 
-namespace App\Library\Structures\Helper;
+namespace App\Library\Structures;
 
 //Internal Library
 use Log;
@@ -15,7 +15,6 @@ use Carbon\Carbon;
 //App Models
 use App\Models\Structure\Structure;
 use App\Models\Structure\Service;
-
 
 
 class StructureStockHelper {
