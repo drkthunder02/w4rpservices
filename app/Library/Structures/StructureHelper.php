@@ -34,10 +34,10 @@ class StructureHelper {
     private $corpId;
     private $page;
 
-    public function __construct($charId, $corpId, $page) {
-        $this->charId = $charId;
-        $this->corpId = $corpId;
-        $this->page = $page;
+    public function __construct($char, $corp, $pg) {
+        $this->charId = $char;
+        $this->corpId = $corp;
+        $this->page = $pg;
     }
 
     public function Start() {
