@@ -12,6 +12,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 //App Library
 use App\Library\Structures\StructureHelper;
 
+//App Models
+use App\Models\Jobs\JobProcessStructure;
+use App\Models\Jobs\JobStatus;
+
 class ProcessStructureJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
