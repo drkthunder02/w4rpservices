@@ -59,7 +59,7 @@ class GetStructuresCommand extends Command
         $task->SetStartStatus();
 
         //Declare some variables
-        $charId = 93738849;
+        $charId = 93738489;
         $corpId = 98287666;
 
         //ESI Scope Check
