@@ -19,6 +19,8 @@ use Commands\Library\CommandHelper;
 
 //Models
 use App\Models\Jobs\JobProcessStructure;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
 
 class GetStructuresCommand extends Command
 {
