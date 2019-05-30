@@ -89,7 +89,7 @@ class StructureHelper {
                     $st->state_timer_end = $this->DecodeDate($structure->state_timer_end);
                 }
                 if(isset($structure->fuel_expires)) {
-                    $st->fuel_expires = $structure->fuel_expires;
+                    $st->fuel_expires = $this->DecodeDate($structure->fuel_expires);
                 }
                 $st->profile_id = $structure->profile_id;
                 $st->position_x = $info->position->x;
