@@ -17,6 +17,8 @@ use App\Jobs\Library\JobHelper;
 use App\Models\Jobs\JobProcessStructure;
 use App\Models\Jobs\JobStatus;
 use App\Models\Structure\Structure;
+use App\Models\Esi\EsiToken;
+use App\Models\Esi\EsiScope;
 
 class ProcessStructureJob implements ShouldQueue
 {
