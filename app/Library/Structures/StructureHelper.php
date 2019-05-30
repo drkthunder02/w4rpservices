@@ -42,6 +42,10 @@ class StructureHelper {
 
     public function Start() {
 
+        $solarName = null;
+        $structure = null;
+        $info = null;
+
         $structures = $this->GetListOfStructures();
 
         foreach($structures as $structure) {
