@@ -90,14 +90,14 @@ class ProcessStructureJob implements ShouldQueue
         $structures = $this->GetListOfStructures();
 
         foreach($structures as $structure) {
-            $info = $this->GetStructureInfo($structure['structure_id']);
+            $info = $this->GetStructureInfo($structure->structure_id);
 
-            $solarName = $this->GetSolarSystemName($info['solar_system_id']);
+            $solarName = $this->GetSolarSystemName($info->solar_system_id);
 
 
             //Record the structure information into the database
             //Find if the structure exists
-            $found = Structure::where(['structure_id' => $structure['structure_id']])->get();
+            $found = Structure::where(['structure_id' => $structure->structure_id])->get();
             if($found) {
                 $this->UpdateExistingStructure($structure, $info, $solarName);
             } else {
@@ -110,25 +110,25 @@ class ProcessStructureJob implements ShouldQueue
         //For each line see if it is part of the structure array, and attempt to modify each variable
         //This will be implemented in the near future.
 
-        if(isset($structures['services'])) {
-            foreach($structure['service'] as $service) {
+        if(isset($structure->services)) {
+            foreach($structure->service as $service) {
                 //Search for the service, and if found, update it, else add it.
                 $serviceFound = Service::where([
-                    'structure_id' => $structure['structure_id'],
-                    'name' => $service['name'],
+                    'structure_id' => $structure->structure_id,
+                    'name' => $service->name,
                 ])->get();
                 if($serviceFound) {
                     Service::where([
-                        'structure_id' => $structure['structure_id'],
-                        'name' => $service['name'],
+                        'structure_id' => $structure->structure_id,
+                        'name' => $service->name,
                     ])->update([
-                        'state' => $service['state'],
+                        'state' => $service->state,
                     ]);
                 } else {
                     $newService = new Service;
-                    $newService->structure_id = $structure['structure_id'];
-                    $newService->name = $service['name'];
-                    $newService->state = $service['state'];
+                    $newService->structure_id = $structure->structure_id;
+                    $newService->name = $service->name;
+                    $newService->state = $service->state;
                 }
                 
             }
@@ -137,52 +137,52 @@ class ProcessStructureJob implements ShouldQueue
 
     private function StoreNewStructure($structure, $info, $solarName) {
         $structure = new Structure;
-        $structure->structure_id = $structure['structure_id'];
-        $structure->structure_name = $info['name'];
-        $structure->corporation_id = $info['owner_id'];
-        $structure->solar_system_id = $info['solar_system_id'];
+        $structure->structure_id = $structure->structure_id;
+        $structure->structure_name = $info->name;
+        $structure->corporation_id = $info->owner_id;
+        $structure->solar_system_id = $info->solar_system_id;
         $structure->solary_system_name = $solarName;
-        if(isset($info['type_id'])) {
-            $structure->type_id = $info['type_id'];
+        if(isset($info->type_id)) {
+            $structure->type_id = $info->type_id;
         }
-        $structure->corporation_id = $structure['corporation_id'];
-        if(isset($structures['services'])) {
+        $structure->corporation_id = $structure->corporation_id;
+        if(isset($structures->services)) {
             $structure->services = true;
         } else {
             $structure->services = false;
         }
-        if(isset($structure['state_timer_start'])) {
-            $structure->state_timer_start = $this->DecodeDate($structure['state_timer_start']);
+        if(isset($structure->state_timer_start)) {
+            $structure->state_timer_start = $this->DecodeDate($structure->state_timer_start);
         }
-        if(isset($structure['state_timer_end'])) {
-            $structure->state_timer_end = $this->DecodeDate($structure['state_timer_end']);
+        if(isset($structure->state_timer_end)) {
+            $structure->state_timer_end = $this->DecodeDate($structure->state_timer_end);
         }
-        if(isset($structure['fuel_expires'])) {
-            $structure->fuel_expires = $structure['fuel_expires'];
+        if(isset($structure->fuel_expires)) {
+            $structure->fuel_expires = $structure->fuel_expires;
         }
-        $structure->profile_id = $structure['profile_id'];
-        $structure->position_x = $info['position']['x'];
-        $structure->position_y = $info['position']['y'];
-        $structure->position_z = $info['position']['z'];
-        if(isset($structure['next_reinforce_apply'])) {
-            $structure->next_reinforce_apply = $structure['next_reinforce_apply'];
+        $structure->profile_id = $structure->profile_id;
+        $structure->position_x = $info->position->x;
+        $structure->position_y = $info->position->y;
+        $structure->position_z = $info->position->z;
+        if(isset($structure->next_reinforce_apply)) {
+            $structure->next_reinforce_apply = $structure->next_reinforce_apply;
         }
-        if(isset($structure['next_reinforce_hour'])) {
-            $structure->next_reinforce_hour = $structure['next_reinforce_hour'];
+        if(isset($structure->next_reinforce_hour)) {
+            $structure->next_reinforce_hour = $structure->next_reinforce_hour;
         }
-        if(isset($structure['next_reinforce_weekday'])) {
-            $structure->next_reinforce_weekday = $structure['next_reinforce_weekday'];
+        if(isset($structure->next_reinforce_weekday)) {
+            $structure->next_reinforce_weekday = $structure->next_reinforce_weekday;
         }
-        $structure->reinforce_hour = $structure['reinforce_hour'];
-        if(isset($structure['reinforce_weekday'])) {
-            $structure->reinforce_weekday = $structure['reinforce_weekday'];
+        $structure->reinforce_hour = $structure->reinforce_hour;
+        if(isset($structure->reinforce_weekday)) {
+            $structure->reinforce_weekday = $structure->reinforce_weekday;
         }
-        if(isset($structure['unanchors_at'])) {
-            $structure->unanchors_at = $structure['unanchors_at'];
+        if(isset($structure->unanchors_at)) {
+            $structure->unanchors_at = $structure->unanchors_at;
         }            
         //If we set the structure services to true, let's save the services
         if($structure->services == true) {
-            $this->StorestructureServices($structure['services'], $structure['structure_id']);
+            $this->StorestructureServices($structure->services, $structure->structure_id);
         }
 
         //Save the database record
@@ -233,21 +233,21 @@ class ProcessStructureJob implements ShouldQueue
             //Find the structure id and the name of the service to see if it exists
             $found = Service::where([
                 'structure_id' => $structureId,
-                'name' => $service['name'],
+                'name' => $service->name,
             ])->get();
 
             if(!$found) {
                 $new = new Service;
                 $new->structure_id = $structureId;
-                $new->name = $service['name'];
-                $new->state = $service['state'];
+                $new->name = $service->name;
+                $new->state = $service->state;
                 $new->save();
             } else {
                 Service::where([
                     'structure_id' => $structureId,
-                    'name' => $service['name'],
+                    'name' => $service->name,
                 ])->update([
-                    'state' => $service['state'],
+                    'state' => $service->state,
                 ]);
             }
 
