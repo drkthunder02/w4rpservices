@@ -97,8 +97,7 @@ class GetStructuresCommand extends Command
         $totalPages = 1;
 
         try {
-            $structures = $esi->page($currentPage)
-                              ->invoke('get', '/corporations/{corporation_id}/structures/', [
+            $structures = $esi->invoke('get', '/corporations/{corporation_id}/structures/', [
                                 'corporation_id' => $corpId,
                                 ]);
         } catch (RequestFailedException $e) {
@@ -111,7 +110,7 @@ class GetStructuresCommand extends Command
             $job->charId = $charId;
             $job->corpId = $corpId;
             $job->page = $i;
-            ProcessStructureJob::dispatch($job)->onQueue('default');
+            ProcessStructureJob::dispatch($job)->onQueue('structures');
         }
 
         //Mark the job as finished

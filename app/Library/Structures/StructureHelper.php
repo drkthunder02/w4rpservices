@@ -31,35 +31,24 @@ use App\Models\Esi\EsiScope;
 class StructureHelper {
 
     public function Start($charId, $corpId, $page) {
-        //Setup the esi authentication container
-        $config = config('esi');
-        //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
 
-        $esi = new Eseye($authentication);
-
-        $structures = $this->GetListOfStructures($page, $corpId, $esi);
+        $structures = $this->GetListOfStructures($page, $corpId);
 
         foreach($structures as $structure) {
-            $info = $this->GetStructureInfo($structure->structure_id, $esi);
-
-            if(isset($info->solar_system_id)) {
-                $solarName = $this->GetSolarSystemName($info->solar_system_id, $esi);
-            } else {
-                Log::critical("Couldn't get solar system name for structure " . $structure->structure_id);
-                Log::critical("Check access lists.");
-                $solarName = null;
-            }
+            $info = $this->GetStructureInfo($structure->structure_id);
             
             //Record the structure information into the database
             //Find if the structure exists
             $found = Structure::where(['structure_id' => $structure->structure_id])->get();
             if(!$found) {
+                if(isset($info->solar_system_id)) {
+                    $solarName = $this->GetSolarSystemName($info->solar_system_id);
+                } else {
+                    Log::critical("Couldn't get solar system name for structure " . $structure->structure_id);
+                    Log::critical("Check access lists.");
+                    $solarName = null;
+                }
+
                 $sHelper->StoreNewStructure($structure, $info, $solarName);
             } else {
                 $sHelper->UpdateExistingStructure($structure, $info, $solarName);
@@ -150,7 +139,18 @@ class StructureHelper {
         $struct->save();
     }
 
-    private function GetSolarSystemName($systemId, $esi) {
+    private function GetSolarSystemName($systemId) {
+        //Setup the esi authentication container
+        $config = config('esi');
+        //Get the refresh token from the database
+        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+
+        $esi = new Eseye($authentication);
 
         //Attempt to get the solar system name from ESI
         try {
@@ -168,7 +168,19 @@ class StructureHelper {
         }
     }
 
-    private function GetStructureInfo($structureId, $esi) {
+    private function GetStructureInfo($structureId) {
+        //Setup the esi authentication container
+        $config = config('esi');
+        //Get the refresh token from the database
+        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+
+        $esi = new Eseye($authentication);
+
         try {
             $info = $esi->invoke('get', '/universe/structures/{structure_id}/', [
                 'structure_id' => $structureId,
@@ -185,7 +197,19 @@ class StructureHelper {
         return $info;
     }
 
-    private function GetListOfStructures($page, $corpId, $esi) {
+    private function GetListOfStructures($page, $corpId) {
+        //Setup the esi authentication container
+        $config = config('esi');
+        //Get the refresh token from the database
+        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+
+        $esi = new Eseye($authentication);
+
         try {
             $structures = $esi->page($page)
                               ->invoke('get', '/corporations/{corporation_id}/structures/', [
