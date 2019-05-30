@@ -75,7 +75,7 @@ class ProcessStructureJob implements ShouldQueue
         $this->esi = new Eseye($authentication);
 
         //Set the connection for the job
-        //$this->connection = 'redis';
+        $this->connection = 'redis';
     }
 
     /**
