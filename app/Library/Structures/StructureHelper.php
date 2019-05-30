@@ -110,6 +110,7 @@ class StructureHelper {
 
                 //Save the database record
                 $st->save();
+                dd($st);
             }
         }
     }
