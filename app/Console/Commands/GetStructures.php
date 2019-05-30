@@ -68,7 +68,12 @@ class GetStructuresCommand extends Command
         $corpStructureScope = $esiHelper->HaveEsiScope($charId, 'esi-corporations.read_structures.v1');
 
         if($structureScope == false || $corpStructureScope == false) {
-            Log::critical("Scope check for esi failed.");
+            if($structureScope == false) {
+                Log::critical("Scope check for esi-universe.read_structures.v1 has failed.");
+            }
+            if($corpStructureScope == false) {
+                Log::critical("Scope check for esi-corporations.read_structures.v1 has failed.");
+            }
             return null;
         }
 
