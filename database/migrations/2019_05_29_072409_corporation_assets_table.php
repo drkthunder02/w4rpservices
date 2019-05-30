@@ -41,8 +41,8 @@ class CorporationAssetsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('structure_services')) {
-            Schema::create('structure_services', function(Blueprint $table) {
+        if(!Schema::hasTable('alliance_services')) {
+            Schema::create('alliance_services', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('structure_id');
                 $table->string('name');
@@ -76,7 +76,7 @@ class CorporationAssetsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('alliance_structures');
-        Schema::dropIfExists('structure_services');
+        Schema::dropIfExists('alliance_services');
         Schema::dropIfExists('alliance_assets');
     }
 }
