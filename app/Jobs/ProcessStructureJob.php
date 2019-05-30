@@ -74,12 +74,6 @@ class ProcessStructureJob implements ShouldQueue
 
         $this->esi = new Eseye($authentication);
 
-        // Disable all caching by setting the NullCache as the
-        // preferred cache handler. By default, Eseye will use the
-        // FileCache.
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-
         //Set the connection for the job
         //$this->connection = 'redis';
     }
