@@ -35,7 +35,8 @@ class CorporationAssetsTable extends Migration
                 $table->integer('next_reinforce_weekday')->nullable();
                 $table->integer('reinforce_hour');
                 $table->integer('reinforce_weekday')->nullable();
-                $table->dateTime('unanchors_at')->nullable(); 
+                $table->dateTime('unanchors_at')->nullable();
+                $table->timestamps();
             });
         }
 
@@ -45,6 +46,7 @@ class CorporationAssetsTable extends Migration
                 $table->string('structure_id');
                 $table->string('name');
                 $table->string('state');
+                $table->timestamps();
             });
         }
 
@@ -59,6 +61,7 @@ class CorporationAssetsTable extends Migration
                 $table->string('location_type');
                 $table->integer('quantity');
                 $table->string('type_id');
+                $table->timestamps();
             });
         }
 
