@@ -16,6 +16,7 @@ use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 //App Models
 use App\Models\Jobs\JobProcessAssets;
