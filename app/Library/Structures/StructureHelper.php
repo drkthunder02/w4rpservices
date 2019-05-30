@@ -63,14 +63,16 @@ class StructureHelper {
         }
         if(isset($structure->unanchors_at)) {
             $struct->unanchors_at = $structure->unanchors_at;
-        }            
+        }
+        //Save the database record
+        $struct->save();
+        
         //If we set the structure services to true, let's save the services
         if($structure->services == true) {
             $this->StorestructureServices($structure->services, $structure->structure_id);
         }
 
-        //Save the database record
-        $struct->save();
+        
     }
 
     public function UpdateExistingStructure($structure, $info, $solarName) {
