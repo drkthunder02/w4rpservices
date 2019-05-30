@@ -148,49 +148,49 @@ class ProcessStructureJob implements ShouldQueue
     }
 
     private function StoreNewStructure($structure, $info, $solarName) {
-        $structure = new Structure;
-        $structure->structure_id = $structure->structure_id;
-        $structure->structure_name = $info->name;
-        $structure->corporation_id = $info->owner_id;
-        $structure->solar_system_id = $info->solar_system_id;
-        $structure->solary_system_name = $solarName;
+        $struct = new Structure;
+        $struct->structure_id = $structure->structure_id;
+        $struct->structure_name = $info->name;
+        $struct->corporation_id = $info->owner_id;
+        $struct->solar_system_id = $info->solar_system_id;
+        $struct->solary_system_name = $solarName;
         if(isset($info->type_id)) {
-            $structure->type_id = $info->type_id;
+            $struct->type_id = $info->type_id;
         }
-        $structure->corporation_id = $structure->corporation_id;
-        if(isset($structures->services)) {
-            $structure->services = true;
+        $struct->corporation_id = $structure->corporation_id;
+        if(isset($structure->services)) {
+            $struct->services = true;
         } else {
-            $structure->services = false;
+            $struct->services = false;
         }
         if(isset($structure->state_timer_start)) {
-            $structure->state_timer_start = $this->DecodeDate($structure->state_timer_start);
+            $struct->state_timer_start = $this->DecodeDate($structure->state_timer_start);
         }
         if(isset($structure->state_timer_end)) {
-            $structure->state_timer_end = $this->DecodeDate($structure->state_timer_end);
+            $struct->state_timer_end = $this->DecodeDate($structure->state_timer_end);
         }
         if(isset($structure->fuel_expires)) {
-            $structure->fuel_expires = $structure->fuel_expires;
+            $struct->fuel_expires = $structure->fuel_expires;
         }
-        $structure->profile_id = $structure->profile_id;
-        $structure->position_x = $info->position->x;
-        $structure->position_y = $info->position->y;
-        $structure->position_z = $info->position->z;
+        $struct->profile_id = $structure->profile_id;
+        $struct->position_x = $info->position->x;
+        $struct->position_y = $info->position->y;
+        $struct->position_z = $info->position->z;
         if(isset($structure->next_reinforce_apply)) {
-            $structure->next_reinforce_apply = $structure->next_reinforce_apply;
+            $struct->next_reinforce_apply = $structure->next_reinforce_apply;
         }
         if(isset($structure->next_reinforce_hour)) {
-            $structure->next_reinforce_hour = $structure->next_reinforce_hour;
+            $struct->next_reinforce_hour = $structure->next_reinforce_hour;
         }
         if(isset($structure->next_reinforce_weekday)) {
-            $structure->next_reinforce_weekday = $structure->next_reinforce_weekday;
+            $struct->next_reinforce_weekday = $structure->next_reinforce_weekday;
         }
-        $structure->reinforce_hour = $structure->reinforce_hour;
+        $struct->reinforce_hour = $structure->reinforce_hour;
         if(isset($structure->reinforce_weekday)) {
-            $structure->reinforce_weekday = $structure->reinforce_weekday;
+            $struct->reinforce_weekday = $structure->reinforce_weekday;
         }
         if(isset($structure->unanchors_at)) {
-            $structure->unanchors_at = $structure->unanchors_at;
+            $struct->unanchors_at = $structure->unanchors_at;
         }            
         //If we set the structure services to true, let's save the services
         if($structure->services == true) {
@@ -198,7 +198,7 @@ class ProcessStructureJob implements ShouldQueue
         }
 
         //Save the database record
-        $structure->save();
+        $struct->save();
     }
 
     private function GetSolarSystemName($systemId) {
