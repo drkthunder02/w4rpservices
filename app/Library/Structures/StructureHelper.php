@@ -67,10 +67,12 @@ class StructureHelper {
         //Save the database record
         $struct->save();
         
+        /*
         //If we set the structure services to true, let's save the services
         if($structure->services == true) {
             $this->StorestructureServices($structure->services, $structure->structure_id);
         }
+        */
 
         
     }
