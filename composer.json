@@ -10,11 +10,11 @@
         "fideloper/proxy": "^4.0",
         "fx3costa/laravelchartjs": "^2.5",
         "guzzlehttp/guzzle": "^6.3",
-        "laravel/framework": "5.7.*",
+        "laravel/framework": "5.8.*",
         "laravel/horizon": "^3.1",
         "laravel/socialite": "^3.1",
         "laravel/tinker": "^1.0",
-        "laravelcollective/html": "^5.7.0",
+        "laravelcollective/html": "^5.8.0",
         "nullx27/eveonline-socialite": "^0.5.0",
         "predis/predis": "^1.1",
         "twbs/bootstrap": "^4.1"
