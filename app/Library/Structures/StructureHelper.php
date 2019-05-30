@@ -59,9 +59,9 @@ class StructureHelper {
                     $solarName = null;
                 }
 
-                $sHelper->StoreNewStructure($structure, $info, $solarName);
+                $this->StoreNewStructure($structure, $info, $solarName);
             } else {
-                $sHelper->UpdateExistingStructure($structure, $info, $solarName);
+                $this->UpdateExistingStructure($structure, $info, $solarName);
             }
         }
     }
