@@ -13,8 +13,8 @@ class CorporationAssetsTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('corporation_structures')) {
-            Schema::create('corporation_structures', function(Blueprint $table) {
+        if(!Schema::hasTable('alliance_structures')) {
+            Schema::create('alliance_structures', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('structure_id');
                 $table->string('structure_name');
