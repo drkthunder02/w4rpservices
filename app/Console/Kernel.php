@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
         Commands\HoldingFinancesCommand::class,
         Commands\MoonMailerCommand::class,
         Commands\PiTransactionsCommand::class,
+        Commands\GetStructuresCommand::class,
+        Commands\GetAssetsCommand::class,
     ];
 
     /**
