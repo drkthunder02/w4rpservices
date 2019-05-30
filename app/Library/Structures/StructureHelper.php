@@ -65,8 +65,6 @@ class StructureHelper {
                 $sHelper->UpdateExistingStructure($structure, $info, $solarName);
             }
         }
-
-
     }
 
     private function UpdateExistingStructure($structure, $info, $solarName) {
