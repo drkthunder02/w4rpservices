@@ -113,6 +113,7 @@ class ProcessStructureJob implements ShouldQueue
                 }
             } else {
                 Log::critical("Couldn't get solar system name for structure " . $structure->structure_id);
+                Log::critical("Check access lists.");
             }            
         }
     }
