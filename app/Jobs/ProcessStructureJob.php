@@ -230,6 +230,7 @@ class ProcessStructureJob implements ShouldQueue
         } catch(RequestFailedException $e) {
             Log::warning("Failed to get structure information for structure with id " . $structureId);
             Log::warning(var_dump($info));
+            Log::warning($e->getEsiResponse());
             $info = null;
         }
 
