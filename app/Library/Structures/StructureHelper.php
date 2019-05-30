@@ -53,7 +53,6 @@ class StructureHelper {
             
             //Record the structure information into the database
             //Find if the structure exists
-            //$found = Structure::where(['structure_id' => $structure->structure_id])->first();
             if(Structure::where(['structure_id' => $structure->structure_id])->count() == 0) {
                 if(isset($info->solar_system_id)) {
                     $solarName = $this->GetSolarSystemName($info->solar_system_id);
@@ -77,6 +76,11 @@ class StructureHelper {
                     $st->services = true;
                 } else {
                     $st->services = false;
+                }
+                if(isset($structure->state)) {
+                    $st->state = $structure->state;
+                } else {
+                    $st->state = 'None';
                 }
                 if(isset($structure->state_timer_start)) {
                     $st->state_timer_start = $this->DecodeDate($structure->state_timer_start);
