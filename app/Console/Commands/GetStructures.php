@@ -111,7 +111,6 @@ class GetStructuresCommand extends Command
             $job->charId = $charId;
             $job->corpId = $corpId;
             $job->page = $i;
-            $job->esi = $esi;
             ProcessStructureJob::dispatch($job)->onQueue('default');
         }
 

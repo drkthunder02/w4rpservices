@@ -21,6 +21,5 @@ class JobProcessStructure extends Model
         'charId',
         'corpId',
         'page',
-        'esi',
     ];
 }

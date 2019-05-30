@@ -52,7 +52,18 @@ class ProcessStructureJob implements ShouldQueue
         $this->charId = $jps->charId;
         $this->corpId = $jps->corpId;
         $this->page = $jps->page;
-        $this->esi = $jps->esi;
+
+        //Setup the esi authentication container
+        $config = config('esi');
+        //Get the refresh token from the database
+        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+
+        $this->esi = new Eseye($authentication);
 
         //Set the connection for the job
         $this->connection = 'redis';
