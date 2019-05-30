@@ -15,8 +15,7 @@ class CorporationAssetsTable extends Migration
     {
         if(!Schema::hasTable('alliance_structures')) {
             Schema::create('alliance_structures', function(Blueprint $table) {
-                $table->increments('id');
-                $table->string('structure_id');
+                $table->string('structure_id')->primary()->unique();
                 $table->string('structure_name');
                 $table->string('solar_system_id');
                 $table->string('solar_system_name')->nullable();
@@ -42,7 +41,7 @@ class CorporationAssetsTable extends Migration
 
         if(!Schema::hasTable('structure_services')) {
             Schema::create('structure_services', function(Blueprint $table) {
-                $table->increments('id');
+                $table->increments('id')->primary();
                 $table->string('structure_id');
                 $table->string('name');
                 $table->string('state');
@@ -51,7 +50,7 @@ class CorporationAssetsTable extends Migration
 
         if(!Schema::hasTable('alliance_assets')) {
             Schema::create('alliance_assets', function(Blueprint $table) {
-                $table->increments('id');
+                $table->increments('id')->primary();
                 $table->boolean('is_blueprint_copy')->nullable();
                 $table->boolean('is_singleton');
                 $table->string('item_id');

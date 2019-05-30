@@ -12,6 +12,9 @@ class Service extends Model
     //Timestamps
     public $timestamps = false;
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable
      * 

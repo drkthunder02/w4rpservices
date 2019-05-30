@@ -17,6 +17,9 @@ class Asset extends Model
     //Timestamps
     public $timestamps = true;
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable
      * 
