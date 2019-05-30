@@ -104,11 +104,13 @@ class ProcessStructureJob implements ShouldQueue
                 $solarName = $this->GetSolarSystemName($info->solar_system_id);
             } else {
                 Log::warning("Couldn't get solar system name for structure " . $structure->structure_id);
-                Log::warning(var_dump($info));
+                Log::warning($info->response_code);
+                Log::warning($info->error_message);
+                Log::warning($info->raw);
                 return null;
             }
             
-
+            die();
 
             //Record the structure information into the database
             //Find if the structure exists
