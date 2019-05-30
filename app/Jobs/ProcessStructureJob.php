@@ -111,7 +111,7 @@ class ProcessStructureJob implements ShouldQueue
         //This will be implemented in the near future.
 
         if(isset($structure->services)) {
-            foreach($structure->service as $service) {
+            foreach($structure->services as $service) {
                 //Search for the service, and if found, update it, else add it.
                 $serviceFound = Service::where([
                     'structure_id' => $structure->structure_id,
