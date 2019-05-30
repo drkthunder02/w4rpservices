@@ -65,7 +65,7 @@ class ProcessStructureJob implements ShouldQueue
         //Setup the esi authentication container
         $config = config('esi');
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
+        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token', 'id']);
         $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
