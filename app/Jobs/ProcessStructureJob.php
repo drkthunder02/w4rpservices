@@ -81,7 +81,7 @@ class ProcessStructureJob implements ShouldQueue
         $configuration->cache = NullCache::class;
 
         //Set the connection for the job
-        $this->connection = 'redis';
+        //$this->connection = 'redis';
     }
 
     /**
