@@ -15,7 +15,8 @@ class CorporationAssetsTable extends Migration
     {
         if(!Schema::hasTable('alliance_structures')) {
             Schema::create('alliance_structures', function(Blueprint $table) {
-                $table->string('structure_id')->primary()->unique();
+                $table->increments('id');
+                $table->string('structure_id')->unique();
                 $table->string('structure_name');
                 $table->string('solar_system_id');
                 $table->string('solar_system_name')->nullable();

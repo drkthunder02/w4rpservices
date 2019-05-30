@@ -15,7 +15,7 @@ class Structure extends Model
     public $table = 'alliance_structures';
 
     //Primary Key
-    public $primaryKey = 'structure_id';
+    public $primaryKey = 'id';
 
     //Timestamps
     public $timestamps = false;
