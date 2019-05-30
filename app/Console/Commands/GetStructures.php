@@ -10,6 +10,7 @@ use Log;
 use App\Jobs\ProcessStructureJob;
 
 //Library
+use App\Library\Strucures\StructureHelper;
 use App\Library\Esi\Esi;
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
@@ -63,6 +64,7 @@ class GetStructuresCommand extends Command
         //Declare some variables
         $charId = 93738489;
         $corpId = 98287666;
+        
 
         //ESI Scope Check
         $esiHelper = new Esi();
@@ -105,6 +107,13 @@ class GetStructuresCommand extends Command
             return null;
         }
 
+        for($i = 1; $i <= $structures->pages; $i++) {
+            $sHelper = new StructureHelper($charId, $corpId, $i);
+
+            $sHelper->Start();
+        }
+
+        /*
         for($i  = 1; $i <= $structures->pages; $i++) {
             $job = new JobProcessStructure;
             $job->charId = $charId;
@@ -112,6 +121,7 @@ class GetStructuresCommand extends Command
             $job->page = $i;
             ProcessStructureJob::dispatch($job)->onQueue('structures');
         }
+        */
 
         //Mark the job as finished
         $task->SetStopStatus();
