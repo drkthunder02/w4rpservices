@@ -245,7 +245,6 @@ class StructureHelper {
             ]);
         } catch(RequestFailedException $e) {
             Log::warning("Failed to get structure information for structure with id " . $structureId);
-            Log::warning(var_dump($info));
             Log::warning($e->getCode());
             Log::warning($e->getMessage());
             Log::warning($e->getEsiResponse());
