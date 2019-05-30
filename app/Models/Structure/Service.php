@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     //Table Name
-    public $table = 'structure_services';
+    public $table = 'alliance_services';
 
     //Timestamps
     public $timestamps = false;
