@@ -20,52 +20,53 @@ use App\Models\Structure\Service;
 class StructureHelper {
 
     public function StoreNewStructure($structure, $info, $solarName) {
-        $struct = new Structure;
-        $struct->structure_id = $structure->structure_id;
-        $struct->structure_name = $info->name;
-        $struct->corporation_id = $info->owner_id;
-        $struct->solar_system_id = $info->solar_system_id;
-        $struct->solary_system_name = $solarName;
+        $st = new Structure;
+        $st->structure_id = $structure->structure_id;
+        $st->structure_name = $info->name;
+        $st->corporation_id = $info->owner_id;
+        $st->solar_system_id = $info->solar_system_id;
+        $st->solary_system_name = $solarName;
         if(isset($info->type_id)) {
-            $struct->type_id = $info->type_id;
+            $st->type_id = $info->type_id;
         }
-        $struct->corporation_id = $structure->corporation_id;
+        $st->corporation_id = $structure->corporation_id;
         if(isset($structure->services)) {
-            $struct->services = true;
+            $st->services = true;
         } else {
-            $struct->services = false;
+            $st->services = false;
         }
         if(isset($structure->state_timer_start)) {
-            $struct->state_timer_start = $this->DecodeDate($structure->state_timer_start);
+            $st->state_timer_start = $this->DecodeDate($structure->state_timer_start);
         }
         if(isset($structure->state_timer_end)) {
-            $struct->state_timer_end = $this->DecodeDate($structure->state_timer_end);
+            $st->state_timer_end = $this->DecodeDate($structure->state_timer_end);
         }
         if(isset($structure->fuel_expires)) {
-            $struct->fuel_expires = $structure->fuel_expires;
+            $st->fuel_expires = $structure->fuel_expires;
         }
-        $struct->profile_id = $structure->profile_id;
-        $struct->position_x = $info->position->x;
-        $struct->position_y = $info->position->y;
-        $struct->position_z = $info->position->z;
+        $st->profile_id = $structure->profile_id;
+        $st->position_x = $info->position->x;
+        $st->position_y = $info->position->y;
+        $st->position_z = $info->position->z;
         if(isset($structure->next_reinforce_apply)) {
-            $struct->next_reinforce_apply = $structure->next_reinforce_apply;
+            $st->next_reinforce_apply = $structure->next_reinforce_apply;
         }
         if(isset($structure->next_reinforce_hour)) {
-            $struct->next_reinforce_hour = $structure->next_reinforce_hour;
+            $st->next_reinforce_hour = $structure->next_reinforce_hour;
         }
         if(isset($structure->next_reinforce_weekday)) {
-            $struct->next_reinforce_weekday = $structure->next_reinforce_weekday;
+            $st->next_reinforce_weekday = $structure->next_reinforce_weekday;
         }
-        $struct->reinforce_hour = $structure->reinforce_hour;
+        $st->reinforce_hour = $structure->reinforce_hour;
         if(isset($structure->reinforce_weekday)) {
-            $struct->reinforce_weekday = $structure->reinforce_weekday;
+            $st->reinforce_weekday = $structure->reinforce_weekday;
         }
         if(isset($structure->unanchors_at)) {
-            $struct->unanchors_at = $structure->unanchors_at;
+            $st->unanchors_at = $structure->unanchors_at;
         }
         //Save the database record
-        $struct->save();
+        //$st->save();
+        DB::table('AllianceStructures')->insert($st);
         
         /*
         //If we set the structure services to true, let's save the services
