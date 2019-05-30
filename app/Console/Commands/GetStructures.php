@@ -15,6 +15,7 @@ use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
+use App\Commands\Library\CommandHelper;
 
 //Models
 use App\Models\Jobs\JobProcessStructure;
