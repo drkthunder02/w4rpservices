@@ -63,7 +63,17 @@ class ProcessAssetsJob implements ShouldQueue
         $this->charId = $jpa->charId;
         $this->corpId = $jpa->corpId;
         $this->page = $jpa->page;
-        $this->esi = $jpa->esi;
+        //Setup the esi authentication container
+        $config = config('esi');
+        //Get the refresh token from the database
+        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+
+        $this->esi = new Eseye($authentication);
 
         //Set the connection for the job
         $this->connection = 'redis';
