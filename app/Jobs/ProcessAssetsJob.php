@@ -12,6 +12,10 @@ use Log;
 //App Library
 use App\Library\Structures\StructureHelper;
 use App\Jobs\Library\JobHelper;
+use Seat\Eseye\Cache\NullCache;
+use Seat\Eseye\Configuration;
+use Seat\Eseye\Containers\EsiAuthentication;
+use Seat\Eseye\Eseye;
 
 //App Models
 use App\Models\Jobs\JobProcessAssets;
