@@ -10,7 +10,7 @@ use Log;
 use App\Jobs\ProcessStructureJob;
 
 //Library
-use App\Library\Strucures\StructureHelper;
+use App\Library\Structures\StructureHelper;
 use App\Library\Esi\Esi;
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
