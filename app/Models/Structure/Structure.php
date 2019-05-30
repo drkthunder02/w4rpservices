@@ -12,7 +12,7 @@ class Structure extends Model
      */
 
     //Table Name
-    public $table = 'alliance_structures';
+    public $table = 'AllianceStructures';
 
     //Primary Key
     public $primaryKey = 'id';

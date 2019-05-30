@@ -66,8 +66,6 @@ class StructureHelper {
         }
         //Save the database record
         $struct->save();
-
-        DB::table('alliance_structures')->insert($struct);
         
         /*
         //If we set the structure services to true, let's save the services
