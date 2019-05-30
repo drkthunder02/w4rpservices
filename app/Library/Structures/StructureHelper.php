@@ -17,7 +17,7 @@ use App\Models\Structure\Structure;
 use App\Models\Structure\Service;
 
 
-class StructureStockHelper {
+class StructureHelper {
 
     public function StoreNewStructure($structure, $info, $solarName) {
         $struct = new Structure;
