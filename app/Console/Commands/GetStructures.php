@@ -124,7 +124,7 @@ class GetStructuresCommand extends Command
                 $totalPages = $structures->pages;
             }
 
-            dd($structures);
+            dd($structures->raw);
             //For each structure we retrieve dispatch a job to process it.
             foreach($structures as $structure) {
                 $job = new JobProcessStructure;
