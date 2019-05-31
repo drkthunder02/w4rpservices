@@ -65,6 +65,7 @@ class GetStructuresCommand extends Command
         $charId = 93738489;
         $corpId = 98287666;
         $sHelper = new StructureHelper($charId, $corpId);
+        $structures = null;
 
         //ESI Scope Check
         $esiHelper = new Esi();
@@ -99,7 +100,6 @@ class GetStructuresCommand extends Command
         //Set our default total pages, and we will refresh this later
         $totalPages = 1;
 
-        
         //Get the list of structures, and send for processing     
         do {
             //Try to get the ESI data
