@@ -93,9 +93,9 @@ class StructureHelper {
         //Record the structure information into the database
         //Find if the structure exists
         if(Structure::where(['structure_id' => $structure->structure_id])->count() == 0) {
-            $this->SaveNewStructure($structure);            
+            $this->SaveNewStructure($structure, $info);            
         } else {
-            $this->UpdateExistingStructure($structure);
+            $this->UpdateExistingStructure($structure, $info);
         }
             
     }
@@ -157,7 +157,7 @@ class StructureHelper {
         return $info;
     }
 
-    private function UpdateExistingStructure($structure) {
+    private function UpdateExistingStructure($structure, $info) {
         $st = Structure::where(['structure_id' => $structure->structure_id])->first();
         $st->structure_id = $structure->structure_id;
         $st->structure_name = $info->name;
@@ -217,7 +217,8 @@ class StructureHelper {
         }
     }
 
-    private function SaveNewStructure($structure) {
+    private function SaveNewStructure($structure, $info) {
+
         if(isset($info->solar_system_id)) {
             $solarName = $this->GetSolarSystemName($info->solar_system_id);
         } else {
