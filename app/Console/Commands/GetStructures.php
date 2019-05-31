@@ -99,6 +99,7 @@ class GetStructuresCommand extends Command
         //Set our default total pages, and we will refresh this later
         $totalPages = 1;
 
+        
         //Get the list of structures, and send for processing     
         do {
             //Try to get the ESI data
