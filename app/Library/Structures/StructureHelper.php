@@ -99,7 +99,7 @@ class StructureHelper {
                 $st->position_y = $info->position->y;
                 $st->position_z = $info->position->z;
                 if(isset($structure->next_reinforce_apply)) {
-                    $st->next_reinforce_apply = $structure->next_reinforce_apply;
+                    $st->next_reinforce_apply = $this->DecodeDate($structure->next_reinforce_apply);
                 }
                 if(isset($structure->next_reinforce_hour)) {
                     $st->next_reinforce_hour = $structure->next_reinforce_hour;
