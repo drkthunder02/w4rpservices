@@ -69,5 +69,8 @@ class ProcessStructureJob implements ShouldQueue
         $sHelper = new StructureHelper($this->charId, $this->corpId);
 
         $sHelper->ProcessStructure($this->structure);
+
+        //After the job is completed, delete the job
+        $this->delete();
     }
 }

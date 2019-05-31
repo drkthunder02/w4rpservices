@@ -42,6 +42,28 @@ class StructureHelper {
         $this->corpId = $corp;
     }
 
+    public function GetStructuresByPage($page) {
+        // Disable all caching by setting the NullCache as the
+        // preferred cache handler. By default, Eseye will use the
+        // FileCache.
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
+
+        //Setup the esi authentication container
+        $config = config('esi');
+        //Get the refresh token from the database
+        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+        //Setup the ESI variable
+        $esi = new Eseye($authentication);
+
+
+    }
+
     public function ProcessStructure($structure) {
         //Setup the esi authentication container
         $config = config('esi');
@@ -65,32 +87,6 @@ class StructureHelper {
             $this->UpdateExistingStructure($structure);
         }
             
-    }
-
-    public function GetListOfStructures() {
-        //Setup the esi authentication container
-        $config = config('esi');
-        //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-
-        $esi = new Eseye($authentication);
-
-        try {
-            $structures = $esi->page($this->page)
-                              ->invoke('get', '/corporations/{corporation_id}/structures/', [
-                                'corporation_id' => $this->corpId,
-                                ]);
-        } catch (RequestFailedException $e) {
-            Log::critical("Failed to get structure list.");
-            $structures = null;
-        }
-
-        return $structures;
     }
 
     private function GetSolarSystemName($systemId) {
