@@ -63,9 +63,9 @@ class StructureHelper {
 
         //Try to get the ESI data
         try {
-            $structures = $esi->page($currentPage)
+            $structures = $esi->page($page)
                               ->invoke('get', '/corporations/{corporation_id}/structures/', [
-                                'corporation_id' => $corpId,
+                                'corporation_id' => $this->corpId,
                                 ]);
         } catch (RequestFailedException $e) {
             Log::critical("Failed to get structure list.");
