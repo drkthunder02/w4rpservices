@@ -106,22 +106,14 @@ class GetStructuresCommand extends Command
             Log::critical("Failed to get structure list.");
             return null;
         }
-
-        for($i = 1; $i <= $structures->pages; $i++) {
-            $sHelper = new StructureHelper($charId, $corpId, $i);
-
-            $sHelper->Start();
-        }
-
-        /*
+        
         for($i  = 1; $i <= $structures->pages; $i++) {
             $job = new JobProcessStructure;
             $job->charId = $charId;
             $job->corpId = $corpId;
             $job->page = $i;
             ProcessStructureJob::dispatch($job)->onQueue('structures');
-        }
-        */
+        }        
 
         //Mark the job as finished
         $task->SetStopStatus();
