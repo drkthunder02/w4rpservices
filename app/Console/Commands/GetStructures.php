@@ -122,7 +122,7 @@ class GetStructuresCommand extends Command
                 $job = new JobProcessStructure;
                 $job->charId;
                 $job->corpId;
-                $job->structureId;
+                $job->structure;
                 ProcessStructureJob::dispatch($job)->onQueue('structures');
             }
 
