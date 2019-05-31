@@ -39,6 +39,7 @@ class ProcessStructureJob implements ShouldQueue
     private $corpId;
     private $page;
     private $esi;
+    private $structure;
 
     /**
      * Create a new job instance.
