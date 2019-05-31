@@ -3,11 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use DB;
 use Log;
-
-//Job
-use App\Jobs\ProcessStructureJob;
 
 //Library
 use App\Library\Structures\StructureHelper;
@@ -17,6 +13,9 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Commands\Library\CommandHelper;
+
+//Job
+use App\Jobs\ProcessStructureJob;
 
 //Models
 use App\Models\Jobs\JobProcessStructure;
@@ -124,7 +123,6 @@ class GetStructuresCommand extends Command
                 $totalPages = $structures->pages;
             }
 
-            dd($structures);
             //For each structure we retrieve dispatch a job to process it.
             foreach($structures as $structure) {
                 $job = new JobProcessStructure;
