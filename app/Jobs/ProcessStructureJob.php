@@ -49,7 +49,7 @@ class ProcessStructureJob implements ShouldQueue
     {
         $this->charId = $jps->charId;
         $this->corpId = $jps->corpId;
-        $this->page = $jps->page;
+        $this->structure = $jps->structure;
 
         //Set the connection for the job
         $this->connection = 'redis';
@@ -66,8 +66,8 @@ class ProcessStructureJob implements ShouldQueue
      */
     public function handle()
     {
-        $sHelper = new StructureHelper($this->charId, $this->corpId, $this->page);
+        $sHelper = new StructureHelper($this->charId, $this->corpId);
 
-        $sHelper->Start();
+        $sHelper->ProcessStructure($this->structure);
     }
 }

@@ -64,13 +64,14 @@ class GetStructuresCommand extends Command
         //Declare some variables
         $charId = 93738489;
         $corpId = 98287666;
-        
+        $sHelper = new StructureHelper($charId, $corpId);
 
         //ESI Scope Check
         $esiHelper = new Esi();
         $structureScope = $esiHelper->HaveEsiScope($charId, 'esi-universe.read_structures.v1');
         $corpStructureScope = $esiHelper->HaveEsiScope($charId, 'esi-corporations.read_structures.v1');
 
+        //Check scopes
         if($structureScope == false || $corpStructureScope == false) {
             if($structureScope == false) {
                 Log::critical("Scope check for esi-universe.read_structures.v1 has failed.");
@@ -90,7 +91,7 @@ class GetStructuresCommand extends Command
             'secret' => $config['secret'],
             'refresh_token' => $token[0]->refresh_token,
         ]);
-
+        //Setup the ESI variable
         $esi = new Eseye($authentication);
 
         //Set the current page
@@ -98,23 +99,37 @@ class GetStructuresCommand extends Command
         //Set our default total pages, and we will refresh this later
         $totalPages = 1;
 
-        try {
-            $structures = $esi->invoke('get', '/corporations/{corporation_id}/structures/', [
-                                'corporation_id' => $corpId,
-                                ]);
-        } catch (RequestFailedException $e) {
-            Log::critical("Failed to get structure list.");
-            return null;
-        }
-        if(isset($structures)) {
-            for($i  = 1; $i <= $structures->pages; $i++) {
+        //Get the list of structures, and send for processing     
+        do {
+            //Try to get the ESI data
+            try {
+                $structures = $esi->page($currentPage)
+                                  ->invoke('get', '/corporations/{corporation_id}/structures/', [
+                                    'corporation_id' => $corpId,
+                                    ]);
+            } catch (RequestFailedException $e) {
+                Log::critical("Failed to get structure list.");
+                return null;
+            }
+
+            //Update the total pages to go through
+            if($totalPages == 1) {
+                $totalPages = $structures->pages;
+            }
+
+            //For each structure we retrieve dispatch a job to process it.
+            foreach($structures as $structure) {
                 $job = new JobProcessStructure;
-                $job->charId = $charId;
-                $job->corpId = $corpId;
-                $job->page = $i;
+                $job->charId;
+                $job->corpId;
+                $job->structureId;
                 ProcessStructureJob::dispatch($job)->onQueue('structures');
-            }  
-        }              
+            }
+
+            //Update the page counter
+            $currentPage++;
+            //Check to see if we need to grab more pages or not.
+        } while($currentPage <= $totalPages);         
 
         //Mark the job as finished
         $task->SetStopStatus();
