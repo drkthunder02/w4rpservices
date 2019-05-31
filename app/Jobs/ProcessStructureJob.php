@@ -38,8 +38,6 @@ class ProcessStructureJob implements ShouldQueue
     private $charId;
     private $corpId;
     private $page;
-    private $esi;
-    private $structure;
 
     /**
      * Create a new job instance.
@@ -50,7 +48,7 @@ class ProcessStructureJob implements ShouldQueue
     {
         $this->charId = $jps->charId;
         $this->corpId = $jps->corpId;
-        $this->structure = $jps->structure;
+        $this->page = $jps->page;
 
         //Set the connection for the job
         $this->connection = 'redis';
@@ -69,7 +67,11 @@ class ProcessStructureJob implements ShouldQueue
     {
         $sHelper = new StructureHelper($this->charId, $this->corpId);
 
-        $sHelper->ProcessStructure($this->structure);
+        $structures = $sHelper->GetStructuresByPage($this->page);
+
+        foreach($structures as $structure) {
+            $sHelper->ProcessStructure($structure);
+        }
 
         //After the job is completed, delete the job
         $this->delete();

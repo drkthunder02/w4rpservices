@@ -61,7 +61,18 @@ class StructureHelper {
         //Setup the ESI variable
         $esi = new Eseye($authentication);
 
+        //Try to get the ESI data
+        try {
+            $structures = $esi->page($currentPage)
+                              ->invoke('get', '/corporations/{corporation_id}/structures/', [
+                                'corporation_id' => $corpId,
+                                ]);
+        } catch (RequestFailedException $e) {
+            Log::critical("Failed to get structure list.");
+            return null;
+        }
 
+        return $structures;
     }
 
     public function ProcessStructure($structure) {

@@ -105,37 +105,26 @@ class GetStructuresCommand extends Command
         //Set our default total pages, and we will refresh this later
         $totalPages = 1;
 
-        //Get the list of structures, and send for processing     
-        do {
-            //Try to get the ESI data
-            try {
-                $structures = $esi->page($currentPage)
-                                  ->invoke('get', '/corporations/{corporation_id}/structures/', [
-                                    'corporation_id' => $corpId,
-                                    ]);
-            } catch (RequestFailedException $e) {
-                Log::critical("Failed to get structure list.");
-                return null;
-            }
+        //Try to get the ESI data
+        try {
+            $structures = $esi->page($currentPage)
+                              ->invoke('get', '/corporations/{corporation_id}/structures/', [
+                                'corporation_id' => $corpId,
+                                ]);
+        } catch (RequestFailedException $e) {
+            Log::critical("Failed to get structure list.");
+            return null;
+        }
 
-            //Update the total pages to go through
-            if($totalPages == 1) {
-                $totalPages = $structures->pages;
-            }
+        $totalPages = $structures->pages;
 
-            //For each structure we retrieve dispatch a job to process it.
-            foreach($structures as $structure) {
-                $job = new JobProcessStructure;
-                $job->charId = $charId;
-                $job->corpId = $corpId;
-                $job->structure = $structure;
-                ProcessStructureJob::dispatch($job)->onQueue('structures');
-            }
-
-            //Update the page counter
-            $currentPage++;
-            //Check to see if we need to grab more pages or not.
-        } while($currentPage <= $totalPages);         
+        for($i = 1; $i <= $totalPages; $i++) {
+            $job = new JobProcessStructure;
+            $job->charId = $charId;
+            $job->corpId = $corpId;
+            $job->page = $currentPage;
+            ProcessStructureJob::dispatch($job)->onQueue('structures');
+        }      
 
         //Mark the job as finished
         $task->SetStopStatus();
