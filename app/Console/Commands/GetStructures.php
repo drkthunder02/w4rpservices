@@ -120,9 +120,9 @@ class GetStructuresCommand extends Command
             //For each structure we retrieve dispatch a job to process it.
             foreach($structures as $structure) {
                 $job = new JobProcessStructure;
-                $job->charId;
-                $job->corpId;
-                $job->structure;
+                $job->charId = $charId;
+                $job->corpId = $corpId;
+                $job->structure = $structure;
                 ProcessStructureJob::dispatch($job)->onQueue('structures');
             }
 
