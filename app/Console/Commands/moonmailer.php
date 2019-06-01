@@ -114,6 +114,11 @@ class MoonMailerCommand extends Command
                 $this->UpdateNotPaid($rental);
             }
             */
+
+            printf("Mail:\n");
+            printf($body);
+            printf("\n");
+            
         }
 
         //Mark the job as finished
@@ -193,8 +198,6 @@ class MoonMailerCommand extends Command
                 $totalCost += $price['outofalliance'];
             }
         }
-
-        dd($totalCost);
 
         //Return the total cost back to the calling function
         return $totalCost;
