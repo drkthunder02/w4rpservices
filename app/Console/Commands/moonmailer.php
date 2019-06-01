@@ -11,7 +11,6 @@ use App\Jobs\SendEveMailJob;
 
 //Library
 use Commands\Library\CommandHelper;
-use App\Library\Moons\MoonMailer;
 use App\Library\Moons\MoonCalc;
 
 //Models
@@ -61,9 +60,6 @@ class MoonMailerCommand extends Command
         $task = new CommandHelper('MoonMailer');
         //Add the entry into the jobs table saying the job has started
         $task->SetStartStatus();
-
-        //Declare the moon calc class variable to utilize the library to update the price
-        $mailer = new MoonMailer;
 
         //Create other variables
         $body = null;
