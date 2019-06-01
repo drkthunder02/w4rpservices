@@ -95,7 +95,7 @@ class MoonMailerCommand extends Command
             $body .= "Please remit payment to Spatial Forces on the 1st should you continue to wish to rent the moon.<br>";
             $body .= "Sincerely,<br>";
             $body .= "Warped Intentions Leadership<br>";
-
+            /*
             //Dispatch the mail job
             $mail = new EveMail;
             $mail->sender = 93738489;
@@ -113,6 +113,7 @@ class MoonMailerCommand extends Command
                 if($today > $rental->Paid_Until)
                 $this->UpdateNotPaid($rental);
             }
+            */
         }
 
         //Mark the job as finished
@@ -172,6 +173,9 @@ class MoonMailerCommand extends Command
         //Delcare variables and classes
         $moonCalc = new MoonCalc;
         $totalCost = 0.00;
+        $price = null;
+
+        dd($rentals);
 
         foreach($rentals as $rental) {
             $moon = Moon::where([
@@ -183,7 +187,7 @@ class MoonMailerCommand extends Command
             //Get the updated price for the moon
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-            dd($price);
+            
             //Check the type and figure out which price to add in
             if($rental->Type == 'alliance') {
                 $totalCost += (float)$price['alliance'];
