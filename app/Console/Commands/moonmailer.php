@@ -67,7 +67,7 @@ class MoonMailerCommand extends Command
 
         //Get today's date.
         $today = Carbon::now();
-        $today->second = 1;
+        $today->second = 2;
         $today->minute = 0;
         $today->hour = 0;
 
@@ -186,10 +186,11 @@ class MoonMailerCommand extends Command
             dd($price);
             //Check the type and figure out which price to add in
             if($rental->Type == 'alliance') {
-                $totalCost += $price['alliance'];
+                $totalCost += (float)$price['alliance'];
             } else{
-                $totalCost += $price['outofalliance'];
+                $totalCost += (float)$price['outofalliance'];
             }
+            dd($totalCost);
         }
 
         //Return the total cost back to the calling function
