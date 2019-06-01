@@ -73,7 +73,7 @@ class MoonMailerCommand extends Command
 
         //Get all contacts from the rentals group
         $contacts = MoonRental::select('Contact')->groupBy('Contact')->get();
-
+        dd($contacts);
         //For each of the contacts totalize the moon rental, and create the mail to send to them,
         //then update parameters of the moon
         foreach($contacts as $contact) {
