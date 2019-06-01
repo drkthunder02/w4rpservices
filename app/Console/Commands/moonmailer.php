@@ -155,9 +155,9 @@ class MoonMailerCommand extends Command
 
         //For each of the moons, build the System Planet and Moon.
         foreach($moons as $moon) {
-            $temp = 'System: ' . $moon->System;
-            $temp .= 'Planet: ' . $moon->Planet;
-            $temp .= 'Moon: ' . $moon->Moon;
+            $temp = 'Moon: ' . $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon;
+            //$temp .= ' Planet: ' . $moon->Planet;
+            //$temp .= ' Moon: ' . $moon->Moon;
             //Push the new string onto the array list
             array_push($list, $temp);
         }
