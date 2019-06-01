@@ -82,6 +82,7 @@ class MoonMailerCommand extends Command
             
             //Totalize the cost of the moons
             $cost = $this->TotalizeMoonCost($rentals);
+            dd($cost);
 
             //Get the list of moons in a list format
             $listItems = $this->GetMoonList($rentals);
