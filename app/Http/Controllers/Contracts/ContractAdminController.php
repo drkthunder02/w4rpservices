@@ -163,7 +163,7 @@ class ContractAdminController extends Controller
         SendEveMailJob::dispatch($mail)->onQueue('mail');
         
         //Tidy up the contract by doing a few things.
-        TidyContract($contract, $bid);
+        $this->TidyContract($contract, $bid);
         
         //Redirect back to the contract admin dashboard.
         return redirect('/contracts/admin/display')->with('success', 'Contract finalized.  Mail has been sent to the queue for processing.');
