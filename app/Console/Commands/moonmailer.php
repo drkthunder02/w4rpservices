@@ -95,7 +95,7 @@ class MoonMailerCommand extends Command
             $body .= "Please remit payment to Spatial Forces on the 1st should you continue to wish to rent the moon.<br>";
             $body .= "Sincerely,<br>";
             $body .= "Warped Intentions Leadership<br>";
-            /*
+            
             //Dispatch the mail job
             $mail = new EveMail;
             $mail->sender = 93738489;
@@ -107,17 +107,14 @@ class MoonMailerCommand extends Command
 
             //After the mail is dispatched, saved the sent mail record
             $this->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
-            */
+            
 
             //Update the moon as not being paid for the next month?
             foreach($rentals as $rental) {
                 $previous = new Carbon($rental->Paid_Until);
 
                 if($today->greaterThan($previous)) {
-                    //$this->UpdateNotPaid($rental);
-                    printf("Updating Moon Rental");
-                    var_dump($rental);
-                    printf("\n");
+                    $this->UpdateNotPaid($rental);
                 }
             }
                         
