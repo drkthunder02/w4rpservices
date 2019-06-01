@@ -87,14 +87,19 @@ class MoonsAdminController extends Controller
         //Create the date
         $date = new Carbon($request->date . '00:00:01');
 
+        $count = MoonRental::where([
+            'System' => $request->system,
+            'Planet' => $request->planet,
+            'Moon' => $request->moon,
+            'Contact' => $contact,
+        ])->first()->count();
+
         $found = MoonRental::where([
             'System' => $request->system,
             'Planet' => $request->planet,
             'Moon' => $request->moon,
             'Contact' => $contact,
         ])->first();
-
-        $count = $found->count();
         dd($count);
 
         //Calculate the price of the moon for when it's updated
