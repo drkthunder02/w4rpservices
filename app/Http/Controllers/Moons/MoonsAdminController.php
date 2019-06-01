@@ -92,7 +92,8 @@ class MoonsAdminController extends Controller
             'Planet' => $request->planet,
             'Moon' => $request->moon,
             'Contact' => $contact,
-        ])->first()->count();
+        ])->count();
+        dd($count);
 
         $found = MoonRental::where([
             'System' => $request->system,
@@ -100,7 +101,6 @@ class MoonsAdminController extends Controller
             'Moon' => $request->moon,
             'Contact' => $contact,
         ])->first();
-        dd($count);
 
         //Calculate the price of the moon for when it's updated
         $moon = Moon::where([
@@ -112,7 +112,7 @@ class MoonsAdminController extends Controller
         $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                 $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
         
-        if($found && $request->removal != true) {
+        if(($found != null) && $request->removal != true) {
             if($allianceId = 99004116) {
                 MoonRental::where([
                     'System' => $request->system,
