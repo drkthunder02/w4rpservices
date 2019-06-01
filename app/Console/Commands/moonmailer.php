@@ -91,7 +91,7 @@ class MoonMailerCommand extends Command
             foreach($listItems as $item) {
                 $body .= $item . "<br>";
             }
-            $body .= "The price for the next month's rent is " . $cost . "<br>";
+            $body .= "The price for the next month's rent is " . number_format($cost, 2, ".", ",") . "<br>";
             $body .= "Please remit payment to Spatial Forces on the 1st should you continue to wish to rent the moon.<br>";
             $body .= "Sincerely,<br>";
             $body .= "Warped Intentions Leadership<br>";
