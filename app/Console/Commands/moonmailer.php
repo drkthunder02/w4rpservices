@@ -106,7 +106,7 @@ class MoonMailerCommand extends Command
             $mail->recipient_type = 'character';
             SendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
             //Increment the delay for the mail to not hit rate limits
-            $delay += 2;
+            $delay += 30;
 
             //After the mail is dispatched, saved the sent mail record
             $this->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
