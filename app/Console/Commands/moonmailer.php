@@ -102,7 +102,8 @@ class MoonMailerCommand extends Command
             $mail->sender = 93738489;
             $mail->subject = "Warped Intentions Moon Rental Payment Due";
             $mail->body = $body;
-            $mail->recipient = (int)$contact->Contact;
+            //$mail->recipient = (int)$contact->Contact;
+            $mail->recipient = 92626011;
             $mail->recipient_type = 'character';
             SendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
             //Increment the delay for the mail to not hit rate limits
