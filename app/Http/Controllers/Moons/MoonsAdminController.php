@@ -46,6 +46,7 @@ class MoonsAdminController extends Controller
     public function storeUpdateMoon(Request $request) {
         $moonCalc = new MoonCalc;
         $lookup = new LookupHelper;
+        $paid = false;
 
         $this->validate($request, [
             'system' => 'required',
@@ -66,6 +67,12 @@ class MoonsAdminController extends Controller
             $contact = 'None';
         } else {
             $contact = $lookup->CharacterNameToId($request->contact);
+        }
+
+        if($request->paid == 'Yes') {
+            $paid = 'Yes';
+        } else {
+            $paid = 'No';
         }
 
         if(isset($request->Paid_Until)) {
