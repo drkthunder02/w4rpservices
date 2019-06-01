@@ -142,7 +142,7 @@ class MoonMailerCommand extends Command
         $sentmail->save();
     }
 
-    private function GetMoonList(MoonRental $moons) {
+    private function GetMoonList($moons) {
         //Declare the variable to be used as a global part of the function
         $list = array();
 
