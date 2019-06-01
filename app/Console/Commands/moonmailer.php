@@ -82,8 +82,7 @@ class MoonMailerCommand extends Command
                         
             //Totalize the cost of the moons
             $cost = $this->TotalizeMoonCost($rentals);
-            dd($cost);
-
+            
             //Get the list of moons in a list format
             $listItems = $this->GetMoonList($rentals);
 
@@ -189,11 +188,13 @@ class MoonMailerCommand extends Command
             
             //Check the type and figure out which price to add in
             if($rental->Type == 'alliance') {
-                $totalCost += (float)$price['alliance'];
+                $totalCost += $price['alliance'];
             } else{
-                $totalCost += (float)$price['outofalliance'];
+                $totalCost += $price['outofalliance'];
             }
         }
+
+        dd($totalCost);
 
         //Return the total cost back to the calling function
         return $totalCost;
