@@ -184,13 +184,13 @@ class MoonMailerCommand extends Command
 
             //Get the updated price for the moon
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                                    $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+                                                          $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             
             //Check the type and figure out which price to add in
             if($rental->Type == 'alliance') {
-                $totalCost += (int)$price['alliance'];
+                $totalCost += ($price['alliance'] * 1.00);
             } else{
-                $totalCost += (int)$price['outofalliance'];
+                $totalCost += ($price['outofalliance'] * 1.00);
             }
         }
 
