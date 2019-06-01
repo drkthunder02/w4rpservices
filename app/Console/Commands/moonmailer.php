@@ -64,6 +64,7 @@ class MoonMailerCommand extends Command
 
         //Create other variables
         $body = null;
+        $delay = 5;
 
         //Get today's date.
         $today = Carbon::now();
@@ -103,7 +104,9 @@ class MoonMailerCommand extends Command
             $mail->body = $body;
             $mail->recipient = (int)$contact->Contact;
             $mail->recipient_type = 'character';
-            SendEveMailJob::dispatch($mail)->onQueue('mail');
+            SendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
+            //Increment the delay for the mail to not hit rate limits
+            $delay += 2;
 
             //After the mail is dispatched, saved the sent mail record
             $this->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
