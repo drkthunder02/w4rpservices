@@ -188,9 +188,9 @@ class MoonMailerCommand extends Command
             
             //Check the type and figure out which price to add in
             if($rental->Type == 'alliance') {
-                $totalCost += ($price['alliance'];
+                $totalCost += $price['alliance'];
             } else{
-                $totalCost += ($price['outofalliance'];
+                $totalCost += $price['outofalliance'];
             }
         }
 
