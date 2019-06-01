@@ -100,7 +100,7 @@ class MoonMailerCommand extends Command
             $mail->sender = 93738489;
             $mail->subject = "Warped Intentions Moon Rental Payment Due";
             $mail->body = $body;
-            $mail->recipient = (int)$contact->character_id;
+            $mail->recipient = (int)$contact->Contact;
             $mail->recipient_type = 'character';
             SendEveMailJob::dispatch($mail)->onQueue('mail');
 
