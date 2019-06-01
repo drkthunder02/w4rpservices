@@ -18,6 +18,7 @@ use App\Models\Moon\Moon;
 use App\Models\MoonRent\MoonRental;
 use App\Models\Jobs\JobSendEveMail;
 use App\Models\Mail\SentMail;
+use App\Models\Mail\EveMail;
 
 class MoonMailerCommand extends Command
 {
@@ -96,7 +97,7 @@ class MoonMailerCommand extends Command
             $body .= "Warped Intentions Leadership<br>";
 
             //Dispatch the mail job
-            $mail = new JobSendEveMail;
+            $mail = new EveMail;
             $mail->sender = 93738489;
             $mail->subject = "Warped Intentions Moon Rental Payment Due";
             $mail->body = $body;
