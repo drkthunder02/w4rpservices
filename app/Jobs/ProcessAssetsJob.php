@@ -101,10 +101,10 @@ class ProcessAssetsJob implements ShouldQueue
         foreach($assets as $asset) {
             $found = Asset::where([
                 'item_id' => $asset['item_id'],
-            ])->get();
+            ])->count();
 
             //Update the asset if we found it, otherwise add the asset to the database
-            if(!$found) {
+            if($found == 0) {
                 if(in_array($asset['location_flag'], $this->location_array)) {
                     $this->StoreNewAsset($asset);
                 }

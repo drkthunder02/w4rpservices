@@ -69,8 +69,8 @@ class StructureStockHelper {
 
         foreach($newAssets as $asset) {
             //See if the asset is in the asset table already.
-            $found = Asset::where(['item_id' => $asset['item_id']]);
-            if(!$found) {
+            $found = Asset::where(['item_id' => $asset['item_id']])->count();
+            if($found == 0) {
                 $newItem = new Asset;
                 if(isset($asset['is_blueprint_copy'])) {
                     $newItem->is_blueprint_coopy = $asset['is_blueprint_copy'];

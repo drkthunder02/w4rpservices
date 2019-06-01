@@ -369,9 +369,9 @@ class MoonsAdminController extends Controller
             'Planet' => $request->planet,
             'Moon' => $request->moon,
             'Contact' => $contact,
-        ])->first();
+        ])->count();
 
-        if($found) {
+        if($found != 0) {
             MoonRental::where([
                 'System' => $request->system,
                 'Planet' => $request->planet,

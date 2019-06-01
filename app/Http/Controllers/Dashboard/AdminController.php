@@ -202,8 +202,8 @@ class AdminController extends Controller
         $found = AllowedLogin::where([
             'entity_type' => $request->allowedentityType,
             'entity_name' => $request->allowedEntityName,
-        ])->get();
-        if($found != null) {
+        ])->count();
+        if($found != 0) {
             AllowedLogin::where([
                 'entity_type' => $request->allowedEntityType,
                 'entity_name' => $request->allowedEntityName,
