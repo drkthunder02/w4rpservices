@@ -82,7 +82,6 @@ class MoonMailerCommand extends Command
             
             //Totalize the cost of the moons
             $cost = $this->TotalizeMoonCost($rentals);
-            dd($cost);
 
             //Get the list of moons in a list format
             $listItems = $this->GetMoonList($rentals);
@@ -184,7 +183,7 @@ class MoonMailerCommand extends Command
             //Get the updated price for the moon
             $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                     $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-
+            dd($price);
             //Check the type and figure out which price to add in
             if($rental->Type == 'alliance') {
                 $totalCost += $price['alliance'];
