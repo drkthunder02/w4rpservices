@@ -78,7 +78,10 @@ class MoonMailerCommand extends Command
         //then update parameters of the moon
         foreach($contacts as $contact) {
             //Get the moons the renter is renting
-            $rentals = $this->GetRentalMoons($contact);
+            //$rentals = $this->GetRentalMoons($contact);
+
+            $rentals = MoonRental::where(['Contact' => $contact->Contact])->get();
+            dd($rentals);
             
             //Totalize the cost of the moons
             $cost = $this->TotalizeMoonCost($rentals);
