@@ -34,5 +34,6 @@ class Asset extends Model
         'location_type',
         'quantity',
         'type_id',
+        'updated_at',
     ];
 }

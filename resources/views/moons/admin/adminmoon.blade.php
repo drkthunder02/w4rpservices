@@ -1,7 +1,7 @@
 @extends('layouts.b4')
 @section('content')
 <br>
-{!! Form::open(['action' => 'Moons\MoonsAdminController@updateMoonPaid', 'method' => 'POST']) !!}
+{!! Form::open(['action' => 'Moons\MoonsAdminController@storeMoonRemoval', 'method' => 'POST']) !!}
 <div class="container col-md-12">
         <table class="table table-striped">
             <thead>
@@ -30,7 +30,7 @@
                         @else
                             <td>No</td>
                         @endif
-                    <td>{{ Form::radio('paid', $row['SPM'], false, ['class' => 'form-control']) }}</td>
+                    <td>{{ Form::radio('remove', $row['SPM'], false, ['class' => 'form-control']) }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -50,7 +50,7 @@
                 <div class="card-body">
                     <table class="table table-striped">
                         <tbody>
-                            <tr class="table-primary">
+                            <tr class="table-success">
                                 <td>Moon Available</td>
                             </tr>
                             <tr class="table-danger">

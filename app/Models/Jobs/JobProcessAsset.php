@@ -4,7 +4,7 @@ namespace App\Models\Jobs;
 
 use Illuminate\Database\Eloquent\Model;
 
-class JobProcessAssets extends Model
+class JobProcessAsset extends Model
 {
     //no table name is needed
 

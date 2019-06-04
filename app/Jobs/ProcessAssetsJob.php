@@ -68,17 +68,6 @@ class ProcessAssetsJob implements ShouldQueue
         $this->charId = $jpa->charId;
         $this->corpId = $jpa->corpId;
         $this->page = $jpa->page;
-        //Setup the esi authentication container
-        $config = config('esi');
-        //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-
-        $this->esi = new Eseye($authentication);
 
         //Set the connection for the job
         $this->connection = 'redis';
@@ -95,75 +84,19 @@ class ProcessAssetsJob implements ShouldQueue
      */
     public function handle()
     {
-        //Get the pages of the asset list
-        $assets = $this->GePageOfAssets();
+        //Declare the asset helper
+        $aHelper = new AssetHelper($this->charId, $this->corpId);
 
+        //Get a page of assets
+        $assets = $aHelper->GetAssetsByPage($jpba->page);
+
+        //Cycle through the assets, and attmept to store them.
         foreach($assets as $asset) {
-            $found = Asset::where([
-                'item_id' => $asset['item_id'],
-            ])->count();
-
-            //Update the asset if we found it, otherwise add the asset to the database
-            if($found == 0) {
-                if(in_array($asset['location_flag'], $this->location_array)) {
-                    $this->StoreNewAsset($asset);
-                }
-            } else {
-                $this->UpdateAsset($asset);
-            }
-        }
-    }
-
-    private function UpdateAsset($asset) {
-        if(isset($asset['is_blueprint_copy'])) {
-            Asset::where([
-                'item_id' => $asset['item_id'],
-            ])->update([
-                'is_blueprint_copy' => $asset['is_blueprint_copy'],
-            ]);
+            //Attempt to store the asset
+            $aHelper->StoreNewAsset($asset);
         }
 
-        Asset::where([
-            'item_id' => $asset['item_id'],
-        ])->update([
-            'is_singleton' => $asset['is_singleton'],
-            'item_id' => $asset['item_id'],
-            'location_flag' => $asset['location_flag'],
-            'location_id' => $asset['location_id'],
-            'location_type' => $asset['location_type'],
-            'quantity' => $asset['quantity'],
-            'type_id' => $asset['type_id'],
-        ]);
+        //Purge Stale Data
+        $aHelper->PurgeStaleData();
     }
-
-    private function StoreNewAsset($asset) {
-        $new = new Asset;
-        if(isset($asset['is_blueprint_copy'])) {
-            $new->is_blueprint_copy = $asset['is_blueprint_copy'];
-        }        
-        $new->is_singleton = $asset['is_singleton'];
-        $new->item_id = $asset['item_id'];
-        $new->location_flag = $asset['location_flag'];
-        $new->location_id = $asset['location_id'];
-        $new->location_type = $asset['location_type'];
-        $new->quantity = $asset['quantity'];
-        $new->type_id = $asset['type_id'];
-        $new->save();
-    }
-
-    private function GetPageOfAssets() {
-        try {
-            $assets = $this->esi->page($this->page)
-                                ->invoke('get', '/corporations/{corporation_id}/assets/', [
-                                    'corporation_id' => $this->corpId,
-                                ]);
-        } catch (RequestFailedException $e) {
-            Log::critical("Failed to get page of Assets from ESI.");
-            $assets = null;
-        }
-
-        return $assets;
-    }
-
-
 }

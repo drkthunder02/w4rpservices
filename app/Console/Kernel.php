@@ -2,8 +2,12 @@
 
 namespace App\Console;
 
+//Internal Library
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+
+//Library
+use Commands\Library\CommandHelper;
 
 class Kernel extends ConsoleKernel
 {
@@ -45,6 +49,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:PiTransactions')
                 ->hourly()
                 ->withoutOverlapping();
+        $schedule->command('services:CleanData')
+                ->monthlyOn(1, '18:00');
 
         //Horizon Graph Schedule
         $schedule->command('horizon:snapshot')->everyFiveMinutes();

@@ -4,12 +4,8 @@
     <h2>Update Existing Moon</h2>
     {!! Form::open(['action' => 'Moons\MoonsAdminController@storeUpdateMoon', 'method' => 'POST']) !!}
     <div class="form-group col-md-6">
-        {{ Form::label('system', 'System') }}
-        {{ Form::text('system', '', ['class' => 'form-control', 'placeholder' => 'System']) }}
-        {{ Form::label('planet', 'Planet') }}
-        {{ Form::text('planet', '', ['class' => 'form-control', 'placeholder' => 'Planet']) }}
-        {{ Form::label('moon', 'Moon') }}
-        {{ Form::text('moon', '', ['class' => 'form-control', 'placeholder' => 'Moon']) }}
+        {{ Form::label('spmn', 'Moon') }}
+        {{ Form::select('spmn', $spmn, 'N/A') }}
     </div>
     <div class="form-group col-md-6">
         {{ Form::label('renter', 'Renter') }}
@@ -21,7 +17,7 @@
     </div>
     <div class="form-group col-md-6">
         {{ Form::label('date', 'Rental End Date') }}
-        {{ Form::date('date', \Carbon\Carbon::now()->addMonth(), ['class' => 'form-control']) }}
+        {{ Form::date('date', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
     </div>
     <div class="form-group">
         Paid?<br>
