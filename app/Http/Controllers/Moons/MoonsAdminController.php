@@ -273,8 +273,6 @@ class MoonsAdminController extends Controller
         
         //If the database entry isn't found, then insert it into the database,
         //otherwise, account for it being in the system already.
-
-        dd($moon);
         if($count != 0) {
             if($allianceId = 99004116) {
                 MoonRental::where([
