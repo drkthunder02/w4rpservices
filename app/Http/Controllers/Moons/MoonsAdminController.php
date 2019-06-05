@@ -190,6 +190,8 @@ class MoonsAdminController extends Controller
             array_push($spmn, $temp);
         }
 
+        dd($spmn);
+
         //Return the view and the form from the blade display
         //Pass the data to the view as well
         return view('moons.admin.updatemoon')->with('spmn', $spmn);
