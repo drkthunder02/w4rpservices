@@ -172,6 +172,7 @@ class MoonsAdminController extends Controller
         $planet = null;
         $moon = null;
         $name = null;
+        $spmnTemp = array();
         $spmn = array();
 
         //Get the moons and put in order by System, Planet, then Moon number
@@ -186,9 +187,11 @@ class MoonsAdminController extends Controller
         //Form our array of strings for each system, planet, and moon combination.
         foreach($moons as $m) {
             $temp = $m->System . " - " . $m->Planet . " - " . $m->Moon . " - " . $m->StructureName;
-            $tempArr[$temp] = $temp;
-            array_push($spmn, $tempArr);
-            $tempArr = null;
+            array_push($spmnTemp, $tempArr);
+        }
+
+        foreach($spmnTemp as $key => $value) {
+            $spmn[$value] = $value;
         }
 
         //Return the view and the form from the blade display
