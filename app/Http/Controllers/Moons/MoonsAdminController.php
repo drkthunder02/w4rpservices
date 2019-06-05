@@ -320,30 +320,30 @@ class MoonsAdminController extends Controller
                 'Moon' => $moon,
             ])->delete();
             
-            if($allianceId = 99004116) {
-                MoonRental::insert([
-                    'System' => $system,
-                    'Planet' => $planet,
-                    'Moon' => $moon,
-                    'RentalCorp' => $request->renter,
-                    'RentalEnd' => $date,
-                    'Contact' => $contact,
-                    'Price' => $price['alliance'],
-                    'Type' => 'alliance',
-                    'Paid' => 'No',
-                ]);
+            if($allianceId == 99004116) {
+                $store = new MoonRental;
+                $store->System = $system;
+                $store->Planet = $planet;
+                $store->Moon = $moon;
+                $store->RentalCorp = $request->renter;
+                $store->RentalEnd = $date;
+                $store->Contact = $contact;
+                $store->Price = $price['alliance'];
+                $store->Type = 'alliance';
+                $store->Paid = $paid;
+                $store->save();
             } else {
-                MoonRental::insert([
-                    'System' => $system,
-                    'Planet' => $planet,
-                    'Moon' => $moon,
-                    'RentalCorp' => $request->renter,
-                    'RentalEnd' => $date,
-                    'Contact' => $contact,
-                    'Price' => $price['outofalliance'],
-                    'Type' => 'outofalliance',
-                    'Paid' => 'No',
-                ]);
+                $store = new MoonRental;
+                $store->System = $system;
+                $store->Planet = $planet;
+                $store->Moon = $moon;
+                $store->RentalCorp = $request->renter;
+                $store->RentalEnd = $date;
+                $store->Contact = $contact;
+                $store->Price = $price['outofalliance'];
+                $store->Type = 'outofalliance';
+                $store->Paid = $paid;
+                $store->save();
             }
         }
 
