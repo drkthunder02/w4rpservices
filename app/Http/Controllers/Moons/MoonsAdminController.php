@@ -135,7 +135,7 @@ class MoonsAdminController extends Controller
         $this->validate($request, [
             'remove' => 'required',
         ]);
-        dd($request->remove);
+
         $str_array = explode(" - ", $request->remove);
 
         //Decode the value for the SPM into a system, planet, and moon for the database to update
@@ -210,7 +210,7 @@ class MoonsAdminController extends Controller
             'date' => 'required',
             'contact' => 'required',
         ]);
-
+        dd($request->spmn);
         //Decode the System, Planet, Moon, Name combinatio sent from the controller
         $str_array = explode(" - ", $request->spmn);
         $system = $str_array[0];
