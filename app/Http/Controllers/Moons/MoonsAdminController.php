@@ -175,9 +175,10 @@ class MoonsAdminController extends Controller
         $spmn = array();
 
         //Get the moons and put in order by System, Planet, then Moon number
-        $moons = Moon::all()->orderBy('System', 'ASC')
-                            ->orderBy('Planet', 'ASC')
-                            ->orderBy('Moon', 'ASC');
+        $moons = Moon::orderBy('System', 'ASC')
+                       ->orderBy('Planet', 'ASC')
+                       ->orderBy('Moon', 'ASC')
+                       ->get();
 
         //Push our default value onto the stack
         array_push($spmn, 'N/A');
