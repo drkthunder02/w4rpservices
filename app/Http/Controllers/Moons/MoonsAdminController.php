@@ -190,6 +190,7 @@ class MoonsAdminController extends Controller
             array_push($spmnTemp, $temp);
         }
 
+        //From our temporary array with all the values in a numbered key, create the real array with the value being the key
         foreach($spmnTemp as $key => $value) {
             $spmn[$value] = $value;
         }
@@ -200,6 +201,7 @@ class MoonsAdminController extends Controller
     }
 
     public function storeUpdateMoon(Request $request) {
+        //Declare some static variables as needed
         $moonCalc = new MoonCalc;
         $lookup = new LookupHelper;
         $paid = false;
@@ -208,13 +210,14 @@ class MoonsAdminController extends Controller
         $moon = null;
         $name = null;
 
+        //Validate our request from the html form
         $this->validate($request, [
             'spmn' => 'required',
             'renter' => 'required',
             'date' => 'required',
             'contact' => 'required',
         ]);
-        dd($request->spmn);
+
         //Decode the System, Planet, Moon, Name combinatio sent from the controller
         $str_array = explode(" - ", $request->spmn);
         $system = $str_array[0];
@@ -229,12 +232,14 @@ class MoonsAdminController extends Controller
             $contact = $lookup->CharacterNameToId($request->contact);
         }
 
+        //Update the paid value for database entry
         if($request->paid == 'Yes') {
             $paid = 'Yes';
         } else {
             $paid = 'No';
         }
 
+        //Update the paid unti value for the database entry
         if(isset($request->Paid_Until)) {
             $paidUntil = $request->Paid_Until;
         } else {
@@ -247,6 +252,7 @@ class MoonsAdminController extends Controller
         //Create the date
         $date = new Carbon($request->date . '00:00:01');
 
+        //Count how many rentals we find for later database processing
         $count = MoonRental::where([
             'System' => $system,
             'Planet' => $planet,
@@ -261,9 +267,12 @@ class MoonsAdminController extends Controller
             'Moon' => $moon,
         ])->first();
 
+        //Calculate the price of the rental and store it in the database
         $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                 $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
         
+        //If the database entry isn't found, then insert it into the database,
+        //otherwise, account for it being in the system already.
         if($count != 0) {
             if($allianceId = 99004116) {
                 MoonRental::where([
