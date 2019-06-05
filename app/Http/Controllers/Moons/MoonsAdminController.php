@@ -188,6 +188,7 @@ class MoonsAdminController extends Controller
             $temp = $m->System . " - " . $m->Planet . " - " . $m->Moon . " - " . $m->StructureName;
             $tempArr[$temp] = $temp;
             array_push($spmn, $tempArr);
+            $tempArr = null;
         }
 
         //Return the view and the form from the blade display
