@@ -5,7 +5,7 @@
     {!! Form::open(['action' => 'Moons\MoonsAdminController@storeUpdateMoon', 'method' => 'POST']) !!}
     <div class="form-group col-md-6">
         {{ Form::label('spmn', 'Moon') }}
-        {{ Form::select('spmn', $spmn, 'N/A') }}
+        {{ Form::select('spmn', $spmn, null, ['class' => 'form-control', 'placeholder' => 'Select Moon...']) }}
     </div>
     <div class="form-group col-md-6">
         {{ Form::label('renter', 'Renter') }}
