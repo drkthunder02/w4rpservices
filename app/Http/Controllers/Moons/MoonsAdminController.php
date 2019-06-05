@@ -186,11 +186,9 @@ class MoonsAdminController extends Controller
         //Form our array of strings for each system, planet, and moon combination.
         foreach($moons as $m) {
             $temp = $m->System . " - " . $m->Planet . " - " . $m->Moon . " - " . $m->StructureName;
-
-            array_push($spmn, $temp);
+            $tempArr[$temp] = $temp;
+            array_push($spmn, $tempArr);
         }
-
-        dd($spmn);
 
         //Return the view and the form from the blade display
         //Pass the data to the view as well
