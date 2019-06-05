@@ -13,7 +13,7 @@
                 <th>Contact</th>
                 <th>Rental End</th>
                 <th>Paid?</th>
-                <th>Mark Paid</th>
+                <th>Remove Renter</th>
             </thead>
             <tbody>
                 @foreach($table as $row)
