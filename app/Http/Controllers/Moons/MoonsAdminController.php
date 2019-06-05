@@ -207,7 +207,7 @@ class MoonsAdminController extends Controller
         $paid = false;
         $system = null;
         $planet = null;
-        $moon = null;
+        $mn = null;
         $name = null;
 
         //Validate our request from the html form
@@ -222,7 +222,7 @@ class MoonsAdminController extends Controller
         $str_array = explode(" - ", $request->spmn);
         $system = $str_array[0];
         $planet = $str_array[1];
-        $moon = $str_array[2];
+        $mn = $str_array[2];
         $name = $str_array[3];
 
         //Take the  contact name and create a character_id from it
@@ -256,7 +256,7 @@ class MoonsAdminController extends Controller
         $count = MoonRental::where([
             'System' => $system,
             'Planet' => $planet,
-            'Moon' => $moon,
+            'Moon' => $mn,
             'Contact' => $contact,
         ])->count();
 
@@ -264,7 +264,7 @@ class MoonsAdminController extends Controller
         $moon = Moon::where([
             'System' => $system,
             'Planet' => $planet,
-            'Moon' => $moon,
+            'Moon' => $mn,
         ])->first();
 
         //Calculate the price of the rental and store it in the database
@@ -280,12 +280,12 @@ class MoonsAdminController extends Controller
                 MoonRental::where([
                     'System' => $system,
                     'Planet' => $planet,
-                    'Moon' => $moon,
+                    'Moon' => $mn,
                     'Contact' => $contact,
                 ])->update([
                     'System' => $system,
                     'Planet' => $planet,
-                    'Moon' => $moon,
+                    'Moon' => $mn,
                     'RentalCorp' => $request->renter,
                     'RentalEnd' => $date,
                     'Contact' => $contact,
@@ -298,12 +298,12 @@ class MoonsAdminController extends Controller
                 MoonRental::where([
                     'System' => $system,
                     'Planet' => $planet,
-                    'Moon' => $moon,
+                    'Moon' => $mn,
                     'Contact' => $contact,
                 ])->update([
                     'System' => $system,
                     'Planet' => $planet,
-                    'Moon' => $moon,
+                    'Moon' => $mn,
                     'RentalCorp' => $request->renter,
                     'RentalEnd' => $date,
                     'Contact' => $contact,
@@ -326,7 +326,7 @@ class MoonsAdminController extends Controller
                 $store = new MoonRental;
                 $store->System = $system;
                 $store->Planet = $planet;
-                $store->Moon = $moon;
+                $store->Moon = $mn;
                 $store->RentalCorp = $request->renter;
                 $store->RentalEnd = $date;
                 $store->Contact = $contact;
@@ -338,7 +338,7 @@ class MoonsAdminController extends Controller
                 $store = new MoonRental;
                 $store->System = $system;
                 $store->Planet = $planet;
-                $store->Moon = $moon;
+                $store->Moon = $mn;
                 $store->RentalCorp = $request->renter;
                 $store->RentalEnd = $date;
                 $store->Contact = $contact;
