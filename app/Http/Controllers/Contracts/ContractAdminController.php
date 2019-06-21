@@ -14,7 +14,7 @@ use App\Library\Esi\Mail;
 use App\Jobs\SendEveMailJob;
 
 //Models
-use App\User;
+use App\Models\User\User;
 use App\Models\User\UserPermission;
 use App\Models\Contracts\Contract;
 use App\Models\Contracts\Bid;

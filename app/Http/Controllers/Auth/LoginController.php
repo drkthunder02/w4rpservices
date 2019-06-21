@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Socialite;
 use Auth;
 
-use App\User;
+use App\Models\User\User;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\User\UserPermission;
@@ -93,42 +93,46 @@ class LoginController extends Controller
      * @param \Laravel\Socialite\Two\User $user
      */
     private function createOrGetUser($eve_user) {
-        //Search for user in the database
-        $authUser = User::where('character_id', $eve_user->id)->first();
-        //If the user is found, do more checks to see what type of login we are doing
-        if($authUser) {
-            //if a refresh token is present, then we are doing a scope callback to update scopes for an access token
-            if($eve_user->refreshToken !== null) {
-                //Check if the owner hash has changed to call the user type if it needs to be updated
-                if($this->OwnerHasChanged($authUser->owner_hash, $eve_user->owner_hash)) {
-                    //Get the right role for the user
-                    $role = $this->GetRole(null, $eve_user->id);
-                    //Set the role for the user
-                    $this->SetRole($role, $eve_user->id);
+        $authUser = null;
 
-                    //Update the user information never the less.
-                    User::where('character_id', $eve_user->id)->update([
-                        'avatar' => $eve_user->avatar,
-                        'owner_hash' => $eve_user->owner_hash,
-                        'role' => $role,
-                    ]);
-                    //Update the user's roles and permission
-                    UserPermission::where(['character_id' => $eve_user->id])->delete();
-                    $perm = new UserPermission();
-                    $perm->character_id = $eve_user->id;
-                    $perm->permission = $role;
-                    $perm->save();
-                } else {
-                    //Update the user information never the less.
-                    User::where('character_id', $eve_user->id)->update([
-                        'avatar' => $eve_user->avatar,
-                    ]);
-                }
-                
+        //Search to see if we have a matching user in the database.
+        //At this point we don't care about the information
+        $userCount = User::where('character_id', $eve_user->id)->count();
+        
+        //If the user is found, do more checks to see what type of login we are doing
+        if($userCount > 0) {
+            //Search for user in the database
+            $authUser = User::where('character_id', $eve_user->id)->first();
+
+            //Check to see if the owner has changed
+            //If the owner has changed, then update their roles and permissions
+            if($this->OwnerHasChanged($authuser->owner_hash, $eve_user->owner_hash)) {
+                //Get the right role for the user
+                $role = $this->GetRole(null, $eve_user->id);
+                //Set the role for the user
+                $this->SetRole($role, $eve_user->id);
+
+                //Update the user information never the less.
+                User::where('character_id', $eve_user->id)->update([
+                    'avatar' => $eve_user->avatar,
+                    'owner_hash' => $eve_user->owner_hash,
+                    'role' => $role,
+                ]);
+                //Update the user's roles and permission
+                UserPermission::where(['character_id' => $eve_user->id])->delete();
+                $perm = new UserPermission();
+                $perm->character_id = $eve_user->id;
+                $perm->permission = $role;
+                $perm->save();
+            }
+
+            //if a refresh token is present, then we are doing a scope callback to update scopes for an access token
+            if($eve_user->refreshToken !== null) {                
                 //See if we have an access token for the user.
                 //If we have a token update the token, if not create an entry into the database
-                $token = EsiToken::where('character_id', $eve_user->id)->first();
-                if($token) {
+                $tokenCount = EsiToken::where('character_id', $eve_user->id)->count();
+                if($tokenCount > 0) {
+
                     //Update the ESI Token
                     EsiToken::where('character_id', $eve_user->id)->update([
                         'character_id' => $eve_user->getId(),

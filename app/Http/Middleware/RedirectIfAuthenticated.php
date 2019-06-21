@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Socialite;
 use DB;
-use App\User;
+use App\Models\User\User;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;

@@ -9,7 +9,7 @@ use DB;
 use Socialite;
 use Auth;
 
-use App\User;
+use App\Models\User\User;
 
 class EsiScopeController extends Controller
 {

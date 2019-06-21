@@ -5,8 +5,7 @@ namespace App\Library\Taxes;
 use DB;
 use Carbon\Carbon;
 
-use App\User;
-
+use App\Models\User\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 

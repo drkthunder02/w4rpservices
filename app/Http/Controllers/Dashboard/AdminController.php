@@ -10,7 +10,7 @@ use DB;
 use App\Library\Taxes\TaxesHelper;
 
 //Models
-use App\User;
+use App\Models\User\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\User\AvailableUserPermission;
