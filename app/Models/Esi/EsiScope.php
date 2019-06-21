@@ -23,6 +23,6 @@ class EsiScope extends Model
     ];
 
     public function user() {
-        return $this->belongsTo('App\User', 'character_id', 'character_id');
+        return $this->belongsTo('App\Models\User\User', 'character_id', 'character_id');
     }
 }
