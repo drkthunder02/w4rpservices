@@ -106,7 +106,7 @@ class LoginController extends Controller
 
             //Check to see if the owner has changed
             //If the owner has changed, then update their roles and permissions
-            if($this->OwnerHasChanged($authuser->owner_hash, $eve_user->owner_hash)) {
+            if($this->OwnerHasChanged($authUser->owner_hash, $eve_user->owner_hash)) {
                 //Get the right role for the user
                 $role = $this->GetRole(null, $eve_user->id);
                 //Set the role for the user
