@@ -151,7 +151,7 @@ return [
          * Package Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
-        nullx27\Socialite\EveOnline\Providers\EveOnlineServiceProvider::class,
+        //nullx27\Socialite\EveOnline\Providers\EveOnlineServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
