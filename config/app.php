@@ -155,7 +155,6 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
-        App\Providers\EveOnlineServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -166,7 +165,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        App\Providers\EveOnlineServiceProvider::class,
     ],
 
     /*
