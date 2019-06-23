@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class EveOnlineServiceProvider extends ServiceProvider {
+class EveOnlineOAuthServiceProvider extends ServiceProvider {
     /**
      * Bootstrap any application services
      * 
