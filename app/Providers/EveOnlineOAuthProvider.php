@@ -50,7 +50,7 @@ class EveOnlineOAuthProvider extends AbstractProvider implements ProviderInterfa
      * @param array $user
      * @return \Laravel\Socialite\Two\User
      */
-    protected function mapUserToObjects(array $user) {
+    protected function mapUserToObject(array $user) {
         return (new User)->setRaw($user)->map([
             'id' => $user['CharacterID'],
             'name' => $user['CharacterName'],
