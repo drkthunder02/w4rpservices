@@ -17,7 +17,7 @@ class EveOnlineOAuthServiceProvider extends ServiceProvider {
             function ($app) use ($socialite) {
                 $config = $app['config']['services.eveonline'];
 
-                return $socialite->buildProvider(EveOnlineSocialiteProvider::class, $config);
+                return $socialite->buildProvider(EveOnlineOAuthProvider::class, $config);
             }
         );
     }
