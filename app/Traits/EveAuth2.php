@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\InvalidStateException;
 
-trait EveAuth2 {
+trait EveAuth {
     protected $user;
 
     public function login() {
