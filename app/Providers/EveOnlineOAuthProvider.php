@@ -29,7 +29,7 @@ class EveOnlineOAuthProvider extends AbstractProvider implements ProviderInterfa
     }
 
     /**
-     * Get the raw uer for the given access token
+     * Get the raw user for the given access token
      * 
      * @param string $token
      * @return array
