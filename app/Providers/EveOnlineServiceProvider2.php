@@ -16,10 +16,19 @@ class EveOnlineServiceProvider2 extends ServiceProvider {
             'eveonline',
             function ($app) use ($socialite) {
                 $config = $app['config']['services.eveonline'];
-                
+
                 return $socialite->buildProvider(EveOnlineSocialiteProvider::class, $config);
             }
         );
+    }
+
+    /**
+     * Register any application services
+     * 
+     * @return void
+     */
+    public function register() {
+        $this->mergeConfigFrom(__DIR__ . '/../../config/services.php', 'services');
     }
 }
 
