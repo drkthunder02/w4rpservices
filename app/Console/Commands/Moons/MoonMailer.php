@@ -72,6 +72,9 @@ class MoonMailerCommand extends Command
         $today->minute = 0;
         $today->hour = 0;
 
+        //Get the esi configuration
+        $config = config('esi');
+
         //Get all contacts from the rentals group
         $contacts = MoonRental::select('Contact')->groupBy('Contact')->get();
         
@@ -99,7 +102,7 @@ class MoonMailerCommand extends Command
             
             //Dispatch the mail job
             $mail = new EveMail;
-            $mail->sender = 93738489;
+            $mail->sender = $config['primary'];
             $mail->subject = "Warped Intentions Moon Rental Payment Due";
             $mail->body = $body;
             $mail->recipient = (int)$contact->Contact;

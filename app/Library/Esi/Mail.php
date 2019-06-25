@@ -16,8 +16,11 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 class Mail {
 
     public function SendMail($recipient, $rType, $subject, $body) {
+        //Get the esi config
+        $config = config('esi');
+
         //Retrieve the token for main character to send mails from
-        $token = EsiToken::where(['character_id' => 93738489])->first();
+        $token = EsiToken::where(['character_id' => $config['primary']])->first();
         //Create the ESI authentication container
         $config = config('esi');
         $authentication = new EsiAuthentication([
@@ -36,7 +39,7 @@ class Mail {
                 ]],
                 'subject' => $subject,
             ])->invoke('post', '/characters/{character_id}/mail/', [
-                'character_id'=> 93738489,
+                'character_id'=> $config['primary'],
             ]);
         } catch(RequestFailedException $e) {
             return 1;

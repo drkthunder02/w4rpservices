@@ -56,14 +56,17 @@ class HoldingFinancesCommand extends Command
         //Setup the Finances container
         $finance = new FinanceHelper();
 
+        //Get the esi configuration
+        $config = config('esi');
+
         //Get the total pages for the journal for the holding corporation
-        $pages = $finance->GetJournalPageCount(1, 93738489);
+        $pages = $finance->GetJournalPageCount(1, $config['primary']);
 
         //Dispatch a single job for each page to process
         for($i = 1; $i <= $pages; $i++) {
             $job = new JobProcessWalletJournal;
             $job->division = 1;
-            $job->charId = 93738489;
+            $job->charId = $config['primary'];
             $job->page = $i;
             ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
         }

@@ -60,8 +60,11 @@ class GetStructuresCommand extends Command
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
 
+        //Get the esi config
+        $config = config('esi');
+
         //Declare some variables
-        $charId = 93738489;
+        $charId = $config['primary'];
         $corpId = 98287666;
         $sHelper = new StructureHelper($charId, $corpId);
         $structures = null;

@@ -316,10 +316,14 @@ class FinanceHelper {
     }
 
     private function TokenNotFound($token, $scope, $charId) {
+        //Get the esi config
+        $config = config('esi');
+
+
         if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
             //Register a mail to be dispatched as a job
             $mail = new EveMail;
-            $mail->sender = 93738489;
+            $mail->sender = $config['primary'];
             $mail->subject = 'W4RP Services ESI API';
             $mail->body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
             $mail->recipient = (int)$charId;

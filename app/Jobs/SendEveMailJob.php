@@ -69,8 +69,11 @@ class SendEveMailJob implements ShouldQueue
      */
     public function handle()
     {
+        //Get the esi configuration
+        $config = config('esi');
+
         //Retrieve the token for main character to send mails from
-        $token = EsiToken::where(['character_id'=> 93738489])->get();
+        $token = EsiToken::where(['character_id'=> $config['primary']])->get();
 
         //Create the ESI authentication container
         $config = config('esi');

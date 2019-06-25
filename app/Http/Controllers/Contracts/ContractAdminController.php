@@ -140,6 +140,9 @@ class ContractAdminController extends Controller
         $mail = new Mail;
         $tries = 1;
 
+        //Get the esi config
+        $config = config('esi');
+
         $contract = Contract::where(['contract_id' => $request->contract_id])->first()->toArray();
         $bid = Bid::where(['id' => $request->accept, 'contract_id' => $request->contract_id])->first()->toArray();
 
@@ -158,7 +161,7 @@ class ContractAdminController extends Controller
         $mail->recipient_type = 'character';
         $mail->recipient = $bid['character_id'];
         $mail->body = $body;
-        $mail->sender = 93738489;
+        $mail->sender = $config['primary'];
         //Dispatch the mail job
         SendEveMailJob::dispatch($mail)->onQueue('mail');
         
@@ -187,10 +190,13 @@ class ContractAdminController extends Controller
         //Get all the users with a specific permission set
         $users = UserPermission::where(['permission' => 'contract.canbid'])->get()->toArray();
 
+        //Get the esi config
+        $config = config('esi');
+
         //Cycle through the users with the correct permission and send a mail to go out with the queue system.
         foreach($users as $user) {
                 $mail = new EveMail;
-                $mail->sender = 93738489;
+                $mail->sender = $config['primary'];
                 $mail->subject = 'New Alliance Contract Available';
                 $mail->recipient = $user['character_id'];
                 $mail->recipient_type = 'character';

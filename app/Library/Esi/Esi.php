@@ -35,6 +35,9 @@ class Esi {
      * @return true,false
      */
     public function HaveEsiScope($charId, $scope) {
+        //Get the esi config
+        $config = config('esi');
+
         //Check for an esi scope
         $checks = DB::table('EsiScopes')->where('character_id', $charId)->get();
         foreach($checks as $check) {
@@ -44,7 +47,7 @@ class Esi {
         }
 
         $mail  = new EveMail;
-        $mail->sender = 93738489;
+        $mail->sender = $config['primary'];
         $mail->subject = 'W4RP Services - Incorrect ESI Scope';
         $mail->body = "Please register on https://services.w4rp.space with the scope: " . $scope;
         $mail->recipient = (int)$charId;

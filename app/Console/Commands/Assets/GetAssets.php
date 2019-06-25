@@ -59,21 +59,23 @@ class GetAssetsCommand extends Command
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
 
+        //Setup the esi authentication container
+        $config = config('esi');
+
         //Declare some variables
         $charId = 93738849;
         $corpId = 98287666;
 
         //ESI Scope Check
         $esiHelper = new Esi();
-        $assetScope = $esiHelper->HaveEsiScope(93738489, 'esi-assets.read_corporation_assets.v1');
+        $assetScope = $esiHelper->HaveEsiScope($config['primary'], 'esi-assets.read_corporation_assets.v1');
 
         if($assetScope == false) {
             Log::critical("Scope check for esi failed.");
             return null;
         }
 
-        //Setup the esi authentication container
-        $config = config('esi');
+        
         //Get the refresh token from the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
         $authentication = new EsiAuthentication([
