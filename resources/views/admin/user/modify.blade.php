@@ -1,15 +1,16 @@
 @extends('layouts.b4')
 @section('content')
-<div class="container">
+<div class="container col-md-6">
     <div class="row">
         <div class="card">
             <div class="card-header">
                 <h2>Modify User</h2>
+                <h3>User: {{ $user->name }}</h3>
             </div>
             <div class="card-body">
                 {{ Form::open(['action' => 'Dashboard\AdminController@addPermission', 'method' => 'POST']) }}
                 <div class="form-group">
-                {{ Form::hidden('user', $name) }}
+                {{ Form::hidden('user', $user->name) }}
                 {{ Form::select('permission', [
                     'structure.operator' => 'structure.operator',
                     'logistics.minion' => 'logistics.minion',
