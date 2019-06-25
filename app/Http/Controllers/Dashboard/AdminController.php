@@ -139,7 +139,7 @@ class AdminController extends Controller
         $user = User::where(['name' => $name])->get()->toArray();
 
         //Pass the user information to the page for hidden text entries
-        return view('admin.user.modify')->with('user', $user);
+        return view('admin.user.modify')->with('name', $user['name']);
     }
 
     public function modifyUser(Request $request) {

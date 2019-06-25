@@ -9,7 +9,7 @@
             <div class="card-body">
                 {{ Form::open(['action' => 'Dashboard\AdminController@addPermission', 'method' => 'POST']) }}
                 <div class="form-group">
-                {{ Form::hidden('user', $user['name']) }}
+                {{ Form::hidden('user', $name) }}
                 {{ Form::select('permission', [
                     'structure.operator' => 'structure.operator',
                     'logistics.minion' => 'logistics.minion',
