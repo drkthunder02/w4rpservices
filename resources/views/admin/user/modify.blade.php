@@ -21,7 +21,7 @@
                 {{ Form::hidden('type', 'addPermission') }}
                 </div>
                 <div class="form-group col-md-2">
-                    {{ Form::submit('Modify User', ['class' => 'btn btn-primary']) }}
+                    {{ Form::submit('Add Permission', ['class' => 'btn btn-primary']) }}
                     {!! Form::close() !!}
                 </div>
             </div>
