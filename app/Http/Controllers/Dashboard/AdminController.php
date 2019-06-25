@@ -132,7 +132,9 @@ class AdminController extends Controller
                                       ->with('pigross', $pigross);
     }
 
-    public function displayModifyUser($name) {
+    public function displayModifyUser(Request $request) {
+        $name = $request->user;
+
         //Get the user information from the name
         $user = User::where(['name' => $name])->get()->toArray();
 
