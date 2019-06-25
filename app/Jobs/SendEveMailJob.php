@@ -97,7 +97,7 @@ class SendEveMailJob implements ShouldQueue
                 ]],
                 'subject' => $this->subject,
             ])->invoke('post', '/characters/{character_id}/mail/', [
-                'character_id'=> 93738489,
+                'character_id'=> $config['primary'],
             ]);
         } catch(RequestFailedException $e) {
             Log::warning($e);
