@@ -135,6 +135,8 @@ class AdminController extends Controller
     public function displayModifyUser(Request $request) {
         $name = $request->user;
 
+        dd($name);
+
         //Get the user information from the name
         $user = User::where(['name' => $name])->get()->toArray();
 
