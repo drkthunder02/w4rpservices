@@ -137,13 +137,20 @@ class AdminController extends Controller
 
         //Get the user information from the name
         $user = User::where(['name' => $name])->get()->toArray();
-        dd($user);
 
         //Pass the user information to the page for hidden text entries
         return view('admin.user.modify')->with('user', $user);
     }
 
     public function modifyUser(Request $request) {
+        $type = $request->type;
+        if(isset($request->permission)) {
+            $permission = $request->permission;
+        }
+        if(isset($request->user)) {
+            $user = $request->user;
+        }
+
         return redirect('/admin/dashboard')->with('error', 'Not implemented yet.');
     }
 

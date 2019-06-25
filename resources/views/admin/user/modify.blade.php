@@ -9,7 +9,7 @@
             <div class="card-body">
                 {{ Form::open(['action' => 'Dashboard\AdminController@addPermission', 'method' => 'POST']) }}
                 <div class="form-group">
-                {{ Form::hidden('user', $user->name) }}
+                {{ Form::hidden('user', $user['name']) }}
                 {{ Form::select('permission', [
                     'structure.operator' => 'structure.operator',
                     'logistics.minion' => 'logistics.minion',
@@ -17,6 +17,7 @@
                     'contract.admin' => 'contract.admin',
                     'contract.canbid' => 'contract.canbid',
                 ], 'None') }}
+                {{ Form::hidden('type', 'addPermission') }}
                 </div>
                 <div class="form-group col-md-2">
                     {{ Form::submit('Modify User', ['class' => 'btn btn-primary']) }}
