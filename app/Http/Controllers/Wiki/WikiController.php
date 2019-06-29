@@ -40,27 +40,22 @@ class WikiController extends Controller
         foreach($users as $user) {
             //Let's look up the character in the user table by their name.
             //If no name is found, then delete the user and have them start over with the wiki permissions
-            $charIdTemp = User::where(['name' => $user])->get(['character_id']);
-            $charId = $charIdTemp[0]->character_id;
+            $count = User::where(['name' => $user])->count();
+            if($count > 0) {
+                $charIdTemp = User::where(['name' => $user])->get(['character_id']);
+                $charId = $charIdTemp[0]->character_id;
+                $corpId = $helper->LookupCharacter($charId);
+                $allianceId = $helper->LookupCorporation($corpId);
 
-            $corpId = $helper->LookupCharacter($charId);
-            $allianceId = $helper->LookupCorporation($corpId);
-            if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {
-                //Do nothing
+                if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {
+                    //Do nothing
+                } else {
+                    $this->DeleteWikiUser($user);
+                }
             } else {
-                //Get the uid of the user as we will need to purge them from the member table as well.
-                //the member table holds their permissions.
-                $uid = DokuUser::where([
-                    'name' => $user,
-                ])->value('id');
-                //Delete the permissions of the user first.
-                DokuMember::where([
-                    'uid' => $uid,
-                ])->delete();
-
-                //Delete the user from the user table
-                DokuUser::where(['name' => $user])->delete();
+                $this->DeleteWikiUser($user);
             }
+
         }
 
         return view('admin.dashboard')->with('success', 'Wiki has been purged.');
@@ -182,5 +177,20 @@ class WikiController extends Controller
     public function storeAddUserToGroup($uid, $gid, $gname) {
 
         return redirect('/dashboard')->with('success', 'User added to the group: ' . $gid . ' with name of ' . $gname);
+    }
+
+    private function DeleteWikiUser($user) {
+        //Get the uid of the user as we will need to purge them from the member table as well.
+        //the member table holds their permissions.
+        $uid = DokuUser::where([
+            'name' => $user,
+        ])->value('id');
+        //Delete the permissions of the user first.
+        DokuMember::where([
+            'uid' => $uid,
+        ])->delete();
+
+        //Delete the user from the user table
+        DokuUser::where(['name' => $user])->delete();
     }
 }
