@@ -31,20 +31,19 @@ class LookupHelper {
 
     //Create a character id from a character name
     public function CharacterNameToId($character) {
-        //Setup Eseye Configuration
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
         //Setup class variables
         $esi = new Eseye();
 
         //Attempt to find the character name in the LookupCharacter table to see if we can match it to an id
         $count = CharacterToCorporation::where(['character_name' => $character])->count();
         if($count == 0) {
+            $name = str_replace(' ', '%20', $character);
+
             try {
                 //Get the character id from the ESI API.
                 $response = $esi->setQueryString([
                     'categories' => 'character',
-                    'search' => $character,
+                    'search' => $name,
                     'strict' => 'true',
                 ])->invoke('get', '/search/');
             } catch(RequestFailedException $e) {
@@ -53,9 +52,12 @@ class LookupHelper {
 
             dd($response);
 
-            $this->LookupCharacter($response->character);
+            if(isset($response->character)) {
+                $this->LookupCharacter($response->character);
 
-            return $response->character;
+                return $response->character;
+            }
+
         } else {
             $char = CharacterToCorporation::where(['character_name' => $character])->get(['character_id']);
 
