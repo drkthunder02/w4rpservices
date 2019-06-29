@@ -42,7 +42,7 @@ class LookupHelper {
 
             try {
                 //Get the character id from the ESI API.
-                $response = $esi->setQueryString([
+                $response = $esi->setBody([
                     'categories' => 'character',
                     'search' => $name,
                     'strict' => 'true',
