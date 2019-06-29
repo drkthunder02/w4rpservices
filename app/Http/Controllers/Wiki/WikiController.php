@@ -16,6 +16,7 @@ use App\Models\Doku\DokuGroupNames;
 use App\Models\Doku\DokuMember;
 use App\Models\Doku\DokuUser;
 use App\Models\Admin\AllowedLogin;
+use App\Models\User\User;
 
 class WikiController extends Controller
 {
@@ -37,7 +38,12 @@ class WikiController extends Controller
         //Search the names and verify against the lookup table
         //to find the corporation and / or alliance they belong to.
         foreach($users as $user) {
-            $charId = $helper->CharacterNameToId($user);
+            //Let's look up the character in the user table by their name.
+            //If no name is found, then delete the user and have them start over with the wiki permissions
+            $charIdTemp = User::where(['name' => $user])->get(['character_id']);
+            $charId = $charIdTemp[0]->character_id;
+            dd($charId);
+
             $corpId = $helper->LookupCharacter($charId);
             $allianceId = $helper->LookupCorporation($corpId);
             if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {

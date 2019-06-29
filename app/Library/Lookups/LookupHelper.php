@@ -47,18 +47,16 @@ class LookupHelper {
                     'search' => $name,
                     'strict' => 'false',
                 ])->invoke('get', '/search/');
-
-
             } catch(RequestFailedException $e) {
 
             }
 
-            dd($response);
-
-            if(isset($response->character)) {
-                $this->LookupCharacter($response->character);
+            if(isset($response->character[0])) {
+                $this->LookupCharacter($response->character[0]);
 
                 return $response->character;
+            } else {
+                return -1;
             }
 
         } else {
@@ -66,8 +64,6 @@ class LookupHelper {
 
             return $char[0]->character_id;
         }
-
-        //return 0;
     }
 
     //Add characters to the lookup table for quicker lookups without having
