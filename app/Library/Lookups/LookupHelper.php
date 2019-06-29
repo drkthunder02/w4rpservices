@@ -42,11 +42,13 @@ class LookupHelper {
 
             try {
                 //Get the character id from the ESI API.
-                $response = $esi->setBody([
+                $response = $esi->setQueryString([
                     'categories' => 'character',
                     'search' => $name,
                     'strict' => 'true',
                 ])->invoke('get', '/search/');
+
+
             } catch(RequestFailedException $e) {
 
             }
