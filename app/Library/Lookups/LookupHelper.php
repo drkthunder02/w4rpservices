@@ -51,9 +51,11 @@ class LookupHelper {
 
             }
 
-            $this->LookupCharacter($response['character'][0]);
+            dd($response->character);
 
-            return $response['character'][0];
+            $this->LookupCharacter($response->character[0]);
+
+            return $response->character[0];
         } else {
             $char = CharacterToCorporation::where(['character_name' => $character])->get(['character_id']);
 
