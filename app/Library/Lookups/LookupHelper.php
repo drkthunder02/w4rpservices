@@ -46,11 +46,10 @@ class LookupHelper {
                 'search' => $character,
                 'strict' => 'true',
             ])->invoke('get', '/search/');
-            dd($response);
 
-            $this->LookupCharacter($response->character[0]);
+            $this->LookupCharacter($response->character);
 
-            return $response->character[0];
+            return $response->character;
         } else {
             return $charId[0]->character_id;
         }
