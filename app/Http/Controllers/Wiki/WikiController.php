@@ -58,7 +58,7 @@ class WikiController extends Controller
 
         }
 
-        return view('admin.dashboard')->with('success', 'Wiki has been purged.');
+        return redirect('/admin/dashboard')->with('success', 'Wiki has been purged.');
     }
     
     public function displayRegister() {
