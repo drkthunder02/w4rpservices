@@ -42,7 +42,6 @@ class WikiController extends Controller
             //If no name is found, then delete the user and have them start over with the wiki permissions
             $charIdTemp = User::where(['name' => $user])->get(['character_id']);
             $charId = $charIdTemp[0]->character_id;
-            dd($charId);
 
             $corpId = $helper->LookupCharacter($charId);
             $allianceId = $helper->LookupCorporation($corpId);
