@@ -51,7 +51,7 @@ class LookupHelper {
 
             }
 
-            dd($response->character);
+            dd($response);
 
             $this->LookupCharacter($response->character[0]);
 
