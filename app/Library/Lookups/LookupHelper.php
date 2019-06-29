@@ -37,8 +37,8 @@ class LookupHelper {
         //Attempt to find the character name in the LookupCharacter table to see if we can match it to an id
         $count = CharacterToCorporation::where(['character_name' => $character])->count();
         if($count === 0) {
+            //Format the name
             $name = str_replace(' ', '%20', $character);
-            dd($name);
 
             try {
                 //Get the character id from the ESI API.
@@ -51,7 +51,7 @@ class LookupHelper {
 
             }
 
-            dd($response);
+            dd($response->raw);
 
             if(isset($response->character)) {
                 $this->LookupCharacter($response->character);
