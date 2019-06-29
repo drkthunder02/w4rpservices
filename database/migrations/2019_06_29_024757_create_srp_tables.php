@@ -16,22 +16,19 @@ class CreateSrpTables extends Migration
         if(!Schema::hasTable('srp_ships')) {
             Schema::create('srp_ships', function (Blueprint $table) {
                 $table->increments('id');
-                $table->string('ship_type');
-                $table->string('character_id');
-                $table->string('zkillboard');
-                $table->string('loss_values');
-                $table->text('notes');
-            });
-        }
-
-        if(!Schema::hasTable('srp_fleets')) {
-            Schema::create('srp_fleets', function(Blueprint $table) {
-                $table->increments('fleet_id');
-                $table->string('fleet_name');
-                $table->string('fleet_commander');
+                $table->string('character_id')->default('N/A');
+                $table->string('character_name');
                 $table->string('fleet_commander_id');
-                $table->string('fleet_type');
-                $table->string('fleet_description');
+                $table->string('fleet_commander_name');
+                $table->string('zkillboard');
+                $table->string('ship_type');
+                $table->decimal('loss_value', 20, 2);
+                $table->string('approved')->default('Not Paid');
+                $table->decimal('paid_value', 20, 2)->default(0.00);
+                $table->string('notes')->nullable();
+                $table->string('paid_by_id')->nullable();
+                $table->string('paid_by_name')->nullable();
+                $table->timestamps();
             });
         }
     }
@@ -44,6 +41,5 @@ class CreateSrpTables extends Migration
     public function down()
     {
         Schema::dropIfExists('srp_ships');
-        Schema::dropIfExists('srp_fleets');
     }
 }

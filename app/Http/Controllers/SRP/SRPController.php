@@ -11,22 +11,20 @@ use Auth;
 //User Libraries
 
 //Models
-use App\Models\SRP\Fleet;
-use App\Models\SRP\FleetCommander;
-use App\Models\SRP\Ship;
+use App\Models\SRP\SRPShip;
 
 class SRPController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middelware('role:User');
+        $this->middleware('role:User');
     }
 
     public function displaySrpForm() {
         return view('srp.srpform');
     }    
 
-    public function storeSRPFile() {
+    public function storeSRPFile(Request $request) {
         $this->validate($request, [
             'FC' => 'required',
             'FleetType' => 'required',
@@ -35,16 +33,22 @@ class SRPController extends Controller
             'ShipType' => 'required',
         ]);
 
-        $fc = $request->FC;
-        $fleetType = $request->FleetType;
-        $zKill = $request->zKillboard;
-        $loss = $request->LossValue;
-        $ship = $request->ShipType;
+        //See if the FC Name ties to a user on the services site
+        $fcId = User::where(['name' => $request->fc])->get(['character_id']);
+
+        $ship = new SRPShip;
+        $ship->character_id = auth()->user()->character_id;
+        $ship->character_name = auth()->user()->name;
+        $ship->fleet_commander_name = $request->fc;
+        if($fcId[0] != null) {
+            $ship->fleet_commander_id = $fcId;
+        }
+        $ship->zkillboard = $request->zKillboard;
+        $ship->ship_type = $request->ShipType;
+        $ship->loss_value = $request->LossValue;
+        $ship->save();
+
+        return redirect('/srpform')->with('success', 'SRP Form Submitted.');
     }
 
-    public function displaySRPRequests() {
-        $this->middleware('permission:SRP');
-
-
-    }
 }

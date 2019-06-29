@@ -4,7 +4,7 @@ namespace App\Models\SRP;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ship extends Model
+class SRPShip extends Model
 {
     //Table Name
     protected $table = 'srp_ships';
@@ -17,9 +17,17 @@ class Ship extends Model
 
     //Fillable Items
     protected $fillable = [
-        'ship_type',
         'character_id',
+        'character_name',
+        'fleet_commander_name',
+        'fleet_commander_id',
         'zkillboard',
+        'ship_type',
+        'loss_value',
         'notes',
+        'approved',
+        'paid_value',
+        'paid_by_id',
+        'paid_by_name',
     ];
 }
