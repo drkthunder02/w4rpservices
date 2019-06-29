@@ -38,8 +38,8 @@ class LookupHelper {
         $esi = new Eseye();
 
         //Attempt to find the character name in the LookupCharacter table to see if we can match it to an id
-        $char = CharacterToCorporation::where(['character_name' => $character])->get(['character_id']);
-        if(!isset($char->character_id)) {
+        $count = CharacterToCorporation::where(['character_name' => $character])->count();
+        if($count == 0) {
             //Get the character id from the ESI API.
             $response = $esi->setQueryString([
                 'categories' => 'character',
@@ -47,11 +47,13 @@ class LookupHelper {
                 'strict' => 'true',
             ])->invoke('get', '/search/');
 
-            $this->LookupCharacter($response->character);
+            $this->LookupCharacter($response->character[0]);
 
-            return $response->character;
+            return $response->character[0];
         } else {
-            return $charId[0]->character_id;
+            $char = CharacterToCorporation::where(['character_name' => $character])->get(['character_id']);
+
+            return $char[0]->character_id;
         }
     }
 
@@ -59,11 +61,11 @@ class LookupHelper {
     //to hit the ESI all the time
     public function LookupCharacter($charId) {
         //Check for the character in the user_to_corporation table
-        $found = CharacterToCorporation::where('character_id', $charId)->get(['corporation_id']);
+        $count = CharacterToCorporation::where('character_id', $charId)->count();
         
         //If we don't find the character in the table, then we retrieve from ESI
         //and add the character to the table
-        if(!isset($found[0]->corporation_id)) {
+        if($count == 0) {
             //Get the configuration for ESI from the environmental variables
             $config = config('esi');
 
@@ -92,6 +94,8 @@ class LookupHelper {
             //Return the corporation_id which is what the calling function is looking for
             return $character->corporation_id;
         } else {
+            $found = CharacterToCorporation::where('character_id', $charId)->get(['corporation_id']);
+
             //Return the corporation_id if it was found in the database as it is what the calling function is looking for
             return $found[0]->corporation_id;
         }
@@ -99,11 +103,11 @@ class LookupHelper {
 
     public function LookupCorporationId($charId) {
         //Check for the character in the user_to_corporation table
-        $found = CharacterToCorporation::where('character_id', $charId)->get(['corporation_id']);
+        $count = CharacterToCorporation::where('character_id', $charId)->count();
         
         //If we don't find the character in the table, then we retrieve from ESI
         //and add the character to the table
-        if(!isset($found[0]->corporation_id)) {
+        if($count == 0) {
             //Get the configuration for ESI from the environmental variables
             $config = config('esi');
 
@@ -132,6 +136,8 @@ class LookupHelper {
             //Return the corporation_id which is what the calling function is looking for
             return $character->corporation_id;
         } else {
+            $found = CharacterToCorporation::where('character_id', $charId)->get(['corporation_id']);
+
             //Return the corporation_id if it was found in the database as it is what the calling function is looking for
             return $found[0]->corporation_id;
         }
@@ -144,11 +150,11 @@ class LookupHelper {
      */
     public function LookupCorporationName($corpId) {
         //check for the character in the user_to_corporation table
-        $found = CorporationToAlliance::where('corporation_id', $corpId)->get(['corporation_name']);
+        $count = CorporationToAlliance::where('corporation_id', $corpId)->count();
 
         //If we don't find the corporation in the table, then we need to retrieve it from ESI
         //and add the corporation to the table
-        if(!isset($found[0]->corporation_name)) {
+        if($count == 0) {
             //Get the configuration for ESI from the environmental variables
             $config = config('esi');
 
@@ -166,6 +172,8 @@ class LookupHelper {
             //Return the corporation name
             return $corporation->name;
         } else {
+            $found = CorporationToAlliance::where('corporation_id', $corpId)->get(['corporation_name']);
+
             return $found[0]->corporation_name;
         }
     }
@@ -174,11 +182,11 @@ class LookupHelper {
     //hit the ESI API all the time
     public function LookupCorporation($corpId) {
         //Check for the character in the user_to_corporation table
-        $found = CorporationToAlliance::where('corporation_id', $corpId)->get(['alliance_id']);
+        $count = CorporationToAlliance::where('corporation_id', $corpId)->count();
        
         //If we don't find the character in the table, then we retrieve from ESI
         //and add the character to the table
-        if(!isset($found[0]->alliance_id)) {
+        if($count == 0) {
             //Get the configuration for ESI from the environmental variables
             $config = config('esi');
 
@@ -213,6 +221,8 @@ class LookupHelper {
             //Return the corporation_id which is what the calling function is looking for
             return $corporation->alliance_id;
         } else {
+            $found = CorporationToAlliance::where('corporation_id', $corpId)->get(['alliance_id']);
+
             //Return the corporation_id if it was found in the database as it is what the calling function is looking for
             return $found[0]->alliance_id;
         }
