@@ -53,7 +53,7 @@ class LookupHelper {
 
             }
 
-            dd($response->raw);
+            dd($response);
 
             if(isset($response->character)) {
                 $this->LookupCharacter($response->character);
@@ -66,6 +66,8 @@ class LookupHelper {
 
             return $char[0]->character_id;
         }
+
+        //return 0;
     }
 
     //Add characters to the lookup table for quicker lookups without having
