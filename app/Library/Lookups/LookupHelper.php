@@ -40,16 +40,20 @@ class LookupHelper {
         //Attempt to find the character name in the LookupCharacter table to see if we can match it to an id
         $count = CharacterToCorporation::where(['character_name' => $character])->count();
         if($count == 0) {
-            //Get the character id from the ESI API.
-            $response = $esi->setQueryString([
-                'categories' => 'character',
-                'search' => $character,
-                'strict' => 'true',
-            ])->invoke('get', '/search/');
+            try {
+                //Get the character id from the ESI API.
+                $response = $esi->setQueryString([
+                    'categories' => 'character',
+                    'search' => $character,
+                    'strict' => 'true',
+                ])->invoke('get', '/search/');
+            } catch(RequestFailedException $e) {
 
-            $this->LookupCharacter($response->character[0]);
+            }
 
-            return $response->character[0];
+            $this->LookupCharacter($response['character'][0]);
+
+            return $response['character'][0];
         } else {
             $char = CharacterToCorporation::where(['character_name' => $character])->get(['character_id']);
 
