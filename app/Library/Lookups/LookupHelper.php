@@ -45,7 +45,7 @@ class LookupHelper {
                 $response = $esi->setQueryString([
                     'categories' => 'character',
                     'search' => $name,
-                    'strict' => 'true',
+                    'strict' => 'false',
                 ])->invoke('get', '/search/');
 
 
