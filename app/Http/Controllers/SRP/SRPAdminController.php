@@ -45,7 +45,7 @@ class SRPAdminController extends Controller
                 $temp['character_name'] = $r['character_name'];
                 $temp['fleet_commander_name'] = $r['fleet_commander_name'];
                 $temp['zkillboard'] = $r['zkillboard'];
-                $temp['loss_value'] = $r['loss_value'];
+                $temp['loss_value'] = number_format($r['loss_value'], 2, '.', ',');
                 //Get the ship type
                 foreach($shipTypes as $s) {
                     if($r['ship_type'] == $s->code) {
@@ -61,7 +61,7 @@ class SRPAdminController extends Controller
                 //Calculate the recommended srp amount
                 foreach($payouts as $p) {
                     if($r['ship_type'] == $p->code) {
-                        $temp['actual_srp'] = $temp['loss_value'] * ($p->payout / 100.00 );
+                        $temp['actual_srp'] = $r['loss_value'] * ($p->payout / 100.00 );
                         $temp['actual_srp'] = number_format($temp['actual_srp'], 2, '.', ',');
                     }
                 }
