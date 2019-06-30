@@ -8,7 +8,7 @@
                 <th>Timestamp</th>
                 <th>Pilot</th>
                 <th>Fleet Commander</th>
-                <th>zKillboard Link</th>
+                <th>zKillboard</th>
                 <th>Total Loss Value</th>
                 <th>Type of Ship</th>
                 <th>Fleet Type</th>
