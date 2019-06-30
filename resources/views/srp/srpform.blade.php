@@ -7,8 +7,11 @@
         'action' => 'SRP\SRPController@storeSRPFile',
         'method' => 'POST'
     ]) !!}
+    <div class="form-group">
     {{ Form::label('FC', 'Fleet Commander') }}
     {{ Form::text('FC', null, ['class' => 'form-control']) }}
+    </div>
+    <div class="form-group">
     {{ Form::label('FleetType', 'Fleet Type') }}
     {{ Form::select('FleetType', [
         'Home Defense' => 'Home Defense',
@@ -16,10 +19,16 @@
         'Strat Op' => 'Strat Op',
         'CTA' => 'CTA',
         ], 'None', ['class' => 'form-control']) }}
+    </div>
+    <div class="form-group">
     {{ Form::label('zKillboard', 'zKillboard Link') }}
     {{ Form::text('zKillboard', null, ['class' => 'form-control']) }}
+    </div>
+    <div class="form-group">
     {{ Form::label('LossValue', 'Loss Value') }}
     {{ Form::text('LossValue', null, ['class' => 'form-control', 'placeholder' => '1.00']) }}
+    </div>
+    <div class="form-group">
     {{ Form::label('ShipType', 'Type of Ship') }}
     {{ Form::select('ShipType', [
         'T1FDC' => 'T1 Frig / Dessie / Cruiser',
@@ -32,6 +41,7 @@
         'T3C' => 'T3 Cruiser',
         'COM' => 'Command Ship',
     ], 'None', ['class' => 'form-control']) }}
-    {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+    </div>
 </div>
+{{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
 @endsection
