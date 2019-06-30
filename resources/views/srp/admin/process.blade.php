@@ -32,6 +32,8 @@
                             {{ Form::hidden('paid_value', $row['actual_srp'], ['class' => 'form-control']) }}
                         </td>
                         <td>{{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 2, 'cols' => 15, 'style' => 'resize:none']) }}
+                        </tr>
+                        <tr>
                         <td>
                             <div class="form-group">
                             {{ Form::hidden('pay_out', $row['id'], ['class' => 'form-control']) }}
