@@ -39,9 +39,9 @@ class SRPController extends Controller
         $ship = new SRPShip;
         $ship->character_id = auth()->user()->character_id;
         $ship->character_name = auth()->user()->name;
-        $ship->fleet_commander_name = $request->fc;
+        $ship->fleet_commander_name = $request->FC;
         if($fcId[0] != null) {
-            $ship->fleet_commander_id = $fcId;
+            $ship->fleet_commander_id = $fcId[0];
         }
         $ship->zkillboard = $request->zKillboard;
         $ship->ship_type = $request->ShipType;
