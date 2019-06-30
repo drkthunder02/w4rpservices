@@ -12,6 +12,7 @@ use Auth;
 
 //Models
 use App\Models\SRP\SRPShip;
+use App\Models\User\User;
 
 class SRPController extends Controller
 {
@@ -36,6 +37,11 @@ class SRPController extends Controller
         //See if the FC Name ties to a user on the services site
         $fcId = User::where(['name' => $request->fc])->get(['character_id']);
 
+        //Take the loss value and remove ' ISK' from it.  Convert the string to a number
+        $lossValue = str_replace(' ISK', '', $request->LossValue);
+        $lossValue = floatval($lossValue);
+        dd($lossValue);
+
         $ship = new SRPShip;
         $ship->character_id = auth()->user()->character_id;
         $ship->character_name = auth()->user()->name;
@@ -45,7 +51,7 @@ class SRPController extends Controller
         }
         $ship->zkillboard = $request->zKillboard;
         $ship->ship_type = $request->ShipType;
-        $ship->loss_value = $request->LossValue;
+        $ship->loss_value = $lossValue;
         $ship->save();
 
         return redirect('/srpform')->with('success', 'SRP Form Submitted.');
