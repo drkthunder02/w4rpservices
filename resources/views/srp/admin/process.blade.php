@@ -14,7 +14,6 @@
                 <th>Fleet Type</th>
                 <th>Actual SRP</th>
                 <th>Notes</th>
-                <th>Pay Out</th>
             </thead>
             <tbody>
                 @foreach($requests as $row)
