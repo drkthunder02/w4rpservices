@@ -37,11 +37,20 @@
     {{ Form::submit('Pay Out', ['class' => 'form-control']) }}
     {!! Form::close() !!}
 @else
-<div class="container col-md-12">
-    <div class="row content-justify-center">
-        <h3>No Open SRP Requests</h3>   
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>SRP Requests Dashboard</h2>
+                </div>
+                <div class="card-body">
+                    <h3>No Open SRP Requests</h3>
+                </div>
+            </div>
+        </div>
     </div>
-</div>  
+</div>
 @endif
         
 @endsection
