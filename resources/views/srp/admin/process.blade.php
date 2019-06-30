@@ -22,7 +22,7 @@
                         <td>{{ $row['created_at'] }}</td>
                         <td>{{ $row['character_name'] }}</td>
                         <td>{{ $row['fleet_commander_name'] }}</td>
-                        <td><a href="{{ $row['zkillboard'] }}">zKill Link</a></td>
+                        <td><a href="{{ $row['zkillboard'] }}" target="_blank">zKill Link</a></td>
                         <td>{{ $row['loss_value'] }}</td>
                         <td>{{ $row['ship_type'] }}</td>
                         <td>{{ $row['fleet_type'] }}</td>
