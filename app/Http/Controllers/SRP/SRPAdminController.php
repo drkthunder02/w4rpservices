@@ -27,7 +27,14 @@ class SRPAdminController extends Controller
     public function displaySRPRequests() {
         $this->middleware('permission:srp.admin');
 
-        $requests = SRPShip::where(['approved' => 'Under Review'])->get();
+        $requests = null;
+        
+        $count = SRPShip::where(['approved' => 'Under Review'])->count();
+        if($count === 0) {
+            $requests = null;
+        } else {
+            $requests = SRPShip::where(['approved' => 'Under Review'])->get();
+        }
 
         return view('srp.admin.process')->with('requests', $requests);
     }
