@@ -2,6 +2,7 @@
 @section('content')
 {!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
     <div class="container col-md-12">
+        @if($requests != null)
         <table class="table table-striped">
             <thead>
                 <th>Timestamp</th>
@@ -16,7 +17,7 @@
                 <th>Pay Out</th>
             </thead>
             <tbody>
-                @if($requests != null)
+                
                 @foreach($requests as $row)
                     <tr>
                         <td>{{ $row['created_at'] }}</td>
@@ -31,23 +32,12 @@
                         <td>{{ Form::radio('pay_out', $row['id'], false, ['class' => 'form-control']) }}</td>
                     </tr>
                 @endforeach
-                @else
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                @endif
             </tbody>
         </table>
+        @else
+            <h3>No Open SRP Requests</h3>            
+        @endif
+            
     </div>
 {{ Form::submit('Pay Out', ['class' => 'form-control']) }}
 {!! Form::close() !!}
