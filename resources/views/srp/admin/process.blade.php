@@ -1,6 +1,6 @@
 @extends('layouts.b4')
 @section('content')
-{!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
+
 @if($requests != null)
     <div class="container col-md-12">
         <table class="table table-striped">
@@ -19,6 +19,7 @@
             <tbody>
                 @foreach($requests as $row)
                     <tr>
+                        {!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
                         <td>{{ $row['created_at'] }}</td>
                         <td>{{ $row['character_name'] }}</td>
                         <td>{{ $row['fleet_commander_name'] }}</td>
@@ -28,14 +29,15 @@
                         <td>{{ $row['fleet_type'] }}</td>
                         <td>{{ $row['actual_srp'] }}</td>
                         <td>{{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 4, 'cols' => 30, 'style' => 'resize:none']) }}
-                        <td>{{ Form::radio('pay_out', $row['id'], false, ['class' => 'form-control']) }}</td>
+                        <td>
+                            {{ Form::hidden('pay_out', $row['id'], ['class' => 'form-control']) }}
+                            {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
+                        </td>
+                        {!! Form::close() !!}
                     </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
-    {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
-    {!! Form::close() !!}
 @else
 <div class="container">
     <div class="row justify-content-center">
