@@ -15,13 +15,7 @@
     </div>
     <div class="form-group">
     {{ Form::label('FleetType', 'Fleet Type') }}
-    {{ Form::select('FleetType', [
-        'None' => 'None',
-        'Home Defense' => 'Home Defense',
-        'Legacy Ops' => 'Legacy Ops',
-        'Strat Op' => 'Strat Op',
-        'CTA' => 'CTA',
-        ], 'None', ['class' => 'form-control']) }}
+    {{ Form::select('FleetType', $fleetTypes, 'None', ['class' => 'form-control']) }}
     </div>
     <div class="form-group">
     {{ Form::label('zKillboard', 'zKillboard Link') }}
@@ -33,18 +27,7 @@
     </div>
     <div class="form-group">
     {{ Form::label('ShipType', 'Type of Ship') }}
-    {{ Form::select('ShipType', [
-        'None' => 'None',
-        'T1FDC' => 'T1 Frig / Dessie / Cruiser',
-        'T1BC' => 'T1 Battlecruiser',
-        'T2F' => 'T2 Frigate',
-        'T3D' => 'T3 Destroyer',
-        'T1T2Logi' => 'T1 & T2 Logisticis',
-        'RI' => 'Recons / Interdictors',
-        'T2C' => 'T2 Cruiser',
-        'T3C' => 'T3 Cruiser',
-        'COM' => 'Command Ship',
-    ], 'None', ['class' => 'form-control']) }}
+    {{ Form::select('ShipType', $shipTypes, 'None', ['class' => 'form-control']) }}
     </div>
 {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
 </div>
