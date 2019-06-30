@@ -71,7 +71,7 @@ class SRPController extends Controller
         $ship->loss_value = $lossValue;
         $ship->save();
 
-        return redirect('/srpform')->with('success', 'SRP Form Submitted.');
+        return redirect('/dashboard')->with('success', 'SRP Form Submitted.');
     }
 
 }
