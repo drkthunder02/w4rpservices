@@ -35,6 +35,7 @@
                         </td>
                         {!! Form::close() !!}
                     </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
