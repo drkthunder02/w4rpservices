@@ -34,16 +34,20 @@
                         <td>{{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 2, 'cols' => 15, 'style' => 'resize:none']) }}
                         </tr>
                         <tr>
-                        <td>
-                            <div class="form-group">
-                            {{ Form::hidden('pay_out', $row['id'], ['class' => 'form-control']) }}
-                            {{ Form::label('approved', 'Approved') }}
-                            {{ Form::radio('approved', 'Approved', false, ['class' => 'form-control']) }}
-                            {{ Form::label('approved', 'Denied') }}
-                            {{ Form::radio('approved', 'Denied', false, ['class' => 'form-control']) }}
-                            </div>
-                            {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
-                        </td>
+                        <div class="form-group">
+                            <td>{{ Form::hidden('pay_out', $row['id'], ['class' => 'form-control']) }}</td>
+                            <td>
+                                {{ Form::label('approved', 'Approved') }}
+                                {{ Form::radio('approved', 'Approved', false, ['class' => 'form-control']) }}
+                            </td>
+                            <td>
+                                {{ Form::label('approved', 'Denied') }}
+                                {{ Form::radio('approved', 'Denied', false, ['class' => 'form-control']) }}
+                            </td>
+                            <td>
+                                {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
+                            </td>
+                        </div>
                         {!! Form::close() !!}
                     </tr>
                 @endforeach
