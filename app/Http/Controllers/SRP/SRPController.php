@@ -36,7 +36,7 @@ class SRPController extends Controller
 
         //See if the FC Name ties to a user on the services site
         $fcId = User::where(['name' => $request->fc])->get(['character_id']);
-
+        dd($fcId);
         //Take the loss value and remove ' ISK' from it.  Convert the string to a number
         $lossValue = str_replace(' ISK', '', $request->LossValue);
         $lossValue = str_replace(',', '', $lossValue);
