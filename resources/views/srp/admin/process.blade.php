@@ -29,7 +29,7 @@
                         <td>{{ $row['fleet_type'] }}</td>
                         <td>
                             {{ $row['actual_srp'] }}
-                            {{ Form::text('paid_value', null, ['class' => 'form-control']) }}
+                            {{ Form::hidden('paid_value', $row['actual_srp'], ['class' => 'form-control']) }}
                         </td>
                         <td>{{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 4, 'cols' => 30, 'style' => 'resize:none']) }}
                         <td>
