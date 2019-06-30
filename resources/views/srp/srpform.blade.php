@@ -9,11 +9,11 @@
         'action' => 'SRP\SRPController@storeSRPFile',
         'method' => 'POST'
     ]) !!}
-    <div class="form-group">
+    <div class="form-group col-md-3">
     {{ Form::label('FC', 'Fleet Commander') }}
     {{ Form::text('FC', null, ['class' => 'form-control']) }}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-3">
     {{ Form::label('FleetType', 'Fleet Type') }}
     {{ Form::select('FleetType', [
         'None' => 'None',
@@ -23,15 +23,15 @@
         'CTA' => 'CTA',
         ], 'None', ['class' => 'form-control']) }}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-3">
     {{ Form::label('zKillboard', 'zKillboard Link') }}
     {{ Form::text('zKillboard', null, ['class' => 'form-control']) }}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-3">
     {{ Form::label('LossValue', 'Loss Value') }}
     {{ Form::text('LossValue', null, ['class' => 'form-control', 'placeholder' => '1.00']) }}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-3">
     {{ Form::label('ShipType', 'Type of Ship') }}
     {{ Form::select('ShipType', [
         'None' => 'None',
