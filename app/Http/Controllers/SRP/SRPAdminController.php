@@ -11,7 +11,7 @@ use Auth;
 //User Libraries
 
 //Models
-use App\Models\SRP\Ship;
+use App\Models\SRP\SRPShip;
 use App\Models\User\User;
 use App\Models\SRP\SrpFleetType;
 use App\Models\SRP\SrpShipType;
