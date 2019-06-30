@@ -67,6 +67,7 @@ class SRPController extends Controller
             $ship->fleet_commander_id = $fcId[0]->character_id;
         }
         $ship->zkillboard = $request->zKillboard;
+        $ship->fleet_type = $request->FleetType;
         $ship->ship_type = $request->ShipType;
         $ship->loss_value = $lossValue;
         $ship->save();

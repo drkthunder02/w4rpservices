@@ -27,14 +27,47 @@ class SRPAdminController extends Controller
     public function displaySRPRequests() {
         $this->middleware('permission:srp.admin');
 
-        $requests = null;
+        $requests = array();
+
+        $shipTypes = SrpShipType::all();
+        $fleetTypes = SrpFleetType::all();
+        $payouts = SrpPayout::all();
         
         $count = SRPShip::where(['approved' => 'Under Review'])->count();
         if($count === 0) {
             $requests = null;
         } else {
-            $requests = SRPShip::where(['approved' => 'Under Review'])->get();
+            $reqs = SRPShip::where(['approved' => 'Under Review'])->get()->toArray();
+            foreach($reqs as $r) {
+                $temp['created_at'] = $r['created_at'];
+                $temp['character_name'] = $r['character_name'];
+                $temp['fleet_commander_name'] = $r['fleet_commander_name'];
+                $temp['zkillboard'] = $r['zkillboard'];
+                $temp['loss_value'] = $r['loss_value'];
+                //Get the ship type
+                foreach($shipTypes as $s) {
+                    if($r['ship_type'] == $s->code) {
+                        $temp['ship_type'] = $s->description;
+                    }
+                }
+                //Get the fleet type
+                foreach($fleetTypes as $f) {
+                    if($r['fleet_type'] == $f->code) {
+                        $temp['fleet_type'] = $f->description;
+                    }
+                }
+                //Calculate the recommended srp amount
+                foreach($payouts as $p) {
+                    if($r['ship_type'] == $p->code) {
+                        $temp['actual_srp'] = $temp['loss_value'] * ($p->payout / 100.00 );
+                    }
+                }
+                
+                array_push($requests, $temp);
+            }
         }
+
+
 
         return view('srp.admin.process')->with('requests', $requests);
     }

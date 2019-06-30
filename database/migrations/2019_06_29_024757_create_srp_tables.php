@@ -22,6 +22,7 @@ class CreateSrpTables extends Migration
                 $table->string('fleet_commander_name');
                 $table->string('zkillboard');
                 $table->string('ship_type');
+                $table->string('fleet_type');
                 $table->decimal('loss_value', 20, 2);
                 $table->string('approved')->default('Under Review');
                 $table->decimal('paid_value', 20, 2)->default(0.00);
@@ -45,6 +46,14 @@ class CreateSrpTables extends Migration
                 $table->increments('id');
                 $table->string('code');
                 $table->string('description');
+            });
+        }
+
+        if(!Schema::hasTable('srp_payouts')) {
+            Schema::create('srp_payouts', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('code');
+                $table->decimal('payout', 5, 2);
             });
         }
 
@@ -122,6 +131,51 @@ class CreateSrpTables extends Migration
             'code' => 'COM',
             'description' => 'Command Ship',
         ]);
+
+        DB::table('srp_payouts')->insert([
+            'code' => 'T1FDC',
+            'payout' => 75.00,
+        ]);
+
+        DB::table('srp_payouts')->insert([
+            'code' => 'T1BC',
+            'payout' => 60.00,
+        ]);
+
+        DB::table('srp_payouts')->insert([
+            'code' => 'T2F',
+            'payout' => 60.00,
+        ]);
+
+        DB::table('srp_payouts')->insert([
+            'code' => 'T3D',
+            'payout' => 60.00,
+        ]);
+
+        DB::table('srp_payouts')->insert([
+            'code' => 'T1T2Logi',
+            'payout' => 100.00,
+        ]);
+
+        DB::table('srp_payouts')->insert([
+            'code' => 'RI',
+            'payout' => 50.00,
+        ]);
+
+        DB::table('srp_payouts')->insert([
+            'code' => 'T2C',
+            'payout' => 50.00,
+        ]);
+
+        DB::table('srp_payouts')->insert([
+            'code' => 'T3C',
+            'payout' => 50.00,
+        ]);
+
+        DB::table('srp_payouts')->insert([
+            'code' => 'COM',
+            'payout' => 100.00,
+        ]);
     }
 
     /**
@@ -134,5 +188,6 @@ class CreateSrpTables extends Migration
         Schema::dropIfExists('srp_ships');
         Schema::dropIfExists('srp_ship_types');
         Schema::dropIfExists('srp_fleet_types');
+        Schema::dropIfExists('srp_payouts');
     }
 }
