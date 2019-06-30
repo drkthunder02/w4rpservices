@@ -75,7 +75,7 @@ class SRPAdminController extends Controller
         return view('srp.admin.process')->with('requests', $requests);
     }
 
-    public function processSRPRequest() {
+    public function processSRPRequest(Request $request) {
         $this->middleware('permission:srp.admin');
 
         $this->validate($request, [
