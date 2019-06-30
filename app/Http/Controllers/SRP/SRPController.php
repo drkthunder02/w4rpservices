@@ -31,8 +31,7 @@ class SRPController extends Controller
         $fleetTypesTemp = SrpFleetType::all();
 
         foreach($shipTypesTemp as $type) {
-            $temp[$type->code] = $type->description;
-            array_push($shipTypes, $temp);
+            array_push($shipTypes, [$type->code => $type->description]);
         }
 
         foreach($fleetTypesTemp as $type) {
