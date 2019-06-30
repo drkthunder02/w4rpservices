@@ -12,6 +12,7 @@
                 <th>Type of Ship</th>
                 <th>Fleet Type</th>
                 <th>Actual SRP</th>
+                <th>Notes</th>
                 <th>Pay Out</th>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                         <td>{{ $row['ship_type'] }}</td>
                         <td>{{ $row['fleet_type'] }}</td>
                         <td>{{ $row['actual_srp'] }}</td>
+                        <td>{{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 4, 'cols' => 30, 'style' => 'resize:none']) }}
                         <td>{{ Form::radio('pay_out', $row['id'], false, ['class' => 'form-control']) }}</td>
                     </tr>
                 @endforeach

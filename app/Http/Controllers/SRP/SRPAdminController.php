@@ -24,9 +24,9 @@ class SRPAdminController extends Controller
     public function displaySRPRequests() {
         $this->middleware('permission:srp.admin');
 
-        $requests = Ship::where(['approved' => 'Not Paid'])->get();
+        $requests = Ship::where(['approved' => 'Under Review'])->get();
 
-        return view('srp.admin.process')->with('requests', $request);
+        return view('srp.admin.process')->with('requests', $requests);
     }
 
     public function processSRPRequest() {
@@ -38,17 +38,33 @@ class SRPAdminController extends Controller
             'paid_value' => 'required',
         ]);
 
-        $srp = SRPShip::where(['id' => $id])->update([
-            'approved' => $request->approved,
-            'paid_value' => $request->paid_value,
-            'paid_by_id' => auth()->user()->character_id,
-            'paid_by_name' => auth()->user()->name,
-        ]);
+        if($request->notes != null) {
+            $srp = SRPShip::where(['id' => $id])->update([
+                'approved' => $request->approved,
+                'paid_value' => $request->paid_value,
+                'paid_by_id' => auth()->user()->character_id,
+                'paid_by_name' => auth()->user()->name,
+                'notes' => $request->notes,
+            ]);
+        } else {
+            $srp = SRPShip::where(['id' => $id])->update([
+                'approved' => $request->approved,
+                'paid_value' => $request->paid_value,
+                'paid_by_id' => auth()->user()->character_id,
+                'paid_by_name' => auth()->user()->name,
+            ]);
+        }
+
+        
 
         if($request->approved == 'Yes') {
             return redirect('/srp/admin/display')->with('success', 'SRP Marked as Paid');
         } else {
             return redirect('/srp/admin/display')->with('error', 'SRP Request Denied.');
         }
+    }
+
+    public function displayStatistics() {
+        return view('srp.admin.statistics');
     }
 }

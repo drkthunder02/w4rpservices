@@ -93,6 +93,19 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/contracts/admin/delete/{id}', 'Contracts\ContractAdminController@deleteContract');
     Route::get('/contracts/admin/end/{id}', 'Contracts\ContractAdminController@displayEndContract');
     Route::post('/contracts/admin/end', 'Contracts\ContractAdminController@storeEndContract');
+
+    /**
+     * SRP Controller display pages
+     */
+    Route::get('/srp/form/display', 'SRP\SRPController@displaySrpForm');
+    Route::post('/srp/form/display', 'SRP\SRPController@storeSRPFile');
+
+    /**
+     * SRP Admin Controller display pages
+     */
+    Route::get('/srp/admin/display', 'SRP\SRPAdminController@displaySRPRequests');
+    Route::post('/srp/admin/display', 'SRP\SRPAdminController@processSRPRequest');
+    Route::get('/srp/admin/statistics', 'SRP\SRPAdminController@displayStatistics');
     
 });
 

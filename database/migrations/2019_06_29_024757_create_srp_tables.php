@@ -23,7 +23,7 @@ class CreateSrpTables extends Migration
                 $table->string('zkillboard');
                 $table->string('ship_type');
                 $table->decimal('loss_value', 20, 2);
-                $table->string('approved')->default('Not Paid');
+                $table->string('approved')->default('Under Review');
                 $table->decimal('paid_value', 20, 2)->default(0.00);
                 $table->string('notes')->nullable();
                 $table->string('paid_by_id')->nullable();
