@@ -1,8 +1,8 @@
 @extends('layouts.b4')
 @section('content')
 {!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
+@if($requests != null)
     <div class="container col-md-12">
-        @if($requests != null)
         <table class="table table-striped">
             <thead>
                 <th>Timestamp</th>
@@ -17,7 +17,6 @@
                 <th>Pay Out</th>
             </thead>
             <tbody>
-                
                 @foreach($requests as $row)
                     <tr>
                         <td>{{ $row['created_at'] }}</td>
@@ -34,11 +33,12 @@
                 @endforeach
             </tbody>
         </table>
-        @else
-            <h3>No Open SRP Requests</h3>            
-        @endif
-            
     </div>
-{{ Form::submit('Pay Out', ['class' => 'form-control']) }}
-{!! Form::close() !!}
+    {{ Form::submit('Pay Out', ['class' => 'form-control']) }}
+    {!! Form::close() !!}
+@else
+    <h3>No Open SRP Requests</h3>            
+@endif
+            
+
 @endsection
