@@ -132,5 +132,7 @@ class CreateSrpTables extends Migration
     public function down()
     {
         Schema::dropIfExists('srp_ships');
+        Schema::dropIfExists('srp_ship_types');
+        Schema::dropIfExists('srp_fleet_types');
     }
 }
