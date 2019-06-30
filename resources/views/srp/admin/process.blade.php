@@ -38,9 +38,7 @@
     {!! Form::close() !!}
 @else
 <div class="row content-justify-center">
-    <div class="container">
         <h3>No Open SRP Requests</h3>   
-    </div>
 </div>  
 @endif
         
