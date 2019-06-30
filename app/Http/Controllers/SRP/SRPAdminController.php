@@ -40,6 +40,7 @@ class SRPAdminController extends Controller
         } else {
             $reqs = SRPShip::where(['approved' => 'Under Review'])->get()->toArray();
             foreach($reqs as $r) {
+                $temp['id'] = $r['id'];
                 $temp['created_at'] = $r['created_at'];
                 $temp['character_name'] = $r['character_name'];
                 $temp['fleet_commander_name'] = $r['fleet_commander_name'];
