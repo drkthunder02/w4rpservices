@@ -36,7 +36,7 @@ class SRPController extends Controller
 
         //See if the FC Name ties to a user on the services site
         $fcId = User::where(['name' => $request->FC])->get(['character_id']);
-        dd($fcId);
+        
         //Take the loss value and remove ' ISK' from it.  Convert the string to a number
         $lossValue = str_replace(' ISK', '', $request->LossValue);
         $lossValue = str_replace(',', '', $lossValue);
@@ -47,7 +47,7 @@ class SRPController extends Controller
         $ship->character_name = auth()->user()->name;
         $ship->fleet_commander_name = $request->FC;
         if(isset($fcId[0])) {
-            $ship->fleet_commander_id = $fcId[0];
+            $ship->fleet_commander_id = $fcId[0]->character_id;
         }
         $ship->zkillboard = $request->zKillboard;
         $ship->ship_type = $request->ShipType;
