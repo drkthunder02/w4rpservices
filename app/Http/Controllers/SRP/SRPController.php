@@ -34,11 +34,8 @@ class SRPController extends Controller
             $shipTypes[$type->code] = $type->description;
         }
 
-        dd($shipTypes);
-
         foreach($fleetTypesTemp as $type) {
-            $temp[$type->code] = $type->description;
-            array_push($fleetTypes, $temp);
+            $fleetTypes[$type->code] = $type->description;
         }
 
         return view('srp.srpform')->with('fleetTypes', $fleetTypes)
