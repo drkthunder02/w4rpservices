@@ -1,8 +1,10 @@
 @extends('layouts.b4')
 @section('content')
-<div class="container col-md-6">
+<div class="container">
     <h2>Ship Replacement Program Form</h2>
     <h3>Enter the details of your loss.</h3>
+</div>
+<div class="container col-md-6">
     {!! Form::open([
         'action' => 'SRP\SRPController@storeSRPFile',
         'method' => 'POST'
