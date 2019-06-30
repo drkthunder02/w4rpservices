@@ -27,10 +27,17 @@
                         <td>{{ $row['loss_value'] }}</td>
                         <td>{{ $row['ship_type'] }}</td>
                         <td>{{ $row['fleet_type'] }}</td>
-                        <td>{{ $row['actual_srp'] }}</td>
+                        <td>
+                            {{ $row['actual_srp'] }}
+                            {{ Form::text('paid_value', null, ['class' => 'form-control']) }}
+                        </td>
                         <td>{{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 4, 'cols' => 30, 'style' => 'resize:none']) }}
                         <td>
                             {{ Form::hidden('pay_out', $row['id'], ['class' => 'form-control']) }}
+                            {{ Form::label('approved', 'Approved') }}
+                            {{ Form::radio('approved', 'Approved', false, ['class' => 'form-control']) }}
+                            {{ Form::label('approved', 'Denied') }}
+                            {{ Form::radio('approved', 'Denied', false, ['class' => 'form-control']) }}
                             {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
                         </td>
                         {!! Form::close() !!}
