@@ -138,7 +138,7 @@ class AdminController extends Controller
         //Get the user information from the name
         $user = User::where(['name' => $name])->first();
 
-        $perms = AvailablePermission::all();
+        $perms = AvailableUserPermission::all();
         foreach($perms as $p) {
             $permissions[$p->permission] = $p->permission;
         }
