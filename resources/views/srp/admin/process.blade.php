@@ -31,13 +31,15 @@
                             {{ $row['actual_srp'] }}
                             {{ Form::hidden('paid_value', $row['actual_srp'], ['class' => 'form-control']) }}
                         </td>
-                        <td>{{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 4, 'cols' => 15, 'style' => 'resize:none']) }}
+                        <td>{{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 2, 'cols' => 15, 'style' => 'resize:none']) }}
                         <td>
+                            <div class="form-group">
                             {{ Form::hidden('pay_out', $row['id'], ['class' => 'form-control']) }}
                             {{ Form::label('approved', 'Approved') }}
                             {{ Form::radio('approved', 'Approved', false, ['class' => 'form-control']) }}
                             {{ Form::label('approved', 'Denied') }}
                             {{ Form::radio('approved', 'Denied', false, ['class' => 'form-control']) }}
+                            </div>
                             {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
                         </td>
                         {!! Form::close() !!}
