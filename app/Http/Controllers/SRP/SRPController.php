@@ -46,7 +46,7 @@ class SRPController extends Controller
         $ship->character_id = auth()->user()->character_id;
         $ship->character_name = auth()->user()->name;
         $ship->fleet_commander_name = $request->FC;
-        if($fcId[0] != null) {
+        if(isset($fcId[0])) {
             $ship->fleet_commander_id = $fcId[0];
         }
         $ship->zkillboard = $request->zKillboard;
