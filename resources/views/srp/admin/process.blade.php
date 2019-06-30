@@ -36,11 +36,11 @@
                         <div class="form-group">
                             <td>{{ Form::hidden('pay_out', $row['id'], ['class' => 'form-control']) }}</td>
                             <td>
-                                
+                                Approved
                                 {{ Form::radio('approved', 'Approved', false, ['class' => 'form-control']) }}
                             </td>
                             <td>
-                                
+                                Denied
                                 {{ Form::radio('approved', 'Denied', false, ['class' => 'form-control']) }}
                             </td>
                             <td>
