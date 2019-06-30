@@ -16,7 +16,7 @@
                 <th>Pay Out</th>
             </thead>
             <tbody>
-                @foreach($srp as $row)
+                @foreach($requests as $row)
                     <tr>
                         <td>{{ $row['created_at'] }}</td>
                         <td>{{ $row['pilot'] }}</td>
