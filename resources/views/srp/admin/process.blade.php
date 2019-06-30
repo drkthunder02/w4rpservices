@@ -16,6 +16,7 @@
                 <th>Pay Out</th>
             </thead>
             <tbody>
+                @if($requests != null)
                 @foreach($requests as $row)
                     <tr>
                         <td>{{ $row['created_at'] }}</td>
@@ -30,6 +31,21 @@
                         <td>{{ Form::radio('pay_out', $row['id'], false, ['class' => 'form-control']) }}</td>
                     </tr>
                 @endforeach
+                @else
+                    <tr>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>--</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
     </div>
