@@ -39,6 +39,7 @@ class SRPController extends Controller
 
         //Take the loss value and remove ' ISK' from it.  Convert the string to a number
         $lossValue = str_replace(' ISK', '', $request->LossValue);
+        $lossValue = str_replace(',', '', $lossValue);
         $lossValue = floatval($lossValue);
         dd($lossValue);
 
