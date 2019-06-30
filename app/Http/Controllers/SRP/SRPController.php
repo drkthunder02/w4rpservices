@@ -41,7 +41,6 @@ class SRPController extends Controller
         $lossValue = str_replace(' ISK', '', $request->LossValue);
         $lossValue = str_replace(',', '', $lossValue);
         $lossValue = floatval($lossValue);
-        dd($lossValue);
 
         $ship = new SRPShip;
         $ship->character_id = auth()->user()->character_id;
@@ -53,6 +52,7 @@ class SRPController extends Controller
         $ship->zkillboard = $request->zKillboard;
         $ship->ship_type = $request->ShipType;
         $ship->loss_value = $lossValue;
+        dd($ship);
         $ship->save();
 
         return redirect('/srpform')->with('success', 'SRP Form Submitted.');
