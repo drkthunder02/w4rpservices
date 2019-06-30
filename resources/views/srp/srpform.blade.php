@@ -1,6 +1,6 @@
 @extends('layouts.b4')
 @section('content')
-<div class="container">
+<div class="container col-md-6">
     <h2>Ship Replacement Program Form</h2>
     <h3>Enter the details of your loss.</h3>
     {!! Form::open([
@@ -14,6 +14,7 @@
     <div class="form-group">
     {{ Form::label('FleetType', 'Fleet Type') }}
     {{ Form::select('FleetType', [
+        'None' => 'None',
         'Home Defense' => 'Home Defense',
         'Legacy Ops' => 'Legacy Ops',
         'Strat Op' => 'Strat Op',
@@ -31,6 +32,7 @@
     <div class="form-group">
     {{ Form::label('ShipType', 'Type of Ship') }}
     {{ Form::select('ShipType', [
+        'None' => 'None',
         'T1FDC' => 'T1 Frig / Dessie / Cruiser',
         'T1BC' => 'T1 Battlecruiser',
         'T2F' => 'T2 Frigate',
