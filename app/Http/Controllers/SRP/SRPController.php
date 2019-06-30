@@ -13,6 +13,8 @@ use Auth;
 //Models
 use App\Models\SRP\SRPShip;
 use App\Models\User\User;
+use App\Models\SRP\SrpFleetType;
+use App\Models\SRP\SrpShipType;
 
 class SRPController extends Controller
 {
@@ -22,7 +24,24 @@ class SRPController extends Controller
     }
 
     public function displaySrpForm() {
-        return view('srp.srpform');
+        $shipTypes = array();
+        $fleetTypes = array();
+
+        $shipTypesTemp = SrpShipType::all();
+        $fleetTypesTemp = SrpFleetType::all();
+
+        foreach($shipTypesTemp as $key => $value) {
+            $temp[$key] = $value;
+            array_push($shipTypes, $temp);
+        }
+
+        foreach($fleetTypesTemp as $key => $value) {
+            $temp[$key] = $value;
+            array_push($fleetTypes, $temp);
+        }
+
+        return view('srp.srpform')->with('fleetTypes', $fleetTypes)
+                                  ->with('shipTypes', $shipTypes);
     }    
 
     public function storeSRPFile(Request $request) {
@@ -52,7 +71,6 @@ class SRPController extends Controller
         $ship->zkillboard = $request->zKillboard;
         $ship->ship_type = $request->ShipType;
         $ship->loss_value = $lossValue;
-        dd($ship);
         $ship->save();
 
         return redirect('/srpform')->with('success', 'SRP Form Submitted.');

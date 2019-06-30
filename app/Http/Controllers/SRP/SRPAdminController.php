@@ -12,6 +12,9 @@ use Auth;
 
 //Models
 use App\Models\SRP\Ship;
+use App\Models\User\User;
+use App\Models\SRP\SrpFleetType;
+use App\Models\SRP\SrpShipType;
 
 class SRPAdminController extends Controller
 {
