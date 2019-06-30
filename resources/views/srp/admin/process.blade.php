@@ -34,7 +34,7 @@
             </tbody>
         </table>
     </div>
-    {{ Form::submit('Pay Out', ['class' => 'form-control']) }}
+    {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}
 @else
 <div class="container">
