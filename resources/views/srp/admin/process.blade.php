@@ -22,7 +22,7 @@
                         <td>{{ $row['created_at'] }}</td>
                         <td>{{ $row['pilot'] }}</td>
                         <td>{{ $row['fc'] }}</td>
-                        <td>{{ $row['link'] }}</td>
+                        <td><a href="{{ $row['link'] }}">zKill Link</a></td>
                         <td>{{ $row['loss'] }}</td>
                         <td>{{ $row['ship_type'] }}</td>
                         <td>{{ $row['fleet_type'] }}</td>
