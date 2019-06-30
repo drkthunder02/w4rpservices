@@ -46,6 +46,6 @@
         'COM' => 'Command Ship',
     ], 'None', ['class' => 'form-control']) }}
     </div>
-</div>
 {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+</div>
 @endsection
