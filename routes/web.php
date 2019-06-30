@@ -104,7 +104,7 @@ Route::group(['middleware' => ['auth']], function(){
      * SRP Admin Controller display pages
      */
     Route::get('/srp/admin/display', 'SRP\SRPAdminController@displaySRPRequests');
-    Route::post('/srp/admin/display', 'SRP\SRPAdminController@processSRPRequest');
+    Route::post('/srp/admin/process', 'SRP\SRPAdminController@processSRPRequest');
     Route::get('/srp/admin/statistics', 'SRP\SRPAdminController@displayStatistics');
     
 });

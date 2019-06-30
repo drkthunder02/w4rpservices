@@ -1,6 +1,6 @@
 @extends('layouts.b4')
 @section('content')
-{!! Form::open(['action' => 'SRP\SRPController@processSRPRequest', 'method' => 'POST']) !!}
+{!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
     <div class="container col-md-12">
         <table class="table table-striped">
             <thead>
