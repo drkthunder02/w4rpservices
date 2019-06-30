@@ -52,6 +52,17 @@
                 </div>
             </li>
             @endif
+            @if(auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Admin'))
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SRP</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                    @if(auth()->user()->hasPermission('srp.admin'))
+                    <a class="dropdown-item" href="/srp/admin/display">SRP Admin Dashboard</a>
+                    @endif
+                    <a class="dropdown-item" href="/srp/form/display">SRP Form</a>
+                </div>
+            </li>
+            @endif
         </ul>
         <ul class="navbar-nav m1-auto">
             <li class="nav-item">
