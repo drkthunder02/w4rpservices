@@ -131,13 +131,21 @@ class AdminController extends Controller
     }
 
     public function displayModifyUser(Request $request) {
+        $permissions = array();
+        
         $name = $request->user;
 
         //Get the user information from the name
         $user = User::where(['name' => $name])->first();
 
+        $perms = AvailablePermission::all();
+        foreach($perms as $p) {
+            $permissions[$p->permission] = $p->permission;
+        }
+
         //Pass the user information to the page for hidden text entries
-        return view('admin.user.modify')->with('user', $user);
+        return view('admin.user.modify')->with('user', $user)
+                                        ->with('permissions', $permissions);
     }
 
     public function modifyUser(Request $request) {

@@ -22,13 +22,7 @@
                     {{ Form::open(['action' => 'Dashboard\AdminController@addPermission', 'method' => 'POST']) }}
                     <div class="form-group">
                     {{ Form::hidden('user', $user->name) }}
-                    {{ Form::select('permission', [
-                        'structure.operator' => 'structure.operator',
-                        'logistics.minion' => 'logistics.minion',
-                        'admin.finance' => 'admin.finance',
-                        'contract.admin' => 'contract.admin',
-                        'contract.canbid' => 'contract.canbid',
-                    ], 'None') }}
+                    {{ Form::select('permission', $permissions, 'None', ['class' => 'form-control']) }}
                     {{ Form::hidden('type', 'addPermission') }}
                     </div>
                     <div class="form-group col-md-2">
