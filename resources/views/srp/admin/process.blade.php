@@ -14,39 +14,53 @@
                 <th>Fleet Type</th>
                 <th>Actual SRP</th>
                 <th>Notes</th>
+                <th>Approve</th>
+                <th>Deny</th>
+                <th>Process</th>
             </thead>
             <tbody>
                 @foreach($requests as $row)
                     <tr>
                         {!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
-                        <td>{{ $row['created_at'] }}</td>
-                        <td>{{ $row['character_name'] }}</td>
-                        <td>{{ $row['fleet_commander_name'] }}</td>
-                        <td><a href="{{ $row['zkillboard'] }}" target="_blank">zKill Link</a></td>
-                        <td>{{ $row['loss_value'] }}</td>
-                        <td>{{ $row['ship_type'] }}</td>
-                        <td>{{ $row['fleet_type'] }}</td>
+                        <td>
+                            {{ Form::hidden('id', $row['id'], ['class' => 'form-control']) }}
+                            {{ $row['created_at'] }}
+                        </td>
+                        <td>
+                            {{ $row['character_name'] }}
+                        </td>
+                        <td>
+                            {{ $row['fleet_commander_name'] }}
+                        </td>
+                        <td>
+                            <a href="{{ $row['zkillboard'] }}" target="_blank">zKill Link</a>
+                        </td>
+                        <td>
+                            {{ $row['loss_value'] }}
+                        </td>
+                        <td>
+                            {{ $row['ship_type'] }}
+                        </td>
+                        <td>
+                            {{ $row['fleet_type'] }}
+                        </td>
                         <td>
                             {{ $row['actual_srp'] }}
                             {{ Form::hidden('paid_value', $row['actual_srp'], ['class' => 'form-control']) }}
                         </td>
-                        <td>{{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 2, 'cols' => 15, 'style' => 'resize:none']) }}
+                        <td>
+                            {{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 2, 'cols' => 15, 'style' => 'resize:none']) }}
+                        </td>
+                        <td>
+                            {{ Form::radio('approved', 'Approved', false, ['class' => 'form-control']) }}
+                        </td>
+                        <td>
+                            {{ Form::radio('approved', 'Denied', false, ['class' => 'form-control']) }}
+                        </td>
+                        <td>
+                            {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
+                        </td>
                         </tr>
-                        <tr>
-                        <div class="form-group">
-                            <td>{{ Form::hidden('pay_out', $row['id'], ['class' => 'form-control']) }}</td>
-                            <td>
-                                {{ Form::label('approved', 'Approve') }}
-                                {{ Form::radio('approved', 'Approved', false, ['class' => 'form-control']) }}
-                            </td>
-                            <td>
-                                {{ Form::label('approved', 'Deny') }}
-                                {{ Form::radio('approved', 'Denied', false, ['class' => 'form-control']) }}
-                            </td>
-                            <td>
-                                {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
-                            </td>
-                        </div>
                         {!! Form::close() !!}
                     </tr>
                 @endforeach

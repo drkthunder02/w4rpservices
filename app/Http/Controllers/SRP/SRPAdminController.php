@@ -70,8 +70,6 @@ class SRPAdminController extends Controller
             }
         }
 
-
-
         return view('srp.admin.process')->with('requests', $requests);
     }
 
@@ -85,7 +83,7 @@ class SRPAdminController extends Controller
         ]);
 
         if($request->notes != null) {
-            $srp = SRPShip::where(['id' => $id])->update([
+            $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
                 'paid_value' => $request->paid_value,
                 'paid_by_id' => auth()->user()->character_id,
@@ -93,7 +91,7 @@ class SRPAdminController extends Controller
                 'notes' => $request->notes,
             ]);
         } else {
-            $srp = SRPShip::where(['id' => $id])->update([
+            $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
                 'paid_value' => $request->paid_value,
                 'paid_by_id' => auth()->user()->character_id,
@@ -101,9 +99,7 @@ class SRPAdminController extends Controller
             ]);
         }
 
-        
-
-        if($request->approved == 'Yes') {
+        if($request->approved == 'Approved') {
             return redirect('/srp/admin/display')->with('success', 'SRP Marked as Paid');
         } else {
             return redirect('/srp/admin/display')->with('error', 'SRP Request Denied.');
