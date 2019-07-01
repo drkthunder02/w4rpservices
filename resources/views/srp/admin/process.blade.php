@@ -36,7 +36,7 @@
                             <a href="{{ $row['zkillboard'] }}" target="_blank">zKill Link</a>
                         </td>
                         <td>
-                            {{ $row['loss_value'] }}
+                            {{ number_format($row['loss_value'], 2, '.', ',') }}
                         </td>
                         <td>
                             {{ $row['ship_type'] }}

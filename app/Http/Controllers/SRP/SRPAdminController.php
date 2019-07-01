@@ -45,7 +45,7 @@ class SRPAdminController extends Controller
                 $temp['character_name'] = $r['character_name'];
                 $temp['fleet_commander_name'] = $r['fleet_commander_name'];
                 $temp['zkillboard'] = $r['zkillboard'];
-                $temp['loss_value'] = number_format($r['loss_value'], 2, '.', ',');
+                $temp['loss_value'] = $r['loss_value'];
                 //Get the ship type
                 foreach($shipTypes as $s) {
                     if($r['ship_type'] == $s->code) {
