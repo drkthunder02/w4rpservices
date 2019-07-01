@@ -45,7 +45,7 @@
                             {{ $row['fleet_type'] }}
                         </td>
                         <td>
-                            {{ $row['actual_srp'] }}
+                            {{ number_format($row['actual_srp'], 2, ".", ",") }}
                             {{ Form::hidden('paid_value', $row['actual_srp'], ['class' => 'form-control']) }}
                         </td>
                         <td>
