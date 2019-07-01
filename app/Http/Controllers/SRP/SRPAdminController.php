@@ -62,7 +62,6 @@ class SRPAdminController extends Controller
                 foreach($payouts as $p) {
                     if($r['ship_type'] == $p->code) {
                         $temp['actual_srp'] = $r['loss_value'] * ($p->payout / 100.00 );
-                        $temp['actual_srp'] = $temp['actual_srp'];
                     }
                 }
                 
