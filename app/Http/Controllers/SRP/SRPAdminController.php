@@ -81,6 +81,8 @@ class SRPAdminController extends Controller
             'paid_value' => 'required',
         ]);
 
+        dd($request->paid_value);
+
         if($request->notes != null) {
             $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
