@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Auth;
+use Khill\Lavacharts\Lavacharts;
 
 //User Libraries
+use App\Library\SRP\SRPHelper;
 
 //Models
 use App\Models\SRP\SRPShip;
@@ -108,6 +110,48 @@ class SRPAdminController extends Controller
     }
 
     public function displayStatistics() {
-        return view('srp.admin.statistics');
+        $months = 3;
+        $approved = array();
+        $denied = array();
+        $fcLosses = array();
+        $lava = new Lavacharts;
+
+        //We need a function from this library rather than recreating a new library
+        $srpHelper = new SRPHelper();
+
+        //Get the dates for the tab panes
+        $dates = $srpHelper->GetTimeFrameInMonths($months);
+
+        //Get the approved requests total by month of the last 3 months
+        foreach($dates as $date) {
+            $approved[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'value' => number_format($srpHelper->GetApprovedPaidValue($date['start'], $date['end']), 2, ".", ","),
+            ];
+        }
+
+        //Get the denied requests total by month of the last 3 months
+        foreach($dates as $date) {
+            $denied[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'value' => number_format($srpHelper->GetDeniedValue($date['start'], $date['end']), 2, ".", ","),
+            ];
+        }
+
+        //Create chart for fc losses
+        $losses = $lava->DataTable();
+        $losses->addDateColumn('FC');
+        $losses->addNumberColumn('ISK');
+        $date = $srpHelper->GetTimeFrameInMonths(1);
+        $fcLosses = $srpHelper->GetLossesByFC($date['start'], $date['end']);
+        foreach($fcLosses as $key => $value) {
+            $losses->addRow([$fcLoss[$key], $value]);
+        }
+
+        $lava->BarChart('ISK', $losses);
+
+        return view('srp.admin.statistics')->with('approved', $approved)
+                                           ->with('denied', $denied)
+                                           ->with('losses', $losses);
     }
 }
