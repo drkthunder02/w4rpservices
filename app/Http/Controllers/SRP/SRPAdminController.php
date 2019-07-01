@@ -81,12 +81,12 @@ class SRPAdminController extends Controller
             'paid_value' => 'required',
         ]);
 
-        dd($request->paid_value);
+        $paidValue = str_replace(',', '', $request->paid_value);
 
         if($request->notes != null) {
             $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
-                'paid_value' => $request->paid_value,
+                'paid_value' => $paidValue,
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
                 'notes' => $request->notes,
@@ -94,7 +94,7 @@ class SRPAdminController extends Controller
         } else {
             $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
-                'paid_value' => $request->paid_value,
+                'paid_value' => $paidValue,
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
             ]);
