@@ -18,7 +18,7 @@ class CreateSrpTables extends Migration
                 $table->increments('id');
                 $table->string('character_id')->default('N/A');
                 $table->string('character_name');
-                $table->string('fleet_commander_id');
+                $table->string('fleet_commander_id')->default('0');
                 $table->string('fleet_commander_name');
                 $table->string('zkillboard');
                 $table->string('ship_type');
