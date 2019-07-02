@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Auth;
 use Khill\Lavacharts\Lavacharts;
+use App\Charts\AD;
 
 //User Libraries
 use App\Library\SRP\SRPHelper;
@@ -115,6 +116,30 @@ class SRPAdminController extends Controller
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
 
-        return view('srp.admin.statistics');
+        
+        $lava = new Lavacharts; // See note below for Laravel
+
+        $reasons = $lava->DataTable();
+
+        $reasons->addStringColumn('Reasons')
+                ->addNumberColumn('Percent')
+                ->addRow(['Check Reviews', 5])
+                ->addRow(['Watch Trailers', 2])
+                ->addRow(['See Actors Other Work', 4])
+                ->addRow(['Settle Argument', 89]);
+
+        $lava->PieChart('IMDB', $reasons, [
+            'title'  => 'Reasons I visit IMDB',
+            'is3D'   => true,
+            'slices' => [
+                ['offset' => 0.2],
+                ['offset' => 0.25],
+                ['offset' => 0.3]
+            ]
+        ]);
+
+
+        return view('srp.admin.statistics')->with('reasons', $reasons)
+                                           ->with('lava', $lava);
     }
 }
