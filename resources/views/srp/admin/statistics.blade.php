@@ -1,7 +1,8 @@
 @extends('srp.layouts.b4')
 @section('content')
 
-<div id="chart-div"></div>
-{!! $lava->render('PieChart', 'SRP Stats', 'chart-div') !!}
-
+<div class="container">
+    <div id="chart-div"></div>
+    {!! $lava->render('PieChart', 'SRP Stats', 'chart-div') !!}
+</div>
 @endsection
