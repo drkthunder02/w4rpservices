@@ -144,9 +144,9 @@ class SRPAdminController extends Controller
         $losses->addNumberColumn('ISK');
         $date = $srpHelper->GetTimeFrameInMonths(1);
         $fcLosses = $srpHelper->GetLossesByFC($date['start'], $date['end']);
-        dd($fcLosses);
+        //Create the rows for the table
         foreach($fcLosses as $key => $value) {
-            $losses->addRow([$fcLoss[$key], $value]);
+            $losses->addRow($key, $value);
         }
 
         $lava->BarChart('ISK', $losses);
