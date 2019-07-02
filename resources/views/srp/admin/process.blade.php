@@ -58,7 +58,7 @@
                             {{ Form::radio('approved', 'Denied', false, ['class' => 'form-control']) }}
                         </td>
                         <td>
-                            {{ Form::submit('Pay Out', ['class' => 'btn btn-primary']) }}
+                            {{ Form::submit('Process', ['class' => 'btn btn-primary']) }}
                         </td>
                         </tr>
                         {!! Form::close() !!}
