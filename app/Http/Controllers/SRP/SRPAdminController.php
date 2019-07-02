@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use DB;
 use Auth;
 use Khill\Lavacharts\Lavacharts;
-use App\Charts\AD;
 
 //User Libraries
 use App\Library\SRP\SRPHelper;
@@ -116,7 +115,7 @@ class SRPAdminController extends Controller
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
 
-        
+        //Pie Chart for approval, denied, and under review
         $lava = new Lavacharts; // See note below for Laravel
 
         $reasons = $lava->DataTable();
@@ -132,7 +131,30 @@ class SRPAdminController extends Controller
             'is3D'   => true,
         ]);
 
+        $guage = new Lavacharts; // See note below for Laravel
 
-        return view('srp.admin.statistics')->with('lava', $lava);
+        $adur = $lava->DataTable();
+
+        $adur->addStringColumn('Type')
+            ->addNumberColumn('Value')
+            ->addRow(['Under Review', rand(0,100)]);
+
+        $guage->GaugeChart('SRP', $adur, [
+            'width'      => 400,
+            'greenFrom'  => 0,
+            'greenTo'    => 69,
+            'yellowFrom' => 70,
+            'yellowTo'   => 89,
+            'redFrom'    => 90,
+            'redTo'      => 100,
+            'majorTicks' => [
+                'Safe',
+                'Critical'
+            ]
+        ]);
+
+
+        return view('srp.admin.statistics')->with('lava', $lava)
+                                            ->with('guage', $guage);
     }
 }
