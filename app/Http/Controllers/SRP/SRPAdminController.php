@@ -120,10 +120,10 @@ class SRPAdminController extends Controller
 
         //Get the dates for the tab panes
         $dates = $srpHelper->GetTimeFrame($months);
-        dd($dates);
-        $approved = $srpHelper->GetApprovedValue($dates['start'], $dates['end']);
-        $denied = $srpHelper->GetDeniedValue($dates['start'], $dates['end']);
         
+        $approved = $srpHelper->GetApprovedValue($dates['start']->toFormattedDateString(), $dates['end']->toFormattedDateString());
+        $denied = $srpHelper->GetDeniedValue($dates['start']->toFormattedDateString(), $dates['end']->toFormattedDateString());
+        dd($denied);
         //Get the approved requests total by month of the last 3 months
         $adLava = new Lavacharts;
 
