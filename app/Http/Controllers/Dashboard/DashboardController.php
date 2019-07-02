@@ -84,16 +84,16 @@ class DashboardController extends Controller
 
         $adur->addStringColumn('Type')
             ->addNumberColumn('Number')
-            ->addRow(['Under Review', $openCount]);
+            ->addRow(['SRP', $openCount]);
 
         $lava->GaugeChart('SRP', $adur, [
-            'width' => 300,
+            'width' => 200,
             'max' => 15,
             'greenFrom' => 0,
             'greenTo' => 5,
-            'yellowFrom' => 6,
+            'yellowFrom' => 5,
             'yellowTo' => 10,
-            'redFrom' => 11,
+            'redFrom' => 10,
             'redTo' => 15,
             'majorTicks' => [
                 'Safe',
