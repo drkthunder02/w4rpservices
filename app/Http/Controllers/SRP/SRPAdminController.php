@@ -111,50 +111,10 @@ class SRPAdminController extends Controller
 
     public function displayStatistics() {
         $months = 3;
-        $fcLosses = array();
-        $lava = new Lavacharts;
-        $ad = new Lavacharts;
 
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
 
-        //Get the dates for the tab panes
-        $dates = $srpHelper->GetTimeFrame($months);
-        
-        $approved = $srpHelper->GetApprovedValue($dates['start']->toFormattedDateString(), $dates['end']->toFormattedDateString());
-        $denied = $srpHelper->GetDeniedValue($dates['start']->toFormattedDateString(), $dates['end']->toFormattedDateString());
-        dd($denied);
-        //Get the approved requests total by month of the last 3 months
-        $adLava = new Lavacharts;
-
-        $ad = $adLava->DataTable();
-        $ad->addStringColumn('Value');
-        $ad->addNumberColumn('ISK');
-        $ad->addRow(['Approved', $approved])
-           ->addRow(['Denied', $denied]);
-        $adLava->PieChart('Approved / Denied', $ad, [
-            'title' => 'Approved vs. Denied SRP Values',
-            'is3D' => true,
-            'slices' => [
-                ['offset' => 0.25],
-                ['offset' => 0.30],
-            ]
-        ]);      
-
-        //Create chart for fc losses
-        $losses = $lava->DataTable();
-        $losses->addStringColumn('FC Losses');
-        $losses->addNumberColumn('ISK');
-        $date = $srpHelper->GetTimeFrameInMonths(1);
-        $fcLosses = $srpHelper->GetLossesByFC($date['start'], $date['end']);
-        //Create the rows for the table
-        foreach($fcLosses as $key => $value) {
-            $losses->addRow([$key, $value]);
-        }
-
-        $lava->BarChart('ISK', $losses);
-
-        return view('srp.admin.statistics')->with('lava', $lava)
-                                           ->with('adLava', $adLava);
+        return view('srp.admin.statistics');
     }
 }

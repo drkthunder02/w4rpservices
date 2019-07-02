@@ -155,7 +155,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
-        //Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
 
 
         /*
