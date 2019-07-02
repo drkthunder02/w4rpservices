@@ -19,7 +19,7 @@ class SRPHelper {
     }
 
     public function GetLossesByFC($start, $end) {
-        $losses = 0.00;
+        $losses = array();
         $fcs = null;
 
         $fcs = SRPShip::whereBetween('created_at', [$start, $end])
@@ -30,7 +30,7 @@ class SRPHelper {
             $tempLosses = SRPShip::where(['fleet_commander_name' => $fc])
                                  ->whereBetween('created_at', [$start, $end])
                                  ->sum('loss_value');
-            dd($tempLosses);
+            
             $losses[$fc] = $tempLosses;
         }
 
