@@ -123,23 +123,16 @@ class SRPAdminController extends Controller
 
         $reasons->addStringColumn('Reasons')
                 ->addNumberColumn('Percent')
-                ->addRow(['Check Reviews', 5])
-                ->addRow(['Watch Trailers', 2])
-                ->addRow(['See Actors Other Work', 4])
-                ->addRow(['Settle Argument', 89]);
+                ->addRow(['Approved', 50])
+                ->addRow(['Denied', 48])
+                ->addRow(['Under Review', 2]);
 
-        $lava->PieChart('IMDB', $reasons, [
-            'title'  => 'Reasons I visit IMDB',
+        $lava->PieChart('SRP Stats', $reasons, [
+            'title'  => 'SRP Stats',
             'is3D'   => true,
-            'slices' => [
-                ['offset' => 0.2],
-                ['offset' => 0.25],
-                ['offset' => 0.3]
-            ]
         ]);
 
 
-        return view('srp.admin.statistics')->with('reasons', $reasons)
-                                           ->with('lava', $lava);
+        return view('srp.admin.statistics')->with('lava', $lava);
     }
 }
