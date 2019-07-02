@@ -88,6 +88,7 @@ class DashboardController extends Controller
 
         $lava->GaugeChart('SRP', $adur, [
             'width' => 300,
+            'max' => 15,
             'greenFrom' => 0,
             'greenTo' => 5,
             'yellowFrom' => 6,

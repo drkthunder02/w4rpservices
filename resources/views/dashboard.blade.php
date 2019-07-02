@@ -25,10 +25,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
+                    <div class="col">
                     Open SRP Requests<br>
                     # Open: {{ $openCount }}<br>
+                    </div>
+                    <div class="col">
                     <div id="under-review-div"></div>
                     {!! $lava->render('GaugeChart', 'SRP', 'under-review-div') !!}
+                    </div>
                 </div>
                 <div class="card-body">
                     @if($openCount > 0)
