@@ -28,7 +28,7 @@
                     Open SRP Requests<br>
                     # Open: {{ $openCount }}<br>
                     <div id="under-review-div"></div>
-                    {!! $lava->redner('GaugeChart', 'SRP', 'under-review-div') !!}
+                    {!! $lava->render('GaugeChart', 'SRP', 'under-review-div') !!}
                 </div>
                 <div class="card-body">
                     @if($openCount > 0)
