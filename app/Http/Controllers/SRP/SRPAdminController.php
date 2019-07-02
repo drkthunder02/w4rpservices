@@ -140,10 +140,10 @@ class SRPAdminController extends Controller
         $lava->GaugeChart('SRP', $adur, [
             'width'      => 400,
             'greenFrom'  => 0,
-            'greenTo'    => 69,
-            'yellowFrom' => 70,
-            'yellowTo'   => 89,
-            'redFrom'    => 90,
+            'greenTo'    => 10,
+            'yellowFrom' => 11,
+            'yellowTo'   => 40,
+            'redFrom'    => 41,
             'redTo'      => 100,
             'majorTicks' => [
                 'Safe',
@@ -151,6 +151,17 @@ class SRPAdminController extends Controller
             ]
         ]);
 
+        $fcs = $lava->DataTable();
+
+        $fcs->addStringColumn('Fleet Commander Losses')
+            ->addNumberColumn('ISK')
+            ->addRow(['Lowjack Tzetsu',  rand(1000,5000)])
+            ->addRow(['Rock Onzo',  rand(1000,5000)])
+            ->addRow(['Jara Keam',  rand(1000,5000)])
+            ->addRow(['3xAWarpNinja', rand(1000,5000)])
+            ->addRow(['Shattered Armer',   rand(1000,5000)]);
+
+        $lava->BarChart('FCs', $fcs);
 
         return view('srp.admin.statistics')->with('lava', $lava);
     }
