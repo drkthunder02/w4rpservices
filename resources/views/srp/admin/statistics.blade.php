@@ -8,6 +8,6 @@
 
 <div class="container">
     <div id="under-review-div"></div>
-    {!! $guage->render('GaugeChart', 'SRP', 'under-review-div') !!}
+    {!! $lava->render('GaugeChart', 'SRP', 'under-review-div') !!}
 </div>
 @endsection

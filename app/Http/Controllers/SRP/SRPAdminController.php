@@ -131,15 +131,13 @@ class SRPAdminController extends Controller
             'is3D'   => true,
         ]);
 
-        $guage = new Lavacharts; // See note below for Laravel
-
         $adur = $lava->DataTable();
 
         $adur->addStringColumn('Type')
             ->addNumberColumn('Value')
             ->addRow(['Under Review', rand(0,100)]);
 
-        $guage->GaugeChart('SRP', $adur, [
+        $lava->GaugeChart('SRP', $adur, [
             'width'      => 400,
             'greenFrom'  => 0,
             'greenTo'    => 69,
@@ -154,7 +152,6 @@ class SRPAdminController extends Controller
         ]);
 
 
-        return view('srp.admin.statistics')->with('lava', $lava)
-                                            ->with('guage', $guage);
+        return view('srp.admin.statistics')->with('lava', $lava);
     }
 }
