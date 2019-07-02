@@ -123,7 +123,7 @@ class SRPAdminController extends Controller
 
         $approved = $srpHelper->GetApprovedValue($dates['start'], $dates['end']);
         $denied = $srpHelper->GetDeniedValue($dates['start'], $dates['end']);
-
+        dd($approved);
         //Get the approved requests total by month of the last 3 months
         $adLava = new Lavacharts;
 
