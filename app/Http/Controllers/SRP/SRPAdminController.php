@@ -111,32 +111,35 @@ class SRPAdminController extends Controller
 
     public function displayStatistics() {
         $months = 3;
-        $approved = array();
-        $denied = array();
         $fcLosses = array();
         $lava = new Lavacharts;
+        $ad = new Lavacharts;
 
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
 
         //Get the dates for the tab panes
-        $dates = $srpHelper->GetTimeFrameInMonths($months);
+        $dates = $srpHelper->GetTimeFrame($months);
+
+        $approved = $srpHelper->GetApprovedValue($dates['start'], $dates['end']);
+        $denied = $srpHelper->GetDeniedValue($dates['start'], $dates['end']);
 
         //Get the approved requests total by month of the last 3 months
-        foreach($dates as $date) {
-            $approved[] = [
-                'date' => $date['start']->toFormattedDateString(),
-                'value' => number_format($srpHelper->GetApprovedPaidValue($date['start'], $date['end']), 2, ".", ","),
-            ];
-        }
+        $adLava = new Lavacharts;
 
-        //Get the denied requests total by month of the last 3 months
-        foreach($dates as $date) {
-            $denied[] = [
-                'date' => $date['start']->toFormattedDateString(),
-                'value' => number_format($srpHelper->GetDeniedValue($date['start'], $date['end']), 2, ".", ","),
-            ];
-        }
+        $ad = $adLava->DataTable();
+        $ad->addStringColumn('Value');
+        $ad->addNumberColumn('ISK');
+        $ad->addRow(['Approved', $approved])
+           ->addRow(['Denied', $denied]);
+        $adLava->PieChart('Approved / Denied', $ad, [
+            'title' => 'Approved vs. Denied SRP Values',
+            'is3D' => true,
+            'slices' => [
+                ['offset' => 0.25],
+                ['offset' => 0.30],
+            ]
+        ]);      
 
         //Create chart for fc losses
         $losses = $lava->DataTable();
@@ -151,9 +154,7 @@ class SRPAdminController extends Controller
 
         $lava->BarChart('ISK', $losses);
 
-        return view('srp.admin.statistics')->with('approved', $approved)
-                                           ->with('denied', $denied)
-                                           ->with('losses', $losses)
-                                           ->with('lava', $lava);
+        return view('srp.admin.statistics')->with('lava', $lava)
+                                           ->with('adLava', $adLava);
     }
 }

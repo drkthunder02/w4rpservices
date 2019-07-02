@@ -1,8 +1,10 @@
 @extends('layouts.b4')
 @section('content')
 
-@barchart('ISK, 'fc_loss_div')
-<div id="poll_div"></div>
-{!! $lava->render('BarChart', 'ISK', 'poll_div') !!}
+<div id="approved_denied"></div>
+{!! Lava::render('PieChart', 'adLava', 'approved_denied') !!}
+
+<div id="FC_Losses"></div>
+{!! $lava->render('BarChart', 'ISK', 'FC_Losses') !!}
 
 @endsection

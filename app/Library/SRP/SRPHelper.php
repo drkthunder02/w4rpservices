@@ -47,7 +47,7 @@ class SRPHelper {
         return $requests;
     }
 
-    public function GetApprovedPaidValue($start, $end) {
+    public function GetApprovedValue($start, $end) {
         $requests = 0.00;
 
         $requests = SRPShip::where(['approved' => 'Approved'])
@@ -85,6 +85,24 @@ class SRPHelper {
                             -sum($type);
 
         return $requests;
+    }
+
+    public function GetTimeFrame($months) {
+        $start = Carbon::now()->startOfMonth();
+        $start->hour = 23;
+        $start->minute = 59;
+        $start->second = 59;
+        $end = Carbon::now()->subMonths($months);
+        $end->hour = 23;
+        $end->minute = 59;
+        $end->second = 59;
+
+        $date = [
+            'start' => $start,
+            'end' => $end,
+        ];
+
+        return $date;
     }
 
     /**
