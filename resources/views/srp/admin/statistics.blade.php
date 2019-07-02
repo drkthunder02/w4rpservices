@@ -3,6 +3,6 @@
 
 @barchart('FC Losses', 'fc_loss_div')
 <div id="poll_div"></div>
-{{ Lava::render('BarChart', 'FC Losses', 'poll_div') }}
+{{ $lava->render('BarChart', 'FC Losses', 'poll_div') }}
 
 @endsection

@@ -153,6 +153,7 @@ class SRPAdminController extends Controller
 
         return view('srp.admin.statistics')->with('approved', $approved)
                                            ->with('denied', $denied)
-                                           ->with('losses', $losses);
+                                           ->with('losses', $losses)
+                                           ->with('lava', $lava);
     }
 }
