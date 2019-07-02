@@ -144,6 +144,7 @@ class SRPAdminController extends Controller
         $losses->addNumberColumn('ISK');
         $date = $srpHelper->GetTimeFrameInMonths(1);
         $fcLosses = $srpHelper->GetLossesByFC($date['start'], $date['end']);
+        dd($fcLosses);
         foreach($fcLosses as $key => $value) {
             $losses->addRow([$fcLoss[$key], $value]);
         }
