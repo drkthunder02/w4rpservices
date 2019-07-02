@@ -140,7 +140,7 @@ class SRPAdminController extends Controller
 
         //Create chart for fc losses
         $losses = $lava->DataTable();
-        $losses->addDateColumn('FC');
+        $losses->addStringColumn('FC');
         $losses->addNumberColumn('ISK');
         $date = $srpHelper->GetTimeFrameInMonths(1);
         $fcLosses = $srpHelper->GetLossesByFC($date['start'], $date['end']);
