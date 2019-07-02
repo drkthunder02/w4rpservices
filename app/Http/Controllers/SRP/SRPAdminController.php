@@ -123,9 +123,9 @@ class SRPAdminController extends Controller
 
         $reasons->addStringColumn('ISK Value')
                 ->addNumberColumn('ISK')
-                ->addRow(['Approved', 50])
-                ->addRow(['Denied', 48])
-                ->addRow(['Under Review', 2]);
+                ->addRow(['Approved', 50000000])
+                ->addRow(['Denied', 48000000])
+                ->addRow(['Under Review', 2000000]);
 
         $lava->PieChart('SRP Stats', $reasons, [
             'title'  => 'SRP Stats',
