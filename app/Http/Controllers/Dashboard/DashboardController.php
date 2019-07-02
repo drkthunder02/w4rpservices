@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Khill\Lavacharts\Lavacharts;
 
 //Models
 use App\Models\Esi\EsiScope;
@@ -61,7 +62,7 @@ class DashboardController extends Controller
             $approved = SRPShip::where([
                 'character_id' => auth()->user()->character_id,
                 'approved' => 'Approved',
-            ])->get();
+            ])->take(10)->get();
         }
 
         //See if we can get all of the closed and denied SRP requests
@@ -73,10 +74,40 @@ class DashboardController extends Controller
             $denied = SRPShip::where([
                 'character_id' => auth()->user()->character_id,
                 'approved' => 'Denied',
-            ])->get();
+            ])->take(10)->get();
         }
 
-        return view('dashboard');
+        //Create a chart of number of approved, denied, and open requests via a fuel gauge chart
+        $lava = new Lavacharts;
+
+        $adur = $lava->DataTable();
+
+        $adur->addStringColumn('Type')
+            ->addNumberColumn('Number')
+            ->addRow(['Under Review', $openCount]);
+
+        $lava->GaugeChart('SRP', $adur, [
+            'width' => 300,
+            'greenFrom' => 0,
+            'greenTo' => 5,
+            'yellowFrom' => 6,
+            'yellowTo' => 10,
+            'redFrom' => 11,
+            'redTo' => 15,
+            'majorTicks' => [
+                'Safe',
+                'Warning',
+                'Critical',
+            ],
+        ]);
+
+        return view('dashboard')->with('openCount', $openCount)
+                                ->with('approvedCount', $approvedCount)
+                                ->with('deniedCount', $deniedCount)
+                                ->with('open', $open)
+                                ->with('approved', $approved)
+                                ->with('denied', $denied)
+                                ->with('lava', $lava);
     }
 
     /**
