@@ -121,8 +121,8 @@ class SRPAdminController extends Controller
 
         $reasons = $lava->DataTable();
 
-        $reasons->addStringColumn('Reasons')
-                ->addNumberColumn('Percent')
+        $reasons->addStringColumn('ISK Value')
+                ->addNumberColumn('ISK')
                 ->addRow(['Approved', 50])
                 ->addRow(['Denied', 48])
                 ->addRow(['Under Review', 2]);
