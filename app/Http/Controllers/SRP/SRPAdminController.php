@@ -158,7 +158,7 @@ class SRPAdminController extends Controller
                 ->addRow(['Denied', $pieDenied])
                 ->addRow(['Under Review', $pieOpen]);
 
-        $lava->PieChart('SRP Stats', $reasons, [
+        $lava->PieChart('SRP Stats', $srp, [
             'title'  => 'SRP Stats',
             'is3D'   => true,
         ]);
