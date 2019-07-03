@@ -127,7 +127,9 @@ class SRPAdminController extends Controller
         $pieDenied = SRPShip::where(['approved' => 'Denied'])
                             ->whereBetween('created_at', [$now, $previous])
                             ->count();
-        
+        dd($pieOpen);
+        dd($pieApproved);
+        dd($pieDenied);
         //Get the amount of open orders
         //Just copy the data from the previous data pull
         $gaugeReview = $pieOpen;
