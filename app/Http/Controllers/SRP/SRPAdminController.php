@@ -109,20 +109,51 @@ class SRPAdminController extends Controller
 
     public function displayStatistics() {
         $months = 3;
+        $barChartData = array();
 
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
 
+        //Get the number of approved, denied, and under review payouts currently from the database
+        $pieOpen = SRPShip::where(['approved' => 'Under Review'])
+                            ->whereBetween('created_at', [Carbon::now(), Carbon::now()->subMonths(3)])
+                            ->count();
+        $pieApproved = SRPShip::where(['approved' => 'Approved'])
+                            ->whereBetween('created_at', [Carbon::now(), Carbon::now()->subMonths(3)])
+                            ->count();
+        $pieDenied = SRPShip::where(['approved' => 'Denied'])
+                            ->whereBetween('created_at', [Carbon::now(), Carbon::now()->subMonths(3)])
+                            ->count();
+        
+        //Get the amount of open orders
+        //Just copy the data from the previous data pull
+        $gaugeReview = $pieOpen;
+
+        //Get the losses by Fleet Commander Name, and populate variables for the table
+        $fcNames = SRPShip::whereBetween('created_at', [Carbon::now(), Carbon::now()=>subMonths(3)])
+                        ->pluck('fleet_commander_name');
+        foreach($fcNames as $name) {
+            $total = SRPShip::where(['fleet_commander_name' => $name])
+                            ->whereBetween('created_at', [Carbon::now(), Carbon::now()->subMonths(3)])
+                            ->sum('loss_value');
+            $temp = [
+                'fc' => $name,
+                'total' => $total,
+            ];
+
+            array_push($barChartData, $temp);
+        }
+
         //Pie Chart for approval, denied, and under review
         $lava = new Lavacharts; // See note below for Laravel
 
-        $reasons = $lava->DataTable();
+        $srp = $lava->DataTable();
 
-        $reasons->addStringColumn('ISK Value')
+        $srp->addStringColumn('ISK Value')
                 ->addNumberColumn('ISK')
-                ->addRow(['Approved', rand(0,100000000)])
-                ->addRow(['Denied', rand(0,100000000)])
-                ->addRow(['Under Review', rand(0,100000000)]);
+                ->addRow(['Approved', $pieApproved])
+                ->addRow(['Denied', $pieDenied])
+                ->addRow(['Under Review', $pieOpen]);
 
         $lava->PieChart('SRP Stats', $reasons, [
             'title'  => 'SRP Stats',
@@ -133,7 +164,7 @@ class SRPAdminController extends Controller
 
         $adur->addStringColumn('Type')
             ->addNumberColumn('Value')
-            ->addRow(['Under Review', rand(0,100)]);
+            ->addRow(['Under Review', $gaugeReview]);
 
         $lava->GaugeChart('SRP', $adur, [
             'width'      => 400,
@@ -152,12 +183,10 @@ class SRPAdminController extends Controller
         $fcs = $lava->DataTable();
 
         $fcs->addStringColumn('Fleet Commander Losses')
-            ->addNumberColumn('ISK')
-            ->addRow(['Lowjack Tzetsu',  rand(1000,5000)])
-            ->addRow(['Rock Onzo',  rand(1000,5000)])
-            ->addRow(['Jara Keam',  rand(1000,5000)])
-            ->addRow(['3xAWarpNinja', rand(1000,5000)])
-            ->addRow(['Shattered Armer',   rand(1000,5000)]);
+            ->addNumberColumn('ISK');
+        foreach($barChartData as $data) {
+            $fcs->addRow([$data['fc'], $data['total']]);
+        }
 
         $lava->BarChart('FCs', $fcs);
 
