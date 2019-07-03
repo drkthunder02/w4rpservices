@@ -14,4 +14,14 @@ class SrpPayout extends Model
 
     //Timestamps
     public $timestamps = false;
+
+    //Fillable
+    protected $fillable = [
+        'code',
+        'payout',
+    ];
+
+    public function shipType() {
+        return $this->belongsTo(SrpShipType::class);
+    }
 }

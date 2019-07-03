@@ -75,8 +75,6 @@ class SRPAdminController extends Controller
     }
 
     public function processSRPRequest(Request $request) {
-        $this->middleware('permission:srp.admin');
-
         $this->validate($request, [
             'id' => 'required',
             'approved' => 'required',
@@ -164,5 +162,84 @@ class SRPAdminController extends Controller
         $lava->BarChart('FCs', $fcs);
 
         return view('srp.admin.statistics')->with('lava', $lava);
+    }
+
+    public function displayCostCodes() {
+        $costcodes = array();
+        $count = 0;
+        $shipType = SrpShipType::all();
+        $srpPayout = SrpPayout::all();
+       
+        foreach($shipType as $ship) {
+            //Don't process if the code is None
+            if($ship->code != 'None') {
+                $tempCode = $ship->code;
+                $tempDescription = $ship->description;
+                $temp = SrpPayout::where(['code' => $ship->code])->get();
+                $tempPayout = $temp->payout;
+
+                $block = [
+                    'code' => $tempCode,
+                    'description' => $tempDescription,
+                    'payout' => $tempPayout,
+                ];
+
+                array_push($costcodes, $block);
+            }            
+        }
+
+        return view('srp.admin.costcodes.display')->with($costcodes);
+    }
+
+    public function addCostCode(Request $request) {
+        $this->validate($request, [
+            'code' => 'required',
+            'description' => 'required',
+            'payout' => 'required',
+        ]);
+
+        $code = $request->code;
+        $description = $request->description;
+        $payout = $request->payout;
+
+        $payoutCount = SrpPayout::where(['code' => $code])->count();
+        $shipTypeCount = SrpShipType::where(['code' => $code])->count();
+
+        //If we don't find the cost code, let's add it.  otherwise send an error.
+        if($payoutCount == 0 && $shipTypeCount == 0) {
+            $payoutTable = new SrpPayout;
+            $payoutTable->code = $code;
+            $payoutTable->payout = $payout;
+            $payoutTable->save();
+
+            $shipType = new SrpShipType;
+            $shipType->code = $code;
+            $shipType->description = $description;
+            $shipType->save();
+
+            redirect('/srp/admin/display')->with('success', 'Cost code added.');
+        } else {
+            redirect('/srp/admin/display')->with('error', 'Cost code already exists in the database.');
+        }
+    }
+
+    public function modifyCostCodes(Request $request) {
+        $this->validate($request, [
+            'code' => 'required',
+            'description' => 'required',
+            'payout' => 'required',
+        ]);
+
+        //Update the SrpShipType
+        SrpShipType::where(['code' => $request->code])->update([
+            'description' => $request->description,
+        ]);
+
+        //Update the payout
+        SrpPayout::where(['code' => $request->code])->update([
+            'payout' => $request->payout,
+        ]);
+
+        return redirect('/srp/admin/display')->with('success', 'Payout and Description updated.');
     }
 }

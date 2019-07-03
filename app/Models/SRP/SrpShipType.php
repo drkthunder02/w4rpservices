@@ -14,4 +14,14 @@ class SrpShipType extends Model
 
     //Timestamps
     public $timestamps = false;
+
+    //Fillable
+    protected $fillable = [
+        'code',
+        'description',
+    ];
+
+    public function costCode() {
+        return $this->hasOne('App\Models\SRP\SrpPayout', 'code', 'code');
+    }
 }
