@@ -112,17 +112,20 @@ class SRPAdminController extends Controller
         $months = 3;
         $barChartData = array();
         $start = Carbon::now()->toDateTimeString();
-        $end = Carbon::now()->subMonths(3)->toDateTimeString();
+        $end = Carbon::now()->subMonths(1)->toDateTimeString();
 
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
 
         //Get the number of approved, denied, and under review payouts currently from the database
         $pieOpen = SRPShip::where(['approved' => 'Under Review'])
+                            ->whereBetween('created_at', [$start, $end])
                             ->count();
         $pieApproved = SRPShip::where(['approved' => 'Approved'])
+                            ->whereBetween('created_at', [$start, $end])
                             ->count();
         $pieDenied = SRPShip::where(['approved' => 'Denied'])
+                            ->whereBetween('created_at', [$start, $end])
                             ->count();
         
         //Get the amount of open orders
