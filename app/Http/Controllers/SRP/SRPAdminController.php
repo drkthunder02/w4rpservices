@@ -119,13 +119,13 @@ class SRPAdminController extends Controller
 
         //Get the number of approved, denied, and under review payouts currently from the database
         $pieOpen = SRPShip::where(['approved' => 'Under Review'])
-                            ->whereBetween('created_at', [$start, $end])
+                            ->where('created_at', '>=', $end)
                             ->count();
         $pieApproved = SRPShip::where(['approved' => 'Approved'])
-                            ->whereBetween('created_at', [$start, $end])
+                            ->where('created_at', '>=', $end)
                             ->count();
         $pieDenied = SRPShip::where(['approved' => 'Denied'])
-                            ->whereBetween('created_at', [$start, $end])
+                            -where('created_at', '>=', $end)
                             ->count();
         
         //Get the amount of open orders
