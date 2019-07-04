@@ -118,15 +118,18 @@ class SRPAdminController extends Controller
         $srpHelper = new SRPHelper();
 
         //Get the number of approved, denied, and under review payouts currently from the database
-        $pieOpen = SRPShip::where(['approved' => 'Under Review'])
-                            ->where('created_at', '>=', $end)
-                            ->count();
-        $pieApproved = SRPShip::where(['approved' => 'Approved'])
-                            ->where('created_at', '>=', $end)
-                            ->count();
-        $pieDenied = SRPShip::where(['approved' => 'Denied'])
-                            -where('created_at', '>=', $end)
-                            ->count();
+        $pieOpen = SRPShip::where([
+            'approved' => 'Under Review',
+            ['created_at', '>=', $end],
+            ])->count();
+        $pieApproved = SRPShip::where([
+            'approved' => 'Approved',
+            ['created_at', '>=', $end],
+            ])->count();
+        $pieDenied = SRPShip::where([
+            'approved' => 'Denied',
+            ['created_at', '>=', $end],
+            ])->count();
         
         //Get the amount of open orders
         //Just copy the data from the previous data pull
