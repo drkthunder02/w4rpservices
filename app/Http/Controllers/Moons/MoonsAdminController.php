@@ -26,14 +26,12 @@ class MoonsAdminController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('role:Admin');
     }
 
     /**
      * Function to display the moons to logistics personnel
      */
     public function displayMoonsLogistics() {
-
         $this->middleware('permissions:logistics.manager');
 
         $lookup = new LookupHelper;
@@ -110,6 +108,8 @@ class MoonsAdminController extends Controller
      * Function to display the moons to admins
      */
     public function displayMoonsAdmin() {
+        $this->middleware('role:Admin');
+
         $lookup = new LookupHelper;
         $contact = '';
         $paid = '';
@@ -209,6 +209,8 @@ class MoonsAdminController extends Controller
      * Function to remove a renter from a moon
      */
     public function storeMoonRemoval(Request $request) {
+        $this->middleware('role:Admin');
+
         $this->validate($request, [
             'remove' => 'required',
         ]);
@@ -244,6 +246,8 @@ class MoonsAdminController extends Controller
      * Function displays the ability for admins to update moons with who is renting, and when it ends.
      */
     public function updateMoon() {
+        $this->middleware('role:Admin');
+
         //Declare some variables
         $system = null;
         $planet = null;
@@ -278,6 +282,8 @@ class MoonsAdminController extends Controller
     }
 
     public function storeUpdateMoon(Request $request) {
+        $this->middleware('role:Admin');
+
         //Declare some static variables as needed
         $moonCalc = new MoonCalc;
         $lookup = new LookupHelper;
@@ -429,6 +435,8 @@ class MoonsAdminController extends Controller
     }
 
     public function showJournalEntries() {
+        $this->middleware('role:Admin');
+
         $dateInit = Carbon::now();
         $date = $dateInit->subDays(30);
 
