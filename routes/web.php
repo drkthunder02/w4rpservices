@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
     Route::get('/moons/admin/journal', 'Moons\MoonsAdminController@showJournalEntries');
     Route::post('/moons/admin/display', 'Moons\MoonsAdminController@storeMoonRemoval');
+    Route::get('/moons/logistics/display', 'Moons\MoonsAdminController@displayMoonsLogistics');
 
     /**
      * Wiki Controller display pages

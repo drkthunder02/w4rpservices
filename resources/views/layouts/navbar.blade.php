@@ -18,6 +18,9 @@
                     <a class="dropdown-item" href="/moons/admin/updatemoon">Update Moon</a>
                     <a class="dropdown-item" href="/moons/admin/journal">Journal</a>
                     @endif
+                    @if(auth()->user()->hasPermission('logistics.manager'))
+                    <a class="dropdown-item" href="/moons/logistics/display">Moons for Logistics</a>
+                    @endif
                 </div>
             </li>
             @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Renter'))
