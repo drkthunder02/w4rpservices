@@ -173,15 +173,16 @@ class SRPAdminController extends Controller
         $lava->GaugeChart('SRP', $adur, [
             'width'      => 400,
             'greenFrom'  => 0,
-            'greenTo'    => 10,
-            'yellowFrom' => 11,
+            'greenTo'    => 20,
+            'yellowFrom' => 20,
             'yellowTo'   => 40,
-            'redFrom'    => 41,
+            'redFrom'    => 40,
             'redTo'      => 100,
             'majorTicks' => [
                 'Safe',
-                'Critical'
-            ]
+                'Warning',
+                'Critical',
+            ],
         ]);
 
         $fcs = $lava->DataTable();
@@ -194,9 +195,7 @@ class SRPAdminController extends Controller
 
         $lava->BarChart('FCs', $fcs);
 
-        return view('srp.admin.statistics')->with('lava', $lava)
-                                           ->with('start', $start)
-                                           ->with('end', $end);
+        return view('srp.admin.statistics')->with('lava', $lava);
     }
 
     public function displayCostCodes() {
