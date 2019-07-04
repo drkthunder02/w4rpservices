@@ -111,8 +111,8 @@ class SRPAdminController extends Controller
     public function displayStatistics() {
         $months = 3;
         $barChartData = array();
-        $now = Carbon::now();
-        $previous = Carbon::now()->subMonths(3);
+        $now = Carbon::now()->toFormattedString();
+        $previous = Carbon::now()->subMonths(3)->toFormattedString();
 
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
@@ -122,6 +122,7 @@ class SRPAdminController extends Controller
                             ->whereBetween('created_at', [$now, $previous])
                             ->count();
         $pieApproved = SRPShip::where(['approved' => 'Approved'])
+                            ->whereBetween('created_at', [$now, $previous])
                             ->count();
         $pieDenied = SRPShip::where(['approved' => 'Denied'])
                             ->whereBetween('created_at', [$now, $previous])
