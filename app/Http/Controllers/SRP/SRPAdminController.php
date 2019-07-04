@@ -111,8 +111,8 @@ class SRPAdminController extends Controller
     public function displayStatistics() {
         $months = 3;
         $barChartData = array();
-        $start = Carbon::now()->toFormattedDateString();
-        $end = Carbon::now()->subMonths(3)->toFormattedDateString();
+        $start = Carbon::now()->toDateString();
+        $end = Carbon::now()->subMonths(3)->toDateTimeString();
 
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
