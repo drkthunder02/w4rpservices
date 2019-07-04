@@ -119,17 +119,12 @@ class SRPAdminController extends Controller
 
         //Get the number of approved, denied, and under review payouts currently from the database
         $pieOpen = SRPShip::where(['approved' => 'Under Review'])
-                            ->whereBetween('created_at', [$now, $previous])
                             ->count();
         $pieApproved = SRPShip::where(['approved' => 'Approved'])
-                            ->whereBetween('created_at', [$now, $previous])
                             ->count();
         $pieDenied = SRPShip::where(['approved' => 'Denied'])
-                            ->whereBetween('created_at', [$now, $previous])
                             ->count();
         
-        dd($pieApproved);
-        dd($pieDenied);
         //Get the amount of open orders
         //Just copy the data from the previous data pull
         $gaugeReview = $pieOpen;
@@ -139,7 +134,6 @@ class SRPAdminController extends Controller
                         ->pluck('fleet_commander_name');
         foreach($fcNames as $name) {
             $total = SRPShip::where(['fleet_commander_name' => $name])
-                            ->whereBetween('created_at', [$now, $previous])
                             ->sum('loss_value');
             $temp = [
                 'fc' => $name,
