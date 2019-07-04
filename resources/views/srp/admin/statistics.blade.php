@@ -3,7 +3,7 @@
 
 <div class="container">
     <div id="chart-div"></div>
-    {!! $lava->render('PieChart', 'SRP Stats', 'pop_div') !!}
+    {!! $lava->render('PieChart', 'SRP Stats', 'chart-div') !!}
 </div>
 
 <div class="container">

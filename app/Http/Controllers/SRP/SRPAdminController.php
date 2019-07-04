@@ -188,8 +188,6 @@ class SRPAdminController extends Controller
 
         $lava->BarChart('FCs', $fcs);
 
-        dd($lava);
-
         return view('srp.admin.statistics')->with('lava', $lava)
                                            ->with('start', $start)
                                            ->with('end', $end);
