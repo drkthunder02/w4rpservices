@@ -122,7 +122,6 @@ class SRPAdminController extends Controller
                             ->whereBetween('created_at', [$now, $previous])
                             ->count();
         $pieApproved = SRPShip::where(['approved' => 'Approved'])
-                            ->whereBetween('created_at', [$now, $previous])
                             ->count();
         $pieDenied = SRPShip::where(['approved' => 'Denied'])
                             ->whereBetween('created_at', [$now, $previous])
