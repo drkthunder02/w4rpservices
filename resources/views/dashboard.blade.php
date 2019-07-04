@@ -32,7 +32,7 @@
                         </div>
                         <div class="col">
                             <div id="under-review-div"></div>
-                            {!! Lava::render('GaugeChart', 'SRP', 'under-review-div') !!}
+                            {!! $lava->render('GaugeChart', 'SRP', 'under-review-div') !!}
                         </div>
                     </div>
                 </div>
