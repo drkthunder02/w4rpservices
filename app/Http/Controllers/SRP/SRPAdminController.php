@@ -180,7 +180,6 @@ class SRPAdminController extends Controller
             'redTo'      => 100,
             'majorTicks' => [
                 'Safe',
-                'Warning',
                 'Critical',
             ],
         ]);
