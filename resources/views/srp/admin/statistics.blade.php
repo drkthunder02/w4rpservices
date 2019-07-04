@@ -15,4 +15,9 @@
     <div id="fc-losses-div"></div>
     {!! $lava->render('BarChart', 'FCs', 'fc-losses-div') !!}
 </div>
+
+<div class="container">
+    {{ $start }}<br>
+    {{ $end }}<br>
+</div>
 @endsection

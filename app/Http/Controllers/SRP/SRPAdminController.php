@@ -111,8 +111,8 @@ class SRPAdminController extends Controller
     public function displayStatistics() {
         $months = 3;
         $barChartData = array();
-        $now = Carbon::now()->toDateTimeString();
-        $previous = Carbon::now()->subMonths(3)->toDateTimeString();
+        $start = Carbon::now()->toFormattedDateString();
+        $end = Carbon::now()->subMonths(3)->toFormattedDateString();
 
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
@@ -188,7 +188,9 @@ class SRPAdminController extends Controller
 
         $lava->BarChart('FCs', $fcs);
 
-        return view('srp.admin.statistics')->with('lava', $lava);
+        return view('srp.admin.statistics')->with('lava', $lava)
+                                           ->with('start', $start)
+                                           ->with('end', $end);
     }
 
     public function displayCostCodes() {
