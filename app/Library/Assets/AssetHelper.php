@@ -58,7 +58,7 @@ class AssetHelper {
         try {
             $assets = $esi->page($this->page)
                           ->invoke('get', '/corporations/{corporation_id}/assets', [
-                              'corporation_id' => $this->corId,
+                              'corporation_id' => $this->corpId,
                           ]);
         } catch(RequestFailedException $e) {
             Log::critical("Failed to get page of assets from ESI.");
