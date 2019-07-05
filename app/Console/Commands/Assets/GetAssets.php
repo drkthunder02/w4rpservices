@@ -102,7 +102,7 @@ class GetAssetsCommand extends Command
             $job->charId = $charId;
             $job->corpId = $corpId;
             $job->page = $i;
-            ProcessAssetJob::dispatch($job)->onQueue('default');
+            ProcessAssetsJob::dispatch($job)->onQueue('default');
         }
     }
 }
