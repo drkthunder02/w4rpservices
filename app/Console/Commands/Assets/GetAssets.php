@@ -56,6 +56,8 @@ class GetAssetsCommand extends Command
      */
     public function handle()
     {
+        $assets = null;
+
         //Create the command helper container
         $task = new CommandHelper('GetAssets');
         //Add the entry into the jobs table saying the job is starting
@@ -77,6 +79,11 @@ class GetAssetsCommand extends Command
             return null;
         }
 
+        // Disable all caching by setting the NullCache as the
+        // preferred cache handler. By default, Eseye will use the
+        // FileCache.
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
         
         //Get the refresh token from the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
