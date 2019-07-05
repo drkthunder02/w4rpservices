@@ -119,12 +119,12 @@ class GetAssetsCommand extends Command
         }
         */
         for($i = 1; $i < $pages; $i++) {
-            var_dump($i);
+            $currentPage = $i;
 
             $aHelper = new AssetHelper($charId, $corpId);
 
             //Get a page of assets
-            $assets = $aHelper->GetAssetsByPage($i);
+            $assets = $aHelper->GetAssetsByPage($currentPage);
 
             foreach($assets as $asset) {
                 $aHelper->StoreNewAsset($asset);
