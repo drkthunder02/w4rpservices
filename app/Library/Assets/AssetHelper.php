@@ -36,7 +36,7 @@ class AssetHelper {
     /**
      * Get Assets By Page in order to store in the database
      */
-    public function GetAssetsByPage($page) {
+    public function GetAssetsByPage() {
         // Disable all caching by setting the NullCache as the
         // preferred cache handler. By default, Eseye will use the
         // FileCache.
@@ -54,7 +54,7 @@ class AssetHelper {
         ]);
         //Setup the ESI variable
         $esi = new Eseye($authentication);
-
+        
         try {
             $assets = $esi->page($this->page)
                           ->invoke('get', '/corporations/{corporation_id}/assets', [
