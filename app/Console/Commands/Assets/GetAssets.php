@@ -57,6 +57,7 @@ class GetAssetsCommand extends Command
     public function handle()
     {
         $assets = null;
+        $pages = 0;
 
         //Create the command helper container
         $task = new CommandHelper('GetAssets');
@@ -101,14 +102,14 @@ class GetAssetsCommand extends Command
                           ->invoke('get', '/corporations/{corporation_id}/assets/', [
                               'corporation_id' => $corpId,
                           ]);
-            
-            var_dump($assets->pages);
         } catch (RequestFailedException $e) {
             Log::critical("Failed to get asset list.");
             return null;
         }
 
-        for($i = 1; $i <= $assets->pages; $i++) {
+        $pages = $assets->pages;
+
+        for($i = 1; $i < $pages; $i++) {
             $job = new JobProcessAsset;
             $job->charId = $charId;
             $job->corpId = $corpId;
