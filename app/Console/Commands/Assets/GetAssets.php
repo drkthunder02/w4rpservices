@@ -16,6 +16,7 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Commands\Library\CommandHelper;
+use App\Library\Assets\AssetHelper;
 
 //Models
 use App\Models\Jobs\JobProcessAsset;
