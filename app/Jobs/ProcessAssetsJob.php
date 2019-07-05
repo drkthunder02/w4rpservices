@@ -57,6 +57,7 @@ class ProcessAssetsJob implements ShouldQueue
         'CorpSAG6',
         'CorpSAG7',
         'StructureFuel',
+        'FighterBay',
     ];
 
     /**
