@@ -119,7 +119,7 @@ class GetAssetsCommand extends Command
         }
         */
         for($i = 1; $i < $pages; $i++) {
-            dd($i);
+            var_dump($i);
 
             $aHelper = new AssetHelper($charId, $corpId);
 
