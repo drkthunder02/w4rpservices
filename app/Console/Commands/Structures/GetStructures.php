@@ -85,14 +85,6 @@ class GetStructuresCommand extends Command
             return null;
         }
 
-        // Disable all caching by setting the NullCache as the
-        // preferred cache handler. By default, Eseye will use the
-        // FileCache.
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-
-        //Setup the esi authentication container
-        $config = config('esi');
         //Get the refresh token from the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
         $authentication = new EsiAuthentication([
