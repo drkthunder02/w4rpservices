@@ -19,6 +19,8 @@ use Commands\Library\CommandHelper;
 
 //Models
 use App\Models\Jobs\JobProcessAssets;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
 
 
 class GetAssetsCommand extends Command
