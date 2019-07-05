@@ -97,14 +97,15 @@ class GetAssetsCommand extends Command
         $esi = new Eseye($authentication);
 
         try {
-            $assets = $esi->invoke('get', '/corporations/{corporation_id}/assets/', [
+            $assets = $esi->page(1)
+                          ->invoke('get', '/corporations/{corporation_id}/assets/', [
                               'corporation_id' => $corpId,
                           ]);
+            dd($assets);
         } catch (RequestFailedException $e) {
-            //
+            Log::critical("Failed to get asset list.");
+            return null;
         }
-
-        dd($assets);
 
         for($i = 1; $i <= $assets->pages; $i++) {
             $job = new JobProcessAsset;
