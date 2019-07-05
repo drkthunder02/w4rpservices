@@ -97,6 +97,8 @@ class GetAssetsCommand extends Command
             //
         }
 
+        dd($assets);
+
         for($i = 1; $i <= $assets->pages; $i++) {
             $job = new JobProcessAsset;
             $job->charId = $charId;
