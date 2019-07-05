@@ -97,6 +97,6 @@ class ProcessAssetsJob implements ShouldQueue
         }
 
         //Purge Stale Data
-        $aHelper->PurgeStaleData();
+        //$aHelper->PurgeStaleData();
     }
 }
