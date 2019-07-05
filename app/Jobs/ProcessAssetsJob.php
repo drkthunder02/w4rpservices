@@ -63,7 +63,7 @@ class ProcessAssetsJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(JobProcessAssets $jpa)
+    public function __construct(JobProcessAsset $jpa)
     {
         $this->charId = $jpa->charId;
         $this->corpId = $jpa->corpId;
