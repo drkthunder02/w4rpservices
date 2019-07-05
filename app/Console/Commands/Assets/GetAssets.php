@@ -102,7 +102,7 @@ class GetAssetsCommand extends Command
                               'corporation_id' => $corpId,
                           ]);
             printf('dumping assests variable');
-            dd($assets);
+            var_dump($assets);
         } catch (RequestFailedException $e) {
             Log::critical("Failed to get asset list.");
             return null;
