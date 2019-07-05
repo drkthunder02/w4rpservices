@@ -65,7 +65,7 @@ class GetAssetsCommand extends Command
         $config = config('esi');
 
         //Declare some variables
-        $charId = 93738849;
+        $charId = $config['primary'];
         $corpId = 98287666;
 
         //ESI Scope Check
