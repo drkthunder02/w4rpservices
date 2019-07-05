@@ -18,7 +18,7 @@ use Seat\Eseye\Eseye;
 use Commands\Library\CommandHelper;
 
 //Models
-use App\Models\Jobs\JobProcessAssets;
+use App\Models\Jobs\JobProcessAsset;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 
