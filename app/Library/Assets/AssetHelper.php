@@ -17,7 +17,7 @@ use App\Library\Esi\Esi;
 
 use App\Models\Jobs\JobProcessAsset;
 use App\Models\Jobs\JobStatus;
-use App\Models\Models\Stock;
+use App\Models\Stock\Asset;
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 
