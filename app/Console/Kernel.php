@@ -52,9 +52,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:GetStructures')
                 ->daily()
                 ->withoutOverlapping();
-        $schedule->command('services:GetAsses')
-                ->hourly()
-                ->withoutOverlapping();
         $schedule->command('services:CleanData')
                 ->monthlyOn(1, '18:00');
 
