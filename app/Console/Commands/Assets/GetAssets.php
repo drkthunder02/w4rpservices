@@ -80,7 +80,7 @@ class GetAssetsCommand extends Command
         
         //Get the refresh token from the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
-        dd($token);
+        //Create the authentication container
         $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
