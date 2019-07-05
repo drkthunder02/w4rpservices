@@ -80,7 +80,7 @@ class AssetHelper {
         //If nothing is found 
         if($found == 0) {
             $item = new Asset;
-            if(isset($asset['is_blueprint_copy'])) {
+            if(isset($asset->is_blueprint_copy)) {
                 $item->is_blueprint_copy = $asset->is_blueprint_copy;
             }
             $item->is_singleton = $asset->is_singleton;
