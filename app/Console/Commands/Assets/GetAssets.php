@@ -37,7 +37,7 @@ class GetAssetsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Gets all of the assets of a corporation.';
+    protected $description = 'Gets all of the assets of the holding corporation.';
 
     /**
      * Create a new command instance.
@@ -101,6 +101,7 @@ class GetAssetsCommand extends Command
                           ->invoke('get', '/corporations/{corporation_id}/assets/', [
                               'corporation_id' => $corpId,
                           ]);
+            printf('dumping assests variable');
             dd($assets);
         } catch (RequestFailedException $e) {
             Log::critical("Failed to get asset list.");
