@@ -86,10 +86,10 @@ class ProcessAssetsJob implements ShouldQueue
     public function handle()
     {
         //Declare the asset helper
-        $aHelper = new AssetHelper($this->charId, $this->corpId);
+        $aHelper = new AssetHelper($this->charId, $this->corpId, $this->page);
 
         //Get a page of assets
-        $assets = $aHelper->GetAssetsByPage($this->page);
+        $assets = $aHelper->GetAssetsByPage();
 
         //Cycle through the assets, and attmept to store them.
         foreach($assets as $asset) {
