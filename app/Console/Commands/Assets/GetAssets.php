@@ -119,6 +119,8 @@ class GetAssetsCommand extends Command
         }
         */
         for($i = 1; $i < $pages; $i++) {
+            dd($i);
+
             $aHelper = new AssetHelper($charId, $corpId);
 
             //Get a page of assets
