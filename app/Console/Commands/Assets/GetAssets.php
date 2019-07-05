@@ -101,7 +101,7 @@ class GetAssetsCommand extends Command
                           ->invoke('get', '/corporations/{corporation_id}/assets/', [
                               'corporation_id' => $corpId,
                           ]);
-            printf('dumping assests variable');
+            
             var_dump($assets->pages);
         } catch (RequestFailedException $e) {
             Log::critical("Failed to get asset list.");
@@ -113,7 +113,7 @@ class GetAssetsCommand extends Command
             $job->charId = $charId;
             $job->corpId = $corpId;
             $job->page = $i;
-            ProcessAssetsJob::dispatch($job)->onQueue('default');
+            ProcessAssetsJob::dispatch($job)->onQueue('assets');
         }
     }
 }
