@@ -88,7 +88,7 @@ class ProcessAssetsJob implements ShouldQueue
         $aHelper = new AssetHelper($this->charId, $this->corpId);
 
         //Get a page of assets
-        $assets = $aHelper->GetAssetsByPage($jpba->page);
+        $assets = $aHelper->GetAssetsByPage($this->page);
 
         //Cycle through the assets, and attmept to store them.
         foreach($assets as $asset) {
