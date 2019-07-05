@@ -93,8 +93,12 @@ class ProcessAssetsJob implements ShouldQueue
 
         //Cycle through the assets, and attmept to store them.
         foreach($assets as $asset) {
-            //Attempt to store the asset
-            $aHelper->StoreNewAsset($asset);
+            //If the asset is in one of the locations we want, then store
+            //or update the asset
+            if(in_array($asset->location_flag, $this->location_array)) {
+                //Attempt to store the asset
+                $aHelper->StoreNewAsset($asset);
+            }
         }
 
         //Purge Stale Data

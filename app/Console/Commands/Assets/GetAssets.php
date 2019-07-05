@@ -109,26 +109,13 @@ class GetAssetsCommand extends Command
         }
 
         $pages = $assets->pages;
-        /*
+        
         for($i = 1; $i < $pages; $i++) {
             $job = new JobProcessAsset;
             $job->charId = $charId;
             $job->corpId = $corpId;
             $job->page = $i;
             ProcessAssetsJob::dispatch($job)->onQueue('assets');
-        }
-        */
-        for($i = 1; $i < $pages; $i++) {
-            $currentPage = $i;
-
-            $aHelper = new AssetHelper($charId, $corpId, $currentPage);
-
-            //Get a page of assets
-            $assets = $aHelper->GetAssetsByPage();
-
-            foreach($assets as $asset) {
-                $aHelper->StoreNewAsset($asset);
-            }
         }
     }
 }
