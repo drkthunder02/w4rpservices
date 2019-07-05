@@ -19,7 +19,7 @@ use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
 //App Models
-use App\Models\Jobs\JobProcessAssets;
+use App\Models\Jobs\JobProcessAsset;
 use App\Models\Jobs\JobStatus;
 use App\Models\Stock\Asset;
 
