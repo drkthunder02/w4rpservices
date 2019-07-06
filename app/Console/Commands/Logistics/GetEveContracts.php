@@ -2,12 +2,13 @@
 
 namespace App\Console\Commands;
 
+//Internal Library
 use Illuminate\Console\Command;
 use DB;
 use Log;
 
 //Job
-use App\Jobs\ProcessAssetsJob;
+use App\Jobs\ProcessContractsJob;
 
 //Library
 use App\Library\Esi\Esi;
@@ -16,28 +17,28 @@ use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Commands\Library\CommandHelper;
-use App\Library\Assets\AssetHelper;
+use App\Library\Logistics\ContractsHelper;
 
 //Models
-use App\Models\Jobs\JobProcessAsset;
+use App\Models\Jobs\JobProcessContracts;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 
-class GetAssetsCommand extends Command
+class GetEveContracts extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'services:GetAssets';
+    protected $signature = 'services:GetContracts';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Gets all of the assets of the holding corporation.';
+    protected $description = 'Get contracts from a certain corporation';
 
     /**
      * Create a new command instance.
@@ -56,11 +57,9 @@ class GetAssetsCommand extends Command
      */
     public function handle()
     {
-        $assets = null;
-        $pages = 0;
-
         //Create the command helper container
-        $task = new CommandHelper('GetAssets');
+        $task = new CommandHelper('GetContracts');
+
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
 
@@ -68,15 +67,15 @@ class GetAssetsCommand extends Command
         $config = config('esi');
 
         //Declare some variables
-        $charId = $config['primary'];
-        $corpId = 98287666;
+        $charId;
+        $corpId;
 
-        //ESI Scope Check
+        //Esi Scope Check
         $esiHelper = new Esi();
-        $assetScope = $esiHelper->HaveEsiScope($config['primary'], 'esi-assets.read_corporation_assets.v1');
+        $contractScope = $esiHelper->HaveEsiScope($charId, 'esi-contracts.read_corporation_contracts.v1');
 
-        if($assetScope == false) {
-            Log::critical("Scope check for esi failed.");
+        if($contractScope == false) {
+            Log::critical('Scope check for esi contracts failed.');
             return null;
         }
 
@@ -85,7 +84,7 @@ class GetAssetsCommand extends Command
         // FileCache.
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
-        
+
         //Get the refresh token from the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
         //Create the authentication container
@@ -98,23 +97,26 @@ class GetAssetsCommand extends Command
         $esi = new Eseye($authentication);
 
         try {
-            $assets = $esi->page(1)
-                          ->invoke('get', '/corporations/{corporation_id}/assets/', [
-                              'corporation_id' => $corpId,
-                          ]);
+            $contracts = $esi->page(1)
+                            ->invoke('get', '/corporations/{corporation_id}/contracts/', [
+                                'corporation_id' => $corpId,
+                            ]);
         } catch (RequestFailedException $e) {
-            Log::critical("Failed to get asset list.");
+            Log::critical("Failed to get the contracts list.");
             return null;
         }
 
-        $pages = $assets->pages;
-        
-        for($i = 1; $i < $pages; $i++) {
-            $job = new JobProcessAsset;
+        $pages = $contracts->pages;
+
+        for($i = 1; $i <= $pages; $i++) {
+            $job = new JobProcessEveContracts;
             $job->charId = $charId;
             $job->corpId = $corpId;
             $job->page = $i;
-            ProcessAssetsJob::dispatch($job)->onQueue('assets');
+            ProcessEveContractsJob::dispatch($job)->onQueue('default');
         }
+
+        //Mark the job as finished
+        $task->SetStopStatus();
     }
 }
