@@ -200,6 +200,54 @@ class CreateLogisticsTables extends Migration
             'price_per_m3' => 300.00,
             'max_size' => 300000.00,
         ]);
+
+        DB::table('logistics_routes')->insert([
+            'name' => 'Jita -> U-QVWD',
+            'price_per_m3'=> 950.00,
+            'max_size' => 330000.00,
+        ]);
+
+        DB::table('logistics_routes')->insert([
+            'name' => 'U-QVWD -> Jita',
+            'price_per_m3' => 950.00,
+            'max_size' => 330000.00,
+        ]);
+
+        DB::table('logistics_routes')->insert([
+            'name' => 'Jita -> J-ODE7',
+            'price_per_m3' => 1000.00,
+            'max_size' => 330000.00,
+        ]);
+
+        DB::table('logistics_routes')->insert([
+            'name' => 'J-ODE7-> Jita',
+            'price_per_m3' => 1000.00,
+            'max_size' => 330000.00,
+        ]);
+
+        DB::table('logistics_routes')->insert([
+            'name' => 'Jita -> B9E-H6',
+            'price_per_m3' => 1000.00,
+            'max_size'=> 330000.00,
+        ]);
+
+        DB::table('logistics_routes')->insert([
+            'name' => 'B9E-H6 -> Jita',
+            'price_per_m3' => 1000.00,
+            'max_size' => 330000.00,
+        ]);
+
+        DB::table('logistics_routes')->insert([
+            'name' => 'Jita -> UALX-3',
+            'price_per_m3' => 1000.00,
+            'max_size' => 330000.00,
+        ]);
+
+        DB::table('logistics_routes')->insert([
+            'name' => 'UALX-3 -> Jita',
+            'price_per_m3' => 1000.00,
+            'max_size' => 330000.00,
+        ]);
     }
 
     /**
