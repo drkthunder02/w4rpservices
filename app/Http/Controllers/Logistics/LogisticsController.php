@@ -40,27 +40,12 @@ class LogisticsController extends Controller
             'status' => 'in_progress',
         ])->get();
 
-        $cancelledCount = EveContract::where(['status' => 'cancelled'])->count();
-        $cancelled = EveContract::where([
-            'status' => 'cancelled',
-        ])->get();
-
-        $failedCount = EveContract::where(['status' => 'failed'])->count();
-        $failed = EveContract::where([
-            'status' => 'failed',
-        ])->get();
-
-        $deletedCount = EveContract::where(['status' => 'deleted'])->count();
-        $deleted = EveContract::where([
-            'status' => 'deleted',
-        ])->get();
-
         $finishedCount = EveContract::where(['status' => 'finished'])->count();
         $finished = EveContract::where([
             'status' => 'finished',
         ])->get();
 
-        $totalCount = $openCount + $inProgressCount + $cancelledCoutn + $failedCount + $deletedCount + $finishedCount;
+        $totalCount = $openCount + $inProgressCount + $finishedCount;
 
         //Fuel Gauge Chart Declarations
         $lava = new Lavacharts;
@@ -88,15 +73,9 @@ class LogisticsController extends Controller
 
         return view('logistics.display.contracts')->with('open', $open)
                                                   ->with('inProgress', $inProgress)
-                                                  ->with('cancelled', $cancelled)
-                                                  ->with('failed', $failed)
-                                                  ->with('deleted', $deleted)
                                                   ->with('finished', $finished)
                                                   ->with('openCount', $openCount)
                                                   ->with('inProgressCount', $inProgressCount)
-                                                  ->with('cancelledCount', $cancelledCount)
-                                                  ->with('failedCount', $failedCount)
-                                                  ->with('deletedCount', $deletedCount)
                                                   ->with('finishedCount', $finishedCount)
                                                   ->with('totalCount', $totalCount)
                                                   ->with('lava', $lava);
@@ -106,9 +85,25 @@ class LogisticsController extends Controller
      * Function to calculate details needing to be set for contracts
      */
     public function displayContractForm() {
+        //Declare some variables
+        $route = array();
+        
+        //Get the distances table for solar system routes for logistics.
         $distances = SolarSystemDistance::all();
 
-        return view('logistics.display.courierform');
+        foreach($distance as $dist) {
+            $name = $dist->start_name . ' -> ' . $dist->end_name;
+            
+            $tempRoute = [
+                'name' => $name,
+                'start' => $dist->start_name,
+                'end' => $dist->end_name,
+            ];
+
+            array_push($route, $tempRoute);
+        }
+
+        return view('logistics.display.courierform')->with('route', $route);
     }
 
     /**
