@@ -45,7 +45,10 @@ class CreateLogisticsTables extends Migration
                 $table->increments('id');
                 $table->string('contract_id');
                 $table->string('accepted')->default('No');
+                $table->string('accepted_by_id')->nullalbe();
+                $table->string('accepted_by_name')->nullalbe();
                 $table->string('status')->default('N/A');
+                $table->timestamps();
             });
         }
 
@@ -67,6 +70,14 @@ class CreateLogisticsTables extends Migration
                 $table->decimal('distance', 20, 6);
             });
         }
+
+        DB::table('solar_system_distances')->insert([
+            'start_id'
+            'start_name'
+            'end_id'
+            'end_name'
+            'distance'
+        ]);
     }
 
     /**

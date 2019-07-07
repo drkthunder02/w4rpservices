@@ -75,6 +75,22 @@ class EveContractsHelper {
     public function StoreNewContract($contract) {
         //Declare esi helper for decoding the date
         $esiHelper = new Esi;
+        $endLocationName = null;
+        $issuerCorporationName = null;
+        $issuerName = null;
+        $startLocationName = null;
+
+        //Setup the esi authentication container
+        $config = config('esi');
+        //Get the refresh token from the database
+        $token = EsiToken::where(['character_id', $this->charId])->get(['refresh_token']);
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token[0]->refresh_token,
+        ]);
+        //Setup the ESI variable
+        $esi = new Eseye($authentication);
 
         //See if we find the contract in the database
         $found = LogisticsContract::where([
