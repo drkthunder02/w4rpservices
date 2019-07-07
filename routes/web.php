@@ -111,6 +111,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/srp/admin/costcodes/add', 'SRP\SRPAdminController@addCostCode');
     Route::post('/srp/admin/costcodes/modify', 'SRP\SRPAdminController@modifyCostCodes');
     
+    /**
+     * Logistics Controller display pages
+     */
+    Route::get('/logistics/courier/form', 'Logistics\LogisticsController@displayContractForm');
+    Route::post('/logistics/courier/form', 'Logistics\LogisticsController@displayContractDetails');
+    Route::get('/logistics/contracts/display', 'Logistics\LogisticsController@displayLogisticsContracts');
 });
 
 /**
