@@ -67,8 +67,8 @@ class GetEveContracts extends Command
         $config = config('esi');
 
         //Declare some variables
-        $charId;
-        $corpId;
+        $charId = 2115439862;
+        $corpId = 98606886;
 
         //Esi Scope Check
         $esiHelper = new Esi();

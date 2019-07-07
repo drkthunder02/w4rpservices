@@ -75,10 +75,6 @@ class EveContractsHelper {
     public function StoreNewContract($contract) {
         //Declare esi helper for decoding the date
         $esiHelper = new Esi;
-        $endLocationName = null;
-        $issuerCorporationName = null;
-        $issuerName = null;
-        $startLocationName = null;
 
         //Setup the esi authentication container
         $config = config('esi');
