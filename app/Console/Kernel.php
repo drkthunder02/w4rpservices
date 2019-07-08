@@ -50,10 +50,10 @@ class Kernel extends ConsoleKernel
                 ->hourly()
                 ->withoutOverlapping();
         $schedule->command('services:GetStructures')
-                ->daily()
+                ->dailyAt('09:00')
                 ->withoutOverlapping();
         $schedule->command('services:GetAssets')
-                ->hourly()
+                ->hourlyAt('22')
                 ->withoutOverlapping();
         $schedule->command('services:CleanData')
                 ->monthlyOn(1, '18:00');

@@ -18,7 +18,12 @@ class CreateLogisticsTables extends Migration
                 $table->string('contract_id')->unique();
                 $table->string('acceptor_id');
                 $table->string('assignee_id');
-                $table->string('availability');
+                $table->enum('availability', [
+                    'public',
+                    'personel',
+                    'corporation',
+                    'alliance',
+                ]);
                 $table->string('buyout')->nullable();
                 $table->string('collateral')->nullable();
                 $table->dateTime('date_accepted')->nullable();
@@ -33,8 +38,26 @@ class CreateLogisticsTables extends Migration
                 $table->decimal('price', 20, 2)->default(0.00);
                 $table->decimal('reward', 20, 2)->default(0.00);
                 $table->string('start_location_id')->nullable();
-                $table->string('status');
+                $table->enum('status',[
+                    'outstanding',
+                    'in_progress',
+                    'finished_issuer',
+                    'finished_contractor',
+                    'finished',
+                    'cancelled',
+                    'rejected',
+                    'failed',
+                    'deleted',
+                    'reversed',
+                ]);
                 $table->string('title')->nullalbe();
+                $table->enum('type', [
+                    'unknown',
+                    'item_exchange',
+                    'auction',
+                    'courier',
+                    'loan',
+                ]);
                 $table->decimal('volume', 20, 2)->default(0.00);
                 $table->timestamps();
             });
@@ -44,10 +67,11 @@ class CreateLogisticsTables extends Migration
             Schema::create('logistics_contracts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('contract_id');
-                $table->string('accepted')->default('No');
-                $table->string('accepted_by_id')->nullalbe();
-                $table->string('accepted_by_name')->nullalbe();
                 $table->string('status')->default('N/A');
+                $table->enum('rush', [
+                    'No',
+                    'Yes',
+                ])->default('No');
                 $table->timestamps();
             });
         }
@@ -261,5 +285,6 @@ class CreateLogisticsTables extends Migration
         Schema::dropIfExists('logistics_contracts');
         Schema::dropIfExists('solar_systems');
         Schema::dropIfExists('solar_system_distances');
+        Schema::dropIfExists('logistics_routes');
     }
 }

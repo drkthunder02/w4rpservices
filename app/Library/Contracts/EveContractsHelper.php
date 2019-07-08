@@ -135,6 +135,7 @@ class EveContractsHelper {
             if(isset($contract->title)) {
                 $logi->title = $contract->title;
             }
+            $logi->type = $contract->type;
             $logi->status = $contract->status;
             if(isset($contract->volume)) {
                 $logi->volume = $contract->volume;
@@ -161,6 +162,7 @@ class EveContractsHelper {
             'issuer_corporation_id' => $contract->issuer_corporation_id,
             'issuer_id' => $contract->issuer_id,
             'status' => $contract->status,
+            'type' => $contract->type,
         ]);
 
         if(isset($contract->buyout)) {
