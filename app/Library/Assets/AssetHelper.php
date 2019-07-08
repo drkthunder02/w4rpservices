@@ -109,7 +109,7 @@ class AssetHelper {
      * Update an existing asset based off the esi pull
      */
     private function UpdateAsset($asset) {
-        $item = Asset::where([
+        $count = Asset::where([
             'item_id' => $asset->item_id,
         ])->count();
 
