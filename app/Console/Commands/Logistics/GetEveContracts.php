@@ -24,7 +24,7 @@ use App\Models\Jobs\JobProcessContracts;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 
-class GetEveContracts extends Command
+class GetEveContractsCommand extends Command
 {
     /**
      * The name and signature of the console command.

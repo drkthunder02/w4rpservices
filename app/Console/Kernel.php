@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
         Commands\PiTransactionsCommand::class,
         Commands\GetStructuresCommand::class,
         Commands\GetAssetsCommand::class,
+        Commands\GetEveContractsCommand::class,
     ];
 
     /**
