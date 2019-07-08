@@ -86,22 +86,7 @@ class LogisticsController extends Controller
      */
     public function displayContractForm() {
         //Declare some variables
-        $route = array();
-        
-        //Get the distances table for solar system routes for logistics.
-        $distances = SolarSystemDistance::all();
-
-        foreach($distance as $dist) {
-            $name = $dist->start_name . ' -> ' . $dist->end_name;
-            
-            $tempRoute = [
-                'name' => $name,
-                'start' => $dist->start_name,
-                'end' => $dist->end_name,
-            ];
-
-            array_push($route, $tempRoute);
-        }
+        $route = LogisticsRoute::pluck('name');
 
         return view('logistics.display.courierform')->with('route', $route);
     }
@@ -110,12 +95,60 @@ class LogisticsController extends Controller
      * Function to calculate details needing to be set for contracts
      */
     public function displayContractDetails(Request $request) {
+        $startSystem = null;
+        $endSystem = null;
+        $reward = null;
+        $okVolume = null;
+        $corporation = null;
+
         $this->validate($request, [
-            'route',
-            'volume',
-            'collateral',  
+            'route' => 'required',
+            'volume' => 'required',
+            'collateral' => 'required',  
         ]);
 
+        //Sanitize the collateral string as we want
+        $collateral = str_replace(' ISK', '', $request->collateral);
+        $collateral = str_replace(',', '', $collateral);
+        $collateral = floatval($collateral);
         
+        $volume = $request->volume;
+
+        $route = LogisticsRoute::where([
+            'name'=> $request->route,
+        ])->get();
+
+        if($routeCount == 0) {
+            $startSystem = 'N/A';
+            $endSystem = 'N/A';
+        } else {
+            //Check the volume of the contract
+            if($volume > $route->max_size) {
+                $okVolume = false;
+            } else {
+                $okVolume = true;
+            }
+
+            //Compose the route to be displayed
+            $tempSystem = explode(' -> ', $request->route);
+            $startSystem = $tempSystem[0];
+            $endSystem = $tempSystem[1];
+
+            if($startSystem == 'Jita' || $endSystem == 'Jita') {
+                $corporation = 'Infernal Armada';
+            } else {
+                $corporation = 'Inmate Logistics';
+            }
+
+            //Calculate the route parameters
+            $reward = ($route->price_per_m3 * $volume) + ( $collateral * 1.02);
+        }
+
+        return view('logistics.display.courier')->with('okVolume', $okVolume)
+                                                ->with('collateral', $collateral)
+                                                ->with('reward', $reward)
+                                                ->with('startSystem', $startSystem)
+                                                ->with('endSystem', $endSystem)
+                                                ->with('corporation', $corporation);
     }
 }

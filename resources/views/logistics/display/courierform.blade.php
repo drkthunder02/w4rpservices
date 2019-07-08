@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 {{ Form::label('collateral', 'Collateral') }}
-                {{ Form::text('collateral', null, ['class' => 'form-control']) }}
+                {{ Form::text('collateral', null, ['class' => 'form-control', 'placeholder' => '1,000.00 ISK']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('type', 'Type') }}
