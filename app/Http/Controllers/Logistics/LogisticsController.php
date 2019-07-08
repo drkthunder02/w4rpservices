@@ -104,7 +104,7 @@ class LogisticsController extends Controller
         $this->validate($request, [
             'route' => 'required',
             'volume' => 'required',
-            'collateral' => 'required',  
+            'collateral' => 'required',
         ]);
 
         //Sanitize the collateral string as we want
