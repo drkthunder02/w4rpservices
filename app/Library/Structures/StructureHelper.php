@@ -290,6 +290,64 @@ class StructureHelper {
         }
     }
 
+    public function GetStructuresByType($type) {
+        $sType = $this->StructureTypeToId($type);
+
+        $structures = Structure::where([
+            'type_id' => $sType,
+        ])->get();
+
+        return $structures;
+    }
+
+    private function StructureTypeToId($name) {
+        $structureTypes = [
+            'Ansiblex Jump Gate' => 35841,
+            'Pharolux Cyno Beacon' => 35840,
+            'Tenebrex Cyno Jammer' => 37534,
+            'Keepstar' => 35834,
+            'Fortizar' => 35833,
+            'Astrahus' => 35832,
+            'Tatara' => 35836,
+            'Athanor' => 35835,
+            'Sotiyo' => 35827,
+            'Azbel' => 35826,
+            'Raitaru' => 35825,
+        ];
+
+        return $structureTypes[$name];
+
+        /*
+        if($name == 'Ansiblex Jump Gate') {
+            return 35841;
+        } else if( $name == 'Pharolux Cyno Beacon') {
+            return 35840;
+        } else if( $name == 'Tenebrex Cyno Jammer') {
+            return 37534;
+        } else if( $name == 'Keepstar') {
+            return 35834;
+        } else if( $name == 'Fortizar') {
+            return 35833;
+        } else if($name == 'Astrahus') {
+            return 35832;
+        } else if($name == 'Tatara') {
+            return 35836;
+        } else if($name == 'Athanor') {
+            return 35835;
+        } else if($name == 'Sotiyo') {
+            return 35827;
+        } else if($name == 'Azbel') {
+            return 35836;
+        } else if($name == 'Raitaru') {
+            return 35835;
+        } else {
+            $id = 0;
+        }
+
+        return $id;
+        */
+    }
+
     private function DecodeDate($date) {
         $esiHelper = new Esi();
 
