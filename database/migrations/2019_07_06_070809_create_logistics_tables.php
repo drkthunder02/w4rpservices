@@ -272,6 +272,30 @@ class CreateLogisticsTables extends Migration
             'price_per_m3' => 1000.00,
             'max_size' => 330000.00,
         ]);
+
+        if(!Schema::hasTable('logistics_insurance_deposits')) {
+            Schema::create('logistics_insurance_deposits', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('character_id');
+                $table->string('character_name');
+                $table->string('corporation_id');
+                $table->string('corporation_name');
+                $table->decimal('amount', 20, 2);
+            });
+        }
+
+        if(!Schema::hasTable('logistics_insurance_payouts')) {
+            Schema::create('logistics_insurance_payouts', function(Blueprint $table) {
+                $table->increments('id');
+                $table->string('character_id');
+                $table->string('character_name')->nullalbe();
+                $table->string('corporation_id');
+                $table->string('corporation_name')->nullable();
+                $table->string('authorized_by_id');
+                $table->string('authorized_by_name')->nullalbe();
+                $table->decimal('amount', 20, 2)->nullalbe();
+            });
+        }
     }
 
     /**
@@ -286,5 +310,7 @@ class CreateLogisticsTables extends Migration
         Schema::dropIfExists('solar_systems');
         Schema::dropIfExists('solar_system_distances');
         Schema::dropIfExists('logistics_routes');
+        Schema::dropIfExists('logistics_insurance_deposits');
+        Schema::dropIfExists('logistics_insurance_payouts');
     }
 }
