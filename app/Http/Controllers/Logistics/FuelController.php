@@ -55,7 +55,7 @@ class FuelController extends Controller
             $gateChart = $lava->DataTable();
             $gateChart->addStringColumn($gate['structure_name'])
                       ->addNumberColumn('Liquid Ozone')
-                      ->addRow([$gate['row'], $gate['lo']]);
+                      ->addRow([$gate['row'], $gate['liquid_ozone']]);
 
             $lava->GaugeChart($gate['row'], $gateChart, [
                 'width' => 300,
