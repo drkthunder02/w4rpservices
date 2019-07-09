@@ -15,12 +15,14 @@ use Auth;
 use App\Library\Assets\AssetHelper;
 use App\Library\Structures\StructureHelper;
 
+//Models
+use App\Models\Structure\Structure;
+
 class FuelController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('role:Admin');
-        //$this->middleware('permission:logistics.structures');
+        $this->middleware('permission:logistics.manager');
     }
 
     public function displayStructures() {

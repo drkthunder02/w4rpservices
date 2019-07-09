@@ -64,9 +64,11 @@
                     <a class="dropdown-item" href="/srp/admin/display">SRP Admin Dashboard</a>
                     <a class="dropdown-item" href="/srp/admin/statistics">SRP Statistics</a>
                     @endif
-                    
                 </div>
             </li>
+            @endif
+            @if(auth()->user->()->hasPermission('logistics.manager'))
+                <a class="nav-link" href="/logistics/fuel/structures">Structure Fuel</a>
             @endif
         </ul>
         <ul class="navbar-nav m1-auto">
