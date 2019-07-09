@@ -49,13 +49,6 @@ class ProcessAssetsJob implements ShouldQueue
     private $esi;
 
     protected $location_array = [
-        'CorpDeliveres',
-        'CorpSAG1',
-        'CorpSAG3',
-        'CorpSAG4',
-        'CorpSAG5',
-        'CorpSAG6',
-        'CorpSAG7',
         'StructureFuel',
         'FighterBay',
     ];
