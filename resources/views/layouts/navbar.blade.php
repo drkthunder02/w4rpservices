@@ -78,7 +78,6 @@
             @if(auth()->user()->hasRole('Admin'))
             <li class="nav-item">
                 <a class="nav-link" href="/admin/dashboard">Admin</a>
-                <a class="nav-link" href="/logistics/fuel/structures">Fuel</a>
             </li>
             @endif
             <li class="nav-item">
