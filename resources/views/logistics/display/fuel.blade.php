@@ -18,7 +18,6 @@
                     <th>System</th>
                     <th>Fuel Expires</th>
                     <th>Liquid Ozone Quantity</th>
-                    <th>Fuel Gauge</th>
                 </thead>
                 <tbody>
                     @foreach($jumpGates as $jumpGate)
@@ -27,7 +26,6 @@
                             <td>{{ $jumpGate['system'] }}</td>
                             <td>{{ $jumpGate{'fuel_expires'} }}</td>
                             <td>{{ $jumpGate['liquid_ozone'] }}</td>
-                            <td><a href="{{ $jumpGate['link'] }}">Link</a></td>
                         </tr>
                     @endforeach
                 </tbody>
