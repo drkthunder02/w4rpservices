@@ -116,7 +116,7 @@ class AssetHelper {
             'location_flag' => 'StructureFuel',
         ])->first();
 
-        return $asset->quantity;
+        return $asset['quantity'];
     }
 
     /**
