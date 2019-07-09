@@ -53,11 +53,11 @@ class FuelController extends Controller
 
         foreach($gates as $gate) {
             $gateChart = $lava->DataTable();
-            $gateChart->addStringColumn($gate->structure_name)
+            $gateChart->addStringColumn($gate['structure_name'])
                       ->addNumberColumn('Liquid Ozone')
-                      ->addRow([$gate->row, $gate->lo]);
+                      ->addRow([$gate['row'], $gate['lo']]);
 
-            $lava->GaugeChart($gate->row, $gateChart, [
+            $lava->GaugeChart($gate['row'], $gateChart, [
                 'width' => 300,
                 'redFrom' => 0,
                 'redTo' => 50000,
