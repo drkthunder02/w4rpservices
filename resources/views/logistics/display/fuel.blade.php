@@ -1,5 +1,13 @@
 @extends('layouts.b4')
 @section('content')
+<br>
+<div class="row justify-content-center">
+    <div class="container">
+        <div id="fuel-div"></div>
+        {!! $lava->render('GaugeChart', 'Liquid Ozone', 'fuel-div') !!}
+    </div>
+</div>
+<br>
 <div class="container">
     <div class="card">
         <div class="card-header">
@@ -28,9 +36,5 @@
             </table>
         </div>
     </div>
-</div>
-<div class="container">
-    <div id="fuel-div"></div>
-    {!! $lava->render('GaugeChart', 'Liquid Ozone', 'fuel-div') !!}
 </div>
 @endsection

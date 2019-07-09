@@ -55,6 +55,10 @@ class FuelController extends Controller
 
             array_push($jumpGates, $temp);
 
+            if($liquidOzone > 1000000) {
+                $liquidOzone = 1000000;
+            }
+
             $gauge->addRow([$gate->structure_name, $liquidOzone]);
         }
 
