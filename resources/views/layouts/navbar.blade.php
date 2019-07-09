@@ -67,7 +67,7 @@
                 </div>
             </li>
             @endif
-            @if(auth()->user->()->hasPermission('logistics.manager'))
+            @if(auth()->user()->hasPermission('logistics.manager'))
                 <a class="nav-link" href="/logistics/fuel/structures">Structure Fuel</a>
             @endif
         </ul>
