@@ -13,8 +13,4 @@
     </div>
 </div>
 <br>
-@for($i = 0; $i <= 5; $i++)
-<div id="{{ $chartsDiv[$i] }}"></div>
-{!! $charts[$i]->render('GaugeChart', $chartsDiv[$i], $chartsDiv[$i]) !!}
-@endfor
 @endsection

@@ -58,8 +58,6 @@ class FuelController extends Controller
     public function displayStructureFuel($id) {
         //Declare class variables
         $lava = new Lavacharts;
-        $charts = array();
-        $chartsDiv = array();
         $aHelper = new AssetHelper(null, null, null);
 
         $structure = Structure::where(['structure_id' => $id])->first();
@@ -95,37 +93,8 @@ class FuelController extends Controller
             ],
         ]);
 
-        for($i = 0; $i <= 5; $i++) {
-            $charts[$i] = new Lavacharts;
-            $chartsDiv[$i] = 'chart-div' . $i;
-            $stuff = $charts[$i]->DataTable();
-            $stuff->addStringColumn('Fuel')
-                  ->addNumberColumn('Units')
-                  ->addRow([$chartsDiv[$i], 500000]);
-            $charts[$i]->GaugeChart($chartsDiv[$i], $stuff, [
-                'min' => 0,
-                'max' => 1000000,
-                'width' => 400,
-                'greenFrom' => 0,
-                'greenTo' => 150000,
-                'greenColor' => '#DC3912',
-                'yellowFrom' => 150000,
-                'yellowTo' => 300000,
-                'yellowColor' => '#FF9900',
-                'redFrom' => 300000,
-                'redTo' => 1000000,
-                'redColor' => '#109618',
-                'majorTicks' => [
-                    'Empty',
-                    'Full',
-                ],
-            ]);
-        }
-
         //Return the view
         return view('logistics.display.fuelgauge')->with('lava', $lava)
-                                                   ->with('name', $name)
-                                                   ->with('charts', $charts)
-                                                   ->with('chartsDiv', $chartsDiv);
+                                                   ->with('name', $name);
     }
 }
