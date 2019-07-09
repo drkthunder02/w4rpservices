@@ -25,7 +25,7 @@
                             <td>{{ $jumpGate['name'] }}</td>
                             <td>{{ $jumpGate['system'] }}</td>
                             <td>{{ $jumpGate{'fuel_expires'} }}</td>
-                            <td>{{ $jumpGate['liquid_ozone'] }}</td>
+                            <td>{{ number_format($jumpGate['liquid_ozone'], 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
