@@ -172,7 +172,9 @@ class SRPAdminController extends Controller
 
         $adur->addStringColumn('Type')
             ->addNumberColumn('Value')
-            ->addRow(['Under Review', $gaugeReview]);
+            ->addRow(['Under Review', $gaugeReview])
+            ->addRow(['Approved', $pieApproved])
+            ->addRow(['Denied', $pieDenied]);
 
         $lava->GaugeChart('SRP', $adur, [
             'width'      => 400,
