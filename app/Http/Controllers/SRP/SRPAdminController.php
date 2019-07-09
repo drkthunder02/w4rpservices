@@ -137,6 +137,7 @@ class SRPAdminController extends Controller
 
         //Get the losses by Fleet Commander Name, and populate variables for the table
         $fcNames = SRPShip::pluck('fleet_commander_name');
+        dd($fcNames);
         foreach($fcNames as $name) {
             $total = SRPShip::where(['fleet_commander_name' => $name])
                             ->sum('loss_value');
@@ -147,6 +148,8 @@ class SRPAdminController extends Controller
 
             array_push($barChartData, $temp);
         }
+
+        dd($barChartData);
 
         //Pie Chart for approval, denied, and under review
         $lava = new Lavacharts; // See note below for Laravel

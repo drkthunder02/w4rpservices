@@ -59,10 +59,14 @@ class SRPController extends Controller
         $lossValue = str_replace(',', '', $lossValue);
         $lossValue = floatval($lossValue);
 
+        //Convert the FC name to a regular case of characters
+        $tempFcName = strtolower($request->FC);
+        $tempFcName = ucwords($tempFcName);
+
         $ship = new SRPShip;
         $ship->character_id = auth()->user()->character_id;
         $ship->character_name = auth()->user()->name;
-        $ship->fleet_commander_name = $request->FC;
+        $ship->fleet_commander_name = $tempFcName;
         if(isset($fcId[0])) {
             $ship->fleet_commander_id = $fcId[0]->character_id;
         }
