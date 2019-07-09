@@ -69,7 +69,7 @@ class FuelController extends Controller
         $gauge->addStringColumn('Fuel')
               ->addNumberColumn('Liquid Ozone')
               ->addRow(['Liquid Ozone', $liquidOzone]);
-        $lava->GaugeChart('Liquid Ozone', $gauge, [
+        $lava->GaugeChart('Fuel', $gauge, [
             'width' => 400,
             'redFrom' => 0,
             'redTo' => 75000,
