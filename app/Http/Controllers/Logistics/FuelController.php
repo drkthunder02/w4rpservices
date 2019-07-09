@@ -101,8 +101,8 @@ class FuelController extends Controller
             $stuff = $charts[$i]->DataTable();
             $stuff->addStringColumn('Fuel')
                   ->addNumberColumn('Units')
-                  ->addRow(['Liquid Ozone', 500000]);
-            $charts[$i]->GaugeChart('Liquid Ozone', $stuff, [
+                  ->addRow([$chartsDiv[$i], 500000]);
+            $charts[$i]->GaugeChart($chartsDiv[$i], $stuff, [
                 'min' => 0,
                 'max' => 1000000,
                 'width' => 400,
