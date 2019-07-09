@@ -10,6 +10,7 @@ use Log;
 use Carbon\Carbon;
 use Khill\Lavacharts\Lavacharts;
 use Auth;
+use Charts;
 
 //Library Helpers
 use App\Library\Assets\AssetHelper;
@@ -57,6 +58,7 @@ class FuelController extends Controller
     public function displayStructureFuel($id) {
         //Declare class variables
         $lava = new Lavacharts;
+        $chartJs = new StructureFuelGauage;
         $aHelper = new AssetHelper(null, null, null);
 
         $structure = Structure::where(['structure_id' => $id])->first();
@@ -71,12 +73,15 @@ class FuelController extends Controller
               ->addRow(['Liquid Ozone', $liquidOzone]);
         $lava->GaugeChart('Liquid Ozone', $gauge, [
             'width' => 400,
-            'redFrom' => 0,
-            'redTo' => 75000,
+            'greenFrom' => 0,
+            'greenTo' => 75000,
+            'greenColor' => '#DC3912',
             'yellowFrom' => 75000,
             'yellowTo' => 150000,
-            'greenFrom' => 150000,
-            'greenTo' => 1000000,
+            'yellowColor' => '#FF9900',
+            'redFrom' => 150000,
+            'redTo' => 1000000,
+            'redColor' => '#109618',
             'majorTicks' => [
                 'Empty',
                 'Ok',
