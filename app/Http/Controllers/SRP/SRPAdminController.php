@@ -136,7 +136,7 @@ class SRPAdminController extends Controller
         $gaugeReview = $pieOpen;
 
         //Get the losses by Fleet Commander Name, and populate variables for the table
-        $fcNames = SRPShip::pluck('fleet_commander_name')->groupBy('fleet_commander_name');
+        $fcNames = SRPShip::groupBy('fleet_commander_name')->get(['fleet_commander_name']);
         dd($fcNames);
         foreach($fcNames as $name) {
             $total = SRPShip::where(['fleet_commander_name' => $name])
