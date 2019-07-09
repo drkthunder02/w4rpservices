@@ -29,10 +29,17 @@ class FuelController extends Controller
     public function displayStructures() {
         //Declare variables
         $jumpGates = array();
+        $lava = new Lavacharts;
 
         //Declare the class helpers
         $sHelper = new StructureHelper(null, null, null);
         $aHelper = new AssetHelper(null, null, null);
+
+        //Setup the charts
+        $gauge = $lava->DataTable();
+        $gauge->addStringColumn('Fuel')
+              ->addNumberColumn('Units');
+
         //Get all of the jump gates
         $gates = $sHelper->GetStructuresByType('Ansiblex Jump Gate');
 
@@ -47,9 +54,30 @@ class FuelController extends Controller
             ];
 
             array_push($jumpGates, $temp);
+
+            $gauge->addRow([$gate->structure_name, $liquidOzone]);
         }
 
-        return view('logistics.display.fuel')->with('jumpGates', $jumpGates);
+        $lava->GaugeChart('Liquid Ozone', $gauge, [
+            'min' => 0,
+            'max' => 1000000,
+            'greenFrom' => 0,
+            'greenTo' => 150000,
+            'greenColor' => '#DC3912',
+            'yellowFrom' => 150000,
+            'yellowTo' => 300000,
+            'yellowColor' => '#FF9900',
+            'redFrom' => 300000,
+            'redTo' => 1000000,
+            'redColor' => '#109618',
+            'majorTicks' => [
+                'Empty',
+                'Full',
+            ],
+        ]);
+
+        return view('logistics.display.fuel')->with('jumpGates', $jumpGates)
+                                             ->with('lava', $lava);
     }
 
     /**
@@ -74,6 +102,8 @@ class FuelController extends Controller
         $gauge->addStringColumn('Fuel')
               ->addNumberColumn('Units')
               ->addRow(['Liquid Ozone', $liquidOzone]);
+
+
         $lava->GaugeChart('Liquid Ozone', $gauge, [
             'min' => 0,
             'max' => 1000000,
