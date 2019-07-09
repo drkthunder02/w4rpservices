@@ -27,7 +27,7 @@ class ProcessWalletTransactionJob implements ShouldQueue
      * 
      * @var int
      */
-    public $timeout = 300;
+    public $timeout = 600;
 
     public $tries = 3;
 
