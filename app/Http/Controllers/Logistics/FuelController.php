@@ -58,7 +58,6 @@ class FuelController extends Controller
     public function displayStructureFuel($id) {
         //Declare class variables
         $lava = new Lavacharts;
-        $chartJs = new StructureFuelGauage;
         $aHelper = new AssetHelper(null, null, null);
 
         $structure = Structure::where(['structure_id' => $id])->first();
