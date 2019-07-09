@@ -75,6 +75,8 @@ class FuelController extends Controller
               ->addNumberColumn('Units')
               ->addRow(['Liquid Ozone', $liquidOzone]);
         $lava->GaugeChart('Liquid Ozone', $gauge, [
+            'min' => 0,
+            'max' => 1000000,
             'width' => 400,
             'greenFrom' => 0,
             'greenTo' => 75000,
