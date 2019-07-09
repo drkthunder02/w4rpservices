@@ -109,7 +109,7 @@ class GetAssetsCommand extends Command
 
         $pages = $assets->pages;
         
-        for($i = 1; $i < $pages; $i++) {
+        for($i = 1; $i <= $pages; $i++) {
             $job = new JobProcessAsset;
             $job->charId = $charId;
             $job->corpId = $corpId;
