@@ -59,7 +59,7 @@ class FuelController extends Controller
                 $liquidOzone = 1000000;
             }
 
-            $gauge->addRow([$gate->structure_name, $liquidOzone]);
+            $gauge->addRow([$gate->solar_system_name, $liquidOzone]);
         }
 
         $lava->GaugeChart('Liquid Ozone', $gauge, [
