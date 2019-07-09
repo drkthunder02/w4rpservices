@@ -83,8 +83,6 @@ class FuelController extends Controller
             ],
         ]);
 
-        dd($lava);
-
         //Return the view
         return view('logistics.display.fuelgauge')->with('lava', $lava)
                                                    ->with('name', $name);
