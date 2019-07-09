@@ -98,6 +98,7 @@ class FuelController extends Controller
         for($i = 0; $i <= 5; $i++) {
             $charts[$i] = new Lavacharts;
             $chartsDiv[$i] = 'chart-div' . $i;
+            $stuff = $charts[$i]->DataTable();
             $stuff->addStringColumn('Fuel')
                   ->addNumberColumn('Units')
                   ->addRow(['Liquid Ozone', 500000]);
