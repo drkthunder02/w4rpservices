@@ -141,14 +141,12 @@ class SRPAdminController extends Controller
             $total = SRPShip::where(['fleet_commander_name' => $name->fleet_commander_name])
                             ->sum('loss_value');
             $temp = [
-                'fc' => $name,
+                'fc' => $name->fleet_commander_name,
                 'total' => $total,
             ];
 
             array_push($barChartData, $temp);
         }
-
-        dd($barChartData);
 
         //Pie Chart for approval, denied, and under review
         $lava = new Lavacharts; // See note below for Laravel
