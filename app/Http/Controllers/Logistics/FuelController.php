@@ -66,6 +66,10 @@ class FuelController extends Controller
         //Get the quantity of liquid ozone in the structure
         $liquidOzone = $aHelper->GetAssetByType(16273, $id);
         
+        if($liquidOzone > 1000000) {
+            $liquidOzone = 1000000;
+        }
+
         $gauge = $lava->DataTable();
         $gauge->addStringColumn('Fuel')
               ->addNumberColumn('Units')
