@@ -72,6 +72,8 @@ class FuelController extends Controller
             ]);
         }
 
+        dd($lava);
+
         return view('logistics.display.fuel')->with('lava', $lava)
                                              ->with('gates', $gates);
     }
