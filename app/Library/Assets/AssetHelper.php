@@ -110,13 +110,24 @@ class AssetHelper {
      * Get the liquid ozone asset
      */
     public function GetAssetByType($type, $structureId) {
+        //See if the row is in the database table
+        $count = Asset::where([
+            'location_id' => $structureId,
+            'type_id' => $type,
+            'location_flag' => 'StructureFuel',
+        ])->count();
+        //Get the row if it is in the table
         $asset = Asset::where([
             'location_id' => $structureId,
             'type_id' => $type,
             'location_flag' => 'StructureFuel',
         ])->first();
 
-        return $asset['quantity'];
+        if($count == 0) {
+            return 0;
+        } else {
+            return $asset['quantity'];
+        }
     }
 
     /**

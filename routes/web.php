@@ -117,7 +117,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/logistics/courier/form', 'Logistics\LogisticsController@displayContractForm');
     Route::post('/logistics/courier/form', 'Logistics\LogisticsController@displayContractDetails');
     Route::get('/logistics/contracts/display', 'Logistics\LogisticsController@displayLogisticsContracts');
-    Route::get('/logistics/fuel/display', 'Fuel\FuelController@displayStructureFuel');
+    Route::get('/logistics/fuel/structures', 'Fuel\FuelController@displayStructures');
+    Route::get('/logistics/fuel/display/{id}/', 'Fuel\FuelController@displayStructureFuel');
 });
 
 /**

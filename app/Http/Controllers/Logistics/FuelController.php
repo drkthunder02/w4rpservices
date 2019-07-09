@@ -23,58 +23,59 @@ class FuelController extends Controller
         //$this->middleware('permission:logistics.structures');
     }
 
-    public function displayStructureFuel() {
-        $aHelper = new AssetHelper(null, null, null);
+    public function displayStructures() {
+        //Declare variables
+        $jumpGates = array();
+
+        //Declare the class helpers
         $sHelper = new StructureHelper(null, null, null);
-        $lava = new Lavacharts;
-        $gates = array();
-        $i = 1;
-
-        $jumpGates = $sHelper->GetStructuresByType('Ansiblex Jump Gate');
-
-        foreach($jumpGates as $jump) {
-            //Liquid Ozone's item id is 16273
-            $lo = $aHelper->GetAssetByType(16273, $jump->structure_id);
-
-            $temp = [
-                'id' => $i,
-                'structure_id' => $jump->structure_id,
-                'structure_name' => $jump->structure_name,
-                'solar_system_name' => $jump->solar_system_name,
-                'fuel_expires' => $jump->fuel_expires,
-                'liquid_ozone' => $lo,
-                'row' => 'Liquid Ozone ' . $i,
-                'div' => 'Liquid-Ozone-' . $i . '-div',
-            ];
-
-            array_push($gates, $temp);
-            $i++;
-        }
+        $aHelper = new AssetHelper(null, null, null);
+        //Get all of the jump gates
+        $gates = $sHelper->GetStructuresByType('Ansiblex Jump Gate');
 
         foreach($gates as $gate) {
-            $gateChart = $lava->DataTable();
-            $gateChart->addStringColumn($gate['structure_name'])
-                      ->addNumberColumn('Liquid Ozone')
-                      ->addRow([$gate['row'], $gate['liquid_ozone']]);
-
-            $lava->GaugeChart($gate['row'], $gateChart, [
-                'width' => 300,
-                'redFrom' => 0,
-                'redTo' => 50000,
-                'yellowFrom' => 50000,
-                'yellowTo' => 150000,
-                'greenFrom' => 150000,
-                'greenTo' => 1000000,
-                'majorTicks' => [
-                    'Critical',
-                    'Ok',                    
-                ],
-            ]);
+            $liquidOzone = $aHelper->GetAssetByType(16273, $gate->structure_id);
+            $temp = [
+                'name' => $gate->structure_name,
+                'system' => $gate->solar_system_name,
+                'fuel_expires' => $gate->fuel_expires,
+                'liquid_ozone' => $liquidOzone,
+                'link' => '/logistics/fuel/display/' . $gate->structure_id . '/',
+            ];
         }
 
-        dd($lava);
+        return view('logistics.display.fuel')->with('gates', $gates);
+    }
 
-        return view('logistics.display.fuel')->with('lava', $lava)
-                                             ->with('gates', $gates);
+    /**
+     * Get the structure id passed to it and display fuel gauage for structure
+     */
+    public function displayStructureFuel($id) {
+        //Declare class variables
+        $lava = new Lavacharts;
+        $aHelper = new AssetHelper(null, null, null);
+        //Get the quantity of liquid ozone in the structure
+        $liquidOzone = $aHelper->GetAssetByType(16273, $id);
+        
+        $gauge = $lava->DataTable();
+        $gauge->addStringColumn('Fuel')
+              ->addNumberColumn('Liquid Ozone')
+              ->addRow(['Liquid Ozone', $liquidOzone]);
+        $lava->GaugeChart('Liquid Ozone', $gauge, [
+            'width' => 400,
+            'redFrom' => 0,
+            'redTo' => 75000,
+            'yellowFrom' => 75000,
+            'yellowTo' => 150000,
+            'greenFrom' => 150000,
+            'greenTo' => 1000000,
+            'majorTicks' => [
+                'Empty',
+                'Ok',
+            ],
+        ]);
+
+        //Return the view
+        return view('logistics.display.fuelgauage')->with('lava', $lava);
     }
 }
