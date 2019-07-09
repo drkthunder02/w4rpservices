@@ -107,6 +107,19 @@ class AssetHelper {
     }
 
     /**
+     * Get the liquid ozone asset
+     */
+    public function GetAssetByType($type, $structureId) {
+        $asset = Asset::where([
+            'structure_id' => $structureId,
+            'type' => $type,
+            'location_flag' => 'StructureFuel',
+        ])->first();
+
+        return $asset->quantity;
+    }
+
+    /**
      * Update an existing asset based off the esi pull
      */
     private function UpdateAsset($asset) {
