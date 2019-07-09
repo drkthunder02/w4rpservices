@@ -196,7 +196,9 @@ class SRPAdminController extends Controller
             $fcs->addRow([$data['fc'], $data['total']]);
         }
 
-        $lava->BarChart('FCs', $fcs);
+        $lava->BarChart('FCs', $fcs, [
+            'width' => 600,
+        ]);
 
         return view('srp.admin.statistics')->with('lava', $lava);
     }
