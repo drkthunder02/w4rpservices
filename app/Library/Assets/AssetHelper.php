@@ -134,23 +134,18 @@ class AssetHelper {
      * Update an existing asset based off the esi pull
      */
     private function UpdateAsset($asset) {
-        $count = Asset::where([
-            'item_id' => $asset->item_id,
-        ])->count();
 
-        if($count != 0) {
-            Asset::where([
-                'item_id' => $asset->item_id,
-            ])->update([
-                'is_singleton' => $asset->is_singleton,
-                'location_flag' => $asset->location_flag,
-                'location_id' => $asset->location_id,
-                'location_type' => $asset->location_type,
-                'quantity' => $asset->quantity,
-                'type_id' => $asset->type_id,
-                'updated_at' => Carbon::now(),
-            ]);
-        }
+        Asset::where([
+            'item_id' => $asset->item_id,
+        ])->update([
+            'is_singleton' => $asset->is_singleton,
+            'location_flag' => $asset->location_flag,
+            'location_id' => $asset->location_id,
+            'location_type' => $asset->location_type,
+            'quantity' => $asset->quantity,
+            'type_id' => $asset->type_id,
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }
 
