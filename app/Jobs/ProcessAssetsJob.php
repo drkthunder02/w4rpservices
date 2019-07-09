@@ -89,7 +89,7 @@ class ProcessAssetsJob implements ShouldQueue
         foreach($assets as $asset) {
             //If the asset is in one of the locations we want, then store
             //or update the asset
-            if(in_array($this->location_array, $asset->location_flag)) {
+            if(in_array($asset->location_flag, $this->location_array)) {
                 //Attempt to store the asset
                 $aHelper->StoreNewAsset($asset);
             }
