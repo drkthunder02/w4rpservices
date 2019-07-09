@@ -84,7 +84,7 @@ class FuelController extends Controller
         ]);
 
         //Return the view
-        return view('logistics.display.fuelgauage')->with('lava', $lava)
+        return view('logistics.display.fuelgauge')->with('lava', $lava)
                                                    ->with('name', $name);
     }
 }
