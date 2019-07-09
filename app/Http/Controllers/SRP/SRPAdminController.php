@@ -142,12 +142,14 @@ class SRPAdminController extends Controller
                     'fleet_commander_name' => $name->fleet_commander_name,
                     'approved' => 'Approved',
                 ])->sum('loss_value');
-            $temp = [
-                'fc' => $name->fleet_commander_name,
-                'total' => $total,
-            ];
-
-            array_push($barChartData, $temp);
+            if($total > 0.00) {
+                $temp = [
+                    'fc' => $name->fleet_commander_name,
+                    'total' => $total,
+                ];
+    
+                array_push($barChartData, $temp);
+            }
         }
 
         //Pie Chart for approval, denied, and under review
