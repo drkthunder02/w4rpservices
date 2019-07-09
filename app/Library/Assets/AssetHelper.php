@@ -112,7 +112,7 @@ class AssetHelper {
     public function GetAssetByType($type, $structureId) {
         $asset = Asset::where([
             'location_id' => $structureId,
-            'type' => $type,
+            'type_id' => $type,
             'location_flag' => 'StructureFuel',
         ])->first();
 
