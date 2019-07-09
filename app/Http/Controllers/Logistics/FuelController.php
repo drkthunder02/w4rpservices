@@ -31,8 +31,6 @@ class FuelController extends Controller
         $i = 1;
 
         $jumpGates = $sHelper->GetStructuresByType('Ansiblex Jump Gate');
-        $cynoBeacons = $sHelper->GetStructuresByTypes('Pharolux Cyno Beacon');
-        $cynoJammers = $sHelper->GetSTructureByTypes('Tenebrex Cyno Jammer');
 
         foreach($jumpGates as $jump) {
             //Liquid Ozone's item id is 16273
