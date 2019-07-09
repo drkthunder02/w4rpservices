@@ -42,9 +42,11 @@ class FuelController extends Controller
                 'liquid_ozone' => $liquidOzone,
                 'link' => '/logistics/fuel/display/' . $gate->structure_id . '/',
             ];
+
+            array_push($jumpGates, $temp);
         }
 
-        return view('logistics.display.fuel')->with('gates', $gates);
+        return view('logistics.display.fuel')->with('jumpGates', $jumpGates);
     }
 
     /**
@@ -54,6 +56,10 @@ class FuelController extends Controller
         //Declare class variables
         $lava = new Lavacharts;
         $aHelper = new AssetHelper(null, null, null);
+
+        $structure = Structure::where(['structure_id' => $id])->first();
+        $name = $structure['structure_name'];
+
         //Get the quantity of liquid ozone in the structure
         $liquidOzone = $aHelper->GetAssetByType(16273, $id);
         
@@ -76,6 +82,7 @@ class FuelController extends Controller
         ]);
 
         //Return the view
-        return view('logistics.display.fuelgauage')->with('lava', $lava);
+        return view('logistics.display.fuelgauage')->with('lava', $lava)
+                                                   ->with('name', $name);
     }
 }
