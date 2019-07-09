@@ -24,8 +24,8 @@ class FuelController extends Controller
     }
 
     public function displayStructureFuel() {
-        $aHelper = new AssetHelper;
-        $sHelper = new StructureHelper;
+        $aHelper = new AssetHelper(null, null, null);
+        $sHelper = new StructureHelper(null, null, null);
         $lava = new Lavacharts;
         $gates = array();
         $i = 1;
