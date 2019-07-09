@@ -23,13 +23,6 @@ class FuelController extends Controller
         //$this->middleware('permission:logistics.structures');
     }
 
-    public function displayStructures() {
-        $aHelper = new AssetHelper;
-        $sHelper = new StructureHelper;
-
-
-    }
-
     public function displayStructureFuel() {
         $aHelper = new AssetHelper;
         $sHelper = new StructureHelper;
