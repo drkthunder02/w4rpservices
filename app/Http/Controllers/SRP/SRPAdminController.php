@@ -114,27 +114,72 @@ class SRPAdminController extends Controller
         $start = Carbon::now()->toDateTimeString();
         $end = Carbon::now()->subMonths(1)->toDateTimeString();
 
+        //Declare the Lavacharts variable
+        $lava = new Lavacharts;
+
         //We need a function from this library rather than recreating a new library
         $srpHelper = new SRPHelper();
 
-        //Get the number of approved, denied, and under review payouts currently from the database
+        /**
+         * Pie chart for the number of approved, denied, and under review payouts currently in the system.
+         */
+        //Get the count of open srp requests
         $pieOpen = SRPShip::where([
             'approved' => 'Under Review',
             ['created_at', '>=', $end],
             ])->count();
+        //Get the count of approved srp requests
         $pieApproved = SRPShip::where([
             'approved' => 'Approved',
             ['created_at', '>=', $end],
             ])->count();
+        //Get the count of denied srp requests
         $pieDenied = SRPShip::where([
             'approved' => 'Denied',
             ['created_at', '>=', $end],
             ])->count();
-        
-        //Get the amount of open orders
-        //Just copy the data from the previous data pull
-        $gaugeReview = $pieOpen;
 
+        //Create a new datatable for the lavachart.
+        $srp = $lava->DataTable();
+        //Add string columns, number columns, and data rows for the chart
+        $srp->addStringColumn('ISK Value')
+                ->addNumberColumn('ISK')
+                ->addRow(['Approved', $pieApproved])
+                ->addRow(['Denied', $pieDenied])
+                ->addRow(['Under Review', $pieOpen]);
+        //Create the pie chart in memory with any options needed to render the chart
+        $lava->PieChart('SRP Stats', $srp, [
+            'title'  => 'SRP Stats',
+            'is3D'   => true,
+        ]);
+        
+        /**
+         * Gauage chart for showing number of open srp requests
+         */
+        //Create a new datatable in the 
+        $adur = $lava->DataTable();
+        //Add string columns, number columns, and data row for the chart
+        $adur->addStringColumn('Type')
+            ->addNumberColumn('Value')
+            ->addRow(['Under Review', $pieOpen]);
+        //Create the gauge chart with any options needed to render the chart
+        $lava->GaugeChart('SRP', $adur, [
+            'width'      => 400,
+            'greenFrom'  => 0,
+            'greenTo'    => 20,
+            'yellowFrom' => 20,
+            'yellowTo'   => 40,
+            'redFrom'    => 40,
+            'redTo'      => 100,
+            'majorTicks' => [
+                'Safe',
+                'Critical',
+            ],
+        ]);
+
+        /**
+         * Create the bar chart to see how expensive each FC is over the course of time.
+         */
         //Get the losses by Fleet Commander Name, and populate variables for the table
         $fcNames = SRPShip::groupBy('fleet_commander_name')->get(['fleet_commander_name']);
         foreach($fcNames as $name) {
@@ -152,55 +197,208 @@ class SRPAdminController extends Controller
             }
         }
 
-        //Pie Chart for approval, denied, and under review
-        $lava = new Lavacharts; // See note below for Laravel
-
-        $srp = $lava->DataTable();
-
-        $srp->addStringColumn('ISK Value')
-                ->addNumberColumn('ISK')
-                ->addRow(['Approved', $pieApproved])
-                ->addRow(['Denied', $pieDenied])
-                ->addRow(['Under Review', $pieOpen]);
-
-        $lava->PieChart('SRP Stats', $srp, [
-            'title'  => 'SRP Stats',
-            'is3D'   => true,
-        ]);
-
-        $adur = $lava->DataTable();
-
-        $adur->addStringColumn('Type')
-            ->addNumberColumn('Value')
-            ->addRow(['Under Review', $gaugeReview])
-            ->addRow(['Approved', $pieApproved])
-            ->addRow(['Denied', $pieDenied]);
-
-        $lava->GaugeChart('SRP', $adur, [
-            'width'      => 400,
-            'greenFrom'  => 0,
-            'greenTo'    => 20,
-            'yellowFrom' => 20,
-            'yellowTo'   => 40,
-            'redFrom'    => 40,
-            'redTo'      => 100,
-            'majorTicks' => [
-                'Safe',
-                'Critical',
-            ],
-        ]);
-
+        //Create a new Bar Chart of all of the FC's
         $fcs = $lava->DataTable();
-
+        //Add string and number columns for the chart
         $fcs->addStringColumn('Fleet Commander Losses')
             ->addNumberColumn('ISK');
+        //Add the data rows for each FC
         foreach($barChartData as $data) {
             $fcs->addRow([$data['fc'], $data['total']]);
         }
-
+        //Declare the chart with the options needed to render the chart
         $lava->BarChart('FCs', $fcs, [
             'width' => 600,
         ]);
+
+        /**
+         * Create a vertical chart of all of the cost codes for the ships being SRP'ed.
+         * The chart will be by cost code of ships being replaced
+         */
+        //Declare the data table
+        $costCodeChart = $lava->DataTable();
+
+        //Get the approved, under review, and denied cost codes and amounts
+        $t1fdcApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'T1FDC', 
+        ])->sum('paid_value');
+        $t1fdcUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'T1FDC',
+        ])->sum('loss_value');
+        $t1fdcDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'T1FDC',
+        ])->sum('loss_value');
+
+        $t1bcApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'T1BC',
+        ])->sum('paid_value');
+        $t1bcUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'T1BC',
+        ])->sum('loss_value');
+        $t1bcDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'T1BC',
+        ])->sum('loss_value');
+        
+        $t2fdApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'T2FD',
+        ])->sum('paid_value');
+        $t2fdUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'T2FD',
+        ])->sum('loss_value');
+        $t2fdDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'T2FD',
+        ])->sum('loss_value');
+
+        $t3dApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'T3D',
+        ])->sum('paid_value');
+        $t3dUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'T3D',
+        ])->sum('loss_value');
+        $t3dDeneid = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'T3D',
+        ])->sum('loss_value');
+
+        $t1t2logiApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'T1T2Logi',
+        ])-sum('paid_value');
+        $t1t2logiUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'T1T2Logi',
+        ])->sum('loss_value');
+        $t1t2logiDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'T1T2Logi',
+        ])->sum('loss_value');
+
+        $reconsApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'REC',
+        ])->sum('paid_value');
+        $reconsUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'REC',
+        ])->sum('loss_value');
+        $reconsDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'REC',
+        ])->sum('loss_value');
+
+        $t2cApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'T2C',
+        ])->sum('paid_value');
+        $t2cUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'T2C',
+        ])->sum('loss_value');
+        $t2cDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'T2C',
+        ])->sum('loss_value');
+
+        $t3cApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'T3C',
+        ])->sum('paid_value');
+        $t3cUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'T3C',
+        ])->sum('loss_value');
+        $t3cDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'T3C',
+        ])->sum('loss_value');
+
+        $commandApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'COM',
+        ])->sum('paid_value');
+        $commandUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'COM',
+        ])->sum('loss_value');
+        $commandDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'COM',
+        ])->sum('loss_value');
+
+        $interdictorApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'INTD',
+        ])->sum('paid_value');
+        $interdictorUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'INTD',
+        ])->sum('loss_value');
+        $interdictorDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'INTD',
+        ])->sum('loss_value');
+
+        $t1bsApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'T1BS',
+        ])->sum('paid_value');
+        $t1bsUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'T1BS',
+        ])->sum('loss_value');
+        $t1bsDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'T1BS',
+        ])->sum('loss_value');
+
+        $dksApproved = SRPShip::where([
+            'approved' => 'Approved',
+            'ship_type' => 'DKS',
+        ])->sum('paid_value');
+        $dksUnderReview = SRPShip::where([
+            'approved' => 'Under Review',
+            'ship_type' => 'DKS',
+        ])->sum('loss_value');
+        $dksDenied = SRPShip::where([
+            'approved' => 'Denied',
+            'ship_type' => 'DKS',
+        ])->sum('loss_value');
+
+
+        //Add string column, number columns.
+        $costCodeChart->addNumberColumn('Approved')
+                      ->addNumberColumn('Under Review')
+                      ->addNumberColumn('Denied')
+                      ->addRow(['T1FDC', $t1fdcApproved, $t1fdcUnderReview, $t1fdcDenied])
+                      ->addRow(['T1BC', $t1bcApproved, $t1bcUnderReview, $t1bcDeneid])
+                      ->addRow(['T1BS', $t1bsApproved, $t1bsUnderReview, $t1bsDenied])
+                      ->addRow(['T2FD', $t2fdApproved, $t2fdUnderReview, $t2fdDeneid])
+                      ->addRow(['T2C', $t2cApproved, $t2cUnderReview, $t2cDenied])
+                      ->addRow(['T1T2Logi', $t1t2logiApproved, $t1t2logiUnderReview, $t1t2logiDenied])
+                      ->addRow(['T3D', $t3dApproved, $t3dUnderReview, $t3dDenied])
+                      ->addRow(['T3C', $t3cApproved, $t3cUnderReview, $t3cDenied])
+                      ->addRow(['RECON', $reconApproved, $reconUnderReview, $reconDenied])
+                      ->addRow(['COMMAND', $commandApproved, $commandUnderReview, $commandDenied])
+                      ->addRow(['DKS', $dksApproved, $dksUnderReview, $dksDenied]);
+        
+        $lava->ColumnChart('Cost Codes', $costCodeChart, [
+            'title' => 'Cost Code SRP Chart',
+            'titleTextStyle' => [
+                'color' => '#eb6b2c',
+                'fontSize' => 14,
+            ],
+        ]);  
 
         return view('srp.admin.statistics')->with('lava', $lava);
     }
