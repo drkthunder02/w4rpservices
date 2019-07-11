@@ -382,7 +382,7 @@ class SRPAdminController extends Controller
                       ->addNumberColumn('Under Review')
                       ->addNumberColumn('Denied')
                       ->addRow(['T1FDC', $t1fdcApproved, $t1fdcUnderReview, $t1fdcDenied])
-                      ->addRow(['T1BC', $t1bcApproved, $t1bcUnderReview, $t1bcDeneid])
+                      ->addRow(['T1BC', $t1bcApproved, $t1bcUnderReview, $t1bcDenied])
                       ->addRow(['T1BS', $t1bsApproved, $t1bsUnderReview, $t1bsDenied])
                       ->addRow(['T2FD', $t2fdApproved, $t2fdUnderReview, $t2fdDeneid])
                       ->addRow(['T2C', $t2cApproved, $t2cUnderReview, $t2cDenied])
