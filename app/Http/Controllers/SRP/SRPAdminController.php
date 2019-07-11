@@ -393,6 +393,7 @@ class SRPAdminController extends Controller
                       ->addRow(['DKS', $dksApproved, $dksUnderReview, $dksDenied]);
         
         $lava->ColumnChart('Cost Codes', $costCodeChart, [
+            'columns' => 4,
             'title' => 'Cost Code SRP Chart',
             'titleTextStyle' => [
                 'color' => '#eb6b2c',
