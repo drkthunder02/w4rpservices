@@ -274,7 +274,7 @@ class SRPAdminController extends Controller
         $t1t2logiApproved = SRPShip::where([
             'approved' => 'Approved',
             'ship_type' => 'T1T2Logi',
-        ])-sum('paid_value');
+        ])->sum('paid_value');
         $t1t2logiUnderReview = SRPShip::where([
             'approved' => 'Under Review',
             'ship_type' => 'T1T2Logi',
