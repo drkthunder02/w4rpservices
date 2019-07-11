@@ -384,7 +384,7 @@ class SRPAdminController extends Controller
                       ->addRow(['T1FDC', $t1fdcApproved, $t1fdcUnderReview, $t1fdcDenied])
                       ->addRow(['T1BC', $t1bcApproved, $t1bcUnderReview, $t1bcDenied])
                       ->addRow(['T1BS', $t1bsApproved, $t1bsUnderReview, $t1bsDenied])
-                      ->addRow(['T2FD', $t2fdApproved, $t2fdUnderReview, $t2fdDeneid])
+                      ->addRow(['T2FD', $t2fdApproved, $t2fdUnderReview, $t2fdDenied])
                       ->addRow(['T2C', $t2cApproved, $t2cUnderReview, $t2cDenied])
                       ->addRow(['T1T2Logi', $t1t2logiApproved, $t1t2logiUnderReview, $t1t2logiDenied])
                       ->addRow(['T3D', $t3dApproved, $t3dUnderReview, $t3dDenied])
