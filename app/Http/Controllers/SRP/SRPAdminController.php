@@ -377,7 +377,8 @@ class SRPAdminController extends Controller
 
 
         //Add string column, number columns.
-        $costCodeChart->addNumberColumn('Approved')
+        $costCodeChart->addStringColumn('SRP Costs')
+                      ->addNumberColumn('Approved')
                       ->addNumberColumn('Under Review')
                       ->addNumberColumn('Denied')
                       ->addRow(['T1FDC', $t1fdcApproved, $t1fdcUnderReview, $t1fdcDenied])
