@@ -266,7 +266,7 @@ class SRPAdminController extends Controller
             'approved' => 'Under Review',
             'ship_type' => 'T3D',
         ])->sum('loss_value');
-        $t3dDeneid = SRPShip::where([
+        $t3dDenied = SRPShip::where([
             'approved' => 'Denied',
             'ship_type' => 'T3D',
         ])->sum('loss_value');
