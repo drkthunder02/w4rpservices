@@ -26,6 +26,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/dashboard', 'Dashboard\DashboardController@index');
 
     /**
+     * AJAX Test pages
+     */
+    Route::get('/ajax', 'LiveSearch@index');
+    Route::get('/ajax/action', 'LiveSearch@action')->name('live_search.action');
+
+    /**
      * Moon Controller display pages
      */
     Route::get('/moons/display', 'Moons\MoonsController@displayMoons');
