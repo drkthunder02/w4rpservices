@@ -29,7 +29,7 @@ Route::group(['middleware' => ['auth']], function(){
      * AJAX Test pages
      */
     Route::get('/ajax', 'LiveSearch@index');
-    Route::get('/ajax/action', 'LiveSearch@action')->name('live_search.action');
+    Route::get('/ajax/store', 'LiveSearch@action');
 
     /**
      * Moon Controller display pages
