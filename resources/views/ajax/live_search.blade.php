@@ -1,7 +1,7 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
-    <input type="text" name="search" id="search" class="form-control" placeholder="search Users" />
+    <input type="text" name="search" id="search" class="form-control" placeholder="Search Users" />
 </div>
 <div class="table-responsive">
     <h3 align="center"> Total Data : <span id="total_records"></span></h3>
@@ -34,6 +34,12 @@
 
         fetch_user_data();
     })
+
+    $(document).on('keyup', '#search', function() {
+        var query = $(this).val();
+        fetch_user_data(query);
+    });
+
 </script>
 
 @endsection
