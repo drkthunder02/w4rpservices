@@ -19,12 +19,9 @@
 
 <script>
     $(document).ready(function() {
-
-        fetch_user_data();
-
         function fetch_user_data(query = '') {
             $.ajax({
-                url:"{{ route('live_search.action')}}",
+                url:"{{ route('live_search.action') }}",
                 method:'GET',
                 data:{query:query},
                 dataType:'json',
@@ -34,6 +31,8 @@
                 }
             });
         }
+
+        fetch_user_data();
     })
 </script>
 
