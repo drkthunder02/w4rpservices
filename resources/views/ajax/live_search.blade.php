@@ -1,4 +1,4 @@
-@extends('layouts.b4')
+@extends('ajax.b4')
 @section('content')
 <div class="container">
     <input type="text" name="search" id="search" class="form-control" placeholder="Search Users" />
@@ -16,30 +16,5 @@
 
     </tbody>
 </table>
-
-<script>
-    $(document).ready(function() {
-        function fetch_user_data(query = '') {
-            $.ajax({
-                url:"{{ route('live_search.action') }}",
-                method:'GET',
-                data:{query:query},
-                dataType:'json',
-                success:function(data) {
-                    $('tbody').html(data.table_data);
-                    $('#total_records').text(data.total_data);
-                }
-            });
-        }
-
-        fetch_user_data();
-    })
-
-    $(document).on('keyup', '#search', function() {
-        var query = $(this).val();
-        fetch_user_data(query);
-    });
-
-</script>
 
 @endsection
