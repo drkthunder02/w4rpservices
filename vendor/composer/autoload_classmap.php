@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Charts\\StructureFuelGauge' => $baseDir . '/app/Charts/StructureFuelGauge.php',
     'App\\Console\\Commands\\CleanStaleDataCommand' => $baseDir . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
     'App\\Console\\Commands\\GetAssetsCommand' => $baseDir . '/app/Console/Commands/Assets/GetAssets.php',
     'App\\Console\\Commands\\GetCorpsCommand' => $baseDir . '/app/Console/Commands/Corps/GetCorps.php',
@@ -26,6 +27,7 @@ return array(
     'App\\Http\\Controllers\\Dashboard\\AdminController' => $baseDir . '/app/Http/Controllers/Dashboard/AdminController.php',
     'App\\Http\\Controllers\\Dashboard\\DashboardController' => $baseDir . '/app/Http/Controllers/Dashboard/DashboardController.php',
     'App\\Http\\Controllers\\Fuel\\FuelController' => $baseDir . '/app/Http/Controllers/Logistics/FuelController.php',
+    'App\\Http\\Controllers\\LiveSearch' => $baseDir . '/app/Http/Controllers/LiveSearch.php',
     'App\\Http\\Controllers\\Logistics\\LogisticsController' => $baseDir . '/app/Http/Controllers/Logistics/LogisticsController.php',
     'App\\Http\\Controllers\\Moons\\MoonsAdminController' => $baseDir . '/app/Http/Controllers/Moons/MoonsAdminController.php',
     'App\\Http\\Controllers\\Moons\\MoonsController' => $baseDir . '/app/Http/Controllers/Moons/MoonsController.php',

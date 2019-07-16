@@ -469,6 +469,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
+        'App\\Charts\\StructureFuelGauge' => __DIR__ . '/../..' . '/app/Charts/StructureFuelGauge.php',
         'App\\Console\\Commands\\CleanStaleDataCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
         'App\\Console\\Commands\\GetAssetsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Assets/GetAssets.php',
         'App\\Console\\Commands\\GetCorpsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Corps/GetCorps.php',
@@ -489,6 +490,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Http\\Controllers\\Dashboard\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/AdminController.php',
         'App\\Http\\Controllers\\Dashboard\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/DashboardController.php',
         'App\\Http\\Controllers\\Fuel\\FuelController' => __DIR__ . '/../..' . '/app/Http/Controllers/Logistics/FuelController.php',
+        'App\\Http\\Controllers\\LiveSearch' => __DIR__ . '/../..' . '/app/Http/Controllers/LiveSearch.php',
         'App\\Http\\Controllers\\Logistics\\LogisticsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Logistics/LogisticsController.php',
         'App\\Http\\Controllers\\Moons\\MoonsAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moons/MoonsAdminController.php',
         'App\\Http\\Controllers\\Moons\\MoonsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moons/MoonsController.php',
