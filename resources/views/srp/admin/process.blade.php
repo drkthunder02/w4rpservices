@@ -42,6 +42,9 @@
                             {{ $row['ship_type'] }}
                         </td>
                         <td>
+                            {{ $row['cost_code'] }}
+                        </td>
+                        <td>
                             {{ $row['fleet_type'] }}
                         </td>
                         <td>
