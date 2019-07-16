@@ -11,6 +11,7 @@
                 <th>zKillboard</th>
                 <th>Total Loss</th>
                 <th>Ship Type</th>
+                <th>Payout %</th>
                 <th>Fleet Type</th>
                 <th>Actual SRP</th>
                 <th>Notes</th>
