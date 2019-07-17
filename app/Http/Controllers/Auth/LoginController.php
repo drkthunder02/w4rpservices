@@ -107,7 +107,6 @@ class LoginController extends Controller
                 } else {
                     return redirect()->to('/profile')->with('error', 'Alt was previously registered.');
                 }
-                
             }
         } else {
             $user = $this->createOrGetUser($ssoUser);

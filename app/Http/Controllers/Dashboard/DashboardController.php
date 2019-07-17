@@ -126,24 +126,24 @@ class DashboardController extends Controller
         $roles = null;
 
         //Get the Esi scopes, user permission set, and roles
-        $scopeCount = EsiScope::where('character_id', auth()->user()->character_id)->count();
+        $scopeCount = EsiScope::where('character_id', Auth()->user()->character_id)->count();
         if($scopeCount > 0) {
             $scopes = EsiScope::where('character_id', Auth()->user()->character_id)->get();
         }
         
-        $permissionCount = UserPermission::where('character_id', auth()->user()->character_id)->count();
+        $permissionCount = UserPermission::where('character_id', Auth()->user()->character_id)->count();
         if($permissionCount > 0) {
             $permissions = UserPermission::where('character_id', Auth()->user()->characer_id)->get();
         }
         
-        $roleCount = UserRole::where('character_id', auth()->user()->character_id)->count();
+        $roleCount = UserRole::where('character_id', Auth()->user()->character_id)->count();
         if($roleCount > 0) {
             $roles = UserRole::where('character_id', Auth()->user()->character_id)->get();
         }
 
-        $altCount = UserAlt::where('main_id', auth()->user()->character_id)->count();
+        $altCount = UserAlt::where('main_id', Auth()->user()->character_id)->count();
         if($altCount > 0) {
-            $alts = UserAlt::where(['main_id' => auth()->user()->character_id])->get();
+            $alts = UserAlt::where(['main_id' => Auth()->user()->character_id])->get();
         }
     
         return view('dashboard.profile')->with('scopeCount', $scopeCount)
