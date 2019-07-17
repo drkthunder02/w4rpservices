@@ -89,6 +89,8 @@ class SRPController extends Controller
         $tempFcName = strtolower($request->FC);
         $tempFcName = ucwords($tempFcName);
 
+        dd($request->character);
+
         $ship = new SRPShip;
         $ship->character_id = $request->character;
         $ship->character_name = auth()->user()->name;
