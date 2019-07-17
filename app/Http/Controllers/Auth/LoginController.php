@@ -128,9 +128,7 @@ class LoginController extends Controller
             $newAlt->main_id = auth()->user()->getId();
             $newAlt->character_id = $user->id;
             $newAlt->avatar = $user->avatar;
-            if(isset($user->access_token)) {
-                $newAlt->access_token = $user->access_token;
-            }
+            $newAlt->access_token = $user->token;
             if(isset($user->refresh_token)) {
                 $newAlt->refresh_token = $user->refresh_token;
             }
