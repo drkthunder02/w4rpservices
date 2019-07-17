@@ -99,9 +99,7 @@ class LoginController extends Controller
                 $this->SetScopes($ssoUser->user['Scopes'], $ssoUser->id);
 
                 return redirect()->to('/dashboard')->with('success', 'Successfully updated ESI Scopes.');
-            } else {    //We must assume the person is logging an alt
-                
-            }
+            } 
         } else {
             $user = $this->createOrGetUser($ssoUser);
 
@@ -119,10 +117,18 @@ class LoginController extends Controller
      */
     private function createOrGetAlt($user) {
         $altCount = UserAlt::where('character_id', $user->id)->count();
-        if($altcount > 0) {
-            
-        } else {
-            
+        if($altcount == 0) {
+            $newAlt = new UserAlt;
+            $newAlt->name = $user->getName();
+            $newAlt->main_id = auth()->user()->getId();
+            $newAlt->character_id = $user->id;
+            $newAlt->avatar = $user->avatar;
+            $newAlt->access_token = $user->access_token;
+            if(isset($user->refresh_token)) {
+                $newAlt->refresh_token = $user->refresh_token;
+            }
+            $newAlt->expires_in = $user->expiresIn;
+            $newAlt->save();
         }
     }
 

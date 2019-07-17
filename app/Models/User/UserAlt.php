@@ -25,6 +25,6 @@ class UserAlt extends Model
         'refresh_token',
         'inserted_at',
         'expires_in',
-        'owner_has',
+        'owner_hash',
     ];
 }
