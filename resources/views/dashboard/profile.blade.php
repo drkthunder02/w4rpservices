@@ -97,7 +97,7 @@
             <th>Remove</th>
         </thead>
         <tbody>
-            @if($altcount > 0)
+            @if($altCount > 0)
                 @foreach($alts as $alt)
                 {{ Form::open(['action' => 'Dashboard\DashboardController@removeAlt', 'method' => 'POST']) }}
                 <tr>
