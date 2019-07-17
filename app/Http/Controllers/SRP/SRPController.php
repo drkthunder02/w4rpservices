@@ -93,11 +93,10 @@ class SRPController extends Controller
 
         $userCount = User::where(['character_id' => $request->character])->count();
         $altCount = UserAlt::where(['character_id' => $request->character])->count();
-
+dd($userCount);
         if($userCount > 0) {
             $tempUser = User::where(['character_id' => $request->character])->get()->toArray();
             $name = $tempUser['name'];
-            
         } else if($altCount > 0) {
             $tempAlt = UserAlt::where(['character_id' => $request->character])->get()->toArray();
             $name = $tempAlt['name'];
