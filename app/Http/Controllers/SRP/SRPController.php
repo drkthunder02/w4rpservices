@@ -15,6 +15,7 @@ use App\Models\SRP\SRPShip;
 use App\Models\User\User;
 use App\Models\SRP\SrpFleetType;
 use App\Models\SRP\SrpShipType;
+use App\Models\User\UserAlt;
 
 class SRPController extends Controller
 {
@@ -26,20 +27,54 @@ class SRPController extends Controller
     public function displaySrpForm() {
         $shipTypes = array();
         $fleetTypes = array();
+        $characters = array();
+        $temp = array();
+        $alts = null;
 
+        //Get all the ship types
         $shipTypesTemp = SrpShipType::all();
+
+        //Get all of the fleet types
         $fleetTypesTemp = SrpFleetType::all();
 
+        //Process the ship types and store in the array
         foreach($shipTypesTemp as $type) {
             $shipTypes[$type->code] = $type->description;
         }
 
+        //Process the fleet types and store in the array
         foreach($fleetTypesTemp as $type) {
             $fleetTypes[$type->code] = $type->description;
         }
 
+        //Get the user id and name, and store in the array
+        $tempMain = [
+            'character_id' => auth()->user()->character_id,
+            'name' => auth()->user()->getName(),
+        ];
+        //Push the main into the array first
+        array_push($characters, $tempMain);
+
+        //Get the alts and store in the array
+        $altCount = UserAlt::where(['main' => auth()->user()->character_id])->count();
+        if($altCount > 0) {
+            $alts = UserAlt::where([
+                'main' => auth()->user()->character_id,
+            ])->get();
+
+            foreach($alts as $alt) {
+                $temp = [
+                    'character_id' => $alt->character_id,
+                    'name' => $alt->name,
+                ];
+
+                array_push($characters, $temp);
+            }
+        }
+        
         return view('srp.srpform')->with('fleetTypes', $fleetTypes)
-                                  ->with('shipTypes', $shipTypes);
+                                  ->with('shipTypes', $shipTypes)
+                                  ->with('characters', $characters);
     }    
 
     public function storeSRPFile(Request $request) {

@@ -10,6 +10,10 @@
         'method' => 'POST'
     ]) !!}
     <div class="form-group">
+    {{ Form::label('character', 'Character') }}
+    {{ Form::select('character', $characters, null, ['class' => 'form-control']) }}
+    </div>
+    <div class="form-group">
     {{ Form::label('FC', 'Fleet Commander') }}
     {{ Form::text('FC', null, ['class' => 'form-control']) }}
     </div>
