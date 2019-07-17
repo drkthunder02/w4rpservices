@@ -102,7 +102,7 @@
                     <td>{{ $alt->character_id }}</td>
                     <td>
                         {{ Form::hidden('character', $alt->character_id) }}
-                        {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+                        {{ Form::submit('Remove Alt', ['class' => 'btn btn-primary']) }}
                     </td>
                 </tr>
                 {{ Form::close() }}
