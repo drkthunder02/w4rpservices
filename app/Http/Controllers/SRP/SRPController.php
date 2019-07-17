@@ -68,6 +68,8 @@ class SRPController extends Controller
     }    
 
     public function storeSRPFile(Request $request) {
+        $name = null;
+
         $this->validate($request, [
             'character' => 'required',
             'FC' => 'required',
@@ -89,11 +91,22 @@ class SRPController extends Controller
         $tempFcName = strtolower($request->FC);
         $tempFcName = ucwords($tempFcName);
 
-        dd($request->character);
+        $userCount = User::where(['character_id' => $request->character])->count();
+        $altCount = UserAlt::where(['character_id' => $request->character])->count();
+
+        if($userCount > 0) {
+            $tempUser = User::where(['character_id' => $request->character])->get();
+            $name = $tempUser->name;
+        } else if($altCoutn > 0) {
+            $tempAlt = UserAlt::where(['character_id' => $request->character])->get();
+            $name = $tempAlt->name;
+        } else {
+            $name = null;
+        }
 
         $ship = new SRPShip;
         $ship->character_id = $request->character;
-        $ship->character_name = auth()->user()->name;
+        $ship->character_name = $name;
         $ship->fleet_commander_name = $tempFcName;
         if(isset($fcId[0])) {
             $ship->fleet_commander_id = $fcId[0]->character_id;
