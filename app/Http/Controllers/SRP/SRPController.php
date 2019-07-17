@@ -78,7 +78,7 @@ class SRPController extends Controller
             'LossValue' => 'required',
             'ShipType' => 'required',
         ]);
-            dd($request->character);
+            
         //See if the FC Name ties to a user on the services site
         $fcId = User::where(['name' => $request->FC])->get(['character_id']);
         
@@ -93,9 +93,10 @@ class SRPController extends Controller
 
         $userCount = User::where(['character_id' => $request->character])->count();
         $altCount = UserAlt::where(['character_id' => $request->character])->count();
-dd($userCount);
+
         if($userCount > 0) {
             $tempUser = User::where(['character_id' => $request->character])->get()->toArray();
+            dd($tempUser);
             $name = $tempUser['name'];
         } else if($altCount > 0) {
             $tempAlt = UserAlt::where(['character_id' => $request->character])->get()->toArray();
