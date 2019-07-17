@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth']], function(){
      */
     Route::get('/dashboard', 'Dashboard\DashboardController@index');
     Route::post('/dashboard/alt/delete', 'Dashboard\DashboardController@removeAlt');
+    Route::get('/profile', 'Dashboard\DashboardController@profile');
 
     /**
      * AJAX Test pages
