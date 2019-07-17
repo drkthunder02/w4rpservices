@@ -85,9 +85,6 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <a href="/login" img='/img/eve-soo-login-white-large.png'>Register Alt</a>
-</div>
 <br>
 <div class="container">
     <table class="table table-striped table-bordered">
@@ -118,5 +115,9 @@
             @endif
         </tbody>
     </table>
+</div>
+<br>
+<div class="container">
+    <a href="/login" img='/img/eve-soo-login-white-large.png'>Register Alt</a>
 </div>
 @endsection
