@@ -101,7 +101,13 @@ class LoginController extends Controller
 
                 return redirect()->to('/dashboard')->with('success', 'Successfully updated ESI Scopes.');
             } else {
-                $this->createAlt($ssoUser);
+                $created = $this->createAlt($ssoUser);
+                if($created == 1) {
+                    return redirect()->to('/profile')->with('success', 'Alt registered.');
+                } else {
+                    return redirect()->to('/profile')->with('error', 'Alt was previously registered.');
+                }
+                
             }
         } else {
             $user = $this->createOrGetUser($ssoUser);
@@ -133,6 +139,9 @@ class LoginController extends Controller
             $newAlt->owner_hash = $user->owner_hash;
             $newAlt->expires_in = $user->expiresIn;
             $newAlt->save();
+            return 1;
+        } else {
+            return 0;
         }
     }
 
