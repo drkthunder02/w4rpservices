@@ -84,7 +84,7 @@ class LoginController extends Controller
         if(Auth::check()) {
             //If a refresh token is present, then we are doing a scope callback
             //to update scopes for an access token
-            if($ssoUser->refresh_token) {
+            if(isset($ssoUser->refresh_token)) {
                 //See if an access token is present already
                 $tokenCount = EsiToken::where('character_id', $ssoUser->id)->count();
                 if($tokenCount > 0) {
