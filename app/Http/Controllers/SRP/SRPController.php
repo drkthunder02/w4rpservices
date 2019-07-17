@@ -96,16 +96,14 @@ class SRPController extends Controller
 
         if($userCount > 0) {
             $tempUser = User::where(['character_id' => $request->character])->get();
-            if(isset($tempUser->name)) {
+  
                 $name = $tempUser->name;
-            }
+            
         } else if($altCount > 0) {
             $tempAlt = UserAlt::where(['character_id' => $request->character])->get();
-            if(isset($tempAlt->name)) {
                 $name = $tempAlt->name;
-            }
         } else {
-            $name = null;
+            $name = 'None';
         }
 
         $ship = new SRPShip;
