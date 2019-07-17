@@ -119,8 +119,6 @@ class LoginController extends Controller
      * @param \Laravel\Socialite\Two\User $user
      */
     private function createAlt($user) {
-        dd($user);
-
         $altCount = UserAlt::where('character_id', $user->id)->count();
         if($altCount == 0) {
             $newAlt = new UserAlt;
