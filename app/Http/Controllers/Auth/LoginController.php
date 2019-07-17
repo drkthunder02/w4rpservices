@@ -120,7 +120,7 @@ class LoginController extends Controller
      */
     private function createAlt($user) {
         $altCount = UserAlt::where('character_id', $user->id)->count();
-        if($altcount == 0) {
+        if($altCount == 0) {
             $newAlt = new UserAlt;
             $newAlt->name = $user->getName();
             $newAlt->main_id = auth()->user()->getId();
