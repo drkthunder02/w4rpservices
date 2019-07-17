@@ -48,10 +48,8 @@ class SRPController extends Controller
         }
 
         //Get the user id and name, and store in the array
-        $tempMain = [
-            'character_id' => auth()->user()->character_id,
-            'name' => auth()->user()->getName(),
-        ];
+        $tempMain[auth()->user()->character_id] = auth()->user()->getName(); 
+
         //Push the main into the array first
         array_push($characters, $tempMain);
 
@@ -63,12 +61,7 @@ class SRPController extends Controller
             ])->get();
 
             foreach($alts as $alt) {
-                $temp = [
-                    'character_id' => $alt->character_id,
-                    'name' => $alt->name,
-                ];
-
-                array_push($characters, $temp);
+                $temp[$alt->character_id] = $alt->name;
             }
         }
         
