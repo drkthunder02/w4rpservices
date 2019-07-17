@@ -48,10 +48,7 @@ class SRPController extends Controller
         }
 
         //Get the user id and name, and store in the array
-        $tempMain[auth()->user()->character_id] = auth()->user()->getName(); 
-
-        //Push the main into the array first
-        array_push($characters, $tempMain);
+        $characters[auth()->user()->character_id] = auth()->user()->getName(); 
 
         //Get the alts and store in the array
         $altCount = UserAlt::where(['main_id' => auth()->user()->character_id])->count();
@@ -61,7 +58,7 @@ class SRPController extends Controller
             ])->get();
 
             foreach($alts as $alt) {
-                $temp[$alt->character_id] = $alt->name;
+                $characters[$alt->character_id] = $alt->name;
             }
         }
         
