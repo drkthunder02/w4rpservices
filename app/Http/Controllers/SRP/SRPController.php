@@ -69,6 +69,7 @@ class SRPController extends Controller
 
     public function storeSRPFile(Request $request) {
         $this->validate($request, [
+            'character' => 'required',
             'FC' => 'required',
             'FleetType' => 'required',
             'zKillboard' => 'required',
@@ -89,7 +90,7 @@ class SRPController extends Controller
         $tempFcName = ucwords($tempFcName);
 
         $ship = new SRPShip;
-        $ship->character_id = auth()->user()->character_id;
+        $ship->character_id = $request->character;
         $ship->character_name = auth()->user()->name;
         $ship->fleet_commander_name = $tempFcName;
         if(isset($fcId[0])) {
