@@ -130,22 +130,26 @@ class DashboardController extends Controller
         if($scopeCount > 0) {
             $scopes = EsiScope::where('character_id', Auth()->user()->character_id)->get();
         }
-        
-        $permissionCount = UserPermission::where('character_id', Auth()->user()->character_id)->count();
+
+        //Get the permission count and permission of the user
+        $permissionCount = UserPermission::where('character_id', auth()->user()->character_id)->count();
         if($permissionCount > 0) {
-            $permissions = UserPermission::where('character_id', Auth()->user()->characer_id)->get();
+            $permissions = UserPermission::where('character_id', auth()->user()->character_id)->get();
         }
-        dd($permissions);
+
+        //Get the roles and role count of the user
         $roleCount = UserRole::where('character_id', Auth()->user()->character_id)->count();
         if($roleCount > 0) {
             $roles = UserRole::where('character_id', Auth()->user()->character_id)->get();
         }
 
+        //Get the alt count and alts of the user
         $altCount = UserAlt::where('main_id', Auth()->user()->character_id)->count();
         if($altCount > 0) {
             $alts = UserAlt::where(['main_id' => Auth()->user()->character_id])->get();
         }
-    
+        
+        //Return the view with that data
         return view('dashboard.profile')->with('scopeCount', $scopeCount)
                                         ->with('scopes', $scopes)
                                         ->with('permissionCount', $permissionCount)
