@@ -118,16 +118,53 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function profile() {
-        $scopes = EsiScope::where('character_id', Auth()->user()->character_id)->get();
-        $permissions = UserPermission::where('character_id', Auth()->user()->characer_id)->get();
-        $roles = UserRole::where('character_id', Auth()->user()->character_id)->get();
-        
-        $data = [
-            'scopes' => $scopes,
-            'permissions' => $permissions,
-            'roles' => $roles,
-        ];
+        //Declare some variables
+        $alts = null;
+        $scopes = null;
+        $permissions = null;
+        $roles = null;
 
-        return view('dashboard.profile')->with('data', $data);
+        //Get the Esi scopes, user permission set, and roles
+        $scopeCount = EsiScope::where('character_id', auth()->user()->character_id)->count();
+        if($scopeCount > 0) {
+            $scopes = EsiScope::where('character_id', Auth()->user()->character_id)->get();
+        }
+        
+        $permissionCount = UserPermission::where('character_id', auth()->user()->character_id)->count();
+        if($permissionCount > 0) {
+            $permissions = UserPermission::where('character_id', Auth()->user()->characer_id)->get();
+        }
+        
+        $roleCount = UserRole::where('character_id', auth()->user()->character_id)->count();
+        if($roleCount > 0) {
+            $roles = UserRole::where('character_id', Auth()->user()->character_id)->get();
+        }
+
+        $altCount = UserAlt::where('main_id', auth()->user()->character_id)->count();
+        if($altCount > 0) {
+            $alts = UserAlt::where(['main_id' => auth()->user()->character_id])->get();
+        }
+    
+        return view('dashboard.profile')->with('scopeCount', $scopeCount)
+                                        ->with('scopes', $scopes)
+                                        ->with('permissionCount', $permissionCount)
+                                        ->with('permissions', $permissions)
+                                        ->with('roleCount', $roleCount)
+                                        ->with('roles', $roles)
+                                        ->with('altCount', $altCount)
+                                        ->with('alts', $alts);
+    }
+
+    public function removeAlt(Request $request) {
+        $this->validate($request, [
+            'character' => 'required',
+        ]);
+
+        UserAlt::where([
+            'main_id' => auth()->user()->character_id,
+            'character_id' => $request->character,
+        ])->delete();
+
+        return redirect('/dashboard');
     }
 }

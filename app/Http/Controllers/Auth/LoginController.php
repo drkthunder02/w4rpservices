@@ -99,7 +99,9 @@ class LoginController extends Controller
                 $this->SetScopes($ssoUser->user['Scopes'], $ssoUser->id);
 
                 return redirect()->to('/dashboard')->with('success', 'Successfully updated ESI Scopes.');
-            } 
+            } else {
+                $this->createAlt($ssoUser);
+            }
         } else {
             $user = $this->createOrGetUser($ssoUser);
 
@@ -115,7 +117,7 @@ class LoginController extends Controller
      * 
      * @param \Laravel\Socialite\Two\User $user
      */
-    private function createOrGetAlt($user) {
+    private function createAlt($user) {
         $altCount = UserAlt::where('character_id', $user->id)->count();
         if($altcount == 0) {
             $newAlt = new UserAlt;
