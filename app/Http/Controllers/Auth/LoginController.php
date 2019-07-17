@@ -14,6 +14,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\User\UserPermission;
 use App\Models\User\UserRole;
 use App\Models\Admin\AllowedLogin;
+use App\Models\User\UserAlt;
 
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
