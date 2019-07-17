@@ -135,7 +135,7 @@ class DashboardController extends Controller
         if($permissionCount > 0) {
             $permissions = UserPermission::where('character_id', Auth()->user()->characer_id)->get();
         }
-        
+        dd($permissions);
         $roleCount = UserRole::where('character_id', Auth()->user()->character_id)->count();
         if($roleCount > 0) {
             $roles = UserRole::where('character_id', Auth()->user()->character_id)->get();
