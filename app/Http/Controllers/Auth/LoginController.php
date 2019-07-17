@@ -130,6 +130,7 @@ class LoginController extends Controller
             if(isset($user->refresh_token)) {
                 $newAlt->refresh_token = $user->refresh_token;
             }
+            $newAlt->owner_hash = $user->owner_hash;
             $newAlt->expires_in = $user->expiresIn;
             $newAlt->save();
         }
