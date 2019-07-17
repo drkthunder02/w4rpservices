@@ -15,6 +15,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\User\UserPermission;
 use App\Models\User\UserRole;
 use App\Models\SRP\SRPShip;
+use App\Models\User\UserAlt;
 
 class DashboardController extends Controller
 {
