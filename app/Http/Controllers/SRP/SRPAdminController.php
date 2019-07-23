@@ -29,18 +29,27 @@ class SRPAdminController extends Controller
     }
 
     public function displaySRPRequests() {
+        //Middleware needed for permissions
         $this->middleware('permission:srp.admin');
 
+        //Create the array
         $requests = array();
 
+        //Get the ship types from the database
         $shipTypes = SrpShipType::all();
+
+        //Get the fleet types from the database
         $fleetTypes = SrpFleetType::all();
+
+        //Get the payouts from the database
         $payouts = SrpPayout::all();
         
+        //Get the SRP ship count to see how many requests are avaiable "Under Review" in the database
         $count = SRPShip::where(['approved' => 'Under Review'])->count();
+        //If the count is 0 then there are no requests
         if($count === 0) {
             $requests = null;
-        } else {
+        } else {    //Process each request
             $reqs = SRPShip::where(['approved' => 'Under Review'])->get()->toArray();
             foreach($reqs as $r) {
                 $temp['id'] = $r['id'];
@@ -69,22 +78,25 @@ class SRPAdminController extends Controller
                     }
                 }
                 
+                //Push the calculations into the array
                 array_push($requests, $temp);
             }
         }
 
+        //Return the view with the variables
         return view('srp.admin.process')->with('requests', $requests);
     }
 
     public function processSRPRequest(Request $request) {
+        //Validate the request
         $this->validate($request, [
             'id' => 'required',
             'approved' => 'required',
             'paid_value' => 'required',
         ]);
-
+        //Get the paid value from the form
         $paidValue = str_replace(',', '', $request->paid_value);
-
+        //If the notes are not null update like this.
         if($request->notes != null) {
             $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
