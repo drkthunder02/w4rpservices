@@ -24,6 +24,27 @@ class SRPController extends Controller
         $this->middleware('role:User');
     }
 
+    public function displayPayoutAmounts() {
+        $shipTypes = array();
+        $payoutCodes = array();
+        $payouts = array();
+
+        $shipTypesTemp = SrpShipType::all();
+        $payoutCodesTemp = SrpPayout::all();
+
+        foreach($shipTypesTemp as $type) {
+            $temp = [
+                'code' => $type->code,
+                'description' => $type->description,
+                'payout' => $payoutCodesTemp[$type->code],
+            ];
+
+            array_push($payouts, $temp);
+        }
+
+        return view('srp.payouts')->with('payouts', $payouts);
+    }
+
     public function displaySrpForm() {
         $shipTypes = array();
         $fleetTypes = array();
