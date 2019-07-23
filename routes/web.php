@@ -117,6 +117,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/srp/admin/process', 'SRP\SRPAdminController@processSRPRequest');
     Route::get('/srp/admin/statistics', 'SRP\SRPAdminController@displayStatistics');
     Route::get('/srp/admin/costcodes/display', 'SRP\SRPAdminController@displayCostCodes');
+    Route::get('/srp/admin/costcodes/add', 'SRP\SRPAdminController@displayAddCostCode');
     Route::post('/srp/admin/costcodes/add', 'SRP\SRPAdminController@addCostCode');
     Route::post('/srp/admin/costcodes/modify', 'SRP\SRPAdminController@modifyCostCodes');
     

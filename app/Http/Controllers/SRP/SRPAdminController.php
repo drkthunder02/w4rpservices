@@ -447,6 +447,10 @@ class SRPAdminController extends Controller
         return view('srp.admin.costcodes.display')->with('costcodes', $costcodes);
     }
 
+    public function displayAddCostCode() {
+        return view('srp.admin.costcodes.add');
+    }
+
     public function addCostCode(Request $request) {
         $this->validate($request, [
             'code' => 'required',
