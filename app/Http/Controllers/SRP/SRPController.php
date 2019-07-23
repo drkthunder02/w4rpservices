@@ -25,21 +25,27 @@ class SRPController extends Controller
     }
 
     public function displayPayoutAmounts() {
-        $shipTypes = array();
-        $payoutCodes = array();
         $payouts = array();
+        $count = 0;
+        $shipType = SrpShipType::all();
+        $srpPayout = SrpPayout::all();
+       
+        foreach($shipType as $ship) {
+            //Don't process if the code is None
+            if($ship->code != 'None') {
+                $tempCode = $ship->code;
+                $tempDescription = $ship->description;
+                $temp = SrpPayout::where(['code' => $ship->code])->get();
+                $tempPayout = $temp->payout;
 
-        $shipTypesTemp = SrpShipType::all();
-        $payoutCodesTemp = SrpPayout::all();
+                $block = [
+                    'code' => $tempCode,
+                    'description' => $tempDescription,
+                    'payout' => $tempPayout,
+                ];
 
-        foreach($shipTypesTemp as $type) {
-            $temp = [
-                'code' => $type->code,
-                'description' => $type->description,
-                'payout' => $payoutCodesTemp[$type->code],
-            ];
-
-            array_push($payouts, $temp);
+                array_push($payouts, $block);
+            }            
         }
 
         return view('srp.payouts')->with('payouts', $payouts);
