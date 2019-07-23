@@ -419,6 +419,7 @@ class SRPAdminController extends Controller
     }
 
     public function displayCostCodes() {
+        //Declare some variables
         $costcodes = array();
         $count = 0;
         $shipType = SrpShipType::all();
@@ -431,13 +432,14 @@ class SRPAdminController extends Controller
                 $tempDescription = $ship->description;
                 $temp = SrpPayout::where(['code' => $ship->code])->first();
                 $tempPayout = $temp->payout;
-
+                //Store the data in a temporary variable
                 $block = [
                     'code' => $tempCode,
                     'description' => $tempDescription,
                     'payout' => $tempPayout,
                 ];
 
+                //Push the data into the array
                 array_push($costcodes, $block);
             }            
         }
