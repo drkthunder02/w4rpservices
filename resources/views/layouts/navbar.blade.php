@@ -64,6 +64,7 @@
                     @if(auth()->user()->hasPermission('srp.admin'))
                     <a class="dropdown-item" href="/srp/admin/display">SRP Admin Dashboard</a>
                     <a class="dropdown-item" href="/srp/admin/statistics">SRP Statistics</a>
+                    <a class="dropdown-item" href="/srp/admin/costcodes/display">SRP Admin Cost Codes</a>
                     @endif
                 </div>
             </li>
