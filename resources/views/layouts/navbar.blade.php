@@ -60,6 +60,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SRP</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/srp/form/display">SRP Form</a>
+                    <a class="dropdown-item" href="/srp/display/costcodes">Cost Codes</a>
                     @if(auth()->user()->hasPermission('srp.admin'))
                     <a class="dropdown-item" href="/srp/admin/display">SRP Admin Dashboard</a>
                     <a class="dropdown-item" href="/srp/admin/statistics">SRP Statistics</a>

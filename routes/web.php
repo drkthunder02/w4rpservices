@@ -108,6 +108,7 @@ Route::group(['middleware' => ['auth']], function(){
      */
     Route::get('/srp/form/display', 'SRP\SRPController@displaySrpForm');
     Route::post('/srp/form/display', 'SRP\SRPController@storeSRPFile');
+    Route::get('/srp/display/costcodes', 'SRP\SRPController@displayPayoutAmounts');
 
     /**
      * SRP Admin Controller display pages
