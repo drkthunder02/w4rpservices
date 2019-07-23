@@ -467,7 +467,6 @@ class SRPAdminController extends Controller
 
     public function modifyCostCodes(Request $request) {
         $this->validate($request, [
-            'code' => 'required',
             'description' => 'required',
             'payout' => 'required',
         ]);
