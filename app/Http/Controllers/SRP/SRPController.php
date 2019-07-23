@@ -16,6 +16,7 @@ use App\Models\User\User;
 use App\Models\SRP\SrpFleetType;
 use App\Models\SRP\SrpShipType;
 use App\Models\User\UserAlt;
+use App\Models\SRP\SrpPayout;
 
 class SRPController extends Controller
 {
