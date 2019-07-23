@@ -36,8 +36,8 @@ class SRPController extends Controller
             if($ship->code != 'None') {
                 $tempCode = $ship->code;
                 $tempDescription = $ship->description;
-                $temp = SrpPayout::where(['code' => $ship->code])->get();
-                dd($temp);
+                $temp = SrpPayout::where(['code' => $ship->code])->first();
+                
                 $tempPayout = $temp->payout;
 
                 $block = [
