@@ -13,15 +13,15 @@
             <tr>
                 {!! Form::open(['action' => 'SRP\SRPAdminController@modifyCostCodes', 'method' => 'POST']) !!}
                 <td>
-                    {{ $code->code }}
+                    {{ $code['code'] }}
                     {{ Form::hidden('code', $code['code']) }}
                 </td>
                 <td>
-                   {{ $code->description }}
+                   {{ $code['description'] }}
                    {{ Form::text('description', null, ['class' => 'form-control', 'placeholder' => $code['description']]) }}
                 </td>
                 <td>
-                    {{ $code->payout }}
+                    {{ $code['payout'] }}
                     {{ Form::text('payout', null, ['class' => 'form-control', 'placeholder' => $code['payout']]) }}
                 </td>
                 <td>
