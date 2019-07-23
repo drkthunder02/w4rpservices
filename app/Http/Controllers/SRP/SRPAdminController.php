@@ -477,9 +477,9 @@ class SRPAdminController extends Controller
             $shipType->description = $description;
             $shipType->save();
 
-            redirect('/srp/admin/display')->with('success', 'Cost code added.');
+            return redirect('/srp/admin/display')->with('success', 'Cost code added.');
         } else {
-            redirect('/srp/admin/display')->with('error', 'Cost code already exists in the database.');
+            return redirect('/srp/admin/display')->with('error', 'Cost code already exists in the database.');
         }
     }
 
