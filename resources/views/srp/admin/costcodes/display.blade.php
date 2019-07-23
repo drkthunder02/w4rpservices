@@ -14,7 +14,7 @@
                 {!! Form::open(['action' => 'SRP\SRPAdminController@modifyCostCodes', 'method' => 'POST']) !!}
                 <td>
                     {{ $code->code }}
-                    {{ Form::text('code', null, ['class' => 'form-control', 'placeholder' => $code->code]) }}
+                    {{ Form::hidden('code', $code->code]) }}
                 </td>
                 <td>
                    {{ $code->description }}
