@@ -31,6 +31,17 @@ class TaxesHelper {
         $this->end = $en;
     }
 
+    public function GetStructureMarketGross($start, $end, $corpId) {
+        $revenue = 0.00;
+
+        $revenu = CorpMarketJournal::where([
+            'second_party_id' => $corpId,
+        ])->whereBetween('date', [$start, $end])
+          ->sum('amount');
+
+        return $revenue;
+    }
+
     public function GetJumpGateGross($start, $end) {
         $revenue = 0.00;
 

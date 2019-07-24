@@ -39,11 +39,9 @@ class Esi {
         $config = config('esi');
 
         //Check for an esi scope
-        $checks = DB::table('EsiScopes')->where('character_id', $charId)->get();
-        foreach($checks as $check) {
-            if($check->scope === $scope) {
-                return true;
-            }
+        $check = EsiScope::where(['character_id' => $charId, 'scope' => $scope])->count();
+        if($check == 0) {
+            return true;
         }
 
         $mail  = new EveMail;
@@ -154,6 +152,51 @@ class Esi {
 
         //Return the combined date in the correct format
         return $realDate;
+    }
+
+    public function GetToken($charId, $scope) {
+        //Get the refresh token from the database
+        $tokenCount = EsiToken::where([
+            'character_id' => $charId,
+        ])->count();
+
+        if($tokenCount == 0) {
+            $config = config('esi');
+
+            $mail = new EveMail;
+            $mail->sender = $config['primary'];
+            $mail->subject = 'W4RP Services - No Token Found';
+            $mail->body = "Please register at https://services.w4rp.space with the scope: " . $scope;
+            $mail->recipient = (int)$charId;
+            $mail->recipient_type = 'character';
+            SendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+
+            return null;
+        }
+
+        $token = EsiToken::where([
+            'character_id' => $charId,
+        ])->first();
+
+        $scope = EsiScope::where([
+            'character_id' => $charId,
+            'scope' => $scope,
+        ])->count();
+
+        if($scope == 0) {
+            $mail  = new EveMail;
+            $mail->sender = $config['primary'];
+            $mail->subject = 'W4RP Services - Incorrect ESI Scope';
+            $mail->body = "Please register on https://services.w4rp.space with the scope: " . $scope;
+            $mail->recipient = (int)$charId;
+            $mail->recipient_type = 'character';
+
+            SendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+
+            return null;
+        } else {
+            return $token->refresh_token;
+        }
     }
 }
 

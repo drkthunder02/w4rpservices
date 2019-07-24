@@ -21,6 +21,7 @@ use App\Models\Mail\EveMail;
 
 //Library
 use App\Library\Esi\Esi;
+use App\Library\Finances\CorpMarketJournal;
 use App\Library\Finances\MarketTax;
 use App\Library\Finances\PlayerDonation;
 use App\Library\Finances\ReprocessingTax;
@@ -39,20 +40,16 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 class FinanceHelper {
 
     public function GetWalletTransaction($division, $charId) {
-        //Declare the lookup class helper
+        //Declare the class helpers
         $lookups = new LookupHelper;
+        $esiHelper = new Esi;
 
         //Setup array for PI items
         $pi_items = $this->GetPIMaterialsArray();
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $tokenData = $this->TokenInfo($charId);
-        $token = $tokenData['token'];
-        $scope = $tokenData['scope'];
-
-        //If the token is not found, send the user an eve mail, and just exit out of the function
-        if($this->TokenNotFound($token, $scope, $charId)) {
-            //Log::critical('Token not found. Character Id: ' . $charId);
+        $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
+        if($token == null) {
             return null;
         }
 
@@ -64,7 +61,7 @@ class FinanceHelper {
         $authentication = new EsiAuthentication([
             'client_id'  => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token,
         ]);
 
         //Create the esi class varialble
@@ -106,18 +103,13 @@ class FinanceHelper {
         $office = new OfficeFee();
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $tokenData = $this->TokenInfo($charId);
-        $token = $tokenData['token'];
-        $scope = $tokenData['scope'];
+        $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
+        if($token == null) {
+            return null;
+        }
 
         //Declare the lookup class helper
         $lookups = new LookupHelper;
-
-        //If the token is not found, send the user an eve mail, and just exit out of the function
-        if($this->TokenNotFound($token, $scope, $charId)) {
-            //Log::critical('Token not found.' . 'Character Id: ' . $charId);
-            return null;
-        }
         
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $lookups->LookupCharacter($charId);
@@ -127,7 +119,7 @@ class FinanceHelper {
         $authentication = new EsiAuthentication([
             'client_id'  => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token,
         ]);
 
         //Create the esi class varialble
@@ -189,12 +181,9 @@ class FinanceHelper {
         //Declare class variables
         $lookups = new LookupHelper;
         
-        //Get the ESI refresh token for the corporation
-        $tokenData = $this->TokenInfo($charId);
-        $token = $tokenData['token'];
-        $scope = $tokenData['scope'];
-
-        if($this->TokenNotFound($token, $scope, $charId)) {
+        //Get the ESI refresh token for the corporation to add new wallet journals into the database
+        $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
+        if($token == null) {
             return null;
         }
 
@@ -206,7 +195,7 @@ class FinanceHelper {
         $authentication = new EsiAuthentication([
             'client_id'  => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token,
         ]);
 
         //Create the esi class variable
@@ -229,6 +218,52 @@ class FinanceHelper {
         return $pages;
     }
 
+    public function GetCorpWalletJournalPage($division, $charId, $corpId, $page = 1) {
+        //Declare new class variables
+        $corpMarket = new MarketTax();
+
+        //Get the ESI refresh token for the corporation to add new wallet journals into the database
+        $tokenData = $this->TokenIfno($charId);
+        $token = $tokenData['token'];
+        $scope = $tokenData['scope'];
+
+        //Create an ESI authentication container
+        $config = config('esi');
+        $authentication = new EsiAuthentication([
+            'client_id' => $config['client_id'],
+            'secret' => $config['secret'],
+            'refresh_token' => $token,
+        ]);
+
+        //Create the esi class varialble
+        $esi = new Eseye($authentication);
+        $esi->setVersion('v4');
+
+        //Call the page of the wallet journal
+        try {
+            $journals = $esi->page($page)
+                            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                                'corporation_id' => $corpId,
+                                'division' => $division,
+                            ]);
+        } catch(RequestFailedException $e) {
+            Log::warning($e->getEsiResponse());
+            return null;
+        }
+
+        //Decode the wallet from json into an array
+        $wallets = json_decode($journals->raw, true);
+
+        //For each journal entry, attempt to store the information into the database
+        foreach($wallets as $wallet) {
+            if($wallet['amount'] > 0) {
+                if($wallet['ref_type'] == 'brokers_fee') {
+                    $corpMarket->InsertCorpMarketTax($wallet, $corpId, $division);
+                }
+            }
+        }
+    }
+
     public function GetWalletJournalPage($division, $charId, $page = 1) {
         //Declare new class variables
         $market = new MarketTax();
@@ -240,9 +275,10 @@ class FinanceHelper {
         $pi = new PlanetProductionTax();
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $tokenData = $this->TokenInfo($charId);
-        $token = $tokenData['token'];
-        $scope = $tokenData['scope'];
+        $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
+        if($token == null) {
+            return null;
+        }
 
         //Declare the lookup class helper
         $lookups = new LookupHelper;
@@ -255,7 +291,7 @@ class FinanceHelper {
         $authentication = new EsiAuthentication([
             'client_id'  => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token,
         ]);
 
         //Create the esi class varialble
@@ -299,42 +335,6 @@ class FinanceHelper {
                 }
             }
         }
-    }
-
-    private function TokenInfo($charId) {
-        //Get the ESI refresh token for the corporation to add a new wallet jouranls into the database
-        //send the token and scope back to the calling function
-        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
-        $scope = EsiScope::where(['character_id' => $charId, 'scope' => 'esi-wallet.read_corporation_wallets.v1'])->get(['scope']);
-
-        $data = [
-            'token' => $token,
-            'scope' => $scope,
-        ];
-
-        return $data;
-    }
-
-    private function TokenNotFound($token, $scope, $charId) {
-        //Get the esi config
-        $config = config('esi');
-
-
-        if(!isset($token[0]->refresh_token) || !isset($scope[0]->scope)) {
-            //Register a mail to be dispatched as a job
-            $mail = new EveMail;
-            $mail->sender = $config['primary'];
-            $mail->subject = 'W4RP Services ESI API';
-            $mail->body = 'You need to register an ESI API on the services site for esi-wallet.read_corporation_wallet.v1<br>This is also labeled Corporation Wallets';
-            $mail->recipient = (int)$charId;
-            $mail->recipient_type = 'character';
-
-            SendEveMailJob::dispatch($mail)->onQueue('mail');
-
-            return true;
-        } 
-
-        return false;
     }
 
     private function GetPIMaterialsArray() {
