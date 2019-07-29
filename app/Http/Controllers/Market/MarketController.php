@@ -78,7 +78,7 @@ class MarketController extends Controller
             return redirect('/market/add')->with('erorr', 'Failed to get character info.');
         }
 
-        //Get the total taxes from the database
+        //Get the total taxes from the database for each of the 3 months in the past
 
     }
 
