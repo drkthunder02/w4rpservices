@@ -71,6 +71,16 @@
             </tbody>
         </table>
     </div>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h2>Totals</h2>
+        </div>
+        <div class="card-body">
+            Total Loss Values: {{ $sum_loss }}<br>
+            Total Actual Value: {{ $sum_actual }}<br>
+        </div>
+    </div>
 @else
 <div class="container">
     <div class="row justify-content-center">

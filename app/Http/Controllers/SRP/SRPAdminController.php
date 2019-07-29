@@ -35,6 +35,10 @@ class SRPAdminController extends Controller
         //Create the array
         $requests = array();
 
+        //Declare variables for use later.
+        $sum_actual = 0.00;
+        $sum_loss = 0.00;
+
         //Get the ship types from the database
         $shipTypes = SrpShipType::all();
 
@@ -58,6 +62,7 @@ class SRPAdminController extends Controller
                 $temp['fleet_commander_name'] = $r['fleet_commander_name'];
                 $temp['zkillboard'] = $r['zkillboard'];
                 $temp['loss_value'] = $r['loss_value'];
+                $sum_loss += $temp['loss_value'];
                 //Get the ship type
                 foreach($shipTypes as $s) {
                     if($r['ship_type'] == $s->code) {
@@ -75,6 +80,7 @@ class SRPAdminController extends Controller
                     if($r['ship_type'] == $p->code) {
                         $temp['actual_srp'] = $r['loss_value'] * ($p->payout / 100.00 );
                         $temp['cost_code'] = $p->payout;
+                        $sum_actual += $temp['actual_srp'];
                     }
                 }
                 
@@ -84,7 +90,9 @@ class SRPAdminController extends Controller
         }
 
         //Return the view with the variables
-        return view('srp.admin.process')->with('requests', $requests);
+        return view('srp.admin.process')->with('requests', $requests)
+                                        ->with('sum_actual', $sum_actual)
+                                        ->with('sum_loss', $sum_loss);
     }
 
     public function processSRPRequest(Request $request) {

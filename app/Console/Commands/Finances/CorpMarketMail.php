@@ -11,14 +11,14 @@ class CorpMarketMail extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'services:MarketMail';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send a mail about a market.';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,13 @@ class CorpMarketMail extends Command
      */
     public function handle()
     {
-        //
+        //Create the command helper container
+        $task = new CommandHelper('CorpMarketMail');
+
+        //Add entry into the table saying the job is starting
+        $task->SetStartStatus();
+
+        //Mark the job as finished
+        $task->SetStopStatus();
     }
 }
