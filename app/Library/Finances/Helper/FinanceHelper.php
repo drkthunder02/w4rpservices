@@ -180,6 +180,7 @@ class FinanceHelper {
     public function GetJournalPageCount($division, $charId) {
         //Declare class variables
         $lookups = new LookupHelper;
+        $esiHelper = new Esi;
         
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
