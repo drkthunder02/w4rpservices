@@ -7,6 +7,7 @@ use DB;
 use Carbon\Carbon;
 
 //Models
+use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 use App\Models\Jobs\JobSendEveMail;
 use App\Models\Mail\EveMail;
