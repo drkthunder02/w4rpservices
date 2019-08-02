@@ -114,7 +114,6 @@ class MoonMailerCommand extends Command
             //After the mail is dispatched, saved the sent mail record
             $this->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
             
-
             //Update the moon as not being paid for the next month?
             foreach($rentals as $rental) {
                 $previous = new Carbon($rental->Paid_Until);
@@ -123,7 +122,6 @@ class MoonMailerCommand extends Command
                     $this->UpdateNotPaid($rental);
                 }
             }
-                        
         }
 
         //Mark the job as finished
