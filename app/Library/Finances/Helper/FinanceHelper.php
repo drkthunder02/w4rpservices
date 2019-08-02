@@ -37,6 +37,7 @@ use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
+
 class FinanceHelper {
 
     public function GetWalletTransaction($division, $charId) {
