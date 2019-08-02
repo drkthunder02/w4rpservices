@@ -41,8 +41,8 @@ class FinanceHelper {
 
     public function GetWalletTransaction($division, $charId) {
         //Declare the class helpers
-        $lookups = new LookupHelper;
-        $esiHelper = new Esi;
+        $lookups = new LookupHelper();
+        $esiHelper = new Esi();
 
         //Setup array for PI items
         $pi_items = $this->GetPIMaterialsArray();
@@ -101,6 +101,7 @@ class FinanceHelper {
         $other = new PlayerDonation();
         $industry = new StructureIndustryTax();
         $office = new OfficeFee();
+        $esiHelper = new Esi();
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
@@ -179,8 +180,8 @@ class FinanceHelper {
 
     public function GetJournalPageCount($division, $charId) {
         //Declare class variables
-        $lookups = new LookupHelper;
-        $esiHelper = new Esi;
+        $lookups = new LookupHelper();
+        $esiHelper = new Esi();
         
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
