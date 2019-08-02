@@ -22,7 +22,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\Mail\EveMail;
 use App\Models\Jobs\JobStatus;
 
-class SendEveMailJob implements ShouldQueue
+class ProcessSendEveMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -92,7 +92,7 @@ class SendEveMailJob implements ShouldQueue
                 'approved_cost' => 100,
                 'body' => $this->body,
                 'recipients' => [[
-                    'recipient_id' => 92626011,
+                    'recipient_id' => (int)92626011,
                     'recipient_type' => $this->recipient_type,
                 ]],
                 'subject' => $this->subject,
