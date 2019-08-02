@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use DB;
 
 //Jobs
-use App\Jobs\SendEveMailJob;
+use App\Jobs\ProcessSendEveMailJob;
 
 //Library
 use Commands\Library\CommandHelper;
@@ -107,7 +107,7 @@ class MoonMailerCommand extends Command
             $mail->body = $body;
             $mail->recipient = (int)$contact->Contact;
             $mail->recipient_type = 'character';
-            SendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
+            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
             //Increment the delay for the mail to not hit rate limits
             $delay += 30;
 

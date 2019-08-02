@@ -12,7 +12,7 @@ use DB;
 use Log;
 
 //Job
-use App\Jobs\SendEveMailJob;
+use App\Jobs\ProcessSendEveMailJob;
 
 //Models
 use App\Models\Esi\EsiToken;

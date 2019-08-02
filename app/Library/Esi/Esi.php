@@ -13,7 +13,7 @@ use App\Models\Jobs\JobSendEveMail;
 use App\Models\Mail\EveMail;
 
 //Jobs
-use App\Jobs\SendEveMailJob;
+use App\Jobs\ProcessSendEveMailJob;
 
 //Seat Stuff
 use Seat\Eseye\Cache\NullCache;
@@ -52,7 +52,7 @@ class Esi {
         $mail->recipient = (int)$charId;
         $mail->recipient_type = 'character';
 
-        SendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
 
         return false;
     }
@@ -170,7 +170,7 @@ class Esi {
             $mail->body = "Please register at https://services.w4rp.space with the scope: " . $scope;
             $mail->recipient = (int)$charId;
             $mail->recipient_type = 'character';
-            SendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
 
             return null;
         }
@@ -192,7 +192,7 @@ class Esi {
             $mail->recipient = (int)$charId;
             $mail->recipient_type = 'character';
 
-            SendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
 
             return null;
         } else {

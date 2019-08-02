@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use App\Library\Esi\Mail;
 
 //Jobs
-use App\Jobs\SendEveMailJob;
+use App\Jobs\ProcessSendEveMailJob;
 
 //Models
 use App\Models\User\User;
@@ -163,7 +163,7 @@ class ContractAdminController extends Controller
         $mail->body = $body;
         $mail->sender = $config['primary'];
         //Dispatch the mail job
-        SendEveMailJob::dispatch($mail)->onQueue('mail');
+        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail');
         
         //Tidy up the contract by doing a few things.
         $this->TidyContract($contract, $bid);
@@ -201,7 +201,7 @@ class ContractAdminController extends Controller
                 $mail->recipient = $user['character_id'];
                 $mail->recipient_type = 'character';
                 $mail->body = "A new contract is available for the alliance contracting system.  Please check out <a href='https://services.w4rp.space'>Services Site</a>.";
-                SendEveMailJob::dispatch($mail)->onQueue('mail');
+                ProcessSendEveMailJob::dispatch($mail)->onQueue('mail');
         }
     }
 }

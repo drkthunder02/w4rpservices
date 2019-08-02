@@ -61,7 +61,7 @@ class ProcessSendEveMailJob implements ShouldQueue
 
     /**
      * Execute the job.
-     * Utilized by using SendEveMailJob::dispatch($mail);
+     * Utilized by using ProcessSendEveMailJob::dispatch($mail);
      * The model is passed into the dispatch function, then added to the queue
      * for processing.
      *
