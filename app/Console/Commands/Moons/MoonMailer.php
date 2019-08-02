@@ -103,7 +103,7 @@ class MoonMailerCommand extends Command
             //Dispatch the mail job
             $mail = new EveMail;
             $mail->sender = $config['primary'];
-            $mail->subject = "Warped Intentions Moon Rental Payment Due";
+            $mail->subject = "Warped Intentions Moon Rental Payment Due for " . $today->monthName;
             $mail->body = $body;
             $mail->recipient = (int)$contact->Contact;
             $mail->recipient_type = 'character';
