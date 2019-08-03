@@ -172,6 +172,7 @@ class MoonsAdminController extends Controller
                 
                 //Set up the renter whether it's W4RP or another corporation
                 $ticker = $rental->RentalCorp;
+                $type = $rental->Type;
             }
 
             //Set the color for the table
@@ -196,6 +197,7 @@ class MoonsAdminController extends Controller
                 'RowColor' => $color,
                 'Paid' => $paid,
                 'Contact' => $contact,
+                'Type' => $type,
                 'Renter' => $ticker,
             ]);
         }
