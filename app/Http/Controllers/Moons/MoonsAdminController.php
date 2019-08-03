@@ -171,9 +171,7 @@ class MoonsAdminController extends Controller
                 $contact = $lookup->CharacterName($rental->Contact);
                 
                 //Set up the renter whether it's W4RP or another corporation
-                $corpId = $lookup->LookupCorporationId($rental->Contact);
-                $allianceId = $lookup->LookupCorporation($corpId);
-                $ticker = $lookup->LookupAllianceTicker($allianceId);
+                $ticker = $rental->RentalCorp;
             }
 
             //Set the color for the table
