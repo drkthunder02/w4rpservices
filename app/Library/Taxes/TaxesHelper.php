@@ -18,7 +18,7 @@ use App\Models\Finances\JumpBridgeJournal;
 use App\Models\Finances\PISaleJournal;
 use App\Models\Finances\AllianceMarketJournal;
 use App\Models\Finances\CorpMarketStructure;
-use App\Models\SRP\SrpShips;
+use App\Models\SRP\SRPShip;
 
 class TaxesHelper {
 
@@ -37,7 +37,7 @@ class TaxesHelper {
     public function GetAllianceSRPActual($start, $end) {
         $actual = 0.00;
 
-        $actual = SrpShips::where([
+        $actual = SRPShip::where([
             'approved' => 'Approved',
         ])->whereBetween('created_at', [$start, $end])
           ->sum('paid_value');
@@ -48,7 +48,7 @@ class TaxesHelper {
     public function GetAllianceSRPLoss($start, $end) {
         $loss = 0.00;
 
-        $loss = SrpShips::where([
+        $loss = SRPShip::where([
             'approved' => 'Approved',
         ])->whereBetween('created_at', [$start, $end])
           ->sum('loss_value');
