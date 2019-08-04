@@ -17,7 +17,6 @@ use App\Models\Finances\CorpMarketJournal;
 use App\Models\Finances\JumpBridgeJournal;
 use App\Models\Finances\PISaleJournal;
 use App\Models\Finances\AllianceMarketJournal;
-use App\Models\Finances\CorpMarketJournal;
 use App\Models\Finances\CorpMarketStructure;
 
 class TaxesHelper {
