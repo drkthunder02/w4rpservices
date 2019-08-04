@@ -13,15 +13,15 @@ use App\Library\Esi\Esi;
 
 use App\Models\Finances\CorpMarketJournal;
 
-class MarketTax {
+class AllianceMarketTax {
     public function InsertMarketTax($journal, $corpId, $division) {
         //Create the ESI Helper class
         $esiHelper = new Esi;
 
         //Check to see if we can find the entry in the database already.
         //If we don't then add it to the database
-        if(!CorpMarketJournal::where(['id' => $journal['id']])->exists()) {
-            $entry = new CorpMarketJournal;
+        if(!AllianceMarketJournal::where(['id' => $journal['id']])->exists()) {
+            $entry = new AllianceMarketJournal;
             $entry->id = $journal['id'];
             $entry->corporation_id = $corpId;
             $entry->division = $division;

@@ -72,7 +72,7 @@ class FinanceHelper {
         try {
             $journals = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
                 'corporation_id' => 98287666,
-                'division'  => 3,
+                'division'  => 5,
             ]);
         } catch(RequestFailedException $e) {
             Log::critical($e->getEsiResponse());
@@ -85,7 +85,7 @@ class FinanceHelper {
         //For each transactional entry, attempt to store it in the database.
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
-                if($division == 3 && $charId == 94415555) {
+                if($division == 5 && $charId == 94415555) {
                     if(in_array($entry['type_id'], $pi_items, false)) {
                         $pi = new PISale();
                         $pi->InsertPISale($entry, 98287666);
@@ -103,15 +103,13 @@ class FinanceHelper {
         $industry = new StructureIndustryTax();
         $office = new OfficeFee();
         $esiHelper = new Esi();
+        $lookups = new LookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
         if($token == null) {
             return null;
-        }
-
-        //Declare the lookup class helper
-        $lookups = new LookupHelper;
+        }        
         
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $lookups->LookupCharacter($charId);
@@ -269,7 +267,7 @@ class FinanceHelper {
 
     public function GetWalletJournalPage($division, $charId, $page = 1) {
         //Declare new class variables
-        $market = new MarketTax();
+        $market = new AllianceMarketTax();
         $reprocessing = new ReprocessingTax();
         $jb = new JumpBridgeTax();
         $other = new PlayerDonation();
@@ -277,15 +275,13 @@ class FinanceHelper {
         $office = new OfficeFee();
         $pi = new PlanetProductionTax();
         $esiHelper = new Esi();
+        $lookups = new LookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
         if($token == null) {
             return null;
-        }
-
-        //Declare the lookup class helper
-        $lookups = new LookupHelper;
+        }       
         
         //Reference to see if the character is in our look up table for corporations and characters
         $corpId = $lookups->LookupCorporationId($charId);
