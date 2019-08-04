@@ -38,6 +38,7 @@ return array(
     'App\\Http\\Controllers\\SRP\\SRPAdminController' => $baseDir . '/app/Http/Controllers/SRP/SRPAdminController.php',
     'App\\Http\\Controllers\\SRP\\SRPController' => $baseDir . '/app/Http/Controllers/SRP/SRPController.php',
     'App\\Http\\Controllers\\Wiki\\WikiController' => $baseDir . '/app/Http/Controllers/Wiki/WikiController.php',
+    'App\\Http\\Controllers\\Wormholes\\WormholeController' => $baseDir . '/app/Http/Controllers/Wormholes/WormholeController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\Callback' => $baseDir . '/app/Http/Middleware/Callback.php',

@@ -501,6 +501,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Http\\Controllers\\SRP\\SRPAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/SRP/SRPAdminController.php',
         'App\\Http\\Controllers\\SRP\\SRPController' => __DIR__ . '/../..' . '/app/Http/Controllers/SRP/SRPController.php',
         'App\\Http\\Controllers\\Wiki\\WikiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Wiki/WikiController.php',
+        'App\\Http\\Controllers\\Wormholes\\WormholeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Wormholes/WormholeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\Callback' => __DIR__ . '/../..' . '/app/Http/Middleware/Callback.php',
