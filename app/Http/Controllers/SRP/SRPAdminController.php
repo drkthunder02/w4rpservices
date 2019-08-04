@@ -89,6 +89,9 @@ class SRPAdminController extends Controller
             }
         }
 
+        $sum_actual = number_format($sum_actual, 2, '.', ',');
+        $sum_loss = number_format($sum_loss, 2, '.', ',');
+
         //Return the view with the variables
         return view('srp.admin.process')->with('requests', $requests)
                                         ->with('sum_actual', $sum_actual)
