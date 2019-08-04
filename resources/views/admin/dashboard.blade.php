@@ -311,10 +311,10 @@
                                     <th>SRP Actual</th>
                                 </thead>
                                 <tbody>
-                                    @foreach($srpActual as $srp)
+                                    @foreach($srpActual as $actual)
                                         <tr>
-                                            <td>{{ $srp['date'] }}</td>
-                                            <td>{{ $srp['gross'] }}</td>
+                                            <td>{{ $actual['date'] }}</td>
+                                            <td>{{ $actual['gross'] }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -334,10 +334,10 @@
                                     <th>SRP Loss</th>
                                 </thead>
                                 <tbody>
-                                    @foreach($srpLoss as $srp)
+                                    @foreach($srpLoss as $loss)
                                         <tr>
-                                            <td>{{ $srp['date'] }}</td>
-                                            <td>{{ $srp['gross'] }}</td>
+                                            <td>{{ $loss['date'] }}</td>
+                                            <td>{{ $loss['gross'] }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

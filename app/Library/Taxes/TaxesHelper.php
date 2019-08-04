@@ -143,9 +143,11 @@ class TaxesHelper {
     public function GetOfficeGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = OfficeFeesJournal::where(['ref_type' => 'office_rental_fee', 'second_party_id' => '98287666'])
-                                ->whereBetween('date', [$start, $end])
-                                ->sum('amount');
+        $revenue = OfficeFeesJournal::where([
+            'ref_type' => 'office_rental_fee', 
+            'second_party_id' => '98287666',
+            ])->whereBetween('date', [$start, $end])
+              ->sum('amount');
 
         return $revenue;
     }
