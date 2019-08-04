@@ -300,10 +300,50 @@
                     </div>
                 </div>
                 <div class="col">
-
+                    <div class="card">
+                        <div class="card-header">
+                            SRP Actual Paid Out
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <th>Month</th>
+                                    <th>SRP Actual</th>
+                                </thead>
+                                <tbody>
+                                    @foreach($srpActual as $srp)
+                                        <tr>
+                                            <td>{{ $srp['date'] }}</td>
+                                            <td>{{ $srp['gross'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div class="col">
-
+                    <div class="card">
+                        <div class="card-header">
+                            SRP Loss Values
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <th>Month</th>
+                                    <th>SRP Loss</th>
+                                </thead>
+                                <tbody>
+                                    @foreach($srpLoss as $srp)
+                                        <tr>
+                                            <td>{{ $srp['date'] }}</td>
+                                            <td>{{ $srp['gross'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

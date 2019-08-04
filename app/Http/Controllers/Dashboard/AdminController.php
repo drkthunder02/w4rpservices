@@ -34,6 +34,8 @@ class AdminController extends Controller
         $permission = array();
         $entities = array();
         $corpId = 98287666;
+        $srpActual = array();
+        $srpLoss = array();
 
         /** Taxes Pane */
         //Declare classes needed for displaying items on the page
@@ -42,6 +44,18 @@ class AdminController extends Controller
         $dates = $tHelper->GetTimeFrameInMonths($months);
         //Get the data for the Taxes Pane
         foreach($dates as $date) {
+            //Get the srp actual pay out for the date range
+            $srpActual[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelpeer->GetAllianceSRPActual($date['start'], $date['end']), 2, ".", ","),
+            ];
+
+            //Get the srp loss value for the date range
+            $srpLoss[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelpeer->GetAllianceSRPActual($date['start'], $date['end']), 2, ".", ","),
+            ];
+
             //Get the pi taxes for the date range
             $pis[] = [
                 'date' => $date['start']->toFormattedDateString(),
@@ -127,7 +141,9 @@ class AdminController extends Controller
                                       ->with('jumpgates', $jumpgates)
                                       ->with('reprocessings', $reprocessings)
                                       ->with('entities', $entities)
-                                      ->with('pigross', $pigross);
+                                      ->with('pigross', $pigross)
+                                      ->with('srpActual', $srpActual)
+                                      ->with('srpLoss', $srpLoss);
     }
 
     public function displayModifyUser(Request $request) {
