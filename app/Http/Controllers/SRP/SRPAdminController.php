@@ -202,40 +202,6 @@ class SRPAdminController extends Controller
         ]);
 
         /**
-         * Create the bar chart to see how expensive each FC is over the course of time.
-         */
-        //Get the losses by Fleet Commander Name, and populate variables for the table
-        $fcNames = SRPShip::groupBy('fleet_commander_name')->get(['fleet_commander_name']);
-        foreach($fcNames as $name) {
-            $total = SRPShip::where([
-                    'fleet_commander_name' => $name->fleet_commander_name,
-                    'approved' => 'Approved',
-                ])->sum('loss_value');
-            if($total > 0.00) {
-                $temp = [
-                    'fc' => $name->fleet_commander_name,
-                    'total' => $total,
-                ];
-    
-                array_push($barChartData, $temp);
-            }
-        }
-
-        //Create a new Bar Chart of all of the FC's
-        $fcs = $lava->DataTable();
-        //Add string and number columns for the chart
-        $fcs->addStringColumn('Fleet Commander Losses')
-            ->addNumberColumn('ISK');
-        //Add the data rows for each FC
-        foreach($barChartData as $data) {
-            $fcs->addRow([$data['fc'], $data['total']]);
-        }
-        //Declare the chart with the options needed to render the chart
-        $lava->BarChart('FCs', $fcs, [
-            'width' => 600,
-        ]);
-
-        /**
          * Create a vertical chart of all of the cost codes for the ships being SRP'ed.
          * The chart will be by cost code of ships being replaced
          */
