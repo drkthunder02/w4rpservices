@@ -56,11 +56,12 @@ class TaxesHelper {
         return $loss;
     }
 
-    public function GetAllianceMarketGross($start, $end, $corpId) {
+    public function GetAllianceMarketGross($start, $end) {
         $revenue = 0.00;
 
         $revenue = AllianceMarketJournal::where([
-            'second_party_id' => $corpId,
+            'second_party_id' => '98287666',
+            'ref_type' => 'brokers_fee',
         ])->whereBetween('date', [$start, $end])
           ->sum('amount');
 
@@ -81,19 +82,11 @@ class TaxesHelper {
     public function GetJumpGateGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = JumpBridgeJournal::where(['ref_type' => 'structure_gate_jump', 'second_party_id' => '98287666'])
-                                ->whereBetween('date', [$start, $end])
-                                ->sum('amount');
-
-        return $revenue;
-    }
-
-    public function GetMarketGross($start, $end) {
-        $revenue = 0.00;
-
-        $revenue = CorpMarketJournal::where(['ref_type' => 'brokers_fee', 'second_party_id' => '98287666'])
-                                ->whereBetween('date', [$start, $end])
-                                ->sum('amount');
+        $revenue = JumpBridgeJournal::where([
+            'ref_type' => 'structure_gate_jump', 
+            'second_party_id' => '98287666',
+            ])->whereBetween('date', [$start, $end])
+              ->sum('amount');
 
         return $revenue;
     }
@@ -101,9 +94,11 @@ class TaxesHelper {
     public function GetIndustryGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = StructureIndustryTaxJournal::where(['ref_type' => 'industry_job_tax', 'second_party_id'  => '98287666'])
-                                ->whereBetween('date', [$start, $end])
-                                ->sum('amount');
+        $revenue = StructureIndustryTaxJournal::where([
+            'ref_type' => 'industry_job_tax', 
+            'second_party_id'  => '98287666',
+            ])->whereBetween('date', [$start, $end])
+              ->sum('amount');
 
         return $revenue;
     }
@@ -111,9 +106,11 @@ class TaxesHelper {
     public function GetReprocessingGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = ReprocessingTaxJournal::where(['ref_type' => 'reprocessing_tax', 'second_party_id' => '98287666'])
-                                ->whereBetween('date', [$start, $end])
-                                ->sum('amount');
+        $revenue = ReprocessingTaxJournal::where([
+            'ref_type' => 'reprocessing_tax', 
+            'second_party_id' => '98287666',
+            ])->whereBetween('date', [$start, $end])
+              ->sum('amount');
 
         return $revenue;
     }
@@ -122,15 +119,24 @@ class TaxesHelper {
         $revenueImport = 0.00;
         $revenueExport = 0.00;
 
-        $revenueImport = PlanetProductionTaxJournal::where(['ref_type' => 'planetary_import_tax', 'second_party_id' => '98287666'])
-                                ->whereBetween('date', [$start, $end])
-                                ->sum('amount');
-        $revenueExport = PlanetProductionTaxJournal::where(['ref_type' => 'planetary_export_tax', 'second_party_id' => '98287666'])
-                                ->whereBetween('date', [$start, $end])
-                                ->sum('amount');
+        //Get the import revenue from the database
+        $revenueImport = PlanetProductionTaxJournal::where([
+            'ref_type' => 'planetary_import_tax', 
+            'second_party_id' => '98287666',
+            ])->whereBetween('date', [$start, $end])
+              ->sum('amount');
 
+        //Get the export revenue from the database      
+        $revenueExport = PlanetProductionTaxJournal::where([
+            'ref_type' => 'planetary_export_tax', 
+            'second_party_id' => '98287666',
+            ])->whereBetween('date', [$start, $end])
+              ->sum('amount');
+
+        //Total up the two values
         $finalRevenue = $revenueImport + $revenueExport;
 
+        //Return the values
         return $finalRevenue;
     }
 
