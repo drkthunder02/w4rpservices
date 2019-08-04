@@ -268,14 +268,14 @@ class FinanceHelper {
 
     public function GetWalletJournalPage($division, $charId, $page = 1) {
         //Declare new class variables
-        $market = new AllianceMarketTax();
-        $reprocessing = new ReprocessingTax();
-        $jb = new JumpBridgeTax();
-        $other = new PlayerDonation();
-        $industry = new StructureIndustryTax();
-        $office = new OfficeFee();
-        $pi = new PlanetProductionTax();
-        $esiHelper = new Esi();
+        $market = new AllianceMarketTax;
+        $reprocessing = new ReprocessingTax;
+        $jb = new JumpBridgeTax;
+        $other = new PlayerDonation;
+        $industry = new StructureIndustryTax;
+        $office = new OfficeFee;
+        $pi = new PlanetProductionTax;
+        $esiHelper = new Esi;
         $lookups = new LookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
