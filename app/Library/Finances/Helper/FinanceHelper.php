@@ -21,7 +21,8 @@ use App\Models\Mail\EveMail;
 
 //Library
 use App\Library\Esi\Esi;
-use App\Library\Finances\CorpMarketJournal;
+use App\Library\Finances\AllianceMarketTax;
+use App\Library\Finances\CorpMarketTax;
 use App\Library\Finances\MarketTax;
 use App\Library\Finances\PlayerDonation;
 use App\Library\Finances\ReprocessingTax;

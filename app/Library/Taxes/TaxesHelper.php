@@ -16,6 +16,9 @@ use App\Models\Finances\OfficeFeesJournal;
 use App\Models\Finances\CorpMarketJournal;
 use App\Models\Finances\JumpBridgeJournal;
 use App\Models\Finances\PISaleJournal;
+use App\Models\Finances\AllianceMarketJournal;
+use App\Models\Finances\CorpMarketJournal;
+use App\Models\Finances\CorpMarketStructure;
 
 class TaxesHelper {
 
@@ -31,10 +34,21 @@ class TaxesHelper {
         $this->end = $en;
     }
 
+    public function GetAllianceMarketGross($start, $end, $corpId) {
+        $revenue = 0.00;
+
+        $revenue = AllianceMarketJournal::where([
+            'second_party_id' => $corpId,
+        ])->whereBetween('date', [$start, $end])
+          ->sum('amount');
+
+        return $revenue;
+    }
+
     public function GetStructureMarketGross($start, $end, $corpId) {
         $revenue = 0.00;
 
-        $revenu = CorpMarketJournal::where([
+        $revenue = CorpMarketJournal::where([
             'second_party_id' => $corpId,
         ])->whereBetween('date', [$start, $end])
           ->sum('amount');

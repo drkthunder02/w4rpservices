@@ -65,7 +65,7 @@ class AdminController extends Controller
             //Get the market taxes for the date range
             $markets[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetMarketGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetAllianceMarketGross($date['start'], $date['end']), 2, ".", ","),
             ];
             //Get the jump gate taxes for the date range
             $jumpgates[] = [
