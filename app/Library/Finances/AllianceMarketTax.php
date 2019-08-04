@@ -11,7 +11,7 @@ use DB;
 
 use App\Library\Esi\Esi;
 
-use App\Models\Finances\CorpMarketJournal;
+use App\Models\Finances\AllianceMarketJournal;
 
 class AllianceMarketTax {
     public function InsertMarketTax($journal, $corpId, $division) {
