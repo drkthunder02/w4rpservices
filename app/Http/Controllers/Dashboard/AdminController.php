@@ -47,13 +47,13 @@ class AdminController extends Controller
             //Get the srp actual pay out for the date range
             $srpActual[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelpeer->GetAllianceSRPActual($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetAllianceSRPActual($date['start'], $date['end']), 2, ".", ","),
             ];
 
             //Get the srp loss value for the date range
             $srpLoss[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelpeer->GetAllianceSRPActual($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetAllianceSRPActual($date['start'], $date['end']), 2, ".", ","),
             ];
 
             //Get the pi taxes for the date range
