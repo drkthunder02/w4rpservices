@@ -40,6 +40,7 @@
                     @if($openCount > 0)
                     <table class="table table-striped">
                         <thead>
+                            <th>Character</th>
                             <th>Fleet Commander</th>
                             <th>Ship Type</th>
                             <th>Loss Value</th>
@@ -48,6 +49,7 @@
                         <tbody>
                             @foreach($open as $o)
                             <tr>
+                                <td>{{ $o['character_name'] }}</td>
                                 <td>{{ $o['fleet_commander_name'] }}</td>
                                 <td>{{ $o['ship_type'] }}</td>
                                 <td>{{ $o['loss_value'] }}</td>
@@ -77,6 +79,7 @@
                     @if($deniedCount > 0)
                     <table class="table table-striped">
                         <thead>
+                            <th>Character</th>
                             <th>Fleet Commander</th>
                             <th>Ship Type</th>
                             <th>Loss Value</th>
@@ -86,6 +89,7 @@
                         <tbody>
                             @foreach($denied as $d)
                             <tr>
+                                <td>{{ $d['character_name'] }}</th>
                                 <td>{{ $d['fleet_commander_name'] }}</td>
                                 <td>{{ $d['ship_type'] }}</td>
                                 <td>{{ $d['loss_value'] }}</td>
@@ -116,6 +120,7 @@
                     @if($approvedCount > 0)
                     <table class="table table-striped">
                         <thead>
+                            <th>Character</th>
                             <th>Fleet Commander</th>
                             <th>Ship Type</th>
                             <th>Loss Value</th>
@@ -124,6 +129,7 @@
                         <tbody>
                             @foreach($approved as $a)
                             <tr>
+                                <td>{{ $a['character_name'] }}</td>
                                 <td>{{ $a['fleet_commander_name'] }}</td>
                                 <td>{{ $a['ship_type'] }}</td>
                                 <td>{{ $a['loss_value'] }}</td>
