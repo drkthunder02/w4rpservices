@@ -49,14 +49,14 @@ class DashboardController extends Controller
             'main_id' => auth()->user()->character_id,
         ])->count();
 
-        dd($altCount);
-
         //If the alt count is greater than 0 get all of the alt accounts
         if($altCount > 0) {
             $alts = UserAlt::where([
                 'main_id' => auth()->user()->character,
             ])->get();
         }
+
+        dd($alts);
 
         //See if we can get all of the open SRP requests
         $openCount = SRPShip::where([
