@@ -38,9 +38,9 @@ class DashboardController extends Controller
     public function index()
     {
         //Set some variables to be used in if statements
-        $open = null;
-        $approved = null;
-        $denied = null;
+        $open = array();
+        $approved = array();
+        $denied = array();
         $altCount = null;
         $alts = null;
 
