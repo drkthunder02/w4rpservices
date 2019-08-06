@@ -12,11 +12,6 @@
 </div>
 
 <div class="container">
-    <div id="fc-losses-div"></div>
-    {!! $lava->render('BarChart', 'FCs', 'fc-losses-div') !!}
-</div>
-
-<div class="container">
     <div id="cost-codes-div"></div>
     {!! $lava->render('ColumnChart', 'Cost Codes', 'cost-codes-div') !!}
 </div>

@@ -41,6 +41,19 @@ class DashboardController extends Controller
         $open = null;
         $approved = null;
         $denied = null;
+        $alts = null;
+
+        //Get the number of the user's alt which are registered so we can process the alt's on the main dashboard page
+        $altCount = UserAlt::where([
+            'main_id' => auth()->user()->character_id,
+        ])->count();
+
+        //If the alt count is greater than 0 get all of the alt accounts
+        if($altCount > 0) {
+            $alts = UserAlt::where([
+                'main_id' => auth()->user()->character,
+            ])->get();
+        }
 
         //See if we can get all of the open SRP requests
         $openCount = SRPShip::where([
@@ -76,6 +89,56 @@ class DashboardController extends Controller
                 'character_id' => auth()->user()->character_id,
                 'approved' => 'Denied',
             ])->take(10)->get();
+        }
+
+        //Process all types of srp requests for the alt of the main and add to the main's page
+        if($altCount > 0) {
+            //For each alt, get the open requests, and increment the open request counter
+            foreach($alts as $alt) {
+                $altOpenCount = SRPShip::where([
+                    'character_id' => $alt->character_id,
+                    'approved' => 'Under Review',
+                ])->count();
+                if($altOpenCount > 0) {
+                    //If the number of open requests is greater than zero, add to the open count
+                    $openCount += $altOpenCount;
+                    //Get the alt's open srp requests
+                    $altOpen = SRPShip::where([
+                        'character_id' => $alt->character_id,
+                        'approved' => 'Under Review',
+                    ])->get();
+                    //Add the alt's open requests to the open requests array
+                    array_push($open, $altOpen);
+                }
+
+                $altApprovedCount = SRPShip::where([
+                    'character_id' => $alt->character_id,
+                    'approved' => 'Approved',
+                ])->count();
+                if($altApprovedCount > 0) {
+                    $approvedCount += $altApprovedCount;
+                    $altApproved = SRPShip::where([
+                        'character_id' => $alt->character_id,
+                        'approved' => 'Approved',
+                    ])->take(5)->get();
+
+                    array_push($approved, $altApproved);
+                }
+
+                $altDeniedCount = SRPShip::where([
+                    'character_id' => $alt->character_id,
+                    'approved' => 'Denied',
+                ])->count();
+                if($altDeniedCount > 0) {
+                    $deniedCount += $altDeniedCount;
+                    $altDenied = SRPShip::where([
+                        'character_id' => $alt->character_id,
+                        'approved' => 'Denied',
+                    ])->take(5)->get();
+
+                    array_push($denied, $altDenied);
+                }
+            }
         }
 
         //Create a chart of number of approved, denied, and open requests via a fuel gauge chart

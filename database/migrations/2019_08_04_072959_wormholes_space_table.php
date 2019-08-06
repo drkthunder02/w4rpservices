@@ -16,10 +16,10 @@ class WormholesSpaceTable extends Migration
         if(!Schema::hasTable('alliance_wormholes')) {
             Schema::create('alliance_wormholes', function (Blueprint $table) {
                 $table->increments('id');
+                $table->string('system');
                 $table->string('sig_id');
                 $table->string('duration_left');
-                $table->string('date_scanned');
-                $table->string('time_scanned');
+                $table->dateTime('dateTime');
                 $table->enum('class', [
                     'C1',
                     'C2',
@@ -48,8 +48,8 @@ class WormholesSpaceTable extends Migration
                     'Non-Critical',
                     'Critical',
                 ]);
-                $table->text('details');
-                $table->string('link');
+                $table->text('details')->nullable();
+                $table->string('link')->nullable();
                 $table->decimal('mass_allowed', 20, 2);
                 $table->decimal('individual_mass', 20, 2);
                 $table->decimal('regeneration', 20, 2);

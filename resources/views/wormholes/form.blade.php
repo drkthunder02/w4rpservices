@@ -9,6 +9,10 @@
             <div class="card-body">
                 {!! Form::open(['action' => 'Wormholes\WormholeController@storeWormhole', 'method' => 'POST']) !!}
                 <div class="form-group">
+                    {{ Form::label('system', 'System') }}
+                    {{ Form::text('system', '', ['class' => 'form-control']) }}
+                </div>
+                <div class="form-group">
                     {{ Form::label('sig', 'Sig ID') }}
                     {{ Form::text('sig', '', ['class' => 'form-control', 'placeholder' => 'XXX-XXX']) }}
                 </div>
@@ -17,8 +21,8 @@
                     {{ Form::select('duration', $duration, null, ['class' => 'form-control']) }}
                 </div>
                 <div class="form-group">
-                    {{ Form::label('date', 'Date Scanned') }}
-                    {{ Form::text('date', \Carbon\Carbon::now(), ['class' => 'form-control']) }}
+                    {{ Form::label('dateTime', 'Date Scanned') }}
+                    {{ Form::date('dateTime', \Carbon\Carbon::now(), ['class' => 'form-control']) }}
                 </div>
                 <div class="form-group">
                     {{ Form::label('class', 'WH Class') }}

@@ -128,6 +128,13 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/logistics/courier/form', 'Logistics\LogisticsController@displayContractDetails');
     Route::get('/logistics/contracts/display', 'Logistics\LogisticsController@displayLogisticsContracts');
     Route::get('/logistics/fuel/structures', 'Fuel\FuelController@displayStructures');
+
+    /**
+     * Wormhole Controller display pages
+     */
+    Route::get('/wormholes/form', 'Wormholes\WormholeController@displayWormholeForm');
+    Route::post('/wormholes/form', 'Wormholes\WormholeController@storeWormhole');
+    Route::get('/wormholes/display', 'Wormholes\WormholeController@displayWormholes');
 });
 
 /**

@@ -21,10 +21,10 @@ class AllianceWormhole extends Model
      * @var array
      */
     protected $fillable = [
+        'system',
         'sig_id',
         'duration_left',
-        'date_scanned',
-        'time_scanned',
+        'dateTime',
         'class',
         'type',
         'hole_size',
