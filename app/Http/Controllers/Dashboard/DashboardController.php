@@ -167,7 +167,17 @@ class DashboardController extends Controller
             ],
         ]);
 
-        dd($openCount);
+        if($openCount == 0) {
+            $open = null;
+        }
+
+        if($approvedCount == 0) {
+            $approved = null;
+        }
+
+        if($deniedCount == 0) {
+            $denied = null;
+        }
 
         return view('dashboard')->with('openCount', $openCount)
                                 ->with('approvedCount', $approvedCount)
