@@ -106,14 +106,17 @@ class DashboardController extends Controller
                 if($altOpenCount > 0) {
                     //If the number of open requests is greater than zero, add to the open count
                     $openCount += $altOpenCount;
-                    dd($openCount);
+                    
                     //Get the alt's open srp requests
                     $altOpen = SRPShip::where([
                         'character_id' => $alt->character_id,
                         'approved' => 'Under Review',
                     ])->get()->toArray();
+
                     //Add the alt's open requests to the open requests array
-                    array_push($open, $altOpen);
+                    foreach($altOpen as $alt) {
+                        array_push($open, $alt);
+                    }
                 }
 
                 $altApprovedCount = SRPShip::where([
@@ -121,13 +124,19 @@ class DashboardController extends Controller
                     'approved' => 'Approved',
                 ])->count();
                 if($altApprovedCount > 0) {
+                    //If the number of approved requests is greater than zero, add to the approved count
                     $approvedCount += $altApprovedCount;
+
+                    //Get the alt's approved srp request
                     $altApproved = SRPShip::where([
                         'character_id' => $alt->character_id,
                         'approved' => 'Approved',
                     ])->take(5)->get()->toArray();
 
-                    array_push($approved, $altApproved);
+                    //For each alt add it to the array
+                    foreach($altApproved as $alt) {
+                        array_push($approved, $alt);
+                    }
                 }
 
                 $altDeniedCount = SRPShip::where([
@@ -135,13 +144,19 @@ class DashboardController extends Controller
                     'approved' => 'Denied',
                 ])->count();
                 if($altDeniedCount > 0) {
+                    //If the denied count is greater then zero for the alt, add it to the count
                     $deniedCount += $altDeniedCount;
+
+                    //Get the denied alt's srp requests
                     $altDenied = SRPShip::where([
                         'character_id' => $alt->character_id,
                         'approved' => 'Denied',
                     ])->take(5)->get()->toArray();
 
-                    array_push($denied, $altDenied);
+                    //For each alt's denied request add it to the array
+                    foreach($altDenied as $alt) {
+                        array_push($denied, $alt);
+                    }
                 }
             }
         }
