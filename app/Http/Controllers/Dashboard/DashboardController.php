@@ -41,6 +41,7 @@ class DashboardController extends Controller
         $open = null;
         $approved = null;
         $denied = null;
+        $altCount = null;
         $alts = null;
 
         //Get the number of the user's alt which are registered so we can process the alt's on the main dashboard page
