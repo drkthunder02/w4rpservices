@@ -50,7 +50,7 @@ class DashboardController extends Controller
         ])->count();
 
         //Temporary Measure to keep the page working properly
-        $altCount = 0;
+        //$altCount = 0;
 
         //If the alt count is greater than 0 get all of the alt accounts
         if($altCount > 0) {
