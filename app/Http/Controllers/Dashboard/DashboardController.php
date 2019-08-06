@@ -49,6 +49,8 @@ class DashboardController extends Controller
             'main_id' => auth()->user()->character_id,
         ])->count();
 
+        dd($altCount);
+
         //If the alt count is greater than 0 get all of the alt accounts
         if($altCount > 0) {
             $alts = UserAlt::where([
