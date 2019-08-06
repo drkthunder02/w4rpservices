@@ -1,5 +1,6 @@
 @extends('layouts.b4')
 @section('content')
+<br>
 <div class="container col-md-8">
     <div class="row justify-content-center">
         <div class="col-md-8">
