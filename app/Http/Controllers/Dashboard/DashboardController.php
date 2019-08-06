@@ -106,6 +106,7 @@ class DashboardController extends Controller
                 if($altOpenCount > 0) {
                     //If the number of open requests is greater than zero, add to the open count
                     $openCount += $altOpenCount;
+                    dd($openCount);
                     //Get the alt's open srp requests
                     $altOpen = SRPShip::where([
                         'character_id' => $alt->character_id,
