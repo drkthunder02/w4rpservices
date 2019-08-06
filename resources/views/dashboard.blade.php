@@ -48,10 +48,10 @@
                         <tbody>
                             @foreach($open as $o)
                             <tr>
-                                <td>{{ $o->fleet_commander_name }}</td>
-                                <td>{{ $o->ship_type }}</td>
-                                <td>{{ $o->loss_value }}</td>
-                                <td>{{ $o->approved }}</td>
+                                <td>{{ $o['fleet_commander_name'] }}</td>
+                                <td>{{ $o['ship_type'] }}</td>
+                                <td>{{ $o['loss_value'] }}</td>
+                                <td>{{ $o['approved'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -86,11 +86,11 @@
                         <tbody>
                             @foreach($denied as $d)
                             <tr>
-                                <td>{{ $d->fleet_commander_name }}</td>
-                                <td>{{ $d->ship_type }}</td>
-                                <td>{{ $d->loss_value }}</td>
-                                <td>{{ $d->approved }}</td>
-                                <td>{{ $d->notes }}</td>
+                                <td>{{ $d['fleet_commander_name'] }}</td>
+                                <td>{{ $d['ship_type'] }}</td>
+                                <td>{{ $d['loss_value'] }}</td>
+                                <td>{{ $d['approved'] }}</td>
+                                <td>{{ $d['notes'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -124,10 +124,10 @@
                         <tbody>
                             @foreach($approved as $a)
                             <tr>
-                                <td>{{ $a->fleet_commander_name }}</td>
-                                <td>{{ $a->ship_type }}</td>
-                                <td>{{ $a->loss_value }}</td>
-                                <td>{{ $a->approved }}</td>
+                                <td>{{ $a['fleet_commander_name'] }}</td>
+                                <td>{{ $a['ship_type'] }}</td>
+                                <td>{{ $a['loss_value'] }}</td>
+                                <td>{{ $a['approved'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>

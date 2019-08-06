@@ -68,7 +68,7 @@ class DashboardController extends Controller
             $open = SRPShip::where([
                 'character_id' => auth()->user()->character_id,
                 'approved' => 'Under Review'
-            ])->get();
+            ])->get()->toArray();
         }
 
         //See if we can get all of the closed and approved SRP requests
@@ -80,7 +80,7 @@ class DashboardController extends Controller
             $approved = SRPShip::where([
                 'character_id' => auth()->user()->character_id,
                 'approved' => 'Approved',
-            ])->take(10)->get();
+            ])->take(10)->get()->toArray();
         }
 
         //See if we can get all of the closed and denied SRP requests
@@ -92,7 +92,7 @@ class DashboardController extends Controller
             $denied = SRPShip::where([
                 'character_id' => auth()->user()->character_id,
                 'approved' => 'Denied',
-            ])->take(10)->get();
+            ])->take(10)->get()->toArray();
         }
 
         //Process all types of srp requests for the alt of the main and add to the main's page
@@ -111,7 +111,7 @@ class DashboardController extends Controller
                     $altOpen = SRPShip::where([
                         'character_id' => $alt->character_id,
                         'approved' => 'Under Review',
-                    ])->get();
+                    ])->get()->toArray();
                     //Add the alt's open requests to the open requests array
                     array_push($open, $altOpen);
                 }
@@ -125,7 +125,7 @@ class DashboardController extends Controller
                     $altApproved = SRPShip::where([
                         'character_id' => $alt->character_id,
                         'approved' => 'Approved',
-                    ])->take(5)->get();
+                    ])->take(5)->get()->toArray();
 
                     array_push($approved, $altApproved);
                 }
@@ -139,7 +139,7 @@ class DashboardController extends Controller
                     $altDenied = SRPShip::where([
                         'character_id' => $alt->character_id,
                         'approved' => 'Denied',
-                    ])->take(5)->get();
+                    ])->take(5)->get()->toArray();
 
                     array_push($denied, $altDenied);
                 }
