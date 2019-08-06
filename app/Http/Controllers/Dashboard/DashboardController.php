@@ -114,8 +114,8 @@ class DashboardController extends Controller
                     ])->get()->toArray();
 
                     //Add the alt's open requests to the open requests array
-                    foreach($altOpen as $alt) {
-                        array_push($open, $alt);
+                    foreach($altOpen as $aOpen) {
+                        array_push($open, $aOpen);
                     }
                 }
 
@@ -134,8 +134,8 @@ class DashboardController extends Controller
                     ])->take(5)->get()->toArray();
 
                     //For each alt add it to the array
-                    foreach($altApproved as $alt) {
-                        array_push($approved, $alt);
+                    foreach($altApproved as $aApproved) {
+                        array_push($approved, $aApproved);
                     }
                 }
 
@@ -154,8 +154,8 @@ class DashboardController extends Controller
                     ])->take(5)->get()->toArray();
 
                     //For each alt's denied request add it to the array
-                    foreach($altDenied as $alt) {
-                        array_push($denied, $alt);
+                    foreach($altDenied as $aDenied) {
+                        array_push($denied, $aDenied);
                     }
                 }
             }
