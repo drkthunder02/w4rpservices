@@ -49,6 +49,8 @@ class DashboardController extends Controller
             'main_id' => auth()->user()->character_id,
         ])->count();
 
+        $altCount = 0;
+
         //If the alt count is greater than 0 get all of the alt accounts
         if($altCount > 0) {
             $alts = UserAlt::where([
@@ -166,18 +168,6 @@ class DashboardController extends Controller
                 'Critical',
             ],
         ]);
-
-        if($openCount == 0) {
-            $open = null;
-        }
-
-        if($approvedCount == 0) {
-            $approved = null;
-        }
-
-        if($deniedCount == 0) {
-            $denied = null;
-        }
 
         return view('dashboard')->with('openCount', $openCount)
                                 ->with('approvedCount', $approvedCount)
