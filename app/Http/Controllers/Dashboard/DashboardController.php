@@ -167,6 +167,8 @@ class DashboardController extends Controller
             ],
         ]);
 
+        dd($open);
+
         return view('dashboard')->with('openCount', $openCount)
                                 ->with('approvedCount', $approvedCount)
                                 ->with('deniedCount', $deniedCount)

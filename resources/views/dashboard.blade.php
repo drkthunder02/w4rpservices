@@ -48,11 +48,7 @@
                         <tbody>
                             @foreach($open as $o)
                             <tr>
-                                    @if(isset($o->fleet_commander_name))
-                                        <td>{{ $o->fleet_commander_name }}</td>
-                                    @else
-                                        <td></td>
-                                    @endif
+                                <td>{{ $o->fleet_commander_name }}</td>
                                 <td>{{ $o->ship_type }}</td>
                                 <td>{{ $o->loss_value }}</td>
                                 <td>{{ $o->approved }}</td>
