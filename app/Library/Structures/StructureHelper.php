@@ -213,6 +213,7 @@ class StructureHelper {
                 $serv->sructure_id = $structure->structure_id;
                 $serv->name = $service->name;
                 $serv->state = $service->state;
+                $serv->save();
             }
         }
     }
