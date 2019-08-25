@@ -19,7 +19,24 @@
             <th>Link</th>
         </thead>
         <tbody>
-
+            @foreach($wormholes as $wormhole)
+                <tr>
+                    <td>{{ $wormhole->system }}</td>
+                    <td>{{ $wormhole->sig_id }}</td>
+                    <td>{{ $wormhole->duration_left }}</td>
+                    <td>{{ $wormhole->dateTime }}</td>
+                    <td>{{ $wormhole->class }}</td>
+                    <td>{{ $wormhole->type }}</td>
+                    <td>{{ $wormhole->hole_size }}</td>
+                    <td>{{ $wormhole->stability }}</td>
+                    <td>{{ $wormhole->mass_allowed }}</td>
+                    <td>{{ $wormhole->individual_mass }}</td>
+                    <td>{{ $wormhole->regeneration }}</td>
+                    <td>{{ $wormhole->max_stable_time }}</td>
+                    <td>{{ $wormhole->details }}</td>
+                    <td>{{ $wormhole->link }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
