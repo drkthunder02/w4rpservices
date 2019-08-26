@@ -42,19 +42,19 @@ class Esi {
         //Check for an esi scope
         $check = EsiScope::where(['character_id' => $charId, 'scope' => $scope])->count();
         if($check == 0) {
-            return true;
+            //Compose a mail to send to the user if the scope is not found
+            $mail  = new EveMail;
+            $mail->sender = $config['primary'];
+            $mail->subject = 'W4RP Services - Incorrect ESI Scope';
+            $mail->body = "Please register on https://services.w4rp.space with the scope: " . $scope;
+            $mail->recipient = (int)$charId;
+            $mail->recipient_type = 'character';
+
+            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+            return false;
         }
 
-        $mail  = new EveMail;
-        $mail->sender = $config['primary'];
-        $mail->subject = 'W4RP Services - Incorrect ESI Scope';
-        $mail->body = "Please register on https://services.w4rp.space with the scope: " . $scope;
-        $mail->recipient = (int)$charId;
-        $mail->recipient_type = 'character';
-
-        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
-
-        return false;
+        return true;
     }
 
     public function GetCharacterData($charId) {
