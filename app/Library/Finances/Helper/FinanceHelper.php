@@ -50,7 +50,12 @@ class FinanceHelper {
         $pi_items = $this->GetPIMaterialsArray();
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
+        $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
+        if($hasScope == false) {
+            Log::critical('Esi scope check for esi-wallet.read_corporation_wallets.v1 has failed for character id: ' . $hcarId);
+            return null;
+        }
+        $token = $esiHelper->GetRefreshToken($charId);
         if($token == null) {
             return null;
         }
@@ -107,7 +112,12 @@ class FinanceHelper {
         $lookups = new LookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
+        $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
+        if($hasScope == false) {
+            Log::critical('Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
+            return null;
+        }
+        $token = $esiHelper->GetRefreshToken($charId);
         if($token == null) {
             return null;
         }        
@@ -184,7 +194,12 @@ class FinanceHelper {
         $esiHelper = new Esi();
         
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
+        $hasScope = $esiHelper->HaveScope($charId, 'esi-wallet.read_corporation_wallets.v1');
+        if($hasScope == false) {
+            Log::critical('Esi Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
+            return null;
+        }
+        $token = $esiHelper->GetRefreshToken($charId);
         if($token == null) {
             return null;
         }
@@ -279,7 +294,12 @@ class FinanceHelper {
         $lookups = new LookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $token = $esiHelper->GetToken($charId, 'esi-wallet.read_corporation_wallets.v1');
+        $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
+        if($hasScope == false) {
+            Log::critical('Esi Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
+            return null;
+        }
+        $token = $esiHelper->GetRefreshToken($charId);
         if($token == null) {
             return null;
         }       

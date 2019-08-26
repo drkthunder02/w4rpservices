@@ -46,12 +46,20 @@ class EveContractsHelper {
 
         //Setup the esi authentication container
         $config = config('esi');
+
+        //Check for the scope for the esi token needed
+        $hasScope = $esiHelper->HaveEsiScope($this->charId, 'esi-contracts.read_corporation_contracts.v1');
+        if($hasScope == false) {
+            Log::critical('Esi Scope check failed for esi-contracts.read_corporation_contracts.v1 for character id: ' . $this->charId);
+            return null;
+        }
+
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
+        $token = $esiHelper->GetRefreshToken($this->charId);
         $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token,
         ]);
         //Setup the ESI variable
         $esi = new Eseye($authentication);
@@ -78,12 +86,20 @@ class EveContractsHelper {
 
         //Setup the esi authentication container
         $config = config('esi');
+
+        //Check if the scope is present for ESI
+        $hasScope = $esiHelper->HaveEsiScope($this->charId, 'esi-contracts.read_corporation_contracts.v1');
+        if($hasScope == false) {
+            Log::critical('Esi Scope check failed for esi-contracts.read_corporation_contracts.v1 for character id: ' . $this->charId);
+            return null;
+        }
+
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id', $this->charId])->get(['refresh_token']);
+        $token = $esiHelper->GetRefreshToken($this->charId);
         $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token,
         ]);
         //Setup the ESI variable
         $esi = new Eseye($authentication);

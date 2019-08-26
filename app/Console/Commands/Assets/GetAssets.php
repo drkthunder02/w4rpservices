@@ -76,7 +76,7 @@ class GetAssetsCommand extends Command
         $assetScope = $esiHelper->HaveEsiScope($config['primary'], 'esi-assets.read_corporation_assets.v1');
 
         if($assetScope == false) {
-            Log::critical("Scope check for esi failed.");
+            Log::critical("Scope check for esi-assets.read_corporation_assets.v1 failed.");
             return null;
         }
 
@@ -87,12 +87,12 @@ class GetAssetsCommand extends Command
         $configuration->cache = NullCache::class;
         
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $token = $esiHelper->GetRefreshToken($charId);
         //Create the authentication container
         $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token,
         ]);
 
         $esi = new Eseye($authentication);

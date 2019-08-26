@@ -38,6 +38,9 @@ class AssetHelper {
      * Get Assets By Page in order to store in the database
      */
     public function GetAssetsByPage() {
+        //Declare the variable for the esi helper
+        $esiHelper = new Esi;
+
         // Disable all caching by setting the NullCache as the
         // preferred cache handler. By default, Eseye will use the
         // FileCache.
@@ -46,12 +49,20 @@ class AssetHelper {
 
         //Setup the esi authentication container
         $config = config('esi');
+
+        //Check for the scope needed
+        $hasScope = $esiHelper->HaveEsiScope($this->charId, 'esi-assets.read_corporation_assets.v1');
+        if($hasScope == false) {
+            Log::critical('ESI Scope check has failed for esi-assets.read_corporation_assets.v1 for character id: ' . $this->charId);
+            return null;
+        }
+        
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
+        $token = $esiHelper->GetRefreshToken($this->charId);
         $authentication = new EsiAuthentication([
             'client_id' => $config['client_id'],
             'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
+            'refresh_token' => $token,
         ]);
         //Setup the ESI variable
         $esi = new Eseye($authentication);

@@ -75,7 +75,7 @@ class GetEveContractsCommand extends Command
         $contractScope = $esiHelper->HaveEsiScope($charId, 'esi-contracts.read_corporation_contracts.v1');
 
         if($contractScope == false) {
-            Log::critical('Scope check for esi contracts failed.');
+            Log::critical('Scope check for esi-contracts.read_corporation_contracts.v1 failed.');
             return null;
         }
 
