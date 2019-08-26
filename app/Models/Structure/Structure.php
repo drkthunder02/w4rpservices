@@ -18,7 +18,7 @@ class Structure extends Model
     public $primaryKey = 'id';
 
     //Timestamps
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable
