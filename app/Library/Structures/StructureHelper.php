@@ -158,53 +158,109 @@ class StructureHelper {
     }
 
     private function UpdateExistingStructure($structure, $info) {
-        $st = Structure::where(['structure_id' => $structure->structure_id])->first();
-        $st->structure_id = $structure->structure_id;
-        $st->structure_name = $info->name;
+        //Update the structure id and name
+        Structure::where(['structure_id' => $structure->structure_id])->update([
+            'structure_id' => $structure->structure_id,
+            'name' => $info->name,
+        ]);
+
+        //Update the services
         if(isset($structure->services)) {
-            $st->services = true;
+            $services = true;
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'services' => $services,
+            ]);
         } else {
-            $st->services = false;
+            $services = false;
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'services' => $services,
+            ]);
         }
+
+        //Update the structure state
         if(isset($structure->state)) {
-            $st->state = $structure->state;
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'state' => $structure->state,
+            ]);
         } else {
-            $st->state = 'None';
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'state' => 'None',
+            ]);
         }
+
+        //Update the state timer start
         if(isset($structure->state_timer_start)) {
-            $st->state_timer_start = $this->DecodeDate($structure->state_timer_start);
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'state_timer_start' => $this->DecodeDate($structure->state_timer_start),
+            ]);
         }
+
+        //Update the state timer end
         if(isset($structure->state_timer_end)) {
-            $st->state_timer_end = $this->DecodeDate($structure->state_timer_end);
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'state_timer_end' => $this->DecodeDate($structure->state_timer_end),
+            ]);
         }
+
+        //Update the fuel expires
         if(isset($structure->fuel_expires)) {
-            $st->fuel_expires = $this->DecodeDate($structure->fuel_expires);
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'fuel_expires' => $this->DecodeDate($structure->fuel_expires),
+            ]);
         }
-        $st->profile_id = $structure->profile_id;
-        $st->position_x = $info->position->x;
-        $st->position_y = $info->position->y;
-        $st->position_z = $info->position->z;
+
+        //Update the profile id, and positions
+        Structure::where(['structure_id' => $structure->structure_id])->update([
+            'profile_id' => $structure->profile_id,
+            'position_x' => $info->position->x,
+            'position_y' => $info->position->y,
+            'position_z' => $info->position->z,
+        ]);
+
+        //Update the next reinforce apply
         if(isset($structure->next_reinforce_apply)) {
-            $st->next_reinforce_apply = $this->DecodeDate($structure->next_reinforce_apply);
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'next_reinforce_apply' => $this->DecodeDate($structure->next_reinforce_apply),
+            ]);
         }
+
+        //update the next reinforce hour
         if(isset($structure->next_reinforce_hour)) {
-            $st->next_reinforce_hour = $structure->next_reinforce_hour;
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'next_reinforce_hour' => $structure->next_reinforce_hour,
+            ]);
         }
+
+        //Update next reinforce weekday
         if(isset($structure->next_reinforce_weekday)) {
-            $st->next_reinforce_weekday = $structure->next_reinforce_weekday;
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'next_reinforce_weekday' => $structure->next_reinforce_weekday,
+            ]);
         }
-        $st->reinforce_hour = $structure->reinforce_hour;
+
+        //Update reinforce hour
+        if(isset($structure->reinforce_hour)) {
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'reinforce_hour' => $structure->reinforce_hour,
+            ]);
+        }
+
+        //Update reinforce weekday
         if(isset($structure->reinforce_weekday)) {
-            $st->reinforce_weekday = $structure->reinforce_weekday;
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'reinforce_weekday' => $structure->reinforce_weekday,
+            ]);
         }
+
+        //Update the unanchors at field
         if(isset($structure->unanchors_at)) {
-            $st->unanchors_at = $structure->unanchors_at;
-        } 
-        //Save the database record
-        $st->save();
+            Structure::where(['structure_id' => $structure->structure_id])->update([
+                'unanchors_at' => $structure->unanchors_at,
+            ]);
+        }
 
         //Update the services for the structure as well
-        if($st->services == true) {
+        if($services == true) {
             //Delete the existing services, then add the new services
             Service::where(['structure_id' => $structure->structure_id, ])->delete();
 
