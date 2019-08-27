@@ -39,7 +39,7 @@ class LookupHelper {
         if($count === 0) {
             //Format the name
             $name = str_replace(' ', '%20', $character);
-
+            dd($name);
             try {
                 //Get the character id from the ESI API.
                 $response = $esi->setQueryString([
