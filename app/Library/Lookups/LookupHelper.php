@@ -45,17 +45,10 @@ class LookupHelper {
                 $response = $esi->setBody(array(
                     $character,
                 ))->invoke('post', '/universe/ids/');
-                //$response = $esi->setQueryString([
-                //    'categories' => 'character',
-                //    'search' => $name,
-                //    'strict' => 'true',
-                //    'language' => 'en-us',
-                //    'datasource' => 'tranquility',
-                //])->invoke('get', '/search/');
             } catch(RequestFailedException $e) {
 
             }
-            dd($response);
+            dd($response->character[0]->name);
             if(isset($response->character[0])) {
                 $this->LookupCharacter($response->character[0]);
 
