@@ -26,7 +26,7 @@ class ProcessCorpJournalJob implements ShouldQueue
      * 
      * @var int
      */
-    public $timeout = 1200;
+    public $timeout = 3600;
 
     public $tries = 3;
 

@@ -25,7 +25,7 @@ class ProcessStructureJob implements ShouldQueue
      * 
      * @var int
      */
-    public $timeout = 300;
+    public $timeout = 3600;
 
     /**
      * Number of job retries

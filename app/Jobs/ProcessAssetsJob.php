@@ -33,7 +33,7 @@ class ProcessAssetsJob implements ShouldQueue
      * 
      * @var int
      */
-    public $timeout = 600;
+    public $timeout = 3600;
 
     /**
      * Number of job retries

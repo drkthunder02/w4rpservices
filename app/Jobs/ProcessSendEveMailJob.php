@@ -31,7 +31,7 @@ class ProcessSendEveMailJob implements ShouldQueue
      * 
      * @var int
      */
-    public $timeout = 120;
+    public $timeout = 3600;
 
     /**
      * Retries
