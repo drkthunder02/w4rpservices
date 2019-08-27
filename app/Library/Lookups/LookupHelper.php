@@ -39,13 +39,15 @@ class LookupHelper {
         if($count === 0) {
             //Format the name
             $name = str_replace(' ', '%20', $character);
-            dd($name);
+            //dd($name);
             try {
                 //Get the character id from the ESI API.
                 $response = $esi->setQueryString([
                     'categories' => 'character',
                     'search' => $name,
-                    'strict' => 'false',
+                    'strict' => 'true',
+                    'language' => 'en-us',
+                    'datasource' => 'tranquility',
                 ])->invoke('get', '/search/');
             } catch(RequestFailedException $e) {
 
