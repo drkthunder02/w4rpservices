@@ -50,7 +50,7 @@ class LookupHelper {
             } catch(RequestFailedException $e) {
 
             }
-
+            dd($response->character[0]);
             if(isset($response->character[0])) {
                 $this->LookupCharacter($response->character[0]);
 
@@ -60,9 +60,9 @@ class LookupHelper {
             }
 
         } else {
-            $char = CharacterToCorporation::where(['character_name' => $character])->get(['character_id']);
+            $char = CharacterToCorporation::where(['character_name' => $character])->get(['character_id'])->first();
 
-            return $char[0]->character_id;
+            return $char->character_id;
         }
     }
 
