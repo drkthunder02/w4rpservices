@@ -48,11 +48,12 @@ class LookupHelper {
             } catch(RequestFailedException $e) {
 
             }
-            dd($response->characters[0]->name);
-            if(isset($response->character[0])) {
-                $this->LookupCharacter($response->character[0]);
+            
+            //If the data we are looking for is set, then process the data
+            if(isset($response->characters[0]->id)) {
+                $this->LookupCharacter($response->characters[0]->id);
 
-                return $response->character;
+                return $response->characters[0]->id;
             } else {
                 return -1;
             }
