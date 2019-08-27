@@ -194,7 +194,7 @@ class FinanceHelper {
         $esiHelper = new Esi();
         
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $hasScope = $esiHelper->HaveScope($charId, 'esi-wallet.read_corporation_wallets.v1');
+        $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
         if($hasScope == false) {
             Log::critical('Esi Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
             return null;
