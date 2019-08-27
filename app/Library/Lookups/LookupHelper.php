@@ -48,7 +48,7 @@ class LookupHelper {
             } catch(RequestFailedException $e) {
 
             }
-            dd($response->character[0]->name);
+            dd($response->characters[0]->name);
             if(isset($response->character[0])) {
                 $this->LookupCharacter($response->character[0]);
 
