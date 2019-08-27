@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\AllianceLookup' => $baseDir . '/app/Models/Lookups/AllianceLookup.php',
+    'App\\CharacterLookup' => $baseDir . '/app/Models/Lookups/CharacterLookup.php',
     'App\\Charts\\StructureFuelGauge' => $baseDir . '/app/Charts/StructureFuelGauge.php',
     'App\\Console\\Commands\\CleanStaleDataCommand' => $baseDir . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
     'App\\Console\\Commands\\CorpFinances' => $baseDir . '/app/Console/Commands/Finances/CorpFinances.php',
@@ -21,6 +23,7 @@ return array(
     'App\\Console\\Commands\\UpdateMoonRental' => $baseDir . '/app/Console/Commands/Moons/UpdateMoonRental.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\CorpMarketStructure' => $baseDir . '/app/Models/Finances/CorpMarketStructure.php',
+    'App\\CorporationLookup' => $baseDir . '/app/Models/Lookups/CorporationLookup.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\EsiScopeController' => $baseDir . '/app/Http/Controllers/Auth/EsiScopeController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
@@ -74,6 +77,7 @@ return array(
     'App\\Library\\Finances\\ReprocessingTax' => $baseDir . '/app/Library/Finances/ReprocessingTax.php',
     'App\\Library\\Finances\\StructureIndustryTax' => $baseDir . '/app/Library/Finances/StructureIndustryTax.php',
     'App\\Library\\Lookups\\LookupHelper' => $baseDir . '/app/Library/Lookups/LookupHelper.php',
+    'App\\Library\\Lookups\\NewLookupHelper' => $baseDir . '/app/Library/Lookups/NewLookupHelper.php',
     'App\\Library\\Moons\\MoonCalc' => $baseDir . '/app/Library/Moons/MoonCalc.php',
     'App\\Library\\SRP\\SRPHelper' => $baseDir . '/app/Library/SRP/SRPHelper.php',
     'App\\Library\\Structures\\StructureHelper' => $baseDir . '/app/Library/Structures/StructureHelper.php',
@@ -136,6 +140,8 @@ return array(
     'App\\Models\\User\\UserAlt' => $baseDir . '/app/Models/User/UserAlt.php',
     'App\\Models\\User\\UserPermission' => $baseDir . '/app/Models/User/UserPermission.php',
     'App\\Models\\User\\UserRole' => $baseDir . '/app/Models/User/UserRole.php',
+    'App\\Models\\Wormholes\\AllianceWormhole' => $baseDir . '/app/Models/Wormholes/AllianceWormhole.php',
+    'App\\Models\\Wormholes\\WormholeType' => $baseDir . '/app/Models/Wormholes/WormholeType.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

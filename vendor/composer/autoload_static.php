@@ -469,6 +469,8 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
+        'App\\AllianceLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/AllianceLookup.php',
+        'App\\CharacterLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/CharacterLookup.php',
         'App\\Charts\\StructureFuelGauge' => __DIR__ . '/../..' . '/app/Charts/StructureFuelGauge.php',
         'App\\Console\\Commands\\CleanStaleDataCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
         'App\\Console\\Commands\\CorpFinances' => __DIR__ . '/../..' . '/app/Console/Commands/Finances/CorpFinances.php',
@@ -484,6 +486,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Console\\Commands\\UpdateMoonRental' => __DIR__ . '/../..' . '/app/Console/Commands/Moons/UpdateMoonRental.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\CorpMarketStructure' => __DIR__ . '/../..' . '/app/Models/Finances/CorpMarketStructure.php',
+        'App\\CorporationLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/CorporationLookup.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\EsiScopeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EsiScopeController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -537,6 +540,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Library\\Finances\\ReprocessingTax' => __DIR__ . '/../..' . '/app/Library/Finances/ReprocessingTax.php',
         'App\\Library\\Finances\\StructureIndustryTax' => __DIR__ . '/../..' . '/app/Library/Finances/StructureIndustryTax.php',
         'App\\Library\\Lookups\\LookupHelper' => __DIR__ . '/../..' . '/app/Library/Lookups/LookupHelper.php',
+        'App\\Library\\Lookups\\NewLookupHelper' => __DIR__ . '/../..' . '/app/Library/Lookups/NewLookupHelper.php',
         'App\\Library\\Moons\\MoonCalc' => __DIR__ . '/../..' . '/app/Library/Moons/MoonCalc.php',
         'App\\Library\\SRP\\SRPHelper' => __DIR__ . '/../..' . '/app/Library/SRP/SRPHelper.php',
         'App\\Library\\Structures\\StructureHelper' => __DIR__ . '/../..' . '/app/Library/Structures/StructureHelper.php',
@@ -599,6 +603,8 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Models\\User\\UserAlt' => __DIR__ . '/../..' . '/app/Models/User/UserAlt.php',
         'App\\Models\\User\\UserPermission' => __DIR__ . '/../..' . '/app/Models/User/UserPermission.php',
         'App\\Models\\User\\UserRole' => __DIR__ . '/../..' . '/app/Models/User/UserRole.php',
+        'App\\Models\\Wormholes\\AllianceWormhole' => __DIR__ . '/../..' . '/app/Models/Wormholes/AllianceWormhole.php',
+        'App\\Models\\Wormholes\\WormholeType' => __DIR__ . '/../..' . '/app/Models/Wormholes/WormholeType.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
