@@ -42,11 +42,9 @@ class LookupHelper {
             //dd($name);
             try {
                 //Get the character id from the ESI API.
-                $response = $esi->setBody([
-                    [
-                        'Rimmelchen Ohu',
-                    ]
-                ])->invoke('post', '/universe/ids/');
+                $response = $esi->setBody(array(
+                    'Rimmelchen Ohu',
+                ))->invoke('post', '/universe/ids/');
                 //$response = $esi->setQueryString([
                 //    'categories' => 'character',
                 //    'search' => $name,
