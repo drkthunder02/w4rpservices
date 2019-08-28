@@ -11,7 +11,8 @@ use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use Seat\Eseye\Containers\EsiAuthentication;
 use Seat\Eseye\Eseye;
-use Seat\Eseye\Exceptions\RequestFailedException; 
+use Seat\Eseye\Exceptions\RequestFailedException;
+use App\Library\Esi\Esi;
 
 //Models
 use App\Models\Lookups\CharacterToCorporation;
@@ -288,31 +289,465 @@ class NewLookupHelper {
     }
 
     private function StoreCharacterLookup($id = null, $name = null) {
+        //Declare the esi helper
+        $esiHelper = new Esi;
+
+        //If the id and name are null, just return
         if($id == null && $name == null) {
-            return null;
+            return;
         }
 
+        //If the id isn't null, then get the character information from the esi via the character id
+        if($id != null) {
+            //See if the character already exists in the lookup table
+            $count = CharacterLookup::where(['character_id' => $id])->count();
+            if($count == 0) {
+                try {
+                    $response = $this->esi->invoke('get', '/characters/{character_id}/', [
+                        'character_id' => $id,
+                    ]);
+                } catch(RequestFailedException $e) {
+                    return;
+                }
+
+                $corpId = $this->SaveCharacter($response, $id);
+
+                if($corpId != null) {
+                    //Do a recursive call for the corporation Lookup
+                    $this->StoreCorporationLookup($corpId, null);
+                }                
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
         
+        //If the name is not null attempt to add the character to the table
+        if($name != null) {
+            $count = CharacterLookup::where(['name' => $name])->count();
+            if($count == 0) {
+                try {
+                    //Get the character id from the ESI API
+                    $responseName = $this->esi->setBody(array(
+                        $name,
+                    ))->invoke('post', '/universe/ids/');
+                } catch(RequestFailedException $e) {
+                    return;
+                }
+
+                try {
+                    $response = $this->esi->invoke('get', '/characters/{character_id}/', [
+                        'character_id' => $responseName->characters[0]->id,
+                    ]);
+                } catch(RequestFailedException $e) {
+                    return;
+                }
+
+                $corpId = $this->SaveCharacter($response, $responseName->characters[0]->id);
+                if($corpId != null) {
+                    //Do a recursive call for the corporation Lookup
+                    $this->StoreCorporationLookup($corpId, null);
+                }
+                
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
     }
 
-    private function UpdateCharacter($id = null, $name = null) {
+    private function SaveCharacter($response, $charId) {
+        $char = new CharacterLookup;
+        $char->character_id = $charId;
+        if(isset($response->alliance_id)) {
+            $char->alliance_id = $response->alliance_id;
+        }
+        if(isset($response->ancestry_id)) {
+            $char->ancestry_id = $response->ancestry_id;
+        }
+        $char->birthday = $response->birthday;
+        $char->bloodline_id = $response->bloodline_id;
+        $char->corporation_id = $response->corporation_id;
+        if(isset($response->description)) {
+            $char->description = $response->description;
+        }
+        if(isset($response->faction_id)) {
+            $char->faction_id = $response->faction_id;
+        }
+        $char->gender = $response->gender;
+        $char->name = $response->name;
+        $char->race_id = $response->race_id;
+        if(isset($response->security_status)) {
+            $char->security_status = $response->security_status;
+        }
+        if(isset($response->title)) {
+            $char->title = $response->title;
+        }
+        $char->save();
 
+        return $response->corporation_id;
+    }
+
+    public function UpdateCharacters() {
+        $all = CharacterLookup::all();
+
+        foreach($all as $entry) {
+            //Attempt to get the data from ESI
+            try {
+                $response = $esi->invoke('get', '/characters/{character_id}/', [
+                    'character_id' => $entry->character_id,
+                ]);
+            } catch(RequestFailedException $e) {
+
+            }
+
+            //Update the data
+            if(isset($response->alliance_id)) {
+                if($response->alliance_id != $entry->alliance_id) {
+                    CharacterLookup::where([
+                        'character_id' => $entry->character_id,
+                    ])->update([
+                        'alliance_id' => $response->alliance_id,
+                    ]);
+                }
+            }
+            if(isset($response->description)) {
+                if($response->description != $entry->description) {
+                    CharacterLookup::where([
+                        'character_id' => $entry->character_id,
+                    ])->update([
+                        'description' => $response->description,
+                    ]);
+                }
+            }
+            if(isset($response->security_status)) {
+                if($response->security_status != $entry->security_status) {
+                    CharacterLookup::where([
+                        'character_id' => $entry->character_id,
+                    ])->update([
+                        'security_status' => $response->security_status,
+                    ]);
+                }
+            }
+            if(isset($response->title)) {
+                if($response->title != $entry->title) {
+                    CharacterLookup::where([
+                        'character_id' => $entry->character_id,
+                    ])->update([
+                        'title' => $response->title,
+                    ]);
+                }
+            }
+            if(isset($response->corporation_id)) {
+                if($response->corporation_id != $entry->corporation_id) {
+                    CharacterLookup::where([
+                        'character_id' => $entry->character_id,
+                    ])->update([
+                        'corporation_id' => $response->corporation_id,
+                    ]);
+                }
+            }
+        }
     }
 
     private function StoreCorporationLookup($id = null, $name = null) {
+        //If the id is null and the name is null, then return
+        if($id == null && $name == null) {
+            return;
+        }
+
+        if($id != null) {
+            $count = CorporationLookup::where(['corporation_id' => $id])->count();
+            if($count == 0) {
+                try {
+                    $response = $esi->invoke('get', '/corporations/{corporation_id}/', [
+                        'corporation_id' => $id,
+                    ]);
+                } catch(RequestFailedException $e) {
+                    return;
+                }
+
+                $allianceId = $this->SaveCorporation($response, $id);
+
+                if($allianceId != null) {
+                    $this->StoreAllianceLookup($allianceId);
+                }
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
+
+        if($name != null) {
+            $count = CorporationLookup::where(['name' => $name])->count();
+            if($count == 0) {
+                try {
+                    //Get the corporation id from the ESI API
+                    $responseName = $this->esi->setBody(array(
+                        $name,
+                    ))->invoke('post', '/universe/ids/');
+                } catch(RequestFailedException $e) {
+                    return;
+                }
+
+                try {
+                    $response = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
+                        'corporation_id' => $responseName->corporations[0]->id,
+                    ]);
+                } catch(ReqeustFailedException $e) {
+                    return;
+                }
+
+                $allianceId = $this->SaveCorporation($response, $responseName->corporations[0]->id);
+                if($allianceId != null) {
+                    //Do a recursive call for the alliance lookup
+                    $this->StoreAllianceLookup($allianceId, null);
+                }
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
+    }
+
+    private function SaveCorporation($response, $corpId) {
+        $corp = new CorporationLookup;
+        $corp->corporation_id = $corpId;
+        if(isset($response->alliance_id)) {
+            $corp->alliance_id = $response->alliance_id;
+        }
+        $corp->ceo_id = $response->ceo_id;
+        $corp->creator_id = $response->creator_id;
+        if(isset($response->date_founded)) {
+            $corp->date_founded = $response->date_founded;
+        }
+        if(isset($response->description)) {
+            $corp->description = $response->description;
+        }
+        if(isset($response->faction_id)) {
+            $corp->faction_id = $response->faction_id;
+        }
+        if(isset($response->home_station_id)) {
+            $corp->home_station_id = $response->home_station_id;
+        }
+        $corp->member_count = $response->member_count;
+        $corp->name = $response->name;
+        if(isset($response->shares)) {
+            $corp->shares = $response->shares;
+        }
+        $corp->tax_rate = $response->tax_rate;
+        $corp->ticker = $response->ticker;
+        if(isset($response->url)) {
+            $corp->url = $response->url;
+        }
+        if(isset($response->war_eligible)) {
+            $corp->war_eligible = $response->war_eligible;
+        }
+        $corp->save();
+
+        if(isset($response->alliance_id)) {
+            return $response->alliance_id;
+        } else {
+            return null;
+        }
 
     }
 
-    private function UpdateCorporation($id = null, $name = null) {
+    public function UpdateCorporations() {
+        $all = CorporationLookup::all();
 
+        foreach($all as $entry) {
+            try {
+                $response = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
+                    'corporation_id' => $entry->corporation_id,
+                ]);
+            } catch(RequestFailedException $e) {
+
+            }
+
+            if(isset($response->alliance_id)) {
+                if($response->alliance_id != $entry->alliance_id) {
+                    CorporationLookup::where([
+                        'corporation_id' => $entry->corporation_id,
+                    ])->update([
+                        'alliance_id' => $response->alliance_id,
+                    ]);
+                }
+
+                if(isset($response->description)) {
+                    if($response->description != $entry->description) {
+                        CorporationLookup::where([
+                            'corporation_id' => $entry->corporation_id,
+                        ])->update([
+                            'description' => $response->description,
+                        ]);
+                    }
+                }
+
+                if(isset($response->faction_id)) {
+                    if($response->faction_id != $entry->faction_id) {
+                        CorporationLookup::where([
+                            'corporation_id' => $entry->corporation_id,
+                        ])->update([
+                            'faction_id' => $response->faction_id,
+                        ]);
+                    }
+                }
+
+                if(isset($response->home_station_id)) {
+                    if($response->home_station_id != $entry->home_station_id) {
+                        CorporationLookup::where([
+                            'corporation_id' => $entry->corporation_id,
+                        ])->update([
+                            'home_station_id' => $response->home_station_id,
+                        ]);
+                    }
+                }
+
+                if(isset($response->member_count)) {
+                    if($response->member_count != $entry->member_count) {
+                        CorporationLookup::where([
+                            'corporation_id' => $entry->corporation_id,
+                        ])->update([
+                            'member_count' => $response->member_count,
+                        ]);
+                    }
+                }
+
+                if(isset($response->tax_rate)) {
+                    if($response->tax_rate != $entry->tax_rate) {
+                        CorporationLookup::where([
+                            'corporation_id' => $entry->corporation_id,
+                        ])->update([
+                            'tax_rate' => $response->tax_rate,
+                        ]);
+                    }
+                }
+
+                if(isset($response->url)) {
+                    if($response->url != $entry->url) {
+                        CorporationLookup::where([
+                            'corporation_id' => $entry->corporation_id,
+                        ])->update([
+                            'url' => $response->url,
+                        ]);
+                    }
+                }
+
+                if(isset($response->war_eligible)) {
+                    if($response->war_eligible != $entry->war_eligible) {
+                        CorporationLookup::where([
+                            'corporation_id' => $entry->corporation_id,
+                        ])->update([
+                            'war_eligible' => $response->war_eligible,
+                        ]);
+                    }
+                }
+            }
+        }
     }
 
     private function StoreAllianceLookup($id = null, $name = null) {
+        //Check if the passed variables are null
+        if($id == null && $name == null) {
+            return;
+        }
 
+        //If the id isn't null then attempt to populate the table
+        if($id != null) {
+            //See if the alliance already exists in the table
+            $count = AllianceLookup::where(['alliance_id' => $id])->count();
+            if($count == 0) {
+                try {
+                    $response = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
+                        'alliance_id' => $id,
+                    ]);
+                } catch(RequestFailedException $e) {
+                    return;
+                }
+
+                $this->SaveAlliance($response, $id);
+            }
+        }
+
+        //If the name isn't null then attempt to populate the table
+        if($name != null) {
+            $count = AllianceLookup::where(['name' => $name])->count();
+            if($count == 0) {
+                try {
+                    $responseName = $this->esi->setBody(array(
+                        $name,
+                    ))->invoke('post', '/universe/ids/');
+                } catch(RequestFailedException $e) {
+                    return;
+                }
+
+                try {
+                    $response = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
+                        'alliance_id' => $responseName->alliances[0]->id,
+                    ]);
+                } catch(RequestFailedException $e) {
+                    return;
+                }
+
+                $this->SaveAlliance($response, $responseName->alliances[0]->id);
+            }
+        }
     }
 
-    private function UpdateAlliance($id = null, $name = null) {
+    private function SaveAlliance($response, $allianceId) {
+        $alliance = new AllianceLookup;
+        $alliance->alliance_id = $allianceId;
+        $alliance->creator_corporation_id = $response->creator_corporation_id;
+        $alliance->creator_id = $response->creator_id;
+        $alliance->date_founded = $response->date_founded;
+        if(isset($response->executor_corporation_id)) {
+            $alliance->executor_corporation_id = $response->executor_corporation_id;
+        }
+        if(isset($response->faction_id)) {
+            $alliance->faction_id = $response->faction_id;
+        }
+        $alliance->name = $response->name;
+        $alliance->ticker = $response->ticker;
+        $alliance->save();
+    }
 
+    public function UpdateAlliances() {
+        $all = AllianceLookup::all();
+        
+        foreach($all as $entry) {
+            try {
+                $response = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
+                    'alliance_id' => $entry->alliance_id,
+                ]);
+            } catch(RequestFailedException $e) {
+
+            }
+
+            if(isset($response->executor_corporation_id)) {
+                if($response->executor_corporation_id != $entry->executor_corporation_id) {
+                    AllianceLookup::where([
+                        'alliance_id' => $entry->alliance_id,
+                    ])->update([
+                        'executor_corporation_id' => $response->executor_corporation_id,
+                    ]);
+                }
+            }
+
+            if(isset($response->faction_id)) {
+                if($response->faction_id != $entry->faction_id) {
+                    AllianceLookup::where([
+                        'alliance_id' => $entry->alliance_id,
+                    ])->update([
+                        'faction_id' => $response->faction_id,
+                    ]);
+                }
+            }
+        }
     }
 }
 
