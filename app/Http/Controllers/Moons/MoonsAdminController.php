@@ -152,6 +152,9 @@ class MoonsAdminController extends Controller
 
                 //Set the ticker info
                 $ticker = 'N/A';
+
+                //Set the type info as it's needed
+                $type = 'N/A';
             } else {
                 //Get the rental data for the moon
                 $rental = MoonRental::where([

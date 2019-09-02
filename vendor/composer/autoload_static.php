@@ -469,8 +469,6 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
-        'App\\AllianceLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/AllianceLookup.php',
-        'App\\CharacterLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/CharacterLookup.php',
         'App\\Charts\\StructureFuelGauge' => __DIR__ . '/../..' . '/app/Charts/StructureFuelGauge.php',
         'App\\Console\\Commands\\CleanStaleDataCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
         'App\\Console\\Commands\\CorpFinances' => __DIR__ . '/../..' . '/app/Console/Commands/Finances/CorpFinances.php',
@@ -486,7 +484,6 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Console\\Commands\\UpdateMoonRental' => __DIR__ . '/../..' . '/app/Console/Commands/Moons/UpdateMoonRental.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\CorpMarketStructure' => __DIR__ . '/../..' . '/app/Models/Finances/CorpMarketStructure.php',
-        'App\\CorporationLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/CorporationLookup.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\EsiScopeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EsiScopeController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -575,10 +572,14 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Models\\Jobs\\JobProcessWalletTransaction' => __DIR__ . '/../..' . '/app/Models/Jobs/JobProcessWalletTransaction.php',
         'App\\Models\\Jobs\\JobSendEveMail' => __DIR__ . '/../..' . '/app/Models/Jobs/JobSendEveMail.php',
         'App\\Models\\Jobs\\JobStatus' => __DIR__ . '/../..' . '/app/Models/Jobs/JobStatus.php',
+        'App\\Models\\Logistics\\AnchorStructure' => __DIR__ . '/../..' . '/app/Models/Logistics/AnchorStructure.php',
         'App\\Models\\Logistics\\LogisticContract' => __DIR__ . '/../..' . '/app/Models/Logistics/LogisticContract.php',
         'App\\Models\\Logistics\\LogisticsInsuranceDeposit' => __DIR__ . '/../..' . '/app/Models/Logistics/LogisticsInsuranceDeposit.php',
         'App\\Models\\Logistics\\LogisticsInsurancePayout' => __DIR__ . '/../..' . '/app/Models/Logistics/LogisticsInsurancePayout.php',
+        'App\\Models\\Lookups\\AllianceLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/AllianceLookup.php',
+        'App\\Models\\Lookups\\CharacterLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/CharacterLookup.php',
         'App\\Models\\Lookups\\CharacterToCorporation' => __DIR__ . '/../..' . '/app/Models/Lookups/CharacterToCorporation.php',
+        'App\\Models\\Lookups\\CorporationLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/CorporationLookup.php',
         'App\\Models\\Lookups\\CorporationToAlliance' => __DIR__ . '/../..' . '/app/Models/Lookups/CorporationToAlliance.php',
         'App\\Models\\Lookups\\SolarSystem' => __DIR__ . '/../..' . '/app/Models/Lookups/SolarSystem.php',
         'App\\Models\\Lookups\\UserToCorporation' => __DIR__ . '/../..' . '/app/Models/Lookups/UserToCorporation.php',

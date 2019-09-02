@@ -6,8 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\AllianceLookup' => $baseDir . '/app/Models/Lookups/AllianceLookup.php',
-    'App\\CharacterLookup' => $baseDir . '/app/Models/Lookups/CharacterLookup.php',
     'App\\Charts\\StructureFuelGauge' => $baseDir . '/app/Charts/StructureFuelGauge.php',
     'App\\Console\\Commands\\CleanStaleDataCommand' => $baseDir . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
     'App\\Console\\Commands\\CorpFinances' => $baseDir . '/app/Console/Commands/Finances/CorpFinances.php',
@@ -23,7 +21,6 @@ return array(
     'App\\Console\\Commands\\UpdateMoonRental' => $baseDir . '/app/Console/Commands/Moons/UpdateMoonRental.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\CorpMarketStructure' => $baseDir . '/app/Models/Finances/CorpMarketStructure.php',
-    'App\\CorporationLookup' => $baseDir . '/app/Models/Lookups/CorporationLookup.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\EsiScopeController' => $baseDir . '/app/Http/Controllers/Auth/EsiScopeController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
@@ -112,10 +109,14 @@ return array(
     'App\\Models\\Jobs\\JobProcessWalletTransaction' => $baseDir . '/app/Models/Jobs/JobProcessWalletTransaction.php',
     'App\\Models\\Jobs\\JobSendEveMail' => $baseDir . '/app/Models/Jobs/JobSendEveMail.php',
     'App\\Models\\Jobs\\JobStatus' => $baseDir . '/app/Models/Jobs/JobStatus.php',
+    'App\\Models\\Logistics\\AnchorStructure' => $baseDir . '/app/Models/Logistics/AnchorStructure.php',
     'App\\Models\\Logistics\\LogisticContract' => $baseDir . '/app/Models/Logistics/LogisticContract.php',
     'App\\Models\\Logistics\\LogisticsInsuranceDeposit' => $baseDir . '/app/Models/Logistics/LogisticsInsuranceDeposit.php',
     'App\\Models\\Logistics\\LogisticsInsurancePayout' => $baseDir . '/app/Models/Logistics/LogisticsInsurancePayout.php',
+    'App\\Models\\Lookups\\AllianceLookup' => $baseDir . '/app/Models/Lookups/AllianceLookup.php',
+    'App\\Models\\Lookups\\CharacterLookup' => $baseDir . '/app/Models/Lookups/CharacterLookup.php',
     'App\\Models\\Lookups\\CharacterToCorporation' => $baseDir . '/app/Models/Lookups/CharacterToCorporation.php',
+    'App\\Models\\Lookups\\CorporationLookup' => $baseDir . '/app/Models/Lookups/CorporationLookup.php',
     'App\\Models\\Lookups\\CorporationToAlliance' => $baseDir . '/app/Models/Lookups/CorporationToAlliance.php',
     'App\\Models\\Lookups\\SolarSystem' => $baseDir . '/app/Models/Lookups/SolarSystem.php',
     'App\\Models\\Lookups\\UserToCorporation' => $baseDir . '/app/Models/Lookups/UserToCorporation.php',
