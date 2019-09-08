@@ -21,6 +21,7 @@ use App\Models\MoonRent\MoonRental;
 use App\Library\Moons\MoonCalc;
 use App\Library\Esi\Esi;
 use App\Library\Lookups\LookupHelper;
+use App\Library\Lookups\NewLookupHelper;
 
 class MoonsAdminController extends Controller
 {
@@ -111,6 +112,7 @@ class MoonsAdminController extends Controller
         $this->middleware('role:Admin');
 
         $lookup = new LookupHelper;
+        $lookupHelper = new NewLookupHelper;
         $contact = '';
         $paid = '';
         $rentalEnd = '';
@@ -171,7 +173,8 @@ class MoonsAdminController extends Controller
                 $rentalEnd = $rentalTemp->format('m-d');
 
                 //Set the contact name
-                $contact = $lookup->CharacterName($rental->Contact);
+                //$contact = $lookup->CharacterName($rental->Contact);
+                $contact = $lookupHelper->CharacterIdToName($rental->Contact);
                 
                 //Set up the renter whether it's W4RP or another corporation
                 $ticker = $rental->RentalCorp;
