@@ -50,9 +50,9 @@ class WormholesSpaceTable extends Migration
                 ]);
                 $table->text('details')->nullable();
                 $table->string('link')->nullable();
-                $table->unsignedInteger('mass_allowed');
-                $table->unsignedInteger('individual_mass');
-                $table->unsignedInteger('regeneration');
+                $table->unsignedBigInteger('mass_allowed');
+                $table->unsignedBigInteger('individual_mass');
+                $table->unsignedBigInteger('regeneration');
                 $table->enum('stable_time', [
                     '>24 hours',
                     '>4 hours <24 hours',
@@ -67,10 +67,10 @@ class WormholesSpaceTable extends Migration
                 $table->increments('id');
                 $table->string('type');
                 $table->string('leads_to');
-                $table->unsignedInteger('mass_allowed');
-                $table->unsignedInteger('individual_mass');
-                $table->unsignedInteger('regeneration');
-                $table->unsignedInteger('max_stable_time');
+                $table->unsignedBigInteger('mass_allowed');
+                $table->unsignedBigInteger('individual_mass');
+                $table->unsignedBigInteger('regeneration');
+                $table->unsignedBigInteger('max_stable_time');
             });
         }
 
