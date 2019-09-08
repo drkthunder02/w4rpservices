@@ -24,7 +24,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('requested_drop_time', 'Requested Drop Time') }}
-            {{ Form::dateTime('requested_drop_time', \Carbon\Carbon::now(), ['class' => 'form-control']) }}
+            {{ Form::dateTime('requested_drop_time', \Carbon\Carbon::now()->toDateTimeString(), ['class' => 'form-control']) }}
         </div>
         <div class="form-group">
             {{ Form::label('requester', 'Requester') }}
