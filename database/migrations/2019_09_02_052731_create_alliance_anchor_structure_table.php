@@ -35,6 +35,10 @@ class CreateAllianceAnchorStructureTable extends Migration
                 $table->string('assigned_fc')->nullable();
                 $table->unsignedInteger('requester_id');
                 $table->string('requester');
+                $table->enum('completed', [
+                    'Yes',
+                    'No',
+                ]);
                 $table->timestamps();
             });
         }

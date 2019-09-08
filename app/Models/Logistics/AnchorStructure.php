@@ -28,5 +28,6 @@ class AnchorStructure extends Model
         'assigned_fc',
         'requester_id',
         'requester',
+        'completed',
     ];
 }
