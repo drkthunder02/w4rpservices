@@ -57,7 +57,7 @@ class StructureRequestController extends Controller
     public function displayRequests() {
         $reqs = AnchorStructure::where(['completed' => 'No'])->get();
 
-        return view('structurerequest.display.structurerequest')->with('reqs', $reqs);
+        return view('structurerequest.display.structurerequests')->with('reqs', $reqs);
     }
 
     public function deleteRequest($request) {
