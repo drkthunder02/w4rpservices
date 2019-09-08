@@ -70,6 +70,17 @@
             </li>
             @endif
             @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Structures</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                    @if(auth()->user()->hasPermission('fc.team'))
+                    <a class="dropdown-item" href="/structrues/display/requests">Display Requests</a>
+                    @endif
+                    <a class="dropdown-item" href="/structures/display/form">Request Form</a>
+                </div>
+            </li>
+            @endif
+            @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
                 <a class="nav-link" href="/logistics/fuel/structures">Jump Gate Fuel</a>
             @endif
         </ul>
