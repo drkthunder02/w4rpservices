@@ -58,7 +58,7 @@ class WormholesSpaceTable extends Migration
                     '>4 hours <24 hours',
                     '<4 hours',
                 ]);
-                $table->timesteamps();
+                $table->timestamps();
             });
         }
 

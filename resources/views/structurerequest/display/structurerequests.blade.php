@@ -18,6 +18,7 @@
                 <th></th>
             </thead>
             <tbody>
+                @if($reqs != null)
                 @foreach($reqs as $req)
                     <tr>
                         <td>{{ $req->corporation_name }}</td>
@@ -37,6 +38,11 @@
                         {!! Form::close() !!}
                     </tr>
                 @endforeach
+                @else
+                <tr>
+                    No  Structure Requests
+                </tr>
+                @endif
             </tbody>
         </table>
     </div>
