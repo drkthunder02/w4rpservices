@@ -15,7 +15,7 @@ use App\Library\Lookups\NewLookupHelper;
 //Models
 use App\Models\Logistics\AnchorStructure;
 
-class StructureRequest extends Controller
+class StructureRequestController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
@@ -81,7 +81,7 @@ class StructureRequest extends Controller
         return redirect('/structures/display/requests');
     }
 
-    public function deleteRequests($request) {
+    public function deleteRequest($request) {
         $this->validate($request, [
             'id' => 'required',
         ]);
