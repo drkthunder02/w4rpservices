@@ -40,7 +40,7 @@
                 @endforeach
                 @else
                 <tr>
-                    No  Structure Requests
+                    
                 </tr>
                 @endif
             </tbody>
