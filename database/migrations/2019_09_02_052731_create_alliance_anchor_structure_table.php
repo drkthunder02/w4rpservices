@@ -31,14 +31,8 @@ class CreateAllianceAnchorStructureTable extends Migration
                     'Refinery',
                 ]);
                 $table->dateTime('requested_drop_time');
-                $table->unsignedInteger('assigned_fc_id')->nullable();
-                $table->string('assigned_fc')->nullable();
                 $table->unsignedInteger('requester_id');
                 $table->string('requester');
-                $table->enum('completed', [
-                    'Yes',
-                    'No',
-                ]);
                 $table->timestamps();
             });
         }

@@ -24,10 +24,7 @@ class AnchorStructure extends Model
         'structure_size',
         'structure_type',
         'requested_drop_time',
-        'assigned_fc_id',
-        'assigned_fc',
         'requester_id',
         'requester',
-        'completed',
     ];
 }

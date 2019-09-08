@@ -140,7 +140,6 @@ Route::group(['middleware' => ['auth']], function(){
      * Anchor Structure Controller display pages
      */
     Route::get('/structures/display/requests', 'Logistics\StructureRequestController@displayRequests');
-    Route::post('/structures/display/requests/assignfc', 'Logistics\StructureRequestController@assignFC');
     Route::post('/structures/display/requests/delete', 'Logistics\StructureRequestController@deleteRequest');
     Route::get('/structures/display/form', 'Logistics\StructureRequestController@displayForm');
     Route::post('/structures/display/form', 'Logistics\StructureRequestController@storeForm');

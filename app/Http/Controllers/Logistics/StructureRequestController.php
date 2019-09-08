@@ -49,7 +49,6 @@ class StructureRequestController extends Controller
             'requested_drop_time' => $request->requested_drop_time,
             'requester_id' => $requesterId,
             'requester' => $request->requester,
-            'completed' => 'No',
         ]);
 
         return redirect('/structures/display/requests');
@@ -59,26 +58,6 @@ class StructureRequestController extends Controller
         $reqs = AnchorStructure::where(['completed' => 'No'])->get();
 
         return view('structurerequest.display.structurerequest')->with('reqs', $reqs);
-    }
-
-    public function assignFC() {
-        $this->validate($request, [
-            'id' => 'required',
-            'assigned_fc' => 'required',
-        ]);
-
-        $lookup = new NewLookupHelper;
-
-        $fcId = $lookup->CharacterNameToId($request->assigned_fc);
-
-        AnchorStructure::where([
-            'id' => $request->id,
-        ])->update([
-            'assigned_fc_id' => $fcId,
-            'assigned_fc' => $request->assigned_fc,
-        ]);
-
-        return redirect('/structures/display/requests');
     }
 
     public function deleteRequest($request) {

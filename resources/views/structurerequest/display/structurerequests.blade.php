@@ -13,10 +13,9 @@
                 <th>Structure Size</th>
                 <th>Structure Type</th>
                 <th>Drop Time</th>
-                <th>FC</th>
                 <th>Requester</th>
-                <th>Completed</th>
                 <th>Delete</th>
+                <th></th>
             </thead>
             <tbody>
                 @foreach($reqs as $req)
@@ -26,10 +25,16 @@
                         <td>{{ $req->structure_size }}</td>
                         <td>{{ $req->structure_type }}</td>
                         <td>{{ $req->requested_drop_time }}</td>
-                        <td>{{ $req->assigned_fc }}</td>
                         <td>{{ $req->requester }}</td>
-                        <td>{{ $req->completed }}</td>
-                        <!--  Create Form -->
+                        {!! Form::open(['action' => 'Logistics\StructureRequestController@deleteRequest', 'method' => 'POST']) !!}
+                        <td>
+                            {{ Form::hidden('id', $req->id, ['class' => 'form-control']) }}
+                            {{ Form::radio('delete', 'Delete', false, ['class' => 'form-conotrol']) }}
+                        </td>
+                        <td>
+                            {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+                        </td>
+                        {!! Form::close() !!}
                     </tr>
                 @endforeach
             </tbody>
