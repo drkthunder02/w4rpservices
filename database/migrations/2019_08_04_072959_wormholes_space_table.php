@@ -50,9 +50,9 @@ class WormholesSpaceTable extends Migration
                 ]);
                 $table->text('details')->nullable();
                 $table->string('link')->nullable();
-                $table->unsignedDecimal('mass_allowed', 12, 2);
-                $table->unsignedDecimal('individual_mass', 12, 2);
-                $table->unsignedDecimal('regeneration', 12, 2);
+                $table->unsignedInteger('mass_allowed', 12);
+                $table->unsignedInteger('individual_mass', 12);
+                $table->unsignedInteger('regeneration', 12);
                 $table->enum('stable_time', [
                     '>24 hours',
                     '>4 hours <24 hours',
