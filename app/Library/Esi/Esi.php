@@ -172,6 +172,33 @@ class Esi {
 
         return $token->refresh_token;
     }
+
+    public function SetupEsiAuthentication($token = null) {
+        //Get the platform configuration
+        $config = config('esi');
+
+        //Declare some variables
+        $authentication = null;
+
+        if($token === null) {
+            $authentication = new EsiAuthentication([
+                'client_id' => $config['client_id'],
+                'secret' => $config['secret'],
+            ]);
+        } else {
+            $authentication = new EsiAuthentication([
+                'client_id' => $config['client_id'],
+                'secret' => $config['secret'],
+                'refresh_token' => $token,
+            ]);
+        }
+
+        //Setup the esi variable
+        $esi = new Eseye($authentication);
+
+        //Return the created variable
+        return $esi;
+    }
 }
 
 ?>
