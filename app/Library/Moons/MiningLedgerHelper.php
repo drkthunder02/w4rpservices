@@ -184,18 +184,9 @@ class MiningLedgerHelper {
 
                 array_push($final[$charName], $temp);
             }
-
-            return $final;
         }
 
-        /**
-         * final[] = [
-         *      'character' = [
-         *          'item_name',
-         *          'quantity',
-         *      ],
-         * ];
-         */
+        return $final;
     }
 
     /**
