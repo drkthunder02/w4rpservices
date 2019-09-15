@@ -118,6 +118,8 @@ class ContractController extends Controller
             $contracts[$i]['lowestcorp'] = $lowestCorp;
             $contracts[$i]['lowestchar'] = $lowestChar;
             
+            //Reset the lowestBid back to null
+            $lowestBid = null;
         }        
 
         //Call for the view to be displayed
