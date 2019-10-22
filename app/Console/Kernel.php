@@ -58,6 +58,9 @@ class Kernel extends ConsoleKernel
                 ->withoutOverlapping();
         $schedule->command('services:CleanData')
                 ->monthlyOn(1, '18:00');
+        $schedule->command('services:PurgeUsers')
+                ->dailyAt('23:00')
+                ->withoutOverlapping();
 
         //Horizon Graph Schedule
         $schedule->command('horizon:snapshot')->everyFiveMinutes();

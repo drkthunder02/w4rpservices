@@ -92,6 +92,21 @@ class Esi {
         ]);
         //Create the esi container
         $esi = new Eseye($authentication);
+
+        try {
+            $character = $esi->setBody(array(
+                $name,
+            ))->invoke('post', '/universe/ids/');
+        } catch(RequestFailedException $e) {
+            return null;
+        }
+
+        if(isset($character->characters[0]->id)) {
+            return $character->characters[0]->id;
+        } else {
+            return null;
+        }
+        /*
         try {
             $character = $esi->setQueryString([
                 'categories' => 'character',
@@ -107,6 +122,7 @@ class Esi {
         $character = json_decode($character, true);
 
         return $character['character'];
+        */
     }
 
     public function FindCorporationId($charId) {
