@@ -41,7 +41,7 @@
                                     {{ implode(', ', $perm) }}
                                 @endforeach
                                 @else
-                                    None
+                                    No Permissions
                                 @endif
                                 </td>
                                 <td>
