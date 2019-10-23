@@ -68,6 +68,9 @@ class PurgeUsers extends Command
             //Set the fail bit to false
             $failed = false;
 
+            //Note a screen entry for when doing cli stuff
+            printf("Processing character with id of " . $user->character_id . "\r\n");
+
             //Get the character information
             try {
                 $character_info = $esi->invoke('get', '/characters/{character_id}/', [
