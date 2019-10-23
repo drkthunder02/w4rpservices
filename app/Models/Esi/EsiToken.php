@@ -24,6 +24,7 @@ class EsiToken extends Model
         'character_id',
         'access_token',
         'refresh_token',
+        'inserted_at',
         'expires_in',
     ];
 

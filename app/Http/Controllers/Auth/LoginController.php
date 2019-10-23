@@ -133,10 +133,8 @@ class LoginController extends Controller
             $newAlt->character_id = $user->id;
             $newAlt->avatar = $user->avatar;
             $newAlt->access_token = $user->token;
-            if(isset($user->refresh_token)) {
-                $newAlt->refresh_token = $user->refresh_token;
-            }
             $newAlt->owner_hash = $user->owner_hash;
+            $newAlt->inserted_at = time();
             $newAlt->expires_in = $user->expiresIn;
             $newAlt->save();
             return 1;
@@ -203,6 +201,7 @@ class LoginController extends Controller
             'character_id' => $eve_user->getId(),
             'access_token' => $eve_user->token,
             'refresh_token' => $eve_user->refreshToken,
+            'inserted_at' => time(),
             'expires_in' => $eve_user->expiresIn,
         ]);
     }
@@ -215,6 +214,7 @@ class LoginController extends Controller
         $token->character_id  = $eve_user->id;
         $token->access_token = $eve_user->token;
         $token->refresh_token = $eve_user->refreshToken;
+        $token->inserted_at = time();
         $token->expires_in = $eve_user->expiresIn;
         $token->save();
     }
@@ -260,6 +260,7 @@ class LoginController extends Controller
             'avatar' => $eve_user->avatar,
             'owner_hash' => $eve_user->owner_hash,
             'character_id' => $eve_user->getId(),
+            'inserted_at' => time(),
             'expires_in' => $eve_user->expiresIn,
             'access_token' => $eve_user->token,
             'user_type' => $this->GetAccountType(null, $eve_user->id),

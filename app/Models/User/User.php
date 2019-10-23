@@ -28,11 +28,8 @@ class User extends Authenticatable
         'character_id',
         'inserted_at',
         'expires_in', 
-        'access_token', 
-        'refresh_token', 
+        'access_token',
         'user_type',
-        'scopes',
-        'role',
     ];
 
     protected $table = 'users';
@@ -55,6 +52,10 @@ class User extends Authenticatable
 
     public function esiScopes() {
         return $this->hasMany('App\Models\Esi\EsiScope', 'character_id');
+    }
+
+    public function userAlts() {
+        return $this->hasMany('App\Models\User\UserAlt', 'character_id', 'main_id');
     }
 
     public function hasPermission($permission) {

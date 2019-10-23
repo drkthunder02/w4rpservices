@@ -148,6 +148,10 @@ class PurgeUsers extends Command
                             'character_id' => $user->character_id,
                         ])->delete();
 
+                        UserAlt::where([
+                            'main_id' => $user->character_id,
+                        ])->delete();
+
                         //Delete the user from the user table
                         User::where([
                             'character_id' => $user->character_id,

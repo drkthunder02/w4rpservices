@@ -22,9 +22,12 @@ class UserAlt extends Model
         'character_id',
         'avatar',
         'access_token',
-        'refresh_token',
         'inserted_at',
         'expires_in',
         'owner_hash',
     ];
+
+    public function mainCharacter() {
+        return $this->belongsTo('App\Models\User\User', 'character_id');
+    }
 }
