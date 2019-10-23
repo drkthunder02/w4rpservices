@@ -89,30 +89,16 @@ class PurgeUsers extends Command
 
                 //Check if the user is allowed to login
                 if(isset($corp_info->alliance_id)) {
-                    //Warped Intentions is allowed to login
-                    if($corp_info->alliance_id == '99004116') {
+                    //Warped Intentions is allowed to login as users
+                    //Legacy is allowed to login as users
+                    //Renters are allowed to login as users
+                    if($corp_info->alliance_id == '99004116' || in_array($corp_info->alliance_id, $legacy) || in_array($corp_info->alliance_id, $renter)) {
                         //If the role is not Warped Intentions, then modify the role
-                        if($role != 'W4RP') {
+                        if($role != 'User') {
                             UserRole::where([
                                 'character_id' => $user->character_id,
                             ])->update([
-                                'role' => 'W4RP',
-                            ]);
-                        }
-                    } else if(in_array($corp_info->alliance_id, $legacy)) {  //Legacy Users
-                        if($role != 'Legacy') {
-                            UserRole::where([
-                                'character_id' => $user->character_id,
-                            ])->update([
-                                'role' => 'Legacy',
-                            ]);
-                        }
-                    } else if(in_array($corp_info->alliance_id, $renter)) {  //Renter Users
-                        if($role != 'Renter') {
-                            UserRole::where([
-                                'character_id' => $user->character_id,
-                            ])->update([
-                                'role' => 'Renter',
+                                'role' => 'User',
                             ]);
                         }
                     } else {
