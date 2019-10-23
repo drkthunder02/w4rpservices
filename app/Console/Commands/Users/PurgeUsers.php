@@ -56,6 +56,13 @@ class PurgeUsers extends Command
         //Setup the esi variable
         $esi = new Eseye();
 
+        //Attempt to get the server status.  Don't want to do anything if the server is down for some reason.
+        try {
+            $status = $esi->invoke('get', '/status/');
+        } catch(RequestFailedException $e) {
+            return;
+        }
+
         //Get all of the users from the database
         $users = User::all();
 
@@ -74,7 +81,7 @@ class PurgeUsers extends Command
                     'character_id' => $user->character_id,
                 ]);
 
-                $corp_info = $esi->invoke('get', '/corporations/{corporation_id/', [
+                $corp_info = $esi->invoke('get', '/corporations/{corporation_id}/', [
                     'corporation_id' => $character_info->corporation_id,
                 ]);
             } catch(RequestFailedException $e) {
