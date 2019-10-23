@@ -256,7 +256,6 @@ class LoginController extends Controller
     private function CreateNewUser($eve_user) {
         $user = User::create([
             'name' => $eve_user->getName(),
-            'email' => null,
             'avatar' => $eve_user->avatar,
             'owner_hash' => $eve_user->owner_hash,
             'character_id' => $eve_user->getId(),
