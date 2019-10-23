@@ -161,7 +161,7 @@ class StructureHelper {
         //Update the structure id and name
         Structure::where(['structure_id' => $structure->structure_id])->update([
             'structure_id' => $structure->structure_id,
-            'structure_name' => $structure->name,
+            'structure_name' => $info->name,
         ]);
 
         //Update the services
@@ -286,7 +286,7 @@ class StructureHelper {
 
         $st = new Structure;
         $st->structure_id = $structure->structure_id;
-        $st->structure_name = $structure->name;
+        $st->structure_name = $info->name;
         $st->corporation_id = $info->owner_id;
         $st->solar_system_id = $info->solar_system_id;
         $st->solar_system_name = $solarName;
@@ -373,36 +373,6 @@ class StructureHelper {
         ];
 
         return $structureTypes[$name];
-
-        /*
-        if($name == 'Ansiblex Jump Gate') {
-            return 35841;
-        } else if( $name == 'Pharolux Cyno Beacon') {
-            return 35840;
-        } else if( $name == 'Tenebrex Cyno Jammer') {
-            return 37534;
-        } else if( $name == 'Keepstar') {
-            return 35834;
-        } else if( $name == 'Fortizar') {
-            return 35833;
-        } else if($name == 'Astrahus') {
-            return 35832;
-        } else if($name == 'Tatara') {
-            return 35836;
-        } else if($name == 'Athanor') {
-            return 35835;
-        } else if($name == 'Sotiyo') {
-            return 35827;
-        } else if($name == 'Azbel') {
-            return 35836;
-        } else if($name == 'Raitaru') {
-            return 35835;
-        } else {
-            $id = 0;
-        }
-
-        return $id;
-        */
     }
 
     private function DecodeDate($date) {
