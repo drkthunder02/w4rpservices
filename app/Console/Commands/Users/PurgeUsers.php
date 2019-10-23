@@ -58,9 +58,7 @@ class PurgeUsers extends Command
 
         //Attempt to get the server status.  Don't want to do anything if the server is down for some reason.
         try {
-            $status = $esi->setQueryString([
-                'datasource' => 'tranquility',
-            ])->invoke('get', '/status/');
+            $status = $esi->invoke('get', '/status/');
         } catch(RequestFailedException $e) {
             return;
         }
