@@ -90,74 +90,80 @@ class PurgeUsers extends Command
                 //Get the user's role
                 $role = UserRole::where(['character_id' => $user->character_id])->first();
 
-                //Check if the user is allowed to login
-                if(isset($corp_info->alliance_id)) {
-                    //Warped Intentions is allowed to login
-                    if($corp_info->alliance_id == '99004116') {
-                        //If the role is not Warped Intentions, then modify the role
-                        if($role != 'User') {
+                //We don't want to modify Admin and SuperUsers.  Admins and SuperUsers are removed via a different process.
+                if($role != 'Admin' || $role != 'SuperUser') {
+                    //Check if the user is allowed to login
+                    if(isset($corp_info->alliance_id)) {
+                        //Warped Intentions is allowed to login
+                        if($corp_info->alliance_id == '99004116') {
+                            //If the role is not Warped Intentions, then modify the role
+                            if($role != 'User') {
+                                //Upate the role of the user
+                                UserRole::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'role' => 'User',
+                                ]);
+                                //Update the user type
+                                User::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'user_type' => 'W4RP',
+                                ]);
+                            }
+                        } else if(in_array($corp_info->alliance_id, $legacy)) {  //Legacy Users
+                            if($role != 'User') {
+                                //Update the role of the user
+                                UserRole::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'role' => 'User',
+                                ]);
+                                //Update the user type
+                                User::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'user_type' => 'Legacy',
+                                ]);
+                            }
+                        } else if(in_array($corp_info->alliance_id, $renter)) {  //Renter Users
+                            if($role != 'Renter') {
+                                //Update the role of the user
+                                UserRole::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'role' => 'Renter',
+                                ]);
+                                //Update the user type
+                                User::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'user_type' => 'Renter',
+                                ]);
+                            }
+                        } else {
+                            //If the user is part of no valid login group, then delete the user.
+                            //Delete all of the permissions first
+                            UserPermission::where([
+                                'character_id' => $user->character_id,
+                            ])->delete();
+                            //Delete the user's role
                             UserRole::where([
                                 'character_id' => $user->character_id,
-                            ])->update([
-                                'role' => 'User',
-                            ]);
-
+                            ])->delete();
+                            //Delete any alts the user might have registered.
+                            UserAlt::where([
+                                'main_id' => $user->character_id,
+                            ])->delete();
+                            //Delete the user from the user table
                             User::where([
                                 'character_id' => $user->character_id,
-                            ])->update([
-                                'user_type' => 'W4RP',
-                            ]);
+                            ])->delete();
                         }
-                    } else if(in_array($corp_info->alliance_id, $legacy)) {  //Legacy Users
-                        if($role != 'User') {
-                            UserRole::where([
-                                'character_id' => $user->character_id,
-                            ])->update([
-                                'role' => 'User',
-                            ]);
-
-                            User::where([
-                                'character_id' => $user->character_id,
-                            ])->update([
-                                'user_type' => 'Legacy',
-                            ]);
-                        }
-                    } else if(in_array($corp_info->alliance_id, $renter)) {  //Renter Users
-                        if($role != 'Renter') {
-                            UserRole::where([
-                                'character_id' => $user->character_id,
-                            ])->update([
-                                'role' => 'Renter',
-                            ]);
-
-                            User::where([
-                                'character_id' => $user->character_id,
-                            ])->update([
-                                'user_type' => 'Renter',
-                            ]);
-                        }
-                    } else {
-                        //If the user is part of no valid login group, then delete the user.
-                        //Delete all of the permissions first
-                        UserPermission::where([
-                            'character_id' => $user->character_id,
-                        ])->delete();
-                        
-                        //Delete the user's role
-                        UserRole::where([
-                            'character_id' => $user->character_id,
-                        ])->delete();
-
-                        UserAlt::where([
-                            'main_id' => $user->character_id,
-                        ])->delete();
-
-                        //Delete the user from the user table
-                        User::where([
-                            'character_id' => $user->character_id,
-                        ])->delete();
                     }
                 }
+
+                
             }
         }   
     }
