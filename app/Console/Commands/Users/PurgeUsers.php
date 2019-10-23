@@ -85,20 +85,52 @@ class PurgeUsers extends Command
             //If the fail bit is still false, then continue
             if($failed === false) {
                 //Get the user's role
-                $role = UserRole::where(['character_id' => $user->character_id])->first();
+                $role = UserRole::where(['character_id'])->first();
 
                 //Check if the user is allowed to login
                 if(isset($corp_info->alliance_id)) {
-                    //Warped Intentions is allowed to login as users
-                    //Legacy is allowed to login as users
-                    //Renters are allowed to login as users
-                    if($corp_info->alliance_id == '99004116' || in_array($corp_info->alliance_id, $legacy) || in_array($corp_info->alliance_id, $renter)) {
+                    //Warped Intentions is allowed to login
+                    if($corp_info->alliance_id == '99004116') {
                         //If the role is not Warped Intentions, then modify the role
                         if($role != 'User') {
                             UserRole::where([
                                 'character_id' => $user->character_id,
                             ])->update([
                                 'role' => 'User',
+                            ]);
+
+                            User::where([
+                                'character_id' => $user->character_id,
+                            ])->update([
+                                'user_type' => 'W4RP',
+                            ]);
+                        }
+                    } else if(in_array($corp_info->alliance_id, $legacy)) {  //Legacy Users
+                        if($role != 'User') {
+                            UserRole::where([
+                                'character_id' => $user->character_id,
+                            ])->update([
+                                'role' => 'User',
+                            ]);
+
+                            User::where([
+                                'character_id' => $user->character_id,
+                            ])->update([
+                                'user_type' => 'Legacy',
+                            ]);
+                        }
+                    } else if(in_array($corp_info->alliance_id, $renter)) {  //Renter Users
+                        if($role != 'Renter') {
+                            UserRole::where([
+                                'character_id' => $user->character_id,
+                            ])->update([
+                                'role' => 'Renter',
+                            ]);
+
+                            User::where([
+                                'character_id' => $user->character_id,
+                            ])->update([
+                                'user_type' => 'Renter',
                             ]);
                         }
                     } else {
