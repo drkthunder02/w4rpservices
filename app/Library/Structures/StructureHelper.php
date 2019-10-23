@@ -161,7 +161,7 @@ class StructureHelper {
         //Update the structure id and name
         Structure::where(['structure_id' => $structure->structure_id])->update([
             'structure_id' => $structure->structure_id,
-            'name' => $info->name,
+            'structure_name' => $info->name,
         ]);
 
         //Update the services
