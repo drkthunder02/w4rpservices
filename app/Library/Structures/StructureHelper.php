@@ -286,7 +286,7 @@ class StructureHelper {
 
         $st = new Structure;
         $st->structure_id = $structure->structure_id;
-        $st->structure_name = $info->name;
+        $st->structure_name = $structure->name;
         $st->corporation_id = $info->owner_id;
         $st->solar_system_id = $info->solar_system_id;
         $st->solar_system_name = $solarName;
