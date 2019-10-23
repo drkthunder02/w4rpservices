@@ -262,7 +262,10 @@ class StructureHelper {
         //Update the services for the structure as well
         if($services == true) {
             //Delete the existing services, then add the new services
-            Service::where(['structure_id' => $structure->structure_id, ])->delete();
+            if(Service::where(['structure_id' => $structure->structure_id])->count() > 0) {
+                Service::where(['structure_id' => $structure->structure_id])->delete();
+            }
+            
 
             foreach($structure->services as $service) {
                 $serv = new Service;
@@ -340,7 +343,7 @@ class StructureHelper {
         if($st->services == true) {
             foreach($structure->services as $service) {
                 $serv = new Service;
-                $serv->sructure_id = $structure->structure_id;
+                $serv->structure_id = $structure->structure_id;
                 $serv->name = $service->name;
                 $serv->state = $service->state;
             }
