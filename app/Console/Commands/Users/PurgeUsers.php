@@ -92,7 +92,7 @@ class PurgeUsers extends Command
             //If the fail bit is still false, then continue
             if($failed === false) {
                 //Get the user's role
-                $role = UserRole::where(['character_id'])->first();
+                $role = UserRole::where(['character_id' => $user->character_id])->first();
 
                 //Check if the user is allowed to login
                 if(isset($corp_info->alliance_id)) {
