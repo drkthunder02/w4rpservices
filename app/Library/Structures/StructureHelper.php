@@ -269,7 +269,7 @@ class StructureHelper {
 
             foreach($structure->services as $service) {
                 $serv = new Service;
-                $serv->sructure_id = $structure->structure_id;
+                $serv->structure_id = $structure->structure_id;
                 $serv->name = $service->name;
                 $serv->state = $service->state;
                 $serv->save();
