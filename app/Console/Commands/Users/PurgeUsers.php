@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 //Internal Library
 use Illuminate\Console\Command;
+use Log;
 
 //Libraries
 use Seat\Eseye\Cache\NullCache;

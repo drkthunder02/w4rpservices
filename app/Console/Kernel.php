@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
         Commands\GetStructuresCommand::class,
         Commands\GetAssetsCommand::class,
         Commands\GetEveContractsCommand::class,
+        Commands\PurgeUsers::class,
     ];
 
     /**
