@@ -254,8 +254,11 @@ class StructureHelper {
 
         //Update the unanchors at field
         if(isset($structure->unanchors_at)) {
+            //Decode the date / time
+            $daTi = $this->DecodeDate($structure->unanchors_at);
+
             Structure::where(['structure_id' => $structure->structure_id])->update([
-                'unanchors_at' => $structure->unanchors_at,
+                'unanchors_at' => $daTi,
             ]);
         }
 
@@ -334,7 +337,8 @@ class StructureHelper {
             $st->reinforce_weekday = $structure->reinforce_weekday;
         }
         if(isset($structure->unanchors_at)) {
-            $st->unanchors_at = $structure->unanchors_at;
+            $daTi = $this->DecodeDate($structure->unanchors_at);
+            $st->unanchors_at = $daTi;
         }
 
         //Save the database record
