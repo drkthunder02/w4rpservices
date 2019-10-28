@@ -14,6 +14,7 @@ use Seat\Eseye\Eseye;
 
 //Models
 use App\Models\User\User;
+use App\Models\User\UserAlt;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\User\UserPermission;
