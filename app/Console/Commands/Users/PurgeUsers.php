@@ -96,7 +96,7 @@ class PurgeUsers extends Command
             if($failed === false) {
                 //Get the user's role
                 $role = UserRole::where(['character_id' => $user->character_id])->first();
-                dd($role->role);
+                
                 //We don't want to modify Admin and SuperUsers.  Admins and SuperUsers are removed via a different process.
                 if($role->role != 'Admin' || $role->role != 'SuperUser') {
                     //Check if the user is allowed to login
