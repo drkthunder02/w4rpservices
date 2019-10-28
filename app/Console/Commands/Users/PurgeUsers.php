@@ -20,6 +20,12 @@ use App\Models\User\UserPermission;
 use App\Models\User\UserRole;
 use App\Models\Admin\AllowedLogin;
 
+
+/**
+ * The PurgeUsers command takes care of updating any user changes in terms of login role, as well as purging any users without at least
+ * the 'User' role.  This command heavily relies on ESI being available.  If no ESI is available, then the function does nothing, in order to prevent
+ * unwanted changes.
+ */
 class PurgeUsers extends Command
 {
     /**
