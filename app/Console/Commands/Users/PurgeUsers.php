@@ -97,13 +97,13 @@ class PurgeUsers extends Command
                 $role = UserRole::where(['character_id' => $user->character_id])->first();
 
                 //We don't want to modify Admin and SuperUsers.  Admins and SuperUsers are removed via a different process.
-                if($role != 'Admin' || $role != 'SuperUser') {
+                if($role->role != 'Admin' || $role->role != 'SuperUser') {
                     //Check if the user is allowed to login
                     if(isset($corp_info->alliance_id)) {
                         //Warped Intentions is allowed to login
                         if($corp_info->alliance_id == '99004116') {
                             //If the role is not Warped Intentions, then modify the role
-                            if($role != 'User') {
+                            if($role->role != 'User') {
                                 //Upate the role of the user
                                 UserRole::where([
                                     'character_id' => $user->character_id,
@@ -118,7 +118,7 @@ class PurgeUsers extends Command
                                 ]);
                             }
                         } else if(in_array($corp_info->alliance_id, $legacy)) {  //Legacy Users
-                            if($role != 'User') {
+                            if($role->role != 'User') {
                                 //Update the role of the user
                                 UserRole::where([
                                     'character_id' => $user->character_id,
@@ -133,7 +133,7 @@ class PurgeUsers extends Command
                                 ]);
                             }
                         } else if(in_array($corp_info->alliance_id, $renter)) {  //Renter Users
-                            if($role != 'Renter') {
+                            if($role->role != 'Renter') {
                                 //Update the role of the user
                                 UserRole::where([
                                     'character_id' => $user->character_id,
