@@ -72,7 +72,7 @@ class PurgeUsers extends Command
 
         //Cycle through all of the users, and either update their role, or delete them.
         foreach($users as $user) {
-            //Set the fail bit to false
+            //Set the fail bit to false for the next user to check
             $failed = false;
 
             //Note a screen entry for when doing cli stuff
@@ -111,6 +111,7 @@ class PurgeUsers extends Command
                                 ])->update([
                                     'role' => 'User',
                                 ]);
+
                                 //Update the user type
                                 User::where([
                                     'character_id' => $user->character_id,
@@ -126,6 +127,7 @@ class PurgeUsers extends Command
                                 ])->update([
                                     'role' => 'User',
                                 ]);
+
                                 //Update the user type
                                 User::where([
                                     'character_id' => $user->character_id,
@@ -141,6 +143,7 @@ class PurgeUsers extends Command
                                 ])->update([
                                     'role' => 'Renter',
                                 ]);
+
                                 //Update the user type
                                 User::where([
                                     'character_id' => $user->character_id,
@@ -167,7 +170,7 @@ class PurgeUsers extends Command
                                     'main_id' => $user->character_id,
                                 ])->delete();
                             }
-                            
+
                             //Delete the user from the user table
                             User::where([
                                 'character_id' => $user->character_id,
