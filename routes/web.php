@@ -143,6 +143,14 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/structures/display/requests/delete', 'Logistics\StructureRequestController@deleteRequest');
     Route::get('/structures/display/form', 'Logistics\StructureRequestController@displayForm');
     Route::post('/structures/display/form', 'Logistics\StructureRequestController@storeForm');
+
+    /**
+     * Blacklist Controller display pages
+     */
+    Route::get('/blacklist/display', 'Corps\BlacklistController@DisplayBlacklist');
+    Route::post('/blacklist/add', 'Corps\BlacklistController@AddToBlacklist');
+    Route::post('/blacklist/remove', 'Corps\BlacklistController@RemoveFromBlacklist');
+    Route::post('/blacklist/search', 'Corps\BlacklistController@SearchInBlacklist');
 });
 
 /**
