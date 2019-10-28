@@ -21,45 +21,6 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']], function(){
     /**
-     * Dashboard Controller Display pages
-     */
-    Route::get('/dashboard', 'Dashboard\DashboardController@index');
-    Route::post('/dashboard/alt/delete', 'Dashboard\DashboardController@removeAlt');
-    Route::get('/profile', 'Dashboard\DashboardController@profile');
-
-    /**
-     * AJAX Test pages
-     */
-    Route::get('/ajax', 'Ajax\LiveSearch@index');
-    Route::post('/ajax/action', 'Ajax\LiveSearch@action')->name('live_search.action');
-
-    /**
-     * Moon Controller display pages
-     */
-    Route::get('/moons/display', 'Moons\MoonsController@displayMoons');
-    Route::get('/moons/display/form/worth', 'Moons\MoonsController@displayTotalWorthForm');
-    Route::post('/moons/worth', 'Moons\MoonsController@displayTotalWorth');
-
-    /**
-     * Moon Admin Controller display pages
-     */
-    Route::get('/moons/admin/display', 'Moons\MoonsAdminController@displayMoonsAdmin');
-    Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
-    Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
-    Route::get('/moons/admin/journal', 'Moons\MoonsAdminController@showJournalEntries');
-    Route::post('/moons/admin/display', 'Moons\MoonsAdminController@storeMoonRemoval');
-    Route::get('/moons/logistics/display', 'Moons\MoonsAdminController@displayMoonsLogistics');
-
-    /**
-     * Wiki Controller display pages
-     */
-    Route::get('/wiki/register', 'Wiki\WikiController@displayRegister');
-    Route::post('/wiki/register', 'Wiki\WikiController@storeRegister');
-    Route::get('/wiki/changepassword', 'Wiki\WikiController@displayChangePassword');
-    Route::post('/wiki/changepassword', 'Wiki\WikiController@changePassword');
-    Route::post('/wiki/purge', 'Wiki\WikiController@purgeUsers');
-
-    /**
      * Admin Controller display pages
      */
     Route::get('/admin/dashboard', 'Dashboard\AdminController@displayDashboard');
@@ -73,10 +34,26 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminController@removeAllowedLogin');
 
     /**
-     * Scopes Controller display pages
+     * AJAX Test pages
      */
-    Route::get('/scopes/select', 'Auth\EsiScopeController@displayScopes');
-    Route::post('redirectToProvider', 'Auth\EsiScopeController@redirectToProvider');
+    Route::get('/ajax', 'Ajax\LiveSearch@index');
+    Route::post('/ajax/action', 'Ajax\LiveSearch@action')->name('live_search.action');
+
+    /**
+     * Anchor Structure Controller display pages
+     */
+    Route::get('/structures/display/requests', 'Logistics\StructureRequestController@displayRequests');
+    Route::post('/structures/display/requests/delete', 'Logistics\StructureRequestController@deleteRequest');
+    Route::get('/structures/display/form', 'Logistics\StructureRequestController@displayForm');
+    Route::post('/structures/display/form', 'Logistics\StructureRequestController@storeForm');
+
+    /**
+     * Blacklist Controller display pages
+     */
+    Route::get('/blacklist/display', 'Corps\BlacklistController@DisplayBlacklist');
+    Route::post('/blacklist/add', 'Corps\BlacklistController@AddToBlacklist');
+    Route::post('/blacklist/remove', 'Corps\BlacklistController@RemoveFromBlacklist');
+    Route::post('/blacklist/search', 'Corps\BlacklistController@SearchInBlacklist');
 
     /**
      * Contract Controller display pages
@@ -102,6 +79,44 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/contracts/admin/delete/{id}', 'Contracts\ContractAdminController@deleteContract');
     Route::get('/contracts/admin/end/{id}', 'Contracts\ContractAdminController@displayEndContract');
     Route::post('/contracts/admin/end', 'Contracts\ContractAdminController@storeEndContract');
+    
+    /**
+     * Dashboard Controller Display pages
+     */
+    Route::get('/dashboard', 'Dashboard\DashboardController@index');
+    Route::post('/dashboard/alt/delete', 'Dashboard\DashboardController@removeAlt');
+    Route::get('/profile', 'Dashboard\DashboardController@profile');
+
+    /**
+     * Logistics Controller display pages
+     */
+    Route::get('/logistics/courier/form', 'Logistics\LogisticsController@displayContractForm');
+    Route::post('/logistics/courier/form', 'Logistics\LogisticsController@displayContractDetails');
+    Route::get('/logistics/contracts/display', 'Logistics\LogisticsController@displayLogisticsContracts');
+    Route::get('/logistics/fuel/structures', 'Fuel\FuelController@displayStructures');
+
+    /**
+     * Moon Controller display pages
+     */
+    Route::get('/moons/display', 'Moons\MoonsController@displayMoons');
+    Route::get('/moons/display/form/worth', 'Moons\MoonsController@displayTotalWorthForm');
+    Route::post('/moons/worth', 'Moons\MoonsController@displayTotalWorth');
+
+    /**
+     * Moon Admin Controller display pages
+     */
+    Route::get('/moons/admin/display', 'Moons\MoonsAdminController@displayMoonsAdmin');
+    Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
+    Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
+    Route::get('/moons/admin/journal', 'Moons\MoonsAdminController@showJournalEntries');
+    Route::post('/moons/admin/display', 'Moons\MoonsAdminController@storeMoonRemoval');
+    Route::get('/moons/logistics/display', 'Moons\MoonsAdminController@displayMoonsLogistics');
+
+    /**
+     * Scopes Controller display pages
+     */
+    Route::get('/scopes/select', 'Auth\EsiScopeController@displayScopes');
+    Route::post('redirectToProvider', 'Auth\EsiScopeController@redirectToProvider');
 
     /**
      * SRP Controller display pages
@@ -120,14 +135,15 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/srp/admin/costcodes/add', 'SRP\SRPAdminController@displayAddCostCode');
     Route::post('/srp/admin/costcodes/add', 'SRP\SRPAdminController@addCostCode');
     Route::post('/srp/admin/costcodes/modify', 'SRP\SRPAdminController@modifyCostCodes');
-    
+
     /**
-     * Logistics Controller display pages
+     * Wiki Controller display pages
      */
-    Route::get('/logistics/courier/form', 'Logistics\LogisticsController@displayContractForm');
-    Route::post('/logistics/courier/form', 'Logistics\LogisticsController@displayContractDetails');
-    Route::get('/logistics/contracts/display', 'Logistics\LogisticsController@displayLogisticsContracts');
-    Route::get('/logistics/fuel/structures', 'Fuel\FuelController@displayStructures');
+    Route::get('/wiki/register', 'Wiki\WikiController@displayRegister');
+    Route::post('/wiki/register', 'Wiki\WikiController@storeRegister');
+    Route::get('/wiki/changepassword', 'Wiki\WikiController@displayChangePassword');
+    Route::post('/wiki/changepassword', 'Wiki\WikiController@changePassword');
+    Route::post('/wiki/purge', 'Wiki\WikiController@purgeUsers');
 
     /**
      * Wormhole Controller display pages
@@ -136,21 +152,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/wormholes/form', 'Wormholes\WormholeController@storeWormhole');
     Route::get('/wormholes/display', 'Wormholes\WormholeController@displayWormholes');
 
-    /**
-     * Anchor Structure Controller display pages
-     */
-    Route::get('/structures/display/requests', 'Logistics\StructureRequestController@displayRequests');
-    Route::post('/structures/display/requests/delete', 'Logistics\StructureRequestController@deleteRequest');
-    Route::get('/structures/display/form', 'Logistics\StructureRequestController@displayForm');
-    Route::post('/structures/display/form', 'Logistics\StructureRequestController@storeForm');
-
-    /**
-     * Blacklist Controller display pages
-     */
-    Route::get('/blacklist/display', 'Corps\BlacklistController@DisplayBlacklist');
-    Route::post('/blacklist/add', 'Corps\BlacklistController@AddToBlacklist');
-    Route::post('/blacklist/remove', 'Corps\BlacklistController@RemoveFromBlacklist');
-    Route::post('/blacklist/search', 'Corps\BlacklistController@SearchInBlacklist');
 });
 
 /**
