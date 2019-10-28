@@ -103,7 +103,7 @@ class PurgeUsers extends Command
                     if(isset($corp_info->alliance_id)) {
                         //Warped Intentions is allowed to login
                         if($corp_info->alliance_id == '99004116') {
-                            //If the role is not Warped Intentions, then modify the role
+                            //If the alliance is Warped Intentions, then modify the role if we need to
                             if($role->role != 'User') {
                                 //Upate the role of the user
                                 UserRole::where([
@@ -154,14 +154,20 @@ class PurgeUsers extends Command
                             UserPermission::where([
                                 'character_id' => $user->character_id,
                             ])->delete();
+
                             //Delete the user's role
                             UserRole::where([
                                 'character_id' => $user->character_id,
                             ])->delete();
+
                             //Delete any alts the user might have registered.
-                            UserAlt::where([
-                                'main_id' => $user->character_id,
-                            ])->delete();
+                            $altCount = UserAlt::where(['main_id' => $user->character_id])->count();
+                            if($altCount > 0) {
+                                UserAlt::where([
+                                    'main_id' => $user->character_id,
+                                ])->delete();
+                            }
+                            
                             //Delete the user from the user table
                             User::where([
                                 'character_id' => $user->character_id,
@@ -169,8 +175,6 @@ class PurgeUsers extends Command
                         }
                     }
                 }
-
-                
             }
         }   
     }
