@@ -98,7 +98,7 @@ class PurgeUsers extends Command
                 $role = UserRole::where(['character_id' => $user->character_id])->first();
                 
                 //We don't want to modify Admin and SuperUsers.  Admins and SuperUsers are removed via a different process.
-                if($role->role != 'Admin' || $role->role != 'SuperUser') {
+                if($role->role != 'Admin') {
                     //Check if the user is allowed to login
                     if(isset($corp_info->alliance_id)) {
                         //Warped Intentions is allowed to login
