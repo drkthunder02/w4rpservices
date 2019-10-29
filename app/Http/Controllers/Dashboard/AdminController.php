@@ -34,7 +34,11 @@ class AdminController extends Controller
         foreach($usersArr as $user) {
             $user->role = $user->getRole();
             $perms = $user->getPermissionsArray();
-            $user->permission = implode(', ', $perms);
+            if($perms != null) {
+                $user->permission = implode(', ', $perms);
+            } else {
+                $user->permission = 'No Permissions';
+            }
             dd($perms);
         }
 
