@@ -45,7 +45,7 @@ class AdminController extends Controller
                 ])->get('permission')->toArray();
 
                 for($i = 0; $i < $permCount; $i++) {
-                    if($i != $permCount - 1) {
+                    if($i != ($permCount - 1)) {
                         $permString .= $perms[$i]['permission'] . ', ';
                     } else {
                         $permString .= $perms[$i]['permission'];
