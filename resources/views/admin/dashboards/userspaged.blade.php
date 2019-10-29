@@ -44,5 +44,5 @@
         </div>
     </div>
 </div>
-{{ $users->links() }}
+{{ $userArr->links() }}
 @endsection
