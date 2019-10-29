@@ -44,12 +44,8 @@ class AdminController extends Controller
                     'character_id' => $user->character_id,
                 ])->get('permission')->toArray();
 
-                for($i = 0; $i < $permCount; $i++) {
-                    if($i != ($permCount - 1)) {
-                        $permString .= $perms[$i]['permission'] . ', ';
-                    } else {
-                        $permString .= $perms[$i]['permission'];
-                    }
+                foreach($perms as $perm) {
+                    $permString .= $perm['permission'] . ', ';
                 }
 
                 $user->permission = $permString;
