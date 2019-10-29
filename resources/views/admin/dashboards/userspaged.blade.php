@@ -20,7 +20,7 @@
                         <td>{{ $user->getRole() }}</td>
                         <td>
                         {!! $perms = $user->getPermissionsArray() !!}                            
-                        @if($perms)
+                        @if($perms != null)
                             @foreach($perms as $perm)
                                 {{ implode(', ', $perm) }}
                             @endforeach
