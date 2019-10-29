@@ -33,9 +33,21 @@ class AdminController extends Controller
 
         foreach($usersArr as $user) {
             $user->role = $user->getRole();
-            $perms = $user->getPermissionsString();
-            if($perms != null) {
-                $user->permission = $perms;
+
+            $permCount = UserPermission::where([
+                'character_id' => $this->character_id,
+            ])->count();
+            
+            if($permCount > 0) {
+                $perms = UserPermission::where([
+                    'character_id' => $this->character_id,
+                ])->get('permission')->toArray();
+
+                foreach($perms as $perm) {
+                    $permString .= implode(', ', $perm);
+                }
+
+                $user->permission = $permString;
             } else {
                 $user->permission = 'No Permissions';
             }

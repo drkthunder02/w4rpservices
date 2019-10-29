@@ -117,26 +117,4 @@ class User extends Authenticatable
 
         return $role->role;
     }
-
-    public function getPermissionsString() {
-        $permString = null;
-
-        $permCount = UserPermission::where([
-            'character_id' => $this->character_id,
-        ])->count();
-
-        if($permCount > 0) {
-            $perms = UserPermission::where([
-                'character_id' => $this->character_id,
-            ])->get('permission')->toArray();
-    
-            foreach($perms as $perm) {
-                $permString = implode(', ', $perm);
-            }
-
-            return $permString;
-        } else {
-            return null;
-        }        
-    }
 }
