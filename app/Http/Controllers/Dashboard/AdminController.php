@@ -28,6 +28,7 @@ class AdminController extends Controller
         $user = array();
         $permission = array();
         $userArr = array();
+        $permString = null;
 
         $usersArr = User::orderBy('name', 'asc')->paginate(50);
 
