@@ -19,7 +19,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->getRole() }}</td>
                         <td>
-                        {{ $perms = $user->getPermissionsArray() }}                            
+                        {!! $perms = $user->getPermissionsArray() !!}                            
                         @if($perms)
                             @foreach($perms as $perm)
                                 {{ implode(', ', $perm) }}
