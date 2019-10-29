@@ -23,7 +23,6 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Admin Controller display pages
      */
-    
     Route::get('/admin/dashboard/users', 'Dashboard\AdminController@displayUsersPaginated');
     Route::get('/admin/dashboard/taxes', 'Dashboard\AdminController@displayTaxes');
     Route::get('/admin/dashboard/logins', 'Dashboard\AdminController@displayAllowedLogins');
