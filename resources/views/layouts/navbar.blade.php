@@ -95,7 +95,7 @@
                     <a class="dropdown-item" href="/admin/dashboard/users">Users</a>
                     <a class="dropdown-item" href="/admin/dashboard/taxes">Taxes</a>
                     <a class="dropdown-item" href="/admin/dashboard/logins">Allowed Logins</a>
-                    <a class="dropdown-item" href="/admin/dashboard/wiki">Wiki Purge</a>
+                    <a class="dropdown-item" href="/admin/dashboard/purgewiki">Wiki Purge</a>
                 </div>
             </li>
             @endif
