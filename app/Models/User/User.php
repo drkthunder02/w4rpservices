@@ -118,7 +118,9 @@ class User extends Authenticatable
         return $role->role;
     }
 
-    public function getPermissionsArray() {
+    public function getPermissionsString() {
+        $permString = null;
+
         $permCount = UserPermission::where([
             'character_id' => $this->character_id,
         ])->count();
@@ -128,7 +130,9 @@ class User extends Authenticatable
                 'character_id' => $this->character_id,
             ])->get('permission')->toArray();
     
-            return $perms[0];
+            foreach($perms as $perm) {
+                $permString = implode(', ', $perm);
+            }
         } else {
             return null;
         }        
