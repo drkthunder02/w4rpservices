@@ -39,7 +39,7 @@ class AdminController extends Controller
             $user->permissions = $perms;
         }
 
-        return view('admin.dashboard.userspaged')->with('usersArr', $usersArr);
+        return view('admin.dashboards.userspaged')->with('usersArr', $usersArr);
     }
 
     public function displayUsers($page) {
