@@ -23,6 +23,14 @@ use App\Models\Moon\Price;
 
 class MoonCalc {
 
+    public function GetOreComposition($ore) {
+        $composition = ItemComposition::where([
+            'Name' => $ore,
+        ])->first()->toArray();
+
+        return $composition;
+    }
+
     public function SpatialMoonsTotalWorth($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3

@@ -133,6 +133,16 @@ class MoonsController extends Controller
                                                         $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
         $totalWorth = number_format($totalWorth, 2, ".", ",");
 
-        return view('moons.user.displayTotalWorth')->with(['totalWorth' => $totalWorth, 'totalGoo' => $totalGoo]);
+        $firstComp = $moonCalc->GetOreComposition($firstOre);
+        $secondComp = $moonCalc->GetOreComposition($secondOre);
+        $thirdComp = $moonCalc->GetOreComposition($thirdOre);
+        $fourthComp = $moonCalc->GetOreComposition($fourthOre);
+
+        $composition['Tritanium'] = $firstComp['Tritanium'] + $secondComp['Tritanium'] + $thirdComp['Tritanium'] + $fourthComp['Tritanium'];
+
+
+        return view('moons.user.displayTotalWorth')->with('totalWorth', $totalWorth)
+                                                   ->with('totalGoo', $totalGoo)
+                                                   ->with('composition', $composition);
     }
 }
