@@ -18,7 +18,6 @@
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->role }}</td>
-                        {{ dd($user->role) }}
                         <td>
                         @if($user->permission)
                             @foreach($user->permissions as $perm)

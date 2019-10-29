@@ -34,10 +34,6 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    public function getUserType() {
-        return User::where('user_type')->get();
-    }
-
     public function role() {
         return $this->hasOne('\App\Models\User\UserRole', 'character_id', 'character_id');
     }
@@ -110,5 +106,31 @@ class User extends Authenticatable
 
     public function getId() {
         return $this->character_id;
+    }
+
+    public function getUserType() {
+        return User::where('user_type')->get();
+    }
+
+    public function getRole() {
+        $role = UserRole::where(['character_id' => $this->character_id])->first();
+
+        return $role->role;
+    }
+
+    public function getPermissionsArray() {
+        $perms = UserPermission::where([
+            'character_id' => $this->character_id,
+        ])->get('permission')->toArray();
+
+        return $perms;
+    }
+
+    public function getPermissions() {
+        $perms = UserPermission::where([
+            'character_id' => $this->character_id,
+        ])->get('permission');
+
+        return $perms;
     }
 }
