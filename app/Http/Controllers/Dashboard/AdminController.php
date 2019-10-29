@@ -36,29 +36,21 @@ class AdminController extends Controller
             $user->role = $user->getRole();
 
             $permCount = UserPermission::where([
-                'character_id' => 92626011,
+                'character_id' => $user->character_id,
             ])->count();
             
             if($permCount > 0) {
                 $perms = UserPermission::where([
-                    'character_id' => 92626011,
+                    'character_id' => $user->character_id,
                 ])->get('permission')->toArray();
 
                 for($i = 0; $i < $permCount; $i++) {
                     if($i != $permCount - 1) {
-                        $permString .= $perms[$i]['permission'] . ',';
+                        $permString .= $perms[$i]['permission'] . ', ';
                     } else {
                         $permString .= $perms[$i]['permission'];
                     }
                 }
-
-                dd($permString);
-
-                foreach($perms as $perm) {
-                    $permString .= implode(', ', $perm);
-                }
-
-                dd($permString);
 
                 $user->permission = $permString;
             } else {
