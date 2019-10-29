@@ -18,13 +18,7 @@
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->role }}</td>
-                        <td>
-                        @if($user->permission)
-                            {{ $user->permission }}
-                        @else
-                            No Permissions
-                        @endif
-                        </td>
+                        <td>{{ $user->permission }}</td>
                         <td>
                             {!! Form::open(['action' => 'Dashboard\AdminController@displayModifyUser', 'method' => 'POST']) !!}
                             {{ Form::hidden('user', $user->name) }}

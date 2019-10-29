@@ -39,7 +39,6 @@ class AdminController extends Controller
             } else {
                 $user->permission = 'No Permissions';
             }
-            dd($perms);
         }
 
         return view('admin.dashboards.userspaged')->with('usersArr', $usersArr);
