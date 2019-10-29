@@ -62,7 +62,6 @@ class AdminController extends Controller
 
         return view('admin.dashboards.users')->with('users', $users)
                                              ->with('userArr', $userArr)
-                                             ->with('page', $page)
                                              ->with('userCount', $userCount)
                                              ->with('userPages', $userPages);
     }
