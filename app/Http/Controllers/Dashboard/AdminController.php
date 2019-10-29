@@ -35,12 +35,12 @@ class AdminController extends Controller
             $user->role = $user->getRole();
 
             $permCount = UserPermission::where([
-                'character_id' => $this->character_id,
+                'character_id' => $user->character_id,
             ])->count();
             
             if($permCount > 0) {
                 $perms = UserPermission::where([
-                    'character_id' => $this->character_id,
+                    'character_id' => $user->character_id,
                 ])->get('permission')->toArray();
 
                 foreach($perms as $perm) {
