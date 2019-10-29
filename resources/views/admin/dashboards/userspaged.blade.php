@@ -21,7 +21,7 @@
                         <td>
                         @if($user->permission)
                             @foreach($user->permissions as $perm)
-                                {{ implode(', ', $perm) }}
+                                {{ $perm . ", " }}
                             @endforeach
                         @else
                             No Permissions
