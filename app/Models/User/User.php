@@ -133,6 +133,8 @@ class User extends Authenticatable
             foreach($perms as $perm) {
                 $permString = implode(', ', $perm);
             }
+
+            return $permString;
         } else {
             return null;
         }        
