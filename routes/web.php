@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth']], function(){
      */
     
     Route::get('/admin/dashboard/users', 'Dashboard\AdminController@displayUsers');
+    Route::get('/admin/dashboard/users/pages', 'Dashboard\AdminController@displayUsersPaginated');
     Route::get('/admin/dashboard/taxes', 'Dashboard\AdminController@displayTaxes');
     Route::get('/admin/dashboard/logins', 'Dashboard\AdminController@displayAllowedLogins');
     Route::get('/admin/dashboard/purgewiki', 'Dashboard\AdminController@displayPurgeWiki');

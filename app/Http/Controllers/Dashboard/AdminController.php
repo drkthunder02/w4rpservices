@@ -23,7 +23,26 @@ class AdminController extends Controller
         $this->middleware('role:Admin');
     }
 
-    public function displayUsers(Request $request) {
+    public function displayUsersPaginated() {
+        //Declare array variables
+        $user = array();
+        $permission = array();
+        $userArr = array();
+
+        $usersArr = User::orderBy('name', 'asc')->paginate(50);
+
+        foreach($usersArr as $user) {
+            $perms = UserPermission::where([
+                'character_id' => $user->character_id,
+            ])->get('permission')->toArray();
+
+            $user->permissions = $perms;
+        }
+
+        return view('admin.dashboard.userspaged')->with('usersArr', $usersArr);
+    }
+
+    public function displayUsers($page) {
         //Declare array variables
         $user = array();
         $permission = array();
@@ -53,11 +72,6 @@ class AdminController extends Controller
         $userCount = User::orderBy('name', 'asc')->count();
         //Set the amount of pages for the data
         $userPages = ceil($userCount / 50);
-
-        /**
-         * Miscellaneous data for populating arrays
-         * 
-         */
         $users = User::pluck('name')->all();
 
         return view('admin.dashboards.users')->with('users', $users)

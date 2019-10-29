@@ -1,5 +1,6 @@
 @extends('layouts.b4')
 @section('content')
+<br>
 <div class="container col-md-6">
     <div class="card">
         <div class="card-header">
