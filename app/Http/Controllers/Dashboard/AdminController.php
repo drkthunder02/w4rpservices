@@ -162,7 +162,7 @@ class AdminController extends Controller
                                             ->with('jumpgates', $jumpgates)
                                             ->with('reprocessings', $reprocessings)
                                             ->with('pigross', $pigross)
-                                            ->with('sprActual', $srpActual)
+                                            ->with('srpActual', $srpActual)
                                             ->with('srpLoss', $srpLoss);
     }
 
