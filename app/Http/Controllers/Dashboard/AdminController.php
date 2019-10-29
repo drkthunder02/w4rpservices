@@ -48,7 +48,7 @@ class AdminController extends Controller
                     if($i != $permCount - 1) {
                         $permString .= $perms[$i]['permission'] . ',';
                     } else {
-                        $permString .= $perm[$i]['permission'];
+                        $permString .= $perms[$i]['permission'];
                     }
                 }
 
