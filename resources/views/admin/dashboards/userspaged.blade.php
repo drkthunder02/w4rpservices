@@ -14,7 +14,7 @@
                     <th>Action</th>
                 </thead>
                 <tbody>
-                    @foreach($userArr as $user)
+                    @foreach($usersArr as $user)
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->role }}</td>
