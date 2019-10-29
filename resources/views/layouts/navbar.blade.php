@@ -89,8 +89,14 @@
                 <a class="nav-link" href="/scopes/select">Add Esi Scopes</a>
             </li>
             @if(auth()->user()->hasRole('Admin'))
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/dashboard">Admin</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Admin</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                    <a class="dropdown-item" href="/admin/dashboard/users">Users</a>
+                    <a class="dropdown-item" href="/admin/dashboard/taxes">Taxes</a>
+                    <a class="dropdown-item" href="/admin/dashboard/logins">Allowed Logins</a>
+                    <a class="dropdown-item" href="/admin/dashboard/wiki">Wiki Purge</a>
+                </div>
             </li>
             @endif
             <li class="nav-item">

@@ -23,16 +23,79 @@ class AdminController extends Controller
         $this->middleware('role:Admin');
     }
 
-    public function displayDashboard() {
+    public function displayUsers(Request $request) {
+        //Declare array variables
+        $user = array();
+        $permission = array();
+        $userArr = array();
+
+        /**
+         * For each user we want to build their name and permission set into one array
+         * Having all of the data in one array will allow us to build the table for the admin page more fluently.
+         * Example:  userArr[0]['name'] = Minerva Arbosa
+         *           userArr[0]['role'] = W4RP
+         *           userArr[0]['permissions'] = ['admin', 'contract.admin', superuser]
+         */
+        $usersTable = User::orderBy('name', 'asc')->get()->toArray();
+        foreach($usersTable as $user) {
+            $perms = UserPermission::where([
+                'character_id' => $user['character_id'],
+            ])->get('permission')->toArray();
+
+            $tempUser['name'] = $user['name'];
+            $tempUser['role'] = $user['user_type'];
+            $tempUser['permissions'] = $perms;
+
+            array_push($userArr, $tempUser);
+        }
+
+        //Get a user count for the view so we can do pagination
+        $userCount = User::orderBy('name', 'asc')->count();
+        //Set the amount of pages for the data
+        $userPages = ceil($userCount / 50);
+
+        /**
+         * Miscellaneous data for populating arrays
+         * 
+         */
+        $users = User::pluck('name')->all();
+
+        return view('admin.dashboards.users')->with('users', $users)
+                                             ->with('userArr', $userArr)
+                                             ->with('page', $page)
+                                             ->with('userCount', $userCount)
+                                             ->with('userPages', $userPages);
+    }
+
+    public function displayAllowedLogins() {
+        //Declare array variables
+        $entities = array();
+
+        /** Entities for allowed logins */
+        $legacys = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_name')->toArray();
+        $renters = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_name')->toArray();
+        //Compile a list of entities by their entity_id
+        foreach($legacys as $legacy) {
+            $entities[] = $legacy;
+        }
+        foreach($renters as $renter) {
+            $entities[] = $renter;
+        }
+
+        return view('admin.dashboards.allowed_logins')->with('entities', $entities);
+    }
+
+    public function displayPurgeWiki() {
+        return view('admin.dashboards.purge_wiki');
+    }
+
+    public function displayTaxes() {
         //Declare variables needed for displaying items on the page
         $months = 3;
         $pi = array();
         $industry = array();
         $reprocessing = array();
         $office = array();
-        $user = array();
-        $permission = array();
-        $entities = array();
         $corpId = 98287666;
         $srpActual = array();
         $srpLoss = array();
@@ -93,57 +156,15 @@ class AdminController extends Controller
             ];
         }
 
-        /** Users & Permissions Pane  */
-        $userArr = array();
-        /**
-         * For each user we want to build their name and permission set into one array
-         * Having all of the data in one array will allow us to build the table for the admin page more fluently.
-         * Example:  userArr[0]['name'] = Minerva Arbosa
-         *           userArr[0]['role'] = W4RP
-         *           userArr[0]['permissions'] = ['admin', 'contract.admin', superuser]
-         */
-        $usersTable = User::orderBy('name', 'asc')->get()->toArray();
-        foreach($usersTable as $user) {
-            $perms = UserPermission::where([
-                'character_id' => $user['character_id'],
-            ])->get('permission')->toArray();
-
-            $tempUser['name'] = $user['name'];
-            $tempUser['role'] = $user['user_type'];
-            $tempUser['permissions'] = $perms;
-
-            array_push($userArr, $tempUser);
-        }
-
-        /**
-         * Miscellaneous data for populating arrays
-         * 
-         */
-        $users = User::pluck('name')->all();
-
-        /** Entities for allowed logins */
-        $legacys = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_name')->toArray();
-        $renters = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_name')->toArray();
-        //Compile a list of entities by their entity_id
-        foreach($legacys as $legacy) {
-            $entities[] = $legacy;
-        }
-        foreach($renters as $renter) {
-            $entities[] = $renter;
-        }
-
-        return view('admin.dashboard')->with('users', $users)
-                                      ->with('userArr', $userArr)
-                                      ->with('pis', $pis)
-                                      ->with('industrys', $industrys)
-                                      ->with('offices', $offices)
-                                      ->with('markets', $markets)
-                                      ->with('jumpgates', $jumpgates)
-                                      ->with('reprocessings', $reprocessings)
-                                      ->with('entities', $entities)
-                                      ->with('pigross', $pigross)
-                                      ->with('srpActual', $srpActual)
-                                      ->with('srpLoss', $srpLoss);
+        return view('admin.dashboards.taxes')->with('pis', $pis)
+                                            ->with('industrys', $industrys)
+                                            ->with('offices', $offices)
+                                            ->with('markets', $markets)
+                                            ->with('jumpgates', $jumpgates)
+                                            ->with('reprocessings', $reprocessings)
+                                            ->with('pigross', $pigross)
+                                            ->with('sprActual', $srpActual)
+                                            ->with('srpLoss', $srpLoss);
     }
 
     public function displayModifyUser(Request $request) {

@@ -23,7 +23,11 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Admin Controller display pages
      */
-    Route::get('/admin/dashboard', 'Dashboard\AdminController@displayDashboard');
+    
+    Route::get('/admin/dashboard/users', 'Dashboard\AdminController@displayUsers');
+    Route::get('/admin/dashboard/taxes', 'Dashboard\AdminController@displayTaxes');
+    Route::get('/admin/dashboard/logins', 'Dashboard\AdminController@displayAllowedLogins');
+    Route::get('/admin/dashboard/purgewiki', 'Dashboard\AdminController@displayPurgeWiki');
     Route::post('/admin/add/role', 'Dashboard\AdminController@addRole');
     Route::post('/admin/remove/role', 'Dashboard\AdminController@removeRole');
     Route::post('/admin/add/permission', 'Dashboard\AdminController@addPermission');
