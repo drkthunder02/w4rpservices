@@ -119,18 +119,34 @@ class User extends Authenticatable
     }
 
     public function getPermissionsArray() {
-        $perms = UserPermission::where([
+        $permCount = UserPermission::where([
             'character_id' => $this->character_id,
-        ])->get('permission')->toArray();
+        ])->count();
 
-        return $perms;
+        if($permCount > 0) {
+            $perms = UserPermission::where([
+                'character_id' => $this->character_id,
+            ])->get('permission')->toArray();
+    
+            return $perms;
+        } else {
+            return null;
+        }        
     }
 
     public function getPermissions() {
-        $perms = UserPermission::where([
+        $permCount = UserPermission::where([
             'character_id' => $this->character_id,
-        ])->get('permission');
+        ])->count();
 
-        return $perms;
+        if($permCount > 0) {
+            $perms = UserPermission::where([
+                'character_id' => $this->character_id,
+            ])->get('permission');
+
+            return $perms;
+        } else {
+            return null;
+        }
     }
 }

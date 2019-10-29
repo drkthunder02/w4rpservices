@@ -20,9 +20,7 @@
                         <td>{{ $user->role }}</td>
                         <td>
                         @if($user->permission)
-                            @foreach($user->permissions as $perm)
-                                {{ $perm . ", " }}
-                            @endforeach
+                            {{ $user->permission }}
                         @else
                             No Permissions
                         @endif

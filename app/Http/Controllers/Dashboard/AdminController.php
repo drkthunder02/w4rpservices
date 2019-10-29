@@ -33,7 +33,7 @@ class AdminController extends Controller
 
         foreach($usersArr as $user) {
             $user->role = $user->getRole();
-            $user->permissions = $user->getPermissionsArray();
+            $user['permissions'] = $user->getPermissionsArray();
         }
 
         return view('admin.dashboards.userspaged')->with('usersArr', $usersArr);
