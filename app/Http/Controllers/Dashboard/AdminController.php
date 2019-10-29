@@ -44,6 +44,16 @@ class AdminController extends Controller
                     'character_id' => 92626011,
                 ])->get('permission')->toArray();
 
+                for($i = 0; $i < $permCount; $i++) {
+                    if($i != $permCount - 1) {
+                        $permString .= $perms[$i]['permission'] . ',';
+                    } else {
+                        $permString .= $perm[$i]['permission'];
+                    }
+                }
+
+                dd($permString);
+
                 foreach($perms as $perm) {
                     $permString .= implode(', ', $perm);
                 }
