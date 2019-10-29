@@ -17,11 +17,10 @@
                     @foreach($usersArr as $user)
                     <tr>
                         <td>{{ $user->name }}</td>
-                        <td>{{ $user->getRole() }}</td>
+                        <td>{{ $user->role }}</td>
                         <td>
-                        {!! $perms = $user->getPermissionsArray() !!}                            
-                        @if($perms != null)
-                            @foreach($perms as $perm)
+                        @if($user->permission)
+                            @foreach($user->permissions as $perm)
                                 {{ implode(', ', $perm) }}
                             @endforeach
                         @else

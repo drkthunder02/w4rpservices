@@ -32,17 +32,8 @@ class AdminController extends Controller
         $usersArr = User::orderBy('name', 'asc')->paginate(50);
 
         foreach($usersArr as $user) {
-            $role = UserRole::where([
-                'character_id' => $user->character_id,
-            ])->get();
-
-            $perms = UserPermission::where([
-                'character_id' => $user->character_id,
-            ])->get('permission')->toArray();
-
-            //Setup the extra stuff needed
-            $user->role = $role;
-            $user->permissions = $perms;
+            $user->role = $user->getRole();
+            $user->permissions = $user->getPermissionsArray();
         }
 
         return view('admin.dashboards.userspaged')->with('usersArr', $usersArr);
