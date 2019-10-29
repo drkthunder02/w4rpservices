@@ -35,7 +35,6 @@ class AdminController extends Controller
             $user->role = $user->getRole();
             $perms = $user->getPermissionsArray();
             if($perms != null) {
-                dd($perms);
                 $user->permission = implode(', ', $perms);
             } else {
                 $user->permission = 'No Permissions';
