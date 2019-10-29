@@ -48,7 +48,7 @@ class AdminController extends Controller
                     $permString .= implode(', ', $perm);
                 }
 
-                dd($perms);
+                dd($permString);
 
                 $user->permission = $permString;
             } else {
