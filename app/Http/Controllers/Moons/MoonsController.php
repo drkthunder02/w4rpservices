@@ -169,12 +169,32 @@ class MoonsController extends Controller
         if($firstOre != 'None') {
             $firstComp = $moonCalc->GetOreComposition($firstOre);
             $rUnits = $moonCalc->CalcReprocessingUnits($firstOre, $firstQuantity);
-            
-            dd($firstComp);
 
-            foreach($firstComp as $key => $value) {
-                $composition[$key] += floor(($firstComp[$key] * $rUnits) * $reprocessing);
-            }
+            dd($rUnits);
+
+            $composition['Tritanium'] += floor(($firstComp->Tritanium * $rUnits) * $reprocessing);
+            $composition['Pyerite'] += floor(($firstComp->Pyerite * $rUnits) * $reprocessing);
+            $composition['Mexallon'] += floor(($firstComp->Mexallon * $rUnits) * $reprocessing);
+            $composition['Isogen'] += floor(($firstComp->Isogen * $rUnits) * $reprocessing);
+            $composition['Nocxium'] += floor(($firstComp->Nocxium * $rUnits) * $reprocessing);
+            $composition['Zydrine'] += floor(($firstComp->Zydrine * $rUnits) * $reprocessing);
+            $composition['Megacyte'] += floor(($firstComp->Megacyte * $rUnits) * $reprocessing);
+            $composition['Atmospheric_Gases'] += floor(($firstComp->AtmosphericGases * $rUnits) * $reprocessing);
+            $composition['Evaporite_Deposits'] += floor(($firstComp->EvaporiteDeposits * $rUnits) * $reprocessing);
+            $composition['Hydrocarbons'] += floor(($firstComp->Hydrocarbons * $rUnits) * $reprocessing);
+            $composition['Silciates'] += floor(($firstComp->Silicates * $rUnits) * $reprocessing);
+            $composition['Cobalt'] += floor(($firstComp->Cobalt * $rUnits) * $reprocessing);
+            $composition['Platinum'] += floor(($firstComp->Platinium * $rUnits) * $reprocessing);
+            $composition['Vanadium'] += floor(($firstComp->Vanadium * $rUnits) * $reprocessing);
+            $composition['Chromium'] += floor(($firstComp->Chromium * $rUnits) * $reprocessing);
+            $composition['Technetium'] += floor(($firstComp->Technetium * $rUnits) * $reprocessing);
+            $composition['Hafnium'] += floor(($firstComp->Hafnium * $rUnits) * $reprocessing);
+            $composition['Caesium'] += floor(($firstComp->Caesium * $rUnits) * $reprocessing);
+            $composition['Mercury'] += floor(($firstComp->Mercury * $rUnits) * $reprocessing);
+            $composition['Dysprosium'] += floor(($firstComp->Dysprosium * $rUnits) * $reprocessing);
+            $composition['Neodymium'] += floor(($firstComp->Neodymium * $rUnits) * $reprocessing);
+            $composition['Promethium'] += floor(($firstComp->Promethium * $rUnits) * $reprocessing);
+            $composition['Thulium'] += floor(($firstComp->Thulium * $rUnits) * $reprocessing);
         }
 
         //Get the composition for the second ore if it is not None.
