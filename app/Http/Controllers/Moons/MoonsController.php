@@ -168,9 +168,7 @@ class MoonsController extends Controller
         //Add the first ore composition to the final composition
         if($firstOre != 'None') {
             $firstComp = $moonCalc->GetOreComposition($firstOre);
-            $rUnits = $moonCalc->CalcReprocessingUnits($firstOre, $firstQuantity);
-
-            dd($rUnits);
+            $rUnits = $moonCalc->CalcOreUnits($firstOre, $firstQuantity);
 
             $composition['Tritanium'] += floor(($firstComp->Tritanium * $rUnits) * $reprocessing);
             $composition['Pyerite'] += floor(($firstComp->Pyerite * $rUnits) * $reprocessing);
