@@ -136,11 +136,11 @@ class SRPAdminController extends Controller
 
         $srpApproved = SRPShip::where([
             'approved' => 'Approved',
-        ])->paginate(25);
+        ])->orderBy('created_at', 'desc')->paginate(25);
 
         $srpDenied = SRPShip::where([
             'approved' => 'Denied',
-        ])->paginate(25);
+        ])->orderBy('created_at', 'desc')->paginate(25);
         
         return view('srp.admin.history')->with('srpApproved', $srpApproved)
                                         ->with('srpDenied', $srpDenied);
