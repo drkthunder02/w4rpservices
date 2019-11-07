@@ -167,8 +167,12 @@ class MoonsController extends Controller
         //Get the composition for the first ore if it is not None.
         //Add the first ore composition to the final composition
         if($firstOre != 'None') {
+            //Get the ore's composition
             $firstComp = $moonCalc->GetOreComposition($firstOre);
-            $rUnits = $moonCalc->CalcOreUnits($firstOre, $firstQuantity);
+            //Get the amount of units mine-able from the moon
+            $mUnits = $moonCalc->CalcOreUnits($firstOre, $firstQuantity);
+            //Calculate the number of reprocessing units to happen from moon units
+            $rUnits = floor($mUnits / 100.0);            
 
             $composition['Tritanium'] += floor(($firstComp->Tritanium * $rUnits) * $reprocessing);
             $composition['Pyerite'] += floor(($firstComp->Pyerite * $rUnits) * $reprocessing);
@@ -198,35 +202,109 @@ class MoonsController extends Controller
         //Get the composition for the second ore if it is not None.
         //Add the second ore composition to the final composition
         if($secondOre != 'None') {
+            //Get the ore's composition
             $secondComp = $moonCalc->GetOreComposition($secondOre);
-            $rUnits = $moonCalc->CalcReprocessingUnits($secondOre, $secondQuantity);
+            //Get the amount of units mine-able from the moon
+            $mUnits = $moonCalc->CalcOreUnits($secondOre, $secondQuantity);
+            //Calculate the number of reprocessing units to happen from moon units
+            $rUnits = floor($mUnits / 100.0);            
 
-            foreach($secondComp as $key => $value) {
-                $composition[$key] += floor(($secondComp[$key] * $rUnits) * $reprocessing);
-            }
+            $composition['Tritanium'] += floor(($secondComp->Tritanium * $rUnits) * $reprocessing);
+            $composition['Pyerite'] += floor(($secondComp->Pyerite * $rUnits) * $reprocessing);
+            $composition['Mexallon'] += floor(($secondComp->Mexallon * $rUnits) * $reprocessing);
+            $composition['Isogen'] += floor(($secondComp->Isogen * $rUnits) * $reprocessing);
+            $composition['Nocxium'] += floor(($secondComp->Nocxium * $rUnits) * $reprocessing);
+            $composition['Zydrine'] += floor(($secondComp->Zydrine * $rUnits) * $reprocessing);
+            $composition['Megacyte'] += floor(($secondComp->Megacyte * $rUnits) * $reprocessing);
+            $composition['Atmospheric_Gases'] += floor(($secondComp->AtmosphericGases * $rUnits) * $reprocessing);
+            $composition['Evaporite_Deposits'] += floor(($secondComp->EvaporiteDeposits * $rUnits) * $reprocessing);
+            $composition['Hydrocarbons'] += floor(($secondComp->Hydrocarbons * $rUnits) * $reprocessing);
+            $composition['Silciates'] += floor(($secondComp->Silicates * $rUnits) * $reprocessing);
+            $composition['Cobalt'] += floor(($secondComp->Cobalt * $rUnits) * $reprocessing);
+            $composition['Platinum'] += floor(($secondComp->Platinium * $rUnits) * $reprocessing);
+            $composition['Vanadium'] += floor(($secondComp->Vanadium * $rUnits) * $reprocessing);
+            $composition['Chromium'] += floor(($secondComp->Chromium * $rUnits) * $reprocessing);
+            $composition['Technetium'] += floor(($secondComp->Technetium * $rUnits) * $reprocessing);
+            $composition['Hafnium'] += floor(($secondComp->Hafnium * $rUnits) * $reprocessing);
+            $composition['Caesium'] += floor(($secondComp->Caesium * $rUnits) * $reprocessing);
+            $composition['Mercury'] += floor(($secondComp->Mercury * $rUnits) * $reprocessing);
+            $composition['Dysprosium'] += floor(($secondComp->Dysprosium * $rUnits) * $reprocessing);
+            $composition['Neodymium'] += floor(($secondComp->Neodymium * $rUnits) * $reprocessing);
+            $composition['Promethium'] += floor(($secondComp->Promethium * $rUnits) * $reprocessing);
+            $composition['Thulium'] += floor(($secondComp->Thulium * $rUnits) * $reprocessing);
         }
-
-        //Get the composition for the third ore if it is not None
+        
+        //Get the composition for the third ore if it is not None.
         //Add the third ore composition to the final composition
         if($thirdOre != 'None') {
+            //Get the ore's composition
             $thirdComp = $moonCalc->GetOreComposition($thirdOre);
-            $rUnits = $moonCalc->CalcReprocessingUnits($thirdOre, $thirdQuantity);
+            //Get the amount of units mine-able from the moon
+            $mUnits = $moonCalc->CalcOreUnits($thirdOre, $thirdQuantity);
+            //Calculate the number of reprocessing units to happen from moon units
+            $rUnits = floor($mUnits / 100.0);            
 
-            foreach($thirdComp as $key => $value) {
-                $composition[$key] += floor(($thirdComp[$key] * $rUnits) * $reprocessing);
-            }
+            $composition['Tritanium'] += floor(($thirdComp->Tritanium * $rUnits) * $reprocessing);
+            $composition['Pyerite'] += floor(($thirdComp->Pyerite * $rUnits) * $reprocessing);
+            $composition['Mexallon'] += floor(($thirdComp->Mexallon * $rUnits) * $reprocessing);
+            $composition['Isogen'] += floor(($thirdComp->Isogen * $rUnits) * $reprocessing);
+            $composition['Nocxium'] += floor(($thirdComp->Nocxium * $rUnits) * $reprocessing);
+            $composition['Zydrine'] += floor(($thirdComp->Zydrine * $rUnits) * $reprocessing);
+            $composition['Megacyte'] += floor(($thirdComp->Megacyte * $rUnits) * $reprocessing);
+            $composition['Atmospheric_Gases'] += floor(($thirdComp->AtmosphericGases * $rUnits) * $reprocessing);
+            $composition['Evaporite_Deposits'] += floor(($thirdComp->EvaporiteDeposits * $rUnits) * $reprocessing);
+            $composition['Hydrocarbons'] += floor(($thirdComp->Hydrocarbons * $rUnits) * $reprocessing);
+            $composition['Silciates'] += floor(($thirdComp->Silicates * $rUnits) * $reprocessing);
+            $composition['Cobalt'] += floor(($thirdComp->Cobalt * $rUnits) * $reprocessing);
+            $composition['Platinum'] += floor(($thirdComp->Platinium * $rUnits) * $reprocessing);
+            $composition['Vanadium'] += floor(($thirdComp->Vanadium * $rUnits) * $reprocessing);
+            $composition['Chromium'] += floor(($thirdComp->Chromium * $rUnits) * $reprocessing);
+            $composition['Technetium'] += floor(($thirdComp->Technetium * $rUnits) * $reprocessing);
+            $composition['Hafnium'] += floor(($thirdComp->Hafnium * $rUnits) * $reprocessing);
+            $composition['Caesium'] += floor(($thirdComp->Caesium * $rUnits) * $reprocessing);
+            $composition['Mercury'] += floor(($thirdComp->Mercury * $rUnits) * $reprocessing);
+            $composition['Dysprosium'] += floor(($thirdComp->Dysprosium * $rUnits) * $reprocessing);
+            $composition['Neodymium'] += floor(($thirdComp->Neodymium * $rUnits) * $reprocessing);
+            $composition['Promethium'] += floor(($thirdComp->Promethium * $rUnits) * $reprocessing);
+            $composition['Thulium'] += floor(($thirdComp->Thulium * $rUnits) * $reprocessing);
         }
 
-        //Get the composition for the fourth ore if it is not None
+        //Get the composition for the fourth ore if it is not None.
         //Add the fourth ore composition to the final composition
         if($fourthOre != 'None') {
+            //Get the ore's composition
             $fourthComp = $moonCalc->GetOreComposition($fourthOre);
-            $rUnits = $moonCalc->CalcReprocessingUnits($fourthOre, $fourthQuantity);
+            //Get the amount of units mine-able from the moon
+            $mUnits = $moonCalc->CalcOreUnits($fourthOre, $fourthQuantity);
+            //Calculate the number of reprocessing units to happen from moon units
+            $rUnits = floor($mUnits / 100.0);            
 
-            foreach($fourthComp as $key => $value) {
-                $composition[$key] += floor(($fourthComp[$key] * $rUnits) * $reprocessing);
-            }
+            $composition['Tritanium'] += floor(($fourthComp->Tritanium * $rUnits) * $reprocessing);
+            $composition['Pyerite'] += floor(($fourthComp->Pyerite * $rUnits) * $reprocessing);
+            $composition['Mexallon'] += floor(($fourthComp->Mexallon * $rUnits) * $reprocessing);
+            $composition['Isogen'] += floor(($fourthComp->Isogen * $rUnits) * $reprocessing);
+            $composition['Nocxium'] += floor(($fourthComp->Nocxium * $rUnits) * $reprocessing);
+            $composition['Zydrine'] += floor(($fourthComp->Zydrine * $rUnits) * $reprocessing);
+            $composition['Megacyte'] += floor(($fourthComp->Megacyte * $rUnits) * $reprocessing);
+            $composition['Atmospheric_Gases'] += floor(($fourthComp->AtmosphericGases * $rUnits) * $reprocessing);
+            $composition['Evaporite_Deposits'] += floor(($fourthComp->EvaporiteDeposits * $rUnits) * $reprocessing);
+            $composition['Hydrocarbons'] += floor(($fourthComp->Hydrocarbons * $rUnits) * $reprocessing);
+            $composition['Silciates'] += floor(($fourthComp->Silicates * $rUnits) * $reprocessing);
+            $composition['Cobalt'] += floor(($fourthComp->Cobalt * $rUnits) * $reprocessing);
+            $composition['Platinum'] += floor(($fourthComp->Platinium * $rUnits) * $reprocessing);
+            $composition['Vanadium'] += floor(($fourthComp->Vanadium * $rUnits) * $reprocessing);
+            $composition['Chromium'] += floor(($fourthComp->Chromium * $rUnits) * $reprocessing);
+            $composition['Technetium'] += floor(($fourthComp->Technetium * $rUnits) * $reprocessing);
+            $composition['Hafnium'] += floor(($fourthComp->Hafnium * $rUnits) * $reprocessing);
+            $composition['Caesium'] += floor(($fourthComp->Caesium * $rUnits) * $reprocessing);
+            $composition['Mercury'] += floor(($fourthComp->Mercury * $rUnits) * $reprocessing);
+            $composition['Dysprosium'] += floor(($fourthComp->Dysprosium * $rUnits) * $reprocessing);
+            $composition['Neodymium'] += floor(($fourthComp->Neodymium * $rUnits) * $reprocessing);
+            $composition['Promethium'] += floor(($fourthComp->Promethium * $rUnits) * $reprocessing);
+            $composition['Thulium'] += floor(($fourthComp->Thulium * $rUnits) * $reprocessing);
         }
+
+        dd($composition);
 
         //Remove any items which don't equal a number above 0 in the composition in order to remove them from the total.
         //The less we display on the table the better.

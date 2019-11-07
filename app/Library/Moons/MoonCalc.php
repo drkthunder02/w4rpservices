@@ -539,30 +539,9 @@ class MoonCalc {
         //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
         $actualm3 = floor($totalPull * ($percentage / 100));
         //Calculate the units from the m3 pulled from the moon
-        $units = floor($actualm3 / $m3Size);
-
-        dd($units);
+        $units = floor($actualm3 / $m3Size);   
 
         return $units;
-    }
-
-    public function CalcReprocessingUnits($ore, $percentage) {
-        //Specify the total pull amount
-        $totalPull = 5.55 * (3600.00 * 24.00 *30.00);
-        //Find the size of the asteroid from the database
-        $item = ItemComposition::where([
-            'Name' => $ore,
-        ])->first();
-        //Get the m3 size from the item composition
-        $m3Size = $item->m3Size;
-        //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
-        $actualm3 = floor($percentage / $m3Size);
-        //Calculate the units from the m3 pulled from the moon
-        $units = floor($actualm3 / $m3Size);
-        //Calculate the number of times the ore is reprocessed from the actual units
-        $rUnits = floor($units / 100.00);
-
-        return $rUnits;
     }
 
     private function CalcPrice($ore, $percentage) {
