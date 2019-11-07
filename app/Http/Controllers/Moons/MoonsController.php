@@ -196,7 +196,9 @@ class MoonsController extends Controller
             //Get the amount of units mine-able from the moon
             $mUnits = $moonCalc->CalcOreUnits($firstOre, $firstQuantity);
             //Calculate the number of reprocessing units to happen from moon units
-            $rUnits = floor($mUnits / 100.0);            
+            $rUnits = floor($mUnits / 100.0);
+            
+            dd($rUnits);
 
             $composition['Tritanium'] += floor(($firstComp->Tritanium * $rUnits) * $reprocessing);
             $composition['Pyerite'] += floor(($firstComp->Pyerite * $rUnits) * $reprocessing);
