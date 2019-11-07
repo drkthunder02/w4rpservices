@@ -176,8 +176,10 @@ class MoonsController extends Controller
             $reprocessing = $request->reprocessing;
         }
 
-        //Set the reprocessing level for 84%
-        $reprocessing = 0.84;
+        //Set the reprocessing level for 84% if the value is null
+        if($request->reprocessing == null) {
+            $reprocessing = 0.84;
+        }
 
         //Calculate the total moon goo value
         $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
@@ -331,16 +333,6 @@ class MoonsController extends Controller
             $composition['Promethium'] += floor(($fourthComp->Promethium * $rUnits) * $reprocessing);
             $composition['Thulium'] += floor(($fourthComp->Thulium * $rUnits) * $reprocessing);
         }
-
-        //Remove any items which don't equal a number above 0 in the composition in order to remove them from the total.
-        //The less we display on the table the better.
-        foreach($composition as $key => $value) {
-            if($composition[$key] === 0) {
-                unset($composition[$key]);
-            }
-        }
-
-        dd($composition);
 
         return view('moons.user.displayTotalWorth')->with('totalWorth', $totalWorth)
                                                    ->with('totalGoo', $totalGoo)
