@@ -138,6 +138,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/srp/admin/costcodes/add', 'SRP\SRPAdminController@displayAddCostCode');
     Route::post('/srp/admin/costcodes/add', 'SRP\SRPAdminController@addCostCode');
     Route::post('/srp/admin/costcodes/modify', 'SRP\SRPAdminController@modifyCostCodes');
+    Route::get('/srp/admin/display', 'SRP\SRPAdminController@displayHistory');
 
     /**
      * Wiki Controller display pages
