@@ -18,10 +18,12 @@
             </thead>
             <tbody>
                 @foreach($composition as $key => $value)
+                    @if($value > 0)
                     <tr>
                         <td>{{ $key }}</td>
-                        <td>{{ $value }}</td>
+                        <td>{{ number_format($value, 0, ".", ",") }}</td>
                     </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>
