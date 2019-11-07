@@ -14,7 +14,7 @@
             <h2>Moon Composition</h2>
         </div>
         <div class="card-body">
-            <h4>Reprocessing Percentage set at: {{ $reprocessing }}</h4><br>
+            <h4>Reprocessing Percentage set at: {{ $reprocessing }}</h4>
             <h4>Length of pull is 1 month</h4>
             <table class="table table-striped table-bordered">
                 <thead>
