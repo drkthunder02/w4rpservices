@@ -26,7 +26,7 @@ class MoonCalc {
     public function GetOreComposition($ore) {
         $composition = ItemComposition::where([
             'Name' => $ore,
-        ])->first()->toArray();
+        ])->first();
 
         return $composition;
     }

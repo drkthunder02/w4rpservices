@@ -167,9 +167,11 @@ class MoonsController extends Controller
         //Get the composition for the first ore if it is not None.
         //Add the first ore composition to the final composition
         if($firstOre != 'None') {
+            dd($firstOre);
+
             $firstComp = $moonCalc->GetOreComposition($firstOre);
             $rUnits = $moonCalc->CalcReprocessingUnits($firstOre, $firstQuantity);
-            dd($rUnits);
+            
 
             foreach($firstComp as $key => $value) {
                 $composition[$key] += floor(($firstComp[$key] * $rUnits) * $reprocessing);
