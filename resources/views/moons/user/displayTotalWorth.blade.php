@@ -11,6 +11,9 @@
 <div class="container">
     <h2>Moon Composition</h2>
     <div class="jumbotron">
+        <div class="container">
+            <h3>Reprocessing Percentage set at: {{ $reprocessing }}</h3>
+        </div>
         <table class="table table-striped table-bordered">
             <thead>
                 <th>Mineral</th>
