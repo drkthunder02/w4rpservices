@@ -12,7 +12,8 @@
     <h2>Moon Composition</h2>
     <div class="jumbotron">
         <div class="container">
-            <h3>Reprocessing Percentage set at: {{ $reprocessing }}</h3>
+            <h3>Reprocessing Percentage set at: {{ $reprocessing }}</h3><br>
+            <h3>Length of pull is 1 month</h3>
         </div>
         <table class="table table-striped table-bordered">
             <thead>
