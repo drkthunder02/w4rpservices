@@ -14,7 +14,6 @@
                     <th>ZKillboard</th>
                     <th>Total Loss</th>
                     <th>Ship Type</th>
-                    <th>Payout %</th>
                     <th>Fleet Type</th>
                     <th>Actual SRP</th>
                     <th>Notes</th>
@@ -26,9 +25,8 @@
                             <td>{{ $approved->character_name }}</td>
                             <td>{{ $approved->fleet_commander_name }}</td>
                             <td><a href="{{ $approved->zkillboard }}" target="_blank">zKill Link</a></td>
-                            <td>{{ $approved->loss_value }}</td>
+                            <td>{{ number_format($approved->loss_value, 2, ".", ",") }}</td>
                             <td>{{ $approved->ship_type }}</td>
-                            <td>{{ $approved->cost_code }}</td>
                             <td>{{ $approved->fleet_type }}</td>
                             <td>{{ number_format($approved->actual_srp, 2, ".", ",") }}</td>
                             <td>{{ $approved->notes }}</td>
@@ -36,6 +34,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $srpApproved->links() }}
         </div>
     </div>
 </div>
@@ -53,7 +52,6 @@
                     <th>FC</th>
                     <th>Total Loss</th>
                     <th>Ship Type</th>
-                    <th>Payout %</th>
                     <th>Fleet Type</th>
                     <th>Actual SRP</th>
                     <th>Notes</th>
@@ -64,9 +62,8 @@
                             <td>{{ $denied->created_at }}</td>
                             <td>{{ $denied->character_name }}</td>
                             <td>{{ $denied->fleet_commander_name }}</td>
-                            <td>{{ $denied->loss_value }}</td>
+                            <td>{{ number_format($denied->loss_value, 2, ".", ",") }}</td>
                             <td>{{ $denied->ship_type }}</td>
-                            <td>{{ $denied->cost_code }}</td>
                             <td>{{ $denied->fleet_type }}</td>
                             <td>{{ number_format($denied->actual_srp, 2, ".", ",") }}</td>
                             <td>{{ $denied->notes }}</td>
@@ -74,6 +71,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $srpDenied->links() }}
         </div>
     </div>
 </div>
