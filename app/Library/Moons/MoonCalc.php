@@ -537,7 +537,7 @@ class MoonCalc {
         //Get the m3 size from the item composition
         $m3Size = $item->m3Size;
         //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
-        $actualm3 = floor($totalPull * ($percentage / 100));
+        $actualm3 = floor($totalPull * $percentage);
         //Calculate the units from the m3 pulled from the moon
         $units = floor($actualm3 / $m3Size);   
 

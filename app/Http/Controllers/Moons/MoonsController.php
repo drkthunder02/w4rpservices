@@ -113,6 +113,35 @@ class MoonsController extends Controller
     }
 
     public function displayTotalWorth(Request $request) {
+        //Setup calls to the MoonCalc class
+        $moonCalc = new MoonCalc();
+        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+        $composition = [
+            'Tritanium' => 0,
+            'Pyerite' => 0,
+            'Mexallon' => 0,
+            'Isogen' => 0,
+            'Nocxium' => 0,
+            'Zydrine' => 0,
+            'Megacyte' => 0,
+            'Atmospheric_Gases' => 0,
+            'Evaporite_Deposits' => 0,
+            'Hydrocarbons' => 0,
+            'Silicates' => 0,
+            'Cobalt' => 0,
+            'Platinum' => 0,
+            'Vanadium'=> 0,
+            'Chromium' => 0,
+            'Technetium' => 0,
+            'Hafnium' => 0,
+            'Caesium' => 0,
+            'Mercury' => 0,
+            'Dysprosium' => 0,
+            'Neodymium' => 0,
+            'Promethium' => 0,
+            'Thulium' => 0,
+        ];
+
         $firstOre = $request->firstOre;
         if($request->firstQuantity >= 1.00) {
             $firstQuantity = $request->firstQuantity / 100.00;
@@ -147,11 +176,6 @@ class MoonsController extends Controller
             $reprocessing = $request->reprocessing;
         }
 
-        //Setup calls to the MoonCalc class
-        $moonCalc = new MoonCalc();
-        $composition = array();
-        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
-
         //Calculate the total moon goo value
         $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
                                                              $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
@@ -184,7 +208,7 @@ class MoonsController extends Controller
             $composition['Atmospheric_Gases'] += floor(($firstComp->AtmosphericGases * $rUnits) * $reprocessing);
             $composition['Evaporite_Deposits'] += floor(($firstComp->EvaporiteDeposits * $rUnits) * $reprocessing);
             $composition['Hydrocarbons'] += floor(($firstComp->Hydrocarbons * $rUnits) * $reprocessing);
-            $composition['Silciates'] += floor(($firstComp->Silicates * $rUnits) * $reprocessing);
+            $composition['Silicates'] += floor(($firstComp->Silicates * $rUnits) * $reprocessing);
             $composition['Cobalt'] += floor(($firstComp->Cobalt * $rUnits) * $reprocessing);
             $composition['Platinum'] += floor(($firstComp->Platinium * $rUnits) * $reprocessing);
             $composition['Vanadium'] += floor(($firstComp->Vanadium * $rUnits) * $reprocessing);
@@ -219,7 +243,7 @@ class MoonsController extends Controller
             $composition['Atmospheric_Gases'] += floor(($secondComp->AtmosphericGases * $rUnits) * $reprocessing);
             $composition['Evaporite_Deposits'] += floor(($secondComp->EvaporiteDeposits * $rUnits) * $reprocessing);
             $composition['Hydrocarbons'] += floor(($secondComp->Hydrocarbons * $rUnits) * $reprocessing);
-            $composition['Silciates'] += floor(($secondComp->Silicates * $rUnits) * $reprocessing);
+            $composition['Silicates'] += floor(($secondComp->Silicates * $rUnits) * $reprocessing);
             $composition['Cobalt'] += floor(($secondComp->Cobalt * $rUnits) * $reprocessing);
             $composition['Platinum'] += floor(($secondComp->Platinium * $rUnits) * $reprocessing);
             $composition['Vanadium'] += floor(($secondComp->Vanadium * $rUnits) * $reprocessing);
@@ -254,7 +278,7 @@ class MoonsController extends Controller
             $composition['Atmospheric_Gases'] += floor(($thirdComp->AtmosphericGases * $rUnits) * $reprocessing);
             $composition['Evaporite_Deposits'] += floor(($thirdComp->EvaporiteDeposits * $rUnits) * $reprocessing);
             $composition['Hydrocarbons'] += floor(($thirdComp->Hydrocarbons * $rUnits) * $reprocessing);
-            $composition['Silciates'] += floor(($thirdComp->Silicates * $rUnits) * $reprocessing);
+            $composition['Silicates'] += floor(($thirdComp->Silicates * $rUnits) * $reprocessing);
             $composition['Cobalt'] += floor(($thirdComp->Cobalt * $rUnits) * $reprocessing);
             $composition['Platinum'] += floor(($thirdComp->Platinium * $rUnits) * $reprocessing);
             $composition['Vanadium'] += floor(($thirdComp->Vanadium * $rUnits) * $reprocessing);
@@ -289,7 +313,7 @@ class MoonsController extends Controller
             $composition['Atmospheric_Gases'] += floor(($fourthComp->AtmosphericGases * $rUnits) * $reprocessing);
             $composition['Evaporite_Deposits'] += floor(($fourthComp->EvaporiteDeposits * $rUnits) * $reprocessing);
             $composition['Hydrocarbons'] += floor(($fourthComp->Hydrocarbons * $rUnits) * $reprocessing);
-            $composition['Silciates'] += floor(($fourthComp->Silicates * $rUnits) * $reprocessing);
+            $composition['Silicates'] += floor(($fourthComp->Silicates * $rUnits) * $reprocessing);
             $composition['Cobalt'] += floor(($fourthComp->Cobalt * $rUnits) * $reprocessing);
             $composition['Platinum'] += floor(($fourthComp->Platinium * $rUnits) * $reprocessing);
             $composition['Vanadium'] += floor(($fourthComp->Vanadium * $rUnits) * $reprocessing);
