@@ -332,8 +332,6 @@ class MoonsController extends Controller
             $composition['Thulium'] += floor(($fourthComp->Thulium * $rUnits) * $reprocessing);
         }
 
-        dd($composition);
-
         //Remove any items which don't equal a number above 0 in the composition in order to remove them from the total.
         //The less we display on the table the better.
         foreach($composition as $key => $value) {
@@ -342,9 +340,11 @@ class MoonsController extends Controller
             }
         }
 
+        dd($composition);
 
         return view('moons.user.displayTotalWorth')->with('totalWorth', $totalWorth)
                                                    ->with('totalGoo', $totalGoo)
-                                                   ->with('composition', $composition);
+                                                   ->with('composition', $composition)
+                                                   ->with('reprocessing', $reprocessing);
     }
 }
