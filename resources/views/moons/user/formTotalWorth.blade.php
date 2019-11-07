@@ -174,7 +174,7 @@
     </div>
     <div class="form-group col-md-2">
         {{ Form::label('reprocessing', 'Reprocessing') }}
-        {{ Form::text('reprocessing', '', ['class' => 'form-control', 'placeholder' = '0.84']) }}
+        {{ Form::text('reprocessing', '', ['class' => 'form-control', 'placeholder' => '0.84']) }}
     </div>
     <div class="form-group col-md-1">
         {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
