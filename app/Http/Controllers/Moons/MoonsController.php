@@ -176,6 +176,9 @@ class MoonsController extends Controller
             $reprocessing = $request->reprocessing;
         }
 
+        //Set the reprocessing level for 84%
+        $reprocessing = 0.84;
+
         //Calculate the total moon goo value
         $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
                                                              $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
@@ -197,8 +200,6 @@ class MoonsController extends Controller
             $mUnits = $moonCalc->CalcOreUnits($firstOre, $firstQuantity);
             //Calculate the number of reprocessing units to happen from moon units
             $rUnits = floor($mUnits / 100.0);
-
-            dd($reprocessing);
 
             //Compile the composition of the ore
             $composition['Tritanium'] += floor(($firstComp->Tritanium * $rUnits) * $reprocessing);
