@@ -169,6 +169,7 @@ class MoonsController extends Controller
         if($firstOre != 'None') {
             $firstComp = $moonCalc->GetOreComposition($firstOre);
             $rUnits = $moonCalc->CalcReprocessingUnits($firstOre, $firstQuantity);
+            dd($firstComp);
 
             foreach($firstComp as $key => $value) {
                 $composition[$key] += floor(($firstComp[$key] * $rUnits) * $reprocessing);
