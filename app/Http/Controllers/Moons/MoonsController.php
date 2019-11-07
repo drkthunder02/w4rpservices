@@ -198,7 +198,9 @@ class MoonsController extends Controller
             //Calculate the number of reprocessing units to happen from moon units
             $rUnits = floor($mUnits / 100.0);
 
-            //Compile the composition of te ore
+            dd($reprocessing);
+
+            //Compile the composition of the ore
             $composition['Tritanium'] += floor(($firstComp->Tritanium * $rUnits) * $reprocessing);
             $composition['Pyerite'] += floor(($firstComp->Pyerite * $rUnits) * $reprocessing);
             $composition['Mexallon'] += floor(($firstComp->Mexallon * $rUnits) * $reprocessing);
@@ -222,8 +224,6 @@ class MoonsController extends Controller
             $composition['Neodymium'] += floor(($firstComp->Neodymium * $rUnits) * $reprocessing);
             $composition['Promethium'] += floor(($firstComp->Promethium * $rUnits) * $reprocessing);
             $composition['Thulium'] += floor(($firstComp->Thulium * $rUnits) * $reprocessing);
-
-            dd($composition);
         }
 
         //Get the composition for the second ore if it is not None.
