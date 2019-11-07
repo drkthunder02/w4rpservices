@@ -35,6 +35,7 @@
                     <a class="dropdown-item" href="/srp/admin/display">SRP Admin Dashboard</a>
                     <a class="dropdown-item" href="/srp/admin/statistics">SRP Statistics</a>
                     <a class="dropdown-item" href="/srp/admin/costcodes/display">SRP Admin Cost Codes</a>
+                    <a class="dropdown-item" href="/srp/admin/display/history">SRP History</a>
                     @endif
                 </div>
             </li>
