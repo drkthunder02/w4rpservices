@@ -114,31 +114,107 @@ class MoonsController extends Controller
 
     public function displayTotalWorth(Request $request) {
         $firstOre = $request->firstOre;
-        $firstQuantity = $request->firstQuantity;
+        if($request->firstQuantity >= 1.00) {
+            $firstQuantity = $request->firstQuantity / 100.00;
+        } else {
+            $firstQuantity = $request->firstQuantity;
+        }
+        
         $secondOre = $request->secondOre;
-        $secondQuantity = $request->secondQuantity;
+        if($request->secondQuantity >= 1.00) {
+            $secondQuantity = $request->secondQuantity / 100.00;
+        } else {
+            $secondQuantity = $request->secondQuantity;
+        }
+
         $thirdOre = $request->thirdOre;
-        $thirdQuantity = $request->thirdQuantity;
+        if($request->thirdQuantity >= 1.00) {
+            $thirdQuantity = $request->thirdQuantity / 100.00;
+        } else {
+            $thirdQuantity = $request->thirdQuantity;
+        }
+
         $fourthOre = $request->fourthOre;
-        $fourthQuantity = $request->fourthQuantity;
+        if($request->fourthQuantity >= 1.00) {
+            $fourthQuantity = $request->fourthQuantity / 100.00;
+        } else {
+            $fourthQuantity = $request->fourthQuantity;
+        }
+
+        if($request->reprocessing >= 1.00) {
+            $reprocessing = $request->reprocessing / 100.00;
+        } else {
+            $reprocessing = $request->reprocessing;
+        }
 
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
+        $composition = array();
+        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
 
+        //Calculate the total moon goo value
         $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
                                                              $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
+        //Format the number to send to the blade
         $totalGoo = number_format($totalGoo, 2, ".", ",");
 
+        //Calculate the total worth of the moon
         $totalWorth = $moonCalc->SpatialMoonsTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
                                                         $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
+        //Format the number to send to the blade.
         $totalWorth = number_format($totalWorth, 2, ".", ",");
 
-        $firstComp = $moonCalc->GetOreComposition($firstOre);
-        $secondComp = $moonCalc->GetOreComposition($secondOre);
-        $thirdComp = $moonCalc->GetOreComposition($thirdOre);
-        $fourthComp = $moonCalc->GetOreComposition($fourthOre);
+        //Get the composition for the first ore if it is not None.
+        //Add the first ore composition to the final composition
+        if($firstOre != 'None') {
+            $firstComp = $moonCalc->GetOreComposition($firstOre);
+            $rUnits = $moonCalc->CalcReprocessingUnits($firstOre, $firstQuantity);
 
-        $composition['Tritanium'] = $firstComp['Tritanium'] + $secondComp['Tritanium'] + $thirdComp['Tritanium'] + $fourthComp['Tritanium'];
+            foreach($firstComp as $key => $value) {
+                $composition[$key] += floor(($firstComp[$key] * $rUnits) * $reprocessing);
+            }
+        }
+
+        //Get the composition for the second ore if it is not None.
+        //Add the second ore composition to the final composition
+        if($secondOre != 'None') {
+            $secondComp = $moonCalc->GetOreComposition($secondOre);
+            $rUnits = $moonCalc->CalcReprocessingUnits($secondOre, $secondQuantity);
+
+            foreach($secondComp as $key => $value) {
+                $composition[$key] += floor(($secondComp[$key] * $rUnits) * $reprocessing);
+            }
+        }
+
+        //Get the composition for the third ore if it is not None
+        //Add the third ore composition to the final composition
+        if($thirdOre != 'None') {
+            $thirdComp = $moonCalc->GetOreComposition($thirdOre);
+            $rUnits = $moonCalc->CalcReprocessingUnits($thirdOre, $thirdQuantity);
+
+            foreach($thirdComp as $key => $value) {
+                $composition[$key] += floor(($thirdComp[$key] * $rUnits) * $reprocessing);
+            }
+        }
+
+        //Get the composition for the fourth ore if it is not None
+        //Add the fourth ore composition to the final composition
+        if($fourthOre != 'None') {
+            $fourthComp = $moonCalc->GetOreComposition($fourthOre);
+            $rUnits = $moonCalc->CalcReprocessingUnits($fourthOre, $fourthQuantity);
+
+            foreach($fourthComp as $key => $value) {
+                $composition[$key] += floor(($fourthComp[$key] * $rUnits) * $reprocessing);
+            }
+        }
+
+        //Remove any items which don't equal a number above 0 in the composition in order to remove them from the total.
+        //The less we display on the table the better.
+        foreach($composition as $key => $value) {
+            if($composition[$key] === 0) {
+                unset($composition[$key]);
+            }
+        }
 
 
         return view('moons.user.displayTotalWorth')->with('totalWorth', $totalWorth)
