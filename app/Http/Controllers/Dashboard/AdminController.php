@@ -267,7 +267,7 @@ class AdminController extends Controller
         //Delete the user from the user table
         DB::table('users')->where(['character_id' => $data[0]->character_id])->delete();
 
-        return redirect('/admin/dashboard')->with('success', 'User deleted from the site.');
+        return redirect('/admin/dashboard/users')->with('success', 'User deleted from the site.');
     }
 
     public function addAllowedLogin(Request $request) {
