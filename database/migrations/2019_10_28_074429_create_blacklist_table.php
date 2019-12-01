@@ -19,7 +19,7 @@ class CreateBlacklistTable extends Migration
                 $table->string('character_id')->unique();
                 $table->string('name')->unique();
                 $table->text('reason');
-                $table->text('alts');
+                $table->text('alts')->nullable();
                 $table->string('lister_id');
                 $table->string('lister_name');
                 $table->timestamps();
