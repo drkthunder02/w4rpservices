@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Corps;
+namespace App\Http\Controllers\Blacklist;
 
 //Internal Library
 use Illuminate\Http\Request;
@@ -12,6 +12,9 @@ use App\Library\Lookups\NewLookupHelper;
 
 //Models
 use App\Models\Character\BlacklistUser;
+use App\Models\User\User;
+use App\Models\User\UserRole;
+use App\Models\User\UserPermission;
 
 class BlacklistController extends Controller
 {
@@ -48,6 +51,8 @@ class BlacklistController extends Controller
                 'character_id' => $charId,
                 'name' => $request->name,
                 'reason' => $request->reason,
+                'lister_id' => auth()->user()->getId(),
+                'lister_name' => auth()->user()->getName(),
             ]);
         } else {
             //Return the view
@@ -77,19 +82,15 @@ class BlacklistController extends Controller
     }
 
     public function DisplayBlacklist() {
-        //Middleware needed
-        $this->middleware('permission:corp.recruiter');
 
         //Get the entire blacklist
-        $blacklist = BlacklistUser::all();
+        $blacklist = BlacklistUser::all()->paginate(50);
 
         //Return the view with the data
         return view('blacklist.list')->with('blacklist', $blacklist);
     }
 
     public function SearchInBlacklist(Request $request) {
-        //Middleware needed
-        $this->middleware('permission:corp.recruiter');
 
         //Validate the input from the form
         $this->validate($request, [

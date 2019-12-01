@@ -29,4 +29,7 @@
         </div>
     </div>
 </div>
+@if($blacklist != null)
+{{ $blacklist->links() }}
+@endif
 @endsection
