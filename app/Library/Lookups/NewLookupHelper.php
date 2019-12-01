@@ -518,6 +518,8 @@ class NewLookupHelper {
     }
 
     private function SaveCorporation($response, $corpId) {
+        $esiHelper = new Esi;
+
         $corp = new CorporationLookup;
         $corp->corporation_id = $corpId;
         if(isset($response->alliance_id)) {
@@ -526,7 +528,7 @@ class NewLookupHelper {
         $corp->ceo_id = $response->ceo_id;
         $corp->creator_id = $response->creator_id;
         if(isset($response->date_founded)) {
-            $corp->date_founded = $response->date_founded;
+            $corp->date_founded = $esiHelper->DecodeDate($response->date_founded);
         }
         if(isset($response->description)) {
             $corp->description = $response->description;
