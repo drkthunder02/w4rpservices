@@ -706,11 +706,13 @@ class NewLookupHelper {
     }
 
     private function SaveAlliance($response, $allianceId) {
+        $esiHelper = new Esi;
+
         $alliance = new AllianceLookup;
         $alliance->alliance_id = $allianceId;
         $alliance->creator_corporation_id = $response->creator_corporation_id;
         $alliance->creator_id = $response->creator_id;
-        $alliance->date_founded = $response->date_founded;
+        $alliance->date_founded =  $esiHelper->DecodeDate($response->date_founded);
         if(isset($response->executor_corporation_id)) {
             $alliance->executor_corporation_id = $response->executor_corporation_id;
         }
