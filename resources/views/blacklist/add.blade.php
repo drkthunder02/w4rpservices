@@ -1,5 +1,6 @@
 @extends('layouts.b4')
 @section('content')
+<br>
 <div class="container">
     {!! Form::open(['action' => 'Blacklist\BlacklistController@AddToBlacklist', 'method' => 'POST']) !!}
     <div class="form-group">
