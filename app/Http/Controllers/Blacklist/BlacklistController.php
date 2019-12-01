@@ -11,7 +11,7 @@ use Log;
 use App\Library\Lookups\NewLookupHelper;
 
 //Models
-use App\Models\Character\BlacklistUser;
+use App\Models\Blacklist\BlacklistUser;
 use App\Models\User\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;

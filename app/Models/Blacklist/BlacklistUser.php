@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Character;
+namespace App\Models\Blacklist;
 
 use Illuminate\Database\Eloquent\Model;
 
 class BlacklistUser extends Model
 {
     //Table Name
-    public $table = 'blacklisted_characters';
+    public $table = 'alliance_blacklist';
 
     //Timestamps
     public $timestamps = true;
