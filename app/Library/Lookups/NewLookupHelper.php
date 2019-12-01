@@ -89,7 +89,7 @@ class NewLookupHelper {
 
             if(isset($response->characters[0]->id)) {
                 $this->StoreCharacterLookup($response->characters[0]->id, null);
-                dd($response);
+                
                 return $response->characters[0]->id;
             } else {
                 return -1;
