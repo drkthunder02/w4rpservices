@@ -91,10 +91,10 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blacklist</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/blacklist/display">Display</a>
-                    <a class="dropdown-item" href="/blacklist/search">Search</a>
+                    <a class="dropdown-item" href="/blacklist/display/search">Search</a>
                     @if(auth()->user()->hasPermission('alliance.recruiter'))
-                    <a class="dropdown-item" href="/blacklist/add">Add To</a>
-                    <a class="dropdown-item" href="/blacklist/remove">Remove From</a>
+                    <a class="dropdown-item" href="/blacklist/display/add">Add To</a>
+                    <a class="dropdown-item" href="/blacklist/display/remove">Remove From</a>
                     @endif
                 </div>
             </li>
