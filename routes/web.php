@@ -91,11 +91,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/profile', 'Dashboard\DashboardController@profile');
 
     /**
-     * Logistics Controller display pages
+     * Fuel Controller display pages
      */
-    Route::get('/logistics/courier/form', 'Logistics\LogisticsController@displayContractForm');
-    Route::post('/logistics/courier/form', 'Logistics\LogisticsController@displayContractDetails');
-    Route::get('/logistics/contracts/display', 'Logistics\LogisticsController@displayLogisticsContracts');
     Route::get('/logistics/fuel/structures', 'Fuel\FuelController@displayStructures');
 
     /**
