@@ -160,29 +160,6 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    PI Transactions
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                            <th>Month</th>
-                            <th>PI Transactions</th>
-                        </thead>
-                        <tbody>
-                            @foreach($pigross as $pi)
-                                <tr>
-                                    <td>{{ $pi['date'] }}</td>
-                                    <td>{{ $pi['gross'] }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
                     SRP Actual Paid Out
                 </div>
                 <div class="card-body">

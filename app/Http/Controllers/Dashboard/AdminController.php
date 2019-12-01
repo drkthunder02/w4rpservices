@@ -177,11 +177,6 @@ class AdminController extends Controller
                 'date' => $date['start']->toFormattedDateString(),
                 'gross' => number_format($tHelper->GetJumpGateGross($date['start'], $date['end']), 2, ".", ","),
             ];
-
-            $pigross[] = [
-                'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetPiSalesGross($date['start'], $date['end']), 2, ".", ","),
-            ];
         }
 
         return view('admin.dashboards.taxes')->with('pis', $pis)
@@ -190,7 +185,6 @@ class AdminController extends Controller
                                             ->with('markets', $markets)
                                             ->with('jumpgates', $jumpgates)
                                             ->with('reprocessings', $reprocessings)
-                                            ->with('pigross', $pigross)
                                             ->with('srpActual', $srpActual)
                                             ->with('srpLoss', $srpLoss);
     }
