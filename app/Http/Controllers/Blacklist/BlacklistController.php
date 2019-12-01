@@ -73,7 +73,7 @@ class BlacklistController extends Controller
         }
 
         //Return the view
-        return redirect('/blacklist/display')->with('success', 'Character added to the blacklist');
+        return view('blacklist.add')->with('success', 'Character added to the blacklist');
     }
 
     public function RemoveFromBlacklist(Request $request) {

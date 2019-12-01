@@ -16,7 +16,7 @@ class NewLookupTables extends Migration
         if(!Schema::hasTable('character_lookup')) {
             Schema::create('character_lookup', function (Blueprint $table) {
                 $table->unsignedInteger('character_id');
-                $table->unsignedInteger('alliance_id');
+                $table->unsignedInteger('alliance_id')->nullable();
                 $table->unsignedInteger('ancestry_id')->nullable();
                 $table->string('birthday');
                 $table->unsignedInteger('bloodline_id');
@@ -47,7 +47,10 @@ class NewLookupTables extends Migration
                 $table->decimal('tax_rate', 20, 2);
                 $table->string('ticker');
                 $table->string('url')->nullable();
-                $table->boolean('war_eligible');
+                $table->enum('war_eligible', [
+                    'Yes',
+                    'No',
+                ])->default('No');
             });
         }
 
