@@ -194,8 +194,6 @@ class AdminController extends Controller
         
         $name = $request->user;
 
-        dd($request);
-
         //Get the user information from the name
         $user = User::where(['name' => $name])->first();
 
@@ -218,7 +216,7 @@ class AdminController extends Controller
             $user = $request->user;
         }
 
-        return redirect('/admin/dashboard/users?page=' . $request->page)->with('error', 'Not Implemented Yet.');
+        return redirect('/admin/dashboard/users')->with('error', 'Not Implemented Yet.');
     }
 
     public function addPermission(Request $request) {
@@ -238,9 +236,9 @@ class AdminController extends Controller
             $perm->permission = $permission;
             $perm->save();
 
-            return redirect('/admin/dashboard/users?page=' . $request->page)->with('success', 'User udpated!');
+            return redirect('/admin/dashboard/users')->with('success', 'User udpated!');
         } else {
-            return redirect('/admin/dashboard/useres?page=' . $request->page)->with('error', 'User not updated or already has the permission.');
+            return redirect('/admin/dashboard/users')->with('error', 'User not updated or already has the permission.');
         }   
     }
 
