@@ -23,7 +23,6 @@ class Kernel extends ConsoleKernel
         Commands\MoonMailerCommand::class,
         Commands\GetStructuresCommand::class,
         Commands\GetAssetsCommand::class,
-        Commands\GetEveContractsCommand::class,
         Commands\PurgeUsers::class,
     ];
 
