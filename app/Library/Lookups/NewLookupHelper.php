@@ -396,7 +396,7 @@ class NewLookupHelper {
         foreach($all as $entry) {
             //Attempt to get the data from ESI
             try {
-                $response = $esi->invoke('get', '/characters/{character_id}/', [
+                $response = $this->esi->invoke('get', '/characters/{character_id}/', [
                     'character_id' => $entry->character_id,
                 ]);
             } catch(RequestFailedException $e) {
@@ -465,7 +465,7 @@ class NewLookupHelper {
             $count = CorporationLookup::where(['corporation_id' => $id])->count();
             if($count == 0) {
                 try {
-                    $response = $esi->invoke('get', '/corporations/{corporation_id}/', [
+                    $response = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
                         'corporation_id' => $id,
                     ]);
                 } catch(RequestFailedException $e) {
