@@ -453,6 +453,9 @@ class NewLookupHelper {
     }
 
     private function StoreCorporationLookup($id = null, $name = null) {
+        //Declare the esi helper
+        $esiHelper = new Esi;
+
         //If the id is null and the name is null, then return
         if($id == null && $name == null) {
             return;
@@ -652,6 +655,9 @@ class NewLookupHelper {
     }
 
     private function StoreAllianceLookup($id = null, $name = null) {
+        //Declare the esi helper
+        $esiHelper = new Esi;
+
         //Check if the passed variables are null
         if($id == null && $name == null) {
             return;
