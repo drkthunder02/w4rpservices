@@ -12,6 +12,7 @@
                     <th>Character Id</th>
                     <th>Character Name</th>
                     <th>Reason</th>
+                    <th>Alts</th>
                 </thead>
                 <tbody>
                     @foreach($blacklist as $bl)
@@ -19,6 +20,11 @@
                             <td>{{ $bl->characer_id }}</td>
                             <td>{{ $bl->name }}</td>
                             <td>{{ $bl->reason }}</td>
+                            @if($bl->alts != null)
+                            <td>{{ $bl->alts }}</td>
+                            @else
+                            <td> </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

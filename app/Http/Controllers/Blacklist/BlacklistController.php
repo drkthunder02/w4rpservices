@@ -45,12 +45,13 @@ class BlacklistController extends Controller
         if($count === 0) {
             //Get the character id from the universe end point
             $charId = $lookup->CharacterNameToId($request->name);
-
+            
             //Insert the character into the blacklist table
             BlacklistUser::insert([
                 'character_id' => $charId,
                 'name' => $request->name,
                 'reason' => $request->reason,
+                'alts' => $request->alts,
                 'lister_id' => auth()->user()->getId(),
                 'lister_name' => auth()->user()->getName(),
             ]);

@@ -21,5 +21,8 @@ class BlacklistUser extends Model
         'character_id',
         'name',
         'reason',
+        'alts',
+        'lister_id',
+        'lister_name',
     ];
 }
