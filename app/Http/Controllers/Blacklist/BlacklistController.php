@@ -52,7 +52,7 @@ class BlacklistController extends Controller
         $count = BlacklistUser::where([
             'name' => $request->name,
         ])->count();
-        dd($count);
+        
         //If the count is 0, then add the character to the blacklist
         if($count === 0) {
             //Get the character id from the universe end point
