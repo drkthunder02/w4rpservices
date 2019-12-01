@@ -85,7 +85,7 @@ class BlacklistController extends Controller
     public function DisplayBlacklist() {
 
         //Get the entire blacklist
-        $blacklist = BlacklistUser::all()->paginate(50);
+        $blacklist = BlacklistUser::orderBy('name', 'asc')->paginate(50);
 
         //Return the view with the data
         return view('blacklist.list')->with('blacklist', $blacklist);
