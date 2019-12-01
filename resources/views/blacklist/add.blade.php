@@ -1,6 +1,5 @@
 @extends('layouts.b4')
 @section('content')
-<br>
 <div class="container">
     <div class="card">
         <div class="card-header">
