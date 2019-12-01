@@ -88,7 +88,7 @@
             @endif
             @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Others</a>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blacklist</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/blacklist/display">Display</a>
                     <a class="dropdown-item" href="/blacklist/search">Search</a>
