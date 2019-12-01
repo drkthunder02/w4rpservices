@@ -27,7 +27,7 @@ class NewLookupTables extends Migration
                 $table->string('name');
                 $table->unsignedInteger('race_id');
                 $table->float('security_status');
-                $table->string('title');
+                $table->string('title')->nullable();
             });
         }
 
