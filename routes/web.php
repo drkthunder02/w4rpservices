@@ -54,6 +54,9 @@ Route::group(['middleware' => ['auth']], function(){
      * Blacklist Controller display pages
      */
     Route::get('/blacklist/display', 'Blacklist\BlacklistController@DisplayBlacklist');
+    Route::get('/blacklist/display/add', 'Blacklist\BlacklistController@DisplayAddToBlacklist');
+    Route::get('/blacklist/display/remove', 'Blacklist\BlacklistController@DisplayRemoveFromBlacklist');
+    Route::get('/blacklist/display/search', 'Blacklist\BlacklistController@DisplaySearch');
     Route::post('/blacklist/add', 'Blacklist\BlacklistController@AddToBlacklist');
     Route::post('/blacklist/remove', 'Blacklist\BlacklistController@RemoveFromBlacklist');
     Route::post('/blacklist/search', 'Blacklist\BlacklistController@SearchInBlacklist');

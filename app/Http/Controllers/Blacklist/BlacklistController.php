@@ -23,6 +23,18 @@ class BlacklistController extends Controller
         $this->middleware('role:User');
     }
 
+    public function DisplayAddToBlacklist() {
+        return view('blacklist.add');
+    }
+
+    public function DisplayRemoveFromBlacklist() {
+        return view('blacklist.remove');
+    }
+
+    public function DisplaySearch() {
+        return view('blacklist.search');
+    }
+
     public function AddToBlacklist(Request $request) {
         //Middleware needed for the function
         $this->middleware('permission:alliance.recruiter');
@@ -61,7 +73,7 @@ class BlacklistController extends Controller
         }
 
         //Return the view
-        return view('blacklist.list')->with('success', 'Character added to the blacklist');
+        return redirect('/blacklist/display')->with('success', 'Character added to the blacklist');
     }
 
     public function RemoveFromBlacklist(Request $request) {
@@ -79,7 +91,7 @@ class BlacklistController extends Controller
         ])->delete();
 
         //Return the view
-        return view('blacklist.list')->with('success', 'Character removed from the blacklist.');
+        return redirect('/blacklist/display')->with('success', 'Character removed from the blacklist.');
     }
 
     public function DisplayBlacklist() {
