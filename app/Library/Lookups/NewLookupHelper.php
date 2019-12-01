@@ -92,7 +92,7 @@ class NewLookupHelper {
                 
                 return $response->characters[0]->id;
             } else {
-                return -1;
+                return null;
             }            
         }
     }
@@ -147,7 +147,7 @@ class NewLookupHelper {
 
                 return $response->corporations[0]->id;
             } else {
-                return -1;
+                return null;
             }
         }
     }
@@ -200,7 +200,7 @@ class NewLookupHelper {
 
                 return $response->alliances[0]->id;
             } else {
-                return -1;
+                return null;
             }
         }
     }
@@ -359,7 +359,10 @@ class NewLookupHelper {
     }
 
     private function SaveCharacter($response, $charId) {
+        $esiHelper = new Esi;
+
         $char = new CharacterLookup;
+
         $char->character_id = $charId;
         if(isset($response->alliance_id)) {
             $char->alliance_id = $response->alliance_id;
@@ -367,7 +370,7 @@ class NewLookupHelper {
         if(isset($response->ancestry_id)) {
             $char->ancestry_id = $response->ancestry_id;
         }
-        $char->birthday = $response->birthday;
+        $char->birthday = $esiHelper->DecodeDate($response->birthday);
         $char->bloodline_id = $response->bloodline_id;
         $char->corporation_id = $response->corporation_id;
         if(isset($response->description)) {

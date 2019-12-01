@@ -58,7 +58,7 @@ class BlacklistController extends Controller
             //Get the character id from the universe end point
             $charId = $lookup->CharacterNameToId($request->name);
 
-            if($charId != -1) {
+            if($charId != null) {
                 //Insert the character into the blacklist table
                 BlacklistUser::insert([
                     'character_id' => $charId,
@@ -70,7 +70,7 @@ class BlacklistController extends Controller
                 ]);
             } else {
                 //Redirect back to the view
-                return redirect('/blacklist/display/add')->with('error', $request->name . ' has been biomassed.');
+                return redirect('/blacklist/display/add')->with('error', $request->name . ' could not be added.');
             }
         } else {
             //Return the view
