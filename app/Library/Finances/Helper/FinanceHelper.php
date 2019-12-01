@@ -41,65 +41,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 
 class FinanceHelper {
 
-    public function GetWalletTransaction($division, $charId) {
-        //Declare the class helpers
-        $lookups = new LookupHelper();
-        $esiHelper = new Esi();
-
-        //Setup array for PI items
-        $pi_items = $this->GetPIMaterialsArray();
-
-        //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
-        if($hasScope == false) {
-            Log::critical('Esi scope check for esi-wallet.read_corporation_wallets.v1 has failed for character id: ' . $hcarId);
-            return null;
-        }
-        $token = $esiHelper->GetRefreshToken($charId);
-        if($token == null) {
-            return null;
-        }
-
-        //Reference to see if the character is in our look up table for corporations and characters
-        $corpId = $lookups->LookupCharacter($charId);
-
-        //Create an ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token,
-        ]);
-
-        //Create the esi class varialble
-        $esi = new Eseye($authentication);
-
-        //Get the entries of the journal for transactions
-        try {
-            $journals = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/transactions/', [
-                'corporation_id' => 98287666,
-                'division'  => 5,
-            ]);
-        } catch(RequestFailedException $e) {
-            Log::critical($e->getEsiResponse());
-            return -1;
-        }
-
-        //Decode the wallet from json into an array
-        $wallet = json_decode($journals->raw, true);
-
-        //For each transactional entry, attempt to store it in the database.
-            //The PutWalletJournal function checks to see if it's already in the database.
-            foreach($wallet as $entry) {
-                if($division == 5 && $charId == 94415555) {
-                    if(in_array($entry['type_id'], $pi_items, false)) {
-                        $pi = new PISale();
-                        $pi->InsertPISale($entry, 98287666);
-                    }
-                }                
-            }
-    }
-
     public function GetWalletJournal($division, $charId) {
         //Declare new class variables
         $market = new MarketTax();

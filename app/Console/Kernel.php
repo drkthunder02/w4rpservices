@@ -21,7 +21,6 @@ class Kernel extends ConsoleKernel
         Commands\UpdateMoonPriceCommand::class,
         Commands\HoldingFinancesCommand::class,
         Commands\MoonMailerCommand::class,
-        Commands\PiTransactionsCommand::class,
         Commands\GetStructuresCommand::class,
         Commands\GetAssetsCommand::class,
         Commands\GetEveContractsCommand::class,
@@ -47,9 +46,6 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
         $schedule->command('services:MoonMailer')
                 ->monthlyOn(1, '00:01')
-                ->withoutOverlapping();
-        $schedule->command('services:PiTransactions')
-                ->hourly()
                 ->withoutOverlapping();
         $schedule->command('services:GetStructures')
                 ->dailyAt('09:00')
