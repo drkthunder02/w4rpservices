@@ -618,7 +618,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\HorizonServiceProvider' => __DIR__ . '/../..' . '/app/Providers/HorizonServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
-        'App\\SolarSystemDistance' => __DIR__ . '/../..' . '/app/Models/Logistics/SolarSystemDistance.php',
+        'App\\SolarSystemDistance' => __DIR__ . '/../..' . '/app/Models/Lookups/SolarSystemDistance.php',
         'App\\Traits\\EveOAuth' => __DIR__ . '/../..' . '/app/Traits/EveOAuth.php',
         'AvailableUserPermissions' => __DIR__ . '/../..' . '/database/seeds/AvailableUserPermissions.php',
         'Balping\\JsonRaw\\Encoder' => __DIR__ . '/..' . '/balping/json-raw-encoder/src/Encoder.php',

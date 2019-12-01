@@ -154,7 +154,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\HorizonServiceProvider' => $baseDir . '/app/Providers/HorizonServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
-    'App\\SolarSystemDistance' => $baseDir . '/app/Models/Logistics/SolarSystemDistance.php',
+    'App\\SolarSystemDistance' => $baseDir . '/app/Models/Lookups/SolarSystemDistance.php',
     'App\\Traits\\EveOAuth' => $baseDir . '/app/Traits/EveOAuth.php',
     'AvailableUserPermissions' => $baseDir . '/database/seeds/AvailableUserPermissions.php',
     'Balping\\JsonRaw\\Encoder' => $vendorDir . '/balping/json-raw-encoder/src/Encoder.php',
