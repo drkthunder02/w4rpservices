@@ -17,7 +17,7 @@
                 <tbody>
                     @foreach($blacklist as $bl)
                         <tr>
-                            <td>{{ $bl->characer_id }}</td>
+                            <td>{{ $bl->character_id }}</td>
                             <td>{{ $bl->name }}</td>
                             <td>{{ $bl->reason }}</td>
                             @if($bl->alts != null)
