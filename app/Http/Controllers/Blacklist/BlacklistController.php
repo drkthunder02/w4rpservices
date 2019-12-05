@@ -57,23 +57,28 @@ class BlacklistController extends Controller
         if($count === 0) {
             //Get the character id from the universe end point
             $charId = $lookup->CharacterNameToId($request->name);
-            
-            //Insert the character into the blacklist table
-            BlacklistUser::insert([
-                'character_id' => $charId,
-                'name' => $request->name,
-                'reason' => $request->reason,
-                'alts' => $request->alts,
-                'lister_id' => auth()->user()->getId(),
-                'lister_name' => auth()->user()->getName(),
-            ]);
+
+            if($charId != null) {
+                //Insert the character into the blacklist table
+                BlacklistUser::insert([
+                    'character_id' => $charId,
+                    'name' => $request->name,
+                    'reason' => $request->reason,
+                    'alts' => $request->alts,
+                    'lister_id' => auth()->user()->getId(),
+                    'lister_name' => auth()->user()->getName(),
+                ]);
+            } else {
+                //Redirect back to the view
+                return redirect('/blacklist/display/add')->with('error', $request->name . ' could not be added.');
+            }
         } else {
             //Return the view
             return view('blacklist.add')->with('error', 'Character is already on the black list.');
         }
 
         //Return the view
-        return redirect('/blacklist/display')->with('success', 'Character added to the blacklist');
+        return redirect('/blacklist/display/add')->with('success', $request->name . ' added to the blacklist.');
     }
 
     public function RemoveFromBlacklist(Request $request) {
@@ -118,9 +123,7 @@ class BlacklistController extends Controller
         //If the count for the blacklist is greater than 0, then  get the details, and send it to the view
         if($blacklistCount > 0) {
             //Try to find the user in the blacklist
-            $blacklist = BlacklistUser::where([
-                'name' => $request->name,
-            ])->first();
+            $blacklist = BlacklistUser::where(['name', 'like', $request->name])->get();
 
             //Send the data to the view
             return view('blacklist.list')->with('blacklist', $blacklist)
