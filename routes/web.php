@@ -94,6 +94,14 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/profile', 'Dashboard\DashboardController@profile');
 
     /**
+     * Flex Admin Controller display pages
+     */
+    Route::get('/flex/display', 'Flex\FlexAdminController@displayFlexStructures');
+    Route::get('/flex/display/add', 'Flex\FlexAdminController@displayAddFlexStructure');
+    Route::post('/flex/display/add', 'Flex\FlexAdminController@addFlexStructure');
+    Route::post('/flex/display/remove', 'Flex\FlexAdminController@removeFlexStructure');
+
+    /**
      * Fuel Controller display pages
      */
     Route::get('/logistics/fuel/structures', 'Fuel\FuelController@displayStructures');
