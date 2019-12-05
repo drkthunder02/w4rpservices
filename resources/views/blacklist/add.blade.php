@@ -8,7 +8,7 @@
     </div>
     <div class="form-group">
         {{ Form::label('reason', 'Reason') }}
-        {{ Form::textarea('reason', '', ['class' => 'form-control', 'placeholder' => 'Just another antiquated dev.']) }}
+        {{ Form::textarea('reason', 'N/A', ['class' => 'form-control']) }}
     </div>
     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}
