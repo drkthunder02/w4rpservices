@@ -116,7 +116,6 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                         <a class="dropdown-item" href="/flex/display">Display</a>
                         <a class="dropdown-item" href="/flex/display/add">Add</a>
-                        <a class="dropdown-item" href="/flex/display/remove">Remove</a>
                     </div>
                 </div>
             </li>
