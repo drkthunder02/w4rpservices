@@ -151,7 +151,7 @@ class BlacklistController extends Controller
         //If the count for the blacklist is greater than 0, then  get the details, and send it to the view
         if($blacklistCount > 0) {
             //Try to find the user in the blacklist
-            $blacklist = BlacklistUser::where('name', 'like', $request->name)->get();
+            $blacklist = DB::table('alliance_blacklist')->where('name', 'like', $request->name)->get();
 
             //Send the data to the view
             return view('blacklist.list')->with('blacklist', $blacklist)
