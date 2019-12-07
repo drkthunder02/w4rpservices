@@ -120,8 +120,6 @@ class BlacklistController extends Controller
         $blacklistAlt = DB::table('alliance_blacklist')->where('alts', 'like', $request->parameter . "%")->get();
         $blacklistReason = DB::table('alliance_blacklist')->where('reason', 'like', $request->paraemter . "%")->get();
 
-        $blacklist = new BlacklistUser;
-
         $i = 0;
         foreach($blacklistName as $bl) {
             $blacklist[$i]->character_id = $bl->character_id;
