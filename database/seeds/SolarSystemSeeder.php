@@ -39,7 +39,6 @@ class SolarSystemSeeder extends Seeder
                 SolarSystem::insert([
                     'name' => $info->name,
                     'solar_system_id' => $system,
-                    'security_status' => $info->security_status,
                 ]);
             }
         }
