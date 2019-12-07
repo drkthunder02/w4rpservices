@@ -116,7 +116,7 @@ class BlacklistController extends Controller
             'parameter' => 'required',
         ]);
 
-        $blacklist = new BlacklistUser;
+        $blacklist = null;
 
         $blacklistName = DB::table('alliance_blacklist')->where('name', 'like', $request->parameter . "%")->get();
         $blacklistAlt = DB::table('alliance_blacklist')->where('alts', 'like', $request->parameter . "%")->get();
