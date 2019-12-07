@@ -120,36 +120,15 @@ class BlacklistController extends Controller
         $blacklistAlt = DB::table('alliance_blacklist')->where('alts', 'like', $request->parameter . "%")->get();
         $blacklistReason = DB::table('alliance_blacklist')->where('reason', 'like', $request->paraemter . "%")->get();
 
-        $i = 0;
-        $blacklist = array();
-        foreach($blacklistName as $bl) {
-            $blacklist[$i]->character_id = $bl->character_id;
-            $blacklist[$i]->name = $bl->name;
-            $blacklist[$i]->reason = $bl->reason;
-            $blacklist[$i]->alts = $bl->alts;
-            $i++;
-        }
+        $blacklist = $blacklistName;
+        $blacklist->push($blacklistAlt);
+        $blacklist->push($blacklistReason);
 
-        foreach($blacklistAlt as $bl) {
-            $blacklist[$i]->character_id = $bl->character_id;
-            $blacklist[$i]->name = $bl->name;
-            $blacklist[$i]->reason = $bl->reason;
-            $blacklist[$i]->alts = $bl->alts;
-            $i++;
-        }
-
-        foreach($blacklistReason as $bl) {
-            $blacklist[$i]->character_id = $bl->character_id;
-            $blacklist[$i]->name = $bl->name;
-            $blacklist[$i]->reason = $bl->reason;
-            $blacklist[$i]->alts = $bl->alts;
-            $i++;
-        }
-
-        $blacklistCount = $i;
+        $blacklistCount = sizeof($blacklist);
 
         //If the count for the blacklist is greater than 0, then  get the details, and send it to the view
         if($blacklistCount > 0) {
+            $blacklist = null;
 
             //Send the data to the view
             return view('blacklist.list')->with('blacklist', $blacklist)
