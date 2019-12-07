@@ -28,7 +28,7 @@ class FlexAdminController extends Controller
      * Function to display all active flex structures and
      * the information regarding the flex structure
      */
-    public function displayFlexStructure() {
+    public function displayFlexStructures() {
 
         //Get the structures from the database
         $structures = FlexStructure::all();
