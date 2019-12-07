@@ -16,11 +16,11 @@ class CreateFlexStructuresTable extends Migration
         if(!Schema::hasTable('alliance_flex_structures')) {
             Schema::create('alliance_flex_structures', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->bigUnsignedInteger('requestor_id');
+                $table->unsignedBigInteger('requestor_id');
                 $table->string('request_name');
-                $table->bigUnsignedInteger('requestor_corp_id');
+                $table->unsignedBigInteger('requestor_corp_id');
                 $table->string('request_corp_name');
-                $table->bigUnsignedInteger('system_id');
+                $table->unsignedBigInteger('system_id');
                 $table->string('system');
                 $table->enum('structure_type', [
                     'Cyno Jammer',
