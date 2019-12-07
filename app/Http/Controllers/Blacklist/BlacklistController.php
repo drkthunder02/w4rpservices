@@ -116,23 +116,15 @@ class BlacklistController extends Controller
             'parameter' => 'required',
         ]);
 
-        $blacklist = null;
-
-        $blacklistName = DB::table('alliance_blacklist')->where('name', 'like', $request->parameter . "%")->get();
-        $blacklistAlt = DB::table('alliance_blacklist')->where('alts', 'like', $request->parameter . "%")->get();
-        $blacklistReason = DB::table('alliance_blacklist')->where('reason', 'like', $request->paraemter . "%")->get();
-
-        $blacklist->push($blacklistName);
-        $blacklist->push($blacklistAlt);
-        $blacklist->push($blacklistReason);
-
-        dd($blacklist);
+        $blacklist = DB::table('alliance_blacklist')->where('name', 'like', $request->parameter . "%")
+                                       ->orWhere('alts', 'like', $request->parameter . "%")
+                                       ->orWhere('reason', 'like', $request->parameter . "%")
+                                       ->get();
 
         $blacklistCount = sizeof($blacklist);
 
         //If the count for the blacklist is greater than 0, then  get the details, and send it to the view
         if($blacklistCount > 0) {
-            $blacklist = null;
 
             //Send the data to the view
             return view('blacklist.list')->with('blacklist', $blacklist)
