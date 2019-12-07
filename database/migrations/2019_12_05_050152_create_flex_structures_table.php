@@ -17,7 +17,7 @@ class CreateFlexStructuresTable extends Migration
             Schema::create('alliance_flex_structures', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('requestor_id');
-                $table->string('request_name');
+                $table->string('requestor_name');
                 $table->unsignedBigInteger('requestor_corp_id');
                 $table->string('request_corp_name');
                 $table->unsignedBigInteger('system_id');
