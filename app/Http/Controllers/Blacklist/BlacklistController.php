@@ -116,13 +116,17 @@ class BlacklistController extends Controller
             'parameter' => 'required',
         ]);
 
+        $blacklist = new BlacklistUser;
+
         $blacklistName = DB::table('alliance_blacklist')->where('name', 'like', $request->parameter . "%")->get();
         $blacklistAlt = DB::table('alliance_blacklist')->where('alts', 'like', $request->parameter . "%")->get();
         $blacklistReason = DB::table('alliance_blacklist')->where('reason', 'like', $request->paraemter . "%")->get();
 
-        $blacklist = $blacklistName;
+        $blacklist->push($blacklistName);
         $blacklist->push($blacklistAlt);
         $blacklist->push($blacklistReason);
+
+        dd($blacklist);
 
         $blacklistCount = sizeof($blacklist);
 
