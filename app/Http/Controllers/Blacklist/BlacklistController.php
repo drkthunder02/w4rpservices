@@ -121,6 +121,7 @@ class BlacklistController extends Controller
         $blacklistReason = DB::table('alliance_blacklist')->where('reason', 'like', $request->paraemter . "%")->get();
 
         $i = 0;
+        $blacklist = array();
         foreach($blacklistName as $bl) {
             $blacklist[$i]->character_id = $bl->character_id;
             $blacklist[$i]->name = $bl->name;
