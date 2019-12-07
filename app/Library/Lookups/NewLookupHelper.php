@@ -296,7 +296,7 @@ class NewLookupHelper {
         } else if($name != null) {
             $count = CorporationLookup::where(['name' => $name])->count();
             if($count > 0) {
-                $corporation = CorporationLookup::where(['name' => $name])->count();
+                $corporation = CorporationLookup::where(['name' => $name])->first();
             } else {
                 $corporation = null;
             }
