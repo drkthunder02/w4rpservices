@@ -474,6 +474,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Console\\Commands\\CleanStaleDataCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
         'App\\Console\\Commands\\CorpFinances' => __DIR__ . '/../..' . '/app/Console/Commands/Finances/CorpFinances.php',
         'App\\Console\\Commands\\CorpMarketMail' => __DIR__ . '/../..' . '/app/Console/Commands/Finances/CorpMarketMail.php',
+        'App\\Console\\Commands\\FlexStructureCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Flex/FlexStructureCommand.php',
         'App\\Console\\Commands\\GetAssetsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Assets/GetAssets.php',
         'App\\Console\\Commands\\GetCorpsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Corps/GetCorps.php',
         'App\\Console\\Commands\\GetStructuresCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Structures/GetStructures.php',

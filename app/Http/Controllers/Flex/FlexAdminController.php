@@ -48,8 +48,36 @@ class FlexAdminController extends Controller
      */
     public function addFlexStructure(Request $request) {
         $this->validate($request, [
-
+            'requestor_name' => 'required',
+            'requestor_corp_name' => 'required',
+            'system' => 'required',
+            'structure_type' => 'required',
+            'structure_cost' => 'required',
         ]);
+
+        //Delcare variables and classes
+        $lookup = new NewLookupHelper;
+
+        //From the character name find the character id
+        $charId = $lookup->CharacterNameToId($request->requestor_name);
+
+        //From the corporation name find the corporation id
+        $corpId = $lookup->CorporationNameToId($request->requestor_corp_name);
+
+        //From the system name find the system id
+        $systemId = $lookup->SystemNameToId($request->system);
+
+        //Create the database model
+        $flex = new FlexStructure;
+        $flex->requestor_id = $charId;
+        $flex->requestor_name = $request->requestor_name;
+        $flex->requestor_corp_id = $corpId;
+        $flex->requestor_corp_name = $request->requestor_corp_name;
+        $flex->system_id = $systemId;
+        $flex->system = $request->system;
+        $flex->structure_type = $request->structure_type;
+        $flex->structure_cost = $request->structure_cost;
+        $flex->save();
 
         return redirect('/flex/display')->with('success', 'Flex Structure Added.');
     }
@@ -59,7 +87,9 @@ class FlexAdminController extends Controller
      */
     public function removeFlexStructure(Request $request) {
         $this->validate($request, [
-
+            'requestor_name' => 'required',
+            'system' => 'required',
+            'structure_type' => 'required',
         ]);
     }
 

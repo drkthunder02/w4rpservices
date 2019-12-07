@@ -166,7 +166,7 @@ class MoonMailerCommand extends Command
         $rentals = MoonRental::where([
             'Contact' => $contact,
         ])->get();
-        dd($rentals);
+        
         return $rentals;
     }
 

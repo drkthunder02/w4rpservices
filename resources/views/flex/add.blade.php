@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 {{ Form::label('structure_type', 'Structure Type') }}
-                {{ Form::text('structure_type', '', ['class' => 'form-control']) }}
+                {{ Form::select('structure_type', '', ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('structure_cost', 'Structure Cost') }}

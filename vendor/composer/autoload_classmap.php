@@ -10,6 +10,7 @@ return array(
     'App\\Console\\Commands\\CleanStaleDataCommand' => $baseDir . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
     'App\\Console\\Commands\\CorpFinances' => $baseDir . '/app/Console/Commands/Finances/CorpFinances.php',
     'App\\Console\\Commands\\CorpMarketMail' => $baseDir . '/app/Console/Commands/Finances/CorpMarketMail.php',
+    'App\\Console\\Commands\\FlexStructureCommand' => $baseDir . '/app/Console/Commands/Flex/FlexStructureCommand.php',
     'App\\Console\\Commands\\GetAssetsCommand' => $baseDir . '/app/Console/Commands/Assets/GetAssets.php',
     'App\\Console\\Commands\\GetCorpsCommand' => $baseDir . '/app/Console/Commands/Corps/GetCorps.php',
     'App\\Console\\Commands\\GetStructuresCommand' => $baseDir . '/app/Console/Commands/Structures/GetStructures.php',

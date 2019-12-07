@@ -20,6 +20,7 @@ use App\Models\Lookups\CorporationToAlliance;
 use App\Models\Lookups\CharacterLookup;
 use App\Models\Lookups\CorporationLookup;
 use App\Models\Lookups\AllianceLookup;
+use App\Models\Lookups\SolarSystem;
 
 class NewLookupHelper {
 
@@ -29,6 +30,47 @@ class NewLookupHelper {
     //Construct
     public function __construct() {
         $this->esi = new Eseye();
+    }
+
+    public function SystemNameToId($system) {
+        //Check if the solar system is stored in our own database first
+        $solarSystem = $this->LookupSolarSystem($system);
+
+        if($solarSystem != null) {
+            return $solarSystem->solar_system_id;
+        } else {
+            try {
+                $response = $this->esi->setBody(array(
+                    $system,
+                ))->invoke('post', '/universe/ids/');
+            } catch(RequestFailedException $e) {
+                Log::warning('Failed to get system name from /universe/ids/ in lookup helper.');
+                return null;
+            }
+    
+            if(isset($response->systems)) {
+                $this->StoreSolarSystem($response->systems[0]);
+
+                return $response->systems[0]->id;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    private function LookupSolarSystem($system) {
+        $solar = SolarSystem::where([
+            'name' => $system,
+        ])->first();
+
+        return $solar;
+    }
+
+    private function StoreSolarSystem($system) {
+        $solar = new SolarSystem;
+        $solar->name = $system->name;
+        $solar->solar_system_id = $system->id;
+        $solar->save();
     }
 
     public function GetCharacterInfo($charId) {
