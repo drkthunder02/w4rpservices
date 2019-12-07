@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Blacklist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Log;
+use DB;
 
 //Library
 use App\Library\Lookups\NewLookupHelper;
