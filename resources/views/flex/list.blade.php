@@ -7,7 +7,6 @@
             <h2>Flex Structures</h2>
         </div>
         <div class="card-body">
-            @if($structures != null)
             {!! Form::open(['action' => 'Flex\FlexAdminController@removeFlexStructure', 'method' => 'POST']) !!}
             <table class="table table-bordered table-striped">
                 <thead>
@@ -38,9 +37,6 @@
             </table>
             {{ Form::submit('Remove', ['class' => 'btn btn-danger']) }}
             {!! Form::close() !!}
-            @else
-            <h3>No Flex Structures Registered</h3>
-            @endif
         </div>
     </div>
 </div>

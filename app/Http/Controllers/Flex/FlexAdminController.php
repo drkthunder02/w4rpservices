@@ -33,8 +33,6 @@ class FlexAdminController extends Controller
         //Get the structures from the database
         $structures = FlexStructure::all();
 
-        dd($structures);
-
         return view('flex.list')->with('structures', $structures);
     }
 
