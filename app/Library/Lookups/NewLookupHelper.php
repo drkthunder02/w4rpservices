@@ -171,6 +171,7 @@ class NewLookupHelper {
     public function CorporationNameToId($corpName) {
         //Check if the corporation is stored in our own database first
         $corp = $this->LookupCorporation(null, $corpName);
+        dd($corp);
         if($corp != null) {
             return $corp->corporation_id;
         } else {
