@@ -3,8 +3,8 @@
 <div class="container">
     {!! Form::open(['action' => 'Blacklist\BlacklistController@SearchInBlacklist', 'method' => 'POST']) !!}
     <div class="form-group">
-        {{ Form::label('name', 'Character Name') }}
-        {{ Form::text('name', '', ['class' => 'form-control']) }}
+        {{ Form::label('parameter', 'Seach Parameter') }}
+        {{ Form::text('parameter', '', ['class' => 'form-control']) }}
     </div>
     {{ Form::submit('Search', ['class' => 'btn btn-primary']) }}
     {!! Form::close() !!}

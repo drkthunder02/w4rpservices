@@ -112,13 +112,41 @@ class BlacklistController extends Controller
 
         //Validate the input from the form
         $this->validate($request, [
-            'name' => 'required',
+            'parameter' => 'required',
         ]);
 
-        //Get the data being requested
-        $blacklistCount = BlacklistUser::where([
-            'name' => $request->name,
-        ])->count();
+        $blacklistName = BlacklistUser::where(['name', 'like', $request->parameter])->get();
+        $blacklistAlt = BlacklistUser::where(['alts', 'like', $request->parameter])->get();
+        $blacklistReason = BlacklistUser::where(['reason', 'like', $request->paraemter])->get();
+
+        $blacklist = new BlacklistUser;
+
+        $i = 0;
+        foreach($blacklistName as $bl) {
+            $blacklist[$i]->character_id = $bl->character_id;
+            $blacklist[$i]->name = $bl->name;
+            $blacklist[$i]->reason = $bl->reason;
+            $blacklist[$i]->alts = $bl->alts;
+            $i++;
+        }
+
+        foreach($blacklistAlt as $bl) {
+            $blacklist[$i]->character_id = $bl->character_id;
+            $blacklist[$i]->name = $bl->name;
+            $blacklist[$i]->reason = $bl->reason;
+            $blacklist[$i]->alts = $bl->alts;
+            $i++;
+        }
+
+        foreach($blacklistReason as $bl) {
+            $blacklist[$i]->character_id = $bl->character_id;
+            $blacklist[$i]->name = $bl->name;
+            $blacklist[$i]->reason = $bl->reason;
+            $blacklist[$i]->alts = $bl->alts;
+            $i++;
+        }
+
+        $blacklistCount = $i;
 
         //If the count for the blacklist is greater than 0, then  get the details, and send it to the view
         if($blacklistCount > 0) {
@@ -127,13 +155,13 @@ class BlacklistController extends Controller
 
             //Send the data to the view
             return view('blacklist.list')->with('blacklist', $blacklist)
-                                         ->with('success', 'Name was found on the blacklist');
+                                         ->with('success', 'Results were found on the blacklist');
         } else {
             //If they aren't found, then null out the blacklist variable, and send to the view
             $blacklist = null;
 
             return view('blacklist.list')->with('blacklist', $blacklist)
-                                         ->with('error', 'Name was not found on the blacklist.');
+                                         ->with('error', 'Results were not found on the blacklist.');
         }
     }
 }
