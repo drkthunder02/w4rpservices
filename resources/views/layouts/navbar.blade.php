@@ -112,6 +112,12 @@
                     <a class="dropdown-item" href="/admin/dashboard/taxes">Taxes</a>
                     <a class="dropdown-item" href="/admin/dashboard/logins">Allowed Logins</a>
                     <a class="dropdown-item" href="/admin/dashboard/purgewiki">Wiki Purge</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Flex</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                        <a class="dropdown-item" href="/flex/display">Display</a>
+                        <a class="dropdown-item" href="/flex/display/add">Add</a>
+                        <a class="dropdown-item" href="/flex/display/remove">Remove</a>
+                    </div>
                 </div>
             </li>
             @endif

@@ -91,6 +91,14 @@ class FlexAdminController extends Controller
             'system' => 'required',
             'structure_type' => 'required',
         ]);
+
+        FlexStructure::where([
+            'requestor_name' => $request->requestor_name,
+            'system' => $request->system,
+            'structure_type' => $request->structure_type,
+        ])->delete();
+
+        return redirect('/flex/display')->with('success', 'Flex Structure Entry Removed.');
     }
 
 }

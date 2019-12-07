@@ -12,10 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            WikiTableSeeder::class,
-            ConfigTableSeeder::class,
-            OrePricesSeeder::class,
-        ]);
+        $this->call(SolarSystemSeeder::class);
     }
 }

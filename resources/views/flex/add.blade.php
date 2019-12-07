@@ -21,7 +21,12 @@
             </div>
             <div class="form-group">
                 {{ Form::label('structure_type', 'Structure Type') }}
-                {{ Form::select('structure_type', '', ['class' => 'form-control']) }}
+                {{ Form::select('structure_type', [
+                    'Cyno Jammer' => 'Cyno Jammer',
+                    'Cyno Beacon' => 'Cyno Beacon',
+                    'Jump Bridge' => 'Jump Bridge',
+                    'Super Construction Facilities' => 'Super Construction Facilities',
+                ], 'None', ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('structure_cost', 'Structure Cost') }}
