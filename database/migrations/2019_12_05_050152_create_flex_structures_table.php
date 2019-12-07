@@ -19,7 +19,7 @@ class CreateFlexStructuresTable extends Migration
                 $table->unsignedBigInteger('requestor_id');
                 $table->string('requestor_name');
                 $table->unsignedBigInteger('requestor_corp_id');
-                $table->string('request_corp_name');
+                $table->string('requestor_corp_name');
                 $table->unsignedBigInteger('system_id');
                 $table->string('system');
                 $table->enum('structure_type', [

@@ -36,6 +36,8 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ Form::submit('Remove', ['class' => 'btn btn-danger']) }}
+            {!! Form::close() !!}
             @else
             <h3>No Flex Structures Registered</h3>
             @endif
