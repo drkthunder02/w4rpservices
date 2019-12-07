@@ -119,7 +119,8 @@ class BlacklistController extends Controller
         $blacklist = DB::table('alliance_blacklist')->where('name', 'like', $request->parameter . "%")
                                        ->orWhere('alts', 'like', $request->parameter . "%")
                                        ->orWhere('reason', 'like', $request->parameter . "%")
-                                       ->get();
+                                       ->orderBy('name', 'asc')
+                                       ->paginate(50);
 
         $blacklistCount = sizeof($blacklist);
 
