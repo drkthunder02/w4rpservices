@@ -31,7 +31,7 @@ class SolarSystemSeeder extends Seeder
                     'system_id' => $system,
                 ]);
             } catch(RequestFailedException $e) {
-
+                return null;
             }
             
             $count = SolarSystem::where(['solar_system_id' => $system])->count();
