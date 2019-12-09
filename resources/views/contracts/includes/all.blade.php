@@ -32,14 +32,14 @@
                             @if($contract['type'] == 'Public')
                             <table class="table table-striped">
                                 <thead>
-                                    <th>Corporation</th>
+                                    <th>Corporation / Character</th>
                                     <th>Amount</th>
                                     <th></th>
                                 </thead>
                                 <tbody>
                                 @foreach($contract['bids'] as $bid)
                                     <tr>
-                                        <td>{{ $bid['corporation_name'] }}</td>
+                                        <td>{{ $bid['corporation_name'] }} : {{ $bid['character_name'] }}</td>
                                         <td>{{ number_format($bid['bid_amount'], 2, '.', ',') }}</td>
                                         @if(auth()->user()->character_id == $bid['character_id'])
                                         <td>
