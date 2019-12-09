@@ -32,6 +32,78 @@ class NewLookupHelper {
         $this->esi = new Eseye();
     }
 
+    public function ItemIdToName($itemId) {
+        //Check if the item is stored in our own database first
+        $item = $this->LookupItem($itemId);
+
+        if($item != null) {
+            return $item->name;
+        } else {
+            try {
+                $response = $this->esi->('get', '/universe/types/{type_id}/', [
+                    'type_id' => $itemId,
+                ]);
+            } catch(RequestFailedException $e) {
+                Log::warning('Failed to get item information from /universe/types/{type_id}/ in NewLookupHelper.');
+                return null;
+            }
+
+            if(isset($response->description)) {
+                $this->StoreItem($response);
+
+                return $response->name;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    private function LookupItem($itemId) {
+        $item = Item::where([
+            'type_id' => $itemId,
+        ])->first();
+
+        return $item;
+    }
+
+    private function StoreItem($item) {
+        $newItem = new Item;
+        if(isset($item->capacity)) {
+            $newItem->capacity = $item->capacity;
+        }
+        $newItem->description = $item->description;
+        if(isset($item->graphic_id)) {
+            $newItem->graphic_id = $item->graphic_id;
+        }
+        $newItem->group_id = $item->group_id;
+        if(isset($item->icon_id)) {
+            $newItem->icon_id = $item->icon_id;
+        }
+        if(isset($item->market_group_id) {
+            $newItem->market_group_id = $item->market_group_id;
+        }
+        if(isset($item->mass)) {
+            $newItem->mass = $item->mass;
+        }
+        $newItem->name = $item->name;
+        if(isset($item->packaged_volume)) {
+            $newItem->packaged_volume = $item->packaged_volume;
+        }
+        if(isset($item->portion_size)) {
+            $newItem->portion_size = $item->portion_size;
+        }
+        $newItem->published = $item->published;
+        if(isset($item->radius)) {
+            $newItem->radius = $item->radius;
+        }
+        $newItem->type_id = $item->type_id;
+        if(isset($item->volume)) {
+            $newItem->volume = $item->volume;
+        }
+        $newItem-save();
+    }
+
+
     public function SystemNameToId($system) {
         //Check if the solar system is stored in our own database first
         $solarSystem = $this->LookupSolarSystem($system);

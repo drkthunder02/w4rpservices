@@ -123,6 +123,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/moons/admin/display', 'Moons\MoonsAdminController@storeMoonRemoval');
 
     /**
+     * Moon Ledger Controller display pages
+     */
+    //Route::post('/moons/ledger/display/', 'Moons\MoonLedgerController@displayLedger');
+    //Route::get('/moons/ledger/display/select', 'Moons\MoonLedgerController@displaySelection');
+
+    /**
      * Scopes Controller display pages
      */
     Route::get('/scopes/select', 'Auth\EsiScopeController@displayScopes');
