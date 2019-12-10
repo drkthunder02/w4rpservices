@@ -102,7 +102,7 @@ class NewLookupHelper {
         if(isset($item->volume)) {
             $newItem->volume = $item->volume;
         }
-        $newItem-save();
+        $newItem->save();
     }
 
 
