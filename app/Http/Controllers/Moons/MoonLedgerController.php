@@ -84,7 +84,8 @@ class MoonLedgerController extends Controller
                 'name' => $structureInfo->name,
             ];
 
-            dd($tempStructure);
+            var_dump($tempStructure);
+            dd();
 
             //Push the data onto the permanent array
             array_push($structures, $tempStructure);
