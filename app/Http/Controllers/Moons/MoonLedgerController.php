@@ -114,11 +114,10 @@ class MoonLedgerController extends Controller
             return redirect('/dashboard')->with('error', 'Failed to get the mining ledger.');
         }
 
-        var_dump($ledgers);
-        dd();
-
         $i = 0;
         foreach($ledgers as $ledger) {
+            dd($ledger);
+
             $char = $lookup->CharacterIdToName($ledger->character_id);
             $ore = $lookup->ItemIdToName($ledger->type_id);
 
