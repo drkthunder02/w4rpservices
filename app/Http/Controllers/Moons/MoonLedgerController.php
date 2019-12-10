@@ -123,8 +123,14 @@ class MoonLedgerController extends Controller
                 'quantity' => $quantity,
             ];
 
-            array_push($mining, $temp);
+            $mining[] = [
+                'character' => $char,
+                'ore' => $ore,
+                'quantity' => $quantity,
+            ];
         }
+
+        dd($mining);
 
         return view('moons.ledger.displayledger')->with('mining', $mining);
     }
