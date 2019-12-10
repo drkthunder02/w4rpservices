@@ -55,7 +55,7 @@ class MoonLedgerController extends Controller
 
         //Get the character data from the lookup table if possible or esi
         $character = $lookup->GetCharacterInfo(auth()->user()->getId());
-        dd($character);
+        
         //Try to get the mining observers for the corporation from esi
         try {
             $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
@@ -65,6 +65,8 @@ class MoonLedgerController extends Controller
             //If an exception has occurred for some reason redirect back to the dashboard with an error message
             return redirect('/dashboard')->with('error', 'Failed to get mining structures.');
         }
+
+        dd($response);
 
         foreach($response as $resp) {
             //Try to get the structure information from esi
