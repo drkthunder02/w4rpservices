@@ -114,7 +114,8 @@ class MoonLedgerController extends Controller
             return redirect('/dashboard')->with('error', 'Failed to get the mining ledger.');
         }
 
-        dd($ledgers);
+        var_dump($ledgers);
+        dd();
 
         $i = 0;
         foreach($ledgers as $ledger) {
