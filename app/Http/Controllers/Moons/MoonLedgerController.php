@@ -119,15 +119,7 @@ class MoonLedgerController extends Controller
             $char = $lookup->CharacterIdToName($ledger->character_id);
             $ore = $lookup->ItemIdToName($ledger->type_id);
 
-            $mining[$i] = [
-                'character' => $char,
-                'ore' => $ore,
-                'quantity' => $ledger->quantity,
-            ];
-
-            $i++;
-
-            dd($mining);
+            dd($char);
         }
 
         return view('moons.ledger.displayledger')->with('mining', $mining);
