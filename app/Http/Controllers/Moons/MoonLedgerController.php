@@ -78,13 +78,12 @@ class MoonLedgerController extends Controller
                 //If an exception has occurred, then do nothing
             }
 
-            var_dump($structureInfo);
-            dd();
-
             //Setup the temporary array structure
             $tempStructure = [
                 $resp->observer_id => $sturcutreInfo->name,
             ];
+
+            dd($tempStructure);
 
             //Push the data onto the permanent array
             array_push($structures, $tempStructure);
