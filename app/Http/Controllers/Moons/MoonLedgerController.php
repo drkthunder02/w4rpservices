@@ -46,12 +46,10 @@ class MoonLedgerController extends Controller
                 return redirect('/dashboard')->with('error', 'Need to add scope for esi-universe.read_structures.v1');
             }
         }
-
-        printf("Testing");
-        dd();
         
         //Get the refresh token if scope checks have passed
         $refreshToken = $esiHelper->GetRefreshToken(auth()->user()->getId());
+        dd($refreshToken);
         //Setup the esi container
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
