@@ -46,6 +46,9 @@ class MoonLedgerController extends Controller
                 return redirect('/dashboard')->with('error', 'Need to add scope for esi-universe.read_structures.v1');
             }
         }
+
+        printf("Testing");
+        dd();
         
         //Get the refresh token if scope checks have passed
         $refreshToken = $esiHelper->GetRefreshToken(auth()->user()->getId());
@@ -64,8 +67,6 @@ class MoonLedgerController extends Controller
             //If an exception has occurred for some reason redirect back to the dashboard with an error message
             return redirect('/dashboard')->with('error', 'Failed to get mining structures.');
         }
-
-        dd($response);
 
         foreach($response as $resp) {
             //Try to get the structure information from esi
