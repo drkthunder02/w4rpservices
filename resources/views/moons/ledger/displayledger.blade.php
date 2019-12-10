@@ -18,6 +18,7 @@
                             <td>{{ $min['character'] }}</td>
                             <td>{{ $min['ore'] }}</td>
                             <td>{{ $min['quantity'] }}</td>
+                            <td>{{ $min['last_updated'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>

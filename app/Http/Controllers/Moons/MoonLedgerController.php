@@ -123,6 +123,7 @@ class MoonLedgerController extends Controller
                 'character' => $char,
                 'ore' => $ore,
                 'quantity' => $ledger->quantity,
+                'updated' => $esiHelper->DecodeDate($ledger->last_updated),
             ]);
         }
 
