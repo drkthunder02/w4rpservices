@@ -579,6 +579,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Models\\Lookups\\CharacterToCorporation' => __DIR__ . '/../..' . '/app/Models/Lookups/CharacterToCorporation.php',
         'App\\Models\\Lookups\\CorporationLookup' => __DIR__ . '/../..' . '/app/Models/Lookups/CorporationLookup.php',
         'App\\Models\\Lookups\\CorporationToAlliance' => __DIR__ . '/../..' . '/app/Models/Lookups/CorporationToAlliance.php',
+        'App\\Models\\Lookups\\Item' => __DIR__ . '/../..' . '/app/Models/Lookups/Item.php',
         'App\\Models\\Lookups\\SolarSystem' => __DIR__ . '/../..' . '/app/Models/Lookups/SolarSystem.php',
         'App\\Models\\Lookups\\UserToCorporation' => __DIR__ . '/../..' . '/app/Models/Lookups/UserToCorporation.php',
         'App\\Models\\Mail\\EveMail' => __DIR__ . '/../..' . '/app/Models/Mail/EveMail.php',

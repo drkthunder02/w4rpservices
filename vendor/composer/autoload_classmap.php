@@ -115,6 +115,7 @@ return array(
     'App\\Models\\Lookups\\CharacterToCorporation' => $baseDir . '/app/Models/Lookups/CharacterToCorporation.php',
     'App\\Models\\Lookups\\CorporationLookup' => $baseDir . '/app/Models/Lookups/CorporationLookup.php',
     'App\\Models\\Lookups\\CorporationToAlliance' => $baseDir . '/app/Models/Lookups/CorporationToAlliance.php',
+    'App\\Models\\Lookups\\Item' => $baseDir . '/app/Models/Lookups/Item.php',
     'App\\Models\\Lookups\\SolarSystem' => $baseDir . '/app/Models/Lookups/SolarSystem.php',
     'App\\Models\\Lookups\\UserToCorporation' => $baseDir . '/app/Models/Lookups/UserToCorporation.php',
     'App\\Models\\Mail\\EveMail' => $baseDir . '/app/Models/Mail/EveMail.php',
