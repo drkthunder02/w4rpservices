@@ -21,7 +21,7 @@ class CreateItemLookupTable extends Migration
                 $table->unsignedBigInteger('group_id');
                 $table->unsignedBigInteger('icon_id')->nullable();
                 $table->unsignedBigInteger('market_group_id')->nullable();
-                $table->double('mass', 20, 2)->nullable();
+                $table->string('mass')->nullable();
                 $table->string('name');
                 $table->double('packaged_volume', 20, 2)->nullable();
                 $table->unsignedBigInteger('portion_size')->nullable();
