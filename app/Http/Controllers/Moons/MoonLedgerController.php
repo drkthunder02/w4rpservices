@@ -116,11 +116,12 @@ class MoonLedgerController extends Controller
 
         //Cycle through each ledger entry and create a new array
         foreach($ledgers as $ledger) {
+            //Get the character name from the character id
             $char = $lookup->CharacterIdToName($ledger->character_id);
+            //Get the ore name from the type id
             $ore = $lookup->ItemIdToName($ledger->type_id);
 
-            dd($ledger->last_updated);
-
+            //Push the data onto the mining arary
             array_push($mining, [
                 'character' => $char,
                 'ore' => $ore,
