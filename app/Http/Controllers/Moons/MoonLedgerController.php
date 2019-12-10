@@ -119,6 +119,8 @@ class MoonLedgerController extends Controller
             $char = $lookup->CharacterIdToName($ledger->character_id);
             $ore = $lookup->ItemIdToName($ledger->type_id);
 
+            dd($ledger->last_updated);
+
             array_push($mining, [
                 'character' => $char,
                 'ore' => $ore,
