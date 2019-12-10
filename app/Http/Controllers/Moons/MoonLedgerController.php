@@ -66,7 +66,8 @@ class MoonLedgerController extends Controller
             return redirect('/dashboard')->with('error', 'Failed to get mining structures.');
         }
 
-        dd($response);
+        var_dump($response);
+        dd();
 
         foreach($response as $resp) {
             //Try to get the structure information from esi
