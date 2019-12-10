@@ -11,6 +11,7 @@
     $corpAssets = false;
     $universeStructures = false;
     $corpContracts = false;
+    $corpMining = false;
 ?>
 <div class="container">
     <h2>Select Scopes for ESI</h2>
@@ -112,6 +113,15 @@
                 <?php $corpContracts = true; ?>
             @endif
         @endforeach
+        @foreach($scopes as $scope)
+            @if($scope->scope == 'esi-industry.read_corporation_mining.v1')
+                <div class="form-group col-md-6">
+                    {{ Form::label('scopes[]', 'Corporate Mining') }}
+                    {{ Form::checkbox('scopes[]', 'esi-industry.read_corporation_mining.v1') }}
+                </div>
+                <?php $corpMining = true; ?>
+            @endif
+        @endforeach
 
         @if($publicData == false)
         <div class="form-group col-md-6">
@@ -171,6 +181,12 @@
         <div class="form-group col-md-6">
             {{ Form::label('scopes[]', 'Corporate Contracts') }}
             {{ Form::checkbox('scopes[]', 'esi-contracts.read_corporation_contracts.v1') }}
+        </div>
+        @endif
+        @if($corpMining == false)
+        <div class="form-group col-md-6">
+            {{ Form::label('scopes[]', 'Corporation Mining') }}
+            {{ Form::checkbox('scopes[]', 'esi-industry.read_corporation_mining.v1') }}
         </div>
         @endif
         
