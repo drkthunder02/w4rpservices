@@ -126,8 +126,7 @@ class MoonLedgerController extends Controller
             ]);
         }
 
-        dd($mining);
-
+        //Return the view with the data
         return view('moons.ledger.displayledger')->with('mining', $mining);
     }
 }
