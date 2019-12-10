@@ -54,7 +54,7 @@ class MoonLedgerController extends Controller
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         //Get the character data from the lookup table if possible or esi
-        $character = $lookup->LookupCharacter(auth()->user()->getId(), null);
+        $character = $lookup->GetCharacterInfo(auth()->user()->getId());
         dd($character);
         //Try to get the mining observers for the corporation from esi
         try {
