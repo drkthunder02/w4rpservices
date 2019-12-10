@@ -78,7 +78,7 @@ class MoonLedgerController extends Controller
                 //If an exception has occurred, then do nothing
             }
 
-            array_push($structures, [$resp->observer_id => $structureInfo->name]);
+            $structures[$resp->observer_id] = $structureInfo->name;
         }
 
         dd($structures);
