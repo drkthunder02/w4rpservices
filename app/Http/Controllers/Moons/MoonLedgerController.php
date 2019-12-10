@@ -78,8 +78,7 @@ class MoonLedgerController extends Controller
                 //If an exception has occurred, then do nothing
             }
 
-            var_dump($structureInfo);
-            dd();
+            dd($structureInfo);
         }
 
         return view('moons.ledger.displayselect')->with('structures', $structures);
