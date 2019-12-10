@@ -114,6 +114,8 @@ class MoonLedgerController extends Controller
             return redirect('/dashboard')->with('error', 'Failed to get the mining ledger.');
         }
 
+        dd($ledgers);
+
         $i = 0;
         foreach($ledgers as $ledger) {
             $char = $lookup->CharacterIdToName($ledger->character_id);
@@ -126,8 +128,6 @@ class MoonLedgerController extends Controller
             ];
 
             $i++;
-
-            dd($mining);
         }
 
         return view('moons.ledger.displayledger')->with('mining', $mining);
