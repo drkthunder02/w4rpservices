@@ -37,6 +37,8 @@ class MoonLedgerController extends Controller
         $structures = array();
         $esiHelper = new Esi;
         $lookup = new NewLookupHelper;
+        $response = null;
+        $structureInfo = null;
 
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope(auth()->user()->getId(), 'esi-industry.read_corporation_mining.v1')) {
@@ -66,9 +68,6 @@ class MoonLedgerController extends Controller
             return redirect('/dashboard')->with('error', 'Failed to get mining structures.');
         }
 
-        var_dump($response);
-        dd();
-
         foreach($response as $resp) {
             //Try to get the structure information from esi
             try {
@@ -78,6 +77,9 @@ class MoonLedgerController extends Controller
             } catch(RequestFailedException $e) {
                 //If an exception has occurred, then do nothing
             }
+
+            var_dump($structureInfo);
+            dd();
 
             //Setup the temporary array structure
             $tempStructure = [
