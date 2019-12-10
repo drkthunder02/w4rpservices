@@ -90,6 +90,8 @@ class MoonLedgerController extends Controller
         $lookup = new NewLookupHelper;
         $mining = array();
 
+        dd($request);
+
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope(auth()->user()->getId(), 'esi-industry.read_corporation_mining.v1')) {
             //If the scope check fails, return with a redirect and error message

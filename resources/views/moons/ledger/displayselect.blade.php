@@ -9,7 +9,7 @@
             {!! Form::open(['action' => 'Moons\MoonLedgerController@displayLedger', 'method' => 'POST']) !!}
             <div class="form-group">
                 {{ Form::label('structure', 'Structure') }}
-                {{ Form::select('structure', $structures, ['class' => 'form-control']) }}
+                {{ Form::select('structure', $structures, null, ['placeholder' => 'Select Structure']) }}
             </div>
             {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
             {!! Form::close() !!}
