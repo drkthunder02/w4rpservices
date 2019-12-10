@@ -91,6 +91,7 @@ class MoonLedgerController extends Controller
         //Declare variables
         $esiHelper = new Esi;
         $lookup = new NewLookupHelper;
+        $mining = array();
 
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope(auth()->user()->getId(), 'esi-industry.read_corporation_mining.v1')) {
@@ -106,7 +107,7 @@ class MoonLedgerController extends Controller
 
         //Try to get the mining ledger for the corporation observer
         try {
-            $ledger = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
+            $ledgers = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
                 'corporation_id' => $character->corporation_id,
                 'observer_id' => $request->structure,
             ]);
@@ -114,6 +115,19 @@ class MoonLedgerController extends Controller
             return redirect('/dashboard')->with('error', 'Failed to get the mining ledger.');
         }
 
-        
+        foreach($ledgers as $ledger) {
+            $char = $lookup->CharacterIdToName($ledger->character_id);
+            $ore = $lookup->ItemIdToName($ledger->type_id);
+
+            $temp = [
+                'character' => $char,
+                'ore' => $ore,
+                'quantity' => $quantity,
+            ];
+
+            array_push($mining, $temp);
+        }
+
+        return view('moons.ledger.displayledger')->with('mining', $mining);
     }
 }

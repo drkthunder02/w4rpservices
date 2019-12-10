@@ -36,11 +36,12 @@ class NewLookupHelper {
         //Check if the item is stored in our own database first
         $item = $this->LookupItem($itemId);
 
+        //If the item is found, return it, otherwise, do some esi to find it.
         if($item != null) {
             return $item->name;
         } else {
             try {
-                $response = $this->esi->('get', '/universe/types/{type_id}/', [
+                $response = $this->esi->invoke('get', '/universe/types/{type_id}/', [
                     'type_id' => $itemId,
                 ]);
             } catch(RequestFailedException $e) {
@@ -79,7 +80,7 @@ class NewLookupHelper {
         if(isset($item->icon_id)) {
             $newItem->icon_id = $item->icon_id;
         }
-        if(isset($item->market_group_id) {
+        if(isset($item->market_group_id)) {
             $newItem->market_group_id = $item->market_group_id;
         }
         if(isset($item->mass)) {
