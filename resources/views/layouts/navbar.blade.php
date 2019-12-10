@@ -19,6 +19,9 @@
                     <a class="dropdown-item" href="/moons/admin/updatemoon">Update Moon</a>
                     <a class="dropdown-item" href="/moons/admin/journal">Journal</a>
                     @endif
+                    @if(auth()->user()->hasPermission('corp.lead'))
+                    <a class="dropdown-item" href="/moons/ledger/display/select">Mining Ledger</a>
+                    @endif
                 </div>
             </li>
             @endif
