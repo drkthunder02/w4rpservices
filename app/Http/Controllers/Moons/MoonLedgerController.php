@@ -49,9 +49,10 @@ class MoonLedgerController extends Controller
         
         //Get the refresh token if scope checks have passed
         $refreshToken = $esiHelper->GetRefreshToken(auth()->user()->getId());
-        dd($refreshToken);
+        
         //Setup the esi container
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+        dd($esi);
 
         //Get the character data from the lookup table if possible or esi
         $character = $lookup->LookupCharacter(auth()->user()->getId(), null);
