@@ -80,7 +80,8 @@ class MoonLedgerController extends Controller
 
             //Setup the temporary array structure
             $tempStructure = [
-                $resp->observer_id => $sturcutreInfo->name,
+                'observer' => $observer_id,
+                'name' => $structureInfo->name,
             ];
 
             dd($tempStructure);
