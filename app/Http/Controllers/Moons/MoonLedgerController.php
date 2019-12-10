@@ -90,8 +90,6 @@ class MoonLedgerController extends Controller
         $lookup = new NewLookupHelper;
         $mining = array();
 
-        dd($request->structure);
-
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope(auth()->user()->getId(), 'esi-industry.read_corporation_mining.v1')) {
             //If the scope check fails, return with a redirect and error message
@@ -102,7 +100,7 @@ class MoonLedgerController extends Controller
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         //Get the character data from the lookup table if possible or esi
-        $character = $lookup->LookupCharacter(auth()->user()->getId(), null);
+        $character = $lookup->GetCharacterInfo(auth()->user()->getId());
 
         //Try to get the mining ledger for the corporation observer
         try {
