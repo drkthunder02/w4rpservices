@@ -16,7 +16,7 @@ class CreateItemLookupTable extends Migration
         if(!Schema::hasTable('item_lookup')) {
             Schema::create('item_lookup', function (Blueprint $table) {
                 $table->double('capacity', 20, 2)->nullable();
-                $table->string('description');
+                $table->text('description');
                 $table->unsignedBigInteger('graphic_id')->nullable();
                 $table->unsignedBigInteger('group_id');
                 $table->unsignedBigInteger('icon_id')->nullable();
