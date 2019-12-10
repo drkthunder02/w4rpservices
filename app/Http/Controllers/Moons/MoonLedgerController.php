@@ -78,17 +78,8 @@ class MoonLedgerController extends Controller
                 //If an exception has occurred, then do nothing
             }
 
-            //Setup the temporary array structure
-            $tempStructure = [
-                'observer' => $observer_id,
-                'name' => $structureInfo->name,
-            ];
-
-            var_dump($tempStructure);
+            var_dump($structureInfo);
             dd();
-
-            //Push the data onto the permanent array
-            array_push($structures, $tempStructure);
         }
 
         return view('moons.ledger.displayselect')->with('structures', $structures);
