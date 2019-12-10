@@ -21,6 +21,7 @@ use App\Models\Lookups\CharacterLookup;
 use App\Models\Lookups\CorporationLookup;
 use App\Models\Lookups\AllianceLookup;
 use App\Models\Lookups\SolarSystem;
+use App\Models\Lookups\Item;
 
 class NewLookupHelper {
 
