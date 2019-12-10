@@ -81,8 +81,6 @@ class MoonLedgerController extends Controller
             $structures[$resp->observer_id] = $structureInfo->name;
         }
 
-        dd($structures);
-
         return view('moons.ledger.displayselect')->with('structures', $structures);
     }
 
