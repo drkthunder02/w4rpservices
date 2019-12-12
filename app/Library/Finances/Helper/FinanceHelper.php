@@ -35,7 +35,8 @@ use App\Library\Lookups\LookupHelper;
 
 //Seat Stuff
 use Seat\Eseye\Exceptions\RequestFailedException;
-
+use Seat\Eseye\Cache\NullCache;
+use Seat\Eseye\Configuration;
 
 class FinanceHelper {
 
@@ -146,6 +147,10 @@ class FinanceHelper {
         //Set the esi version to v4
         $esi->setVersion('v4');
 
+        //Set caching to null
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
+
         //Call the first page so we can get the header data for the number of pages
         try {
             $journals = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
@@ -153,7 +158,7 @@ class FinanceHelper {
                 'division'  => $division,
             ]);
         } catch(RequestFailedException $e) {
-            //Log::warning($e->getEsiResponse());
+            Log::warning($e->getEsiResponse());
             return null;
         }
 
