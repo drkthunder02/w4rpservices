@@ -149,7 +149,7 @@ class LookupHelper {
     public function GetCharacterInfo($charId) {
         //Check our own database first
         $char = $this->LookupCharacter($charId, null);
-
+        dd($char);
         //if the character was not found in the database, then get the information and store it in our database for later
         if($char == null) {
             try {
