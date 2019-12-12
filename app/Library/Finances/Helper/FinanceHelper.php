@@ -70,6 +70,10 @@ class FinanceHelper {
         $esi = $esiHelper->SetupEsiAuthentication($token);
         //Set the version
         $esi->setVersion('v4');
+
+        //Set caching to null
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
         
         //Set our current page to 1 which is the one we are starting on.
         $currentPage = 1;
@@ -179,6 +183,10 @@ class FinanceHelper {
         $esi = $esiHelper->SetupEsiAuthentication($token);
         $esi->setVersion('v4');
 
+        //Set caching to null
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
+
         //Call the page of the wallet journal
         try {
             $journals = $esi->page($page)
@@ -235,6 +243,10 @@ class FinanceHelper {
         //Create an ESI authentication container
         $esi = $esiHelper->SetupEsiAuthentication($token);
         $esi->setVersion('v4');
+
+        //Set caching to null
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
 
         //Call the first page of the wallet journal, as we are always going to get at least one page.
         //If we have more pages, then we will continue through the while loop.
