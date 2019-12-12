@@ -183,6 +183,7 @@ class Esi {
             $authentication = new EsiAuthentication([
                 'client_id' => $config['client_id'],
                 'secret' => $config['secret'],
+                'refresh_token' => null,
             ]);
         } else {
             $authentication = new EsiAuthentication([
