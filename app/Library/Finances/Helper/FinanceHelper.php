@@ -138,7 +138,6 @@ class FinanceHelper {
 
         //Refrence to see if the character is in our look up table for corporation and characters
         $char = $lookup->GetCharacterInfo($charId);
-        dd($char);
         $corpId = $char->corporation_id;
 
         //Create the ESI authentication container
