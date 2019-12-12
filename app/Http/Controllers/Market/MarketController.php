@@ -10,10 +10,6 @@ use Carbon\Carbon;
 
 //Library
 use App\Library\Esi\Esi;
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Taxes\TaxesHelper;
 
@@ -45,7 +41,7 @@ class MarketController extends Controller
         //Declare the esi helper
         $esiHelper = new Esi;
         //Create the esi container to get the character's public information
-        $esi = new Eseye();
+        $esi = $esiHelper->SetupEsiAuthentication();
         try {
             $charInfo = $esi->invoke('get', '/characters/{character_id}/', [
                 'character_id' => $charId,
@@ -67,9 +63,13 @@ class MarketController extends Controller
     }
 
     public function displayTaxes() {
+        //Declare some variables
+        $esiHelper = new Esi;
         $charId = auth()->user()->getId();
         
-        $esi = new Eseye();
+        //Setup the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication();
+        
         try {
             $charInfo = $esi->invoke('get', '/characters/{character_id}/', [
                 'character_id' => $charId,

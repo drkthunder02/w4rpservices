@@ -13,6 +13,7 @@ use App\Jobs\ProcessAssetsJob;
 use App\Library\Esi\Esi;
 use Commands\Library\CommandHelper;
 use App\Library\Assets\AssetHelper;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 //Models
 use App\Models\Jobs\JobProcessAsset;

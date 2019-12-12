@@ -7,10 +7,6 @@ use DB;
 use Log;
 
 //Library
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 
@@ -30,7 +26,10 @@ class NewLookupHelper {
 
     //Construct
     public function __construct() {
-        $this->esi = new Eseye();
+        //Declare a variable for use by the construct
+        $esiHelper = new Esi;
+
+        $this->esi = $esiHelper->SetupEsiAuthentication();
     }
 
     public function ItemIdToName($itemId) {

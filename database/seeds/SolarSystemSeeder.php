@@ -4,10 +4,8 @@ use Illuminate\Database\Seeder;
 
 use App\Models\Lookups\SolarSystem;
 
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
+use Seat\Eseye\Exceptions\RequestFailedException;
+use App\Library\Esi\Esi;
 
 class SolarSystemSeeder extends Seeder
 {
@@ -18,10 +16,10 @@ class SolarSystemSeeder extends Seeder
      */
     public function run()
     {
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
+        //Declare some variables
+        $esiHelper = new Esi;
 
-        $esi = new Eseye();
+        $esi = $esiHelper->SetupEsiAuthentication();
 
         $systems = $esi->invoke('get', '/universe/systems/');
 

@@ -9,6 +9,7 @@ use DB;
 //App Library
 use App\Jobs\Library\JobHelper;
 use App\Library\Esi\Esi;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 //Models
 use App\Models\Jobs\JobProcessContracts;

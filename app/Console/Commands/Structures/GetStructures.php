@@ -9,6 +9,7 @@ use Log;
 use App\Library\Structures\StructureHelper;
 use App\Library\Esi\Esi;
 use Commands\Library\CommandHelper;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 //Job
 use App\Jobs\ProcessStructureJob;
@@ -82,7 +83,7 @@ class GetStructuresCommand extends Command
         }
 
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
+        $token = $esiHelper->GetRefreshToken($charId);
         //Create the esi authentication container
         $esi = $esiHelper->SetupEsiAuthentication($token);
 

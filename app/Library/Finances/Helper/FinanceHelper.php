@@ -34,8 +34,6 @@ use App\Library\Finances\PISale;
 use App\Library\Lookups\NewLookupHelper;
 
 //Seat Stuff
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
 
@@ -87,7 +85,6 @@ class FinanceHelper {
                     'division'  => $division,
                 ]);
             } catch(RequestFailedException $e) {
-                //Log::warning($e->getEsiResponse());
                 return null;
             }
 

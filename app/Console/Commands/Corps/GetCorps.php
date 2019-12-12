@@ -2,17 +2,18 @@
 
 namespace App\Console\Commands;
 
+//Internal Library
 use Illuminate\Console\Command;
 use DB;
 use Commands\Library\CommandHelper;
 
+//Models
 use App\Models\Corporation\AllianceCorp;
 use App\Models\ScheduledTask\ScheduleJob;
 
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
+//Library
+use Seat\Eseye\Exceptions\RequestFailedException;
+use App\Library\Esi\Esi;
 
 class GetCorpsCommand extends Command
 {
@@ -51,15 +52,18 @@ class GetCorpsCommand extends Command
         $task = new CommandHelper('CorpJournal');
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
+
+        //Declare some variables
+        $esiHelper = new Esi;
         
-        //Create the ESI container
-        $esi = new Eseye();
+        $esi = $esiHelper->SetupEsiAuthentication();
+
         //try the  esi call to get all of the corporations in the alliance
         try {
             $corporations = $esi->invoke('get', '/alliances/{alliance_id}/corporations/', [
                 'alliance_id' => 99004116,
             ]);
-        } catch(\Seat\Eseye\Exceptions\RequestFailedException $e){
+        } catch(RequestFailedException $e){
             dd($e->getEsiResponse());
         }
         //Delete all of the entries in the AllianceCorps table
@@ -69,7 +73,7 @@ class GetCorpsCommand extends Command
                 $corpInfo = $esi->invoke('get', '/corporations/{corporation_id}/', [
                     'corporation_id' => $corp,
                 ]);
-            } catch(\Seat\Eseye\Exceptions\RequestFailedException $e) {
+            } catch(RequestFailedException $e) {
                 return $e->getEsiResponse();
             }
             $entry = new AllianceCorp;

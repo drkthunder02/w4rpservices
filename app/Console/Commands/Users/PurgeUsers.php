@@ -7,10 +7,8 @@ use Illuminate\Console\Command;
 use Log;
 
 //Libraries
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
+use Seat\Eseye\Exceptions\RequestFailedException;
+use App\Library\Esi\Esi;
 
 //Models
 use App\Models\User\User;
@@ -60,8 +58,11 @@ class PurgeUsers extends Command
      */
     public function handle()
     {
+        //Declare some variables
+        $esiHelper = new Esi;
+
         //Setup the esi variable
-        $esi = new Eseye();
+        $esi = $esiHelper->SetupEsiAuthentication();
 
         //Get all of the users from the database
         $users = User::all();
