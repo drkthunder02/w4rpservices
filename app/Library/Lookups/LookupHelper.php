@@ -150,7 +150,7 @@ class LookupHelper {
         //Check our own database first
         $char = $this->LookupCharacter($charId, null);
 
-        dd($char);
+        
 
         //if the character was not found in the database, then get the information and store it in our database for later
         if($char == null) {
@@ -162,6 +162,8 @@ class LookupHelper {
                 Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
                 return null;
             }
+
+            dd($character);
 
             //Store the character in our database
             $this->SaveCharacter($character, $charId);
