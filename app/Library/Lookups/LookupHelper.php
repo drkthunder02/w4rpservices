@@ -159,6 +159,8 @@ class LookupHelper {
         } catch(RequestFailedException $e) {
             Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
             printf("Failed ESI Call.");
+
+            dd($e);
             return null;
         }
 
