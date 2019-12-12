@@ -53,7 +53,7 @@ class EmptyJumpBridges extends Command
 
         Structure::truncate();
         Service::truncate();
-        Assets::truncate();
+        Asset::truncate();
 
         //Mark the job as finished
         $task->SetStopStatus();
