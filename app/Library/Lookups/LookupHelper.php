@@ -31,16 +31,9 @@ class LookupHelper {
     //Construct
     public function __construct() {
         //Declare a variable for use by the construct
-        //$esiHelper = new Esi;
-        //$this->esi = $esiHelper->SetupEsiAuthentication();
-        $config = config('esi');
-
-        $authentication = new EsiAuthentication([
-            'client_id'     => $config['client_id'],
-            'secret'        => $config['secret'],
-        ]);
+        $esiHelper = new Esi;
         
-        $this->esi = new Eseye($authentication);
+        $this->esi = $esiHelper->SetupEsiAuthentication();
     }
 
     public function ItemIdToName($itemId) {
