@@ -160,8 +160,6 @@ class LookupHelper {
                 Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
                 return null;
             }
-            var_dump($response);
-            dd();
 
             //Store the character in our database
             $this->SaveCharacter($response, $charId);
