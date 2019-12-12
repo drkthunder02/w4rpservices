@@ -154,6 +154,11 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/srp/admin/display/history', 'SRP\SRPAdminController@displayHistory');
 
     /**
+     * Test Controller display pages
+     */
+    Route::get('/test/char/display', 'Test\TestController@displayCharTest');
+
+    /**
      * Wiki Controller display pages
      */
     Route::get('/wiki/register', 'Wiki\WikiController@displayRegister');
