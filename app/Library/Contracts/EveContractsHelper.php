@@ -15,8 +15,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Models\Jobs\JobProcessContracts;
 use App\Models\Job\JobStatus;
 use App\Models\Logistics\Contract;
-use App\Models\Esi\EsiToken;
-use App\Models\Esi\EsiScope;
 
 class EveContractsHelper {
 
