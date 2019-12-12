@@ -151,7 +151,7 @@ class LookupHelper {
         $char = $this->LookupCharacter($charId, null);
 
         //if the character was not found in the database, then get the information and store it in our database for later
-        if($char == null) {
+        if(!isset($char)) {
 
             try {
                 $response = $this->esi->invoke('get', '/characters/{character_id}/', [
