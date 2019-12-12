@@ -148,6 +148,8 @@ class LookupHelper {
     }
 
     public function GetCharacterInfo($charId) {
+
+        dd($this->esi);
         //Check our own database first
         $char = $this->LookupCharacter($charId, null);
 
