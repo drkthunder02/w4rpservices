@@ -21,7 +21,7 @@ use App\Models\Lookups\CharacterLookup;
 use App\Models\Lookups\CorporationLookup;
 use App\Models\Lookups\AllianceLookup;
 use App\Models\Lookups\SolarSystem;
-use App\Models\Lookups\Item;
+use App\Models\Lookups\ItemLookup;
 
 class NewLookupHelper {
 
@@ -61,7 +61,7 @@ class NewLookupHelper {
     }
 
     private function LookupItem($itemId) {
-        $item = Item::where([
+        $item = ItemLookup::where([
             'type_id' => $itemId,
         ])->first();
 

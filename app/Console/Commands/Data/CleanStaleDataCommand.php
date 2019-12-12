@@ -2,8 +2,17 @@
 
 namespace App\Console\Commands;
 
+//Internal Library
 use Illuminate\Console\Command;
+
+//Library
 use Commands\Library\CommandHelper;
+
+//Models
+use App\Models\Lookups\AllianceLookup;
+use App\Models\Lookups\CharacterLookup;
+use App\Models\Lookups\CorporationLookup;
+use App\Models\Lookups\ItemLookup;
 
 class CleanStaleDataCommand extends Command
 {
@@ -40,5 +49,17 @@ class CleanStaleDataCommand extends Command
     {
         $command = new CommandHelper;
         $command->CleanJobStatusTable();
+
+        //Empty the item lookup table
+        ItemLookup::truncate();
+
+        //Empty the character lookup table
+        CharacterLookup::truncate();
+
+        //Empty the corporation lookup table
+        CorporationLookup::truncate();
+
+        //Empty the alliance lookup table
+        AllianceLookup::truncate();
     }
 }

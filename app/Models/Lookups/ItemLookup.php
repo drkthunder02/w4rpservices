@@ -4,7 +4,7 @@ namespace App\Models\Lookups;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class ItemLookup extends Model
 {
     /**
      * Table Name

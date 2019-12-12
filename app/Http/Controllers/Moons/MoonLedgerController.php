@@ -23,7 +23,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 use App\Models\Structure\Structure;
 use App\Models\Structure\Service;
-use App\Models\Lookups\Item;
+use App\Models\Lookups\ItemLookup;
 
 class MoonLedgerController extends Controller
 {
