@@ -17,8 +17,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 
 //Models
 use App\Models\Jobs\JobProcessAsset;
-use App\Models\Esi\EsiScope;
-use App\Models\Esi\EsiToken;
 
 class GetAssetsCommand extends Command
 {
