@@ -150,23 +150,23 @@ class LookupHelper {
         //Check our own database first
         $char = $this->LookupCharacter($charId, null);
 
-        dd($char);
+        
 
         //if the character was not found in the database, then get the information and store it in our database for later
         if($char == null) {
             try {
-                $character = $this->esi->invoke('get', '/characters/{character_id}/', [
+                $response = $this->esi->invoke('get', '/characters/{character_id}/', [
                     'character_id' => $charId,
                 ]);
             } catch(RequestFailedException $e) {
                 Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
                 return null;
             }
-
-            dd($character);
+            var_dump($response);
+            dd();
 
             //Store the character in our database
-            $this->SaveCharacter($character, $charId);
+            $this->SaveCharacter($response, $charId);
 
             //Return the character details to the calling function
             return $character;
