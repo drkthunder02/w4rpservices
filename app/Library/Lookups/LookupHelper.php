@@ -6,8 +6,11 @@ namespace App\Library\Lookups;
 use DB;
 use Log;
 
-//Library
+//Seat Stuff
+use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
+use Seat\Eseye\Containers\EsiAuthentication;
+use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 
@@ -28,9 +31,16 @@ class LookupHelper {
     //Construct
     public function __construct() {
         //Declare a variable for use by the construct
-        $esiHelper = new Esi;
+        //$esiHelper = new Esi;
+        //$this->esi = $esiHelper->SetupEsiAuthentication();
+        $config = config('esi');
 
-        $this->esi = $esiHelper->SetupEsiAuthentication(null);
+        $authentication = new EsiAuthentication([
+            'client_id'     => $config['client_id'],
+            'secret'        => $config['secret'],
+        ]);
+        
+        $this->esi = new Eseye($authentication);
     }
 
     public function ItemIdToName($itemId) {
