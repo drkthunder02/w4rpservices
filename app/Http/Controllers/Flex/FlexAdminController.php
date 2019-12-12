@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use App\Models\Flex\FlexStructure;
 
 //Library
-use App\Library\Lookups\NewLookupHelper;
+use App\Library\Lookups\LookupHelper;
 use App\Library\Esi\Esi;
 
 class FlexAdminController extends Controller
@@ -56,7 +56,7 @@ class FlexAdminController extends Controller
         ]);
 
         //Delcare variables and classes
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
 
         //From the character name find the character id
         $charId = $lookup->CharacterNameToId($request->requestor_name);

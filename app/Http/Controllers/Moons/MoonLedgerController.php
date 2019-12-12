@@ -12,7 +12,7 @@ use DB;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Structures\StructureHelper;
-use App\Library\Lookups\NewLookupHelper;
+use App\Library\Lookups\LookupHelper;
 
 //App Models
 use App\Models\Esi\EsiToken;
@@ -33,7 +33,7 @@ class MoonLedgerController extends Controller
         //Declare variables
         $structures = array();
         $esiHelper = new Esi;
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
         $response = null;
         $structureInfo = null;
 
@@ -84,7 +84,7 @@ class MoonLedgerController extends Controller
     public function displayLedger(Request $request) {
         //Declare variables
         $esiHelper = new Esi;
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
         $mining = array();
         $temp = array();
 

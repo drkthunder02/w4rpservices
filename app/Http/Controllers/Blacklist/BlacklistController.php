@@ -9,7 +9,7 @@ use Log;
 use DB;
 
 //Library
-use App\Library\Lookups\NewLookupHelper;
+use App\Library\Lookups\LookupHelper;
 
 //Models
 use App\Models\Blacklist\BlacklistUser;
@@ -47,7 +47,7 @@ class BlacklistController extends Controller
         ]);
 
         //Create the library variable
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
 
         //See if the character is already on the list
         $count = BlacklistUser::where([

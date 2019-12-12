@@ -538,7 +538,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Library\\Finances\\ReprocessingTax' => __DIR__ . '/../..' . '/app/Library/Finances/ReprocessingTax.php',
         'App\\Library\\Finances\\StructureIndustryTax' => __DIR__ . '/../..' . '/app/Library/Finances/StructureIndustryTax.php',
         'App\\Library\\Lookups\\LookupHelper' => __DIR__ . '/../..' . '/app/Library/Lookups/LookupHelper.php',
-        'App\\Library\\Lookups\\NewLookupHelper' => __DIR__ . '/../..' . '/app/Library/Lookups/NewLookupHelper.php',
+        'App\\Library\\Lookups\\LookupHelper' => __DIR__ . '/../..' . '/app/Library/Lookups/LookupHelper.php',
         'App\\Library\\Moons\\MiningLedgerHelper' => __DIR__ . '/../..' . '/app/Library/Moons/MiningLedgerHelper.php',
         'App\\Library\\Moons\\MoonCalc' => __DIR__ . '/../..' . '/app/Library/Moons/MoonCalc.php',
         'App\\Library\\SRP\\SRPHelper' => __DIR__ . '/../..' . '/app/Library/SRP/SRPHelper.php',

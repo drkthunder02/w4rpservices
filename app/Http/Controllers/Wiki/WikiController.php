@@ -9,7 +9,7 @@ use DB;
 use Auth;
 
 //User Libraries
-use App\Library\Lookups\NewLookupHelper;
+use App\Library\Lookups\LookupHelper;
 
 //Models
 use App\Models\Doku\DokuGroupNames;
@@ -27,7 +27,7 @@ class WikiController extends Controller
 
     public function purgeUsers() {
         //Declare helper classes
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
 
         //Get all the users from the database
         $users = DokuUser::pluck('name')->all();

@@ -19,7 +19,7 @@ use App\Models\Lookups\AllianceLookup;
 use App\Models\Lookups\SolarSystem;
 use App\Models\Lookups\ItemLookup;
 
-class NewLookupHelper {
+class LookupHelper {
 
     //Variables
     private $esi;
@@ -45,7 +45,7 @@ class NewLookupHelper {
                     'type_id' => $itemId,
                 ]);
             } catch(RequestFailedException $e) {
-                Log::warning('Failed to get item information from /universe/types/{type_id}/ in NewLookupHelper.');
+                Log::warning('Failed to get item information from /universe/types/{type_id}/ in LookupHelper.');
                 return null;
             }
 

@@ -31,7 +31,7 @@ use App\Library\Finances\StructureIndustryTax;
 use App\Library\Finances\OfficeFee;
 use App\Library\Finances\PlanetProductionTax;
 use App\Library\Finances\PISale;
-use App\Library\Lookups\NewLookupHelper;
+use App\Library\Lookups\LookupHelper;
 
 //Seat Stuff
 use Seat\Eseye\Exceptions\RequestFailedException;
@@ -48,7 +48,7 @@ class FinanceHelper {
         $industry = new StructureIndustryTax();
         $office = new OfficeFee();
         $esiHelper = new Esi();
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
@@ -121,7 +121,7 @@ class FinanceHelper {
 
     public function GetJournalPageCount($division, $charId) {
         //Declare class variables
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
         $esiHelper = new Esi;
         
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
@@ -207,7 +207,7 @@ class FinanceHelper {
         $office = new OfficeFee;
         $pi = new PlanetProductionTax;
         $esiHelper = new Esi;
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');

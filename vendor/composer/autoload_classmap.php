@@ -74,7 +74,7 @@ return array(
     'App\\Library\\Finances\\ReprocessingTax' => $baseDir . '/app/Library/Finances/ReprocessingTax.php',
     'App\\Library\\Finances\\StructureIndustryTax' => $baseDir . '/app/Library/Finances/StructureIndustryTax.php',
     'App\\Library\\Lookups\\LookupHelper' => $baseDir . '/app/Library/Lookups/LookupHelper.php',
-    'App\\Library\\Lookups\\NewLookupHelper' => $baseDir . '/app/Library/Lookups/NewLookupHelper.php',
+    'App\\Library\\Lookups\\LookupHelper' => $baseDir . '/app/Library/Lookups/LookupHelper.php',
     'App\\Library\\Moons\\MiningLedgerHelper' => $baseDir . '/app/Library/Moons/MiningLedgerHelper.php',
     'App\\Library\\Moons\\MoonCalc' => $baseDir . '/app/Library/Moons/MoonCalc.php',
     'App\\Library\\SRP\\SRPHelper' => $baseDir . '/app/Library/SRP/SRPHelper.php',

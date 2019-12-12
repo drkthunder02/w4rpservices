@@ -15,7 +15,7 @@ use DB;
 //App Library
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
-use App\Library\Lookups\NewLookupHelper;
+use App\Library\Lookups\LookupHelper;
 
 //App Models
 use App\Models\Structure\Structure;
@@ -149,7 +149,7 @@ class MiningLedgerHelper {
         $items = array();
         $notSorted = array();
         $final = array();
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
 
 
         //In the first iteration of the array get rid of the extra items we don't want

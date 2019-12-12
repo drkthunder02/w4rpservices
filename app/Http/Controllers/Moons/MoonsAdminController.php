@@ -20,7 +20,7 @@ use App\Models\MoonRent\MoonRental;
 //Library
 use App\Library\Moons\MoonCalc;
 use App\Library\Esi\Esi;
-use App\Library\Lookups\NewLookupHelper;
+use App\Library\Lookups\LookupHelper;
 
 class MoonsAdminController extends Controller
 {
@@ -34,7 +34,7 @@ class MoonsAdminController extends Controller
     public function displayMoonsAdmin() {
         $this->middleware('role:Admin');
 
-        $lookupHelper = new NewLookupHelper;
+        $lookupHelper = new LookupHelper;
         $contact = '';
         $paid = '';
         $rentalEnd = '';
@@ -213,7 +213,7 @@ class MoonsAdminController extends Controller
 
         //Declare some static variables as needed
         $moonCalc = new MoonCalc;
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
         $paid = false;
         $system = null;
         $planet = null;

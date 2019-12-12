@@ -8,7 +8,7 @@ use DB;
 use Carbon\Carbon;
 
 //Libraries
-use App\Library\Lookups\NewLookupHelper;
+use App\Library\Lookups\LookupHelper;
 //use App\Library\Contracts\ContractHelper;
 
 //Models
@@ -207,7 +207,7 @@ class ContractController extends Controller
         ]);
 
         //Delcare some class variables we will need
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
 
         $amount = 0.00;
 

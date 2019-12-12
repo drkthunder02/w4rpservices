@@ -9,7 +9,7 @@ use DB;
 use Log;
 
 //Library Helpers
-use App\Library\Lookups\NewLookupHelper;
+use App\Library\Lookups\LookupHelper;
 
 
 //Models
@@ -35,7 +35,7 @@ class StructureRequestController extends Controller
             'requester' => 'required',
         ]);
 
-        $lookup = new NewLookupHelper;
+        $lookup = new LookupHelper;
 
         $requesterId = $lookup->CharacterNameToId($request->requester);
         $corporationId = $lookup->CorporationNameToId($request->corporation_name);
