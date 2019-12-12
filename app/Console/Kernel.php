@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
         Commands\GetAssetsCommand::class,
         Commands\PurgeUsers::class,
         Commands\FlexStructureCommand::class,
+        Commands\EmptyJumpBridges::class,
     ];
 
     /**
