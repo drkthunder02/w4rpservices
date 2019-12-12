@@ -121,8 +121,6 @@ class FinanceHelper {
     }
 
     public function GetJournalPageCount($division, $charId) {
-        dd($charId);
-
         //Declare class variables
         $lookup = new LookupHelper;
         $esiHelper = new Esi;
