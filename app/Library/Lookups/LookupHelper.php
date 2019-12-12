@@ -31,6 +31,8 @@ class LookupHelper {
         $esiHelper = new Esi;
 
         $this->esi = $esiHelper->SetupEsiAuthentication(null);
+
+        dd($this->esi);
     }
 
     public function ItemIdToName($itemId) {
