@@ -13,11 +13,9 @@ use App\Models\Finances\ReprocessingTaxJournal;
 use App\Models\Finances\StructureIndustryTaxJournal;
 use App\Models\Finances\PlanetProductionTaxJournal;
 use App\Models\Finances\OfficeFeesJournal;
-use App\Models\Finances\CorpMarketJournal;
 use App\Models\Finances\JumpBridgeJournal;
 use App\Models\Finances\PISaleJournal;
 use App\Models\Finances\AllianceMarketJournal;
-use App\Models\Finances\CorpMarketStructure;
 use App\Models\SRP\SRPShip;
 
 class TaxesHelper {
@@ -62,17 +60,6 @@ class TaxesHelper {
         $revenue = AllianceMarketJournal::where([
             'second_party_id' => '98287666',
             'ref_type' => 'brokers_fee',
-        ])->whereBetween('date', [$start, $end])
-          ->sum('amount');
-
-        return $revenue;
-    }
-
-    public function GetStructureMarketGross($start, $end, $corpId) {
-        $revenue = 0.00;
-
-        $revenue = CorpMarketJournal::where([
-            'second_party_id' => $corpId,
         ])->whereBetween('date', [$start, $end])
           ->sum('amount');
 
