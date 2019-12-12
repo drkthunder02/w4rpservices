@@ -178,23 +178,20 @@ class Esi {
 
         //Declare some variables
         $authentication = null;
+        $esi = null;
 
-        if($token === null) {
-            $authentication = new EsiAuthentication([
-                'client_id' => $config['client_id'],
-                'secret' => $config['secret'],
-                'token_expires' => date('Y-m-d H:i:s', time() + 600),
-            ]);
+        if($token == null) {
+            $esi = new Eseye();
         } else {
             $authentication = new EsiAuthentication([
                 'client_id' => $config['client_id'],
                 'secret' => $config['secret'],
                 'refresh_token' => $token,
             ]);
-        }
 
-        //Setup the esi variable
-        $esi = new Eseye($authentication);
+            //Setup the esi variable
+            $esi = new Eseye($authentication);
+        }
 
         //Return the created variable
         return $esi;
