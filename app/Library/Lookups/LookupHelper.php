@@ -152,11 +152,13 @@ class LookupHelper {
         $char = $this->LookupCharacter($charId, null);
 
         try {
+            printf("Attemping esi call");
             $response = $this->esi->invoke('get', '/characters/{character_id}/', [
                 'character_id' => $charId,
             ]);
         } catch(RequestFailedException $e) {
             Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
+            printf("Failed ESI Call.");
             return null;
         }
 
