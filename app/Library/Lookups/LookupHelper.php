@@ -30,7 +30,7 @@ class LookupHelper {
         //Declare a variable for use by the construct
         $esiHelper = new Esi;
 
-        $this->esi = $esiHelper->SetupEsiAuthentication();
+        $this->esi = $esiHelper->SetupEsiAuthentication(null);
     }
 
     public function ItemIdToName($itemId) {
@@ -151,24 +151,16 @@ class LookupHelper {
         //Check our own database first
         $char = $this->LookupCharacter($charId, null);
 
-        try {
-            printf("Attemping esi call");
-            $response = $this->esi->invoke('get', '/characters/{character_id}/', [
-                'character_id' => $charId,
-            ]);
-        } catch(RequestFailedException $e) {
-            Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
-            printf("Failed ESI Call.");
-
-            dd($e);
-            return null;
-        }
-
-        dd($response);
-
         //if the character was not found in the database, then get the information and store it in our database for later
         if($char == null) {
-            
+            try {
+                $response = $this->esi->invoke('get', '/characters/{character_id}/', [
+                    'character_id' => $charId,
+                ]);
+            } catch(RequestFailedException $e) {
+                Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
+                return null;
+            }
 
             //Store the character in our database
             $this->SaveCharacter($response, $charId);
