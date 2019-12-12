@@ -12,7 +12,9 @@ class TestController extends Controller
     public function displayCharTest() {
         $lookup = new LookupHelper;
 
-        $char = $lookup->GetCharacterInfo(93738489);
+        $config = config('esi');
+
+        $char = $lookup->GetCharacterInfo($config['primary']);
 
         return view('test.char.display')->with('char', $char);
     }

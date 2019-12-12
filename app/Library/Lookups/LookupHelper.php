@@ -169,6 +169,7 @@ class LookupHelper {
                 ]);
             } catch(RequestFailedException $e) {
                 Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
+                dd($e);
                 return null;
             }
 
