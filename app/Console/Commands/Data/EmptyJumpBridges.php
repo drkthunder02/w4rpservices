@@ -10,7 +10,7 @@ use Commands\Library\CommandHelper;
 
 //Models
 use App\Models\Structure\Structure;
-use App\Models\Structure\Services;
+use App\Models\Structure\Service;
 use App\Models\Stock\Asset;
 
 class EmptyJumpBridges extends Command
@@ -52,7 +52,7 @@ class EmptyJumpBridges extends Command
         $task->SetStartStatus();
 
         Structure::truncate();
-        Services::truncate();
+        Service::truncate();
         Assets::truncate();
 
         //Mark the job as finished
