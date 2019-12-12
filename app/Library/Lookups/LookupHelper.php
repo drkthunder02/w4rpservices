@@ -7,6 +7,7 @@ use DB;
 use Log;
 
 //Library
+use Seat\Eseye\Configuration;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 
@@ -150,18 +151,20 @@ class LookupHelper {
         //Check our own database first
         $char = $this->LookupCharacter($charId, null);
 
-        //if the character was not found in the database, then get the information and store it in our database for later
-        if(!isset($char->id)) {
-            try {
-                $response = $this->esi->invoke('get', '/characters/{character_id}/', [
-                    'character_id' => $charId,
-                ]);
-            } catch(RequestFailedException $e) {
-                Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
-                return null;
-            }
+        try {
+            $response = $this->esi->invoke('get', '/characters/{character_id}/', [
+                'character_id' => $charId,
+            ]);
+        } catch(RequestFailedException $e) {
+            Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
+            return null;
+        }
 
-            dd($response);
+        dd($response);
+
+        //if the character was not found in the database, then get the information and store it in our database for later
+        if($char == null) {
+            
 
             //Store the character in our database
             $this->SaveCharacter($response, $charId);
