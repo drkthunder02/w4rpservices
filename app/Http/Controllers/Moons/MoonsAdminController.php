@@ -257,7 +257,7 @@ class MoonsAdminController extends Controller
         }
 
         //Let's find the corporation and alliance information to ascertain whethery they are in Warped Intentions or another Legacy Alliance
-        $char = $lookup->LookupCharacter($contact, null);
+        $char = $lookup->GetCharacterInfo($contact);
         $corp = $lookup->LookupCorporation($char->character_id, null);
         $allianceId = $corp->alliance_id;
 

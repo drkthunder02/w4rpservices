@@ -49,7 +49,7 @@ class WikiController extends Controller
                 $charId = $charIdTemp[0]->character_id;
 
                 //Set the corp id
-                $char = $lookup->LookupCharacter($charId, null);
+                $char = $lookup->GetCharacterInfo($charId);
                 $corpId = $char->corporation_id;
 
                 //Set the alliance id

@@ -62,7 +62,8 @@ class FinanceHelper {
         }        
         
         //Reference to see if the character is in our look up table for corporations and characters
-        $corpId = $lookup->LookupCharacter($charId, null);
+        $char = $lookup->GetCharacterInfo($charId);
+        $corpId = $char->corporation_id;
 
         //Create an ESI authentication container
         $esi = $esiHelper->SetupEsiAuthentication($token);
@@ -136,7 +137,8 @@ class FinanceHelper {
         }
 
         //Refrence to see if the character is in our look up table for corporation and characters
-        $corpId = $lookup->LookupCharacter($charId, null);
+        $char = $lookup->GetCharacterInfo($charId);
+        $corpId = $char->corporation_id;
 
         //Create the ESI authentication container
         $esi = $esiHelper->SetupEsiAuthentication($token);
@@ -221,7 +223,8 @@ class FinanceHelper {
         }       
         
         //Reference to see if the character is in our look up table for corporations and characters
-        $char = $lookup->LookupCharacter($charId, null);
+        $char = $lookup->GetCharacterInfo($charId);
+        
         $corpId = $char->corporation_id;
 
         //Create an ESI authentication container

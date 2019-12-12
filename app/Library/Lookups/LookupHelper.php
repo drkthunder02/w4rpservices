@@ -147,15 +147,67 @@ class LookupHelper {
     }
 
     public function GetCharacterInfo($charId) {
-        try {
-            $character = $this->esi->invoke('get', '/characters/{character_id}/', [
-                'character_id' => $charId,
-            ]);
-        } catch(RequestFailedException $e) {
-            return null;
-        }
+        //Check our own database first
+        $char = $this->LookupCharacter($charId, null);
 
-        return $character;
+        //if the character was not found in the database, then get the information and store it in our database for later
+        if($char == null) {
+            try {
+                $character = $this->esi->invoke('get', '/characters/{character_id}/', [
+                    'character_id' => $charId,
+                ]);
+            } catch(RequestFailedException $e) {
+                Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
+                return null;
+            }
+
+            //Store the character in our database
+            $this->SaveCharacter($character, $charId);
+
+            //Return the character details to the calling function
+            return $character;
+        } else {
+            //Return what was pulled from the database
+            return $char;
+        }
+    }
+
+    public function GetCorporationInfo($corpId) {
+        //Check our own database first
+        $corp = $this->LookupCorporation($corpId, null);
+
+        //If the corporation was not found in the database, then get the information and store it in our database for later
+        if($corp == null) {
+            try {
+                $corporation = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
+                    'corporation_id' => $corpId,
+                ]);
+            } catch(RequestFailedException $e) {
+                Log::warning('Failed to get corporation information in GetCorporationInfo in Lookup');
+                return null;
+            }
+        } else {
+            //Return what was pulled from the database
+            return $corp;
+        }
+    }
+
+    public function GetAllianceInfo($allianceId) {
+        //Check our own database first
+        $ally = $this->LookupAlliance($corpId, null);
+
+        if($ally == null) {
+            try {
+                $alliance = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
+                    'alliance_id' => $allianceId,
+                ]);
+            } catch(RequestFailedException $e) {
+                Log::warning('Failed to get alliance information in GetAllianceInfo in Lookup');
+                return null;
+            }
+        } else {
+            return $ally;
+        }
     }
 
     public function CharacterIdToName($charId) {
@@ -321,7 +373,7 @@ class LookupHelper {
         }
     }
 
-    public function LookupCharacter($id = null, $name = null) {
+    private function LookupCharacter($id = null, $name = null) {
         //If both the id and name are null, then there is nothing to lookup
         if($id == null & $name == null) {
             return null;
@@ -351,7 +403,7 @@ class LookupHelper {
         return $character;
     }
 
-    public function LookupCorporation($id = null, $name = null) {
+    private function LookupCorporation($id = null, $name = null) {
         if($id == null && $name == null) {
             return null;
         }
@@ -378,7 +430,7 @@ class LookupHelper {
         return $corporation;
     }
 
-    public function LookupAlliance($id = null, $name = null) {
+    private function LookupAlliance($id = null, $name = null) {
         if($id == null && $name == null) {
             return null;
         }
