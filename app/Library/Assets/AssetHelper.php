@@ -9,12 +9,8 @@ use Carbon\Carbon;
 
 //App Library
 use App\Jobs\Library\JobHelper;
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
-use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 use App\Models\Jobs\JobProcessAsset;
 use App\Models\Jobs\JobStatus;
@@ -41,12 +37,6 @@ class AssetHelper {
         //Declare the variable for the esi helper
         $esiHelper = new Esi;
 
-        // Disable all caching by setting the NullCache as the
-        // preferred cache handler. By default, Eseye will use the
-        // FileCache.
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-
         //Setup the esi authentication container
         $config = config('esi');
 
@@ -59,13 +49,8 @@ class AssetHelper {
         
         //Get the refresh token from the database
         $token = $esiHelper->GetRefreshToken($this->charId);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token,
-        ]);
-        //Setup the ESI variable
-        $esi = new Eseye($authentication);
+        //Setup the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
         
         try {
             $assets = $esi->page($this->page)

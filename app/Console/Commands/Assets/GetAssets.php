@@ -11,10 +11,6 @@ use App\Jobs\ProcessAssetsJob;
 
 //Library
 use App\Library\Esi\Esi;
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
 use Commands\Library\CommandHelper;
 use App\Library\Assets\AssetHelper;
 
@@ -79,23 +75,11 @@ class GetAssetsCommand extends Command
             Log::critical("Scope check for esi-assets.read_corporation_assets.v1 failed.");
             return null;
         }
-
-        // Disable all caching by setting the NullCache as the
-        // preferred cache handler. By default, Eseye will use the
-        // FileCache.
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
         
         //Get the refresh token from the database
         $token = $esiHelper->GetRefreshToken($charId);
         //Create the authentication container
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token,
-        ]);
-
-        $esi = new Eseye($authentication);
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         try {
             $assets = $esi->page(1)

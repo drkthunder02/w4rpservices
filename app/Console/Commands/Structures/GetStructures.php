@@ -8,10 +8,6 @@ use Log;
 //Library
 use App\Library\Structures\StructureHelper;
 use App\Library\Esi\Esi;
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
 use Commands\Library\CommandHelper;
 
 //Job
@@ -70,7 +66,7 @@ class GetStructuresCommand extends Command
         $structures = null;
 
         //ESI Scope Check
-        $esiHelper = new Esi();
+        $esiHelper = new Esi;
         $structureScope = $esiHelper->HaveEsiScope($charId, 'esi-universe.read_structures.v1');
         $corpStructureScope = $esiHelper->HaveEsiScope($charId, 'esi-corporations.read_structures.v1');
 
@@ -87,13 +83,8 @@ class GetStructuresCommand extends Command
 
         //Get the refresh token from the database
         $token = EsiToken::where(['character_id' => $charId])->get(['refresh_token']);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-        //Setup the ESI variable
-        $esi = new Eseye($authentication);
+        //Create the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         //Set the current page
         $currentPage = 1;

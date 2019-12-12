@@ -20,7 +20,6 @@ use App\Models\MoonRent\MoonRental;
 //Library
 use App\Library\Moons\MoonCalc;
 use App\Library\Esi\Esi;
-use App\Library\Lookups\LookupHelper;
 use App\Library\Lookups\NewLookupHelper;
 
 class MoonsAdminController extends Controller
@@ -35,7 +34,6 @@ class MoonsAdminController extends Controller
     public function displayMoonsAdmin() {
         $this->middleware('role:Admin');
 
-        $lookup = new LookupHelper;
         $lookupHelper = new NewLookupHelper;
         $contact = '';
         $paid = '';
@@ -97,7 +95,6 @@ class MoonsAdminController extends Controller
                 $rentalEnd = $rentalTemp->format('m-d');
 
                 //Set the contact name
-                //$contact = $lookup->CharacterName($rental->Contact);
                 $contact = $lookupHelper->CharacterIdToName($rental->Contact);
                 
                 //Set up the renter whether it's W4RP or another corporation
@@ -216,7 +213,7 @@ class MoonsAdminController extends Controller
 
         //Declare some static variables as needed
         $moonCalc = new MoonCalc;
-        $lookup = new LookupHelper;
+        $lookup = new NewLookupHelper;
         $paid = false;
         $system = null;
         $planet = null;
@@ -260,7 +257,9 @@ class MoonsAdminController extends Controller
         }
 
         //Let's find the corporation and alliance information to ascertain whethery they are in Warped Intentions or another Legacy Alliance
-        $allianceId = $lookup->LookupCorporation($lookup->LookupCharacter($contact));
+        $char = $lookup->LookupCharacter($contact, null);
+        $corp = $lookup->LookupCorporation($char->character_id, null);
+        $allianceId = $corp->alliance_id;
 
         //Create the date
         $date = new Carbon($request->date . '00:00:01');

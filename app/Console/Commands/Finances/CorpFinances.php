@@ -56,9 +56,6 @@ class CorpFinances extends Command
         //Setup the Finances container
         $finance = new FinanceHelper();
 
-        //Get the esi configuration
-        $config = config('esi');
-
         //Get the corporations who have registered for structure markets
         $structures = CorpMarketStructure::all();
 

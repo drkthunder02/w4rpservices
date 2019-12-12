@@ -10,10 +10,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Log;
 
-//Seat stuff
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
+//Library
+use App\Library\Esi\Esi;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
 //Models
@@ -69,22 +67,17 @@ class ProcessSendEveMailJob implements ShouldQueue
      */
     public function handle()
     {
+        //Declare some variables
+        $esiHelper = new Esi;
+
         //Get the esi configuration
         $config = config('esi');
 
         //Retrieve the token for main character to send mails from
-        $token = EsiToken::where(['character_id'=> 92626011])->first();
+        $token = EsiToken::where(['character_id'=> $config['primary']])->first();
 
         //Create the ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token->refresh_token,
-        ]);
-
-        //Setup the Eseye class
-        $esi = new Eseye($authentication);
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         //Attemp to send the mail
         try {
@@ -97,7 +90,7 @@ class ProcessSendEveMailJob implements ShouldQueue
                 ]],
                 'subject' => $this->subject,
             ])->invoke('post', '/characters/{character_id}/mail/', [
-                'character_id'=> 92626011,
+                'character_id'=> $config['primary'],
             ]);
         } catch(RequestFailedException $e) {
             Log::warning($e);

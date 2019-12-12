@@ -106,23 +106,6 @@ class Esi {
         } else {
             return null;
         }
-        /*
-        try {
-            $character = $esi->setQueryString([
-                'categories' => 'character',
-                'language' => 'en-us',
-                'search' => $name,
-                'strict' => 'true',
-            ])->invoke('get', '/search/');
-        } catch(RequestFailedException $e) {
-            return null;
-        }
-        
-
-        $character = json_decode($character, true);
-
-        return $character['character'];
-        */
     }
 
     public function FindCorporationId($charId) {

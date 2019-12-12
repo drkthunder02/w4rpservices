@@ -31,7 +31,7 @@ use App\Library\Finances\StructureIndustryTax;
 use App\Library\Finances\OfficeFee;
 use App\Library\Finances\PlanetProductionTax;
 use App\Library\Finances\PISale;
-use App\Library\Lookups\LookupHelper;
+use App\Library\Lookups\NewLookupHelper;
 
 //Seat Stuff
 use Seat\Eseye\Containers\EsiAuthentication;
@@ -50,7 +50,7 @@ class FinanceHelper {
         $industry = new StructureIndustryTax();
         $office = new OfficeFee();
         $esiHelper = new Esi();
-        $lookups = new LookupHelper;
+        $lookup = new NewLookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
@@ -64,18 +64,11 @@ class FinanceHelper {
         }        
         
         //Reference to see if the character is in our look up table for corporations and characters
-        $corpId = $lookups->LookupCharacter($charId);
+        $corpId = $lookup->LookupCharacter($charId, null);
 
         //Create an ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token,
-        ]);
-
-        //Create the esi class varialble
-        $esi = new Eseye($authentication);
+        $esi = $esiHelper->SetupEsiAuthentication($token);
+        //Set the version
         $esi->setVersion('v4');
         
         //Set our current page to 1 which is the one we are starting on.
@@ -131,8 +124,8 @@ class FinanceHelper {
 
     public function GetJournalPageCount($division, $charId) {
         //Declare class variables
-        $lookups = new LookupHelper();
-        $esiHelper = new Esi();
+        $lookup = new NewLookupHelper;
+        $esiHelper = new Esi;
         
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
@@ -146,18 +139,12 @@ class FinanceHelper {
         }
 
         //Refrence to see if the character is in our look up table for corporation and characters
-        $corpId = $lookups->LookupCharacter($charId);
+        $corpId = $lookup->LookupCharacter($charId, null);
 
         //Create the ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token,
-        ]);
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
-        //Create the esi class variable
-        $esi = new Eseye($authentication);
+        //Set the esi version to v4
         $esi->setVersion('v4');
 
         //Call the first page so we can get the header data for the number of pages
@@ -179,22 +166,13 @@ class FinanceHelper {
     public function GetCorpWalletJournalPage($division, $charId, $corpId, $page = 1) {
         //Declare new class variables
         $corpMarket = new MarketTax();
+        $esiHelper = new Esi;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $tokenData = $this->TokenIfno($charId);
-        $token = $tokenData['token'];
-        $scope = $tokenData['scope'];
+        $token = $esiHelper->GetRefreshToken($charId);
 
-        //Create an ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token,
-        ]);
-
-        //Create the esi class varialble
-        $esi = new Eseye($authentication);
+        //Setup the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
         $esi->setVersion('v4');
 
         //Call the page of the wallet journal
@@ -232,7 +210,7 @@ class FinanceHelper {
         $office = new OfficeFee;
         $pi = new PlanetProductionTax;
         $esiHelper = new Esi;
-        $lookups = new LookupHelper;
+        $lookup = new NewLookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
@@ -246,18 +224,11 @@ class FinanceHelper {
         }       
         
         //Reference to see if the character is in our look up table for corporations and characters
-        $corpId = $lookups->LookupCorporationId($charId);
+        $char = $lookup->LookupCharacter($charId, null);
+        $corpId = $char->corporation_id;
 
         //Create an ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token,
-        ]);
-
-        //Create the esi class varialble
-        $esi = new Eseye($authentication);
+        $esi = $esiHelper->SetupEsiAuthentication($token);
         $esi->setVersion('v4');
 
         //Call the first page of the wallet journal, as we are always going to get at least one page.

@@ -8,11 +8,6 @@ use DB;
 
 //App Library
 use App\Jobs\Library\JobHelper;
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
-use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 
 //Models
@@ -38,14 +33,8 @@ class EveContractsHelper {
      * Get a page of Contracts to store in the database
      */
     public function GetContractsByPage() {
-        // Disable all caching by setting the NullCache as the
-        // preferred cache handler. By default, Eseye will use the
-        // FileCache.
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-
-        //Setup the esi authentication container
-        $config = config('esi');
+        //Declare some variables
+        $esiHelper = new Esi;
 
         //Check for the scope for the esi token needed
         $hasScope = $esiHelper->HaveEsiScope($this->charId, 'esi-contracts.read_corporation_contracts.v1');
@@ -56,13 +45,8 @@ class EveContractsHelper {
 
         //Get the refresh token from the database
         $token = $esiHelper->GetRefreshToken($this->charId);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token,
-        ]);
-        //Setup the ESI variable
-        $esi = new Eseye($authentication);
+        //Setup the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         try {
             $contracts = $esi->page($this->page)
@@ -84,9 +68,6 @@ class EveContractsHelper {
         //Declare esi helper for decoding the date
         $esiHelper = new Esi;
 
-        //Setup the esi authentication container
-        $config = config('esi');
-
         //Check if the scope is present for ESI
         $hasScope = $esiHelper->HaveEsiScope($this->charId, 'esi-contracts.read_corporation_contracts.v1');
         if($hasScope == false) {
@@ -96,13 +77,8 @@ class EveContractsHelper {
 
         //Get the refresh token from the database
         $token = $esiHelper->GetRefreshToken($this->charId);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token,
-        ]);
-        //Setup the ESI variable
-        $esi = new Eseye($authentication);
+        //Setup the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         //See if we find the contract in the database
         $found = LogisticsContract::where([

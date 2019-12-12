@@ -8,7 +8,7 @@ use DB;
 use Carbon\Carbon;
 
 //Libraries
-use App\Library\Lookups\LookupHelper;
+use App\Library\Lookups\NewLookupHelper;
 //use App\Library\Contracts\ContractHelper;
 
 //Models
@@ -207,7 +207,7 @@ class ContractController extends Controller
         ]);
 
         //Delcare some class variables we will need
-        $lookup = new LookupHelper;
+        $lookup = new NewLookupHelper;
 
         $amount = 0.00;
 
@@ -231,8 +231,11 @@ class ContractController extends Controller
         $characterId = auth()->user()->getId();
         $characterName = auth()->user()->getName();
         //Use the lookup helper in order to find the user's corporation id and name
-        $corporationId = $lookup->LookupCharacter($characterId);
-        $corporationName = $lookup->LookupCorporationName($corporationId);
+        $char = $looup->LookupCharacter($characterId, null);
+        $corporationId = $char->corporation_id;
+        //use the lookup helper in order to find the corporation's name from it's id.
+        $corp = $lookup->LookupCorporation($corporationId, null);
+        $corporationName = $corp->name;
 
         //Before saving a bid let's check to see if the user already placed a bid on the contract
         $found = Bid::where([

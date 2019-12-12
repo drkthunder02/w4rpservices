@@ -15,10 +15,6 @@ use DB;
 
 //App Library
 use App\Jobs\Library\JobHelper;
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 
@@ -43,23 +39,13 @@ class StructureHelper {
     }
 
     public function GetStructuresByPage($page) {
-        // Disable all caching by setting the NullCache as the
-        // preferred cache handler. By default, Eseye will use the
-        // FileCache.
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
+        //Declare some variables
+        $esiHelper = new Esi;
 
-        //Setup the esi authentication container
-        $config = config('esi');
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
-        //Setup the ESI variable
-        $esi = new Eseye($authentication);
+        $token = $esiHelper->GetRefreshToken($this->charId);
+        //Create the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         //Try to get the ESI data
         try {
@@ -76,18 +62,15 @@ class StructureHelper {
     }
 
     public function ProcessStructure($structure) {
-        //Setup the esi authentication container
-        $config = config('esi');
+        //Declare some variables
+        $esiHelper = new Esi;
+        
         //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
+        $token = $esiHelper->GetRefreshToken($this->charId);
+        //Setup the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
-        $esi = new Eseye($authentication);
-
+        //Get the structure information
         $info = $this->GetStructureInfo($structure->structure_id);
 
         //Record the structure information into the database
@@ -101,17 +84,13 @@ class StructureHelper {
     }
 
     private function GetSolarSystemName($systemId) {
-        //Setup the esi authentication container
-        $config = config('esi');
-        //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
+        //Declare some variables
+        $esiHelper = new Esi;
 
-        $esi = new Eseye($authentication);
+        //Get the refresh token
+        $token = $esiHelper->GetRefreshToken($this->charId);
+        //Setup the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         //Attempt to get the solar system name from ESI
         try {
@@ -130,17 +109,13 @@ class StructureHelper {
     }
 
     private function GetStructureInfo($structureId) {
-        //Setup the esi authentication container
-        $config = config('esi');
-        //Get the refresh token from the database
-        $token = EsiToken::where(['character_id' => $this->charId])->get(['refresh_token']);
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token[0]->refresh_token,
-        ]);
+        //Declare some variables
+        $esiHelper = new Esi;
 
-        $esi = new Eseye($authentication);
+        //Get the refresh token
+        $token = $esiHelper->GetRefreshToken($this->charId);
+        //Setup the esi authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         try {
             $info = $esi->invoke('get', '/universe/structures/{structure_id}/', [
@@ -383,7 +358,7 @@ class StructureHelper {
     }
 
     private function DecodeDate($date) {
-        $esiHelper = new Esi();
+        $esiHelper = new Esi;
 
         $dateTime = $esiHelper->DecodeDate($date);
 

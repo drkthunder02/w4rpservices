@@ -9,7 +9,7 @@ use DB;
 use Auth;
 
 //User Libraries
-use App\Library\Lookups\LookupHelper;
+use App\Library\Lookups\NewLookupHelper;
 
 //Models
 use App\Models\Doku\DokuGroupNames;
@@ -27,7 +27,7 @@ class WikiController extends Controller
 
     public function purgeUsers() {
         //Declare helper classes
-        $helper = new LookupHelper;
+        $lookup = new NewLookupHelper;
 
         //Get all the users from the database
         $users = DokuUser::pluck('name')->all();
@@ -42,10 +42,19 @@ class WikiController extends Controller
             //If no name is found, then delete the user and have them start over with the wiki permissions
             $count = User::where(['name' => $user])->count();
             if($count > 0) {
+                //Get the user from the database
                 $charIdTemp = User::where(['name' => $user])->get(['character_id']);
+
+                //Set the character id
                 $charId = $charIdTemp[0]->character_id;
-                $corpId = $helper->LookupCharacter($charId);
-                $allianceId = $helper->LookupCorporation($corpId);
+
+                //Set the corp id
+                $char = $lookup->LookupCharacter($charId, null);
+                $corpId = $char->corporation_id;
+
+                //Set the alliance id
+                $corp = $lookup->LookupCorporation($corpId, null);
+                $allianceId = $corp->alliance_id;
 
                 if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {
                     //Do nothing

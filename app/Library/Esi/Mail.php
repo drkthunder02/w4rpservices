@@ -2,33 +2,29 @@
 
 namespace App\Library\Esi;
 
-use DB;
-
+//Models
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
+//Library
+use App\Library\Esi\Esi;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
 class Mail {
 
     public function SendMail($recipient, $rType, $subject, $body) {
+        //Declare some variables
+        $esiHelper = new Esi;
+
         //Get the esi config
         $config = config('esi');
 
         //Retrieve the token for main character to send mails from
-        $token = EsiToken::where(['character_id' => $config['primary']])->first();
+        $token = $esiHelper->GetRefreshToken($config['primary']);
         //Create the ESI authentication container
-        $config = config('esi');
-        $authentication = new EsiAuthentication([
-            'client_id'  => $config['client_id'],
-            'secret' => $config['secret'],
-            'refresh_token' => $token->refresh_token,
-        ]);
-        $esi = new Eseye($authentication);
+        $esi = $esiHelper->SetupEsiAuthentication($token);
+
+        //Try to send the mail
         try {
             $esi->setBody([
                 'approved_cost' => 0,
