@@ -165,7 +165,7 @@ class LookupHelper {
             $this->SaveCharacter($response, $charId);
 
             //Return the character details to the calling function
-            return $character;
+            return $response;
         } else {
             //Return what was pulled from the database
             return $char;
