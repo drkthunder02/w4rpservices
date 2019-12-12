@@ -51,9 +51,9 @@ class EmptyJumpBridges extends Command
         //Add entry into the table saying the job is starting
         $task->SetStartStatus();
 
-        Structure::delete();
-        Services::delete();
-        Assets::delete();
+        Structure::truncate();
+        Services::truncate();
+        Assets::truncate();
 
         //Mark the job as finished
         $task->SetStopStatus();
