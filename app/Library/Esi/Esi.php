@@ -183,6 +183,7 @@ class Esi {
             $authentication = new EsiAuthentication([
                 'client_id' => $config['client_id'],
                 'secret' => $config['secret'],
+                'token_expires' => date('Y-m-d H:i:s', time() + 600),
             ]);
         } else {
             $authentication = new EsiAuthentication([
