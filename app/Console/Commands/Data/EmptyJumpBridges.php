@@ -9,8 +9,8 @@ use Illuminate\Console\Command;
 use Commands\Library\CommandHelper;
 
 //Models
-use App\Models\Lookups\Structure;
-use App\Models\Lookups\Services;
+use App\Models\Structure\Structure;
+use App\Models\Structure\Services;
 use App\Models\Stock\Asset;
 
 class EmptyJumpBridges extends Command
