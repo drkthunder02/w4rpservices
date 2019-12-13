@@ -19,6 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('/');
 
+/**
+ * Login Display pages
+ */
+Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('login');
+Route::get('/callback', 'Auth\LoginController@handleProviderCallback')->name('callback');
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
 Route::group(['middleware' => ['auth']], function(){
     /**
      * Admin Controller display pages
@@ -176,10 +183,3 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/wormholes/display', 'Wormholes\WormholeController@displayWormholes');
 
 });
-
-/**
- * Login Display pages
- */
-Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('login');
-Route::get('/callback', 'Auth\LoginController@handleProviderCallback')->name('callback');
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
