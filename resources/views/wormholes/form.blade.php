@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     {{ Form::label('points', 'Points of Interest') }}
-                    {{ Form::text('points', null, ['class' => 'form-control']) }}
+                    {{ Form::textarea('points', null, ['class' => 'form-control']) }}
                 </div>
                 <div class="form-group">
                     {{ Form::label('link', 'WH Link') }}
