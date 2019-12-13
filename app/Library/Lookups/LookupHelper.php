@@ -15,8 +15,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 
 //Models
-use App\Models\Lookups\CharacterToCorporation;
-use App\Models\Lookups\CorporationToAlliance;
 use App\Models\Lookups\CharacterLookup;
 use App\Models\Lookups\CorporationLookup;
 use App\Models\Lookups\AllianceLookup;
