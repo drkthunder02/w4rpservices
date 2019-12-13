@@ -17,7 +17,6 @@
                     <a class="dropdown-item" href="/moons/admin/display">Display Moons</a>
                     <a class="dropdown-item" href="/moons/display/form/worth">Moon Worth</a>
                     <a class="dropdown-item" href="/moons/admin/updatemoon">Update Moon</a>
-                    <a class="dropdown-item" href="/moons/admin/journal">Journal</a>
                     @endif
                     @if(auth()->user()->hasPermission('corp.lead'))
                     <a class="dropdown-item" href="/moons/ledger/display/select">Mining Ledger</a>
@@ -112,6 +111,7 @@
                     <a class="dropdown-item" href="/admin/dashboard/taxes">Taxes</a>
                     <a class="dropdown-item" href="/admin/dashboard/logins">Allowed Logins</a>
                     <a class="dropdown-item" href="/admin/dashboard/purgewiki">Wiki Purge</a>
+                    <a class="dropdown-item" href="/admin/dashboard/journal">Wallet Journal</a>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Flex</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                         <a class="dropdown-item" href="/flex/display">Display</a>
