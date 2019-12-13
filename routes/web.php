@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/modify/user', 'Dashboard\AdminController@modifyUser');
     Route::post('/admin/add/allowedlogin', 'Dashboard\AdminController@addAllowedLogin');
     Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminController@removeAllowedLogin');
+    Route::get('/admin/dashboard/journal', 'Dashboard\AdminController@showJournalEntries');
 
     /**
      * AJAX Test pages
@@ -119,7 +120,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/moons/admin/display', 'Moons\MoonsAdminController@displayMoonsAdmin');
     Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
     Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
-    Route::get('/moons/admin/journal', 'Moons\MoonsAdminController@showJournalEntries');
     Route::post('/moons/admin/display', 'Moons\MoonsAdminController@storeMoonRemoval');
 
     /**

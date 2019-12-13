@@ -362,15 +362,4 @@ class MoonsAdminController extends Controller
         //Redirect to the update moon page
         return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
     }
-
-    public function showJournalEntries() {
-        $this->middleware('role:Admin');
-
-        $dateInit = Carbon::now();
-        $date = $dateInit->subDays(30);
-
-        $journal = DB::select('SELECT amount,reason,description,date FROM `player_donation_journal` WHERE corporation_id=98287666 AND date >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH) ORDER BY date DESC');
-        
-        return view('moons.admin.moonjournal')->with('journal', $journal);
-    }
 }
