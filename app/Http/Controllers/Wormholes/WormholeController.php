@@ -94,7 +94,7 @@ class WormholeController extends Controller
         $duration = null;
 
         //Create the stable time for the database
-        if($request->duraiton == 'This wormhole has not yet begun its natural cycle of decay and should last at least another day.') {
+        if($request->duration == 'This wormhole has not yet begun its natural cycle of decay and should last at least another day.') {
             $duration = '>24 hours';
         } else if ($request->duration == 'This wormhole is beginning to decay, but will not last another day.') {
             $duration = '>4 hours <24 hours';
