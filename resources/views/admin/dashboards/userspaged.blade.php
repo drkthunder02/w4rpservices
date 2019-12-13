@@ -6,6 +6,15 @@
             <h2>User Information</h2>
         </div>
         <div class="card-body">
+            <div class="container">
+                {!! Form::open(['action' => 'Dashboard\AdminController@searchUsers', 'method' => 'POST']) !!}
+                <div class="form-group">
+                    {{ Form::label('parameter', 'Seach For A User') }}
+                    {{ Form::text('parameter', '', ['class' => 'form-control', 'placeholder' => 'CCP Antiquarian']) }}
+                </div>
+                {{ Form::submit('Search', ['class' => 'btn btn-primary']) }}
+                {!! Form::close() !!}
+            </div>
             <table class="table table-striped table-bordered">
                 <thead>
                     <th>Name</th>

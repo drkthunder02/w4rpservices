@@ -66,42 +66,43 @@ class AdminController extends Controller
         return view('admin.dashboards.userspaged')->with('usersArr', $usersArr);
     }
 
-    public function displayUsers($page) {
+    public function searchUsers(Request $request) {
         //Declare array variables
         $user = array();
         $permission = array();
         $userArr = array();
+        $permString = null;
 
-        /**
-         * For each user we want to build their name and permission set into one array
-         * Having all of the data in one array will allow us to build the table for the admin page more fluently.
-         * Example:  userArr[0]['name'] = Minerva Arbosa
-         *           userArr[0]['role'] = W4RP
-         *           userArr[0]['permissions'] = ['admin', 'contract.admin', superuser]
-         */
-        $usersTable = User::orderBy('name', 'asc')->get()->toArray();
-        foreach($usersTable as $user) {
-            $perms = UserPermission::where([
-                'character_id' => $user['character_id'],
-            ])->get('permission')->toArray();
+        //Validate the input from the form
+        $this->validate($request, [
+            'parameter' => 'required',
+        ]);
 
-            $tempUser['name'] = $user['name'];
-            $tempUser['role'] = $user['user_type'];
-            $tempUser['permissions'] = $perms;
+        $usersArr = User::where('name', 'like', $request->parameter)->paginate(50);
 
-            array_push($userArr, $tempUser);
+        foreach($usersArr as $user) {
+            $user->role = $user->getRole();
+
+            $permCount = UserPermission::where([
+                'character_id' => $user->character_id,
+            ])->count();
+
+            if($permCount > 0) {
+                $perms = UserPermission::where([
+                    'character_id' => $user->character_id,
+                ])->get('permission')->toArray();
+
+                foreach($perms as $perm) {
+                    $permString .= $perm['permission'] . ', ';
+                }
+
+                $user->permission = $permString;
+            } else {
+                $user->permission = 'No Permissions';
+            }
         }
 
-        //Get a user count for the view so we can do pagination
-        $userCount = User::orderBy('name', 'asc')->count();
-        //Set the amount of pages for the data
-        $userPages = ceil($userCount / 50);
-        $users = User::pluck('name')->all();
-
-        return view('admin.dashboards.users')->with('users', $users)
-                                             ->with('userArr', $userArr)
-                                             ->with('userCount', $userCount)
-                                             ->with('userPages', $userPages);
+        return view('admin.dashboards.users.searched')->with('usersArr', $usersArr);
     }
 
     public function displayAllowedLogins() {
