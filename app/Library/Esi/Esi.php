@@ -58,7 +58,8 @@ class Esi {
     }
 
     public function GetCharacterData($charId) {
-        $esi = new Eseye();
+        $esi = $this->SetupEsiAuthentication();
+
         try {
             $character = $esi->invoke('get', '/characters/{character_id}/', [
                 'character_id' => $charId,
@@ -70,8 +71,23 @@ class Esi {
         return $character;
     }
 
+    public function GetCorporationData($corpId) {
+        $esi = $this->SetupEsiAuthentication();
+
+        try {
+            $corporation = $esi->invoke('get', '/corporations/{corporation_id}/', [
+                'corporation_id' => $corpId,
+            ]);
+        } catch(RequestFailedException $e) {
+            return null;
+        }
+
+        return $corporation;
+    }
+
     public function GetCharacterName($charId) {
-        $esi = new Eseye();
+        $esi = $this->SetupEsiAuthentication;
+        
         try {
             $character = $esi->invoke('get', '/characters/{character_id}/', [
                 'character_id' => $charId,
@@ -85,13 +101,8 @@ class Esi {
 
     public function FindCharacterId($name) {
         $config = config('esi');
-        //Create the esi authentication container
-        $authentication = new EsiAuthentication([
-            'client_id' => $config['client_id'],
-            'secret' => $config['secret'],
-        ]);
-        //Create the esi container
-        $esi = new Eseye($authentication);
+
+        $esi = $this->SetupEsiAuthentication();
 
         try {
             $character = $esi->setBody(array(
@@ -109,7 +120,8 @@ class Esi {
     }
 
     public function FindCorporationId($charId) {
-        $esi = new Eseye();
+        $esi = $this->SetupEsiAuthentication();
+        
         try {
             $character = $esi->invoke('get', '/characters/{character_id}/', [
                 'character_id' => $charId,
@@ -122,7 +134,8 @@ class Esi {
     }
 
     public function FindCorporationName($charId) {
-        $esi = new Eseye();
+        $esi = $this->SetupEsiAuthentication();
+        
         try {
             $character = $esi->invoke('get', '/characters/{character_id}/', [
                 'character_id' => $charId,

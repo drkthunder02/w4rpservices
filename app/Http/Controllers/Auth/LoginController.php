@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
+//Internal Library
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Socialite;
 use Auth;
 
+//Library
+use Seat\Eseye\Cache\NullCache;
+use Seat\Eseye\Configuration;
+use App\Library\Esi\Esi;
+
+//Models
 use App\Models\User\User;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
@@ -16,10 +23,6 @@ use App\Models\User\UserRole;
 use App\Models\Admin\AllowedLogin;
 use App\Models\User\UserAlt;
 
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
 
 class LoginController extends Controller
 {
@@ -345,22 +348,25 @@ class LoginController extends Controller
      * @return text
      */
     private function GetAccountType($refreshToken, $charId) {
+        //Declare some variables
+        $esiHelper = new Esi;
+
+        //Instantiate a new ESI isntance
+        $esi = $esiHelper->SetupEsiAuthentication();
+
         //Set caching to null
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
 
-        // Instantiate a new ESI instance
-        $esi = new Eseye();
-
         //Get the character information
-        $character_info = $esi->invoke('get', '/characters/{character_id}/', [
-            'character_id' => $charId,
-        ]);
+        $character_info = $esiHelper->GetCharacterData($charId);
 
         //Get the corporation information
-        $corp_info = $esi->invoke('get', '/corporations/{corporation_id}/', [
-            'corporation_id' => $character_info->corporation_id,
-        ]);
+        $corp_info = $esiHelper->GetCorporationData($character_info->corporation_id);
+
+        if($character_info == null || $corp_info == null) {
+            return redirect('/')->with('error', 'Could not create user at this time.');
+        }
 
         $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
         $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
