@@ -10,6 +10,7 @@ use Auth;
 
 //User Libraries
 use App\Library\Lookups\LookupHelper;
+use App\Library\Wiki\WikiHelper;
 
 //Models
 use App\Models\Doku\DokuGroupNames;
@@ -28,6 +29,7 @@ class WikiController extends Controller
     public function purgeUsers() {
         //Declare helper classes
         $lookup = new LookupHelper;
+        $wikiHelper = new WikiHelper;
 
         //Get all the users from the database
         $users = DokuUser::pluck('name')->all();
@@ -42,29 +44,13 @@ class WikiController extends Controller
             //If no name is found, then delete the user and have them start over with the wiki permissions
             $count = User::where(['name' => $user])->count();
             if($count > 0) {
-                //Get the user from the database
-                $charIdTemp = User::where(['name' => $user])->get(['character_id']);
-
-                //Set the character id
-                $charId = $charIdTemp[0]->character_id;
-
-                //Set the corp id
-                $char = $lookup->GetCharacterInfo($charId);
-                $corpId = $char->corporation_id;
-
-                //Set the alliance id
-                $corp = $lookup->LookupCorporation($corpId, null);
-                $allianceId = $corp->alliance_id;
-
-                if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {
-                    //Do nothing
-                } else {
+                //If the user is not allowed, then delete the user, otherwise, leave the user untouched
+                if(!$wikiHelper->AllowedUser($user)) {
                     $this->DeleteWikiUser($user);
                 }
             } else {
                 $this->DeleteWikiUser($user);
             }
-
         }
 
         return redirect('/admin/dashboard')->with('success', 'Wiki has been purged.');
@@ -186,6 +172,25 @@ class WikiController extends Controller
     public function storeAddUserToGroup($uid, $gid, $gname) {
 
         return redirect('/dashboard')->with('success', 'User added to the group: ' . $gid . ' with name of ' . $gname);
+    }
+
+    /**
+     * Display the modify user group page
+     */
+    public function displayModifyWikiUser() {
+        $this->middleware('role:Admin');
+
+        return view('wiki.display.modifyuser');
+    }
+
+    /**
+     * Modify the user's group(s) in the database for the wiki
+     */
+    public function modifyWikiUser(Request $request) {
+        $this->validate($request, [
+            'user' => 'required',
+            'group' => 'required',
+        ]);
     }
 
     private function DeleteWikiUser($user) {
