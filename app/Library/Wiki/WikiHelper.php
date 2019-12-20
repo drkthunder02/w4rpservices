@@ -80,6 +80,7 @@ class WikiHelper {
             DokuMember::insert([
                 'uid' => $user->id,
                 'gid' => $newGroup->id,
+                'groupname' => $newGroup->gname,
             ]);
 
             //Return true saying we have inserted the user into the group

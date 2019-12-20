@@ -88,8 +88,10 @@ class WikiController extends Controller
 
         if(Auth::user()->hasRole('User')) {
             $role = 1; //User role id from wiki_groupname table
+            $roleDescription = 'user';
         } else if(Auth::user()->hasRole('Renter')) {
             $role = 8; //Renter role id from wiki_groupname table
+            $roleDescription = 'renter';
         }
 
         //Load the model
@@ -111,6 +113,7 @@ class WikiController extends Controller
         $uid = DB::select('SELECT id FROM wiki_user WHERE login = ?', [$name]);
         $member->uid = $uid[0]->id;
         $member->gid = $role;
+        $member->groupname = $roleDescription;
         $member->save();
         //Return to the dashboard view
         return redirect('/dashboard')->with('success', 'Registration successful.  Your username is: ' . $name);
@@ -160,37 +163,6 @@ class WikiController extends Controller
      */
     public function displayAddUserToGroup() {
         return view('wiki.displayaddug');
-    }
-
-    /**
-     * Stores the modifications to the user to add to a group to give permissions
-     * 
-     * @param uid
-     * @param gid
-     * @param gname
-     */
-    public function storeAddUserToGroup($uid, $gid, $gname) {
-
-        return redirect('/dashboard')->with('success', 'User added to the group: ' . $gid . ' with name of ' . $gname);
-    }
-
-    /**
-     * Display the modify user group page
-     */
-    public function displayModifyWikiUser() {
-        $this->middleware('role:Admin');
-
-        return view('wiki.display.modifyuser');
-    }
-
-    /**
-     * Modify the user's group(s) in the database for the wiki
-     */
-    public function modifyWikiUser(Request $request) {
-        $this->validate($request, [
-            'user' => 'required',
-            'group' => 'required',
-        ]);
     }
 
     private function DeleteWikiUser($user) {
