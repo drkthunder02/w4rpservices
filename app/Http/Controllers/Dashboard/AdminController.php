@@ -8,6 +8,7 @@ use DB;
 
 //Libraries
 use App\Library\Taxes\TaxesHelper;
+use App\Library\Wiki\WikiHelper;
 
 //Models
 use App\Models\User\User;
@@ -15,6 +16,9 @@ use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\User\AvailableUserPermission;
 use App\Models\Admin\AllowedLogin;
+use App\Models\Doku\DokuGroupNames;
+use App\Models\Doku\DokuMember;
+use App\Models\Doku\DokuUser;
 
 class AdminController extends Controller
 {
@@ -121,10 +125,6 @@ class AdminController extends Controller
         }
 
         return view('admin.dashboards.allowed_logins')->with('entities', $entities);
-    }
-
-    public function displayPurgeWiki() {
-        return view('admin.dashboards.purge_wiki');
     }
 
     public function displayTaxes() {
@@ -320,5 +320,67 @@ class AdminController extends Controller
         ])->delete();
 
         return redirect('/admin/dashboard')->with('success', 'Entity removed from allowed login list.');
+    }
+
+    /**
+     * Displays the purge wiki page.  This will be removed in favor of the wiki dashboard.
+     */
+    public function displayPurgeWiki() {
+        return view('admin.dashboards.purge_wiki');
+    }
+
+    /**
+     * Display the wiki dashboard for wiki functions
+     */
+    public function displayWikiDashboard() {
+        $wikiUsers = DokuUser::all();
+        $wikiGroups = DokuGroupNames::all();
+        $wikiMembership = DokuMember::all();
+
+        return view('admin.dashboard.wiki')->with('wikiUsers', $wikiUsers)
+                                           ->with('wikiGroups', $wikiGroups)
+                                           ->with('wikiMembership', $wikiMembership);
+    }
+
+    /**
+     * Modify a user's wiki group
+     */
+    public function modifyWikiUser(Request $request) {
+
+    }
+
+    /**
+     * Delete a wiki user
+     */
+    public function deleteWikiUser(Request $request) {
+
+    }
+
+    /**
+     * Add a group to a wiki user
+     */
+    public function addWikiUserGroup(Request $request) {
+
+    }
+
+    /**
+     * Remove a group from a wiki user
+     */
+    public function removeWikiUserGroup(Request $request) {
+
+    }
+
+    /**
+     * Remove a user from all wiki groups
+     */
+    public function removeWikiUserAllGroups(Request $request) {
+
+    }
+
+    /**
+     * Insert a new group for wiki user's to be added to
+     */
+    public function insertNewWikiUserGroup(Request $request) {
+        
     }
 }

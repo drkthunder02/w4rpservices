@@ -158,13 +158,6 @@ class WikiController extends Controller
         return redirect('/dashboard')->with('success', 'Password changed successfully.  Your username is: ' . $name);
     }
 
-    /**
-     * Displays the page to add a user to a certain group
-     */
-    public function displayAddUserToGroup() {
-        return view('wiki.displayaddug');
-    }
-
     private function DeleteWikiUser($user) {
         //Get the uid of the user as we will need to purge them from the member table as well.
         //the member table holds their permissions.
