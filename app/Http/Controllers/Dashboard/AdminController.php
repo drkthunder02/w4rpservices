@@ -327,9 +327,19 @@ class AdminController extends Controller
      * Display the wiki dashboard for wiki functions
      */
     public function displayWikiDashboard() {
-        $wikiUsers = DokuUser::all();
+        //Declare some variables
+        $wikiUsers = array();
+        
+        $tempUsers = DokuUser::all();
         $wikiGroups = DokuGroupNames::all();
         $wikiMembership = DokuMember::all();
+
+        //Create a list of users based on id and name for the select form
+        foreach($tempUsers as $temp) {
+            $wikiUsers[$temp->id] = $temp->name;
+        }
+
+        dd($wikiUsers);
 
         return view('admin.dashboards.wiki')->with('wikiUsers', $wikiUsers)
                                            ->with('wikiGroups', $wikiGroups)
