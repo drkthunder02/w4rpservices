@@ -9,7 +9,7 @@
 <br>
 <div class="container-fluid">
     <div class="row">
-        <div class="col">
+        <div class="col col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h2>Add User to Group</h2>
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h2>Create New User Group</h2>
@@ -52,7 +52,7 @@
     </div>
     <br>
     <div class="row">
-        <div class="col">
+        <div class="col col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h2>Remove User From Group</h2>
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h2>Remove User From All Groups</h2>
@@ -91,7 +91,7 @@
     </div>
     <br>
     <div class="row">
-        <div class="col">
+        <div class="col col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h2>Remove Wiki User</h2>
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h2>Purge Wiki</h2>
