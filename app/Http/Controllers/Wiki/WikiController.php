@@ -25,36 +25,6 @@ class WikiController extends Controller
         $this->middleware('auth');
         $this->middleware('role:Renter');
     }
-
-    public function purgeUsers() {
-        //Declare helper classes
-        $lookup = new LookupHelper;
-        $wikiHelper = new WikiHelper;
-
-        //Get all the users from the database
-        $users = DokuUser::pluck('name')->all();
-
-        $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
-        $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
-
-        //Search the names and verify against the lookup table
-        //to find the corporation and / or alliance they belong to.
-        foreach($users as $user) {
-            //Let's look up the character in the user table by their name.
-            //If no name is found, then delete the user and have them start over with the wiki permissions
-            $count = User::where(['name' => $user])->count();
-            if($count > 0) {
-                //If the user is not allowed, then delete the user, otherwise, leave the user untouched
-                if(!$wikiHelper->AllowedUser($user)) {
-                    $this->DeleteWikiUser($user);
-                }
-            } else {
-                $this->DeleteWikiUser($user);
-            }
-        }
-
-        return redirect('/admin/dashboard')->with('success', 'Wiki has been purged.');
-    }
     
     public function displayRegister() {
         //make user name syntax like we want it.
@@ -156,20 +126,5 @@ class WikiController extends Controller
             ->update(['pass' => $password]);
 
         return redirect('/dashboard')->with('success', 'Password changed successfully.  Your username is: ' . $name);
-    }
-
-    private function DeleteWikiUser($user) {
-        //Get the uid of the user as we will need to purge them from the member table as well.
-        //the member table holds their permissions.
-        $uid = DokuUser::where([
-            'name' => $user,
-        ])->value('id');
-        //Delete the permissions of the user first.
-        DokuMember::where([
-            'uid' => $uid,
-        ])->delete();
-
-        //Delete the user from the user table
-        DokuUser::where(['name' => $user])->delete();
     }
 }

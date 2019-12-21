@@ -323,13 +323,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Displays the purge wiki page.  This will be removed in favor of the wiki dashboard.
-     */
-    public function displayPurgeWiki() {
-        return view('admin.dashboards.purge_wiki');
-    }
-
-    /**
      * Display the wiki dashboard for wiki functions
      */
     public function displayWikiDashboard() {
@@ -343,44 +336,127 @@ class AdminController extends Controller
     }
 
     /**
-     * Modify a user's wiki group
-     */
-    public function modifyWikiUser(Request $request) {
-
-    }
-
-    /**
      * Delete a wiki user
      */
     public function deleteWikiUser(Request $request) {
+        $this->validate($request, [
+            'user' => 'required',
+        ]);
 
+        //Declare helper variable
+        $wikiHelper = new WikiHelper;
+
+        $wikiHelper->DeleteWikiUser($request->user);
+
+        redirect('/admin/wiki/dashboard')->with('success', 'User: ' . $request->user . ' has been deleted.');
     }
 
     /**
      * Add a group to a wiki user
      */
     public function addWikiUserGroup(Request $request) {
+        $this->validate($request, [
+            'user' => 'required',
+            'groupname' => 'required',
+        ]);
 
+        //Declare some helper variables
+        $wikiHelper = new WikiHelper;
+
+        //Check to see if the user has the group we are going to add first
+        if($wikiHelper->UserHasGroup($request->user, $request->groupname)) {
+            return redirect('/admin/wiki/dashboard')->with('error', 'User already has the group.');
+        }
+
+        //Add the user to the wiki group
+        $wikiHelper->AddUserToGroup($request->user, $request->groupname);
+
+        return redirect('/admin/wiki/dashboard')->with('success', 'User added to group for the wiki.');
     }
 
     /**
      * Remove a group from a wiki user
      */
     public function removeWikiUserGroup(Request $request) {
+        $this->validate($request, [
+            'user' => 'required',
+            'groupname' => 'required',
+        ]);
 
+        //Declare some helper variables
+        $wikiHelper = new WikiHelper;
+
+        //Check to see if the user has the group we are going to remove them from
+        if(!$wikiHelper->UserHasGroup($request->user, $request->groupname)) {
+            return redirect('/admin/wiki/dashboard')->with('error', 'User does not have the group to remove.');
+        }
+
+        //Remove the user from the wiki group
+        $wikiHelper->RemoveUserFromGroup($request->user, $request->groupname);
+
+        return redirect('/admin/wiki/dashboard')->with('success', 'Removed user from group ' . $request->grouopname);
     }
 
     /**
      * Remove a user from all wiki groups
      */
     public function removeWikiUserAllGroups(Request $request) {
+        $this->validate($request, [
+            'user' => 'required',
+        ]);
 
+        //Declare variable
+        $wikiHelper = new WikiHelper;
+
+        $wikiHelper->RemoveUserFromAllGroups($request->user);
+
+        return redirect('/admin/wiki/dashboard')->with('success', 'User successfully removed from all groups.');
     }
 
     /**
      * Insert a new group for wiki user's to be added to
      */
     public function insertNewWikiUserGroup(Request $request) {
-        
+        $this->validate($request, [
+            'group' => 'required',
+            'description' => 'required',
+        ]);
+
+        //Declare variable
+        $wikiHelper = new WikiHelper;
+
+        $wikiHelper->AddNewUserGroup($request->group, $request->description);
+
+        return redirect('/admin/wiki/dashboard')->with('success', 'Added new user group.');
+    }
+
+    public function purgeWikiUsers() {
+        //Declare helper classes
+        $lookup = new LookupHelper;
+        $wikiHelper = new WikiHelper;
+
+        //Get all the users from the database
+        $users = DokuUser::pluck('name')->all();
+
+        $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
+        $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
+
+        //Search the names and verify against the lookup table
+        //to find the corporation and / or alliance they belong to.
+        foreach($users as $user) {
+            //Let's look up the character in the user table by their name.
+            //If no name is found, then delete the user and have them start over with the wiki permissions
+            $count = User::where(['name' => $user])->count();
+            if($count > 0) {
+                //If the user is not allowed, then delete the user, otherwise, leave the user untouched
+                if(!$wikiHelper->AllowedUser($user)) {
+                    $wikiHelper->DeleteWikiUser($user);
+                }
+            } else {
+                $wikiHelper->DeleteWikiUser($user);
+            }
+        }
+
+        return redirect('/admin/wiki/dashboard')->with('success', 'Wiki has been purged.');
     }
 }

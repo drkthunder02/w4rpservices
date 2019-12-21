@@ -13,5 +13,6 @@ class DokuGroupNames extends Model
 
     protected $fillable = [
         'gname',
+        'description',
     ];
 }

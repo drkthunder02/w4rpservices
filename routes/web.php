@@ -44,6 +44,14 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/add/allowedlogin', 'Dashboard\AdminController@addAllowedLogin');
     Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminController@removeAllowedLogin');
     Route::get('/admin/dashboard/journal', 'Dashboard\AdminController@showJournalEntries');
+    Route::get('/admin/dashboard/wiki', 'Dashboard\AdminController@displayWikiDashboard');
+    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@deleteWikiUser');
+    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@addWikiUserGroup');
+    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@removeWikiUserGroup');
+    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@removeWikiUserAllGroups');
+    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@insertNewWikiUserGroup');
+    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@purgeWikiUseres');
+    
 
     /**
      * AJAX Test pages
