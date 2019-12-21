@@ -38,11 +38,11 @@
                     {!! Form::open(['action' => 'Dashboard\AdminController@insertNewWikiUserGroup', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('group', 'New Group Name') }}
-                        {{ Form::text('group', '', ['class' => 'form-control']) }}
+                        {{ Form::text('group', '', ['class' => 'form-control col-md-4']) }}
                     </div>
                     <div class="form-group">
                         {{ Form::label('description', 'Group Description') }}
-                        {{ Form::text('description', '', ['class' => 'form-control']) }}
+                        {{ Form::text('description', '', ['class' => 'form-control col-md-4']) }}
                     </div>
                     {{ Form::submit('Add New Group', ['class' => 'btn btn-success']) }}
                     {!! Form::close() !!}
