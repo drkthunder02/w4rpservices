@@ -34,7 +34,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/dashboard/users', 'Dashboard\AdminController@searchUsers');
     Route::get('/admin/dashboard/taxes', 'Dashboard\AdminController@displayTaxes');
     Route::get('/admin/dashboard/logins', 'Dashboard\AdminController@displayAllowedLogins');
-    Route::get('/admin/dashboard/purgewiki', 'Dashboard\AdminController@displayPurgeWiki');
     Route::post('/admin/add/role', 'Dashboard\AdminController@addRole');
     Route::post('/admin/remove/role', 'Dashboard\AdminController@removeRole');
     Route::post('/admin/add/permission', 'Dashboard\AdminController@addPermission');
@@ -45,12 +44,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminController@removeAllowedLogin');
     Route::get('/admin/dashboard/journal', 'Dashboard\AdminController@showJournalEntries');
     Route::get('/admin/dashboard/wiki', 'Dashboard\AdminController@displayWikiDashboard');
-    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@deleteWikiUser');
-    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@addWikiUserGroup');
-    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@removeWikiUserGroup');
-    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@removeWikiUserAllGroups');
-    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@insertNewWikiUserGroup');
-    Route::post('/admin/dashboard/wiki', 'Dashboard\AdminController@purgeWikiUseres');
+    Route::post('/admin/dashboard/wiki/deleteuser', 'Dashboard\AdminController@deleteWikiUser');
+    Route::post('/admin/dashboard/wiki/adduser', 'Dashboard\AdminController@addWikiUserGroup');
+    Route::post('/admin/dashboard/wiki/removegroup', 'Dashboard\AdminController@removeWikiUserGroup');
+    Route::post('/admin/dashboard/wiki/removeallgroups', 'Dashboard\AdminController@removeWikiUserAllGroups');
+    Route::post('/admin/dashboard/wiki/newgroup', 'Dashboard\AdminController@insertNewWikiUserGroup');
+    Route::post('/admin/dashboard/wiki/purge', 'Dashboard\AdminController@purgeWikiUseres');
     
 
     /**
