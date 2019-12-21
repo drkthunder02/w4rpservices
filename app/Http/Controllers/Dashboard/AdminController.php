@@ -339,8 +339,6 @@ class AdminController extends Controller
             $wikiUsers[$temp->id] = $temp->name;
         }
 
-        dd($wikiUsers);
-
         return view('admin.dashboards.wiki')->with('wikiUsers', $wikiUsers)
                                            ->with('wikiGroups', $wikiGroups)
                                            ->with('wikiMembership', $wikiMembership);
