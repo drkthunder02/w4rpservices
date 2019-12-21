@@ -98,7 +98,7 @@
                     {!! Form::open(['action' => 'Dashboard\AdminController@deleteWikiUser', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('user', 'Select User') }}
-                        {{ Form::select('user', $user, null, ['placeholder' => 'Select User to Delete']) }}
+                        {{ Form::select('user', $wikiUsers, null, ['placeholder' => 'Select User to Delete']) }}
                     </div>
                     {{ Form::submit('Delete User', ['class' => 'btn btn-danger']) }}
                     {!! Form::close() !!}
