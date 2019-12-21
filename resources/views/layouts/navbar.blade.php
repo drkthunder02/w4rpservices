@@ -110,7 +110,7 @@
                     <a class="dropdown-item" href="/admin/dashboard/users">Users</a>
                     <a class="dropdown-item" href="/admin/dashboard/taxes">Taxes</a>
                     <a class="dropdown-item" href="/admin/dashboard/logins">Allowed Logins</a>
-                    <a class="dropdown-item" href="/admin/dashboard/purgewiki">Wiki Purge</a>
+                    <a class="dropdown-item" href="/admin/dashboard/wiki">Wiki</a>
                     <a class="dropdown-item" href="/admin/dashboard/journal">Wallet Journal</a>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Flex</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
