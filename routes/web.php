@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/dashboard/wiki/removegroup', 'Dashboard\AdminController@removeWikiUserGroup');
     Route::post('/admin/dashboard/wiki/removeallgroups', 'Dashboard\AdminController@removeWikiUserAllGroups');
     Route::post('/admin/dashboard/wiki/newgroup', 'Dashboard\AdminController@insertNewWikiUserGroup');
-    Route::post('/admin/dashboard/wiki/purge', 'Dashboard\AdminController@purgeWikiUseres');
+    Route::post('/admin/dashboard/wiki/purge', 'Dashboard\AdminController@purgeWikiUsers');
     
 
     /**
