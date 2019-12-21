@@ -41,7 +41,7 @@
                         {{ Form::text('group', '', ['class' => 'form-control']) }}
                     </div>
                     <div class="form-group">
-                        {{ Form::lable('description', 'Group Description') }}
+                        {{ Form::label('description', 'Group Description') }}
                         {{ Form::text('description', '', ['class' => 'form-control']) }}
                     </div>
                     {{ Form::submit('Add New Group', ['class' => 'btn btn-success']) }}
