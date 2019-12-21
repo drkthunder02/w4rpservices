@@ -111,7 +111,7 @@
                     <h2>Purge Wiki</h2>
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['action' => 'Dashboard\AdminController@purgeUsers', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Dashboard\AdminController@purgeWikiUsers', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('admin', 'This action will log the administrator who peformed the action.') }}
                         {{ Form::hidden('admin', auth()->user()->character_id) }}

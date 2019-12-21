@@ -430,7 +430,11 @@ class AdminController extends Controller
         return redirect('/admin/dashboard/wiki')->with('success', 'Added new user group.');
     }
 
-    public function purgeWikiUsers() {
+    public function purgeWikiUsers(Request $request) {
+        $this->validate($request, [
+            'admin' => 'required',
+        ]);
+
         //Declare helper classes
         $lookup = new LookupHelper;
         $wikiHelper = new WikiHelper;
