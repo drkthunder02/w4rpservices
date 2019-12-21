@@ -329,14 +329,19 @@ class AdminController extends Controller
     public function displayWikiDashboard() {
         //Declare some variables
         $wikiUsers = array();
+        $wikiGroups = array();
         
         $tempUsers = DokuUser::all();
-        $wikiGroups = DokuGroupNames::all();
+        $tempGroups = DokuGroupNames::all();
         $wikiMembership = DokuMember::all();
 
         //Create a list of users based on id and name for the select form
         foreach($tempUsers as $temp) {
             $wikiUsers[$temp->id] = $temp->name;
+        }
+
+        foreach($tempGroups as $temp) {
+            $wikiGroups[$temp->id] = $temp->gname;
         }
 
         return view('admin.dashboards.wiki')->with('wikiUsers', $wikiUsers)
