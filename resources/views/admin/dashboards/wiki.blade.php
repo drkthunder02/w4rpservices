@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-group">
                         {{ Form::label('groupname', 'Group') }}
-                        {{ Form::select('groupname', $wikiGroup, null, ['placeholder' => 'Pick A Group']) }}
+                        {{ Form::select('groupname', $wikiGroups, null, ['placeholder' => 'Pick A Group']) }}
                     </div>
                     {{ Form::submit('Remove User From Group', ['class' => 'btn btn-warning']) }}
                     {!! Form::close() !!}
