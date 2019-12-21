@@ -330,7 +330,7 @@ class AdminController extends Controller
         $wikiGroups = DokuGroupNames::all();
         $wikiMembership = DokuMember::all();
 
-        return view('admin.dashboard.wiki')->with('wikiUsers', $wikiUsers)
+        return view('admin.dashboards.wiki')->with('wikiUsers', $wikiUsers)
                                            ->with('wikiGroups', $wikiGroups)
                                            ->with('wikiMembership', $wikiMembership);
     }
@@ -348,7 +348,7 @@ class AdminController extends Controller
 
         $wikiHelper->DeleteWikiUser($request->user);
 
-        redirect('/admin/wiki/dashboard')->with('success', 'User: ' . $request->user . ' has been deleted.');
+        redirect('/admin/dashboard/wiki')->with('success', 'User: ' . $request->user . ' has been deleted.');
     }
 
     /**
@@ -365,13 +365,13 @@ class AdminController extends Controller
 
         //Check to see if the user has the group we are going to add first
         if($wikiHelper->UserHasGroup($request->user, $request->groupname)) {
-            return redirect('/admin/wiki/dashboard')->with('error', 'User already has the group.');
+            return redirect('/admin/dashboard/wiki')->with('error', 'User already has the group.');
         }
 
         //Add the user to the wiki group
         $wikiHelper->AddUserToGroup($request->user, $request->groupname);
 
-        return redirect('/admin/wiki/dashboard')->with('success', 'User added to group for the wiki.');
+        return redirect('/admin/dashboard/wiki')->with('success', 'User added to group for the wiki.');
     }
 
     /**
@@ -388,13 +388,13 @@ class AdminController extends Controller
 
         //Check to see if the user has the group we are going to remove them from
         if(!$wikiHelper->UserHasGroup($request->user, $request->groupname)) {
-            return redirect('/admin/wiki/dashboard')->with('error', 'User does not have the group to remove.');
+            return redirect('/admin/dashboard/wiki')->with('error', 'User does not have the group to remove.');
         }
 
         //Remove the user from the wiki group
         $wikiHelper->RemoveUserFromGroup($request->user, $request->groupname);
 
-        return redirect('/admin/wiki/dashboard')->with('success', 'Removed user from group ' . $request->grouopname);
+        return redirect('/admin/dashboard/wiki')->with('success', 'Removed user from group ' . $request->grouopname);
     }
 
     /**
@@ -410,7 +410,7 @@ class AdminController extends Controller
 
         $wikiHelper->RemoveUserFromAllGroups($request->user);
 
-        return redirect('/admin/wiki/dashboard')->with('success', 'User successfully removed from all groups.');
+        return redirect('/admin/dashboard/wiki')->with('success', 'User successfully removed from all groups.');
     }
 
     /**
@@ -427,7 +427,7 @@ class AdminController extends Controller
 
         $wikiHelper->AddNewUserGroup($request->group, $request->description);
 
-        return redirect('/admin/wiki/dashboard')->with('success', 'Added new user group.');
+        return redirect('/admin/dashboard/wiki')->with('success', 'Added new user group.');
     }
 
     public function purgeWikiUsers() {
@@ -457,6 +457,6 @@ class AdminController extends Controller
             }
         }
 
-        return redirect('/admin/wiki/dashboard')->with('success', 'Wiki has been purged.');
+        return redirect('/admin/dashboard/wiki')->with('success', 'Wiki has been purged.');
     }
 }
