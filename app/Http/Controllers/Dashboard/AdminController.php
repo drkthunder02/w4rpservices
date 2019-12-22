@@ -361,6 +361,8 @@ class AdminController extends Controller
             'user' => 'required',
         ]);
 
+        dd($request);
+
         //Declare helper variable
         $wikiHelper = new WikiHelper;
 
@@ -377,6 +379,8 @@ class AdminController extends Controller
             'user' => 'required',
             'groupname' => 'required',
         ]);
+
+        dd($request);
 
         //Declare some helper variables
         $wikiHelper = new WikiHelper;
@@ -400,6 +404,7 @@ class AdminController extends Controller
             'user' => 'required',
             'groupname' => 'required',
         ]);
+        dd($request);
 
         //Declare some helper variables
         $wikiHelper = new WikiHelper;
@@ -422,6 +427,7 @@ class AdminController extends Controller
         $this->validate($request, [
             'user' => 'required',
         ]);
+        dd($request);
 
         //Declare variable
         $wikiHelper = new WikiHelper;
@@ -439,6 +445,7 @@ class AdminController extends Controller
             'group' => 'required',
             'description' => 'required',
         ]);
+        dd($request);
 
         //Declare variable
         $wikiHelper = new WikiHelper;
@@ -452,6 +459,7 @@ class AdminController extends Controller
         $this->validate($request, [
             'admin' => 'required',
         ]);
+        dd($request);
 
         //Declare helper classes
         $lookup = new LookupHelper;
