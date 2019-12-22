@@ -376,13 +376,9 @@ class AdminController extends Controller
      */
     public function addWikiUserGroup(Request $request) {
         $this->validate($request, [
-            'user' => 'required',
-            'groupname' => 'required',
+            'user' => 'required',       //User Id number
+            'groupname' => 'required',  //Group Id number
         ]);
-
-        var_dump($request->user);
-        var_dump($request->groupname);
-        dd();
 
         //Declare some helper variables
         $wikiHelper = new WikiHelper;
@@ -406,8 +402,6 @@ class AdminController extends Controller
             'user' => 'required',
             'groupname' => 'required',
         ]);
-        var_dump($request->user);
-        dd($request->groupname);
 
         //Declare some helper variables
         $wikiHelper = new WikiHelper;
@@ -430,7 +424,6 @@ class AdminController extends Controller
         $this->validate($request, [
             'user' => 'required',
         ]);
-        dd($request->user);
 
         //Declare variable
         $wikiHelper = new WikiHelper;
@@ -448,8 +441,6 @@ class AdminController extends Controller
             'group' => 'required',
             'description' => 'required',
         ]);
-        var_dump($request->group);
-        dd($request->description);
 
         //Declare variable
         $wikiHelper = new WikiHelper;
@@ -463,17 +454,10 @@ class AdminController extends Controller
         $this->validate($request, [
             'admin' => 'required',
         ]);
-        dd($request->admin);
 
         //Declare helper classes
         $lookup = new LookupHelper;
         $wikiHelper = new WikiHelper;
-
-        //Get all the users from the database
-        $users = DokuUser::pluck('name')->all();
-
-        $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
-        $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
 
         //Search the names and verify against the lookup table
         //to find the corporation and / or alliance they belong to.

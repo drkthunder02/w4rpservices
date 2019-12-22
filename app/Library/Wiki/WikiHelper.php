@@ -58,28 +58,23 @@ class WikiHelper {
     /**
      * Add a user to a particular group
      */
-    public function AddUserToGroup($name, $groupName) {
+    public function AddUserToGroup($userId, $groupId) {
         //Get the group information
         $groups = DokuGroupNames::all();
 
         //Check if the user already belongs to the group
-        $userGroups = DokuMember::where(['groupname' => $groupName])->count();
+        $userGroups = DokuMember::where(['gid' => $groupId])->count();
         if($count > 0) {
             //If the count is greater than zero then we don't need to do anything,
             //just return false to indicate nothing was changed
             return false;
         } else {
-            //If the person is not part of the group, then we need to add them to the group
-            
-            //Get the uid from the user
-            $user = DokuUser::where(['name' => $name])->first();
-            
             //Get the group the person needs to be added to.
-            $newGroup = DokuGroupNames::where(['groupname' => $groupName])->first();
+            $newGroup = DokuGroupNames::where(['id' => $groupId])->first();
             //Add the user to the group
             DokuMember::insert([
-                'uid' => $user->id,
-                'gid' => $newGroup->id,
+                'uid' => $userId,
+                'gid' => $groupId,
                 'groupname' => $newGroup->gname,
             ]);
 
@@ -91,49 +86,38 @@ class WikiHelper {
     /**
      * Remove a user from a particular group
      */
-    public function RemoveUserFromGroup($name, $groupName) {
-        
-        $user = DokuUser::where(['name' => $name])->first();
-
-        $group = DokuGroupNames::where(['groupname' => $groupName])->first();
-
+    public function RemoveUserFromGroup($userId, $groupId) {
+        //Remove the user from any groups he is associated with
         DokuMember::where([
-            'uid' => $user->id,
-            'gid' => $group->gid,
+            'uid' => $userId,
+            'gid' => $groupId,
         ])->delete();
     }
 
     /**
      * Remove a user from all groups
      */
-    public function RemoveUserFromAllGroups($name) {
-        $user = DokuUser::where(['name' => $name])->first();
-
+    public function RemoveUserFromAllGroups($userId) {
+        //Remove the user from all groups
         DokuMember::where([
-            'uid' => $user->id,
+            'uid' => $userId,
         ])->delete();
     }
 
     /**
      * Check to see if a user is already in a group
      */
-    public function UserHasGroup($user, $groupname) {
-
+    public function UserHasGroup($userId, $groupId) {
         //Get the user information
-        $user = DokuUser::where(['name' => $user])->first();
-        //Get the groups the user is a part of
-        $groups = DokuMember::where(['uid' => $user->id])->get();
+        $user = DokuUser::where(['id' => $userId])->first();
         //Get all of the groups
         $allGroups = DokuGroupNames::all();
 
         //cycle through all of the groups, and all of the user's groups to see if the user
         //is part of the group we are seeking
         foreach($allGroups as $all) {
-            foreach($groups as $group) {
-                //If the group is found, then send back the group has been found
-                if($group->gid === $all->id) {
-                    return true;
-                }
+            if($groupId === $all->id) {
+                return true;
             }
         }
         
@@ -160,18 +144,13 @@ class WikiHelper {
     /**
      * Delete all traces of a wiki user
      */
-    public function DeleteWikiUser($user) {
-        //Get the uid of the user as we will need to purge them from the member table as well.
-        //the member table holds their permissions.
-        $uid = DokuUser::where([
-            'name' => $user,
-        ])->value('id');
+    public function DeleteWikiUser($userId) {
         //Delete the permissions of the user first.
         DokuMember::where([
-            'uid' => $uid,
+            'uid' => $userId,
         ])->delete();
 
         //Delete the user from the user table
-        DokuUser::where(['name' => $user])->delete();
+        DokuUser::where(['id' => $userId])->delete();
     }
 }
