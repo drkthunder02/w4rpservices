@@ -340,9 +340,13 @@ class AdminController extends Controller
             $wikiUsers[$temp->id] = $temp->name;
         }
 
+        $wikiUsers = asort($wikiUsers);
+
         foreach($tempGroups as $temp) {
             $wikiGroups[$temp->id] = $temp->gname;
         }
+
+        $wikiGroups = asort($wikiGroups);
 
         return view('admin.dashboards.wiki')->with('wikiUsers', $wikiUsers)
                                            ->with('wikiGroups', $wikiGroups)
