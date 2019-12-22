@@ -342,6 +342,8 @@ class AdminController extends Controller
 
         $wikiUsers = asort($wikiUsers);
 
+        dd($wikiUsers);
+
         foreach($tempGroups as $temp) {
             $wikiGroups[$temp->id] = $temp->gname;
         }
