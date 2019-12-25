@@ -6,3 +6,4 @@
 worker.log
 /public/cache/*
 /.env
+.vscode
