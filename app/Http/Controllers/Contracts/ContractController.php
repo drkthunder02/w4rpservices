@@ -9,7 +9,6 @@ use Carbon\Carbon;
 
 //Libraries
 use App\Library\Lookups\LookupHelper;
-//use App\Library\Contracts\ContractHelper;
 
 //Models
 use App\Models\User\User;
@@ -22,7 +21,6 @@ class ContractController extends Controller
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('role:User');
-        //$this->middleware('permission:contract.canbid');
     }
 
     /**
