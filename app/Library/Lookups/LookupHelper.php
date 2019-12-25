@@ -70,7 +70,7 @@ class LookupHelper {
     }
 
     private function StoreItem($item) {
-        $newItem = new Item;
+        $newItem = new ItemLookup;
         if(isset($item->capacity)) {
             $newItem->capacity = $item->capacity;
         }
