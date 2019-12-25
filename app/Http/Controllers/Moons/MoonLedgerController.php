@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Log;
 use DB;
+use Carbon\Carbon;
 
 //App Library
 use Seat\Eseye\Exceptions\RequestFailedException;
@@ -85,8 +86,10 @@ class MoonLedgerController extends Controller
         //Declare variables
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
+        $tempMining = array();
         $mining = array();
         $temp = array();
+        $ledgerEntries = array();
 
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope(auth()->user()->getId(), 'esi-industry.read_corporation_mining.v1')) {
@@ -118,7 +121,7 @@ class MoonLedgerController extends Controller
             $ore = $lookup->ItemIdToName($ledger->type_id);
 
             //Push the data onto the mining arary
-            array_push($mining, [
+            array_push($tempMining, [
                 'character' => $char,
                 'ore' => $ore,
                 'quantity' => $ledger->quantity,
@@ -126,7 +129,20 @@ class MoonLedgerController extends Controller
             ]);
         }
 
-        $mining = array_reverse($mining, true);
+        //Sort through the array and reverse it so the last day is shown first
+        $tempMining = array_reverse($tempMining, true);
+
+        //Create the current time based on the current time and then subtract 30 days
+        $sortTime = Carbon::now()->subDays(30);
+
+        //Sort through the array and discard anything that is further than 30 days out.
+        foreach($tempMining as $entry) {
+            //Create the current time stamp from the current legder before sorting
+            $current = Carbon::createFromFormat('Y-m-d', $entry['updated']);
+            if($current->greaterThanOrEqualTo($sortTime)) {
+                array_push($mining, $entry);
+            }
+        }
 
         //Return the view with the data
         return view('moons.ledger.displayledger')->with('mining', $mining);
