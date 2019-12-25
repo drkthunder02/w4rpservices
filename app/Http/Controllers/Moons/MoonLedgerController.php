@@ -119,7 +119,6 @@ class MoonLedgerController extends Controller
             $charInfo = $lookup->GetCharacterInfo($ledger->character_id);
             //Get the corp ticker
             $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
-            dd($corpInfo);
             //Get the ore name from the type id
             $ore = $lookup->ItemIdToName($ledger->type_id);
 
