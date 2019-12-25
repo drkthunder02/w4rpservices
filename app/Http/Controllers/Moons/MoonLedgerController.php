@@ -115,6 +115,7 @@ class MoonLedgerController extends Controller
 
         //Cycle through each ledger entry and create a new array
         foreach($ledgers as $ledger) {
+            var_dump($ledger->character_id);
             //Get the character information from the character id
             $charInfo = $lookup->GetCharacterInfo($ledger->character_id);
             //Get the corp ticker
