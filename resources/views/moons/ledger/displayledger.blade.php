@@ -19,7 +19,7 @@
                     @foreach($mining as $min)
                         <tr>
                             <td>{{ $min['character'] }}</td>
-                            <td>{{ $min['corp_ticker'] }}</td>
+                            <td>{{ $min['corpTicker'] }}</td>
                             <td>{{ $min['ore'] }}</td>
                             <td>{{ $min['quantity'] }}</td>
                             <td>{{ $min['updated'] }}</td>
