@@ -234,7 +234,7 @@ class ContractController extends Controller
         $char = $lookup->GetCharacterInfo($characterId);
         $corporationId = $char->corporation_id;
         //use the lookup helper in order to find the corporation's name from it's id.
-        $corp = $lookup->LookupCorporation($corporationId, null);
+        $corp = $lookup->GetCorporationInfo($corporationId);
         $corporationName = $corp->name;
 
         //Before saving a bid let's check to see if the user already placed a bid on the contract
