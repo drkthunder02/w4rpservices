@@ -3,7 +3,8 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h2>Moon Ledger</h2>
+            <h2>Moon Ledger</h2><br>
+            <p align="left">Shows mining from the last 30 days.</p>
         </div>
         <div class="card-body">
             <table class="table table-bordered table-striped">
