@@ -117,6 +117,7 @@ class MoonLedgerController extends Controller
         foreach($ledgers as $ledger) {
             //Get the character information from the character id
             $charInfo = $lookup->GetCharacterInfo($ledger->character_id);
+            dd($charInfo);
             //Get the corp ticker
             $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
             dd($corpInfo);
