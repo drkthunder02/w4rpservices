@@ -178,18 +178,23 @@ class LookupHelper {
     public function GetCorporationInfo($corpId) {
         //Check our own database first
         $corp = $this->LookupCorporation($corpId, null);
-        dd($corp);
 
         //If the corporation was not found in the database, then get the information and store it in our database for later
         if($corp == null) {
             try {
-                $corporation = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
+                $response = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
                     'corporation_id' => $corpId,
                 ]);
             } catch(RequestFailedException $e) {
                 Log::warning('Failed to get corporation information in GetCorporationInfo in Lookup');
                 return null;
             }
+
+            //Store the corporation in our database
+            $this->SaveCorporation($response, $corpId);
+
+            //Return the corporation details to the calling function
+            return $response;
         } else {
             //Return what was pulled from the database
             return $corp;
@@ -202,13 +207,18 @@ class LookupHelper {
 
         if($ally == null) {
             try {
-                $alliance = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
+                $response = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
                     'alliance_id' => $allianceId,
                 ]);
             } catch(RequestFailedException $e) {
                 Log::warning('Failed to get alliance information in GetAllianceInfo in Lookup');
                 return null;
             }
+
+            //Store the alliance in our database
+            $this->SaveAlliance($response, $allianceId);
+
+            return $response;
         } else {
             return $ally;
         }
