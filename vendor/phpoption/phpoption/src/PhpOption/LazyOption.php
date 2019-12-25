@@ -18,6 +18,11 @@
 
 namespace PhpOption;
 
+/**
+ * @template T
+ *
+ * @extends Option<T>
+ */
 final class LazyOption extends Option
 {
     /** @var callable */
@@ -26,14 +31,16 @@ final class LazyOption extends Option
     /** @var array */
     private $arguments;
 
-    /** @var Option|null */
+    /** @var Option<T>|null */
     private $option;
 
     /**
+     * @template S
+     *
      * @param callable $callback
      * @param array    $arguments
      *
-     * @return LazyOption
+     * @return LazyOption<S>
      */
     public static function create($callback, array $arguments = [])
     {
@@ -89,9 +96,6 @@ final class LazyOption extends Option
         return $this->option()->orElse($else);
     }
 
-    /**
-     * @deprecated Use forAll() instead.
-     */
     public function ifDefined($callable)
     {
         $this->option()->ifDefined($callable);
@@ -148,7 +152,7 @@ final class LazyOption extends Option
     }
 
     /**
-     * @return Option
+     * @return Option<T>
      */
     private function option()
     {
