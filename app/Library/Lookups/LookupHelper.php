@@ -178,6 +178,7 @@ class LookupHelper {
     public function GetCorporationInfo($corpId) {
         //Check our own database first
         $corp = $this->LookupCorporation($corpId, null);
+        dd($corp);
 
         //If the corporation was not found in the database, then get the information and store it in our database for later
         if($corp == null) {
