@@ -117,12 +117,15 @@ class MoonLedgerController extends Controller
         foreach($ledgers as $ledger) {
             //Get the character name from the character id
             $char = $lookup->CharacterIdToName($ledger->character_id);
+            //Get the corp ticker
+            $corpInfo = $lookup->GetCorporationInfo($char->corporation_id);
             //Get the ore name from the type id
             $ore = $lookup->ItemIdToName($ledger->type_id);
 
             //Push the data onto the mining arary
             array_push($tempMining, [
                 'character' => $char,
+                'corp_ticker' => $corpInfo->ticker,
                 'ore' => $ore,
                 'quantity' => $ledger->quantity,
                 'updated' => $ledger->last_updated,

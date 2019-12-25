@@ -1,5 +1,6 @@
 @extends('layouts.b4')
 @section('content')
+<br>
 <div class="container">
     <div class="card">
         <div class="card-header">
@@ -10,6 +11,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <th>Character</th>
+                    <th>Corp Ticker</th>
                     <th>Ore Name</th>
                     <th>Quantity</th>
                 </thead>
@@ -17,6 +19,7 @@
                     @foreach($mining as $min)
                         <tr>
                             <td>{{ $min['character'] }}</td>
+                            <td>{{ $min['corp_ticker'] }}</td>
                             <td>{{ $min['ore'] }}</td>
                             <td>{{ $min['quantity'] }}</td>
                             <td>{{ $min['updated'] }}</td>
