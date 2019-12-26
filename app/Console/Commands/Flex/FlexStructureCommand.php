@@ -79,8 +79,6 @@ class FlexStructureCommand extends Command
                 'requestor_id' => $contact->requestor_id,
             ])->get();
 
-            dd($structures);
-
             //Totalize the total cost of everything
             $totalCost = $this->TotalizeCost($structures);
 
@@ -89,7 +87,6 @@ class FlexStructureCommand extends Command
             foreach($structures as $structure) {
                 $body += "System: " . $structure->system . " - " . $structure->structure_type . ": " . $structure->structure_cost . " ISK<br>";
             }
-            
             $body += "Total Cost: " . number_format($totalCost, 2,".", ",");
             $body += "Please remit payment to Spatial Forces by the 3rd of the month.<br>";
             $body += "Sincerely,<br>";
