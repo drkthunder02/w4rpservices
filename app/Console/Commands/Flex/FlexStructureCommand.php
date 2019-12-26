@@ -71,15 +71,13 @@ class FlexStructureCommand extends Command
 
         //Get all of the contacts for the flex structures
         $contacts = FlexStructure::select('requestor_id')->orderBy('requestor_id')->get();
-
+dd($contacts);
         //For each of the contacts, send a reminder mail about the total of the structures they are paying for
         foreach($contacts as $contact) {
             //Get all of the structures for requestor
             $structures = FlexStructure::where([
                 'requestor_id' => $contact,
             ])->get();
-
-            dd($structures);
 
             //Totalize the total cost of everything
             $totalCost = $this->TotalizeCost($structures);
@@ -89,7 +87,7 @@ class FlexStructureCommand extends Command
             foreach($structures as $structure) {
                 $body += "System: " . $structure->system . " - " . $structure->structure_type . ": " . $structure->structure_cost . " ISK<br>";
             }
-            dd($totalCost);
+            
             $body += "Total Cost: " . number_format($totalCost, 2,".", ",");
             $body += "Please remit payment to Spatial Forces by the 3rd of the month.<br>";
             $body += "Sincerely,<br>";
