@@ -74,12 +74,12 @@ class FlexStructureCommand extends Command
 
         //For each of the contacts, send a reminder mail about the total of the structures they are paying for
         foreach($contacts as $contact) {
-
-            dd($contact);
             //Get all of the structures for requestor
             $structures = FlexStructure::where([
-                'requestor_id' => $contact,
+                'requestor_id' => $contact->requestor_id,
             ])->get();
+
+            dd($structures);
 
             //Totalize the total cost of everything
             $totalCost = $this->TotalizeCost($structures);
