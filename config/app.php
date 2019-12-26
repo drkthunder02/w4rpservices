@@ -155,7 +155,6 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
         //ConsoleTVs\Charts\ChartsServiceProvider::class,
-        PragmaRX\Tracker\Vendor\Laravel\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -220,7 +219,6 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
         //'Charts' => ConsoleTVs\Charts\Charts::class,
-        'Tracker' => PragmaRX\Tracker\Vendor\Laravel\Facade::class,
     ],
 
 ];
