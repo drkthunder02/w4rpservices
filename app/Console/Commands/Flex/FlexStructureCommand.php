@@ -71,9 +71,11 @@ class FlexStructureCommand extends Command
 
         //Get all of the contacts for the flex structures
         $contacts = FlexStructure::select('requestor_id')->orderBy('requestor_id')->get();
-dd($contacts);
+
         //For each of the contacts, send a reminder mail about the total of the structures they are paying for
         foreach($contacts as $contact) {
+
+            dd($contact);
             //Get all of the structures for requestor
             $structures = FlexStructure::where([
                 'requestor_id' => $contact,
