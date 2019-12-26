@@ -322,7 +322,7 @@ return [
 
     'authenticated_user_id_column' => 'id', // to Auth::user()->id
 
-    'authenticated_user_username_column' => 'email', // to Auth::user()->email
+    'authenticated_user_username_column' => 'name', // to Auth::user()->email
 
     /*
      * Enable the Stats Panel?
