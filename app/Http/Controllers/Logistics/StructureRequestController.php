@@ -8,12 +8,17 @@ use App\Http\Controllers\Controller;
 use DB;
 use Log;
 
+//Jobs
+use App\Jobs\ProcessSendEveMailJob;
+
 //Library Helpers
 use App\Library\Lookups\LookupHelper;
 
-
 //Models
 use App\Models\Logistics\AnchorStructure;
+use App\Models\Mail\SentMail;
+use App\Models\Jobs\JobSendEveMail;
+use App\Models\Mail\EveMail;
 
 class StructureRequestController extends Controller
 {
@@ -25,7 +30,7 @@ class StructureRequestController extends Controller
         return view('structurerequest.requeststructure');
     }
 
-    public function storeForm() {
+    public function storeForm(Request $request) {
         $this->validate($request, [
             'corporation_name' => 'required',
             'system' => 'required',
