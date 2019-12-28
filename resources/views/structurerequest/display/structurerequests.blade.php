@@ -21,7 +21,6 @@
                 @if($reqs != null)
                 @foreach($reqs as $req)
                     <tr>
-                        {{ dd($req->id) }}
                         <td>{{ $req->corporation_name }}</td>
                         <td>{{ $req->system }}</td>
                         <td>{{ $req->structure_size }}</td>

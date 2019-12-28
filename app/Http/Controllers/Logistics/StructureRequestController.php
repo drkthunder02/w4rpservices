@@ -65,8 +65,7 @@ class StructureRequestController extends Controller
         return view('structurerequest.display.structurerequests')->with('reqs', $reqs);
     }
 
-    public function deleteRequest($request) {
-        dd($request);
+    public function deleteRequest(Request $request) {
         $this->validate($request, [
             'id' => 'required',
         ]);
