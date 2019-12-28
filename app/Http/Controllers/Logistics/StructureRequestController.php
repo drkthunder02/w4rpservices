@@ -66,6 +66,7 @@ class StructureRequestController extends Controller
     }
 
     public function deleteRequest($request) {
+        dd($request);
         $this->validate($request, [
             'id' => 'required',
         ]);
