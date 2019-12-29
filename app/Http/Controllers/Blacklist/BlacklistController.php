@@ -140,7 +140,7 @@ class BlacklistController extends Controller
     public function DisplayBlacklist() {
 
         //Get the entire blacklist
-        $blacklist = BlacklistEntity::orderBy('name', 'asc')->paginate(50);
+        $blacklist = BlacklistEntity::orderBy('entity_name', 'asc')->paginate(50);
 
         //Return the view with the data
         return view('blacklist.list')->with('blacklist', $blacklist);
@@ -153,7 +153,7 @@ class BlacklistController extends Controller
             'parameter' => 'required',
         ]);
 
-        $blacklist = DB::table('alliance_blacklist')->where('name', 'like', $request->parameter . "%")
+        $blacklist = DB::table('alliance_blacklist')->where('entity_name', 'like', $request->parameter . "%")
                                        ->orWhere('entity_type', 'like', $request->parameter . "%")
                                        ->orWhere('alts', 'like', $request->parameter . "%")
                                        ->orWhere('reason', 'like', $request->parameter . "%")
