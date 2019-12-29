@@ -65,36 +65,23 @@ class BlacklistController extends Controller
         if($count === 0) {
             if($request->type == 'Character') {
                 //Get the character id from the universe end point
-                $charId = $lookup->CharacterNameToId($request->name);
+                $entityId = $lookup->CharacterNameToId($request->name);
             } else if($request->type == 'Corporation') {
                 //Get the corporation id from the universe end point
-                $corpId = $lookup->CorporationNameToId($request->name);
+                $entityId = $lookup->CorporationNameToId($request->name);
             } else if($request->type == 'Alliance') {
                 //Get the alliance id from the universe end point
-                $allianceId = $lookup->AllianceNameToId($request->name);
+                $entityId = $lookup->AllianceNameToId($request->name);
             } else {
                 //Redirect back to the view
                 return redirect('/blacklist/display/add')->with('error', 'Entity Type not allowed.');
             }
 
             //If all id's are null, then we couldn't find the entity
-            if($charId == null && $corporationId == null && $allianceId == null) {
+            if($entityId == null) {
                 //Redirect back to the view
                 return redirect('/blacklist/display/add')->with('error', 'Entity Id was not found.');
             }
-
-            //Construct the entityId
-            if($charId != null) {
-                $entityId = $charId;
-            } else if($corporationId != null) {
-                $entityId = $corporationId;
-            } else if($allianceId != null) {
-                $entityId = $allianceId;
-            } else {
-                $entityId = null;
-            }
-            //Construct the entity type
-            $entityType = $request->type;
 
             //Store the entity in the table
             BlacklistEntity::insert([
