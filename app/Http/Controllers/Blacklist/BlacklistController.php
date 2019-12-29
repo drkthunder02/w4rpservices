@@ -12,7 +12,7 @@ use DB;
 use App\Library\Lookups\LookupHelper;
 
 //Models
-use App\Models\Blacklist\BlacklistUser;
+use App\Models\Blacklist\BlacklistEntity;
 use App\Models\User\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
@@ -43,43 +43,80 @@ class BlacklistController extends Controller
         //Validate the user input
         $this->validate($request, [
             'name' => 'required',
+            'type' => 'required',
             'reason' => 'required',
         ]);
 
         //Create the library variable
         $lookup = new LookupHelper;
+        //Declare other necessary variables
+        $charId = null;
+        $corporationId = null;
+        $allianceId = null;
+        $entityId = null;
+        $entityType = null;
 
-        //See if the character is already on the list
-        $count = BlacklistUser::where([
+        //See if the entity is already on the list
+        $count = BlacklistEntity::where([
             'name' => $request->name,
         ])->count();
         
         //If the count is 0, then add the character to the blacklist
         if($count === 0) {
-            //Get the character id from the universe end point
-            $charId = $lookup->CharacterNameToId($request->name);
-
-            if($charId != null) {
-                //Insert the character into the blacklist table
-                BlacklistUser::insert([
-                    'character_id' => $charId,
-                    'name' => $request->name,
-                    'reason' => $request->reason,
-                    'alts' => $request->alts,
-                    'lister_id' => auth()->user()->getId(),
-                    'lister_name' => auth()->user()->getName(),
-                ]);
+            if($request->type == 'Character') {
+                //Get the character id from the universe end point
+                $charId = $lookup->CharacterNameToId($request->name);
+            } else if($request->entity_type == 'corporation') {
+                //Get the corporation id from the universe end point
+                $corpId = $lookup->CorporationNameToId($request->name);
+            } else if($request->entity_type == 'alliance') {
+                //Get the alliance id from the universe end point
+                $allianceId = $lookup->AllianceNameToId($request->name);
             } else {
                 //Redirect back to the view
-                return redirect('/blacklist/display/add')->with('error', $request->name . ' could not be added.');
+                return redirect('/blacklist/display/add')->with('error', 'Entity Type not allowed.');
             }
+
+            //If all id's are null, then we couldn't find the entity
+            if($charId == null && $corporationId == null && $allianceId == null) {
+                //Redirect back to the view
+                return redirect('/blacklist/display/add')->with('error', 'Entity Id was not found.');
+            }
+
+            //Construct the entityId
+            if($charId != null) {
+                $entityId = $charId;
+            } else if($corporationId != null) {
+                $entityId = $corporationId;
+            } else if($allianceId != null) {
+                $entityId = $allianceId;
+            } else {
+                $entityId = null;
+            }
+            //Construct the entity type
+            $entityType = $request->type;
+
+            //Store the entity in the table
+            BlacklistEntity::insert([
+                'entity_id' => $entityId,
+                'entity_name' => $request->name,
+                'entity_type' => $entityType,
+                'reason' => $request->reason,
+                'alts' => $request->alts,
+                'lister_id' => auth()->user()->getId(),
+                'lister_name' => auth()->user()->getName(),
+            ]);
+
+            //Return to the view
+            return redirect('/blacklist/display/add')->with('success', $request->name . ' added to the blacklist.');
+
         } else {
             //Return the view
-            return view('blacklist.add')->with('error', 'Character is already on the black list.');
+            return view('blacklist.add')->with('error', 'Entity of type '. $request->entity_type . ' is already on the black list.');
         }
 
-        //Return the view
-        return redirect('/blacklist/display/add')->with('success', $request->name . ' added to the blacklist.');
+        //If we get back to this point redirect to the blacklist with a general error.
+        return redirect('/blacklist/display/add')->with('error', 'General Error. Contact Support.');
     }
 
     public function RemoveFromBlacklist(Request $request) {
@@ -92,7 +129,7 @@ class BlacklistController extends Controller
         ]);
 
         //Delete the blacklist character
-        BlacklistUser::where([
+        BlacklistEntity::where([
             'name' => $request->name,
         ])->delete();
 
@@ -103,7 +140,7 @@ class BlacklistController extends Controller
     public function DisplayBlacklist() {
 
         //Get the entire blacklist
-        $blacklist = BlacklistUser::orderBy('name', 'asc')->paginate(50);
+        $blacklist = BlacklistEntity::orderBy('name', 'asc')->paginate(50);
 
         //Return the view with the data
         return view('blacklist.list')->with('blacklist', $blacklist);
@@ -117,6 +154,7 @@ class BlacklistController extends Controller
         ]);
 
         $blacklist = DB::table('alliance_blacklist')->where('name', 'like', $request->parameter . "%")
+                                       ->orWhere('entity_type', 'like', $request->parameter . "%")
                                        ->orWhere('alts', 'like', $request->parameter . "%")
                                        ->orWhere('reason', 'like', $request->parameter . "%")
                                        ->orderBy('name', 'asc')

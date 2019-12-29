@@ -9,16 +9,18 @@
             @if($blacklist != null)
             <table class="table table-bordered table-striped">
                 <thead>
-                    <th>Character Id</th>
-                    <th>Character Name</th>
+                    <th>Entity Id</th>
+                    <th>Entity Name</th>
+                    <th>Entity Type
                     <th>Reason</th>
                     <th>Alts</th>
                 </thead>
                 <tbody>
                     @foreach($blacklist as $bl)
                         <tr>
-                            <td>{{ $bl->character_id }}</td>
-                            <td>{{ $bl->name }}</td>
+                            <td>{{ $bl->entity_id }}</td>
+                            <td>{{ $bl->entity_name }}</td>
+                            <td>{{ $bl->entity_type }}</td>
                             <td>{{ $bl->reason }}</td>
                             @if($bl->alts != null)
                             <td>{{ $bl->alts }}</td>

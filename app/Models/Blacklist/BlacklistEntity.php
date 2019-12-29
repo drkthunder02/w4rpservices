@@ -4,7 +4,7 @@ namespace App\Models\Blacklist;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BlacklistUser extends Model
+class BlacklistEntity extends Model
 {
     //Table Name
     public $table = 'alliance_blacklist';
@@ -18,8 +18,9 @@ class BlacklistUser extends Model
      * @var array
      */
     protected $fillable = [
-        'character_id',
-        'name',
+        'entity_id',
+        'entity_name',
+        'entity_type',
         'reason',
         'alts',
         'lister_id',

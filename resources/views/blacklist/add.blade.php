@@ -8,8 +8,16 @@
         <div class="card-body">
             {!! Form::open(['action' => 'Blacklist\BlacklistController@AddToBlacklist', 'method' => 'POST']) !!}
             <div class="form-group">
-                {{ Form::label('name', 'Character Name') }}
+                {{ Form::label('name', 'Entity Name') }}
                 {{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'CCP Antiquarian']) }}
+            </div>
+            <div class="form-group">
+                {{ Form::label('type', 'Entity Type') }}
+                {{ Form::select('type', [
+                    'Character' => 'Character',
+                    'Corporation' => 'Corporation',
+                    'Alliance' => 'Alliance',
+                ], 'Character', ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('reason', 'Reason') }}

@@ -16,8 +16,9 @@ class CreateBlacklistTable extends Migration
         if(!Schema::hasTable('alliance_blacklist')) {
             Schema::create('alliance_blacklist', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->string('character_id')->unique();
-                $table->string('name')->unique();
+                $table->string('entity_id')->unique();
+                $table->string('entity_name')->default('');
+                $table->string('entity_type')->default('None');
                 $table->text('reason');
                 $table->text('alts')->nullable();
                 $table->string('lister_id');
