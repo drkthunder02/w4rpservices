@@ -1,6 +1,7 @@
 @extends('layouts.b4')
 @section('content')
-<div class="container">
+<br>
+<div class="container col-md-10">
     <div class="card">
         <div class="card-header">
             <h2>Alliance Blacklist</h2>
