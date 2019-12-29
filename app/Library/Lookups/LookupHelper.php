@@ -310,19 +310,21 @@ class LookupHelper {
     public function CorporationNameToId($corpName) {
         //Check if the corporation is stored in our own database first
         $corp = $this->LookupCorporation(null, $corpName);
-        dd($corp);
+        
         if($corp != null) {
             return $corp->corporation_id;
         } else {
             //Try to get the corporation details from ESI
             try {
-                $corporation = $this->esi->setBody(array(
+                $response = $this->esi->setBody(array(
                     $corpName,
                 ))->invoke('post', '/universe/ids/');
             } catch(RequestFailedException $e) {
                 Log::warning('Failed to get the corporation id from /universe/ids/ in lookup helper.');
                 return null;
             }
+
+            dd($response);
 
             if(isset($response->corporations[0]->id)) {
                 $this->StoreCorporationLookup($response->corporations[0]->id, null);
