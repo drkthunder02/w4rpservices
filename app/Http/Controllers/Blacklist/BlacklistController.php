@@ -69,7 +69,6 @@ class BlacklistController extends Controller
             } else if($request->type == 'Corporation') {
                 //Get the corporation id from the universe end point
                 $corpId = $lookup->CorporationNameToId($request->name);
-                dd($corpId);
             } else if($request->type == 'Alliance') {
                 //Get the alliance id from the universe end point
                 $allianceId = $lookup->AllianceNameToId($request->name);
