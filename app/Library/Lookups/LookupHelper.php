@@ -324,8 +324,6 @@ class LookupHelper {
                 return null;
             }
 
-            dd($response);
-
             if(isset($response->corporations[0]->id)) {
                 $this->StoreCorporationLookup($response->corporations[0]->id, null);
 
