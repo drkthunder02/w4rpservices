@@ -144,7 +144,7 @@ class BlacklistController extends Controller
                                        ->orWhere('entity_type', 'like', $request->parameter . "%")
                                        ->orWhere('alts', 'like', $request->parameter . "%")
                                        ->orWhere('reason', 'like', $request->parameter . "%")
-                                       ->orderBy('name', 'asc')
+                                       ->orderBy('entity_name', 'asc')
                                        ->paginate(50);
 
         $blacklistCount = sizeof($blacklist);
