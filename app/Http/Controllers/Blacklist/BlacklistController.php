@@ -66,10 +66,10 @@ class BlacklistController extends Controller
             if($request->type == 'Character') {
                 //Get the character id from the universe end point
                 $charId = $lookup->CharacterNameToId($request->name);
-            } else if($request->entity_type == 'corporation') {
+            } else if($request->type == 'Corporation') {
                 //Get the corporation id from the universe end point
                 $corpId = $lookup->CorporationNameToId($request->name);
-            } else if($request->entity_type == 'alliance') {
+            } else if($request->type == 'Alliance') {
                 //Get the alliance id from the universe end point
                 $allianceId = $lookup->AllianceNameToId($request->name);
             } else {
@@ -100,7 +100,7 @@ class BlacklistController extends Controller
             BlacklistEntity::insert([
                 'entity_id' => $entityId,
                 'entity_name' => $request->name,
-                'entity_type' => $entityType,
+                'entity_type' => $request->type,
                 'reason' => $request->reason,
                 'alts' => $request->alts,
                 'lister_id' => auth()->user()->getId(),
