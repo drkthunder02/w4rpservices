@@ -58,7 +58,7 @@ class BlacklistController extends Controller
 
         //See if the entity is already on the list
         $count = BlacklistEntity::where([
-            'name' => $request->name,
+            'entity_name' => $request->name,
         ])->count();
         
         //If the count is 0, then add the character to the blacklist
