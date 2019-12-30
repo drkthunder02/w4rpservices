@@ -92,6 +92,7 @@ class MoonsAdminController extends Controller
 
                 //Set the rental date up
                 $rentalTemp = new Carbon($rental->RentalEnd);
+                dd($rental->RentalEnd);
                 $rentalEnd = $rentalTemp->format('m-d');
 
                 //Set the contact name
