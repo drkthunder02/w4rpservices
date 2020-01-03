@@ -223,7 +223,7 @@ class MoonsAdminController extends Controller
         //Validate our request from the html form
         $this->validate($request, [
             'spmn' => 'required',
-            'renter' => 'required',
+            //'renter' => 'required',
             'date' => 'required',
             'contact' => 'required',
         ]);
@@ -242,6 +242,13 @@ class MoonsAdminController extends Controller
             $contact = $lookup->CharacterNameToId($request->contact);
         }
 
+        //After we get the contact, from his name to the character Id, let's do some other functions before continuing.
+        //Let's find the corporation and alliance information to ascertain whethery they are in Warped Intentions or another Legacy Alliance
+        $char = $lookup->GetCharacterInfo($contact);
+        //Takes the corp id and looks up the corporation info
+        $corp = $lookup->GetCorporationInfo($char->corporation_id);
+        $allianceId = $corp->alliance_id;
+
         //Update the paid value for database entry
         if($request->paid == 'Yes') {
             $paid = 'Yes';
@@ -256,11 +263,11 @@ class MoonsAdminController extends Controller
             $paidUntil = null;
         }
 
-        //Let's find the corporation and alliance information to ascertain whethery they are in Warped Intentions or another Legacy Alliance
-        $char = $lookup->GetCharacterInfo($contact);
-        //Takes the corp id and looks up the corporation info
-        $corp = $lookup->GetCorporationInfo($char->corporation_id);
-        $allianceId = $corp->alliance_id;
+        if($request->rental_corp == null) {
+            $renter = $corp->name;
+        } else {
+            $renter = $request->rental_corp;
+        }   
 
         //Create the date
         $date = new Carbon($request->date . '00:00:01');
