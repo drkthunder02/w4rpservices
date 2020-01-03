@@ -97,7 +97,7 @@ class MoonsAdminController extends Controller
                 //Set the contact name
                 $contact = $lookupHelper->CharacterIdToName($rental->Contact);
                 
-                //Set up the renter whether it's W4RP or another corporation
+                //Set up the renter whether it's a corporation in W4RP or another alliance
                 $ticker = $rental->RentalCorp;
                 $type = $rental->Type;
             }
@@ -257,7 +257,6 @@ class MoonsAdminController extends Controller
         }
 
         //Let's find the corporation and alliance information to ascertain whethery they are in Warped Intentions or another Legacy Alliance
-
         $char = $lookup->GetCharacterInfo($contact);
         //Takes the corp id and looks up the corporation info
         $corp = $lookup->GetCorporationInfo($char->corporation_id);

@@ -8,7 +8,7 @@
         {{ Form::select('spmn', $spmn, null, ['class' => 'form-control', 'placeholder' => 'Select Moon...']) }}
     </div>
     <div class="form-group col-md-6">
-        {{ Form::label('renter', 'Alliance Ticker') }}
+        {{ Form::label('renter', 'Corp / Alliance Ticker') }}
         {{ Form::text('renter', '', ['class' => 'form-control', 'placeholder' => 'Renter']) }}
     </div>
     <div class="form-group col-md-6">
