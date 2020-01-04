@@ -8,10 +8,6 @@
         {{ Form::select('spmn', $spmn, null, ['class' => 'form-control', 'placeholder' => 'Select Moon...']) }}
     </div>
     <div class="form-group col-md-6">
-        {{ Form::label('rental_corp', 'Corp / Alliance Ticker') }}
-        {{ Form::text('rental_corp', '', ['class' => 'form-control', 'placeholder' => 'Renter']) }}
-    </div>
-    <div class="form-group col-md-6">
         {{ Form::label('contact', 'Contact') }}
         {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' => 'Character']) }}
     </div>

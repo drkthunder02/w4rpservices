@@ -223,7 +223,6 @@ class MoonsAdminController extends Controller
         //Validate our request from the html form
         $this->validate($request, [
             'spmn' => 'required',
-            //'renter' => 'required',
             'date' => 'required',
             'contact' => 'required',
         ]);
@@ -262,12 +261,13 @@ class MoonsAdminController extends Controller
         } else {
             $paidUntil = null;
         }
-
-        if($request->rental_corp == null) {
-            $renter = $corp->name;
+        
+        //Create the rnetal ticker if the corp is in Warped Intentions, otherwise just display the alliance ticker
+        if($allianceId == 99004116) {
+            $renter = $corp->ticker;
         } else {
-            $renter = $request->rental_corp;
-        }   
+            $renter = $alliance->ticker;
+        }
 
         //Create the date
         $date = new Carbon($request->date . '00:00:01');
