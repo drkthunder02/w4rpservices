@@ -203,7 +203,7 @@ class LookupHelper {
 
     public function GetAllianceInfo($allianceId) {
         //Check our own database first
-        $ally = $this->LookupAlliance($corpId, null);
+        $ally = $this->LookupAlliance($allianceId, null);
 
         if($ally == null) {
             try {
