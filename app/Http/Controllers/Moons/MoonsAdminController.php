@@ -304,7 +304,7 @@ class MoonsAdminController extends Controller
                     'System' => $system,
                     'Planet' => $planet,
                     'Moon' => $mn,
-                    'RentalCorp' => $request->renter,
+                    'RentalCorp' => $renter,
                     'RentalEnd' => $date,
                     'Contact' => $contact,
                     'Price' => $price['alliance'],
@@ -322,7 +322,7 @@ class MoonsAdminController extends Controller
                     'System' => $system,
                     'Planet' => $planet,
                     'Moon' => $mn,
-                    'RentalCorp' => $request->renter,
+                    'RentalCorp' => $renter,
                     'RentalEnd' => $date,
                     'Contact' => $contact,
                     'Price' => $price['outofalliance'],
@@ -345,7 +345,7 @@ class MoonsAdminController extends Controller
                 $store->System = $system;
                 $store->Planet = $planet;
                 $store->Moon = $mn;
-                $store->RentalCorp = $request->renter;
+                $store->RentalCorp = $renter;
                 $store->RentalEnd = $date;
                 $store->Contact = $contact;
                 $store->Price = $price['alliance'];
@@ -357,7 +357,7 @@ class MoonsAdminController extends Controller
                 $store->System = $system;
                 $store->Planet = $planet;
                 $store->Moon = $mn;
-                $store->RentalCorp = $request->renter;
+                $store->RentalCorp = $renter;
                 $store->RentalEnd = $date;
                 $store->Contact = $contact;
                 $store->Price = $price['outofalliance'];
