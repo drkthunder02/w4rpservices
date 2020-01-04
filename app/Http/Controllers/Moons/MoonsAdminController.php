@@ -246,9 +246,7 @@ class MoonsAdminController extends Controller
         $char = $lookup->GetCharacterInfo($contact);
         //Takes the corp id and looks up the corporation info
         $corp = $lookup->GetCorporationInfo($char->corporation_id);
-        dd($corp);
-        $alliance = $lookup->GetAllianceInfo($corp->allianceId);
-        dd($alliance);
+        $alliance = $lookup->GetAllianceInfo($corp->alliance_id);
         $allianceId = $corp->alliance_id;
 
         //Update the paid value for database entry
