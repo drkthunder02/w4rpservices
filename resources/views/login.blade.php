@@ -34,8 +34,7 @@
         <div class="container">
             <div class="card-header">Welcome to the W4RP Services Page</div>
             <div class="card-body">
-                <a href="/login" img={{asset("/img/eve-sso-login-black-large.png")}}>Please Login</a>
-                <img src="{{asset('/img/eve-sso-login-black-large.png')}}">
+                <a href="/login" img="{{asset('/img/eve-sso-login-black-large.png')}}">Please Login</a>
             </div>
         </div>
     </div>
