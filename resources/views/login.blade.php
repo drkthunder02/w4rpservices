@@ -31,7 +31,7 @@
 </head>
 <body>
     <div id="app">
-        <div class="container">
+        <div class="container col-md-4">
             <div class="card">
                 <div class="card-header">
                     <h2>Welcome to the W4RP Services Page</h2>
