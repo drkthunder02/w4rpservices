@@ -31,7 +31,7 @@ class MoonsAdminController extends Controller
     /**
      * Function to display the moons to admins
      */
-    public function displayMoonsAdmin() {
+    public function displayRentalMoonsAdmin() {
         $this->middleware('role:Admin');
 
         $lookupHelper = new LookupHelper;

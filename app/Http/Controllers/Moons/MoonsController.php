@@ -28,16 +28,58 @@ class MoonsController extends Controller
     }
 
     /**
-     * Function to display the moons and pass data to the blade template
+     * Function to display all alliance moons and pass data to the blade template
      */
     public function displayMoons() {
+        $moons = array();
+
+        //Get all of the alliance moons from the database
+        $moonsTemp = DB::table('AllianceMoons')->orderBy('System', 'asc')->get();
+
+        //Get the unique systems from the database
+        $systems = AllianceMoons::pluck('System')->toArray();
+
+        foreach($systems as $system) {
+            foreach($moonsTemp as $moon) {
+                if($moonsTemp->System == $system) {
+                    array_push($moons[$system], [
+                        'Region' => $moon->Region,
+                        'System' => $moon->System,
+                        'Planet' => $moon->Planet,
+                        'System' => $moon->System,
+                        'FirstOre' => $moon->FirstOre,
+                        'FirstQuantity' => $moon->FirstQuantity,
+                        'SecondOre' => $moon->SecondOre,
+                        'SecondQuantity' => $moon->SecondQuantity,
+                        'ThirdOre' => $moon->ThirdOre,
+                        'ThirdQuantity' => $moon->ThirdQuantity,
+                        'FourthOre' => $moon->FourthOre,
+                        'FourthQuantity' => $moon->FourthQuantity,
+                        'Corporation' => $moon->Corporation,
+                        'Available' => $moon->Available,
+                    ]);
+                }
+            }
+            
+        }
+
+        dd($moons);
+
+        return view('moons.user.allmoons')->with('moons', $moons)
+                                          ->with('systems', $systems);
+    }
+
+    /**
+     * Function to display the moons and pass data to the blade template
+     */
+    public function displayRentalMoons() {
         $rentalEnd = '';
 
         //Get the user type from the user Auth class
-        $type = Auth::user()->user_type;
+        $type = Auth::user()->getUserType();
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
-        //get all of the moons from the database
+        //get all of the rental moons from the database
         $moons = DB::table('Moons')->orderBy('System', 'asc')->get();
         //Set the rental date as last month for moons not rented
         $lastMonth = Carbon::now()->subMonth();

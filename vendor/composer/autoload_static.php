@@ -470,6 +470,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
+        'App\\AllianceMoons' => __DIR__ . '/../..' . '/app/Models/Moon/AllianceMoons.php',
         'App\\Console\\Commands\\CleanStaleDataCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
         'App\\Console\\Commands\\EmptyJumpBridges' => __DIR__ . '/../..' . '/app/Console/Commands/Data/EmptyJumpBridges.php',
         'App\\Console\\Commands\\FlexStructureCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Flex/FlexStructureCommand.php',
@@ -538,7 +539,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Library\\Taxes\\TaxesHelper' => __DIR__ . '/../..' . '/app/Library/Taxes/TaxesHelper.php',
         'App\\Library\\Wiki\\WikiHelper' => __DIR__ . '/../..' . '/app/Library/Wiki/WikiHelper.php',
         'App\\Models\\Admin\\AllowedLogin' => __DIR__ . '/../..' . '/app/Models/Admin/AllowedLogin.php',
-        'App\\Models\\Blacklist\\BlacklistUser' => __DIR__ . '/../..' . '/app/Models/Blacklist/BlacklistUser.php',
+        'App\\Models\\Blacklist\\BlacklistEntity' => __DIR__ . '/../..' . '/app/Models/Blacklist/BlacklistEntity.php',
         'App\\Models\\Config' => __DIR__ . '/../..' . '/app/Models/Moon/Config.php',
         'App\\Models\\Contracts\\AcceptedBid' => __DIR__ . '/../..' . '/app/Models/Contracts/AcceptedBid.php',
         'App\\Models\\Contracts\\Bid' => __DIR__ . '/../..' . '/app/Models/Contracts/Bid.php',

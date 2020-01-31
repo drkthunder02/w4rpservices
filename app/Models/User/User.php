@@ -109,7 +109,7 @@ class User extends Authenticatable
     }
 
     public function getUserType() {
-        return User::where('user_type')->get();
+        return $this->user_type;
     }
 
     public function getRole() {

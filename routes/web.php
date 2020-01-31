@@ -125,14 +125,14 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Moon Controller display pages
      */
-    Route::get('/moons/display', 'Moons\MoonsController@displayMoons');
+    Route::get('/moons/display/rentals', 'Moons\MoonsController@displayRentalMoons');
     Route::get('/moons/display/form/worth', 'Moons\MoonsController@displayTotalWorthForm');
     Route::post('/moons/worth', 'Moons\MoonsController@displayTotalWorth');
 
     /**
      * Moon Admin Controller display pages
      */
-    Route::get('/moons/admin/display', 'Moons\MoonsAdminController@displayMoonsAdmin');
+    Route::get('/moons/admin/display/rentals', 'Moons\MoonsAdminController@displayRentalMoonsAdmin');
     Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
     Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
     Route::post('/moons/admin/display', 'Moons\MoonsAdminController@storeMoonRemoval');

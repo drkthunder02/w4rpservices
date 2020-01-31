@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\AllianceMoons' => $baseDir . '/app/Models/Moon/AllianceMoons.php',
     'App\\Console\\Commands\\CleanStaleDataCommand' => $baseDir . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
     'App\\Console\\Commands\\EmptyJumpBridges' => $baseDir . '/app/Console/Commands/Data/EmptyJumpBridges.php',
     'App\\Console\\Commands\\FlexStructureCommand' => $baseDir . '/app/Console/Commands/Flex/FlexStructureCommand.php',
@@ -74,7 +75,7 @@ return array(
     'App\\Library\\Taxes\\TaxesHelper' => $baseDir . '/app/Library/Taxes/TaxesHelper.php',
     'App\\Library\\Wiki\\WikiHelper' => $baseDir . '/app/Library/Wiki/WikiHelper.php',
     'App\\Models\\Admin\\AllowedLogin' => $baseDir . '/app/Models/Admin/AllowedLogin.php',
-    'App\\Models\\Blacklist\\BlacklistUser' => $baseDir . '/app/Models/Blacklist/BlacklistUser.php',
+    'App\\Models\\Blacklist\\BlacklistEntity' => $baseDir . '/app/Models/Blacklist/BlacklistEntity.php',
     'App\\Models\\Config' => $baseDir . '/app/Models/Moon/Config.php',
     'App\\Models\\Contracts\\AcceptedBid' => $baseDir . '/app/Models/Contracts/AcceptedBid.php',
     'App\\Models\\Contracts\\Bid' => $baseDir . '/app/Models/Contracts/Bid.php',
