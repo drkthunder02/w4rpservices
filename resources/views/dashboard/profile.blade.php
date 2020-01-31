@@ -1,6 +1,18 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2>Information</h2>
+        </div>
+        <div class="card-body">
+            This page displays the Scopes, Permissions, and Roles you currently have on the services site.<br>
+            By clicking on the Register Alt link you can add alts for SRP management.<br>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
     <div class="row">
         <div class="col">
             <div class="card">
@@ -118,6 +130,13 @@
 </div>
 <br>
 <div class="container">
-    <a href="/login" img='/img/eve-soo-login-white-large.png'>Register Alt</a>
+    <div class="card">
+        <div class="card-header">
+            <h2>Register Alts for SRP Form</h2>
+        </div>
+        <div class="card-body">
+            <a href="/login"><img src="{{asset('/img/eve-sso-login-white-large.png')}}"></a>
+        </div>
+    </div>
 </div>
 @endsection
