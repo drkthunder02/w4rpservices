@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="container" align="center">
                         <img src={{asset('/img/eve-sso-login-white-large.png')}}
-                        <a href="/login" img={{asset('/img/eve-soo-login-white-large.png')}}>Login</a>
+                        <a href="/login">Login</a>
                     </div>
                 </div>
             </div>
