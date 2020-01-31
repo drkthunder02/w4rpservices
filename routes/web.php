@@ -16,7 +16,7 @@ Route::get('/', function () {
         return redirect('/dashboard');
     }
 
-    return view('welcome');
+    return view('login');
 })->name('/');
 
 /**
