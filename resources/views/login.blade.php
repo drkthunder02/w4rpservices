@@ -32,9 +32,13 @@
 <body>
     <div id="app">
         <div class="container">
-            <div class="card-header">Welcome to the W4RP Services Page</div>
-            <div class="card-body">
-                <a href="/login"><img src="{{asset('/img/eve-sso-login-black-large.png')}}" /></a>
+            <div class="card">
+                <div class="card-header">
+                    <h2>Welcome to the W4RP Services Page</h2>
+                </div>
+                <div class="card-body">
+                    <a href="/login"><img src="{{asset('/img/eve-sso-login-black-large.png')}}" /></a>
+                </div>
             </div>
         </div>
     </div>
