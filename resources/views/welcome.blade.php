@@ -7,8 +7,7 @@
                 <div class="card-header">Welcome to the W4RP Services Page</div>
                 <div class="card-body">
                     <div class="container" align="center">
-                        <img src={{asset('/img/eve-sso-login-white-large.png')}}
-                        <a href="/login">Login</a>
+                        <a href="/login" img={{asset('/img/eve-soo-login-white-large.png')}}>Login</a>
                     </div>
                 </div>
             </div>
