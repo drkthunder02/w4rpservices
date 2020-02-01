@@ -10,7 +10,7 @@ class EveMail extends Model
     protected $table = 'eve_mails';
 
     //Timestamps
-    public $timestamps = 'true';
+    public $timestamps = true;
 
     protected $fillable = [
         'sender',
