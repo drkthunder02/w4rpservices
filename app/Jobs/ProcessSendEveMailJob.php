@@ -50,7 +50,7 @@ class ProcessSendEveMailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(EveMail $mail) {
+    public function __construct(JobSendEveMail $mail) {
         $this->body = $mail->body;
         $this->recipient = $mail->recipient;
         $this->recipient_type = $mail->recipient_type;

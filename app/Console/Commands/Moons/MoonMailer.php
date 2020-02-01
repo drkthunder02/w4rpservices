@@ -12,6 +12,8 @@ use App\Jobs\ProcessSendEveMailJob;
 //Library
 use Commands\Library\CommandHelper;
 use App\Library\Moons\MoonCalc;
+use App\Library\Esi\Esi;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 //Models
 use App\Models\Moon\Moon;
@@ -101,7 +103,7 @@ class MoonMailerCommand extends Command
             $body .= "Warped Intentions Leadership<br>";
             
             //Dispatch the mail job
-            $mail = new EveMail;
+            $mail = new JobSendEveMail;
             $mail->sender = $config['primary'];
             $mail->subject = "Warped Intentions Moon Rental Payment Due for " . $today->englishMonth;
             $mail->body = $body;
@@ -110,6 +112,8 @@ class MoonMailerCommand extends Command
             ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
             //Increment the delay for the mail to not hit rate limits
             $delay += 30;
+
+            $this->SendMail($mail);
 
             //Update the moon as not being paid for the next month?
             foreach($rentals as $rental) {
@@ -123,6 +127,10 @@ class MoonMailerCommand extends Command
 
         //Mark the job as finished
         $task->SetStopStatus();
+    }
+
+    private function SendMail(EveMail $mail) {
+
     }
 
     private function UpdateNotPaid(MoonRental $rental) {

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class JobSendEveMail extends Model
 {
     //Timestamps
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'sender',
@@ -15,7 +15,5 @@ class JobSendEveMail extends Model
         'recipient_type',
         'subject',
         'body',
-        'created_at',
-        'updated_at',
     ];
 }
