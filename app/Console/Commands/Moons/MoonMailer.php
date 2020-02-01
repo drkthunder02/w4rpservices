@@ -129,8 +129,8 @@ class MoonMailerCommand extends Command
         $task->SetStopStatus();
     }
 
-    private function SendMail(EveMail $mail) {
-
+    private function SendMail() {
+        return;
     }
 
     private function UpdateNotPaid(MoonRental $rental) {
