@@ -13,11 +13,12 @@ use Log;
 //Library
 use App\Library\Esi\Esi;
 use Seat\Eseye\Exceptions\RequestFailedException;
+use Seat\Eseye\Cache\NullCache;
+use Seat\Eseye\Configuration;
 
 //Models
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
-use App\Models\Mail\EveMail;
 use App\Models\Jobs\JobStatus;
 use App\Models\Mail\SentMail;
 use App\Models\Jobs\JobSendEveMail;
@@ -78,7 +79,7 @@ class ProcessSendEveMailJob implements ShouldQueue
         $config = config('esi');
 
         //Retrieve the token for main character to send mails from
-        $token = EsiToken::where(['character_id'=> $this->sender])->first();
+        $token = $esiHelper->GetRefreshToken($config['primary']);
 
         //Create the ESI authentication container
         $esi = $esiHelper->SetupEsiAuthentication($token);

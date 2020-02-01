@@ -16,7 +16,7 @@ use Commands\Library\CommandHelper;
 //Models
 use App\Models\Flex\FlexStructure;
 use App\Models\Mail\SentMail;
-use App\Models\Mail\EveMail;
+use App\Models\Jobs\JobSendEveMail;
 
 class FlexStructureCommand extends Command
 {
@@ -93,7 +93,7 @@ class FlexStructureCommand extends Command
             $body += "Warped Intentions Leadership<br>";
 
             //Dispatch the mail job
-            $mail = new EveMail;
+            $mail = new JobSendEveMail;
             $mail->sender = $config['primary'];
             $mail->subject = "Warped Intentions Flex Structures Payment Due for " . $today->englishMonth;
             $mail->body = $body;

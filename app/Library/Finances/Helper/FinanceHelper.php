@@ -17,7 +17,6 @@ use App\Jobs\ProcessSendEveMailJob;
 //Models
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
-use App\Models\Mail\EveMail;
 
 //Library
 use App\Library\Esi\Esi;

@@ -18,7 +18,6 @@ use App\Library\Lookups\LookupHelper;
 use App\Models\Logistics\AnchorStructure;
 use App\Models\Mail\SentMail;
 use App\Models\Jobs\JobSendEveMail;
-use App\Models\Mail\EveMail;
 
 class StructureRequestController extends Controller
 {

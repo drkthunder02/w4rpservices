@@ -20,7 +20,6 @@ use App\Models\Moon\Moon;
 use App\Models\MoonRent\MoonRental;
 use App\Models\Jobs\JobSendEveMail;
 use App\Models\Mail\SentMail;
-use App\Models\Mail\EveMail;
 
 class MoonMailerCommand extends Command
 {
@@ -112,8 +111,6 @@ class MoonMailerCommand extends Command
             ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
             //Increment the delay for the mail to not hit rate limits
             $delay += 30;
-
-            $this->SendMail($mail);
 
             //Update the moon as not being paid for the next month?
             foreach($rentals as $rental) {

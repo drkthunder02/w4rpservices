@@ -19,7 +19,6 @@ use App\Models\User\UserPermission;
 use App\Models\Contracts\Contract;
 use App\Models\Contracts\Bid;
 use App\Models\Contracts\AcceptedBid;
-use App\Models\Mail\EveMail;
 use App\Models\Jobs\JobSendEveMail;
 
 class ContractAdminController extends Controller
@@ -137,7 +136,6 @@ class ContractAdminController extends Controller
         ]);
 
         //Declare class variables
-        $mail = new Mail;
         $tries = 1;
 
         //Get the esi config
@@ -156,7 +154,7 @@ class ContractAdminController extends Controller
         $body .= 'Sincerely,<br>Spatial Forces Contracting Department';
 
         //Setup the mail job
-        $mail = new EveMail;
+        $mail = new JobSendEveMail;
         $mail->subject = $subject;
         $mail->recipient_type = 'character';
         $mail->recipient = $bid['character_id'];
@@ -195,7 +193,7 @@ class ContractAdminController extends Controller
 
         //Cycle through the users with the correct permission and send a mail to go out with the queue system.
         foreach($users as $user) {
-                $mail = new EveMail;
+                $mail = new JobSendEveMail;
                 $mail->sender = $config['primary'];
                 $mail->subject = 'New Alliance Contract Available';
                 $mail->recipient = $user['character_id'];
