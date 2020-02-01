@@ -77,7 +77,7 @@ class ProcessSendEveMailJob implements ShouldQueue
         $config = config('esi');
 
         //Retrieve the token for main character to send mails from
-        $token = EsiToken::where(['character_id'=> $config['primary']])->first();
+        $token = EsiToken::where(['character_id'=> $this->sender])->first();
 
         //Create the ESI authentication container
         $esi = $esiHelper->SetupEsiAuthentication($token);
