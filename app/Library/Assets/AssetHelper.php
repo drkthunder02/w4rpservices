@@ -52,7 +52,7 @@ class AssetHelper {
         
         try {
             $assets = $esi->page($this->page)
-                          ->invoke('get', '/corporations/{corporation_id}/assets', [
+                          ->invoke('get', '/corporations/{corporation_id}/assets/', [
                               'corporation_id' => $this->corpId,
                           ]);
         } catch(RequestFailedException $e) {
