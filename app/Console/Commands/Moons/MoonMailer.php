@@ -111,9 +111,6 @@ class MoonMailerCommand extends Command
             //Increment the delay for the mail to not hit rate limits
             $delay += 30;
 
-            //After the mail is dispatched, saved the sent mail record
-            $this->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
-            
             //Update the moon as not being paid for the next month?
             foreach($rentals as $rental) {
                 $previous = new Carbon($rental->Paid_Until);
@@ -136,16 +133,6 @@ class MoonMailerCommand extends Command
         ])->update([
             'Paid' => 'No',
         ]);
-    }
-
-    private function SaveSentRecord($sender, $subject, $body, $recipient, $recipientType) {
-        $sentmail = new SentMail;
-        $sentmail->sender = $sender;
-        $sentmail->subject = $subject;
-        $sentmail->body = $body;
-        $sentmail->recipient = $recipient;
-        $sentmail->recipient_type = $recipientType;
-        $sentmail->save();
     }
 
     private function GetMoonList($moons) {

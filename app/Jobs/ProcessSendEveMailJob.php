@@ -19,6 +19,7 @@ use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\Mail\EveMail;
 use App\Models\Jobs\JobStatus;
+use App\Models\Mail\SentMail;
 
 class ProcessSendEveMailJob implements ShouldQueue
 {
@@ -38,6 +39,7 @@ class ProcessSendEveMailJob implements ShouldQueue
      */
     public $retries = 3;
 
+    private $sender;
     private $body;
     private $recipient;
     private $recipient_type;
@@ -53,6 +55,7 @@ class ProcessSendEveMailJob implements ShouldQueue
         $this->recipient = $mail->recipient;
         $this->recipient_type = $mail->recipient_type;
         $this->subject = $mail->subject;
+        $this->sender = $mail->sender;
 
         $this->connection = 'redis';
     }
@@ -90,12 +93,14 @@ class ProcessSendEveMailJob implements ShouldQueue
                 ]],
                 'subject' => $this->subject,
             ])->invoke('post', '/characters/{character_id}/mail/', [
-                'character_id'=> $config['primary'],
+                'character_id'=> $this->sender,
             ]);
         } catch(RequestFailedException $e) {
             Log::warning($e);
             return null;
         }
+
+        $this->SaveSentRecord($this->sender, $this->subject, $this->body, $this->recipient, $this->recipient_type);
         
         $this->delete();
     }
@@ -109,5 +114,15 @@ class ProcessSendEveMailJob implements ShouldQueue
     public function failed($exception)
     {
         Log::critical($exception);
+    }
+
+    private function SaveSentRecord($sender, $subject, $body, $recipient, $recipientType) {
+        $sentmail = new SentMail;
+        $sentmail->sender = $sender;
+        $sentmail->subject = $subject;
+        $sentmail->body = $body;
+        $sentmail->recipient = $recipient;
+        $sentmail->recipient_type = $recipientType;
+        $sentmail->save();
     }
 }
