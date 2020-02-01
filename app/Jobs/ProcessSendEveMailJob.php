@@ -20,6 +20,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\Mail\EveMail;
 use App\Models\Jobs\JobStatus;
 use App\Models\Mail\SentMail;
+use App\Models\Jobs\JobSendEveMail;
 
 class ProcessSendEveMailJob implements ShouldQueue
 {
