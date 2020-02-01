@@ -4,6 +4,6 @@
         'secret' => env('ESI_SECRET_KEY'),
         'useragent' => env('ESI_USERAGENT'),
         'callback' => env('ESI_CALLBACK_URI'),
-        'primary' => env('ESI_PRIMARY_CHAR'),
+        'primary' => env('ESI_PRIMARY_CHAR', 93738489),
     ];
 ?>
