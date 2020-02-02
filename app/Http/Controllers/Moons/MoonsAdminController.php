@@ -234,8 +234,6 @@ class MoonsAdminController extends Controller
         $mn = $str_array[2];
         $name = $str_array[3];
 
-        dd($request->contact);
-
         //Take the  contact name and create a character_id from it
         if($request->contact == 'None') {
             $contact = -1;

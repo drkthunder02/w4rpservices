@@ -407,6 +407,7 @@ class LookupHelper {
         } else if($name != null) {
             //If the name is not null then attemp to lookup the character
             $count = CharacterLookup::where(['name' => $name])->count();
+            dd($count);
             if($count > 0) {
                 $character = CharacterLookup::where(['name' => $name])->first();
             } else {
