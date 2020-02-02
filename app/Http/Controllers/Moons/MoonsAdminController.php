@@ -234,14 +234,14 @@ class MoonsAdminController extends Controller
         $mn = $str_array[2];
         $name = $str_array[3];
 
+        dd($request->contact);
+
         //Take the  contact name and create a character_id from it
         if($request->contact == 'None') {
             $contact = -1;
         } else {
             $contact = $lookup->CharacterNameToId($request->contact);
         }
-
-        dd($contact);
 
         //After we get the contact, from his name to the character Id, let's do some other functions before continuing.
         //Let's find the corporation and alliance information to ascertain whethery they are in Warped Intentions or another Legacy Alliance
