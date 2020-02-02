@@ -256,7 +256,7 @@ class LookupHelper {
     public function CharacterNameToId($charName) {
         //Check if the character is stored in our own database first
         $char = $this->LookupCharacter(null, $charName);
-        dd($char);
+        
         if($char != null) {
             return $char->character_id;
         } else {
@@ -268,7 +268,7 @@ class LookupHelper {
                 Log::warning('Failed to get character name from /universe/ids/ in lookup helper.');
                 return null;
             }
-
+            dd($response);
             if(isset($response->characters[0]->id)) {
                 $this->StoreCharacterLookup($response->characters[0]->id, null);
                 
@@ -402,16 +402,17 @@ class LookupHelper {
             if($count > 0) {
                 $character = CharacterLookup::where(['character_id' => $id])->first();
             } else {
-                $character = null;
+                //If we didn't find it in the database, then return null
+                return null;
             }
         } else if($name != null) {
             //If the name is not null then attemp to lookup the character
             $count = CharacterLookup::where(['name' => $name])->count();
-            dd($count);
             if($count > 0) {
                 $character = CharacterLookup::where(['name' => $name])->first();
             } else {
-                $character = null;
+                //If we didn't find it in the database, then return null
+                return null;
             }
         }
 
