@@ -256,6 +256,7 @@ class LookupHelper {
     public function CharacterNameToId($charName) {
         //Check if the character is stored in our own database first
         $char = $this->LookupCharacter(null, $charName);
+        dd($char);
         if($char != null) {
             return $char->character_id;
         } else {
