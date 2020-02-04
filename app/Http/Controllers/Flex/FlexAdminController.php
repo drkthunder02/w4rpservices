@@ -105,6 +105,8 @@ class FlexAdminController extends Controller
         ])->update([
             'paid_until' => $request->paid_until,
         ]);
+
+        return redirect('/flex/display')->with('success', 'Flex Structure Updated.');
     }
 
     /**
