@@ -28,6 +28,7 @@
                         <td>{{ $structure->structure_type }}</td>
                         <td>{{ number_format($structure->structure_cost, "2", ".", ",") }}</td>
                         <td>
+                            {{ $structure->paid_until }}
                             {!! Form::open(['action' => 'Flex\FlexAdminController@updateFlexStructure', 'method' => 'POST']) !!}
                             {{ Form::date('paid_until', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
                         </td>
