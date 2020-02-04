@@ -28,7 +28,7 @@
                         <td>
                             {!! Form::open(['action' => 'Flex\FlexAdminController@updateFlexStructure', 'method' => 'POST']) !!}
                             {{ Form::date('paid_until', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
-                            {{ submit('Update', ['class' => 'btn btn-primary']) }}
+                            {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
                         </td>
                         <td>
