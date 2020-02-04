@@ -15,7 +15,9 @@
                     <th>Structure Type</th>
                     <th>Cost</th>
                     <th>Update</th>
+                    <th> </th>
                     <th>Remove?</th>
+                    <th> </th>
                 </thead>
                 <tbody>
                     @foreach($structures as $structure)
@@ -28,6 +30,8 @@
                         <td>
                             {!! Form::open(['action' => 'Flex\FlexAdminController@updateFlexStructure', 'method' => 'POST']) !!}
                             {{ Form::date('paid_until', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
+                        </td>
+                        <td>
                             {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
                         </td>
@@ -38,6 +42,8 @@
                             {{ Form::hidden('requestor_id', $structure->requestor_id) }}
                             {{ Form::hidden('requestor_corp_id', $structure->requestor_corp_id) }}
                             {{ Form::hidden('system_id', $structure->system_id) }}
+                        </td>
+                        <td>
                             {{ Form::submit('Remove', ['class' => 'btn btn-danger']) }}
                             {!! Form::close() !!}
                         </td>
