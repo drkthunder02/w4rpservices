@@ -68,6 +68,10 @@ class MoonsAdminController extends Controller
                 $rentalTemp = $lastMonth;
                 $rentalEnd = $rentalTemp->format('m-d');
 
+                //If we don't find a rental record, set the paid until date as last month
+                $paidUntilTemp = $lastMonth;
+                $paidUntil = $paidUntilTemp->format('m-d');
+
                 //Set the contact info
                 $contact = 'None';
 
