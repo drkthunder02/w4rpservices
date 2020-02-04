@@ -33,6 +33,10 @@
                         <td>
                             {!! Form::open(['action' => 'Flex\FlexAdminController@updateFlexStructure', 'method' => 'POST']) !!}
                             {{ Form::date('paid_until', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
+                            {{ Form::hidden('requestor_id', $structure->requestor_id) }}
+                            {{ Form::hidden('requestor_corp_id', $structure->requestor_corp_id) }}
+                            {{ Form::hidden('system_id', $structure->system_id) }}
+                            {{ Form::hidden('structure_type', $structure->structure_type) }}
                             {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
                         </td>
