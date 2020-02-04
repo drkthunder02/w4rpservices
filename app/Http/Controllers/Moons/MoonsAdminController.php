@@ -318,7 +318,7 @@ class MoonsAdminController extends Controller
                 $store->Planet = $planet;
                 $store->Moon = $mn;
                 $store->RentalCorp = $renter;
-                $store->RentalEnd = $date;
+                $store->RentalEnd = $rentalEnd;
                 $store->Contact = $contact;
                 $store->Price = $price['alliance'];
                 $store->Type = 'alliance';
@@ -331,7 +331,7 @@ class MoonsAdminController extends Controller
                 $store->Planet = $planet;
                 $store->Moon = $mn;
                 $store->RentalCorp = $renter;
-                $store->RentalEnd = $date;
+                $store->RentalEnd = $rentalEnd;
                 $store->Contact = $contact;
                 $store->Price = $price['outofalliance'];
                 $store->Type = 'outofalliance';
@@ -351,7 +351,7 @@ class MoonsAdminController extends Controller
                     'Planet' => $planet,
                     'Moon' => $mn,
                     'RentalCorp' => $renter,
-                    'RentalEnd' => $date,
+                    'RentalEnd' => $rentalEnd,
                     'Contact' => $contact,
                     'Price' => $price['alliance'],
                     'Type' => 'alliance',
@@ -369,7 +369,7 @@ class MoonsAdminController extends Controller
                     'Planet' => $planet,
                     'Moon' => $mn,
                     'RentalCorp' => $renter,
-                    'RentalEnd' => $date,
+                    'RentalEnd' => $rentalEnd,
                     'Contact' => $contact,
                     'Price' => $price['outofalliance'],
                     'Type' => 'outofalliance',
@@ -392,7 +392,7 @@ class MoonsAdminController extends Controller
                 $store->Planet = $planet;
                 $store->Moon = $mn;
                 $store->RentalCorp = $renter;
-                $store->RentalEnd = $date;
+                $store->RentalEnd = $rentalEnd;
                 $store->Contact = $contact;
                 $store->Price = $price['alliance'];
                 $store->Type = 'alliance';
@@ -405,7 +405,7 @@ class MoonsAdminController extends Controller
                 $store->Planet = $planet;
                 $store->Moon = $mn;
                 $store->RentalCorp = $renter;
-                $store->RentalEnd = $date;
+                $store->RentalEnd = $rentalEnd;
                 $store->Contact = $contact;
                 $store->Price = $price['outofalliance'];
                 $store->Type = 'outofalliance';
