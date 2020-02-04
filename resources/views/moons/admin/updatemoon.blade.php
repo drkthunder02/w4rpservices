@@ -12,7 +12,11 @@
         {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' => 'Character']) }}
     </div>
     <div class="form-group col-md-6">
-        {{ Form::label('paid_until', 'Rental End Date') }}
+        {{ Form::label('rental_end', 'Rental End Date') }}
+        {{ Form::date('rental_end', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
+    </div>
+    <div class="form-group col-md-6">
+        {{ Form::label('paid_until', 'Paid Until') }}
         {{ Form::date('paid_until', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
     </div>
     <div class="form-group">

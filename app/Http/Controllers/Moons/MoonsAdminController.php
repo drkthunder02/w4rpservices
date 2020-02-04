@@ -89,6 +89,8 @@ class MoonsAdminController extends Controller
 
                 //If we find a rental record, mark the moon as whether it's paid or not
                 $paid = $rental->Paid;
+                $paidUntil = new Carbon($rental->Paid_Until);
+                $paidUntil = $paidUntil->format('m-d');
 
                 //Set the rental date up
                 $rentalTemp = new Carbon($rental->RentalEnd);
@@ -123,6 +125,7 @@ class MoonsAdminController extends Controller
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
                 'Paid' => $paid,
+                'PaidUntil' => $paidUntil,
                 'Contact' => $contact,
                 'Type' => $type,
                 'Renter' => $ticker,
@@ -223,9 +226,9 @@ class MoonsAdminController extends Controller
         //Validate our request from the html form
         $this->validate($request, [
             'spmn' => 'required',
-            'date' => 'required',
             'contact' => 'required',
             'paid_until' => 'required',
+            'rental_end' => 'required',
         ]);
 
         //Decode the System, Planet, Moon, Name combinatio sent from the controller
@@ -264,11 +267,18 @@ class MoonsAdminController extends Controller
             $renter = $alliance->ticker;
         }
 
-        //Create the date
+        //Create the paid until date
         if(isset($request->paid_until)) {
             $paidUntil = new Carbon($request->paid_until . '00:00:01');
         } else {
             $paidUntil = Carbon::now();
+        }
+
+        //Create the rental end date
+        if(isset($request->rental_end)) {
+            $rentalEnd = new Carbon($request->date . '00:00:01');
+        } else {
+            $rentalEnd = Carbon::now();
         }
 
         //Calculate the price of the moon for when it's updated

@@ -13,6 +13,7 @@
                 <th>Contact</th>
                 <th>Rental End</th>
                 <th>Paid?</th>
+                <th>Paid Until</th>
                 <th>Remove Renter</th>
             </thead>
             <tbody>
@@ -25,11 +26,12 @@
                     <td>{{ $row['Renter'] }}</td>
                     <td>{{ $row['Contact'] }}</td>
                     <td>{{ $row['RentalEnd'] }}</td>
-                        @if($row['Paid'] == 'Yes')
-                            <td>Yes</td>
-                        @else
-                            <td>No</td>
-                        @endif
+                    @if($row['Paid'] == 'Yes')
+                        <td>Yes</td>
+                    @else
+                        <td>No</td>
+                    @endif
+                    <td>{{ $row['PaidUntil'] }}</td>
                     <td>{{ Form::radio('remove', $row['SPM'], false, ['class' => 'form-control']) }}</td>
                 </tr>
                 @endforeach
