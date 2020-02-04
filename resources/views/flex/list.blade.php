@@ -14,8 +14,8 @@
                     <th>System</th>
                     <th>Structure Type</th>
                     <th>Cost</th>
+                    <th>Paid Until</th>
                     <th>Update</th>
-                    <th> </th>
                     <th>Remove?</th>
                     <th> </th>
                 </thead>
