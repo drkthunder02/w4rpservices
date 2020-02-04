@@ -116,7 +116,7 @@ class MoonMailerCommand extends Command
             foreach($rentals as $rental) {
                 $previous = new Carbon($rental->Paid_Until);
 
-                if($today->greaterThan($previous)) {
+                if($today->greaterThanOrEqualTo($previous)) {
                     $this->UpdateNotPaid($rental);
                 }
             }
