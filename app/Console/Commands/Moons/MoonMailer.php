@@ -69,7 +69,7 @@ class MoonMailerCommand extends Command
 
         //Get today's date.
         $today = Carbon::now();
-        $today->second = 2;
+        $today->second = 1;
         $today->minute = 0;
         $today->hour = 0;
 
@@ -168,22 +168,34 @@ class MoonMailerCommand extends Command
         $totalCost = 0.00;
         $price = null;
 
+        //Create the date for today
+        $today = Carbon::now();
+        $today->second = 1;
+        $today->minute = 0;
+        $today->hour = 0;
+
         foreach($rentals as $rental) {
             $moon = Moon::where([
                 'System' => $rental->System,
                 'Planet' => $rental->Planet,
                 'Moon' => $rental->Moon,
             ])->first();
+           
+            //Create the date time object for the rental end
+            $end = new Carbon($rental->Paid_Until);
 
-            //Get the updated price for the moon
-            $price = $moonCalc->SpatialMoonsOnlyGooMailer($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                                          $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-            
-            //Check the type and figure out which price to add in
-            if($rental->Type == 'alliance') {
-                $totalCost += $price['alliance'];
-            } else{
-                $totalCost += $price['outofalliance'];
+            //If today is greater than the rental end, then calculate the moon cost
+            if($today->greaterThanOrEqualTo($end)) {
+                //Get the updated price for the moon
+                $price = $moonCalc->SpatialMoonsOnlyGooMailer($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
+                                                              $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+
+                //Check the type and figure out which price to add in
+                if($rental->Type == 'alliance') {
+                    $totalCost += $price['alliance'];
+                } else{
+                    $totalCost += $price['outofalliance'];
+                }
             }
         }
 
