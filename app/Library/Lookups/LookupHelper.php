@@ -268,7 +268,7 @@ class LookupHelper {
                 Log::warning('Failed to get character name from /universe/ids/ in lookup helper.');
                 return null;
             }
-            dd($response);
+            
             if(isset($response->characters[0]->id)) {
                 $this->StoreCharacterLookup($response->characters[0]->id, null);
                 

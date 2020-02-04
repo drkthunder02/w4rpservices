@@ -63,8 +63,6 @@ class MoonsController extends Controller
             
         }
 
-        dd($moons);
-
         return view('moons.user.allmoons')->with('moons', $moons)
                                           ->with('systems', $systems);
     }

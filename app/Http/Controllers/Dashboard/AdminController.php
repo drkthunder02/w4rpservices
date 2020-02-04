@@ -361,8 +361,6 @@ class AdminController extends Controller
             'user' => 'required',
         ]);
 
-        dd($request->user);
-
         //Declare helper variable
         $wikiHelper = new WikiHelper;
 
