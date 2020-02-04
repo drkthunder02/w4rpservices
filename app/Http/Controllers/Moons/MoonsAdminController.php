@@ -225,6 +225,7 @@ class MoonsAdminController extends Controller
             'spmn' => 'required',
             'date' => 'required',
             'contact' => 'required',
+            'paid_until' => 'required',
         ]);
 
         //Decode the System, Planet, Moon, Name combinatio sent from the controller
@@ -255,13 +256,6 @@ class MoonsAdminController extends Controller
         } else {
             $paid = 'No';
         }
-
-        //Update the paid unti value for the database entry
-        if(isset($request->Paid_Until)) {
-            $paidUntil = $request->Paid_Until;
-        } else {
-            $paidUntil = null;
-        }
         
         //Create the rnetal ticker if the corp is in Warped Intentions, otherwise just display the alliance ticker
         if($allianceId == 99004116) {
@@ -271,15 +265,11 @@ class MoonsAdminController extends Controller
         }
 
         //Create the date
-        $date = new Carbon($request->date . '00:00:01');
-
-        //Count how many rentals we find for later database processing
-        $count = MoonRental::where([
-            'System' => $system,
-            'Planet' => $planet,
-            'Moon' => $mn,
-            'Contact' => $contact,
-        ])->count();
+        if(isset($request->paid_until)) {
+            $paidUntil = new Carbon($request->paid_until . '00:00:01');
+        } else {
+            $paidUntil = Carbon::now();
+        }
 
         //Calculate the price of the moon for when it's updated
         $moon = Moon::where([
@@ -291,10 +281,55 @@ class MoonsAdminController extends Controller
         //Calculate the price of the rental and store it in the database
         $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
                                                 $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+
+        //Count how many rentals we find for later database processing
+        $count = MoonRental::where([
+            'System' => $system,
+            'Planet' => $planet,
+            'Moon' => $mn,
+            'Contact' => $contact,
+        ])->count();
         
         //If the database entry isn't found, then insert it into the database,
         //otherwise, account for it being in the system already.
-        if($count != 0) {
+        //Also check for the weird condition of more than one moon entry existing
+        if($count > 1) {
+            //If more than one entry is found for a particular system, planet, moon combo, then delete all the entries, and put in 
+            // a single new entry
+            MoonRental::where([
+                'System' => $system,
+                'Planet' => $planet,
+                'Moon' => $moon,
+            ])->delete();
+
+            if($allianceId == 99004116) {
+                $store = new MoonRental;
+                $store->System = $system;
+                $store->Planet = $planet;
+                $store->Moon = $mn;
+                $store->RentalCorp = $renter;
+                $store->RentalEnd = $date;
+                $store->Contact = $contact;
+                $store->Price = $price['alliance'];
+                $store->Type = 'alliance';
+                $store->Paid = $paid;
+                $store->Paid_Until = $paidUntil;
+                $store->save();
+            } else {
+                $store = new MoonRental;
+                $store->System = $system;
+                $store->Planet = $planet;
+                $store->Moon = $mn;
+                $store->RentalCorp = $renter;
+                $store->RentalEnd = $date;
+                $store->Contact = $contact;
+                $store->Price = $price['outofalliance'];
+                $store->Type = 'outofalliance';
+                $store->Paid = $paid;
+                $store->Paid_Until = $paidUntil;
+                $store->save();
+            }
+        } else if($count == 1) {
             if($allianceId = 99004116) {
                 MoonRental::where([
                     'System' => $system,
@@ -311,7 +346,7 @@ class MoonsAdminController extends Controller
                     'Price' => $price['alliance'],
                     'Type' => 'alliance',
                     'Paid' => $paid,
-                    'Paid_Until' => $request->paid_until,
+                    'Paid_Until' => $paidUntil,
                 ]);
             } else {
                 MoonRental::where([
@@ -329,7 +364,7 @@ class MoonsAdminController extends Controller
                     'Price' => $price['outofalliance'],
                     'Type' => 'outofalliance',
                     'Paid' => $paid,
-                    'Paid_Until' => $request->paid_until,
+                    'Paid_Until' => $paidUntil,
                 ]);
             }
         } else {
@@ -352,6 +387,7 @@ class MoonsAdminController extends Controller
                 $store->Price = $price['alliance'];
                 $store->Type = 'alliance';
                 $store->Paid = $paid;
+                $store->Paid_Until = $paidUntil;
                 $store->save();
             } else {
                 $store = new MoonRental;
@@ -364,6 +400,7 @@ class MoonsAdminController extends Controller
                 $store->Price = $price['outofalliance'];
                 $store->Type = 'outofalliance';
                 $store->Paid = $paid;
+                $store->Paid_Until = $paidUntil;
                 $store->save();
             }
         }

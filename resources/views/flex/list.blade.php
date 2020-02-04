@@ -7,7 +7,6 @@
             <h2>Flex Structures</h2>
         </div>
         <div class="card-body">
-            {!! Form::open(['action' => 'Flex\FlexAdminController@removeFlexStructure', 'method' => 'POST']) !!}
             <table class="table table-bordered table-striped">
                 <thead>
                     <th>Requestor</th>
@@ -15,6 +14,7 @@
                     <th>System</th>
                     <th>Structure Type</th>
                     <th>Cost</th>
+                    <th>Update</th>
                     <th>Remove?</th>
                 </thead>
                 <tbody>
@@ -26,17 +26,25 @@
                         <td>{{ $structure->structure_type }}</td>
                         <td>{{ number_format($structure->structure_cost, "2", ".", ",") }}</td>
                         <td>
+                            {!! Form::open(['action' => 'Flex\FlexAdminController@updateFlexStructure', 'method' => 'POST']) !!}
+                            {{ Form::date('paid_until', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
+                            {{ submit('Update', ['class' => 'btn btn-primary']) }}
+                            {!! Form::close() !!}
+                        </td>
+                        <td>
+                            {!! Form::open(['action' => 'Flex\FlexAdminController@removeFlexStructure', 'method' => 'POST']) !!}
                             {{ Form::radio('remove', 'Yes', false, ['class' => 'form-control']) }}
-                            {{ Form::hidden('requestor_name', $structure->requestor_name) }}
-                            {{ Form::hidden('system', $structure->system) }}
                             {{ Form::hidden('structure_type', $structure->structure_type) }}
+                            {{ Form::hidden('requestor_id', $structure->requestor_id) }}
+                            {{ Form::hidden('requestor_corp_id', $structure->requestor_corp_id) }}
+                            {{ Form::hidden('system_id', $structure->system_id) }}
+                            {{ Form::submit('Remove', ['class' => 'btn btn-danger']) }}
+                            {!! Form::close() !!}
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
-            {{ Form::submit('Remove', ['class' => 'btn btn-danger']) }}
-            {!! Form::close() !!}
         </div>
     </div>
 </div>

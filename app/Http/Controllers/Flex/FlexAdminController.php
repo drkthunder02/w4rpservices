@@ -29,10 +29,10 @@ class FlexAdminController extends Controller
      * the information regarding the flex structure
      */
     public function displayFlexStructures() {
-
         //Get the structures from the database
         $structures = FlexStructure::all();
 
+        //Return the view with the data
         return view('flex.list')->with('structures', $structures);
     }
 
@@ -77,9 +77,34 @@ class FlexAdminController extends Controller
         $flex->system = $request->system;
         $flex->structure_type = $request->structure_type;
         $flex->structure_cost = $request->structure_cost;
+        if(isset($request->paid_until)) {
+            $flex->paid_until = $request->paid_until;
+        }
         $flex->save();
 
         return redirect('/flex/display')->with('success', 'Flex Structure Added.');
+    }
+
+    /**
+     * Function to update paid until section of the flex structure in the database
+     */
+    public function updateFlexStructure(Request $request) {
+        $this->validate($request, [
+            'paid_until' => 'required',
+            'requestor_id' => 'required',
+            'requestor_corp_id' => 'required',
+            'system_id' => 'required',
+            'structure_type' => 'required',
+        ]);
+
+        FlexStructure::where([
+            'requestor_id' => $request->requestor_id,
+            'requestor_corp_id' => $request->requestor_corp_id,
+            'system_id' => $request->system_id,
+            'structure_type' => $request->structure_type,
+        ])->update([
+            'paid_until' => $request->paid_until,
+        ]);
     }
 
     /**
@@ -87,14 +112,16 @@ class FlexAdminController extends Controller
      */
     public function removeFlexStructure(Request $request) {
         $this->validate($request, [
-            'requestor_name' => 'required',
-            'system' => 'required',
+            'requestor_id' => 'required',
+            'requestor_corp_id' => 'required',
+            'system_id' => 'required',
             'structure_type' => 'required',
         ]);
 
         FlexStructure::where([
-            'requestor_name' => $request->requestor_name,
-            'system' => $request->system,
+            'requestor_id' => $request->requestor_id,
+            'requestor_corp_id' => $request->requestor_corp_id,
+            'system' => $request->system_id,
             'structure_type' => $request->structure_type,
         ])->delete();
 

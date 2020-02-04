@@ -30,5 +30,6 @@ class FlexStructure extends Model
         'system',
         'structure_type',
         'structure_cost',
+        'paid_until',
     ];
 }

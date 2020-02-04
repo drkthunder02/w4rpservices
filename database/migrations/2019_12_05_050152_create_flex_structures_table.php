@@ -29,6 +29,7 @@ class CreateFlexStructuresTable extends Migration
                     'Super Construction Facilities',
                 ]);
                 $table->double('structure_cost', 20, 2);
+                $table->dateTime('paid_until');
                 $table->timestamps();
             });
         }

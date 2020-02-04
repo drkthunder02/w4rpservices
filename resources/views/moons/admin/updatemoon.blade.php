@@ -12,8 +12,8 @@
         {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' => 'Character']) }}
     </div>
     <div class="form-group col-md-6">
-        {{ Form::label('date', 'Rental End Date') }}
-        {{ Form::date('date', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
+        {{ Form::label('paid_until', 'Rental End Date') }}
+        {{ Form::date('paid_until', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
     </div>
     <div class="form-group">
         Paid?<br>

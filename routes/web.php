@@ -116,6 +116,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/flex/display/add', 'Flex\FlexAdminController@displayAddFlexStructure');
     Route::post('/flex/display/add', 'Flex\FlexAdminController@addFlexStructure');
     Route::post('/flex/display/remove', 'Flex\FlexAdminController@removeFlexStructure');
+    Route::post('/flex/display/update', 'Flex\FlexAdminController@updateFlexStructure');
 
     /**
      * Fuel Controller display pages
