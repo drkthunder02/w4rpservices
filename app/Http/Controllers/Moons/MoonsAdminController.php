@@ -276,7 +276,7 @@ class MoonsAdminController extends Controller
 
         //Create the rental end date
         if(isset($request->rental_end)) {
-            $rentalEnd = new Carbon($request->rental_end . '00:00:01');
+            $rentalEnd = new Carbon($request->rental_end . '23:59:59');
         } else {
             $rentalEnd = Carbon::now();
         }
