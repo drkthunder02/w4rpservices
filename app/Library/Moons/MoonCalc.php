@@ -34,8 +34,11 @@ class MoonCalc {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
+
+        //Convert the quantities into numbers we want to utilize
         if($firstQuan >= 1.00) {
             $firstPerc = $this->ConvertToPercentage($firstQuan);
         } else {
@@ -56,6 +59,8 @@ class MoonCalc {
         } else {
             $fourthPerc = $fourthQuan;
         }
+
+        //Calculate the prices from the ores
         if($firstOre != "None") {
             $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
         } else {
@@ -76,6 +81,7 @@ class MoonCalc {
         } else {
             $fourthTotal = 0.00;
         }
+
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
        
@@ -87,8 +93,11 @@ class MoonCalc {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
+        
+        //Convert the percentages into values we want to use to standardize the process
         if($firstQuan >= 1.00) {
             $firstPerc = $this->ConvertToPercentage($firstQuan);
         } else {
@@ -109,6 +118,8 @@ class MoonCalc {
         } else {
             $fourthPerc = $fourthQuan;
         }
+
+        //Calculate the price of each ore
         if($firstOre != "None") {
             if($this->IsRMoonGoo($firstOre)) {
                 $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
@@ -145,6 +156,7 @@ class MoonCalc {
         } else {
             $fourthTotal = 0.00;
         }
+
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
        
@@ -156,8 +168,11 @@ class MoonCalc {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
+
+        //Convert the numbers into percentages to standardize the data
         if($firstQuan >= 1.00) {
             $firstPerc = $this->ConvertToPercentage($firstQuan);
         } else {
@@ -178,6 +193,8 @@ class MoonCalc {
         } else {
             $fourthPerc = $fourthQuan;
         }
+
+        //Calculate the price
         if($firstOre != "None") {
             if($this->IsRMoon($firstOre)) {
                 $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
@@ -214,8 +231,10 @@ class MoonCalc {
         } else {
             $fourthTotal = 0.00;
         }
+
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
+        
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
         $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
         $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
@@ -228,8 +247,11 @@ class MoonCalc {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
+        
+        //Standardize the data for the percentage
         if($firstQuan >= 1.00) {
             $firstPerc = $this->ConvertToPercentage($firstQuan);
         } else {
@@ -250,6 +272,8 @@ class MoonCalc {
         } else {
             $fourthPerc = $fourthQuan;
         }
+
+        //Calculate the prices of each of the ores
         if($firstOre != "None") {
             if($this->IsRMoon($firstOre)) {
                 $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
@@ -286,11 +310,14 @@ class MoonCalc {
         } else {
             $fourthTotal = 0.00;
         }
+
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
+        
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
         $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
         $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
+        
         //Format the rental price to the appropriate number
         $rentalPrice['alliance'] = number_format($rentalPrice['alliance'], 0, ".", ",");
         $rentalPrice['outofalliance'] = number_format($rentalPrice['outofalliance'], 0, ".", ",");
@@ -303,8 +330,11 @@ class MoonCalc {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
+
+        //Standardize the percentage numbers
         if($firstQuan >= 1.00) {
             $firstPerc = $this->ConvertToPercentage($firstQuan);
         } else {
@@ -325,6 +355,8 @@ class MoonCalc {
         } else {
             $fourthPerc = $fourthQuan;
         }
+
+        //Calculate the price of each of the ores
         if($firstOre != "None") {
             $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
         } else {
@@ -345,11 +377,14 @@ class MoonCalc {
         } else {
             $fourthTotal = 0.00;
         }
+
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
+        
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
         $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
         $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
+        
         //Format the rental price to the appropriate number
         $rentalPrice['alliance'] = number_format($rentalPrice['alliance'], 0, ".", ",");
         $rentalPrice['outofalliance'] = number_format($rentalPrice['outofalliance'], 0, ".", ",");
@@ -560,38 +595,50 @@ class MoonCalc {
     public function CalcOreUnits($ore, $percentage) {
         //Specify the total pull amount
         $totalPull = 5.55 * (3600.00 * 24.00 *30.00);
+
         //Find the size of the asteroid from the database
         $item = ItemComposition::where([
             'Name' => $ore,
         ])->first();
+        
         //Get the m3 size from the item composition
         $m3Size = $item->m3Size;
+        
         //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
         $actualm3 = floor($totalPull * $percentage);
+        
         //Calculate the units from the m3 pulled from the moon
         $units = floor($actualm3 / $m3Size);   
 
+        //Return the calculated data
         return $units;
     }
 
     private function CalcPrice($ore, $percentage) {
         //Specify the total pull amount
         $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+
         //Find the size of the asteroid from the database
         $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
+        
         //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
         $actualm3 = floor($percentage * $totalPull);
+        
         //Calculate the units once we have the size and actual m3 value
         $units = floor($actualm3 / $m3Size);
+        
         //Look up the unit price from the database
         $unitPrice = DB::table('ore_prices')->where('Name', $ore)->value('UnitPrice');
+        
         //Calculate the total amount from the units and unit price
         $total = $units * $unitPrice;
+        
         //Return the value
         return $total;
     }
 
     private function ConvertToPercentage($quantity) {
+        //Perform the calculation and return the data
         return $quantity / 100.00;
     }
 
