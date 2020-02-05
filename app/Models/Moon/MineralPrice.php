@@ -4,7 +4,7 @@ namespace App\Models\Moon;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Price extends Model
+class MineralPrice extends Model
 {
     // Table Name
     protected $table = 'Prices';
