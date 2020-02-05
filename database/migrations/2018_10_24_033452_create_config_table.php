@@ -69,10 +69,10 @@ class CreateConfigTable extends Migration
         if(!Schema::hasTable('Prices')) {
             Schema::create('Prices', function (Blueprint $table) {
                 $table->increments('id');
-                $table->text('Name');
+                $table->string('Name');
                 $table->integer('ItemId');
                 $table->decimal('Price', 20, 2);
-                $table->string('Time');
+                $table->dateTime('Time');
             });
         }
 
