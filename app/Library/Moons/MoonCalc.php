@@ -418,7 +418,7 @@ class MoonCalc {
             $item = json_decode($result->getBody(), true);
 
             //Save the entry into the database
-            $price = new Price;
+            $price = new MineralPrice;
             $price->Name = $key;
             $price->ItemId = $value;
             $price->Price = $item[$value]['sell']['median'];
