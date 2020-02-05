@@ -438,7 +438,7 @@ class MoonCalc {
         $refineRate = $config->RefineRate / 100.00;
         
         //Calculate the current time
-        $time = Carbon\Carbon::now();
+        $time = Carbon::now();
         //Calcualate the current time minus 30 days
         $pastTime = Carbon::now()->subDays(30);
 
