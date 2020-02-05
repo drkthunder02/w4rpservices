@@ -3,12 +3,13 @@
 use Illuminate\Database\Seeder;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use Carbon\Carbon;
 
 use App\Models\Moon\Config;
 use App\Models\Moon\Moon;
-use App\Models\Moon\Price;
 use App\Models\Moon\ItemComposition;
 use App\Models\Moon\OrePrice;
+use App\Models\Moon\MineralPrice;
 
 class OrePricesSeeder extends Seeder
 {
@@ -29,105 +30,110 @@ class OrePricesSeeder extends Seeder
         //Calculate refine rate
         $refineRate = $config->RefineRate / 100.00;
         //Calculate the current time
-        $time = time();
-        //Get the max time from the database
-        $maxTime = DB::table('Prices')->where('ItemId', 34)->max('Time');
+        $time = Carbon::now();
+        
         //Get the price of the basic minerals
-        $tritaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [34, $maxTime]);
-        $tritanium = DB::select( DB::raw('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time'), array('id' => 34, 'time' => $maxTime));
-        $pyeritePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [35, $maxTime]);
-        $mexallonPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [36, $maxTime]);
-        $isogenPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [37, $maxTime]);
-        $nocxiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [38, $maxTime]);
-        $zydrinePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [39, $maxTime]);
-        $megacytePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [40, $maxTime]);
-        $morphitePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [11399, $maxTime]);
-        $heliumIsotopesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16274, $maxTime]);
-        $nitrogenIsotopesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [17888, $maxTime]);
-        $oxygenIsotopesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [17887, $maxTime]);
-        $hydrogenIsotopesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [17889, $maxTime]);
-        $liquidOzonePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16273, $maxTime]);
-        $heavyWaterPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16272, $maxTime]);
-        $strontiumClathratesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16275, $maxTime]);
+        $tritaniumPrice = MineralPrice::where(['ItemId' => 34])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $pyeritePrice = MineralPrice::where(['ItemId' => 35])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $mexallonPrice = MineralPrice::where(['ItemId' => 36])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $isogenPrice = MineralPrice::where(['ItemId' => 37])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $nocxiumPrice = MineralPrice::where(['ItemId' => 38])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $zydrinePrice = MineralPrice::where(['ItemId' => 39])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $megacytePrice = MineralPrice::where(['ItemId' => 40])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $morphitePrice = MineralPrice::where(['ItemId' => 11399])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $heliumIsotopesPrice = MineralPrice::where(['ItemId' => 16274])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $nitrogenIsotopesPrice = MineralPrice::where(['ItemId' => 17888])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $oxygenIsotopesPrice = MineralPrice::where(['ItemId' => 17887])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $hydrogenIsotopesPrice = MineralPrice::where(['ItemId' => 17889])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $liquidOzonePrice = MineralPrice::where(['ItemId' => 16273])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $heavyWaterPrice = MineralPrice::where(['ItemId' => 16272])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $strontiumClathratesPrice = MineralPrice::where(['ItemId' => 16275])->whereDate('Time', '>', $pastTime)->avg('Price');
         //Get the price of the moongoo
-        $atmosphericGasesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16634, $maxTime]);
-        $evaporiteDepositsPirce = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16635, $maxTime]);
-        $hydrocarbonsPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16633, $maxTime]);
-        $silicatesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16636, $maxTime]);
-        $cobaltPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16640, $maxTime]);
-        $scandiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16639, $maxTime]);
-        $titaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16638, $maxTime]);
-        $tungstenPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16637, $maxTime]);
-        $cadmiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16643, $maxTime]);
-        $platinumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16644, $maxTime]);
-        $vanadiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16642, $maxTime]);
-        $chromiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16641, $maxTime]);
-        $technetiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16649, $maxTime]);
-        $hafniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16648, $maxTime]);
-        $caesiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16647, $maxTime]);
-        $mercuryPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16646, $maxTime]);
-        $dysprosiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16650, $maxTime]);
-        $neodymiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16651, $maxTime]);
-        $promethiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16652, $maxTime]);
-        $thuliumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16653, $maxTime]);
+        $atmosphericGasesPrice = MineralPrice::where(['ItemId' => 16634])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $evaporiteDepositsPirce = MineralPrice::where(['ItemId' => 16635])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $hydrocarbonsPrice = MineralPrice::where(['ItemId' => 16633])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $silicatesPrice = MineralPrice::where(['ItemId' => 16636])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $cobaltPrice = MineralPrice::where(['ItemId' => 16640])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $scandiumPrice = MineralPrice::where(['ItemId' => 16639])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $titaniumPrice = MineralPrice::where(['ItemId' => 16638])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $tungstenPrice = MineralPrice::where(['ItemId' => 16637])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $cadmiumPrice = MineralPrice::where(['ItemId' => 16643])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $platinumPrice = MineralPrice::where(['ItemId' => 16644])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $vanadiumPrice = MineralPrice::where(['ItemId' => 16642])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $chromiumPrice = MineralPrice::where(['ItemId' => 16641])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $technetiumPrice = MineralPrice::where(['ItemId' => 16649])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $hafniumPrice = MineralPrice::where(['ItemId' => 16648])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $caesiumPrice = MineralPrice::where(['ItemId' => 16647])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $mercuryPrice = MineralPrice::where(['ItemId' => 16646])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $dysprosiumPrice = MineralPrice::where(['ItemId' => 16650])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $neodymiumPrice = MineralPrice::where(['ItemId' => 16651])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $promethiumPrice = MineralPrice::where(['ItemId' => 16652])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $thuliumPrice = MineralPrice::where(['ItemId' => 16653])->whereDate('Time', '>', $pastTime)->avg('Price');
+        
+        
         //Get the item compositions
         $items = DB::select('SELECT Name,ItemId FROM ItemComposition');
         //Go through each of the items and update the price
         foreach($items as $item) {
             //Get the item composition
-            $composition = DB::select('SELECT * FROM ItemComposition WHERE ItemId = ?', [$item->ItemId]);
+            $composition = ItemComposition::where('ItemId', $item->ItemId)->first();
+    
             //Calculate the Batch Price
-            $batchPrice = ( ($composition[0]->Tritanium * $tritaniumPrice[0]->Price) +
-                            ($composition[0]->Pyerite * $pyeritePrice[0]->Price) +
-                            ($composition[0]->Mexallon * $mexallonPrice[0]->Price) +
-                            ($composition[0]->Isogen * $isogenPrice[0]->Price) +
-                            ($composition[0]->Nocxium * $nocxiumPrice[0]->Price) +
-                            ($composition[0]->Zydrine * $zydrinePrice[0]->Price) +
-                            ($composition[0]->Megacyte * $megacytePrice[0]->Price) + 
-                            ($composition[0]->Morphite * $morphitePrice[0]->Price) +
-                            ($composition[0]->HeavyWater * $heavyWaterPrice[0]->Price) +
-                            ($composition[0]->LiquidOzone * $liquidOzonePrice[0]->Price) +
-                            ($composition[0]->NitrogenIsotopes * $nitrogenIsotopesPrice[0]->Price) +
-                            ($composition[0]->HeliumIsotopes * $heliumIsotopesPrice[0]->Price) + 
-                            ($composition[0]->HydrogenIsotopes * $hydrogenIsotopesPrice[0]->Price) +
-                            ($composition[0]->OxygenIsotopes * $oxygenIsotopesPrice[0]->Price) +
-                            ($composition[0]->StrontiumClathrates * $strontiumClathratesPrice[0]->Price) +
-                            ($composition[0]->AtmosphericGases * $atmosphericGasesPrice[0]->Price) +
-                            ($composition[0]->EvaporiteDeposits * $evaporiteDepositsPirce[0]->Price) +
-                            ($composition[0]->Hydrocarbons * $hydrocarbonsPrice[0]->Price) +
-                            ($composition[0]->Silicates * $silicatesPrice[0]->Price) +
-                            ($composition[0]->Cobalt * $cobaltPrice[0]->Price) +
-                            ($composition[0]->Scandium * $scandiumPrice[0]->Price) +
-                            ($composition[0]->Titanium * $titaniumPrice[0]->Price) +
-                            ($composition[0]->Tungsten * $tungstenPrice[0]->Price) +
-                            ($composition[0]->Cadmium * $cadmiumPrice[0]->Price) +
-                            ($composition[0]->Platinum * $platinumPrice[0]->Price) +
-                            ($composition[0]->Vanadium * $vanadiumPrice[0]->Price) +
-                            ($composition[0]->Chromium * $chromiumPrice[0]->Price)+
-                            ($composition[0]->Technetium * $technetiumPrice[0]->Price) +
-                            ($composition[0]->Hafnium * $hafniumPrice[0]->Price) +
-                            ($composition[0]->Caesium * $caesiumPrice[0]->Price) +
-                            ($composition[0]->Mercury * $mercuryPrice[0]->Price) +
-                            ($composition[0]->Dysprosium * $dysprosiumPrice[0]->Price) +
-                            ($composition[0]->Neodymium * $neodymiumPrice[0]->Price) + 
-                            ($composition[0]->Promethium * $promethiumPrice[0]->Price) +
-                            ($composition[0]->Thulium * $thuliumPrice[0]->Price));
-            //Calculate the batch price with the refine rate included
+            $batchPrice = ( ($composition->Tritanium * $tritaniumPrice) +
+                            ($composition->Pyerite * $pyeritePrice) +
+                            ($composition->Mexallon * $mexallonPrice) +
+                            ($composition->Isogen * $isogenPrice) +
+                            ($composition->Nocxium * $nocxiumPrice) +
+                            ($composition->Zydrine * $zydrinePrice) +
+                            ($composition->Megacyte * $megacytePrice) + 
+                            ($composition->Morphite * $morphitePrice) +
+                            ($composition->HeavyWater * $heavyWaterPrice) +
+                            ($composition->LiquidOzone * $liquidOzonePrice) +
+                            ($composition->NitrogenIsotopes * $nitrogenIsotopesPrice) +
+                            ($composition->HeliumIsotopes * $heliumIsotopesPrice) + 
+                            ($composition->HydrogenIsotopes * $hydrogenIsotopesPrice) +
+                            ($composition->OxygenIsotopes * $oxygenIsotopesPrice) +
+                            ($composition->StrontiumClathrates * $strontiumClathratesPrice) +
+                            ($composition->AtmosphericGases * $atmosphericGasesPrice) +
+                            ($composition->EvaporiteDeposits * $evaporiteDepositsPirce) +
+                            ($composition->Hydrocarbons * $hydrocarbonsPrice) +
+                            ($composition->Silicates * $silicatesPrice) +
+                            ($composition->Cobalt * $cobaltPrice) +
+                            ($composition->Scandium * $scandiumPrice) +
+                            ($composition->Titanium * $titaniumPrice) +
+                            ($composition->Tungsten * $tungstenPrice) +
+                            ($composition->Cadmium * $cadmiumPrice) +
+                            ($composition->Platinum * $platinumPrice) +
+                            ($composition->Vanadium * $vanadiumPrice) +
+                            ($composition->Chromium * $chromiumPrice)+
+                            ($composition->Technetium * $technetiumPrice) +
+                            ($composition->Hafnium * $hafniumPrice) +
+                            ($composition->Caesium * $caesiumPrice) +
+                            ($composition->Mercury * $mercuryPrice) +
+                            ($composition->Dysprosium * $dysprosiumPrice) +
+                            ($composition->Neodymium * $neodymiumPrice) + 
+                            ($composition->Promethium * $promethiumPrice) +
+                            ($composition->Thulium * $thuliumPrice));
+            
+                            //Calculate the batch price with the refine rate included
             //Batch Price is base price for everything
             $batchPrice = $batchPrice * $refineRate;
+            
             //Calculate the unit price
-            $price = $batchPrice / $composition[0]->BatchSize;
+            $price = $batchPrice / $composition->BatchSize;
+            
             //Calculate the m3 price
-            $m3Price = $price / $composition[0]->m3Size;  
+            $m3Price = $price / $composition->m3Size;  
+            
             //Insert the prices into the Prices table
-            DB::table('OrePrices')->insert([
-                'Name' => $composition[0]->Name,
-                'ItemId' => $composition[0]->ItemId,
-                'BatchPrice' => $batchPrice,
-                'UnitPrice' => $price,
-                'm3Price' => $m3Price,
-                'Time' => $time
-            ]);
+            $ore = new OrePrice;
+            $ore->Name = $composition->Name;
+            $ore->ItemId = $composition->ItemId;
+            $ore->BatchPrice = $batchPrice;
+            $ore->UnitPrice = $price;
+            $ore->m3Price = $m3Price;
+            $ore->Time = $time;
+            $ore->save();
         }
     }
 

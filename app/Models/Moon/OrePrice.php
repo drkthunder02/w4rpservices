@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrePrice extends Model
 {
     // Table Name
-    protected $table = 'OrePrices';
+    protected $table = 'ore_prices';
 
     //Primary Key
     public $primaryKey = 'id';

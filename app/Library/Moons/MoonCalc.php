@@ -485,58 +485,75 @@ class MoonCalc {
         //Go through each of the items and update the price
         foreach($items as $item) {
             //Get the item composition
-            $composition = DB::select('SELECT * FROM ItemComposition WHERE ItemId = ?', [$item->ItemId]);
+            $composition = ItemComposition::where('ItemId', $item->ItemId)->first();
+
             //Calculate the Batch Price
-            $batchPrice = ( ($composition[0]->Tritanium * $tritaniumPrice) +
-                            ($composition[0]->Pyerite * $pyeritePrice) +
-                            ($composition[0]->Mexallon * $mexallonPrice) +
-                            ($composition[0]->Isogen * $isogenPrice) +
-                            ($composition[0]->Nocxium * $nocxiumPrice) +
-                            ($composition[0]->Zydrine * $zydrinePrice) +
-                            ($composition[0]->Megacyte * $megacytePrice) + 
-                            ($composition[0]->Morphite * $morphitePrice) +
-                            ($composition[0]->HeavyWater * $heavyWaterPrice) +
-                            ($composition[0]->LiquidOzone * $liquidOzonePrice) +
-                            ($composition[0]->NitrogenIsotopes * $nitrogenIsotopesPrice) +
-                            ($composition[0]->HeliumIsotopes * $heliumIsotopesPrice) + 
-                            ($composition[0]->HydrogenIsotopes * $hydrogenIsotopesPrice) +
-                            ($composition[0]->OxygenIsotopes * $oxygenIsotopesPrice) +
-                            ($composition[0]->StrontiumClathrates * $strontiumClathratesPrice) +
-                            ($composition[0]->AtmosphericGases * $atmosphericGasesPrice) +
-                            ($composition[0]->EvaporiteDeposits * $evaporiteDepositsPirce) +
-                            ($composition[0]->Hydrocarbons * $hydrocarbonsPrice) +
-                            ($composition[0]->Silicates * $silicatesPrice) +
-                            ($composition[0]->Cobalt * $cobaltPrice) +
-                            ($composition[0]->Scandium * $scandiumPrice) +
-                            ($composition[0]->Titanium * $titaniumPrice) +
-                            ($composition[0]->Tungsten * $tungstenPrice) +
-                            ($composition[0]->Cadmium * $cadmiumPrice) +
-                            ($composition[0]->Platinum * $platinumPrice) +
-                            ($composition[0]->Vanadium * $vanadiumPrice) +
-                            ($composition[0]->Chromium * $chromiumPrice)+
-                            ($composition[0]->Technetium * $technetiumPrice) +
-                            ($composition[0]->Hafnium * $hafniumPrice) +
-                            ($composition[0]->Caesium * $caesiumPrice) +
-                            ($composition[0]->Mercury * $mercuryPrice) +
-                            ($composition[0]->Dysprosium * $dysprosiumPrice) +
-                            ($composition[0]->Neodymium * $neodymiumPrice) + 
-                            ($composition[0]->Promethium * $promethiumPrice) +
-                            ($composition[0]->Thulium * $thuliumPrice));
+            $batchPrice = ( ($composition->Tritanium * $tritaniumPrice) +
+                            ($composition->Pyerite * $pyeritePrice) +
+                            ($composition->Mexallon * $mexallonPrice) +
+                            ($composition->Isogen * $isogenPrice) +
+                            ($composition->Nocxium * $nocxiumPrice) +
+                            ($composition->Zydrine * $zydrinePrice) +
+                            ($composition->Megacyte * $megacytePrice) + 
+                            ($composition->Morphite * $morphitePrice) +
+                            ($composition->HeavyWater * $heavyWaterPrice) +
+                            ($composition->LiquidOzone * $liquidOzonePrice) +
+                            ($composition->NitrogenIsotopes * $nitrogenIsotopesPrice) +
+                            ($composition->HeliumIsotopes * $heliumIsotopesPrice) + 
+                            ($composition->HydrogenIsotopes * $hydrogenIsotopesPrice) +
+                            ($composition->OxygenIsotopes * $oxygenIsotopesPrice) +
+                            ($composition->StrontiumClathrates * $strontiumClathratesPrice) +
+                            ($composition->AtmosphericGases * $atmosphericGasesPrice) +
+                            ($composition->EvaporiteDeposits * $evaporiteDepositsPirce) +
+                            ($composition->Hydrocarbons * $hydrocarbonsPrice) +
+                            ($composition->Silicates * $silicatesPrice) +
+                            ($composition->Cobalt * $cobaltPrice) +
+                            ($composition->Scandium * $scandiumPrice) +
+                            ($composition->Titanium * $titaniumPrice) +
+                            ($composition->Tungsten * $tungstenPrice) +
+                            ($composition->Cadmium * $cadmiumPrice) +
+                            ($composition->Platinum * $platinumPrice) +
+                            ($composition->Vanadium * $vanadiumPrice) +
+                            ($composition->Chromium * $chromiumPrice)+
+                            ($composition->Technetium * $technetiumPrice) +
+                            ($composition->Hafnium * $hafniumPrice) +
+                            ($composition->Caesium * $caesiumPrice) +
+                            ($composition->Mercury * $mercuryPrice) +
+                            ($composition->Dysprosium * $dysprosiumPrice) +
+                            ($composition->Neodymium * $neodymiumPrice) + 
+                            ($composition->Promethium * $promethiumPrice) +
+                            ($composition->Thulium * $thuliumPrice));
             //Calculate the batch price with the refine rate included
             //Batch Price is base price for everything
             $batchPrice = $batchPrice * $refineRate;
             //Calculate the unit price
-            $price = $batchPrice / $composition[0]->BatchSize;
+            $price = $batchPrice / $composition->BatchSize;
             //Calculate the m3 price
-            $m3Price = $price / $composition[0]->m3Size;
-            //Update the prices in the Prices table
-            DB::table('OrePrices')->where('Name', $composition[0]->Name)->update([
-                'Name' => $composition[0]->Name,
-                'ItemId' => $composition[0]->ItemId,
-                'BatchPrice' => $batchPrice,
-                'UnitPrice' => $price,
-                'm3Price' => $m3Price,
-            ]);
+            $m3Price = $price / $composition->m3Size;
+
+            //Check if an item is in the table
+            $count = OrePrice::where('Name', $composition->Name)->count();
+            if($count == 0) {
+                //If the ore wasn't found, then add a new entry
+                $ore = new OrePrice;
+                $ore->Name = $composition->Name;
+                $ore->ItemId = $composition->ItemId;
+                $ore->BatchPrice = $batchPrice;
+                $ore->UnitPrice = $price;
+                $ore->m3Price = $m3Price;
+                $ore->Time = $time;
+                $ore->save();
+            } else {
+                //Update the prices in the Prices table
+                OrePrice::where('Name', $composition->Name)->update([
+                    'Name' => $composition->Name,
+                    'ItemId' => $composition->ItemId,
+                    'BatchPrice' => $batchPrice,
+                    'UnitPrice' => $price,
+                    'm3Price' => $m3Price,
+                    'Time' => $time,
+                ]);
+            }
         }
     }
 
@@ -567,7 +584,7 @@ class MoonCalc {
         //Calculate the units once we have the size and actual m3 value
         $units = floor($actualm3 / $m3Size);
         //Look up the unit price from the database
-        $unitPrice = DB::table('OrePrices')->where('Name', $ore)->value('UnitPrice');
+        $unitPrice = DB::table('ore_prices')->where('Name', $ore)->value('UnitPrice');
         //Calculate the total amount from the units and unit price
         $total = $units * $unitPrice;
         //Return the value
