@@ -479,6 +479,7 @@ class MoonCalc {
         $neodymiumPrice = MineralPrice::where(['ItemId' => 16651])->whereDate('Time', '>', $pastTime)->avg('Price');
         $promethiumPrice = MineralPrice::where(['ItemId' => 16652])->whereDate('Time', '>', $pastTime)->avg('Price');
         $thuliumPrice = MineralPrice::where(['ItemId' => 16653])->whereDate('Time', '>', $pastTime)->avg('Price');
+        dd($tritaniumPrice);
         //Get the item compositions
         $items = DB::select('SELECT Name,ItemId FROM ItemComposition');
         //Go through each of the items and update the price
