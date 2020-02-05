@@ -10,5 +10,5 @@ class ItemComposition extends Model
     protected $table = 'ItemComposition';
 
     // Timestamps
-    public $timestamps = 'false';
+    public $timestamps = false;
 }

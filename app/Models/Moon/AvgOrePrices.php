@@ -4,19 +4,19 @@ namespace App\Models\Moon;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrePrice extends Model
+class AvgOrePrices extends Model
 {
-    // Table Name
-    protected $table = 'OrePrices';
+    //Table Name
+    protected $table = 'avg_ore_prices';
 
     //Primary Key
     public $primaryKey = 'id';
 
-    // Timestamps
-    public $timestamps = false;
+    //Timestamps
+    public $timestamps = true;
 
     /**
-     * Fillable Array
+     * Fillable array
      * 
      * @var array
      */

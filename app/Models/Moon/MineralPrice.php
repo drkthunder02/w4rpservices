@@ -14,4 +14,16 @@ class Price extends Model
 
     // Timestamps
     public $timestamps = false;
+
+    /**
+     * Fillable Array
+     * 
+     * @var array
+     */
+    protected $fillable = [
+        'Name',
+        'ItemId',
+        'Price',
+        'Time',
+    ];
 }

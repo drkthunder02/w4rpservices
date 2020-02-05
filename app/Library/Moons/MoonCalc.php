@@ -6,15 +6,14 @@
 
 namespace App\Library\Moons;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
+//Internal Library
 use Session;
 use DB;
-
+use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 
+//Models
 use App\Models\Moon\Config;
 use App\Models\Moon\ItemComposition;
 use App\Models\Moon\Moon;
@@ -360,6 +359,7 @@ class MoonCalc {
     }
 
     public function FetchNewPrices() {
+        //Create the item id array which we will pull data for from Fuzzwork market api
         $ItemIDs = array(
             "Tritanium" => 34,
             "Pyerite" => 35,
@@ -397,76 +397,88 @@ class MoonCalc {
             "Promethium" => 16652,
             "Thulium" => 16653,
         );
-        $time = time();
-        $item = array();
+
+        //Create the time variable
+        $time = Carbon\Carbon::now();
+
         //Get the json data for each ItemId from https://market.fuzzwork.co.uk/api/
         //Base url is https://market.fuzzwork.co.uk/aggregates/?region=10000002&types=34
         //Going to use curl for these requests
         foreach($ItemIDs as $key => $value) {
+            //Declare a new array each time we cycle through the for loop for the item
+            $item = array();
+
+            //Setup the guzzle client fetch object
             $client = new Client(['base_uri' => 'https://market.fuzzwork.co.uk/aggregates/']);
+            //Setup the uri for the guzzle client
             $uri = '?region=10000002&types=' . $value;
+            //Get the result from the guzzle client request
             $result = $client->request('GET', $uri);
+            //Decode the request into an array from the json body return
             $item = json_decode($result->getBody(), true);
 
-            DB::table('Prices')->where('Name', $key)->update([
-                'Name' => $key,
-                'ItemId' => $value,
-                'Price' => $item[$value]['sell']['median'],
-                'Time' => $time,
-            ]);
+            //Save the entry into the database
+            $price = new Price;
+            $price->Name = $key;
+            $price->ItemId = $value;
+            $price->Price = $item[$value]['sell']['median'];
+            $price->Time = $time;
+            $price->save();
         }
         
+        //Run the update for the item pricing
         $this->UpdateItemPricing();
     }
 
     private function UpdateItemPricing() {
-
         //Get the configuration from the config table
         $config = DB::table('Config')->first();
+
         //Calculate refine rate
         $refineRate = $config->RefineRate / 100.00;
+        
         //Calculate the current time
-        $time = time();
-        //Get the max time from the database
-        $maxTime = DB::table('Prices')->where('ItemId', 34)->max('Time');
+        $time = Carbon\Carbon::now();
+        //Calcualate the current time minus 30 days
+        $pastTime = Carbon::now()->subDays(30);
+
         //Get the price of the basic minerals
-        $tritaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [34, $maxTime]);
-        $tritanium = DB::select( DB::raw('SELECT Price FROM Prices WHERE ItemId= :id AND Time= :time'), array('id' => 34, 'time' => $maxTime));
-        $pyeritePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [35, $maxTime]);
-        $mexallonPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [36, $maxTime]);
-        $isogenPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [37, $maxTime]);
-        $nocxiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [38, $maxTime]);
-        $zydrinePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [39, $maxTime]);
-        $megacytePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [40, $maxTime]);
-        $morphitePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [11399, $maxTime]);
-        $heliumIsotopesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16274, $maxTime]);
-        $nitrogenIsotopesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [17888, $maxTime]);
-        $oxygenIsotopesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [17887, $maxTime]);
-        $hydrogenIsotopesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [17889, $maxTime]);
-        $liquidOzonePrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16273, $maxTime]);
-        $heavyWaterPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16272, $maxTime]);
-        $strontiumClathratesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16275, $maxTime]);
+        $tritaniumPrice = MineralPrice::where(['ItemId' => 34])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $pyeritePrice = MineralPrice::where(['ItemId' => 35])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $mexallonPrice = MineralPrice::where(['ItemId' => 36])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $isogenPrice = MineralPrice::where(['ItemId' => 37])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $nocxiumPrice = MineralPrice::where(['ItemId' => 38])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $zydrinePrice = MineralPrice::where(['ItemId' => 39])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $megacytePrice = MineralPrice::where(['ItemId' => 40])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $morphitePrice = MineralPrice::where(['ItemId' => 11399])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $heliumIsotopesPrice = MineralPrice::where(['ItemId' => 16274])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $nitrogenIsotopesPrice = MineralPrice::where(['ItemId' => 17888])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $oxygenIsotopesPrice = MineralPrice::where(['ItemId' => 17887])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $hydrogenIsotopesPrice = MineralPrice::where(['ItemId' => 17889])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $liquidOzonePrice = MineralPrice::where(['ItemId' => 16273])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $heavyWaterPrice = MineralPrice::where(['ItemId' => 16272])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $strontiumClathratesPrice = MineralPrice::where(['ItemId' => 16275])->whereDate('Time', '>', $pastTime)->avg('Price');
         //Get the price of the moongoo
-        $atmosphericGasesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16634, $maxTime]);
-        $evaporiteDepositsPirce = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16635, $maxTime]);
-        $hydrocarbonsPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16633, $maxTime]);
-        $silicatesPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16636, $maxTime]);
-        $cobaltPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16640, $maxTime]);
-        $scandiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16639, $maxTime]);
-        $titaniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16638, $maxTime]);
-        $tungstenPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16637, $maxTime]);
-        $cadmiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16643, $maxTime]);
-        $platinumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16644, $maxTime]);
-        $vanadiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16642, $maxTime]);
-        $chromiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16641, $maxTime]);
-        $technetiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16649, $maxTime]);
-        $hafniumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16648, $maxTime]);
-        $caesiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16647, $maxTime]);
-        $mercuryPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16646, $maxTime]);
-        $dysprosiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16650, $maxTime]);
-        $neodymiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16651, $maxTime]);
-        $promethiumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16652, $maxTime]);
-        $thuliumPrice = DB::select('SELECT Price FROM Prices WHERE ItemId = ? AND Time = ?', [16653, $maxTime]);
+        $atmosphericGasesPrice = MineralPrice::where(['ItemId' => 16634])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $evaporiteDepositsPirce = MineralPrice::where(['ItemId' => 16635])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $hydrocarbonsPrice = MineralPrice::where(['ItemId' => 16633])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $silicatesPrice = MineralPrice::where(['ItemId' => 16636])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $cobaltPrice = MineralPrice::where(['ItemId' => 16640])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $scandiumPrice = MineralPrice::where(['ItemId' => 16639])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $titaniumPrice = MineralPrice::where(['ItemId' => 16638])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $tungstenPrice = MineralPrice::where(['ItemId' => 16637])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $cadmiumPrice = MineralPrice::where(['ItemId' => 16643])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $platinumPrice = MineralPrice::where(['ItemId' => 16644])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $vanadiumPrice = MineralPrice::where(['ItemId' => 16642])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $chromiumPrice = MineralPrice::where(['ItemId' => 16641])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $technetiumPrice = MineralPrice::where(['ItemId' => 16649])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $hafniumPrice = MineralPrice::where(['ItemId' => 16648])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $caesiumPrice = MineralPrice::where(['ItemId' => 16647])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $mercuryPrice = MineralPrice::where(['ItemId' => 16646])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $dysprosiumPrice = MineralPrice::where(['ItemId' => 16650])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $neodymiumPrice = MineralPrice::where(['ItemId' => 16651])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $promethiumPrice = MineralPrice::where(['ItemId' => 16652])->whereDate('Time', '>', $pastTime)->avg('Price');
+        $thuliumPrice = MineralPrice::where(['ItemId' => 16653])->whereDate('Time', '>', $pastTime)->avg('Price');
         //Get the item compositions
         $items = DB::select('SELECT Name,ItemId FROM ItemComposition');
         //Go through each of the items and update the price
