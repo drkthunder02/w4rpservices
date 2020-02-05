@@ -66,8 +66,8 @@ class CreateConfigTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('Prices')) {
-            Schema::create('Prices', function (Blueprint $table) {
+        if(!Schema::hasTable('mineral_prices')) {
+            Schema::create('mineral_prices', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('Name');
                 $table->integer('ItemId');
@@ -98,7 +98,7 @@ class CreateConfigTable extends Migration
     {
         Schema::dropIfExists('Config');
         Schema::dropIfExists('ItemComposition');
-        Schema::dropIfExists('Prices');
+        Schema::dropIfExists('mineral_prices');
         Schema::dropIfExists('OrePrices');
     }
 }
