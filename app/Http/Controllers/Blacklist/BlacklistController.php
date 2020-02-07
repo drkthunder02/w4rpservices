@@ -117,7 +117,7 @@ class BlacklistController extends Controller
 
         //Delete the blacklist character
         BlacklistEntity::where([
-            'name' => $request->name,
+            'entity_name' => $request->name,
         ])->delete();
 
         //Return the view

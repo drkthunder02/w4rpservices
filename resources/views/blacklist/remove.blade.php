@@ -3,7 +3,7 @@
 <div class="container">
     {!! Form::open(['action' => 'Blacklist\BlacklistController@RemoveFromBlacklist', 'method' => 'POST']) !!}
     <div class="form-group">
-        {{ Form::label('name', 'Character Name') }}
+        {{ Form::label('name', 'Entity Name') }}
         {{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'CCP Antiquarian']) }}
     </div>
     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
