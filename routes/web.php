@@ -136,7 +136,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/moons/admin/display/rentals', 'Moons\MoonsAdminController@displayRentalMoonsAdmin');
     Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
     Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
-    Route::post('/moons/admin/display', 'Moons\MoonsAdminController@storeMoonRemoval');
+    Route::post('/moons/admin/display/rentals', 'Moons\MoonsAdminController@storeMoonRemoval');
 
     /**
      * Moon Ledger Controller display pages
