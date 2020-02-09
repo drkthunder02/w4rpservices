@@ -169,11 +169,11 @@ class MoonsAdminController extends Controller
                 'Moon' => $moon,
             ])->delete();
 
-            return redirect('/moons/admin/display')->with('success', 'Renter removed.');
+            return redirect('/moons/admin/display/rentals')->with('success', 'Renter removed.');
         } 
 
         //Redirect back to the moon page, which should call the page to be displayed correctly
-        return redirect('/moons/admin/display')->with('error', 'Something went wrong.');
+        return redirect('/moons/admin/display/rentals')->with('error', 'Something went wrong.');
     }
 
     /**
