@@ -142,7 +142,7 @@ class WormholeController extends Controller
         $dateTime = Carbon::now()->subDays(2);
 
         //Get all of the wormholes from the last 48 hours from the database to display
-        $wormholes = AllianceWormholes::where('created_at', '>=', $dateTime)->get();
+        $wormholes = AllianceWormhole::where('created_at', '>=', $dateTime)->get();
 
         return view('wormholes.display')->with('wormholes', $wormholes);
     }
