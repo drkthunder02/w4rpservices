@@ -14,6 +14,7 @@
                     <th>Corp Ticker</th>
                     <th>Ore Name</th>
                     <th>Quantity</th>
+                    <th>Date</th>
                 </thead>
                 <tbody>
                     @foreach($mining as $min)
