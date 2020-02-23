@@ -59,9 +59,10 @@ class MoonsController extends Controller
                         'Available' => $moon->Available,
                     ]);
                 }
-            }
-            
+            }   
         }
+
+        dd($systems);
 
         return view('moons.user.allmoons')->with('moons', $moons)
                                           ->with('systems', $systems);

@@ -129,6 +129,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/moons/display/rentals', 'Moons\MoonsController@displayRentalMoons');
     Route::get('/moons/display/form/worth', 'Moons\MoonsController@displayTotalWorthForm');
     Route::post('/moons/worth', 'Moons\MoonsController@displayTotalWorth');
+    Route::get('/moons/display/all', 'Moons\MoonsController@displayMoons');
 
     /**
      * Moon Admin Controller display pages
