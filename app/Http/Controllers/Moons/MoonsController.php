@@ -47,15 +47,6 @@ class MoonsController extends Controller
     }
 
     /**
-     * Function to display alliance moons of a particular system
-     */
-    public function displayMoonsSystem($system) {
-        $moons = AllianceMoon::where(['System' => $system])->get();
-
-        return view('moons.user.allmoons.system')->with('moons', $moons);
-    }
-
-    /**
      * Function to display the moons and pass data to the blade template
      */
     public function displayRentalMoons() {

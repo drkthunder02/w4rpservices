@@ -1,4 +1,4 @@
-@extends('layouts.b4')
+@extends('layouts.moons.b4')
 @section('content')
 <div class="row">
 <div class="container">
