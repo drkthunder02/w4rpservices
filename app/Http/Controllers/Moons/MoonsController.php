@@ -35,20 +35,14 @@ class MoonsController extends Controller
         //Setup variables for moons
         $moons = array();
 
-        //Get all of the alliance moons from the database
+        //Get all of the alliance moon systems from the database
         $systems = DB::table('alliance_moons')->select('System')->distinct()->get()->toArray();
 
-        foreach($systems as $system) {
-            $moons[$system] = null;
-            $moonsTemp = AllianceMoon::where(['System' => $system])->get();
-            foreach($moonsTemp as $moon) {
-                array_push($moons[$system], $moon);
-            }
-        }
+        //Get all of the alliance moons from the database
+        $moons = AllianceMoon::all();
 
-        dd($moons);
-
-        return view('moons.user.allmoons');
+        return view('moons.user.allmoons')->with('systems', $systems)
+                                          ->with('moons', $moons);
     }
 
     /**
