@@ -6,13 +6,13 @@
     <ul class="nav nav-tabs">
         @foreach($systems as $system)
         <li class="nav-item">
-            <a class="nav-link" href="{{ $system}}">{{ $system }}</a>
+            <a class="nav-link" href="#">{{ $system }}</a>
         </li>
         @endforeach
     </ul>
     <div class="tab-content" id="myTabContent">
         @foreach($systems as $system)
-            <div class="tab-pane fade" id="{{ $system }}" role="tabpanel" aria-labelledby="{{ $system}}-tab">
+            <div class="tab-pane fade" id="{{ $system }}" role="tabpanel" aria-labelledby="{{ $system }}-tab">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <th>Location</th>
