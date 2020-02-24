@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="container">
-            <h2>Moons in W4RP Space</h2>
+            <p align="center"><h2>Moons in W4RP Space</h2></p>
         </div>
     </div>
     <br>
