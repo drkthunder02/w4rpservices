@@ -32,15 +32,13 @@ class MoonsController extends Controller
      * Function to display all alliance moons and pass data to the blade template
      */
     public function displayMoons() {
-        $moons = array();
 
         //Get all of the alliance moons from the database
-        $moonsTemp = AllianceMoon::orderBy('System', 'asc')->distinct()->get(['System']);
+        $systems = DB::table('alliance_moons')->select('System')->distinct()->get();
 
-        dd($moonsTemp);
+        dd($systems);
 
-        return view('moons.user.allmoons')->with('moons', $moons)
-                                          ->with('systems', $systems);
+        return view('moons.user.allmoons');
     }
 
     /**
