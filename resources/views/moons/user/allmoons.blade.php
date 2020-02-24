@@ -3,7 +3,7 @@
 <div class="container">
 <div class="row">
     <h2>Moons in W4RP Space</h2>
-    <ul class="nav nav-pills nav-link">
+    <ul class="nav nav-pills nav-item">
         @foreach($systems as $system)
         <li>
             <a data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
