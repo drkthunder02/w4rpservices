@@ -37,10 +37,7 @@ class MoonsController extends Controller
         $systems = array();
 
         //Get all of the alliance moon systems from the database
-        $systemsTemp = DB::table('alliance_moons')->select('System')->distinct()->get()->toArray();
-        foreach($systemsTemp as $key => $value) {
-            array_push($systems, $value);
-        }
+        $systems = DB::table('alliance_moons')->select('System')->distinct()->get();
 
         dd($systems);
 
