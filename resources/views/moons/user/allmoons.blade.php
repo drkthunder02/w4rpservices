@@ -6,7 +6,7 @@
     <ul class="nav nav-pills">
         @foreach($systems as $system)
         <li>
-            <a data-toggle="tab" href="#W4RP-{{$system}}">{{$system}}</a>
+            <a data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
         </li>
         @endforeach
     </ul>
