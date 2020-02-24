@@ -7,7 +7,7 @@
         <li class="active"><a data-taggle="tab" href="#blank">Blank</a></li>
         @foreach($systems as $system)
         <li>
-            <a data-toggle="tab" href="#{{$system}}">{{$system}}</a>
+            <a data-toggle="tab" href="#.{{$system}}">{{$system}}</a>
         </li>
         @endforeach
     </ul>
@@ -16,7 +16,7 @@
             <br>
         </div>
         @foreach($systems as $system)
-            <div id="{{ $system }}" class="tab-pane fade">
+            <div id=".{{ $system }}" class="tab-pane fade">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <th>Location</th>
