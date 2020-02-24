@@ -1,9 +1,8 @@
 @extends('layouts.moons.b4')
 @section('content')
-<div class="container">
-<div class="row">
+<div class="container-fluid">
     <h2>Moons in W4RP Space</h2>
-    <ul class="nav nav-pills nav-item">
+    <ul class="nav nav-pills">
         @foreach($systems as $system)
         <li>
             <a data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
@@ -56,6 +55,5 @@
             </div>
         @endforeach
     </div>
-</div>
 </div>
 @endsection
