@@ -34,7 +34,7 @@ class MoonsController extends Controller
     public function displayMoons() {
 
         //Get all of the alliance moons from the database
-        $systems = DB::table('alliance_moons')->select('System')->distinct()->get();
+        $systems = DB::table('alliance_moons')->select('System')->distinct()->get()->toArray();
 
         dd($systems);
 
