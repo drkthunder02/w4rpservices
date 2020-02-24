@@ -3,13 +3,13 @@
 <div class="container">
 <div class="row">
     <h2>Moons in W4RP Space</h2>
-    <ul class="nav nav-pills">
+    <nav class="nav nav-pills nav-fill">
         @foreach($systems as $system)
         <li>
             <a data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
         </li>
         @endforeach
-    </ul>
+    </nav>
     <div class="tab-content">
         @foreach($systems as $system)
             <div id="W4RP-{{ $system }}" class="tab-pane fade">
