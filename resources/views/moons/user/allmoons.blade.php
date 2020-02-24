@@ -2,7 +2,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-    <h2>Moons in W4RP Space</h2>
+        <div class="container">
+            <h2>Moons in W4RP Space</h2>
+        </div>
     </div>
     <br>
     <ul class="nav nav-pills">
