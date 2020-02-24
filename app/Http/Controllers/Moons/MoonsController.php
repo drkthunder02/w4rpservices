@@ -38,7 +38,7 @@ class MoonsController extends Controller
         $moonsTemp = DB::table('alliance_moons')->orderBy('System', 'asc')->get();
 
         //Get the unique systems from the database
-        $systems = AllianceMoon::pluck('System')->distinct()->toArray();
+        $systems = AllianceMoon::pluck('System')->groupBy('System')->toArray();
 
         dd($systems);
 
