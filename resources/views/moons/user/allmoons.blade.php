@@ -14,6 +14,7 @@
         </li>
         @endforeach
     </ul>
+    <br>
     <div class="tab-content">
         @foreach($systems as $system)
             <div id="W4RP-{{ $system }}" class="tab-pane fade">
