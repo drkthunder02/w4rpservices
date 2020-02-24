@@ -1,5 +1,6 @@
 @extends('layouts.b4')
 @section('content')
+<div class="row">
 <div class="container">
     <h2>Moons in W4RP Space</h2>
     <ul class="nav nav-pills">
@@ -54,5 +55,6 @@
             </div>
         @endforeach
     </div>
+</div>
 </div>
 @endsection
