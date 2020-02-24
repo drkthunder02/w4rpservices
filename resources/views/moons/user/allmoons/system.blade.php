@@ -1,6 +1,13 @@
 @extends('layouts.b4')
 @section('content')
 <div class="container">
+    <ul class="nav nav-tabs">
+        @foreach($systems as $system)
+        <li class="nav-item">
+            <a class="nav-link" href="/{{$system}}">{{ $system }}</a>
+        </li>
+        @endforeach
+    </ul>
     <table class="table table-striped table-bordered">
         <thead>
             <th>Location</th>

@@ -4,15 +4,19 @@
 <div class="container">
     <h2>Moons in W4RP Space</h2>
     <ul class="nav nav-tabs">
+        <li class="active"><a data-taggle="tab" href="#blank">Blank</a></li>
         @foreach($systems as $system)
-        <li class="nav-item">
-            <a class="nav-link" href="#">{{ $system }}</a>
+        <li>
+            <a data-toggle="tab" href="#{{$system}}">{{$system}}</a>
         </li>
         @endforeach
     </ul>
-    <div class="tab-content" id="myTabContent">
+    <div class="tab-content">
+        <div id="blank" class="tab-pane fade in active">
+            <br>
+        </div>
         @foreach($systems as $system)
-            <div class="tab-pane fade" id="{{ $system }}" role="tabpanel" aria-labelledby="{{ $system }}-tab">
+            <div id="{{ $system }}" class="tab-pane fade">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <th>Location</th>
