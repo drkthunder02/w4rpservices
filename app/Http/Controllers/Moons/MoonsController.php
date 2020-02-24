@@ -16,7 +16,7 @@ use App\Models\Moon\Moon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
 use App\Models\MoonRent\MoonRental;
-use App\Models\Moon\AllianceMoons;
+use App\Models\Moon\AllianceMoon;
 
 //Library
 use App\Library\Moons\MoonCalc;
@@ -35,7 +35,7 @@ class MoonsController extends Controller
         $moons = array();
 
         //Get all of the alliance moons from the database
-        $moonsTemp = DB::table('AllianceMoons')->orderBy('System', 'asc')->get();
+        $moonsTemp = DB::table('alliance_moons')->orderBy('System', 'asc')->get();
 
         //Get the unique systems from the database
         $systems = AllianceMoons::pluck('System')->toArray();

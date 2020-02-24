@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AllianceMoons extends Model
+class AllianceMoon extends Model
 {
     // Table Name
     protected $table = 'alliance_moons';
