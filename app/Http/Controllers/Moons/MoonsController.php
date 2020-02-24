@@ -42,7 +42,7 @@ class MoonsController extends Controller
 
         foreach($systems as $system) {
             foreach($moonsTemp as $moon) {
-                if($moonsTemp->System == $system) {
+                if($moon->System == $system) {
                     array_push($moons[$system], [
                         'Region' => $moon->Region,
                         'System' => $moon->System,
