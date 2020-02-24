@@ -6,8 +6,6 @@
         @foreach($systems as $system)
         <li><a data-toggle="pill" href="{{ $system }}">{{ $system }}</a></li>
         @endforeach
-        <li class="active"><a data-toggle="pill" href="#6X7-JO">6X7-JO</a></li>
-        <li><a data-toggle="pill" href="#A-803L">A-803L</a></li>
     </ul>
 
     <div class="tab-content">
@@ -55,12 +53,6 @@
                 </table>
             </div>
         @endforeach
-        <div id="6X7-JO" class="tab-pane fade in active">
-            <h3>Table Goes here</h3>
-        </div>
-        <div id="A-803L" class="tab-pane fade">
-            <h3>Table Goes Here</h3>
-        </div>
     </div>
 </div>
 @endsection
