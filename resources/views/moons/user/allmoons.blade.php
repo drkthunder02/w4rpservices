@@ -1,7 +1,9 @@
 @extends('layouts.moons.b4')
 @section('content')
 <div class="container-fluid">
+    <div class="container">
     <h2>Moons in W4RP Space</h2>
+    </div>
     <ul class="nav nav-pills">
         @foreach($systems as $system)
         <li>
