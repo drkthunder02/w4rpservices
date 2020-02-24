@@ -3,14 +3,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="container">
-            <p align="center"><h2>Moons in W4RP Space</h2></p>
+            <h2>Moons in W4RP Space</h2>
         </div>
     </div>
     <br>
     <ul class="nav nav-pills">
         @foreach($systems as $system)
         <li>
-            <a data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
+            <a class="nav-fill" data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
         </li>
         @endforeach
     </ul>
