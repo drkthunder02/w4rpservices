@@ -39,7 +39,7 @@ class MoonsController extends Controller
         $systems = DB::table('alliance_moons')->select('System')->distinct()->get()->toArray();
 
         foreach($systems as $system) {
-            $moons[$system] = array();
+            $moons[$system] = null;
             $moonsTemp = AllianceMoon::where(['System' => $system])->get();
             foreach($moonsTemp as $moon) {
                 array_push($moons[$system], $moon);
