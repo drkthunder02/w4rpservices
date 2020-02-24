@@ -47,6 +47,22 @@ class MoonsController extends Controller
     }
 
     /**
+     * Function to display moon request form
+     */
+    public function displayRequestMoon() {
+        return view('moon.user.requestmoon');
+    }
+
+    /**
+     * Function to store the moon request
+     */
+    public function storeRequestMoon(Request $request) {
+        $this->validate($request, [
+
+        ]);
+    }
+
+    /**
      * Function to display the moons and pass data to the blade template
      */
     public function displayRentalMoons() {

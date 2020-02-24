@@ -29,6 +29,24 @@ class MoonsAdminController extends Controller
     }
 
     /**
+     * Function to display moon requests
+     */
+    public function displayMoonRequests() {
+
+
+        return view('moon.admin.moonrequest');
+    }
+
+    /**
+     * Function to approve a moon request
+     */
+    public function storeApprovedMoonRequest(Request $request) {
+        $this->validate($request, [
+
+        ]);
+    }
+
+    /**
      * Function to display the moons to admins
      */
     public function displayRentalMoonsAdmin() {
