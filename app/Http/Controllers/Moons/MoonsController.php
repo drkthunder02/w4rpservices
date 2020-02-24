@@ -40,30 +40,11 @@ class MoonsController extends Controller
         //Get the unique systems from the database
         $systems = AllianceMoon::pluck('System')->toArray();
 
-        foreach($systems as $system) {
-            foreach($moonsTemp as $moon) {
-                if($moon->System == $system) {
-                    array_push($moons[$system], [
-                        'Region' => $moon->Region,
-                        'System' => $moon->System,
-                        'Planet' => $moon->Planet,
-                        'System' => $moon->System,
-                        'FirstOre' => $moon->FirstOre,
-                        'FirstQuantity' => $moon->FirstQuantity,
-                        'SecondOre' => $moon->SecondOre,
-                        'SecondQuantity' => $moon->SecondQuantity,
-                        'ThirdOre' => $moon->ThirdOre,
-                        'ThirdQuantity' => $moon->ThirdQuantity,
-                        'FourthOre' => $moon->FourthOre,
-                        'FourthQuantity' => $moon->FourthQuantity,
-                        'Corporation' => $moon->Corporation,
-                        'Available' => $moon->Available,
-                    ]);
-                }
-            }   
-        }
-
         dd($systems);
+
+        foreach($systems as $system) {
+            
+        }
 
         return view('moons.user.allmoons')->with('moons', $moons)
                                           ->with('systems', $systems);
