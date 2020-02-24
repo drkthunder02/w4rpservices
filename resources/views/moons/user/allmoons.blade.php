@@ -10,7 +10,7 @@
     <ul class="nav nav-pills">
         @foreach($systems as $system)
         <li>
-            <a class="nav-fill" data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
+            <a class="nav-item" data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
         </li>
         @endforeach
     </ul>
