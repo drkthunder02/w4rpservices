@@ -26,6 +26,7 @@ class AllianceMoon extends Model
         'Planet',
         'Moon',
         'Corporation',
+        'StructureName',
         'FirstOre',
         'FirstQuantity',
         'SecondOre',
@@ -34,6 +35,7 @@ class AllianceMoon extends Model
         'ThirdQuantity',
         'FourthOre',
         'FourthQuantity',
+        'MoonType',
         'Available',
     ];
 }
