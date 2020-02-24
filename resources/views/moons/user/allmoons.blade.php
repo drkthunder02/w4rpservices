@@ -3,11 +3,16 @@
 <div class="container">
 <div class="row">
     <h2>Moons in W4RP Space</h2>
-    <nav class="nav nav-pills nav-fill">
+    <ul class="nav nav-pills nav-fill">
         @foreach($systems as $system)
         <li>
             <a data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
         </li>
+        @endforeach
+    </ul>
+    <nav class="nav nav-pills nav-fill">
+        @foreach($systems as $system)
+        <a data-toggle="pill" href="#W4RP-{{$system}}">{{$system}}</a>
         @endforeach
     </nav>
     <div class="tab-content">
@@ -58,4 +63,12 @@
     </div>
 </div>
 </div>
+<script> 
+    $(document).ready(function() { 
+        $('nav a').click(function() { 
+            $('nav a').removeClass("active"); 
+            $(this).addClass("active"); 
+        }); 
+    }); 
+</script> 
 @endsection
