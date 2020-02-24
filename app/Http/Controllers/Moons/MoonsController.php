@@ -38,7 +38,7 @@ class MoonsController extends Controller
 
         //Get all of the alliance moon systems from the database
         //$systems = DB::table('alliance_moons')->select('System')->distinct()->get();
-        $systems = AllianceMoon::groupBy('System')->distinct('System')->toArray();
+        $systems = AllianceMoon::groupBy('System')->pluck('System');
         dd($systems);
 
         //Get all of the alliance moons from the database
