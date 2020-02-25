@@ -52,7 +52,7 @@ class MoonsController extends Controller
      * Function to display moon request form
      */
     public function displayRequestAllianceMoon() {
-        return view('moon.user.requestmoon');
+        return view('moons.user.requestmoon');
     }
 
     /**
