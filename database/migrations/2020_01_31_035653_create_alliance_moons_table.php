@@ -53,7 +53,7 @@ class CreateAllianceMoonsTable extends Migration
                 $table->string('requestor_name');
                 $table->unsignedBigInteger('requestor_id');
                 $table->string('approver_name')->nullable();
-                $table->ungignedBigInteger('approver_id')->nullable();
+                $table->unsignedBigInteger('approver_id')->nullable();
                 $table->enum('status', [
                     'Pending',
                     'Approved',
