@@ -31,7 +31,7 @@
                         <th>Third Quantity</th>
                         <th>Fourth Ore</th>
                         <th>Fourth Quantity</th>
-                        <th>Available</th>
+                        <th>Availability</th>
                     </thead>
                     <tbody>
             @foreach($moons as $moon)
@@ -48,11 +48,7 @@
                         <td>{{ $moon->ThirdQuantity }}</td>
                         <td>{{ $moon->FourthOre }}</td>
                         <td>{{ $moon->FourthQuantity }}</td>
-                        @if($moon->Available == 1)
-                        <td>Yes</td>
-                        @else
-                        <td>No</td>
-                        @endif
+                        <td>{{ $moon->Available }}</td>
                     </tr>
                 @endif
             @endforeach

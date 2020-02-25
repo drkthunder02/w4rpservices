@@ -153,10 +153,10 @@ class MoonsController extends Controller
 
         //Update the current moon's status in the model AllianceMoon
         AllianceMoon::where([
-            'region' => $region,
-            'system' => $request->system,
-            'planet' => $request->planet,
-            'moon' => $request->moon,
+            'Region' => $region,
+            'System' => $request->system,
+            'Planet' => $request->planet,
+            'Moon' => $request->moon,
         ])->update([
             'Available' => 'Request Pending',
         ]);
