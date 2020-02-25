@@ -32,9 +32,11 @@ class MoonsAdminController extends Controller
      * Function to display moon requests
      */
     public function displayMoonRequests() {
+        $requests = AllianceMoonRequest::where([
+            'status' => 'Pending',
+        ])->get();
 
-
-        return view('moon.admin.moonrequest');
+        return view('moon.admin.moonrequest')->with('requests', $requests);
     }
 
     /**
@@ -42,8 +44,19 @@ class MoonsAdminController extends Controller
      */
     public function storeApprovedMoonRequest(Request $request) {
         $this->validate($request, [
-
+            'id' => 'required',
+            'status' => 'required',
         ]);
+
+        AllianceMoonRequest::where([
+            'id' => $request->id,
+        ])->update([
+            'status' => $request->status,
+            'approver_name' => auth()->user()->getName(),
+            'approver_id' => auth()->user()->getId(),
+        ]);
+
+        return redirect('/moons/admin/display/requests');
     }
 
     /**

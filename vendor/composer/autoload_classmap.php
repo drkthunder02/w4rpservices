@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\AllianceMoons' => $baseDir . '/app/Models/Moon/AllianceMoons.php',
     'App\\Console\\Commands\\CleanStaleDataCommand' => $baseDir . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
     'App\\Console\\Commands\\EmptyJumpBridges' => $baseDir . '/app/Console/Commands/Data/EmptyJumpBridges.php',
     'App\\Console\\Commands\\FlexStructureCommand' => $baseDir . '/app/Console/Commands/Flex/FlexStructureCommand.php',
@@ -108,13 +107,12 @@ return array(
     'App\\Models\\Mail\\EveMail' => $baseDir . '/app/Models/Mail/EveMail.php',
     'App\\Models\\Mail\\SentMail' => $baseDir . '/app/Models/Mail/SentMail.php',
     'App\\Models\\MoonRent\\MoonRental' => $baseDir . '/app/Models/MoonRentals/MoonRental.php',
-    'App\\Models\\Moon\\AvgMineralPrices' => $baseDir . '/app/Models/Moon/AvgMineralPrices.php',
-    'App\\Models\\Moon\\AvgOrePrices' => $baseDir . '/app/Models/Moon/AvgOrePrices.php',
+    'App\\Models\\Moon\\AllianceMoon' => $baseDir . '/app/Models/Moon/AllianceMoon.php',
     'App\\Models\\Moon\\Config' => $baseDir . '/app/Models/Moon/Config.php',
     'App\\Models\\Moon\\ItemComposition' => $baseDir . '/app/Models/Moon/ItemComposition.php',
+    'App\\Models\\Moon\\MineralPrice' => $baseDir . '/app/Models/Moon/MineralPrice.php',
     'App\\Models\\Moon\\Moon' => $baseDir . '/app/Models/Moon/Moon.php',
     'App\\Models\\Moon\\OrePrice' => $baseDir . '/app/Models/Moon/OrePrice.php',
-    'App\\Models\\Moon\\Price' => $baseDir . '/app/Models/Moon/MineralPrice.php',
     'App\\Models\\SRP\\SRPShip' => $baseDir . '/app/Models/SRP/SRPShip.php',
     'App\\Models\\SRP\\SrpFleetType' => $baseDir . '/app/Models/SRP/SrpFleetType.php',
     'App\\Models\\SRP\\SrpPayout' => $baseDir . '/app/Models/SRP/SrpPayout.php',

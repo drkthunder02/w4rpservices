@@ -130,6 +130,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/moons/display/form/worth', 'Moons\MoonsController@displayTotalWorthForm');
     Route::post('/moons/worth', 'Moons\MoonsController@displayTotalWorth');
     Route::get('/moons/display/all', 'Moons\MoonsController@displayMoons');
+    Route::get('/moons/display/request', 'Moons\MoonsController@displayRequestAllianceMoon');
+    Route::post('/moon/display/request', 'Moons\MoonsController@storeRequestAllianceMoon');
 
     /**
      * Moon Admin Controller display pages
@@ -138,6 +140,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
     Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
     Route::post('/moons/admin/display/rentals', 'Moons\MoonsAdminController@storeMoonRemoval');
+    Route::get('/moons/admin/display/request', 'Moons\MoonsAdminController@displayMoonReqquests');
+    Route::post('/moons/admin/display/request', 'Moons\MoonsAdminController@storeApprovedMoonRequest');
 
     /**
      * Moon Ledger Controller display pages

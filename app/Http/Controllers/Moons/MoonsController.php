@@ -17,9 +17,11 @@ use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
 use App\Models\MoonRent\MoonRental;
 use App\Models\Moon\AllianceMoon;
+use App\Models\Moon\AllianceMoonRequest;
 
 //Library
 use App\Library\Moons\MoonCalc;
+use App\Library\Lookups\LookupHelper;
 
 class MoonsController extends Controller
 {
@@ -49,17 +51,117 @@ class MoonsController extends Controller
     /**
      * Function to display moon request form
      */
-    public function displayRequestMoon() {
+    public function displayRequestAllianceMoon() {
         return view('moon.user.requestmoon');
     }
 
     /**
      * Function to store the moon request
      */
-    public function storeRequestMoon(Request $request) {
+    public function storeRequestAllianceMoon(Request $request) {
         $this->validate($request, [
-
+            'system' => 'required',
+            'planet' => 'required',
+            'moon' => 'required',
         ]);
+
+        //Declare some necessary arrays for figuring out what region a moon resides in
+        $catch = [
+            '6X7-JO',
+            'A803-L',
+            'I8-D0G',
+            'WQH-4K',
+            'GJ0-JO',
+            'Q-S7ZD',
+            'JWZ2-V',
+            'J-ODE7',
+            'OGL8-Q',
+            'R-K4QY',
+        ];
+
+        $immensea = [
+            'ZBP-TP',
+            'XVV-21',
+            'B9E-H6',
+            'JDAS-0',
+            'Y19P-1',
+            'LN-56V',
+            'O7-7UX',
+            'Y2-QUV',
+            'SPBS-6',
+            'A4B-V5',
+            'GXK-7F',
+            '78TS-Q',
+            'CJNF-J',
+            'EA-HSA',
+            'FYI-49',
+            'WYF8-8',
+            'NS2L-4',
+            'B-S347',
+            'AF0-V5',
+            'QI-S9W',
+            'B-A587',
+            'PPFB-U',
+            'L-5JCJ',
+            '4-GB14',
+            'REB-KR',
+            'QE-E1D',
+            'LK1K-5',
+            'Z-H2MA',
+            'B-KDOZ',
+            'E8-YS9',
+        ];
+
+        //Declare lookup variables
+        $lookup = new LookupHelper;
+
+        //Get all of the information needed to create the database entry
+        $charId = auth()->user()->getId();
+        $charInfo = $lookup->GetCharacterInfo($charId);
+        $charName = $charInfo->name;
+        $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
+        $corpId = $corpInfo->corporation_id;
+        $corpName = $corpInfo->name;
+        $corpTicker = $corpInfo->ticker;
+        //Declare the region variable as null for the lookup if statement
+        $region = null;
+
+        //Get the region the moon resides in from the system
+        if(in_array($request->system, $catch, true)) {
+            $region = 'Catch';
+        } else if(in_array($request->system, $immensea, true)) {
+            $region = 'Immensea';
+        } else {
+            //False value. Redirect back to page
+            return redirct('/moons/display/request')->with('error', 'Region was not found.');
+        }
+
+
+        //Create the new object to save into the database
+        $moonRequest = new AllianceMoonReqeuest;
+        $moonRequest->region = $region;
+        $moonRequest->system = $request->system;
+        $moonRequest->planet = $request->planet;
+        $moonRequest->moon = $request->moon;
+        $moonRequest->corporation_id = $corpId;
+        $moonRequest->corporation_name = $corpName;
+        $moonRequest->corporation_ticker = $corpTicker;
+        $moonRequest->requestor_name = $charName;
+        $moonRequest->requestor_id = $charId;
+        $moonRequest->status = 'Pending';
+        $moonRequest->save();
+
+        //Update the current moon's status in the model AllianceMoon
+        AllianceMoon::where([
+            'region' => $region,
+            'system' => $request->system,
+            'planet' => $request->planet,
+            'moon' => $request->moon,
+        ])->update([
+            'Available' => 'Request Pending',
+        ]);
+
+        return redirect('/moons/display/request')->with('success', 'Moon request submitted.');
     }
 
     /**

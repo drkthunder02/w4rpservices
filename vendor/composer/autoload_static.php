@@ -470,7 +470,6 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
     );
 
     public static $classMap = array (
-        'App\\AllianceMoons' => __DIR__ . '/../..' . '/app/Models/Moon/AllianceMoons.php',
         'App\\Console\\Commands\\CleanStaleDataCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Data/CleanStaleDataCommand.php',
         'App\\Console\\Commands\\EmptyJumpBridges' => __DIR__ . '/../..' . '/app/Console/Commands/Data/EmptyJumpBridges.php',
         'App\\Console\\Commands\\FlexStructureCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Flex/FlexStructureCommand.php',
@@ -572,13 +571,12 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Models\\Mail\\EveMail' => __DIR__ . '/../..' . '/app/Models/Mail/EveMail.php',
         'App\\Models\\Mail\\SentMail' => __DIR__ . '/../..' . '/app/Models/Mail/SentMail.php',
         'App\\Models\\MoonRent\\MoonRental' => __DIR__ . '/../..' . '/app/Models/MoonRentals/MoonRental.php',
-        'App\\Models\\Moon\\AvgMineralPrices' => __DIR__ . '/../..' . '/app/Models/Moon/AvgMineralPrices.php',
-        'App\\Models\\Moon\\AvgOrePrices' => __DIR__ . '/../..' . '/app/Models/Moon/AvgOrePrices.php',
+        'App\\Models\\Moon\\AllianceMoon' => __DIR__ . '/../..' . '/app/Models/Moon/AllianceMoon.php',
         'App\\Models\\Moon\\Config' => __DIR__ . '/../..' . '/app/Models/Moon/Config.php',
         'App\\Models\\Moon\\ItemComposition' => __DIR__ . '/../..' . '/app/Models/Moon/ItemComposition.php',
+        'App\\Models\\Moon\\MineralPrice' => __DIR__ . '/../..' . '/app/Models/Moon/MineralPrice.php',
         'App\\Models\\Moon\\Moon' => __DIR__ . '/../..' . '/app/Models/Moon/Moon.php',
         'App\\Models\\Moon\\OrePrice' => __DIR__ . '/../..' . '/app/Models/Moon/OrePrice.php',
-        'App\\Models\\Moon\\Price' => __DIR__ . '/../..' . '/app/Models/Moon/MineralPrice.php',
         'App\\Models\\SRP\\SRPShip' => __DIR__ . '/../..' . '/app/Models/SRP/SRPShip.php',
         'App\\Models\\SRP\\SrpFleetType' => __DIR__ . '/../..' . '/app/Models/SRP/SrpFleetType.php',
         'App\\Models\\SRP\\SrpPayout' => __DIR__ . '/../..' . '/app/Models/SRP/SrpPayout.php',

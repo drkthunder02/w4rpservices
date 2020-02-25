@@ -31,7 +31,35 @@ class CreateAllianceMoonsTable extends Migration
                 $table->string('FourthOre')->default('None');
                 $table->integer('FourthQuantity')->default('0');
                 $table->string('Moon_Type');
-                $table->boolean('Available')->default(true);
+                $table->enum('Available', [
+                    'Available',
+                    'Request Pending',
+                    'Reserved',
+                    'Deployed',
+                ])->default('Available');
+            });
+        }
+
+        if(!Schema::hasTable('alliance_moon_requests')) {
+            Schema::create('alliance_moon_requests', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('region');
+                $table->string('system');
+                $table->string('planet');
+                $table->string('moon');
+                $table->string('corporation_name');
+                $table->string('corporation_ticker');
+                $table->unsignedBigInteger('corporation_id');
+                $table->string('requestor_name');
+                $table->unsignedBigInteger('requestor_id');
+                $table->string('approver_name')->nullable();
+                $table->ungignedBigInteger('approver_id')->nullable();
+                $table->enum('status', [
+                    'Pending',
+                    'Approved',
+                    'Denied',
+                ]);
+                $table->timestamps();
             });
         }
     }
@@ -44,5 +72,6 @@ class CreateAllianceMoonsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('alliance_moons');
+        Schema::dropIfExists('alliance_moon_requests');
     }
 }
