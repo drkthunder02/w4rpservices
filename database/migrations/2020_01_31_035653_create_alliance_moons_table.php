@@ -30,7 +30,7 @@ class CreateAllianceMoonsTable extends Migration
                 $table->integer('ThirdQuantity')->default('0');
                 $table->string('FourthOre')->default('None');
                 $table->integer('FourthQuantity')->default('0');
-                $table->string('Moon_Type');
+                $table->string('MoonType');
                 $table->enum('Available', [
                     'Available',
                     'Request Pending',
