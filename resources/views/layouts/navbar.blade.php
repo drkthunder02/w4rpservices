@@ -108,7 +108,7 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item dropbox">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moon Admin</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/moons/admin/display/rentals">Display Moons</a>
@@ -116,7 +116,7 @@
                     <a class="dropdown-item" href="/moons/admin/display/request">Moon Request</a>
                 </div>
             </li>
-            <li class="nav-item dropbox">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SRP Admin</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/srp/admin/display">SRP Admin Dashboard</a>
@@ -127,7 +127,7 @@
             </li>
             @endif
             @if(auth()->user()->hasPermission('srp.admin'))
-            <li class="nav-item dropbox">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contract Admin</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="/contracts/admin/display">Admin Dashboard</a>
