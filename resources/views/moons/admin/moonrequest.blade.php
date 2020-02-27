@@ -28,8 +28,9 @@
                                 'Approved' => 'Approved',
                                 'Denied' => 'Denied',
                             ], 'Select') }}
+                            {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
                         </td>
-                        {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
+                        
                         {!! Form::close() !!}
                     </tr>
                     @endforeach
