@@ -140,7 +140,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
     Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
     Route::post('/moons/admin/display/rentals', 'Moons\MoonsAdminController@storeMoonRemoval');
-    Route::get('/moons/admin/display/request', 'Moons\MoonsAdminController@displayMoonReqquests');
+    Route::get('/moons/admin/display/request', 'Moons\MoonsAdminController@displayMoonRequests');
     Route::post('/moons/admin/display/request', 'Moons\MoonsAdminController@storeApprovedMoonRequest');
 
     /**
