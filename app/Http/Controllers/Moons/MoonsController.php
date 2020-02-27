@@ -138,7 +138,7 @@ class MoonsController extends Controller
 
 
         //Create the new object to save into the database
-        $moonRequest = new AllianceMoonReqeuest;
+        $moonRequest = new AllianceMoonRequest;
         $moonRequest->region = $region;
         $moonRequest->system = $request->system;
         $moonRequest->planet = $request->planet;
