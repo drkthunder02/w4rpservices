@@ -16,6 +16,7 @@ use App\Models\Moon\Moon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
 use App\Models\MoonRent\MoonRental;
+use App\Models\Moon\AllianceMoonRequest;
 
 //Library
 use App\Library\Moons\MoonCalc;
