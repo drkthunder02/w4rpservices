@@ -24,6 +24,9 @@
                         <td>{{ $req->requestor_name }}</td>
                         <td>
                             {{ Form::hidden('id', $req->id) }}
+                            {{ Form::hidden('system', $req->system) }}
+                            {{ Form::hideen('planet', $req->planet) }}
+                            {{ Form::hidden('moon', $req->moon) }}
                             {{ Form::select('status', [
                                 'Approved' => 'Approved',
                                 'Denied' => 'Denied',

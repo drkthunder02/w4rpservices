@@ -16,12 +16,17 @@ use App\Models\Moon\Moon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
 use App\Models\MoonRent\MoonRental;
+use App\Models\Moon\AllianceMoon;
 use App\Models\Moon\AllianceMoonRequest;
+use App\Models\Jobs\JobSendEveMail;
 
 //Library
 use App\Library\Moons\MoonCalc;
 use App\Library\Esi\Esi;
 use App\Library\Lookups\LookupHelper;
+
+//Jobs
+use App\Jobs\ProcessSendEveMailJob;
 
 class MoonsAdminController extends Controller
 {
@@ -44,11 +49,19 @@ class MoonsAdminController extends Controller
      * Function to approve a moon request
      */
     public function storeApprovedMoonRequest(Request $request) {
+        //Validate the input request
         $this->validate($request, [
             'id' => 'required',
             'status' => 'required',
+            'system' => 'required',
+            'planet' => 'required',
+            'moon' => 'required',
         ]);
 
+        //Get the configuration data to use later in the function
+        $config = config('esi');
+
+        //Update the alliance moon request to either approved or denied
         AllianceMoonRequest::where([
             'id' => $request->id,
         ])->update([
@@ -56,8 +69,38 @@ class MoonsAdminController extends Controller
             'approver_name' => auth()->user()->getName(),
             'approver_id' => auth()->user()->getId(),
         ]);
-        
-        return redirect('/moons/admin/display/request');
+
+        //Update the alliance moon in the table to the correct status
+        AllianceMoon::where([
+            'System' => $request->system,
+            'Planet' => $request->planet,
+            'Moon' => $request->moon,
+        ])->update([
+            'Available' => 'Deployed',
+        ]);
+
+        //Send an eve mail to the requestor stating they can set a moon up.
+        //Get the request data which holds all of the information for the request user
+        $moon = AllianceMoonRequest::where([
+            'id' => $request->id,
+        ])->get();
+        //Setup the mail body
+        $body = 'The moon request for ' . $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon . ' has changed status.<br>';
+        $body .= 'The request has been ' . $request->status . '.<br>';
+        $body .= 'Please contact the FC Team should it be necessary to arrange a fleet to cover the structure drop.';
+        $body .= 'Sincerely,<br>';
+        $body .= 'Warped Intentions Leadership<br>';
+
+        //Setup the mail model
+        $mail = new JobSendEveMail;
+        $mail->sender = $config['primary'];
+        $mail->subject = 'Warped Intentions Moon Request';
+        $mail->body = $body;
+        $mail->recipient = (int)$moon->requestor_id;
+        $mail->recipient_type = 'character';
+        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail');
+
+        return redirect('/moons/admin/display/request')->with('success', 'Moon has been approved, and mail has been sent out.');
     }
 
     /**
