@@ -56,8 +56,8 @@ class MoonsAdminController extends Controller
             'approver_name' => auth()->user()->getName(),
             'approver_id' => auth()->user()->getId(),
         ]);
-
-        return redirect('/moons/admin/display/requests');
+        
+        return redirect('/moons/admin/display/request');
     }
 
     /**
