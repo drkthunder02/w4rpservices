@@ -37,7 +37,7 @@ class MoonsAdminController extends Controller
             'status' => 'Pending',
         ])->get();
 
-        return view('moon.admin.moonrequest')->with('requests', $requests);
+        return view('moons.admin.moonrequest')->with('requests', $requests);
     }
 
     /**
