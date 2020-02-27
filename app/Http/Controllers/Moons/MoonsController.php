@@ -143,6 +143,8 @@ class MoonsController extends Controller
             'Moon' => $request->moon,
         ])->get();
 
+        dd($future);
+
         if($future->Available != 'Available') {
             return redirect('/moons/display/request')->with('error', 'The moon has already been reserved by another party.');
         }
