@@ -83,7 +83,7 @@ class MoonsAdminController extends Controller
         //Get the request data which holds all of the information for the request user
         $moon = AllianceMoonRequest::where([
             'id' => $request->id,
-        ])->get();
+        ])->first();
         //Setup the mail body
         $body = 'The moon request for ' . $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon . ' has changed status.<br>';
         $body .= 'The request has been ' . $request->status . '.<br>';
