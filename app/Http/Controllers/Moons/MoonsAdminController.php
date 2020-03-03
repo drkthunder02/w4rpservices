@@ -85,6 +85,7 @@ class MoonsAdminController extends Controller
                 'Planet' => $request->planet,
                 'Moon' => $request->moon,
             ])->update([
+                'Corporation' => $moon->corporation_ticker,
                 'Availability' => 'Deployed',
             ]);
 
