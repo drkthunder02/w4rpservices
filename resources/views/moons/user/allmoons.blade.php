@@ -48,7 +48,7 @@
                         <td>{{ $moon->ThirdQuantity }}</td>
                         <td>{{ $moon->FourthOre }}</td>
                         <td>{{ $moon->FourthQuantity }}</td>
-                        <td>{{ $moon->Available }}</td>
+                        <td>{{ $moon->Availability }}</td>
                     </tr>
                 @endif
             @endforeach
