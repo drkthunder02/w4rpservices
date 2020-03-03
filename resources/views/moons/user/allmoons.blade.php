@@ -36,7 +36,11 @@
                     <tbody>
             @foreach($moons as $moon)
                 @if($moon->System == $system)
+                    @if($moon->Availability == 'Deployed')
+                    <tr class="table-danger">
+                    @else
                     <tr>
+                    @endif
                         <td>{{ $moon->System . " - " . $moon->Planet . " - " . $moon->Moon }}</td>
                         <td>{{ $moon->Corporation }}</td>
                         <td>{{ $moon->StructureName }}</td>
