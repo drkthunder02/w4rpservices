@@ -136,7 +136,7 @@ class MoonsController extends Controller
             return redirct('/moons/display/request')->with('error', 'Region was not found.');
         }
 
-        dd($request->system);
+        dd($request->planet);
 
         //Check to see if the moon is not available
         $future = AllianceMoon::where([
