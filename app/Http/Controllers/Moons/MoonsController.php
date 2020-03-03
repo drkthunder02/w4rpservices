@@ -169,7 +169,7 @@ class MoonsController extends Controller
             'Planet' => $request->planet,
             'Moon' => $request->moon,
         ])->update([
-            'Available' => 'Request Pending',
+            'Availability' => 'Request Pending',
         ]);
 
         return redirect('/moons/display/request')->with('success', 'Moon request submitted.');
