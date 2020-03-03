@@ -36,6 +36,6 @@ class AllianceMoon extends Model
         'FourthOre',
         'FourthQuantity',
         'MoonType',
-        'Available',
+        'Availability',
     ];
 }

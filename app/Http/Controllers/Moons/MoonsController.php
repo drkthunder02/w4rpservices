@@ -144,7 +144,9 @@ class MoonsController extends Controller
             'Moon' => $request->moon,
         ])->first();
 
-        if($future->Available != 'Available') {
+        dd($future);
+
+        if($future->Availability != 'Available') {
             return redirect('/moons/display/request')->with('error', 'The moon has already been reserved by another party.');
         }
 
