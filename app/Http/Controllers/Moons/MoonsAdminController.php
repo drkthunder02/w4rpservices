@@ -30,6 +30,9 @@ use App\Jobs\ProcessSendEveMailJob;
 
 class MoonsAdminController extends Controller
 {
+    /**
+     * Constructor for the class
+     */
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('role:Admin');
@@ -326,6 +329,9 @@ class MoonsAdminController extends Controller
         return view('moons.admin.updatemoon')->with('spmn', $spmn);
     }
 
+    /**
+     * Store the updated moon
+     */
     public function storeUpdateMoon(Request $request) {
         $this->middleware('role:Admin');
 
