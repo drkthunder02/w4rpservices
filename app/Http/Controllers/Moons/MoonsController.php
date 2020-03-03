@@ -138,10 +138,10 @@ class MoonsController extends Controller
 
         //Check to see if the moon is not available
         $future = AllianceMoon::where([
-            'Region' => $region,
-            'System' => $request->system,
-            'Planet' => $request->planet,
-            'Moon' => $request->moon,
+            'Region' => (string)$region,
+            'System' => (string)$request->system,
+            'Planet' => (string)$request->planet,
+            'Moon' => (string)$request->moon,
         ])->first();
 
         if($future->Availability != 'Available') {
