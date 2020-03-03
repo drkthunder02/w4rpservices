@@ -141,7 +141,7 @@ class MoonsController extends Controller
             'System' => $request->system,
             'Planet' => $request->planet,
             'Moon' => $request->moon,
-        ])->first();
+        ])->get();
 
         dd($future);
 
