@@ -10,6 +10,7 @@ use Carbon\Carbon;
 //Libraries
 use App\Library\Taxes\TaxesHelper;
 use App\Library\Wiki\WikiHelper;
+use App\Library\Lookups\LookupHelper;
 
 //Models
 use App\Models\User\User;
