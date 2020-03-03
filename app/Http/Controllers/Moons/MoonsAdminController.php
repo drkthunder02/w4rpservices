@@ -58,38 +58,72 @@ class MoonsAdminController extends Controller
             'moon' => 'required',
         ]);
 
-        //Get the configuration data to use later in the function
-        $config = config('esi');
-
-        //Update the alliance moon request to either approved or denied
-        AllianceMoonRequest::where([
-            'id' => $request->id,
-        ])->update([
-            'status' => $request->status,
-            'approver_name' => auth()->user()->getName(),
-            'approver_id' => auth()->user()->getId(),
-        ]);
-
-        //Update the alliance moon in the table to the correct status
-        AllianceMoon::where([
-            'System' => $request->system,
-            'Planet' => $request->planet,
-            'Moon' => $request->moon,
-        ])->update([
-            'Available' => 'Deployed',
-        ]);
-
-        //Send an eve mail to the requestor stating they can set a moon up.
+        
         //Get the request data which holds all of the information for the request user
         $moon = AllianceMoonRequest::where([
             'id' => $request->id,
         ])->first();
-        //Setup the mail body
-        $body = 'The moon request for ' . $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon . ' has changed status.<br>';
-        $body .= 'The request has been ' . $request->status . '.<br>';
-        $body .= 'Please contact the FC Team should it be necessary to arrange a fleet to cover the structure drop.';
-        $body .= 'Sincerely,<br>';
-        $body .= 'Warped Intentions Leadership<br>';
+
+        //Get the configuration data to use later in the function
+        $config = config('esi');
+
+        //If the request is approved, then update everything.
+        if($request->status == 'Approved') {
+            //Update the alliance moon request to either approved or denied
+            AllianceMoonRequest::where([
+                'id' => $request->id,
+            ])->update([
+                'status' => $request->status,
+                'approver_name' => auth()->user()->getName(),
+                'approver_id' => auth()->user()->getId(),
+            ]);
+
+            //Update the alliance moon in the table to the correct status
+            AllianceMoon::where([
+                'System' => $request->system,
+                'Planet' => $request->planet,
+                'Moon' => $request->moon,
+            ])->update([
+                'Availability' => 'Deployed',
+            ]);
+
+            //Send an eve mail to the requestor stating they can set a moon up.
+            //Setup the mail body
+            $body = 'The moon request for ' . $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon . ' has changed status.<br>';
+            $body .= 'The request has been ' . $request->status . '.<br>';
+            $body .= 'Please contact the FC Team should it be necessary to arrange a fleet to cover the structure drop.<br>';
+            $body .= 'Sincerely,<br>';
+            $body .= 'Warped Intentions Leadership<br>';
+
+            
+        } else {
+            //If the status was Denied, then update the request, and mark the moon available again.
+            AllianceMoonRequest::where([
+                'id' => $request->id,
+            ])->update([
+                'status' => $request->status,
+                'approver_name' => auth()->user()->getName(),
+                'approver_id' => auth()->user()->getId(),
+            ]);
+
+            //Update the alliance moon in the table to the correct status
+            AllianceMoon::where([
+                'System' => (string)$request->system,
+                'Planet' => (string)$request->planet,
+                'Moon' => (string)$request->moon,
+            ])->update([
+                'Availability' => 'Available',
+            ]);
+
+            //Send an eve mail to the requestor stating they can set a moon up.
+            //Setup the mail body
+            $body = 'The moon request for ' . $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon . ' has changed status.<br>';
+            $body .= 'The request has been ' . $request->status . '.<br>';
+            $body .= 'Should you have questions please contact alliance leadership for further clarification.<br>';
+            $body .= 'Sincerely,<br>';
+            $body .= 'Warped Intentions Leadership<br>';
+            
+        }
 
         //Setup the mail model
         $mail = new JobSendEveMail;
@@ -100,7 +134,7 @@ class MoonsAdminController extends Controller
         $mail->recipient_type = 'character';
         ProcessSendEveMailJob::dispatch($mail)->onQueue('mail');
 
-        return redirect('/moons/admin/display/request')->with('success', 'Moon has been approved, and mail has been sent out.');
+        return redirect('/moons/admin/display/request')->with('success', 'Moon has been processed, and mail has been sent out.');
     }
 
     /**
