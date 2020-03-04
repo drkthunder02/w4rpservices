@@ -27,7 +27,7 @@
                         <td>{{ $req->structure_type }}</td>
                         <td>{{ $req->requested_drop_time }}</td>
                         <td>{{ $req->requester }}</td>
-                        {!! Form::open(['action' => 'Logistics\StructureRequestController@deleteRequest', 'method' => 'POST']) !!}
+                        {!! Form::open(['action' => 'Logistics\StructureRequestAdminController@deleteRequest', 'method' => 'POST']) !!}
                         <td>
                             {{ Form::hidden('id', $req->id, ['class' => 'form-control']) }}
                             {{ Form::radio('delete', 'Delete', false, ['class' => 'form-conotrol']) }}
