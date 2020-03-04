@@ -29,10 +29,6 @@
                     {{ Form::select('class', $class, null, ['class' => 'form-control']) }}
                 </div>
                 <div class="form-group">
-                    {{ Form::label('type', 'WH Type') }}
-                    {{ Form::select('class', $type, null, ['class' => 'form-control']) }}
-                </div>
-                <div class="form-group">
                     {{ Form::label('size', 'WH Size') }}
                     {{ Form::select('size', $size, null, ['class' => 'form-control']) }}
                 </div>

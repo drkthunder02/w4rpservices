@@ -87,7 +87,6 @@ class WormholeController extends Controller
             'class' => 'required',
             'size' => 'required',
             'stability' => 'required',
-            'type' => 'required',
             'system' => 'required',
         ]);
 
@@ -120,7 +119,7 @@ class WormholeController extends Controller
                 'duration_left' => $duration,
                 'dateTime' => $request->dateTime,
                 'class' => $request->class,
-                'type' => $request->type,
+                'type' => $request->class,
                 'hole_size' => $request->size,
                 'stability' => $request->stability,
                 'details' => $request->details,

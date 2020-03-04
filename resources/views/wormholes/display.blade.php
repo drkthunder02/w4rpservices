@@ -8,7 +8,6 @@
             <th>Duration Left</th>
             <th>Scan Time</th>
             <th>WH Class</th>
-            <th>WH Type</th>
             <th>Hole Size</th>
             <th>Stability</th>
             <th>Mass Allowed</th>
@@ -26,7 +25,6 @@
                     <td>{{ $wormhole->duration_left }}</td>
                     <td>{{ $wormhole->dateTime }}</td>
                     <td>{{ $wormhole->class }}</td>
-                    <td>{{ $wormhole->type }}</td>
                     <td>{{ $wormhole->hole_size }}</td>
                     <td>{{ $wormhole->stability }}</td>
                     <td>{{ $wormhole->mass_allowed }}</td>
