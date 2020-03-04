@@ -136,6 +136,7 @@ class MoonsController extends Controller
             return redirct('/moons/display/request')->with('error', 'Region was not found.');
         }
 
+        /*  Not working correctly with certain systems
         //Check to see if the moon is not available
         $future = AllianceMoon::where([
             'Region' => (string)$region,
@@ -146,6 +147,19 @@ class MoonsController extends Controller
 
         if($future->Availability != 'Available') {
             return redirect('/moons/display/request')->with('error', 'The moon has already been reserved by another party.');
+        }
+        */
+
+        //Check to see if the moon has been previously inputted for
+        $allMoons = AllianceMoon::all();
+        foreach($allMoons as $moon) {
+            if($moon->Region == $region && $moon->System == $request->system && $moon->Planet == $request->planet && $moon->Moon == $request->moon) {
+                if($moon->Availability != 'Available') {
+                    return redirect('moons/display/request')->with('error', 'The moon has already been reserved by another party.');
+                }
+
+                break;
+            }
         }
 
         //Create the new object to save into the database
