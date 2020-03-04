@@ -96,6 +96,7 @@ class JumpBridgeTax {
      * Returns a specific briddge usage statistics for overall usage
      */
     public function JBOverallUsage($structure) {
+        
         $usage = DB::table('jump_bridge_journal')
                     ->select('amount')
                     ->where('context_id', $structure)

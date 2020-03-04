@@ -5,15 +5,15 @@
  * GNU Public License
  */
 
- namespace App\Library\Finances;
+namespace App\Library\Finances;
 
- use DB;
+//Library
+use App\Library\Esi\Esi;
 
- use App\Library\Esi\Esi;
+//Models
+use App\Models\Finances\PISaleJournal;
 
- use App\Models\Finances\PISaleJournal;
-
- class PISale {
+class PISale {
     
     public function InsertPISale($journal, $corpId) {
         //Create the ESI Helper class

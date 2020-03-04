@@ -9,13 +9,11 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdoownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moons</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                    @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Renter'))
                     <a class="dropdown-item" href="/moons/display/all">Display All Moons</a>
                     <a class="dropdown-item" href="/moons/display/rentals">Display Rental Moons</a>
                     <a class="dropdown-item" href="/moons/display/form/worth">Moon Worth</a>
                     <a class="dropdown-item" href="/moons/display/request">Moon Reservation</a>
-                    @endif
-                    @if(auth()->user()->hasPermission('corp.lead'))
+                    @if(auth()->user()->hasPermission('corp.lead') && auth()->user()->hasEsiScope('esi-industry.read_corporation_mining.v1'))
                     <a class="dropdown-item" href="/moons/ledger/display/select">Mining Ledger</a>
                     @endif
                 </div>

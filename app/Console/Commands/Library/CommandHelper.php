@@ -3,7 +3,6 @@
 namespace Commands\Library;
 
 //Internal Libraries
-use DB;
 use Carbon\Carbon;
 
 //Models
@@ -32,7 +31,7 @@ class CommandHelper {
 
     public function SetStopStatus() {
         //Mark the job as finished
-        DB::table('schedule_jobs')->where([
+        ScheduleJob::where([
             'system_time' => $this->system_time,
             'job_name' => $this->job_name,
         ])->update([
@@ -41,7 +40,8 @@ class CommandHelper {
     }
 
     public function CleanJobStatusTable() {
-        DB::table('schedule_jobs')->where('system_time', '<', Carbon::now()->subMonths(3))->delete();
+        //Delete old jobs
+        ScheduleJob::where(['system_time', '<', Carbon::now()->subMonths(3)])->delete();
     }
 }
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\SRP;
 //Laravel Libraries
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
 use Auth;
 
 //User Libraries

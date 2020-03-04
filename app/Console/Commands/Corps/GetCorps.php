@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 //Internal Library
 use Illuminate\Console\Command;
-use DB;
 use Commands\Library\CommandHelper;
 
 //Models
@@ -67,7 +66,9 @@ class GetCorpsCommand extends Command
             dd($e->getEsiResponse());
         }
         //Delete all of the entries in the AllianceCorps table
-        DB::table('AllianceCorps')->delete();
+        AllianceCorp::truncate();
+
+        //Foreach corporation, make entries into the database.
         foreach($corporations as $corp) {
             try {
                 $corpInfo = $esi->invoke('get', '/corporations/{corporation_id}/', [

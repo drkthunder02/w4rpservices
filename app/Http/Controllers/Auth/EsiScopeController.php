@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use DB;
 use Socialite;
 use Auth;
 
@@ -20,7 +18,10 @@ class EsiScopeController extends Controller
 
     public function displayScopes() {
         //Get the ESI Scopes for the user
-        $scopes = DB::table('EsiScopes')->where('character_id', Auth::user()->character_id)->get();
+        $scopes = EsiScope::where([
+            'character_id' => Auth::user()->character_id,
+        ])->get();
+
         return view('scopes.select')->with('scopes', $scopes);
     }
 

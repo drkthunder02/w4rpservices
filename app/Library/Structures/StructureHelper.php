@@ -11,7 +11,6 @@ namespace App\Library\Structures;
 
 //Internal Library
 use Log;
-use DB;
 
 //App Library
 use App\Jobs\Library\JobHelper;

@@ -7,9 +7,10 @@
 
 namespace App\Library\Finances;
 
-use DB;
+//Library
 use App\Library\Esi\Esi;
 
+//Models
 use App\Models\Finances\ReprocessingTaxJournal;
 
 class ReprocessingTax {

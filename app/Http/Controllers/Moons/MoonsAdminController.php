@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Moons;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use DB;
 use Carbon\Carbon;
 
 //Models

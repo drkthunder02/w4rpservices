@@ -2,9 +2,10 @@
 
 namespace App\Library\Taxes;
 
-use DB;
+//Internal Library
 use Carbon\Carbon;
 
+//Models
 use App\Models\User\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Logistics;
 //Internal Libraries
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
 use Log;
 
 //Jobs
@@ -16,13 +15,14 @@ use App\Library\Lookups\LookupHelper;
 
 //Models
 use App\Models\Logistics\AnchorStructure;
-use App\Models\Mail\SentMail;
 use App\Models\Jobs\JobSendEveMail;
+use App\Models\User\UserPermission;
 
 class StructureRequestController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
+        $this->middleware('role:User');
     }
 
     public function displayForm() {
@@ -41,6 +41,8 @@ class StructureRequestController extends Controller
 
         $lookup = new LookupHelper;
 
+        $config = config('esi');
+
         $requesterId = $lookup->CharacterNameToId($request->requester);
         $corporationId = $lookup->CorporationNameToId($request->corporation_name);
         
@@ -55,23 +57,31 @@ class StructureRequestController extends Controller
             'requester' => $request->requester,
         ]);
 
-        return redirect('/structures/display/requests');
-    }
+        //Send a mail out to the FC Team
+        $fcTeam = UserPermission::where([
+            'permission' => 'fc.team',
+        ])->get();
 
-    public function displayRequests() {
-        $reqs = AnchorStructure::all();
+        //Set the mail delay
+        $delay = 5;
 
-        return view('structurerequest.display.structurerequests')->with('reqs', $reqs);
-    }
+        foreach($fcTeam as $fc) {
+            $body = "Structure Anchor Request has been entered.<br>";
+            $body .= "Please check the W4RP Services Site for the structure information.<br>";
+            $body .= "<br>Sincerely,<br>";
+            $body .= "Warped Intentions Leadership<br>";
+            
+            //Dispatch the mail job
+            $mail = new JobSendEveMail;
+            $mail->sender = $config['primary'];
+            $mail->subject = "New Structure Anchor Request";
+            $mail->body = $body;
+            $mail->recipient = (int)$fc->character_id;
+            $mail->recipient_type = 'character';
+            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
 
-    public function deleteRequest(Request $request) {
-        $this->validate($request, [
-            'id' => 'required',
-        ]);
-
-        AnchorStructure::where([
-            'id' => $request->id,
-        ])->delete();
+            $delay += 15;
+        }
 
         return redirect('/structures/display/requests');
     }

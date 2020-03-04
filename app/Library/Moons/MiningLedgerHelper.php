@@ -10,7 +10,6 @@ namespace App\Library\Moons;
 
 //Internal Library
 use Log;
-use DB;
 
 //App Library
 use Seat\Eseye\Exceptions\RequestFailedException;

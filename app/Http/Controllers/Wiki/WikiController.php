@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Wiki;
 //Laravel libraries
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
 use Auth;
 
 //User Libraries
@@ -33,9 +32,19 @@ class WikiController extends Controller
         $name = str_replace(' ', '_', $name);
 
         //Check to see if the user is already registered in the database
-        $check = DB::select('SELECT login FROM wiki_user WHERE login = ?', [$name]);
-        if(isset($check[0]) && ($check[0]->login === $name)) {
-            return redirect('/dashboard')->with('error', 'Already registered for the wiki!');            
+        $count = DokuUser::where([
+            'login' => $name,
+        ])->count();
+
+        //If the count is greater than zero, also check the login name as a reference
+        if($count > 0) {
+            $check = DokuUser::where([
+                'login' => $name,
+            ])->first();
+
+            if($check->login === $name) {
+                return redirect('/dashboard')->with('error', 'Already registered for the wiki!');
+            }
         }
 
         return view('wiki.user.register')->with('name', $name);
@@ -80,11 +89,16 @@ class WikiController extends Controller
         $user->save();
 
         //Get the user from the table to get the uid
-        $uid = DB::select('SELECT id FROM wiki_user WHERE login = ?', [$name]);
-        $member->uid = $uid[0]->id;
+        $uid = DokuUser::where([
+            'login' => $name,
+        ])->first();
+
+        //Save information in the model
+        $member->uid = $uid->id;
         $member->gid = $role;
         $member->groupname = $roleDescription;
         $member->save();
+
         //Return to the dashboard view
         return redirect('/dashboard')->with('success', 'Registration successful.  Your username is: ' . $name);
     }
@@ -93,10 +107,15 @@ class WikiController extends Controller
         $name = Auth::user()->name;
         $name = strtolower($name);
         $name = str_replace(' ', '_', $name);
-        $check = DB::select('SELECT login FROM wiki_user WHERE login = ?', [$name]);
-        if(!isset($check[0])) {
-            return redirect('/dashboard')->with('error', 'Login Not Found!');
-        } 
+
+        //Get the password
+        $check = DokuUser::where([
+            'login' => $name
+        ])->count();
+
+        if($check == 0) {
+            return redirect('/dashboard')->with('error', 'Login Not Found');
+        }
 
         return view('wiki.user.changepassword')->with('name', $name);
     }
@@ -120,10 +139,13 @@ class WikiController extends Controller
         $name = Auth::user()->name;
         $name = strtolower($name);
         $name = str_replace(' ', '_', $name);
+
         //Update the password for the login name
-        DB::table('wiki_user')
-            ->where('login', $name)
-            ->update(['pass' => $password]);
+        DokuUser::where([
+            'login' => $name,
+        ])->update([
+            'pass' => $password,
+        ]);
 
         return redirect('/dashboard')->with('success', 'Password changed successfully.  Your username is: ' . $name);
     }

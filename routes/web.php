@@ -59,14 +59,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/ajax/action', 'Ajax\LiveSearch@action')->name('live_search.action');
 
     /**
-     * Anchor Structure Controller display pages
-     */
-    Route::get('/structures/display/requests', 'Logistics\StructureRequestController@displayRequests');
-    Route::post('/structures/display/requests/delete', 'Logistics\StructureRequestController@deleteRequest');
-    Route::get('/structures/display/form', 'Logistics\StructureRequestController@displayForm');
-    Route::post('/structures/display/form', 'Logistics\StructureRequestController@storeForm');
-
-    /**
      * Blacklist Controller display pages
      */
     Route::get('/blacklist/display', 'Blacklist\BlacklistController@DisplayBlacklist');
@@ -173,6 +165,18 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/srp/admin/costcodes/add', 'SRP\SRPAdminController@addCostCode');
     Route::post('/srp/admin/costcodes/modify', 'SRP\SRPAdminController@modifyCostCodes');
     Route::get('/srp/admin/display/history', 'SRP\SRPAdminController@displayHistory');
+
+    /**
+     * Structure Request Controller display pages
+     */
+    Route::get('/structures/display/form', 'Logistics\StructureRequestController@displayForm');
+    Route::post('/structures/display/form', 'Logistics\StructureRequestController@storeForm');
+
+    /**
+     * Structure Request Admin Controller display pages
+     */
+    Route::get('/structures/display/requests', 'Logistics\StructureRequestAdminController@displayRequests');
+    Route::post('/structures/display/requests/delete', 'Logistics\StructureRequestAdminController@deleteRequest');
 
     /**
      * Test Controller display pages

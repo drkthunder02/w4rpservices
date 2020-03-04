@@ -176,6 +176,14 @@ class PurgeUsers extends Command
                             User::where([
                                 'character_id' => $user->character_id,
                             ])->delete();
+
+                            EsiScope::where([
+                                'character_id' => $user->character_id,
+                            ])->delete();
+
+                            EsiToken::where([
+                                'character_id' => $user->character_id,
+                            ])->delete();
                         }
                     }
                 }

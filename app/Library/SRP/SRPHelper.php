@@ -3,7 +3,6 @@
 namespace App\Library\SRP;
 
 //Internal Libraries
-use DB;
 use Carbon\Carbon;
 
 //Models

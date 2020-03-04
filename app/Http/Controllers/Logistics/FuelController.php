@@ -23,7 +23,7 @@ class FuelController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('permission:logistics.manager');
+        $this->middleware('role:User');
     }
 
     public function displayStructures() {

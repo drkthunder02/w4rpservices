@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use DB;
 use Carbon\Carbon;
 use Commands\Library\CommandHelper;
 

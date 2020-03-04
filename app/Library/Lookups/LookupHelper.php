@@ -3,7 +3,6 @@
 namespace App\Library\Lookups;
 
 //Internal Libraries
-use DB;
 use Log;
 
 //Seat Stuff
