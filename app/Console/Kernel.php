@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
         Commands\PurgeUsers::class,
         Commands\FlexStructureCommand::class,
         Commands\EmptyJumpBridges::class,
+        Commands\PurgeWormholes::class,
     ];
 
     /**
@@ -71,6 +72,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:FlexStructures')
                 ->monthlyOn(2, '00:01')
                 ->withoutOverlapping();
+        //Wormhole data purge
+        $schedule->command('services:PurgeWormholeData')
+                ->hourlyAt(20);
 
         //Horizon Graph Schedule
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
