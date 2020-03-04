@@ -18,11 +18,11 @@
                 </td>
                 <td>
                    {{ $code['description'] }}
-                   {{ Form::text('description', null, ['class' => 'form-control', 'value' => $code['description']]) }}
+                   {{ Form::text('description', null, ['class' => 'form-control', 'placeholder' => $code['description']]) }}
                 </td>
                 <td>
                     {{ $code['payout'] }}
-                    {{ Form::text('payout', null, ['class' => 'form-control', 'value' => $code['payout']]) }}
+                    {{ Form::text('payout', null, ['class' => 'form-control', 'placeholder' => $code['payout']]) }}
                 </td>
                 <td>
                     {{ Form::submit('Modify', ['class' => 'btn btn-primary']) }}
