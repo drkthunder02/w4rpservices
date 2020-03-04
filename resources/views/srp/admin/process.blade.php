@@ -49,8 +49,7 @@
                             {{ $row['fleet_type'] }}
                         </td>
                         <td>
-                            {{ number_format($row['actual_srp'], 2, ".", ",") }}
-                            {{ Form::hidden('paid_value', $row['actual_srp'], ['class' => 'form-control']) }}
+                            {{ Form::text('paid_value', number_format($row['actual_srp'], 2, ".", ","), ['class' => 'form-control']) }}
                         </td>
                         <td>
                             {{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 2, 'cols' => 15, 'style' => 'resize:none']) }}

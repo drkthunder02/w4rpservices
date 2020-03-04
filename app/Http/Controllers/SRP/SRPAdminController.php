@@ -104,7 +104,9 @@ class SRPAdminController extends Controller
             'id' => 'required',
             'approved' => 'required',
             'paid_value' => 'required',
+            
         ]);
+
         //Get the paid value from the form
         $paidValue = str_replace(',', '', $request->paid_value);
         //If the notes are not null update like this.
