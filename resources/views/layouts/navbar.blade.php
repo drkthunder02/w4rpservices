@@ -68,7 +68,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                     <a class="dropdown-item" href="https://buyback.w4rp.space">Buyback Program</a>
                     <a class="dropdown-item" href="/wormholes/display">Wormholes</a>
-                    <a class="dropdown-item" href="/ormholes/form">Wormhole Form</a>
+                    <a class="dropdown-item" href="/wormholes/form">Wormhole Form</a>
                 </div>
             </li>
             @endif
