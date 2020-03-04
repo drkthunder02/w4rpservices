@@ -34,6 +34,7 @@ class SRPAdminController extends Controller
 
         //Create the array
         $requests = array();
+        $viewShipTypes = array();
 
         //Declare variables for use later.
         $sum_actual = 0.00;
@@ -41,6 +42,12 @@ class SRPAdminController extends Controller
 
         //Get the ship types from the database
         $shipTypes = SrpShipType::all();
+
+        //Setup the viewShipTypes variable
+        $tempShipTypes = SrpShipType::groupBy('code')->pluck('code');
+        foreach($tempShipTypes as $key => $value) {
+            $viewShipTypes[$value] = $value;
+        }
 
         //Get the fleet types from the database
         $fleetTypes = SrpFleetType::all();
@@ -95,7 +102,8 @@ class SRPAdminController extends Controller
         //Return the view with the variables
         return view('srp.admin.process')->with('requests', $requests)
                                         ->with('sum_actual', $sum_actual)
-                                        ->with('sum_loss', $sum_loss);
+                                        ->with('sum_loss', $sum_loss)
+                                        ->with('viewShipTypes', $viewShipTypes);
     }
 
     public function processSRPRequest(Request $request) {
@@ -104,6 +112,7 @@ class SRPAdminController extends Controller
             'id' => 'required',
             'approved' => 'required',
             'paid_value' => 'required',
+            'ship_type' => 'required',
         ]);
 
         //Get the paid value from the form
@@ -116,6 +125,7 @@ class SRPAdminController extends Controller
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
                 'notes' => $request->notes,
+                'ship_type' => $request->ship_type,
             ]);
         } else {
             $srp = SRPShip::where(['id' => $request->id])->update([
@@ -123,6 +133,7 @@ class SRPAdminController extends Controller
                 'paid_value' => $paidValue,
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
+                'ship_type' => $request->ship_type,
             ]);
         }
 

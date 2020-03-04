@@ -40,7 +40,7 @@
                             {{ number_format($row['loss_value'], 2, '.', ',') }}
                         </td>
                         <td>
-                            {{ $row['ship_type'] }}
+                            {{ Form::select('ship_type', $viewShipTypes, $row['ship_type']) }}
                         </td>
                         <td>
                             {{ $row['cost_code'] }}
