@@ -53,7 +53,7 @@ class WormholeController extends Controller
         ];
 
         //Get the wh types from the table
-        $type = WormholeType::pluck('type');
+        $type = WormholeType::groupBy('type')->pluck('type');
 
         //Get the wh sizes from the table
         $size = [
