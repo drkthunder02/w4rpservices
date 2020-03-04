@@ -104,7 +104,6 @@ class SRPAdminController extends Controller
             'id' => 'required',
             'approved' => 'required',
             'paid_value' => 'required',
-            
         ]);
 
         //Get the paid value from the form
