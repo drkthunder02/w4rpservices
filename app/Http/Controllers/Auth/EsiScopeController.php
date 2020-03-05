@@ -25,8 +25,6 @@ class EsiScopeController extends Controller
             'character_id' => Auth::user()->character_id,
         ])->get();
 
-        dd($scopes);
-
         return view('scopes.select')->with('scopes', $scopes);
     }
 

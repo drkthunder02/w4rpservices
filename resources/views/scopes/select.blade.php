@@ -108,7 +108,7 @@
             @if($scope->scope == 'esi-contracts.read_corporation_contracts.v1')
                 <div class="form-group col-md-6">
                     {{ Form::label('scopes[]', 'Corporate Contracts') }}
-                    {{ Form::checkbox('scopes[]', 'esi-contracts.read_corporation_contracts.v1') }}
+                    {{ Form::checkbox('scopes[]', 'esi-contracts.read_corporation_contracts.v1', 'true') }}
                 </div>
                 <?php $corpContracts = true; ?>
             @endif
@@ -117,7 +117,7 @@
             @if($scope->scope == 'esi-industry.read_corporation_mining.v1')
                 <div class="form-group col-md-6">
                     {{ Form::label('scopes[]', 'Corporate Mining') }}
-                    {{ Form::checkbox('scopes[]', 'esi-industry.read_corporation_mining.v1') }}
+                    {{ Form::checkbox('scopes[]', 'esi-industry.read_corporation_mining.v1', 'true') }}
                 </div>
                 <?php $corpMining = true; ?>
             @endif
