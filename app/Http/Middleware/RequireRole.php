@@ -27,7 +27,7 @@ class RequireRole
             array_push($temp, $ranking);
         }
 
-        dd($ranking);
+        dd($roles);
 
         $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
 
