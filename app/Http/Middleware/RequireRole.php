@@ -25,7 +25,7 @@ class RequireRole
         foreach($roles as $r) {
             $temp[$r->role] = $r->rank;
             
-            array_push($temp, $ranking);
+            array_push($ranking, $temp);
         }
 
         dd($ranking);
