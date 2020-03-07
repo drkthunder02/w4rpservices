@@ -106,6 +106,8 @@
                     </div>
                 </div>
             </li>
+            @endif
+            @if(auth()->user()->hasPermission('moon.admin'))
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moon Admin</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
