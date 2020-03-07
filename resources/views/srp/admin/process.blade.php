@@ -38,10 +38,10 @@
                             <a href="{{ $row['zkillboard'] }}" target="_blank">zKill Link</a>
                         </td>
                         <td><!-- Total Loss -->
-                            {{ Form::text('total_loss', number_format($row['loss_value'], 2, ".", ","), ['class' => 'form-control', 'id' => $row['id'], 'onchange' => 'UpdateTotalLoss(this.value,this.id)']) }}
+                            {{ Form::text('total_loss', number_format($row['loss_value'], 2, ".", ","), ['class' => 'form-control', 'id' => $row['id'], 'onchange' => 'UpdateTotalLoss(this.value, this.id)']) }}
                         </td>
                         <td><!-- Ship Type -->
-                            {{ Form::select('ship_type', $viewShipTypes, $row['cost_code'], ['class' => 'form-control', 'onchange' => 'UpdateShipType(this.value)']) }}
+                            {{ Form::select('ship_type', $viewShipTypes, $row['cost_code'], ['class' => 'form-control', 'id' => $row['id'], 'onchange' => 'UpdateShipType(this.value, this.id)']) }}
                         </td>
                         <td><!-- Payout percentage -->
                             {{ $row['payout_percentage'] }}
@@ -86,8 +86,8 @@
             alert("The input value has changed. The new value is: " + val + " " + id);
         }
 
-        function UpdateShipType(val) {
-            alert("The input value for ship type has changed.  Thew new value is: " + val);
+        function UpdateShipType(val, id) {
+            alert("The input value for ship type has changed.  Thew new value is: " + val + " " + id);
         }
     </script>
 @else
