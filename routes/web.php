@@ -158,8 +158,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/srp/admin/costcodes/add', 'SRP\SRPAdminController@addCostCode');
     Route::post('/srp/admin/costcodes/modify', 'SRP\SRPAdminController@modifyCostCodes');
     Route::get('/srp/admin/display/history', 'SRP\SRPAdminController@displayHistory');
-    Route::get('/srp/admin/update/shiptype/{id}/{value}', 'SRP\AdminController@updateShipType');
-    Route::get('/srp/admin/update/lossvalue/{id}/{value}', 'SRP\AdminController@updateLossValue');
+    Route::get('/srp/admin/update/shiptype/{id}/{value}', 'SRP\SRPAdminController@updateShipType');
+    Route::get('/srp/admin/update/lossvalue/{id}/{value}', 'SRP\SRPAdminController@updateLossValue');
 
     /**
      * Structure Request Controller display pages
