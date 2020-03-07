@@ -19,13 +19,10 @@ class RequireRole
     public function handle($request, Closure $next, $role)
     {
         $ranking = array();
-        $temp = array();
         $roles = AvailableUserRole::all();
 
         foreach($roles as $r) {
-            $temp[$r->role] = $r->rank;
-            
-            array_push($ranking, $temp);
+            $ranking[$r->role] = $r->rank;
         }
 
         dd($ranking);
