@@ -73,13 +73,13 @@ class SRPAdminController extends Controller
                 foreach($shipTypes as $s) {
                     if($r['ship_type'] == $s->code) {
                         $temp['ship_type'] = $s->description;
+                        $temp['cost_code'] = $s->code;
                     }
                 }
                 //Get the fleet type
                 foreach($fleetTypes as $f) {
                     if($r['fleet_type'] == $f->code) {
                         $temp['fleet_type'] = $f->description;
-                        $temp['cost_code'] = $f->code;
                     }
                 }
                 //Calculate the recommended srp amount
