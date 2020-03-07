@@ -83,11 +83,11 @@
 
     <script>
         function UpdateTotalLoss(val,id) {
-            window.location.href("https://services.w4rp.space/srp/admin/update/lossvalue/" + id + "/" + val);
+            window.location.href = "https://services.w4rp.space/srp/admin/update/lossvalue/" + id + "/" + val;
         }
 
         function UpdateShipType(val, id) {
-            window.location.href("https://services.w4rp.space/srp/admin/update/shiptype/" + id + "/" + val);
+            window.location.href = "https://services.w4rp.space/srp/admin/update/shiptype/" + id + "/" + val;
         }
     </script>
 @else
