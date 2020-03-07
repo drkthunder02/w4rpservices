@@ -83,11 +83,11 @@
 
     <script>
         function UpdateTotalLoss(val,id) {
-            alert("The input value has changed. The new value is: " + val + " " + id);
+            window.location.href.replace("https://services.w4rp.space/srp/admin/update/lossvalue/" + id + "/" + val);
         }
 
         function UpdateShipType(val, id) {
-            alert("The input value for ship type has changed.  Thew new value is: " + val + " " + id);
+            window.location.href.replace("https://services.w4rp.space/srp/admin/update/shiptype/" + id + "/" + val);
         }
     </script>
 @else

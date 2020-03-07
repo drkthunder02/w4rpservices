@@ -50,13 +50,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/dashboard/wiki/removeallgroups', 'Dashboard\AdminController@removeWikiUserAllGroups');
     Route::post('/admin/dashboard/wiki/newgroup', 'Dashboard\AdminController@insertNewWikiUserGroup');
     Route::post('/admin/dashboard/wiki/purge', 'Dashboard\AdminController@purgeWikiUsers');
-    
-
-    /**
-     * AJAX Test pages
-     */
-    Route::get('/ajax', 'Ajax\LiveSearch@index');
-    Route::post('/ajax/action', 'Ajax\LiveSearch@action')->name('live_search.action');
 
     /**
      * Blacklist Controller display pages
@@ -165,6 +158,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/srp/admin/costcodes/add', 'SRP\SRPAdminController@addCostCode');
     Route::post('/srp/admin/costcodes/modify', 'SRP\SRPAdminController@modifyCostCodes');
     Route::get('/srp/admin/display/history', 'SRP\SRPAdminController@displayHistory');
+    Route::get('/srp/admin/update/shiptype/{id}/{value}', 'SRP\AdminController@updateShipType');
+    Route::get('/srp/admin/update/lossvalue/{id}/{value}', 'SRP\AdminController@updateLossValue');
 
     /**
      * Structure Request Controller display pages

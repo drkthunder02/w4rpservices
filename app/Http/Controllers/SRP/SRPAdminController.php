@@ -106,22 +106,20 @@ class SRPAdminController extends Controller
                                         ->with('viewShipTypes', $viewShipTypes);
     }
 
-    public function changeSRPRequest(Request $request) {
-        //Validate the request
-        $this->validate($request, [
-            'id' => 'required',
-            'approved' => 'required',
-            'ship_type' => 'required',
-            'total_loss' => 'required',
+    public function updateLossValue($id, $value) {
+        SRPShip::where(['id' => $id])->update([
+            'loss_value' => $value,
         ]);
 
-        $current = SRPShip::where([
-            'id' => $request->id,
-        ])->get();
+        return redirect('/srp/admin/display');
+    }
 
-        if($current->ship_type != $request->ship_type || $current->loss_value != $request->total_loss) {
-            
-        } 
+    public function updateShipType($id, $value) {
+        SRPShip::where(['id' => $id])->update([
+            'ship_type' => $value,
+        ]);
+
+        return redirect('/srp/admin/display');
     }
 
     public function processSRPRequest(Request $request) {
