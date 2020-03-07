@@ -20,9 +20,10 @@
                 <th>Process</th>
             </thead>
             <tbody>
-                {!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
+                
                 @foreach($requests as $row)
                     <tr>
+                        {!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
                         <td><!-- Timestamp -->
                             {{ Form::hidden('id', $row['id'], ['class' => 'form-control']) }}
                             {{ $row['created_at'] }}
@@ -37,7 +38,7 @@
                             <a href="{{ $row['zkillboard'] }}" target="_blank">zKill Link</a>
                         </td>
                         <td><!-- Total Loss -->
-                            {{ Form::text('total_loss', number_format($row['loss_value'], 2, ".", ","), ['class' => 'form-control', 'onchange' => 'UpdateTotalLoss(this.value)']) }}
+                            {{ Form::text('total_loss', number_format($row['loss_value'], 2, ".", ","), ['class' => 'form-control', 'onchange' => 'UpdateTotalLoss(this.value,id.value)']) }}
                         </td>
                         <td><!-- Ship Type -->
                             {{ Form::select('ship_type', $viewShipTypes, $row['cost_code'], ['class' => 'form-control', 'onchange' => 'UpdateShipType(this.value)']) }}
@@ -63,10 +64,9 @@
                         <td><!-- Update the row -->
                             {{ Form::submit('Process', ['class' => 'btn btn-primary']) }}
                         </td>
-                        </tr>
+                        {!! Form::close() !!}
                     </tr>
                 @endforeach
-                {!! Form::close() !!}
             </tbody>
         </table>
     </div>
@@ -82,8 +82,8 @@
     </div>
 
     <script>
-        function UpdateTotalLoss(val) {
-            alert("The input value has changed. The new value is: " + val);
+        function UpdateTotalLoss(val,id) {
+            alert("The input value has changed. The new value is: " + val + " " + id);
         }
 
         function UpdateShipType(val) {
