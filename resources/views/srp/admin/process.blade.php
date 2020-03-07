@@ -82,7 +82,7 @@
     </div>
 
     <script>
-        function myFunction(val) {
+        function UpdateTotalLoss(val) {
             alert("The input value has changed. The new value is: " + val);
         }
     </script>
