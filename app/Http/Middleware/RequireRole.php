@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 
 use App\Models\User\UserRole;
+use App\Models\User\AvailableUserRole;
 
 class RequireRole
 {
@@ -17,8 +18,26 @@ class RequireRole
      */
     public function handle($request, Closure $next, $role)
     {
-        $confirmed = false;
+        $ranking = array();
+        $roles = AvailableUserRole::all();
 
+        foreach($roles as $r) {
+            $temp[$r->role] = $r->rank;
+
+            array_push($temp, $ranking);
+        }
+
+        $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
+
+        if(!isset($check[0]->role)) {
+            abort(403, "You don't have any roles.  You don't belong here.");
+        }
+
+        if($ranking[$check[0]->role] > $ranking[$role]) {
+            abort(403, "You don't have the correct role to be in this area.");
+        }
+
+        /*
         $ranking = [
             'None' => 0,
             'Guest' => 1,
@@ -31,12 +50,13 @@ class RequireRole
         $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
 
         if(!isset($check[0]->role)) {
-            abort(403, "You don't any roles.  You don't belong here.");
+            abort(403, "You don't have any roles.  You don't belong here.");
         }
 
         if($ranking[$check[0]->role] < $ranking[$role]) {
             abort(403, "You don't have the correct role to be in this area.");
         }
+        */
 
         return $next($request);
     }
