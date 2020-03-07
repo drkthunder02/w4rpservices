@@ -40,11 +40,11 @@
                             {{ number_format($row['loss_value'], 2, '.', ',') }}
                         </td>
                         <td><!-- Ship Type -->
-                            {{ Form::select('ship_type', $viewShipTypes, $row['ship_type']) }}
+                            {{ Form::select('ship_type', $viewShipTypes, $row['cost_code']) }}
                             {!! $row['cost_code'] !!}
                         </td>
                         <td><!-- Payout percentage -->
-                            {{ $row['payout'] }}
+                            {{ $row['payout_percentage'] }}
                         </td>
                         <td><!-- Fleet Type -->
                             {{ $row['fleet_type'] }}

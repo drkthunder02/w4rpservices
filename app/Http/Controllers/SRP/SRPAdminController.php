@@ -86,7 +86,7 @@ class SRPAdminController extends Controller
                 foreach($payouts as $p) {
                     if($r['ship_type'] == $p->code) {
                         $temp['actual_srp'] = $r['loss_value'] * ($p->payout / 100.00 );
-                        $temp['payout'] = $p->payout;
+                        $temp['payout_percentage'] = $p->payout;
                         $sum_actual += $temp['actual_srp'];
                     }
                 }
@@ -95,8 +95,6 @@ class SRPAdminController extends Controller
                 array_push($requests, $temp);
             }
         }
-
-        dd($requests);
 
         $sum_actual = number_format($sum_actual, 2, '.', ',');
         $sum_loss = number_format($sum_loss, 2, '.', ',');
