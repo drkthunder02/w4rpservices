@@ -106,18 +106,33 @@ class SRPAdminController extends Controller
                                         ->with('viewShipTypes', $viewShipTypes);
     }
 
+    public function changeSRPRequest(Request $request) {
+        //Validate the request
+        $this->validate($request, [
+            'id' => 'required',
+            'approved' => 'required',
+            'ship_type' => 'required',
+            'total_loss' => 'required',
+        ]);
+
+        $current = SRPShip::where([
+            'id' => $request->id,
+        ])->get();
+
+        if($current->ship_type != $request->ship_type || $current->loss_value != $request->total_loss) {
+            
+        } 
+    }
+
     public function processSRPRequest(Request $request) {
         //Validate the request
         $this->validate($request, [
             'id' => 'required',
             'approved' => 'required',
-            'paid_value' => 'required',
             'ship_type' => 'required',
             'total_loss' => 'required',
         ]);
 
-        //Get the paid value from the form
-        $paidValue = str_replace(',', '', $request->paid_value);
         //Get the total loss value from the form
         $totalLoss = str_replace(',', '', $request->total_loss);
 
@@ -125,7 +140,6 @@ class SRPAdminController extends Controller
         if($request->notes != null) {
             $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
-                'paid_value' => $paidValue,
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
                 'notes' => $request->notes,
@@ -135,7 +149,6 @@ class SRPAdminController extends Controller
         } else {
             $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
-                'paid_value' => $paidValue,
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
                 'ship_type' => $request->ship_type,

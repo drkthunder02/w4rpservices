@@ -35,4 +35,13 @@
     </div>
 {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
 </div>
+<br>
+<div class="card">
+    <div class="card-header">
+        <h2>Notes:</h2>
+    </div>
+    <div class="card-body">
+        1.)  Capitals recieve a ship hull replacement versus an ISK replacement.<br>
+    </div>
+</div>
 @endsection

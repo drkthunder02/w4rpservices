@@ -20,9 +20,9 @@
                 <th>Process</th>
             </thead>
             <tbody>
+                {!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
                 @foreach($requests as $row)
                     <tr>
-                        {!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
                         <td><!-- Timestamp -->
                             {{ Form::hidden('id', $row['id'], ['class' => 'form-control']) }}
                             {{ $row['created_at'] }}
@@ -37,7 +37,7 @@
                             <a href="{{ $row['zkillboard'] }}" target="_blank">zKill Link</a>
                         </td>
                         <td><!-- Total Loss -->
-                            {{ Form::text('total_loss', number_format($row['loss_value'], 2, ".", ","), ['class' => 'form-control']) }}
+                            {{ Form::text('total_loss', number_format($row['loss_value'], 2, ".", ","), ['class' => 'form-control', 'onchange' => 'UpdateTotalLoss(this.Value)']) }}
                         </td>
                         <td><!-- Ship Type -->
                             {{ Form::select('ship_type', $viewShipTypes, $row['cost_code']) }}
@@ -49,7 +49,7 @@
                             {{ $row['fleet_type'] }}
                         </td>
                         <td><!-- Actual SRP -->
-                            {{ Form::text('paid_value', number_format($row['actual_srp'], 2, ".", ","), ['class' => 'form-control']) }}
+                            {{ number_format($row['actual_srp', 2, ".", ","]) }}
                         </td>
                         <td><!-- Notes -->
                             {{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 2, 'cols' => 15, 'style' => 'resize:none']) }}
@@ -64,9 +64,9 @@
                             {{ Form::submit('Process', ['class' => 'btn btn-primary']) }}
                         </td>
                         </tr>
-                        {!! Form::close() !!}
                     </tr>
                 @endforeach
+                {!! Form::close() !!}
             </tbody>
         </table>
     </div>
@@ -80,6 +80,12 @@
             Total Actual Value: {{ $sum_actual }}<br>
         </div>
     </div>
+
+    <script>
+        function myFunction(val) {
+            alert("The input value has changed. The new value is: " + val);
+        }
+    </script>
 @else
 <div class="container">
     <div class="row justify-content-center">
