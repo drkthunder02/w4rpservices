@@ -23,44 +23,45 @@
                 @foreach($requests as $row)
                     <tr>
                         {!! Form::open(['action' => 'SRP\SRPAdminController@processSRPRequest', 'method' => 'POST']) !!}
-                        <td>
+                        <td><!-- Timestamp -->
                             {{ Form::hidden('id', $row['id'], ['class' => 'form-control']) }}
                             {{ $row['created_at'] }}
                         </td>
-                        <td>
+                        <td><!-- Pilot -->
                             {{ $row['character_name'] }}
                         </td>
-                        <td>
+                        <td><!-- FC -->
                             {{ $row['fleet_commander_name'] }}
                         </td>
-                        <td>
+                        <td><!-- zkillboard link -->
                             <a href="{{ $row['zkillboard'] }}" target="_blank">zKill Link</a>
                         </td>
-                        <td>
+                        <td><!-- Total Loss -->
                             {{ number_format($row['loss_value'], 2, '.', ',') }}
                         </td>
-                        <td>
+                        <td><!-- Ship Type -->
                             {{ Form::select('ship_type', $viewShipTypes, $row['ship_type']) }}
+                            {!! $row['ship_type'] !!}
                         </td>
-                        <td>
+                        <td><!-- Payout percentage -->
                             {{ $row['cost_code'] }}
                         </td>
-                        <td>
+                        <td><!-- Fleet Type -->
                             {{ $row['fleet_type'] }}
                         </td>
-                        <td>
+                        <td><!-- Actual SRP -->
                             {{ Form::text('paid_value', number_format($row['actual_srp'], 2, ".", ","), ['class' => 'form-control']) }}
                         </td>
-                        <td>
+                        <td><!-- Notes -->
                             {{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 2, 'cols' => 15, 'style' => 'resize:none']) }}
                         </td>
-                        <td>
+                        <td><!-- Approved -->
                             {{ Form::radio('approved', 'Approved', false, ['class' => 'form-control']) }}
                         </td>
-                        <td>
+                        <td><!-- Denied -->
                             {{ Form::radio('approved', 'Denied', false, ['class' => 'form-control']) }}
                         </td>
-                        <td>
+                        <td><!-- Update the row -->
                             {{ Form::submit('Process', ['class' => 'btn btn-primary']) }}
                         </td>
                         </tr>
