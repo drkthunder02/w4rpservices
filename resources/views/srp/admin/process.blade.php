@@ -41,7 +41,6 @@
                         </td>
                         <td><!-- Ship Type -->
                             {{ Form::select('ship_type', $viewShipTypes, $row['cost_code']) }}
-                            {!! $row['cost_code'] !!}
                         </td>
                         <td><!-- Payout percentage -->
                             {{ $row['payout_percentage'] }}
