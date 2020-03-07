@@ -95,6 +95,8 @@ class SRPAdminController extends Controller
             }
         }
 
+        dd($requests);
+
         $sum_actual = number_format($sum_actual, 2, '.', ',');
         $sum_loss = number_format($sum_loss, 2, '.', ',');
 
