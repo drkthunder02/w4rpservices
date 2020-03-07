@@ -111,6 +111,7 @@ class SRPController extends Controller
         $fcId = User::where(['name' => $request->FC])->get(['character_id']);
         
         //Take the loss value and remove ' ISK' from it.  Convert the string to a number
+        //May need to work on some locale stuff here but will think about it first.
         $lossValue = str_replace(' ISK', '', $request->LossValue);
         $lossValue = str_replace(',', '', $lossValue);
         $lossValue = floatval($lossValue);

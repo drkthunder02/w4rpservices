@@ -113,10 +113,14 @@ class SRPAdminController extends Controller
             'approved' => 'required',
             'paid_value' => 'required',
             'ship_type' => 'required',
+            'total_loss' => 'required',
         ]);
 
         //Get the paid value from the form
         $paidValue = str_replace(',', '', $request->paid_value);
+        //Get the total loss value from the form
+        $totalLoss = str_replace(',', '', $request->total_loss);
+
         //If the notes are not null update like this.
         if($request->notes != null) {
             $srp = SRPShip::where(['id' => $request->id])->update([
@@ -126,6 +130,7 @@ class SRPAdminController extends Controller
                 'paid_by_name' => auth()->user()->name,
                 'notes' => $request->notes,
                 'ship_type' => $request->ship_type,
+                'loos_value' => $totalLoss,
             ]);
         } else {
             $srp = SRPShip::where(['id' => $request->id])->update([
@@ -134,6 +139,7 @@ class SRPAdminController extends Controller
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
                 'ship_type' => $request->ship_type,
+                'loss_value' => $request->total_loss,
             ]);
         }
 

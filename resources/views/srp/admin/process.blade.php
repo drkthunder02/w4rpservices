@@ -37,7 +37,7 @@
                             <a href="{{ $row['zkillboard'] }}" target="_blank">zKill Link</a>
                         </td>
                         <td><!-- Total Loss -->
-                            {{ number_format($row['loss_value'], 2, '.', ',') }}
+                            {{ Form::text('total_loss', number_format($row['loss_value'], 2, ".", ","), ['class' => 'form-control']) }}
                         </td>
                         <td><!-- Ship Type -->
                             {{ Form::select('ship_type', $viewShipTypes, $row['cost_code']) }}
