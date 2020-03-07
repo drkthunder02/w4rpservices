@@ -40,7 +40,7 @@
                             {{ Form::text('total_loss', number_format($row['loss_value'], 2, ".", ","), ['class' => 'form-control', 'onchange' => 'UpdateTotalLoss(this.value)']) }}
                         </td>
                         <td><!-- Ship Type -->
-                            {{ Form::select('ship_type', $viewShipTypes, $row['cost_code']) }}
+                            {{ Form::select('ship_type', $viewShipTypes, $row['cost_code'], ['class' => 'form-control', 'onchange' => 'UpdateShipType(this.value)']) }}
                         </td>
                         <td><!-- Payout percentage -->
                             {{ $row['payout_percentage'] }}
@@ -84,6 +84,10 @@
     <script>
         function UpdateTotalLoss(val) {
             alert("The input value has changed. The new value is: " + val);
+        }
+
+        function UpdateShipType(val) {
+            alert("The input value for ship type has changed.  Thew new value is: " + val);
         }
     </script>
 @else
