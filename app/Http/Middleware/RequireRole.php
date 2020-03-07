@@ -24,11 +24,11 @@ class RequireRole
 
         foreach($roles as $r) {
             $temp[$r->role] = $r->rank;
-            dd($temp);
+            
             array_push($temp, $ranking);
         }
 
-        dd($roles);
+        dd($ranking);
 
         $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
 
