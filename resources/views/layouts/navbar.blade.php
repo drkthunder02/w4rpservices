@@ -114,6 +114,8 @@
                     <a class="dropdown-item" href="/moons/admin/display/request">Moon Request</a>
                 </div>
             </li>
+            @endif
+            @if(auth()->user()->hasPermission('srp.admin'))
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SRP Admin</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
@@ -124,7 +126,7 @@
                 </div>
             </li>
             @endif
-            @if(auth()->user()->hasPermission('srp.admin'))
+            @if(auth()->user()->hasPermission('contract.admin'))
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contract Admin</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
