@@ -35,27 +35,6 @@ class RequireRole
             abort(403, "You don't have the correct role to be in this area.");
         }
 
-        /*
-        $ranking = [
-            'None' => 0,
-            'Guest' => 1,
-            'Renter' => 2,
-            'User' => 3,
-            'Admin' => 4,
-            'SuperUser' => 5,
-        ];
-
-        $check = UserRole::where('character_id', auth()->user()->character_id)->get(['role']);
-
-        if(!isset($check[0]->role)) {
-            abort(403, "You don't have any roles.  You don't belong here.");
-        }
-
-        if($ranking[$check[0]->role] < $ranking[$role]) {
-            abort(403, "You don't have the correct role to be in this area.");
-        }
-        */
-
         return $next($request);
     }
 }
