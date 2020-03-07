@@ -41,10 +41,10 @@
                         </td>
                         <td><!-- Ship Type -->
                             {{ Form::select('ship_type', $viewShipTypes, $row['ship_type']) }}
-                            {!! $row['ship_type'] !!}
+                            {!! $row['cost_code'] !!}
                         </td>
                         <td><!-- Payout percentage -->
-                            {{ $row['cost_code'] }}
+                            {{ $row['payout'] }}
                         </td>
                         <td><!-- Fleet Type -->
                             {{ $row['fleet_type'] }}
