@@ -49,7 +49,7 @@
                             {{ $row['fleet_type'] }}
                         </td>
                         <td><!-- Actual SRP -->
-                            {{ number_format($row['actual_srp', 2, ".", ","]) }}
+                            {{ number_format($row['actual_srp'], 2, ".", ",") }}
                         </td>
                         <td><!-- Notes -->
                             {{ Form::textarea('notes', null, ['class' => 'form-control', 'id' => 'notes', 'rows' => 2, 'cols' => 15, 'style' => 'resize:none']) }}
