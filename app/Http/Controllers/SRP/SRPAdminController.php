@@ -136,7 +136,7 @@ class SRPAdminController extends Controller
 
         //Get the total loss value from the form and convert it to the right format
         $paidLoss = str_replace(',', '', $request->paid_value);
-        $paidLoss = floatval($totalLoss);
+        $paidLoss = floatval($paidLoss);
 
         //If the notes are not null update like this.
         if($request->notes != null) {
