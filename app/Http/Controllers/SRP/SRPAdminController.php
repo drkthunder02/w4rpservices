@@ -131,12 +131,12 @@ class SRPAdminController extends Controller
         $this->validate($request, [
             'id' => 'required',
             'approved' => 'required',
-            'total_loss' => 'required',
+            'paid_value' => 'required',
         ]);
 
         //Get the total loss value from the form and convert it to the right format
-        $totalLoss = str_replace(',', '', $request->total_loss);
-        $totalLoss = floatval($totalLoss);
+        $paidLoss = str_replace(',', '', $request->paid_value);
+        $paidLoss = floatval($totalLoss);
 
         //If the notes are not null update like this.
         if($request->notes != null) {
@@ -145,14 +145,14 @@ class SRPAdminController extends Controller
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
                 'notes' => $request->notes,
-                'paid_value' => $totalLoss,
+                'paid_value' => $paidLoss,
             ]);
         } else {
             $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
-                'paid_value' => $totalLoss,
+                'paid_value' => $paidLoss,
             ]);
         }
 
