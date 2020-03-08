@@ -152,7 +152,7 @@ class SRPAdminController extends Controller
                 'approved' => $request->approved,
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
-                'loss_value' => $request->total_loss,
+                'loss_value' => $totalLoss,
             ]);
         }
 
