@@ -107,8 +107,12 @@ class SRPAdminController extends Controller
     }
 
     public function updateLossValue($id, $value) {
+        //Convert the string into a decimal style number to be stored correctly
+        $lossValue = str_replace(',', '', $value);
+        $lossValue = floatval($lossValue);
+        
         SRPShip::where(['id' => $id])->update([
-            'loss_value' => $value,
+            'loss_value' => $lossValue,
         ]);
 
         return redirect('/srp/admin/display');
@@ -127,12 +131,12 @@ class SRPAdminController extends Controller
         $this->validate($request, [
             'id' => 'required',
             'approved' => 'required',
-            'ship_type' => 'required',
             'total_loss' => 'required',
         ]);
 
-        //Get the total loss value from the form
+        //Get the total loss value from the form and convert it to the right format
         $totalLoss = str_replace(',', '', $request->total_loss);
+        $totalLoss = floatval($totalLoss);
 
         //If the notes are not null update like this.
         if($request->notes != null) {
@@ -141,7 +145,6 @@ class SRPAdminController extends Controller
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
                 'notes' => $request->notes,
-                'ship_type' => $request->ship_type,
                 'loos_value' => $totalLoss,
             ]);
         } else {
@@ -149,7 +152,6 @@ class SRPAdminController extends Controller
                 'approved' => $request->approved,
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
-                'ship_type' => $request->ship_type,
                 'loss_value' => $request->total_loss,
             ]);
         }
