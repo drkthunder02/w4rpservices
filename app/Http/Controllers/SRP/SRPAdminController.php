@@ -145,14 +145,14 @@ class SRPAdminController extends Controller
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
                 'notes' => $request->notes,
-                'loos_value' => $totalLoss,
+                'paid_value' => $totalLoss,
             ]);
         } else {
             $srp = SRPShip::where(['id' => $request->id])->update([
                 'approved' => $request->approved,
                 'paid_by_id' => auth()->user()->character_id,
                 'paid_by_name' => auth()->user()->name,
-                'loss_value' => $totalLoss,
+                'paid_value' => $totalLoss,
             ]);
         }
 
