@@ -93,7 +93,7 @@ class MoonsAdminController extends Controller
 
             //Send an eve mail to the requestor stating they can set a moon up.
             //Setup the mail body
-            $body = 'The moon request for ' . $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon . ' has changed status.<br>';
+            $body = 'The moon request for ' . $request->System . ' - ' . $request->Planet . ' - ' . $request->Moon . ' has changed status.<br>';
             $body .= 'The request has been ' . $request->status . '.<br>';
             $body .= 'Please contact the FC Team should it be necessary to arrange a fleet to cover the structure drop.<br>';
             $body .= 'Sincerely,<br>';
