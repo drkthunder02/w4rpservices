@@ -84,7 +84,7 @@ class AdminController extends Controller
             'parameter' => 'required',
         ]);
 
-        $usersArr = User::where('name', 'like', $request->parameter)->paginate(50);
+        $usersArr = User::where('name', 'like', $request->parameter . "%")->paginate(50);
 
         foreach($usersArr as $user) {
             $user->role = $user->getRole();
