@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Library\Taxes\TaxesHelper;
 use App\Library\Wiki\WikiHelper;
 use App\Library\Lookups\LookupHelper;
+use App\Library\SRP\SRPHelper;
 
 //Models
 use App\Models\User\User;
@@ -143,6 +144,7 @@ class AdminController extends Controller
         /** Taxes Pane */
         //Declare classes needed for displaying items on the page
         $tHelper = new TaxesHelper();
+        $srpHelper = new SRPHelper();
         //Get the dates for the tab panes
         $dates = $tHelper->GetTimeFrameInMonths($months);
         //Get the data for the Taxes Pane
@@ -150,13 +152,13 @@ class AdminController extends Controller
             //Get the srp actual pay out for the date range
             $srpActual[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetAllianceSRPActual($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($srpHelper->GetAllianceSRPActual($date['start'], $date['end']), 2, ".", ","),
             ];
 
             //Get the srp loss value for the date range
             $srpLoss[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetAllianceSRPLoss($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($srpHelper->GetAllianceSRPLoss($date['start'], $date['end']), 2, ".", ","),
             ];
 
             //Get the pi taxes for the date range

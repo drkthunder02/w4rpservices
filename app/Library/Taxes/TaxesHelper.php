@@ -33,28 +33,6 @@ class TaxesHelper {
         $this->end = $en;
     }
 
-    public function GetAllianceSRPActual($start, $end) {
-        $actual = 0.00;
-
-        $actual = SRPShip::where([
-            'approved' => 'Approved',
-        ])->whereBetween('created_at', [$start, $end])
-          ->sum('paid_value');
-
-        return $actual;
-    }
-
-    public function GetAllianceSRPLoss($start, $end) {
-        $loss = 0.00;
-
-        $loss = SRPShip::where([
-            'approved' => 'Approved',
-        ])->whereBetween('created_at', [$start, $end])
-          ->sum('loss_value');
-
-        return $loss;
-    }
-
     public function GetAllianceMarketGross($start, $end) {
         $revenue = 0.00;
 
