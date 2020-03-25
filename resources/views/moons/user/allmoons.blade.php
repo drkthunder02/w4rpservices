@@ -62,8 +62,8 @@
                             <td>{{ $moon->FirstQuantity }}</td>
                         @endif
                         @if(in_array($moon->SecondOre, $gasGoo))
-                            <td class="table-light">{{ $moon->SecondOre }}</td>
-                            <td class="table-light">{{ $moon->SecondQuantity }}</td>
+                            <td class="table-secondary">{{ $moon->SecondOre }}</td>
+                            <td class="table-secondary">{{ $moon->SecondQuantity }}</td>
                         @elseif(in_array($moon->SecondOre, $r8Goo))
                             <td class="table-primary">{{ $moon->SecondOre }}</td>
                             <td class="table-primary">{{ $moon->SecondQuantity }}</td>
@@ -81,8 +81,8 @@
                             <td>{{ $moon->SecondQuantity }}</td>
                         @endif
                         @if(in_array($moon->ThirdOre, $gasGoo))
-                            <td class="table-light">{{ $moon->ThirdOre }}</td>
-                            <td class="table-light">{{ $moon->ThirdQuantity }}</td>
+                            <td class="table-secondary">{{ $moon->ThirdOre }}</td>
+                            <td class="table-secondary">{{ $moon->ThirdQuantity }}</td>
                         @elseif(in_array($moon->ThirdOre, $r8Goo))
                             <td class="table-primary">{{ $moon->ThirdOre }}</td>
                             <td class="table-primary">{{ $moon->ThirdQuantity }}</td>
@@ -100,8 +100,8 @@
                             <td>{{ $moon->ThirdQuantity }}</td>
                         @endif
                         @if(in_array($moon->FourthOre, $gasGoo))
-                            <td class="table-light">{{ $moon->FourthOre }}</td>
-                            <td class="table-light">{{ $moon->FourthQuantity }}</td>
+                            <td class="table-secondary">{{ $moon->FourthOre }}</td>
+                            <td class="table-secondary">{{ $moon->FourthQuantity }}</td>
                         @elseif(in_array($moon->FourthOre, $r8Goo))
                             <td class="table-primary">{{ $moon->FourthOre }}</td>
                             <td class="table-primary">{{ $moon->FourthQuantity }}</td>
@@ -139,7 +139,7 @@
                 <div class="card-body">
                     <table class="table table-striped">
                         <tbody>
-                            <tr class="table-light">
+                            <tr class="table-secondary">
                                 <td>Gas Ore</td>
                             </tr>
                             <tr class="table-primary">
