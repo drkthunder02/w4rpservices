@@ -42,14 +42,70 @@
                     @endif
                         <td>{{ $moon->System . " - " . $moon->Planet . " - " . $moon->Moon }}</td>
                         <td>{{ $moon->Corporation }}</td>
-                        <td class="table-warning">{{ $moon->FirstOre }}</td>
-                        <td>{{ $moon->FirstQuantity }}</td>
-                        <td>{{ $moon->SecondOre }}</td>
-                        <td>{{ $moon->SecondQuantity }}</td>
-                        <td>{{ $moon->ThirdOre }}</td>
-                        <td>{{ $moon->ThirdQuantity }}</td>
-                        <td>{{ $moon->FourthOre }}</td>
-                        <td>{{ $moon->FourthQuantity }}</td>
+                        @if(in_array($moon->FirstOre, $gasGoo))
+                            <td class="table-light">{{ $moon->FirstOre }}</td>
+                            <td class="table-light">{{ $moon->FirstQuantity }}</td>
+                        @elseif(in_array($moon->FirstOre, $r8Goo))
+                            <td class="table-primary">{{ $moon->FirstOre }}</td>
+                            <td class="table-primary">{{ $moon->FirstQuantity }}</td>
+                        @elseif(in_array($moon->FirstOre, $r16Goo))
+                            <td class="table-success">{{ $moon->FirstOre }}</td>
+                            <td class="table-success">{{ $moon->FirstQuantity }}</td>
+                        @elseif(in_array($moon->FirstOre, $r32Goo))
+                            <td class="table-warning">{{ $moon->FirstOre }}</td>
+                            <td class="table-warning">{{ $moon->FirstQuantity }}</td>
+                        @elseif(in_array($moon->FirstOre, $r64Goo))
+                            <td class="table-danger">{{ $moon->FirstOre }}</td>
+                            <td class="table-danger">{{ $moon->FirstQuantity }}</td>
+                        @endif
+                        @if(in_array($moon->SecondOre, $gasGoo))
+                            <td class="table-light">{{ $moon->SecondOre }}</td>
+                            <td class="table-light">{{ $moon->SecondQuantity }}</td>
+                        @elseif(in_array($moon->SecondOre, $r8Goo))
+                            <td class="table-primary">{{ $moon->SecondOre }}</td>
+                            <td class="table-primary">{{ $moon->SecondQuantity }}</td>
+                        @elseif(in_array($moon->SecondOre, $r16Goo))
+                            <td class="table-success">{{ $moon->SecondOre }}</td>
+                            <td class="table-success">{{ $moon->SecondQuantity }}</td>
+                        @elseif(in_array($moon->SecondOre, $r32Goo))
+                            <td class="table-warning">{{ $moon->SecondOre }}</td>
+                            <td class="table-warning">{{ $moon->SecondQuantity }}</td>
+                        @elseif(in_array($moon->SecondOre, $r64Goo))
+                            <td class="table-danger">{{ $moon->SecondOre }}</td>
+                            <td class="table-danger">{{ $moon->SecondQuantity }}</td>
+                        @endif
+                        @if(in_array($moon->ThirdOre, $gasGoo))
+                            <td class="table-light">{{ $moon->ThirdOre }}</td>
+                            <td class="table-light">{{ $moon->ThirdQuantity }}</td>
+                        @elseif(in_array($moon->ThirdOre, $r8Goo))
+                            <td class="table-primary">{{ $moon->ThirdOre }}</td>
+                            <td class="table-primary">{{ $moon->ThirdQuantity }}</td>
+                        @elseif(in_array($moon->ThirdOre, $r16Goo))
+                            <td class="table-success">{{ $moon->ThirdOre }}</td>
+                            <td class="table-success">{{ $moon->ThirdQuantity }}</td>
+                        @elseif(in_array($moon->ThirdOre, $r32Goo))
+                            <td class="table-warning">{{ $moon->ThirdOre }}</td>
+                            <td class="table-warning">{{ $moon->ThirdQuantity }}</td>
+                        @elseif(in_array($moon->ThirdOre, $r64Goo))
+                            <td class="table-danger">{{ $moon->ThirdOre }}</td>
+                            <td class="table-danger">{{ $moon->ThirdQuantity }}</td>
+                        @endif
+                        @if(in_array($moon->FourthOre, $gasGoo))
+                            <td class="table-light">{{ $moon->FourthOre }}</td>
+                            <td class="table-light">{{ $moon->FourthQuantity }}</td>
+                        @elseif(in_array($moon->FourthOre, $r8Goo))
+                            <td class="table-primary">{{ $moon->FourthOre }}</td>
+                            <td class="table-primary">{{ $moon->FourthQuantity }}</td>
+                        @elseif(in_array($moon->FourthOre, $r16Goo))
+                            <td class="table-success">{{ $moon->FourthOre }}</td>
+                            <td class="table-success">{{ $moon->FourthQuantity }}</td>
+                        @elseif(in_array($moon->FourthOre, $r32Goo))
+                            <td class="table-warning">{{ $moon->FourthOre }}</td>
+                            <td class="table-warning">{{ $moon->FourthQuantity }}</td>
+                        @elseif(in_array($moon->FourthOre, $r64Goo))
+                            <td class="table-danger">{{ $moon->FourthOre }}</td>
+                            <td class="table-danger">{{ $moon->FourthQuantity }}</td>
+                        @endif
                         <td>{{ $moon->Availability }}</td>
                     </tr>
                 @endif
