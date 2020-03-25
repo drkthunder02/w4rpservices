@@ -116,4 +116,43 @@
         @endforeach
     </div>
 </div>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Legend
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr class="table-light">
+                                <td>Gas Ore</td>
+                            </tr>
+                            <tr class="table-primary">
+                                <td>R8 Ore</td>
+                            </tr>
+                            <tr class="table-success">
+                                <td>R16 Ore</td>
+                            </tr>
+                            <tr class="table-warning">
+                                <td>R32 Ore</td>
+                            </tr>
+                            <tr class="table-danger">
+                                <td>R64 Ore</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+    </div>
+</div>
+
 @endsection
