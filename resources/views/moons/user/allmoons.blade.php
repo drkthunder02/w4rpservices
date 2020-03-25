@@ -57,6 +57,9 @@
                         @elseif(in_array($moon->FirstOre, $r64Goo))
                             <td class="table-danger">{{ $moon->FirstOre }}</td>
                             <td class="table-danger">{{ $moon->FirstQuantity }}</td>
+                        @else
+                            <td>{{ $moon->FirstOre }}</td>
+                            <td>{{ $moon->FirstQuantity }}</td>
                         @endif
                         @if(in_array($moon->SecondOre, $gasGoo))
                             <td class="table-light">{{ $moon->SecondOre }}</td>
@@ -73,6 +76,9 @@
                         @elseif(in_array($moon->SecondOre, $r64Goo))
                             <td class="table-danger">{{ $moon->SecondOre }}</td>
                             <td class="table-danger">{{ $moon->SecondQuantity }}</td>
+                        @else
+                            <td>{{ $moon->SecondOre }}</td>
+                            <td>{{ $moon->SecondQuantity }}</td>
                         @endif
                         @if(in_array($moon->ThirdOre, $gasGoo))
                             <td class="table-light">{{ $moon->ThirdOre }}</td>
@@ -89,6 +95,9 @@
                         @elseif(in_array($moon->ThirdOre, $r64Goo))
                             <td class="table-danger">{{ $moon->ThirdOre }}</td>
                             <td class="table-danger">{{ $moon->ThirdQuantity }}</td>
+                        @else
+                            <td>{{ $moon->ThirdOre }}</td>
+                            <td>{{ $moon->ThirdQuantity }}</td>
                         @endif
                         @if(in_array($moon->FourthOre, $gasGoo))
                             <td class="table-light">{{ $moon->FourthOre }}</td>
@@ -105,6 +114,9 @@
                         @elseif(in_array($moon->FourthOre, $r64Goo))
                             <td class="table-danger">{{ $moon->FourthOre }}</td>
                             <td class="table-danger">{{ $moon->FourthQuantity }}</td>
+                        @else
+                            <td>{{ $moon->FourthOre }}</td>
+                            <td>{{ $moon->FourthQuantity }}</td>
                         @endif
                         <td>{{ $moon->Availability }}</td>
                     </tr>
