@@ -18,7 +18,7 @@
     <div class="tab-content">
         @foreach($systems as $system)
             <div id="W4RP-{{ $system }}" class="tab-pane fade">
-                <table class="table table-striped table-bordered">
+                <table class="table table-bordered">
                     <thead>
                         <th>Location</th>
                         <th>Corporation</th>
@@ -43,8 +43,8 @@
                         <td>{{ $moon->System . " - " . $moon->Planet . " - " . $moon->Moon }}</td>
                         <td>{{ $moon->Corporation }}</td>
                         @if(in_array($moon->FirstOre, $gasGoo))
-                            <td class="table-light">{{ $moon->FirstOre }}</td>
-                            <td class="table-light">{{ $moon->FirstQuantity }}</td>
+                            <td class="table-secondary">{{ $moon->FirstOre }}</td>
+                            <td class="table-secondary">{{ $moon->FirstQuantity }}</td>
                         @elseif(in_array($moon->FirstOre, $r8Goo))
                             <td class="table-primary">{{ $moon->FirstOre }}</td>
                             <td class="table-primary">{{ $moon->FirstQuantity }}</td>
