@@ -44,8 +44,48 @@ class MoonsController extends Controller
         //Get all of the alliance moons from the database
         $moons = AllianceMoon::all();
 
+        $gasGoo = [
+            'Zeolites',
+            'Sylvite',
+            'Bitumens',
+            'Coesite',
+        ];
+
+        $r8Goo = [
+            'Cobaltite',
+            'Euxenite',
+            'Titanite',
+            'Scheelite',
+        ];
+
+        $r16Goo = [
+            'Otavite',
+            'Sperrylite',
+            'Vanadinite',
+            'Chromite',
+        ];
+
+        $r32Goo = [
+            'Carnotite',
+            'Zircon',
+            'Pollucite',
+            'Cinnabar',
+        ];
+
+        $r64Goo = [
+            'Xenotime',
+            'Monazite',
+            'Loparite',
+            'Ytterbite',
+        ];
+
         return view('moons.user.allmoons')->with('systems', $systems)
-                                          ->with('moons', $moons);
+                                          ->with('moons', $moons)
+                                          ->with('gasGoo', $gasGoo)
+                                          ->with('r8Goo', $r8Goo)
+                                          ->with('r16Goo', $r16Goo)
+                                          ->with('r32Goo', $r32Goo)
+                                          ->with('r64Goo', $r64Goo);
     }
 
     /**

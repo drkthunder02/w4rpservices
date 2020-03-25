@@ -22,7 +22,6 @@
                     <thead>
                         <th>Location</th>
                         <th>Corporation</th>
-                        <th>Structure Name</th>
                         <th>First Ore</th>
                         <th>First Quantity</th>
                         <th>Second Ore</th>
@@ -43,8 +42,7 @@
                     @endif
                         <td>{{ $moon->System . " - " . $moon->Planet . " - " . $moon->Moon }}</td>
                         <td>{{ $moon->Corporation }}</td>
-                        <td>{{ $moon->StructureName }}</td>
-                        <td>{{ $moon->FirstOre }}</td>
+                        <td class="table-warning">{{ $moon->FirstOre }}</td>
                         <td>{{ $moon->FirstQuantity }}</td>
                         <td>{{ $moon->SecondOre }}</td>
                         <td>{{ $moon->SecondQuantity }}</td>
