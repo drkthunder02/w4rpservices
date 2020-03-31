@@ -31,9 +31,9 @@ class MoonCalc {
     }
 
     public function SpatialMoonsTotalWorth($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
-        //Total pull size is 14,385,600 m3
-        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+        
+        //Get the total moon pull in m3
+        $totalPull = $this->CalculateTotalMoonPull();
 
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
@@ -52,9 +52,8 @@ class MoonCalc {
     }
 
     public function SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
-        //Total pull size is 14,385,600 m3
-        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+        //Get the total moon pull in m3
+        $totalPull = $this->CalculateTotalMoonPull();
 
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
@@ -73,9 +72,8 @@ class MoonCalc {
     }
 
     public function SpatialMoonsOnlyGooMailer($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
-        //Total pull size is 14,385,600 m3
-        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+        //Get the total moon pull in m3
+        $totalPull = $this->CalculateTotalMoonPull();
 
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
@@ -98,9 +96,8 @@ class MoonCalc {
     }
 
     public function SpatialMoonsOnlyGoo($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
-        //Total pull size is 14,385,600 m3
-        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+        //Get the total moon pull in m3
+        $totalPull = $this->CalculateTotalMoonPull();
 
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
@@ -127,9 +124,8 @@ class MoonCalc {
     }
 
     public function SpatialMoons($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
-        //Total pull size is 14,385,600 m3
-        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+        //Get the total moon pull in m3
+        $totalPull = $this->CalculateTotalMoonPull();
 
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
@@ -374,6 +370,14 @@ class MoonCalc {
 
         //Return the calculated data
         return $units;
+    }
+
+    private function CalculateTotalMoonPull() {
+        //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
+        //Total pull size is 14,385,600 m3
+        $totalPull = 5.55 * (3600.00 * 24.00 *30.00);
+
+        return $totalPull;
     }
 
     private function CalcPrice($ore, $percentage) {
