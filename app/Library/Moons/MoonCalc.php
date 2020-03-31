@@ -39,48 +39,10 @@ class MoonCalc {
         $config = DB::table('Config')->get();
 
         //Convert the quantities into numbers we want to utilize
-        if($firstQuan >= 1.00) {
-            $firstPerc = $this->ConvertToPercentage($firstQuan);
-        } else {
-            $firstPerc = $firstQuan;
-        }
-        if($secondQuan >= 1.00) {
-            $secondPerc = $this->ConvertToPercentage($secondQuan);
-        } else {
-            $secondPerc = $secondQuan;
-        }
-        if($thirdQuan >= 1.00) {
-            $thirdPerc = $this->ConvertToPercentage($thirdQuan);
-        } else {
-            $thirdPerc = $thirdQuan;
-        }
-        if($fourthQuan >= 1.00) {
-            $fourthPerc = $this->ConvertToPercentage($fourthQuan);
-        } else {
-            $fourthPerc = $fourthQuan;
-        }
+        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
         //Calculate the prices from the ores
-        if($firstOre != "None") {
-            $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
-        } else {
-            $firstTotal = 0.00;
-        }
-        if($secondOre != "None") {
-            $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
-        } else {
-            $secondTotal = 0.00;
-        }
-        if($thirdOre != "None") {
-            $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
-        } else {
-            $thirdTotal = 0.00;
-        }
-        if($fourthOre != "None") {
-            $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
-        } else {
-            $fourthTotal = 0.00;
-        }
+        $this->CalculateTotalPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
 
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
@@ -97,65 +59,11 @@ class MoonCalc {
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
         
-        //Convert the percentages into values we want to use to standardize the process
-        if($firstQuan >= 1.00) {
-            $firstPerc = $this->ConvertToPercentage($firstQuan);
-        } else {
-            $firstPerc = $firstQuan;
-        }
-        if($secondQuan >= 1.00) {
-            $secondPerc = $this->ConvertToPercentage($secondQuan);
-        } else {
-            $secondPerc = $secondQuan;
-        }
-        if($thirdQuan >= 1.00) {
-            $thirdPerc = $this->ConvertToPercentage($thirdQuan);
-        } else {
-            $thirdPerc = $thirdQuan;
-        }
-        if($fourthQuan >= 1.00) {
-            $fourthPerc = $this->ConvertToPercentage($fourthQuan);
-        } else {
-            $fourthPerc = $fourthQuan;
-        }
+        //Convert the quantities into numbers we want to utilize
+        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
         //Calculate the price of each ore
-        if($firstOre != "None") {
-            if($this->IsRMoonGoo($firstOre)) {
-                $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
-            } else {
-                $firstTotal = 0.00;
-            }
-        } else {
-            $firstTotal = 0.00;
-        }
-        if($secondOre != "None") {
-            if($this->IsRMoonGoo($secondOre)) {
-                $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
-            } else {
-                $secondTotal = 0.00;
-            }
-        } else {
-            $secondTotal = 0.00;
-        }
-        if($thirdOre != "None") {
-            if($this->IsRMoonGoo($thirdOre)) {
-                $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
-            } else {
-                $thirdTotal = 0.00;
-            }
-        } else {
-            $thirdTotal = 0.00;
-        }
-        if($fourthOre != "None") {
-            if($this->IsRMoonGoo($fourthOre)) {
-                $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
-            } else {
-                $fourthTotal = 0.00;
-            }
-        } else {
-            $fourthTotal = 0.00;
-        }
+        $this->CalculateOnlyGooPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
 
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
@@ -172,65 +80,11 @@ class MoonCalc {
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
 
-        //Convert the numbers into percentages to standardize the data
-        if($firstQuan >= 1.00) {
-            $firstPerc = $this->ConvertToPercentage($firstQuan);
-        } else {
-            $firstPerc = $firstQuan;
-        }
-        if($secondQuan >= 1.00) {
-            $secondPerc = $this->ConvertToPercentage($secondQuan);
-        } else {
-            $secondPerc = $secondQuan;
-        }
-        if($thirdQuan >= 1.00) {
-            $thirdPerc = $this->ConvertToPercentage($thirdQuan);
-        } else {
-            $thirdPerc = $thirdQuan;
-        }
-        if($fourthQuan >= 1.00) {
-            $fourthPerc = $this->ConvertToPercentage($fourthQuan);
-        } else {
-            $fourthPerc = $fourthQuan;
-        }
+        //Convert the quantities into numbers we want to utilize
+        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
-        //Calculate the price
-        if($firstOre != "None") {
-            if($this->IsRMoon($firstOre)) {
-                $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
-            } else {
-                $firstTotal = 0.00;
-            }
-        } else {
-            $firstTotal = 0.00;
-        }
-        if($secondOre != "None") {
-            if($this->IsRMoon($secondOre)) {
-                $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
-            } else {
-                $secondTotal = 0.00;
-            }
-        } else {
-            $secondTotal = 0.00;
-        }
-        if($thirdOre != "None") {
-            if($this->IsRMoon($thirdOre)) {
-                $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
-            } else {
-                $thirdTotal = 0.00;
-            }
-        } else {
-            $thirdTotal = 0.00;
-        }
-        if($fourthOre != "None") {
-            if($this->IsRMoon($fourthOre)) {
-                $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
-            } else {
-                $fourthTotal = 0.00;
-            }
-        } else {
-            $fourthTotal = 0.00;
-        }
+        //Calculate the price of each ore
+        $this->CalculateOnlyGooPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
 
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
@@ -251,65 +105,11 @@ class MoonCalc {
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
         
-        //Standardize the data for the percentage
-        if($firstQuan >= 1.00) {
-            $firstPerc = $this->ConvertToPercentage($firstQuan);
-        } else {
-            $firstPerc = $firstQuan;
-        }
-        if($secondQuan >= 1.00) {
-            $secondPerc = $this->ConvertToPercentage($secondQuan);
-        } else {
-            $secondPerc = $secondQuan;
-        }
-        if($thirdQuan >= 1.00) {
-            $thirdPerc = $this->ConvertToPercentage($thirdQuan);
-        } else {
-            $thirdPerc = $thirdQuan;
-        }
-        if($fourthQuan >= 1.00) {
-            $fourthPerc = $this->ConvertToPercentage($fourthQuan);
-        } else {
-            $fourthPerc = $fourthQuan;
-        }
+        //Convert the quantities into numbers we want to utilize
+        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
-        //Calculate the prices of each of the ores
-        if($firstOre != "None") {
-            if($this->IsRMoon($firstOre)) {
-                $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
-            } else {
-                $firstTotal = 0.00;
-            }
-        } else {
-            $firstTotal = 0.00;
-        }
-        if($secondOre != "None") {
-            if($this->IsRMoon($secondOre)) {
-                $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
-            } else {
-                $secondTotal = 0.00;
-            }
-        } else {
-            $secondTotal = 0.00;
-        }
-        if($thirdOre != "None") {
-            if($this->IsRMoon($thirdOre)) {
-                $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
-            } else {
-                $thirdTotal = 0.00;
-            }
-        } else {
-            $thirdTotal = 0.00;
-        }
-        if($fourthOre != "None") {
-            if($this->IsRMoon($fourthOre)) {
-                $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
-            } else {
-                $fourthTotal = 0.00;
-            }
-        } else {
-            $fourthTotal = 0.00;
-        }
+        //Calculate the price of each ore
+        $this->CalculateOnlyGooPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
 
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
@@ -334,49 +134,11 @@ class MoonCalc {
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
 
-        //Standardize the percentage numbers
-        if($firstQuan >= 1.00) {
-            $firstPerc = $this->ConvertToPercentage($firstQuan);
-        } else {
-            $firstPerc = $firstQuan;
-        }
-        if($secondQuan >= 1.00) {
-            $secondPerc = $this->ConvertToPercentage($secondQuan);
-        } else {
-            $secondPerc = $secondQuan;
-        }
-        if($thirdQuan >= 1.00) {
-            $thirdPerc = $this->ConvertToPercentage($thirdQuan);
-        } else {
-            $thirdPerc = $thirdQuan;
-        }
-        if($fourthQuan >= 1.00) {
-            $fourthPerc = $this->ConvertToPercentage($fourthQuan);
-        } else {
-            $fourthPerc = $fourthQuan;
-        }
+        //Convert the quantities into numbers we want to utilize
+        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
-        //Calculate the price of each of the ores
-        if($firstOre != "None") {
-            $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
-        } else {
-            $firstTotal = 0.00;
-        }
-        if($secondOre != "None") {
-            $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
-        } else {
-            $secondTotal = 0.00;
-        }
-        if($thirdOre != "None") {
-            $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
-        } else {
-            $thirdTotal = 0.00;
-        }
-        if($fourthOre != "None") {
-            $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
-        } else {
-            $fourthTotal = 0.00;
-        }
+        //Calculate the prices from the ores
+        $this->CalculateTotalPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
 
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
@@ -712,5 +474,104 @@ class MoonCalc {
         }
 
         return false;
+    }
+
+    private function ConvertPercentages(&$firstPerc, $firstQuan, &$secondPerc, $secondQuan, &$thirdPerc, $thirdQuan, &$fourthPerc, $fourthQuan) {
+        //Convert the quantities into numbers we want to utilize
+        if($firstQuan >= 1.00) {
+            $firstPerc = $this->ConvertToPercentage($firstQuan);
+        } else {
+            $firstPerc = $firstQuan;
+        }
+        if($secondQuan >= 1.00) {
+            $secondPerc = $this->ConvertToPercentage($secondQuan);
+        } else {
+            $secondPerc = $secondQuan;
+        }
+        if($thirdQuan >= 1.00) {
+            $thirdPerc = $this->ConvertToPercentage($thirdQuan);
+        } else {
+            $thirdPerc = $thirdQuan;
+        }
+        if($fourthQuan >= 1.00) {
+            $fourthPerc = $this->ConvertToPercentage($fourthQuan);
+        } else {
+            $fourthPerc = $fourthQuan;
+        }
+
+        //Add up all the percentages
+        $totalPerc = $firstPerc + $secondPerc + $thirdPerc + $fourthPerc;
+
+        //If it is less than 0.95, then we need to convert to a format where 0.80 is equal to 1.00
+        if($totalPerc < 0.95) {
+            $firstPerc = $firstPerc / 0.80;
+            $secondPerc = $secondPerc / 0.80;
+            $thirdPerc = $thirdPerc / 0.80;
+            $fourthPerc = $fourthPerc / 0.80;
+        }
+    }
+
+    private function CalculateTotalPrices($firstOre, $firstPerc, &$firstTotal, $secondOre, $secondPerc, &$secondTotal, $thirdOre, $thirdPerc, &$thirdTotal, $fourthOre, $fourthPerc, &$fourthTotal) {
+        //Calculate the prices from the ores
+        if($firstOre != "None") {
+            $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
+        } else {
+            $firstTotal = 0.00;
+        }
+        if($secondOre != "None") {
+            $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
+        } else {
+            $secondTotal = 0.00;
+        }
+        if($thirdOre != "None") {
+            $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
+        } else {
+            $thirdTotal = 0.00;
+        }
+        if($fourthOre != "None") {
+            $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
+        } else {
+            $fourthTotal = 0.00;
+        }
+    }
+
+    private function CalculateOnlyGooPrices($firstOre, $firstPerc, &$firstTotal, $secondOre, $secondPerc, &$secondTotal, $thirdOre, $thirdPerc, &$thirdTotal, $fourthOre, $fourthPerc, &$fourthTotal) {
+        //Calculate the price of each ore
+        if($firstOre != "None") {
+            if($this->IsRMoonGoo($firstOre)) {
+                $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
+            } else {
+                $firstTotal = 0.00;
+            }
+        } else {
+            $firstTotal = 0.00;
+        }
+        if($secondOre != "None") {
+            if($this->IsRMoonGoo($secondOre)) {
+                $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
+            } else {
+                $secondTotal = 0.00;
+            }
+        } else {
+            $secondTotal = 0.00;
+        }
+        if($thirdOre != "None") {
+            if($this->IsRMoonGoo($thirdOre)) {
+                $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
+            } else {
+                $thirdTotal = 0.00;
+            }
+        } else {
+            $thirdTotal = 0.00;
+        }
+        if($fourthOre != "None") {
+            if($this->IsRMoonGoo($fourthOre)) {
+                $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
+            } else {
+                $fourthTotal = 0.00;
+            }
+        } else {
+            $fourthTotal = 0.00;
+        }
     }
 }
