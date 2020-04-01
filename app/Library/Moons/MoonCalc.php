@@ -507,11 +507,11 @@ class MoonCalc {
         $totalPerc = $firstPerc + $secondPerc + $thirdPerc + $fourthPerc;
 
         //If it is less than 0.95, then we need to convert to a format where 0.80 is equal to 1.00
-        if($totalPerc < 0.95) {
-            $firstPerc = $firstPerc / 0.80;
-            $secondPerc = $secondPerc / 0.80;
-            $thirdPerc = $thirdPerc / 0.80;
-            $fourthPerc = $fourthPerc / 0.80;
+        if($totalPerc < 1.00) {
+            $firstPerc = $firstPerc / $totalPerc;
+            $secondPerc = $secondPerc / $totalPerc;
+            $thirdPerc = $thirdPerc / $totalPerc;
+            $fourthPerc = $fourthPerc / $totalPerc;
         }
     }
 
