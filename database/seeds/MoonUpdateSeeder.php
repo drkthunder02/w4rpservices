@@ -57,5 +57,22 @@ class MoonUpdateSeeder extends Seeder
          * 10 => FourthQuan
          */
 
+        foreach($lines as $line) {
+            AllianceMoon::where([
+                'System' => $line[0],
+                'Planet' => $line[1],
+                'Moon' => $line[2],
+            ])->update([
+                'FirstOre' => $line[3],
+                'FirstQuan' => $line[4],
+                'SecondOre' => $line[5],
+                'SecondQuan' => $line[6],
+                'ThirdOre' => $line[7],
+                'ThirdQuan' => $line[8],
+                'FourthOre' => $line[9],
+                'FourthQuan' => $line[10],
+            ]);
+        }
+
     }
 }
