@@ -42,9 +42,9 @@ class MoonFormatter extends Command
         //Create the file handler
         $lines = Storage::get('public/moon_data.txt');
         $lines = str_replace('"', null, $lines);
-        //$stuff = explode('\n', $lines);
+        $stuff = explode(']', $lines);
         
-        var_dump($lines);
+        var_dump($stuff);
         dd();
         
         //Create the output file handler       
