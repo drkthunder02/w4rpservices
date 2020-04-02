@@ -481,6 +481,12 @@ class MoonCalc {
     }
 
     private function ConvertPercentages(&$firstPerc, $firstQuan, &$secondPerc, $secondQuan, &$thirdPerc, $thirdQuan, &$fourthPerc, $fourthQuan) {
+        //Set the base percentages for the if statements
+        $firstPerc = 0.00;
+        $secondPerc = 0.00;
+        $thirdPerc = 0.00;
+        $fourthPerc = 0.00;
+        
         //Convert the quantities into numbers we want to utilize
         if($firstQuan >= 1.00) {
             $firstPerc = $this->ConvertToPercentage($firstQuan);
@@ -505,13 +511,33 @@ class MoonCalc {
 
         //Add up all the percentages
         $totalPerc = $firstPerc + $secondPerc + $thirdPerc + $fourthPerc;
+        dd($totalPerc);
 
-        //If it is less than 0.95, then we need to convert to a format where 0.80 is equal to 1.00
+        //If it is less than 1.00, then we need to normalize the decimal to be 100.0%.
         if($totalPerc < 1.00) {
-            $firstPerc = $firstPerc / $totalPerc;
-            $secondPerc = $secondPerc / $totalPerc;
-            $thirdPerc = $thirdPerc / $totalPerc;
-            $fourthPerc = $fourthPerc / $totalPerc;
+            if($firstPerc > 0.00) {
+                $firstPerc = $firstPerc / $totalPerc;
+            } else {
+                $firstPerc = 0.00;
+            }
+
+            if($secondPerc > 0.00) {
+                $secondPerc = $secondPerc / $totalPerc;
+            } else {
+                $secondPerc = 0.00;
+            }
+
+            if($thirdPerc > 0.00) {
+                $thirdPerc = $thirdPerc / $totalPerc;
+            } else {
+                $thirdPerc = 0.00;
+            }
+
+            if($fourthPerc > 0.00) {
+                $fourthPerc = $fourthPerc / $totalPerc;
+            } else {
+                $fourthPerc = 0.00;
+            }
         }
     }
 
