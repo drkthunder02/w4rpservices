@@ -1,51 +1,33 @@
 <?php
 
-namespace App\Console\Commands;
-
-use Illuminate\Console\Command;
+//Internal Libraries
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 
-class MoonFormatter extends Command
+//Models
+use App\Models\Moon\AllianceMoon;
+
+class MoonUpdateSeeder extends Seeder
 {
     /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'file:moons';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create a text file to put into sql to update the moons';
-
-    /**
-     * Create a new command instance.
+     * Run the database seeds.
      *
      * @return void
      */
-    public function __construct()
+    public function run()
     {
-        parent::__construct();
+        $this->Updater();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
-    {
+    private function Updater() {
         $lines = array();
 
         //Create the file handler
         $data = Storage::get('public/moon_data.txt');
         //Split the string into separate arrays based on the line
         $data = preg_split("/\n/", $data);
-        
+
         //For each array of data, let's separate the data into more arrays built in arrays
         for($i = 0; $i < sizeof($data); $i++) {
             //Strip the beginning [ from the line
@@ -75,10 +57,5 @@ class MoonFormatter extends Command
          * 10 => FourthQuan
          */
 
-        var_dump($lines);
-        dd();
-        
-        //Create the output file handler       
-        Storage::put('public/moon_sql.txt', $formatted);
     }
 }
