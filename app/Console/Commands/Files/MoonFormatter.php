@@ -77,8 +77,5 @@ class MoonFormatter extends Command
 
         var_dump($lines);
         dd();
-        
-        //Create the output file handler       
-        Storage::put('public/moon_sql.txt', $formatted);
     }
 }
