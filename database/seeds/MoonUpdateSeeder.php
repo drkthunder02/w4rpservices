@@ -163,19 +163,24 @@ class MoonUpdateSeeder extends Seeder
                         'FourthQuantity' => $line[10],
                     ]);
                 } else if($count > 0) {  //If the moon is found then update it.
+                    $firstQuantity = round($line[4] * 100);
+                    $secondQuantity = round($line[6] * 100);
+                    $thirdQuantity = round($line[8] * 100);
+                    $fourthQuantity = round($line[10] * 100);
+
                     Moon::where([
                         'System' => $line[0],
                         'Planet' => $line[1],
                         'Moon' => $line[2],
                     ])->update([
                         'FirstOre' => $line[3],
-                        'FirstQuantity' => $line[4],
+                        'FirstQuantity' => $firstQuantity,
                         'SecondOre' => $line[5],
-                        'SecondQuantity' => $line[6],
+                        'SecondQuantity' => $secondQuantity,
                         'ThirdOre' => $line[7],
-                        'ThirdQuantity' => $line[8],
+                        'ThirdQuantity' => $thirdQuantity,
                         'FourthOre' => $line[9],
-                        'FourthQuantity' => $line[10],
+                        'FourthQuantity' => $fourthQuantity,
                     ]);
                 }
 
