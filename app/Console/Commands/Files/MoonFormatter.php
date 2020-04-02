@@ -39,7 +39,8 @@ class MoonFormatter extends Command
     public function handle()
     {
         //Create the file handler
-        $lines = Storage::disk('local')->get('moon_data.txt');
+        $lines = Storage::get('moon_data.txt');
+        //$lines = Storage::disk('local')->get('moon_data.txt');
         //$lines = file('moon_data.txt');
         //Create the output file handler
         //$output = file('/moon_output.txt');
