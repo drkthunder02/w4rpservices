@@ -39,10 +39,22 @@ class MoonFormatter extends Command
      */
     public function handle()
     {
+        $lines = array();
+
         //Create the file handler
-        $lines = Storage::get('public/moon_data.txt');
-        $lines = preg_split("/\n/", $lines);
+        $data = Storage::get('public/moon_data.txt');
+        //Split the string into separate arrays based on the line
+        $data = preg_split("/\n/", $lines);
         
+        //For each array of data, let's separate the data into more arrays built in arrays
+        for($i = 0; $i < sizeof($data); $i++) {
+            //Strip the beginning [ from the line
+            $temp = str_replace('[', '', $data[$i]);
+            //Strip the ending ] from the line
+            $temp = str_replace(']', '', $temp);
+            $lines[$i] = preg_split("/,/", $temp);
+        }
+
         var_dump($lines);
         dd();
         
