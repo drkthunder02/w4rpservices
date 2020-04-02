@@ -44,8 +44,7 @@ class MoonFormatter extends Command
         $lines = str_replace('"', null, $lines);
         $stuff = explode(']', $lines);
         
-        var_dump($stuff);
-        dd();
+        dd($stuff);
         
         //Create the output file handler       
         Storage::put('public/moon_sql.txt', $formatted);
