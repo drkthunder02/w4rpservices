@@ -58,6 +58,7 @@ return [
         'storage' => [
             'driver' => 'local',
             'root' => storage_path('storage/app/public'),
+            'url' => env('APP_URL').'/storage/app/public',
         ],
 
         's3' => [
