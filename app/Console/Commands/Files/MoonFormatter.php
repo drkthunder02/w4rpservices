@@ -38,9 +38,9 @@ class MoonFormatter extends Command
     public function handle()
     {
         //Create the file handler
-        $lines = file('moon_data.txt');
+        $lines = file('/moon_data.txt');
         //Create the output file handler
-        $output = file('moon_output.txt');
+        //$output = file('/moon_output.txt');
         dd($lines);
     }
 }
