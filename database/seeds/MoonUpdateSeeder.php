@@ -64,13 +64,13 @@ class MoonUpdateSeeder extends Seeder
                 'Moon' => $line[2],
             ])->update([
                 'FirstOre' => $line[3],
-                'FirstQuan' => $line[4],
+                'FirstQuantity' => $line[4],
                 'SecondOre' => $line[5],
-                'SecondQuan' => $line[6],
+                'SecondQuantity' => $line[6],
                 'ThirdOre' => $line[7],
-                'ThirdQuan' => $line[8],
+                'ThirdQuantity' => $line[8],
                 'FourthOre' => $line[9],
-                'FourthQuan' => $line[10],
+                'FourthQuantity' => $line[10],
             ]);
         }
 
