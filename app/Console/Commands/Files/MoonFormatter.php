@@ -44,7 +44,7 @@ class MoonFormatter extends Command
         //Create the file handler
         $data = Storage::get('public/moon_data.txt');
         //Split the string into separate arrays based on the line
-        $data = preg_split("/\n/", $lines);
+        $data = preg_split("/\n/", $data);
         
         //For each array of data, let's separate the data into more arrays built in arrays
         for($i = 0; $i < sizeof($data); $i++) {
