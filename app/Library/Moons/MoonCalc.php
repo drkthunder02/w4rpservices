@@ -511,7 +511,6 @@ class MoonCalc {
 
         //Add up all the percentages
         $totalPerc = $firstPerc + $secondPerc + $thirdPerc + $fourthPerc;
-        dd($totalPerc);
 
         //If it is less than 1.00, then we need to normalize the decimal to be 100.0%.
         if($totalPerc < 1.00) {
