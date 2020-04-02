@@ -52,6 +52,8 @@ class MoonFormatter extends Command
             $temp = str_replace('[', '', $data[$i]);
             //Strip the ending ] from the line
             $temp = str_replace(']', '', $temp);
+            //Remove the spacees from the line
+            $temp = str_replace(' ', '', $temp);
             $lines[$i] = preg_split("/,/", $temp);
         }
 
