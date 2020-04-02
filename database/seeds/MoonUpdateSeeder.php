@@ -162,8 +162,8 @@ class MoonUpdateSeeder extends Seeder
                         'FourthOre' => $line[9],
                         'FourthQuantity' => $line[10],
                     ]);
-                } else {  //If the moon is found then update it.
-                    AllianceMoon::where([
+                } else if($count > 0) {  //If the moon is found then update it.
+                    Moon::where([
                         'System' => $line[0],
                         'Planet' => $line[1],
                         'Moon' => $line[2],
