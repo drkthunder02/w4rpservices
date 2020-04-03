@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Fuel Controller display pages
      */
-    Route::get('/logistics/fuel/structures', 'Fuel\FuelController@displayStructures');
+    Route::get('/logistics/fuel/structures', 'Logistics\FuelController@displayStructures');
 
     /**
      * Moon Controller display pages

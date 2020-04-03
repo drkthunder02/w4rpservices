@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Fuel;
+namespace App\Http\Controllers\Logistics;
 
 //Internal Library
 use Illuminate\Http\Request;
@@ -80,8 +80,7 @@ class FuelController extends Controller
             ],
         ]);
 
-        return view('logistics.display.fuel')->with('jumpGates', $jumpGates)
+        return view('logistics.fuel')->with('jumpGates', $jumpGates)
                                              ->with('lava', $lava);
     }
-
 }
