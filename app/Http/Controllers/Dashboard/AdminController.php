@@ -30,40 +30,6 @@ class AdminController extends Controller
         $this->middleware('role:Admin');
     }
 
-    public function displayTestAdminDashboard() {
-        //Declare array variables
-        $user = array();
-        $permission = array();
-        $userArr = array();
-        $permString = null;
-
-        $usersArr = User::orderBy('name', 'asc')->paginate(50);
-
-        foreach($usersArr as $user) {
-            $user->role = $user->getRole();
-
-            $permCount = UserPermission::where([
-                'character_id' => $user->character_id,
-            ])->count();
-            
-            if($permCount > 0) {
-                $perms = UserPermission::where([
-                    'character_id' => $user->character_id,
-                ])->get('permission')->toArray();
-
-                foreach($perms as $perm) {
-                    $permString .= $perm['permission'] . ', ';
-                }
-
-                $user->permission = $permString;
-            } else {
-                $user->permission = 'No Permissions';
-            }
-        }
-
-        return view('admin.dashboards.testdashboard')->with('usersArr', $usersArr);
-    }
-
     public function showJournalEntries() {
         $dateInit = Carbon::now();
         $date = $dateInit->subDays(30);
