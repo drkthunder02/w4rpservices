@@ -1,8 +1,13 @@
 @extends('layouts.admin.b4')
 @section('content')
 <div class="container">
-    <h2>Admin Dashboard</h2><br>
-    This will eventually house statistics and financial status of the alliance.<br>
-    This page will house a graph at least of the financial statistics.
+    <div class="card">
+        <div class="card-header">
+            <h2>Admin Dashboard</h2>
+        </div>
+        <div class="card-body">
+            Draw a graph of income and expenses.
+        </div>
+    </div>
 </div>
 @endsection

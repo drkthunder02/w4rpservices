@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Khill\Lavacharts\Lavacharts;
+use Carbon\Carbon;
 
 //Models
 use App\Models\Esi\EsiScope;
@@ -28,17 +29,6 @@ class DashboardController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:Guest');
-    }
-
-    /**
-     * Show the administration dashboard.
-     */
-    public function displayAdminDashboard() {
-        if(auth()->user()->hasRole('Admin') || auth()->user()->hasPermission('moon.admin') || auth()->user()->hasPermission('srp.admin') || auth()->user()->hasPermission('contract.admin')) {
-            return view('admin.dashboards.dashboard');
-        } else {
-            redirect('/dashboard');
-        }
     }
 
     /**

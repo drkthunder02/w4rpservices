@@ -71,6 +71,18 @@ class HoldingFinancesCommand extends Command
             ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
         }
 
+        //Get the total pages for the journal for the sov bills from the holding corporation
+        $pages = $finance->GetJournalPageCount(6, $config['primary']);
+
+        //Dispatch a job for each page to process
+        for($i = 1; $i <= $pages; $i++) {
+            $job = new JobProcessWalletJournal;
+            $job->division = 6;
+            $job->charId = $config['primary'];
+            $job->page = $i;
+            ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
+        }
+
         //Mark the job as finished
         $task->SetStopStatus();
     }

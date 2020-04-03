@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/dashboard/wiki/newgroup', 'Dashboard\AdminController@insertNewWikiUserGroup');
     Route::post('/admin/dashboard/wiki/purge', 'Dashboard\AdminController@purgeWikiUsers');
     Route::get('/admin/dashboard/test', 'Dashboard\AdminController@displayTestAdminDashboard');
-    Route::get('/admin/dashboard', 'Dashboard\DashboardController@displayAdminDashboard');
+    Route::get('/admin/dashboard', 'Dashboard\AdminDashboardController@displayAdminDashboard');
 
     /**
      * Blacklist Controller display pages

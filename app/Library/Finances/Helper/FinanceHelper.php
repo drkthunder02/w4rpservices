@@ -30,6 +30,7 @@ use App\Library\Finances\OfficeFee;
 use App\Library\Finances\PlanetProductionTax;
 use App\Library\Finances\PISale;
 use App\Library\Lookups\LookupHelper;
+use App\Library\Finances\SovBillExpenses;
 
 //Seat Stuff
 use Seat\Eseye\Exceptions\RequestFailedException;
@@ -47,6 +48,7 @@ class FinanceHelper {
         $industry = new StructureIndustryTax();
         $office = new OfficeFee();
         $esiHelper = new Esi();
+        $sovBillHelper = new SovBillExpenses();
         $lookup = new LookupHelper;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
@@ -113,6 +115,8 @@ class FinanceHelper {
                         $industry->InsertStructureIndustryTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
                         $office->InsertOfficeFee($entry, $corpId, $division);
+                    } else if($entry['ref_type'] == 'infrastructure_hub_bill' && $entry['second_party_id'] == 9828766) {
+                        $sovBillHelper->InsertSovBillExpense($entry, $corpId, $division);
                     }
                 }
             }
