@@ -34,7 +34,7 @@
         </div>
         <!-- Content of the Page -->
         @yield('content')
-
+        </div>
 
 
         <!-- Optional JavaScript -->
