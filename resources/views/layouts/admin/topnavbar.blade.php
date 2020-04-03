@@ -3,6 +3,8 @@
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item text-nowrap">
             <a class="nav-link" href="/logout">Logout</a>
         </li>
     </ul>
