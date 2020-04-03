@@ -1,8 +1,8 @@
-@extends('layouts.b4')
+@extends('layouts.admin.b4')
 @section('content')
 <br>
 {!! Form::open(['action' => 'Moons\MoonsAdminController@storeMoonRemoval', 'method' => 'POST']) !!}
-<div class="container col-md-12">
+<div class="container">
         <table class="table table-striped">
             <thead>
                 <th>System</th>
@@ -42,7 +42,7 @@
 {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
 {!! Form::close() !!}
 <br>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col">
             <div class="card">
