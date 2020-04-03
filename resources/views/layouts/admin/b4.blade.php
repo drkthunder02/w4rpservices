@@ -37,8 +37,6 @@
         </div>
         
         <!-- Admin Layouts Navbar -->
-        <div class="container-fluid">
-            <div class="row">
         @include('layouts.admin.sidenavbar')         
                     
         <!-- Content of the Page -->
