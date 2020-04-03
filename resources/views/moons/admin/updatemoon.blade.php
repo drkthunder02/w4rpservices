@@ -1,4 +1,4 @@
-@extends('layouts.b4')
+@extends('layouts.admin.b4')
 @section('content')
 <div class="container">
     <h2>Update Existing Moon</h2>

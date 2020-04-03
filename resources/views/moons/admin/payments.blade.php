@@ -1,7 +1,7 @@
-@extends('layouts.b4')
+@extends('layouts.admin.b4')
 @section('content')
 
-<div class="container col-md-12">
+<div class="container">
     <!--  Put form header here for the form in the table -->
     <table class="table table-striped">
         <thead>
