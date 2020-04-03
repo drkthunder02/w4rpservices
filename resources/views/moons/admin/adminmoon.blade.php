@@ -3,7 +3,7 @@
 <br>
 {!! Form::open(['action' => 'Moons\MoonsAdminController@storeMoonRemoval', 'method' => 'POST']) !!}
 <div class="container">
-        <table class="table table-striped">
+        <table class="table table-striped table-bordered">
             <thead>
                 <th>System</th>
                 <th>Name</th>
