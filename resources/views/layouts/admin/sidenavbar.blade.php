@@ -5,6 +5,7 @@
                 <ul class="nav flex-column">
                     @if(auth()->user()->hasRole('Admin'))
                     <li class="nav-item dropdown">
+                        <span data-feather="layers"></span>
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">General Admin</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                             <a class="dropdown-item" href="/admin/dashboard/users">Users</a>
