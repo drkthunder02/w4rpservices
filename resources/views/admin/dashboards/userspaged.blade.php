@@ -1,6 +1,6 @@
 @extends('layouts.admin.b4')
 @section('content')
-<div class="container-fluid w-50">
+<div class="container-fluid">
     <div class="card">
         <div class="card-header">
             <h2>User Information</h2>
