@@ -26,12 +26,22 @@
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     </head>
     <body>
-        <!-- Admin Layouts Navbar -->
-        @include('layouts.admin.navbar')
+        <!-- Top Navbar -->
+        @include('layouts.admin.topnavbar')
+        
         <!-- Included Messages -->
         <div class="container">
             @include('inc.messages')
         </div>
+        
+        <!-- Admin Layouts Navbar -->
+        <div class="container-fluid">
+            <div class="row">
+        @include('layouts.admin.navbar')
+            </div>
+        </div>
+            
+        
         <!-- Content of the Page -->
         @yield('content')
         </div>
