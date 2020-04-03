@@ -7,7 +7,7 @@
     </div>
 </div>
 <br>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col">
             <div class="card">
@@ -155,7 +155,7 @@
     </div>
 </div>
 <br>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col">
             <div class="card">
