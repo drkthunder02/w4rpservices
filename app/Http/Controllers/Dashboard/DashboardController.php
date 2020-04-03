@@ -34,7 +34,11 @@ class DashboardController extends Controller
      * Show the administration dashboard.
      */
     public function displayAdminDashboard() {
-        return view('admin.dashboards.dashboard');
+        if(auth()->user()->hasRole('Admin') || auth()->user()->hasPermission('moon.admin') || auth()->user()->hasPermission('srp.admin') || auth()->user()->hasPermission('contract.admin')) {
+            return view('admin.dashboards.dashboard');
+        } else {
+            redirect('/dashboard');
+        }
     }
 
     /**
