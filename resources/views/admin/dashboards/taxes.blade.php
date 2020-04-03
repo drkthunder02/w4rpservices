@@ -1,4 +1,4 @@
-@extends('admin.layouts.b4')
+@extends('layouts.admin.b4')
 @section('content')
 
 <div class="container">
@@ -81,7 +81,7 @@
     </div>
 </div>
 <br>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col">
             <div class="card">
