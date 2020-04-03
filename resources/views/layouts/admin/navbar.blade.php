@@ -19,7 +19,20 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <span data-feather=""
+                            <span data-feather="layers"></span>
+                            Moon Admin
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="layers"></span>
+                            SRP Admin
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="layers"></span>
+                            Contract Admin
                         </a>
                     </li>
                 </ul>
