@@ -30,7 +30,8 @@
     <body>
         <!-- Top Navbar -->
         @include('layouts.admin.topnavbar')
-        
+        <div class="container-fluid">
+            <div class="row">
         <!-- Admin Layouts Navbar -->
         @include('layouts.admin.sidenavbar')
         
@@ -41,6 +42,8 @@
                     
         <!-- Content of the Page -->
         @yield('content')
+            </div>
+        </div>
             
 
 
