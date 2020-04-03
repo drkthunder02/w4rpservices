@@ -1,7 +1,7 @@
 @extends('layouts.admin.b4')
 @section('content')
 <br>
-<div class="container col-md-12">
+<div class="container">
     <table class="table table-striped">
         <thead>
             <th>Date</th>
