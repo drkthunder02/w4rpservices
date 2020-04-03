@@ -1,6 +1,7 @@
 @extends('layouts.admin.b4')
 @section('content')
 <br>
+<br>
 <div class="container">
 <br>
 <h2>Admin Dashboard Test</h2><br>
