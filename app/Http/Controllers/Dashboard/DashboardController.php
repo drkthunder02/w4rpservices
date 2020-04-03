@@ -31,6 +31,13 @@ class DashboardController extends Controller
     }
 
     /**
+     * Show the administration dashboard.
+     */
+    public function displayAdminDashboard() {
+        return view('admin.dashboards.dashboard');
+    }
+
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
