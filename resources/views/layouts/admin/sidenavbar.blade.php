@@ -4,7 +4,6 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     @if(auth()->user()->hasRole('Admin'))
-                    <span data-feather="layers">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">General Admin</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
@@ -15,7 +14,6 @@
                             <a class="dropdown-item" href="/admin/dashboard/journal">Wallet Journal</a>
                         </div>
                     </li>
-                    </span>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Flex Structures</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
