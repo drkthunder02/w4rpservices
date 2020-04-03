@@ -7,7 +7,7 @@
     </div>
 </div>
 <br>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col col-md-6">
             <div class="card">
