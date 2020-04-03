@@ -2,6 +2,7 @@
 @section('content')
 <div class="container">
 <h2>Admin Dashboard Test</h2><br>
+</div>
 <div class="card">
     <div class="card-header">
         <h2>User Information</h2>
