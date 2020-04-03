@@ -1,4 +1,4 @@
-@extends('layouts.b4')
+@extends('layouts.admin.b4')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

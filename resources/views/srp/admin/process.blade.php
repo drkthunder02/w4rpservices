@@ -1,8 +1,8 @@
-@extends('layouts.b4')
+@extends('layouts.admin.b4')
 @section('content')
 
 @if($requests != null)
-    <div class="container col-md-12">
+    <div class="container">
         <table class="table table-striped">
             <thead>
                 <th>Timestamp</th>
