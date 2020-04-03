@@ -1,7 +1,7 @@
 @extends('layouts.admin.b4')
 @section('content')
 
-    <div class="card">
+    <div class="card col-md-10">
         <div class="card-header">
             <h2>User Information</h2>
         </div>
