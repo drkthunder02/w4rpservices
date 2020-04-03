@@ -45,4 +45,6 @@
         </table>
     </div>
 </div>
+<br>
+{{ $usersArr->links() }}
 @endsection
