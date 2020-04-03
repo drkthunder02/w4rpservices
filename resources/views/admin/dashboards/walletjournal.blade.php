@@ -2,7 +2,7 @@
 @section('content')
 <br>
 <div class="container">
-    <table class="table table-striped">
+    <table class="table table-striped table-bordered">
         <thead>
             <th>Date</th>
             <th>Description</th>
