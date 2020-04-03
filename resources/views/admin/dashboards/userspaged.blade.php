@@ -1,7 +1,7 @@
 @extends('layouts.admin.b4')
 @section('content')
-
-    <div class="card col-md-10">
+<div class="container">
+    <div class="card">
         <div class="card-header">
             <h2>User Information</h2>
         </div>
@@ -44,6 +44,6 @@
             </table>
         </div>
     </div>
-
+</div>
 {{ $usersArr->links() }}
 @endsection
