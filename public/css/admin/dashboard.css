@@ -98,3 +98,33 @@ body {
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
   }
+
+  @media only screen and (min-wdith : 320px) {
+    .container, .container-fluid {
+      padding-left: 100px;
+    }
+  }
+
+  @media only screen and (min-width : 480px) {
+    .container, .container-fluid {
+      padding-left: 100px; // just an example
+    }
+  }
+  
+  @media only screen and (min-width : 768px) {
+    .container, .container-fluid {
+      padding-left: 100px; // just an example
+    }
+  }
+  
+  @media only screen and (min-width : 992px) {
+    .container, .container-fluid {
+      padding-left: 100px; // just an example
+    }
+  }
+  
+  @media only screen and (min-width : 1200px) {
+    .container, .container-fluid {
+      padding-left: 100px; // just an example
+    }
+  }
