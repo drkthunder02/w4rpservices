@@ -40,11 +40,12 @@
         <div class="container-fluid">
             <div class="row">
         @include('layouts.admin.navbar')
+            </div>
+        </div>
                     
         <!-- Content of the Page -->
         @yield('content')
-            </div>
-        </div>
+            
 
 
         <!-- Optional JavaScript -->
