@@ -1,4 +1,4 @@
-@extends('layouts.admin.b4')
+@extends('admin.layouts.b4')
 @section('content')
 <div class="container-fluid">
     <div class="card">
