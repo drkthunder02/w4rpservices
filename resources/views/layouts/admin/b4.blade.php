@@ -39,12 +39,12 @@
         <!-- Admin Layouts Navbar -->
         <div class="container-fluid">
             <div class="row">
-        @include('layouts.admin.navbar')
-            </div>
-        </div>
+        @include('layouts.admin.navbar')         
                     
         <!-- Content of the Page -->
         @yield('content')
+            </div>
+        </div>
             
 
 
