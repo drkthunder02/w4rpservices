@@ -31,13 +31,13 @@
         <!-- Top Navbar -->
         @include('layouts.admin.topnavbar')
         
+        <!-- Admin Layouts Navbar -->
+        @include('layouts.admin.sidenavbar')
+        
         <!-- Included Messages -->
         <div class="container">
             @include('inc.messages')
         </div>
-        
-        <!-- Admin Layouts Navbar -->
-        @include('layouts.admin.sidenavbar')         
                     
         <!-- Content of the Page -->
         @yield('content')

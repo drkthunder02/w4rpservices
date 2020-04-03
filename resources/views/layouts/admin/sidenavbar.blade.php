@@ -12,11 +12,13 @@
                             <a class="dropdown-item" href="/admin/dashboard/logins">Allowed Logins</a>
                             <a class="dropdown-item" href="/admin/dashboard/wiki">Wiki</a>
                             <a class="dropdown-item" href="/admin/dashboard/journal">Wallet Journal</a>
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Flex</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                                <a class="dropdown-item" href="/flex/display">Display</a>
-                                <a class="dropdown-item" href="/flex/display/add">Add</a>
-                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Flex</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+                            <a class="dropdown-item" href="/flex/display">Display</a>
+                            <a class="dropdown-item" href="/flex/display/add">Add</a>
                         </div>
                     </li>
                     @endif
