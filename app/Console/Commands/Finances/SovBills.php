@@ -117,7 +117,7 @@ class SovBillsCommand extends Command
             printf("Getting page: " . $i . "\n");
 
             try {
-                $journals = $esi->page($page)
+                $journals = $esi->page($i)
                                 ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
                     'corporation_id' => $corpId,
                     'division'  => $division,
