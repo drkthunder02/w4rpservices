@@ -104,23 +104,21 @@ class FinanceHelper {
             //For each journal entry, attempt to store it in the database.
             //The PutWalletJournal function checks to see if it's already in the database.
             foreach($wallet as $entry) {
-                if($entry['amount'] != 0) {
-                    if($entry['ref_type'] == 'brokers_fee') {
-                        $market->InsertMarketTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'reprocessing_tax') {
-                        $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'structure_gate_jump') {
-                        $jb->InsertJumpBridgeTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'player_donation' ||
-                             ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
-                        $other->InsertPlayerDonation($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
-                        $industry->InsertStructureIndustryTax($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
-                        $office->InsertOfficeFee($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'infrastructure_hub_maintenance' && $entry['first_party_id'] == 98287666) {
-                        $sovBillHelper->InsertSovBillExpense($entry, $corpId, $division);
-                    }
+                if($entry['ref_type'] == 'brokers_fee') {
+                    $market->InsertMarketTax($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'reprocessing_tax') {
+                    $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'structure_gate_jump') {
+                    $jb->InsertJumpBridgeTax($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'player_donation' ||
+                            ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
+                    $other->InsertPlayerDonation($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
+                    $industry->InsertStructureIndustryTax($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
+                    $office->InsertOfficeFee($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'infrastructure_hub_maintenance' && $entry['first_party_id'] == 98287666) {
+                    $sovBillHelper->InsertSovBillExpense($entry, $corpId, $division);
                 }
             }
             
