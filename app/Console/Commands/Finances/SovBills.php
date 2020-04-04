@@ -130,10 +130,8 @@ class SovBillsCommand extends Command
             $wallet = json_decode($journals->raw, true);
             dd($wallet);
             foreach($wallet as $entry) {
-                if($entry['amount'] > 0) {
-                    if($entry['ref_type'] == 'infrastructure_hub_maintenance' && $entry['first_party_id'] == 98287666) {
-                        $sovBill->InsertSovBillExpense($entry, $corpId, $division);
-                    }
+                if($entry['ref_type'] == 'infrastructure_hub_maintenance' && $entry['first_party_id'] == 98287666) {
+                    $sovBill->InsertSovBillExpense($entry, $corpId, $division);
                 }
             }
         }
