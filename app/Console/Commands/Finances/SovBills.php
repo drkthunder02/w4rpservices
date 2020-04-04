@@ -86,14 +86,14 @@ class SovBillsCommand extends Command
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
 
-        //Create an ESI authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
-        $esi->setVersion('v4');
-
         $token = $esiHelper->GetRefreshToken($config['primary']);
         if($token == null) {
             return null;
         }
+
+        //Create an ESI authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
+        $esi->setVersion('v4');
 
         //Reference to see if the character is in our look up table for corporations and characters
         $char = $lookup->GetCharacterInfo($charId);
