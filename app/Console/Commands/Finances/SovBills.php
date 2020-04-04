@@ -47,17 +47,35 @@ class SovBillsCommand extends Command
      */
     public function handle()
     {
+        $sovBill = new SovBillExpenses;
+        $esiHelper = new Esi;
+        $finance = new FinanceHelper();
+
         //Create the command helper container
         $task = new CommandHelper('SovBills');
 
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
-
-        //Setup the Finances container
-        $finance = new FinanceHelper();
+        
 
         //Get the esi configuration
         $config = config('esi');
+        //Set caching to null
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
+
+        //Create an ESI authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
+        $esi->setVersion('v4');
+
+        $token = $esiHelper->GetRefreshToken($config['primary']);
+        if($token == null) {
+            return null;
+        }
+
+        //Reference to see if the character is in our look up table for corporations and characters
+        $char = $lookup->GetCharacterInfo($charId);
+        $corpId = $char->corporation_id;
 
         //Get the total pages for the journal for the sov bills from the holding corporation
         $pages = $finance->GetJournalPageCount(6, $config['primary']);
@@ -74,7 +92,27 @@ class SovBillsCommand extends Command
         //Try to figure it out from the command itself.
         for($i = 1; $i <= $pages; $i++) {
             printf("Getting page: " . $i . "\n");
-            $finance->GetWalletJournalPage(6, $config['primary'], $i);
+
+            try {
+                $journals = $esi->page($page)
+                                ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                    'corporation_id' => $corpId,
+                    'division'  => $division,
+                ]);
+            } catch(RequestFailedException $e) {
+                return null;
+            }
+
+            //Decode the wallet from json into an array
+            $wallet = json_decode($journals->raw, true);
+            dd($wallet);
+            foreach($wallet as $entry) {
+                if($entry['amount'] > 0) {
+                    if($entry['ref_type'] == 'infrastructure_hub_maintenance' && $entry['first_party_id'] == 98287666) {
+                        $sovBill->InsertSovBillExpense($entry, $corpId, $division);
+                    }
+                }
+            }
         }
 
         //Mark the job as finished
