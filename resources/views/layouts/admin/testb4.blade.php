@@ -45,13 +45,16 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      @if(auth()->user()->hasPermission('srp.admin'))
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
+        <!-- Link to the SRP Page with notifications based on how many open SRP requests there are -->
+        <a class="nav-link" href="#">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">15</span>
         </a>
       </li>
+      @endif
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
             class="fas fa-th-large"></i></a>
