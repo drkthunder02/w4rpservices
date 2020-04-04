@@ -225,6 +225,7 @@ class FinanceHelper {
         $pi = new PlanetProductionTax;
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
+        $sovBillHelper = new SovBillExpenses;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
@@ -284,6 +285,8 @@ class FinanceHelper {
                     $office->InsertOfficeFee($entry, $corpId, $division);
                 } else if($entry['ref_type'] == 'planetary_export_tax' || $entry['ref_type'] == 'planetary_import_tax') {
                     $pi->InsertPlanetProductionTax($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'infrastructure_hub_maintenance') {
+                    $sovBillHelper->InsertSovBillExpense($entry, $corpId, $division);
                 }
             }
         }
