@@ -67,7 +67,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <span class="brand-text font-weight-light">W4RP</span>
+      <span class="brand-text font-weight-light">W4RP Admin Dashboard</span>
     </a>
 
     <!-- Sidebar -->
