@@ -1,4 +1,4 @@
-@extends('layouts.admin.b4')
+@extends('layouts.b4')
 @section('content')
 <!-- Under Review Section Guage Chart -->
 <div class="container">

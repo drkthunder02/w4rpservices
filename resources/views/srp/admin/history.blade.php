@@ -1,6 +1,6 @@
-@extends('layouts.admin.b4')
+@extends('layouts.b4')
 @section('content')
-<div class="container">
+<div class="container col-md-9">
     <div class="card">
         <div class="card-header">
             <h2>Approved SRP Requests</h2>
@@ -39,7 +39,7 @@
     </div>
 </div>
 <br>
-<div class="container col-md-12">
+<div class="container col-md-9">
     <div class="card">
         <div class="card-header">
             <h2>Denied SRP Requests</h2>
