@@ -115,7 +115,7 @@ class FinanceHelper {
                         $industry->InsertStructureIndustryTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
                         $office->InsertOfficeFee($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'infrastructure_hub_bill' && $entry['second_party_id'] == 9828766) {
+                    } else if($entry['ref_type'] == 'infrastructure_hub_maintenance') {
                         $sovBillHelper->InsertSovBillExpense($entry, $corpId, $division);
                     }
                 }
