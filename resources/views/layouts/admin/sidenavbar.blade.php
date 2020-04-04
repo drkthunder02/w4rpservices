@@ -1,6 +1,7 @@
 
 <nav class="col-md-1 d-none d-md-block bg-light sidebar">
-    <div class="sidebar-sticky">
+    <!-- <div class="sidebar-sticky"> -->
+    <div class="sidenav">
         <ul class="nav flex-column">
             @if(auth()->user()->hasRole('Admin'))
             <li class="nav-item dropdown">

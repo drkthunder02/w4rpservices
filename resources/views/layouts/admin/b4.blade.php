@@ -36,6 +36,7 @@
         <br>
         <br>
         <br>
+        <div class="main">
         <!-- Included Messages -->
         <div class="container">
             @include('inc.messages')
@@ -43,6 +44,7 @@
                     
         <!-- Content of the Page -->
         @yield('content')
+        </div>
             
 
 
