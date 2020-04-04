@@ -94,8 +94,11 @@ class FinanceHelper {
                 return null;
             }
 
-            //Set the total pages we need to cycle through.
-            $totalPages = $journals->pages;
+            if($currentPage == 1) {
+                //Set the total pages we need to cycle through.
+                $totalPages = $journals->pages;
+            }
+            
             //Decode the wallet from json into an array
             $wallet = json_decode($journals->raw, true);
             //For each journal entry, attempt to store it in the database.
@@ -115,7 +118,7 @@ class FinanceHelper {
                         $industry->InsertStructureIndustryTax($entry, $corpId, $division);
                     } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
                         $office->InsertOfficeFee($entry, $corpId, $division);
-                    } else if($entry['ref_type'] == 'infrastructure_hub_maintenance') {
+                    } else if($entry['ref_type'] == 'infrastructure_hub_maintenance' && $entry['first_party_id'] == 98287666) {
                         $sovBillHelper->InsertSovBillExpense($entry, $corpId, $division);
                     }
                 }
@@ -225,7 +228,7 @@ class FinanceHelper {
         $pi = new PlanetProductionTax;
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
-        $sovBillHelper = new SovBillExpenses;
+        $sovBill = new SovBillExpenses;
 
         //Get the ESI refresh token for the corporation to add new wallet journals into the database
         $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
@@ -260,7 +263,6 @@ class FinanceHelper {
                 'division'  => $division,
             ]);
         } catch(RequestFailedException $e) {
-            //Log::warning($e->getEsiResponse());
             return null;
         }
 
@@ -285,8 +287,8 @@ class FinanceHelper {
                     $office->InsertOfficeFee($entry, $corpId, $division);
                 } else if($entry['ref_type'] == 'planetary_export_tax' || $entry['ref_type'] == 'planetary_import_tax') {
                     $pi->InsertPlanetProductionTax($entry, $corpId, $division);
-                } else if($entry['ref_type'] == 'infrastructure_hub_maintenance') {
-                    $sovBillHelper->InsertSovBillExpense($entry, $corpId, $division);
+                } else if($entry['ref_type'] == 'infrastructure_hub_maintenance' && $entry['first_party_id'] == 98287666) {
+                    $sovBill->InsertSovBillExpense($entry, $corpId, $division);
                 }
             }
         }
