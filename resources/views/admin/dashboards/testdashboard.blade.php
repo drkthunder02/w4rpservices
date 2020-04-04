@@ -1,4 +1,4 @@
-@extends('layouts.admin.testb4')
+@extends('layouts.admin.b4')
 @section('content')
 <div class="container">
     <div class="card">
