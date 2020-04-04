@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         Commands\FlexStructureCommand::class,
         Commands\EmptyJumpBridges::class,
         Commands\PurgeWormholes::class,
+        Commands\SovBillsCommand::class,
     ];
 
     /**

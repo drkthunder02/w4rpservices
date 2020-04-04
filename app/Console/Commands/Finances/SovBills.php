@@ -14,21 +14,21 @@ use App\Jobs\ProcessWalletJournalJob;
 //Models
 use App\Models\Jobs\JobProcessWalletJournal;
 
-class HoldingFinancesCommand extends Command
+class SovBillsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'services:HoldingJournal';
+    protected $signature = 'services:SovBills';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Get the holding corps finances.';
+    protected $description = 'Get the holding corps sov bills from wallet 6.';
 
     /**
      * Create a new command instance.
@@ -48,7 +48,7 @@ class HoldingFinancesCommand extends Command
     public function handle()
     {
         //Create the command helper container
-        $task = new CommandHelper('HoldingFinances');
+        $task = new CommandHelper('SovBills');
 
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
@@ -59,28 +59,22 @@ class HoldingFinancesCommand extends Command
         //Get the esi configuration
         $config = config('esi');
 
-        //Get the total pages for the journal for the holding corporation
-        $pages = $finance->GetJournalPageCount(1, $config['primary']);
-
-        //Dispatch a single job for each page to process
-        for($i = 1; $i <= $pages; $i++) {
-            $job = new JobProcessWalletJournal;
-            $job->division = 1;
-            $job->charId = $config['primary'];
-            $job->page = $i;
-            ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
-        }
-
         //Get the total pages for the journal for the sov bills from the holding corporation
         $pages = $finance->GetJournalPageCount(6, $config['primary']);
 
         //Dispatch a job for each page to process
+        //for($i = 1; $i <= $pages; $i++) {
+        //    $job = new JobProcessWalletJournal;
+        //    $job->division = 6;
+        //    $job->charId = $config['primary'];
+        //    $job->page = $i;
+        //    ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
+        //}
+
+        //Try to figure it out from the command itself.
         for($i = 1; $i <= $pages; $i++) {
-            $job = new JobProcessWalletJournal;
-            $job->division = 6;
-            $job->charId = $config['primary'];
-            $job->page = $i;
-            ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
+            printf("Getting page: " . $i . "\n");
+            $finance->GetWalletJournalPage(6, $config['primary'], $i);
         }
 
         //Mark the job as finished
