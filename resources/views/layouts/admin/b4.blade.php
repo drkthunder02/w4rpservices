@@ -27,14 +27,8 @@
     </head>
     <body>
         <!-- Top Navbar -->
-        @include('layouts.admin.topnavbar')
+        @include('layouts.admin.navbar')
         
-        <!-- Admin Layouts Navbar -->
-        @include('layouts.admin.sidenavbar')
-        <br>
-        <br>
-        <br>
-        <div class="main">
         <!-- Included Messages -->
         <div class="container">
             @include('inc.messages')
