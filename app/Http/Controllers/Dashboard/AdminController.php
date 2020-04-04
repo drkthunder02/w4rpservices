@@ -30,6 +30,10 @@ class AdminController extends Controller
         $this->middleware('role:Admin');
     }
 
+    public function displayTestAdminDashboard() {
+        return view('admin.dashboards.testdashboard');
+    }
+
     public function showJournalEntries() {
         $dateInit = Carbon::now();
         $date = $dateInit->subDays(30);
