@@ -82,8 +82,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+          <!-- General Administrative Stuff -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -96,17 +95,37 @@
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Active Page</p>
+                  <p>Users</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Inactive Page</p>
+                  <p>Taxes</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Allowed Logins</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Wiki</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Wallet Journal</p>
                 </a>
               </li>
             </ul>
           </li>
+          <!-- End General Administrative Stuff -->
+          <!-- Flex Structure -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -130,6 +149,8 @@
               </li>
             </ul>
           </li>
+          <!-- End Flex Structure -->
+          <!-- Moon Admin -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -153,6 +174,8 @@
               </li>
             </ul>
           </li>
+          <!-- End Moon Admin -->
+          <!-- SRP Admin -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -176,11 +199,13 @@
               </li>
             </ul>
           </li>
+          <!-- End SRP Admin -->
+          <!-- Contract Admin -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Contact Admin<br>
+                Contract Admin<br>
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -199,6 +224,7 @@
               </li>
             </ul>
           </li>
+          <!-- End Contract Admin -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
