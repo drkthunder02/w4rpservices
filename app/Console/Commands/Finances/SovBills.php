@@ -72,6 +72,7 @@ class SovBillsCommand extends Command
         $sovBill = new SovBillExpenses;
         $esiHelper = new Esi;
         $finance = new FinanceHelper();
+        $lookup = new LookupHelper;
 
         //Create the command helper container
         $task = new CommandHelper('SovBills');
