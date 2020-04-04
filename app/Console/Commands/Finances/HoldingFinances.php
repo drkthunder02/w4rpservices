@@ -61,7 +61,6 @@ class HoldingFinancesCommand extends Command
 
         //Get the total pages for the journal for the holding corporation
         $pages = $finance->GetJournalPageCount(1, $config['primary']);
-        dd($pages);
 
         //Dispatch a single job for each page to process
         for($i = 1; $i <= $pages; $i++) {
