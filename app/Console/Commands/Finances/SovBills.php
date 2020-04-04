@@ -120,7 +120,7 @@ class SovBillsCommand extends Command
                 $journals = $esi->page($i)
                                 ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
                     'corporation_id' => $corpId,
-                    'division'  => $division,
+                    'division'  => 6,
                 ]);
             } catch(RequestFailedException $e) {
                 return null;
