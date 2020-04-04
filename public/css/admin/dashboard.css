@@ -24,7 +24,7 @@ body {
   }
   
   .sidebar-sticky {
-    position: relative;
+    position: fixed;
     top: 0;
     width: 100px;
     height: calc(100vh - 48px);
