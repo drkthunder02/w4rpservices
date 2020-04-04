@@ -83,6 +83,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- General Administrative Stuff -->
+          @if(auth()->user()->hasRole('Admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -93,39 +94,41 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/dashboard/users" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/dashboard/taxes" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Taxes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="admin/dashboard/logins" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Allowed Logins</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/dashboard/wiki" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Wiki</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/dashboard/journal" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Wallet Journal</p>
                 </a>
               </li>
             </ul>
           </li>
+          @endif
           <!-- End General Administrative Stuff -->
           <!-- Flex Structure -->
+          @if(auth()->user()->hasRole('Admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -136,21 +139,23 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/flex/display" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Display</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/flex/display/add" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add</p>
                 </a>
               </li>
             </ul>
           </li>
+          @endif
           <!-- End Flex Structure -->
           <!-- Moon Admin -->
+          @if(auth()->user()->hasPermission('moon.admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -161,27 +166,29 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/moons/admin/display/rentals" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Display Moons</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/moons/admin/updatemoon" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Update Moon</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/moons/admin/display/request" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Moon Request</p>
                 </a>
               </li>
             </ul>
           </li>
+          @endif
           <!-- End Moon Admin -->
           <!-- SRP Admin -->
+          @if(auth()->user()->hasPermission('srp.admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -192,33 +199,35 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/srp/admin/display" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>SRP Admin Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/srp/admin/statistics" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>SRP Statistics</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/srp/admin/costcodes/display" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>SRP Admin Cost Codes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/srp/admin/display/history" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>SRP History</p>
                 </a>
               </li>
             </ul>
           </li>
+          @endif
           <!-- End SRP Admin -->
           <!-- Contract Admin -->
+          @if(auth()->user()->hasPermission('contract.admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -229,19 +238,20 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/contracts/admin/display" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Admin Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/contracts/admin/new" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>New Contract</p>
                 </a>
               </li>
             </ul>
           </li>
+          @endif
           <!-- End Contract Admin -->
         </ul>
       </nav>
