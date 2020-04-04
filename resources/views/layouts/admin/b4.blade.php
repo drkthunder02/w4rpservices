@@ -106,7 +106,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="admin/dashboard/logins" class="nav-link">
+                <a href="/admin/dashboard/logins" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Allowed Logins</p>
                 </a>
