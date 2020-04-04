@@ -96,7 +96,7 @@ class SovBillsCommand extends Command
         $esi->setVersion('v4');
 
         //Reference to see if the character is in our look up table for corporations and characters
-        $char = $lookup->GetCharacterInfo($charId);
+        $char = $lookup->GetCharacterInfo($config['primary']);
         $corpId = $char->corporation_id;
 
         //Get the total pages for the journal for the sov bills from the holding corporation
