@@ -14,6 +14,14 @@ use App\Library\Esi\Esi;
 use App\Models\Finances\AllianceMarketJournal;
 
 class AllianceMarketTax {
+    public function EntryExists($journal) {
+        if(AllianceMarketJournal::where(['id' => $journal['id']])->exists()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function InsertMarketTax($journal, $corpId, $division) {
         //Create the ESI Helper class
         $esiHelper = new Esi;
