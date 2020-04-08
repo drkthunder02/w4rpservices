@@ -481,6 +481,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Console\\Commands\\MoonMailerCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Moons/MoonMailer.php',
         'App\\Console\\Commands\\PurgeUsers' => __DIR__ . '/../..' . '/app/Console/Commands/Users/PurgeUsers.php',
         'App\\Console\\Commands\\PurgeWormholes' => __DIR__ . '/../..' . '/app/Console/Commands/Wormholes/PurgeWormholes.php',
+        'App\\Console\\Commands\\SovBillsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Finances/SovBills.php',
         'App\\Console\\Commands\\UpdateMoonPriceCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Moons/UpdateMoonPricing.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',

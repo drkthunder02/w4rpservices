@@ -17,6 +17,7 @@ return array(
     'App\\Console\\Commands\\MoonMailerCommand' => $baseDir . '/app/Console/Commands/Moons/MoonMailer.php',
     'App\\Console\\Commands\\PurgeUsers' => $baseDir . '/app/Console/Commands/Users/PurgeUsers.php',
     'App\\Console\\Commands\\PurgeWormholes' => $baseDir . '/app/Console/Commands/Wormholes/PurgeWormholes.php',
+    'App\\Console\\Commands\\SovBillsCommand' => $baseDir . '/app/Console/Commands/Finances/SovBills.php',
     'App\\Console\\Commands\\UpdateMoonPriceCommand' => $baseDir . '/app/Console/Commands/Moons/UpdateMoonPricing.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
