@@ -312,6 +312,7 @@ class AdminController extends Controller
             $login->entity_name = $request->allowedEntityName;
             $login->entity_type = $request->allowedEntityType;
             $login->login_type = $request->allowedLoginType;
+            $login->save();
         }
 
         return redirect('/admin/dashboard')->with('success', 'Entity added to allowed login list.');
