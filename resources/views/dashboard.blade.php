@@ -46,6 +46,7 @@
                             <th>Ship Type</th>
                             <th>Loss Value</th>
                             <th>Status</th>
+                            <th>Date</th>
                         </thead>
                         <tbody>
                             @foreach($open as $o)
@@ -55,6 +56,7 @@
                                 <td>{{ $o['ship_type'] }}</td>
                                 <td>{{ $o['loss_value'] }}</td>
                                 <td>{{ $o['approved'] }}</td>
+                                <td>{{ $o['created_at'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -86,6 +88,7 @@
                             <th>Loss Value</th>
                             <th>Status</th>
                             <th>Notes</th>
+                            <th>Date</th>
                         </thead>
                         <tbody>
                             @foreach($denied as $d)
@@ -96,6 +99,7 @@
                                 <td>{{ $d['loss_value'] }}</td>
                                 <td>{{ $d['approved'] }}</td>
                                 <td>{{ $d['notes'] }}</td>
+                                <td>{{ $d['updated_at'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -126,6 +130,7 @@
                             <th>Ship Type</th>
                             <th>Loss Value</th>
                             <th>Status</th>
+                            <th>Date</th>
                         </thead>
                         <tbody>
                             @foreach($approved as $a)
@@ -135,6 +140,7 @@
                                 <td>{{ $a['ship_type'] }}</td>
                                 <td>{{ $a['loss_value'] }}</td>
                                 <td>{{ $a['approved'] }}</td>
+                                <td>{{ $a['updated_at'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -24,6 +24,10 @@ class SRPController extends Controller
         $this->middleware('role:User');
     }
 
+    public function displaySrpHistory() {
+        
+    }
+
     public function displayPayoutAmounts() {
         $payouts = array();
         $count = 0;
