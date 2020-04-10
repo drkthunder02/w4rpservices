@@ -2,7 +2,7 @@
 @section('content')
 
 @if($requests != null)
-    <div class="container">
+    <div class="container-fluid">
         <table class="table table-striped">
             <thead>
                 <th>Timestamp</th>
