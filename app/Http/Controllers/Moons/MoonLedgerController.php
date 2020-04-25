@@ -128,6 +128,8 @@ class MoonLedgerController extends Controller
                         ]);
                     }
                 }
+
+                dd($tempMiningLedger);
                 
                 //Store the ledger permanently by structure name
                 array_push($miningLedger, $tempMiningLedger);
