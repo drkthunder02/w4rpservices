@@ -116,7 +116,7 @@ class MoonLedgerController extends Controller
                     //We only want to push the mining ledger entry into the array if it matches
                     //the date within 30 days
                     $sortTime = Carbon::now()->subDays(30);
-                    $current = Carbon::createFromFormat('Y-m-d', $entry['updated']);
+                    $current = Carbon::createFromFormat('Y-m-d', $ledger->last_updated);
                     if($current->greaterThanOrEqualTo($sortTime)) {
                         array_push($tempMiningLedger, [
                             'structure' => $value,
