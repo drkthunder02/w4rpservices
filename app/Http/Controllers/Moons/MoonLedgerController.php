@@ -79,7 +79,7 @@ class MoonLedgerController extends Controller
             //Try to get the structure information from esi
             try {
                 $structureInfo = $esi->invoke('get', '/universe/structures/{structure_id}/', [
-                    'structure_id' => $resp->observer_id,
+                    'structure_id' => $response->observer_id,
                 ]);
             } catch(RequestFailedException $e) {
                 //If an exception has occurred, then do nothing
