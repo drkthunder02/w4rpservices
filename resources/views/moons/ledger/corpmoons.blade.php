@@ -8,16 +8,16 @@
     </div>
     <br>
     <ul class="nav nav-pills">
-        @foreach($structures as $structure)
+        @foreach($structures as $key => $value)
         <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#W4RP-{{$structure}}">{{$structure}}</a>
+            <a class="nav-link" data-toggle="pill" href="#W4RP-{{$value}}">{{$value}}</a>
         </li>
         @endforeach
     </ul>
     <br>
     <div class="tab-content">
-        @foreach($structures as $structure)
-            <div id="W4RP-{{ $structure }}" class="tab-pane fade">
+        @foreach($structures as $key => $value)
+            <div id="W4RP-{{ $value }}" class="tab-pane fade">
                 <table class="table table-bordered">
                     <thead>
                         <th>Character</th>
@@ -28,7 +28,7 @@
                     </thead>
                     <tbody>
                         @foreach($miningLedgers as $ledger)
-                            @if($ledger['structure'] == $structure)
+                            @if($ledger['structure'] == $value)
                             <tr>
                                 <td>{{ $ledger['character'] }}</td>
                                 <td>{{ $ledger['corpTicker'] }}</td>
