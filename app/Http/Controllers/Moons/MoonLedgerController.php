@@ -20,6 +20,8 @@ use App\Models\Esi\EsiScope;
 use App\Models\Structure\Structure;
 use App\Models\Structure\Service;
 use App\Models\Lookups\ItemLookup;
+use App\Models\MoonRent\MoonRental;
+use App\Models\Moon\Moon;
 
 class MoonLedgerController extends Controller
 {
@@ -27,6 +29,113 @@ class MoonLedgerController extends Controller
         $this->middleware('auth');
         $this->middleware('role:User');
         $this->middleware('permission:corp.lead');
+    }
+
+    public function displayRentalMoon() {
+        
+    }
+
+    public function displayMoonLedger() {
+        //Declare variables
+        $structures = array();
+        $miningLedgers = array();
+        $tempMiningLedger = array();
+        $tempMining = array();
+        $esiHelper = new Esi;
+        $lookup = new LookupHelper;
+        $response = null;
+        $structureInfo = null;
+
+        //Check for the esi scope
+        if(!$esiHelper->HaveEsiScope(auth()->user()->getId(), 'esi-industry.read_corporation_mining.v1')) {
+            return redirect('/dashboard')->with('error', 'Need to add scopes for esi-industry.read_corporation_mining.v1');
+        } else {
+            if(!$esiHelper->HaveEsiScope(auth()->user()->getId(), 'esi-universe.read_structures.v1')) {
+                return redirect('/dashboard')->with('error', 'Need to add scope for esi-universe.read_structures.v1');
+            }
+        }
+
+        //Get the refresh token if scope checks have passed
+        $refreshToken = $esiHelper->GetRefreshToken(auth()->user()->getId());
+        
+        //Setup the esi container
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+
+        //Get the character data from the lookup table if possible or esi
+        $character = $lookup->GetCharacterInfo(auth()->user()->getId());
+
+        //Try to get the mining observers for the corporation from esi
+        try {
+            $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
+                'corporation_id' => $character->corporation_id,
+            ]);
+        } catch(RequestFailedException $e) {
+            //If an exception has occurred for some reason redirect back to the dashboard with an error message
+            return redirect('/dashboard')->with('error', 'Failed to get mining structures.');
+        }
+
+        //For each mining observer, let's build the array of data to show on the page
+        foreach($response as $response) {
+            //Try to get the structure information from esi
+            try {
+                $structureInfo = $esi->invoke('get', '/universe/structures/{structure_id}/', [
+                    'structure_id' => $resp->observer_id,
+                ]);
+            } catch(RequestFailedException $e) {
+                //If an exception has occurred, then do nothing
+            }
+
+            //We don't really care about the key, but it is better than just 0 through whatever number
+            $structures[$resp->observer_id] = $structureInfo->name;
+        }
+
+        //For each of the structures we want to address it by it's key value pair.
+        //This will allow us to do some interesting things in the display.
+        foreach($structures as $key => $value) {
+            try {
+                $ledgers = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
+                    'corporation_id' => $character->corporation_id,
+                    'observer_id' => $key,
+                ]);
+            } catch(RequestFailedException $e) {
+                $ledgers = null;
+            }
+
+            if($ledgers != null) {
+                foreach($ledgers as $ledger) {
+                    //Declare a variable that will need to be cleared each time the foreach processes
+                    $tempArray = array();
+
+                    //Get the character information from the character id
+                    $charInfo = $lookup->GetCharacterInfo($ledger->character_id);
+                    //Get the corp ticker
+                    $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
+                    //Get the ore name from the type id
+                    $ore = $lookup->ItemIdToName($ledger->type_id);
+
+                    //We only want to push the mining ledger entry into the array if it matches
+                    //the date within 30 days
+                    $sortTime = Carbon::now()->subDays(30);
+                    $current = Carbon::createFromFormat('Y-m-d', $entry['updated']);
+                    if($current->greaterThanOrEqualTo($sortTime)) {
+                        array_push($tempMiningLedger, [
+                            'structure' => $value,
+                            'character' => $charInfo->name,
+                            'corpTicker' => $corpInfo->ticker,
+                            'ore' => $ore,
+                            'quantity' => $ledger->quantity,
+                            'updated' => $ledger->last_updated,
+                        ]);
+                    }
+                }
+                
+                //Store the ledger permanently by structure name
+                array_push($miningLedger, $tempMiningLedger);
+            }
+        }
+
+        return view('moons.ledger.corpmoons')->with('miningLedger', $miningLedger)
+                                             ->with('structures', $structures);
     }
 
     public function displaySelection() {

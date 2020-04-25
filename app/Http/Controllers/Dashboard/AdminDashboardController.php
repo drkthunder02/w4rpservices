@@ -28,7 +28,7 @@ class AdminDashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:Guest');
+        $this->middleware('role:Member');
     }
 
     /**
@@ -40,6 +40,19 @@ class AdminDashboardController extends Controller
         } else {
             redirect('/dashboard');
         }
+
+        //Declare variables we will need
+        $days = 30;
+        $sovBills = array();
+        $pi = array();
+        $industry = array();
+        $reprocessing = array();
+        $office = array();
+        $sprActual = array();
+        $srpLoss = array();
+
+        //Get the data for the sov expenses for a graph
+        
 
         return view('admin.dashboards.dashboard');
     }
