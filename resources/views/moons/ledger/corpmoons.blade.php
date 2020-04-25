@@ -17,7 +17,7 @@
     <br>
     <div class="tab-content">
         @foreach($structures as $structure)
-            <div id="W4RP-{{$structure}}" class="tab-pane fade">
+            <div id="W4RP-{{ $structure }}" class="tab-pane fade">
                 <table class="table table-bordered">
                     <thead>
                         <th>Character</th>
