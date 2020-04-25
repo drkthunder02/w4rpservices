@@ -66,7 +66,7 @@ class MoonLedgerController extends Controller
 
         //Try to get the mining observers for the corporation from esi
         try {
-            $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
+            $responses = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
                 'corporation_id' => $character->corporation_id,
             ]);
         } catch(RequestFailedException $e) {
@@ -75,7 +75,7 @@ class MoonLedgerController extends Controller
         }
 
         //For each mining observer, let's build the array of data to show on the page
-        foreach($response as $response) {
+        foreach($responses as $response) {
             //Try to get the structure information from esi
             try {
                 $structureInfo = $esi->invoke('get', '/universe/structures/{structure_id}/', [
