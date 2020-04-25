@@ -86,7 +86,7 @@ class MoonLedgerController extends Controller
             }
 
             //We don't really care about the key, but it is better than just 0 through whatever number
-            $structures[$resp->observer_id] = $structureInfo->name;
+            $structures[$response->observer_id] = $structureInfo->name;
         }
 
         //For each of the structures we want to address it by it's key value pair.
