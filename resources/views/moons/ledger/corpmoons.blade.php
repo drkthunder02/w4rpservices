@@ -27,7 +27,7 @@
                         <th>Date</th>
                     </thead>
                     <tbody>
-                        @foreach($miningLedgers as $ledgers)
+                        @foreach($miningLedgers as $ledger)
                             @if($ledger['structure'] == $value)
                             <tr>
                                 <td>{{ $ledger['character'] }}</td>
