@@ -15,7 +15,7 @@ use App\Library\Esi\Esi;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
 //Models
-use App\Models\Moon\Moon;
+use App\Models\Moon\RentalMoon;
 use App\Models\MoonRent\MoonRental;
 use App\Models\Jobs\JobSendEveMail;
 use App\Models\Mail\SentMail;
@@ -174,7 +174,7 @@ class MoonMailerCommand extends Command
         $today->hour = 0;
 
         foreach($rentals as $rental) {
-            $moon = Moon::where([
+            $moon = RentalMoon::where([
                 'System' => $rental->System,
                 'Planet' => $rental->Planet,
                 'Moon' => $rental->Moon,

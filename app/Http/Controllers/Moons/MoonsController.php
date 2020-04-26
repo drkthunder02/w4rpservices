@@ -12,7 +12,7 @@ use Carbon\Carbon;
 //Models
 use App\Models\Moon\Config;
 use App\Models\Moon\ItemComposition;
-use App\Models\Moon\Moon;
+use App\Models\Moon\RentalMoon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
 use App\Models\MoonRent\MoonRental;

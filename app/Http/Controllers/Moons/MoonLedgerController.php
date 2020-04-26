@@ -19,7 +19,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 use App\Models\Lookups\ItemLookup;
 use App\Models\MoonRent\MoonRental;
-use App\Models\Moon\Moon;
+use App\Models\Moon\RentalMoon;
 
 class MoonLedgerController extends Controller
 {

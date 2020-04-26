@@ -4,7 +4,7 @@ namespace App\Models\Moon;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Moon extends Model
+class RentalMoon extends Model
 {
     // Table Name
     protected $table = 'RentalMoons';

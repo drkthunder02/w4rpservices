@@ -7,7 +7,7 @@ use Illuminate\Http\File;
 
 //Models
 use App\Models\Moon\AllianceMoon;
-use App\Models\Moon\Moon;
+use App\Models\Moon\RentalMoon;
 
 class MoonUpdateSeeder extends Seeder
 {
@@ -138,7 +138,7 @@ class MoonUpdateSeeder extends Seeder
         foreach($lines as $line) {
             //If the moon is a rare moon, then either update it or add it.
             if($this->IsRMoon($line[3], $line[5], $line[7], $line[9])) {
-                $count = Moon::where([
+                $count = RentalMoon::where([
                     'System' => $line[0],
                     'Planet' =>  $line[1],
                     'Moon' => $line[2],
@@ -147,7 +147,7 @@ class MoonUpdateSeeder extends Seeder
                 if($count == 0) {
                     $region = $this->FindRegion($line[0]);
 
-                    Moon::insert([
+                    RentalMoon::insert([
                         'Region' => $region,
                         'System' => $line[0],
                         'Planet' => $line[1],
@@ -168,7 +168,7 @@ class MoonUpdateSeeder extends Seeder
                     $thirdQuantity = round($line[8] * 100);
                     $fourthQuantity = round($line[10] * 100);
 
-                    Moon::where([
+                    RentalMoon::where([
                         'System' => $line[0],
                         'Planet' => $line[1],
                         'Moon' => $line[2],

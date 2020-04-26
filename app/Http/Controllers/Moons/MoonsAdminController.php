@@ -11,7 +11,7 @@ use Carbon\Carbon;
 //Models
 use App\Models\Moon\Config;
 use App\Models\Moon\ItemComposition;
-use App\Models\Moon\Moon;
+use App\Models\Moon\RentalMoon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
 use App\Models\MoonRent\MoonRental;
@@ -157,7 +157,7 @@ class MoonsAdminController extends Controller
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
         //Get all of the moons from the database
-        $moons = Moon::orderBy('System', 'asc')->get();
+        $moons = RentalMoon::orderBy('System', 'asc')->get();
         //Declare the html variable and set it to null
         $table = array();
         //Set carbon dates as needed
@@ -304,7 +304,7 @@ class MoonsAdminController extends Controller
         $spmn = array();
 
         //Get the moons and put in order by System, Planet, then Moon number
-        $moons = Moon::orderBy('System', 'ASC')
+        $moons = RentalMoon::orderBy('System', 'ASC')
                        ->orderBy('Planet', 'ASC')
                        ->orderBy('Moon', 'ASC')
                        ->get();
@@ -402,7 +402,7 @@ class MoonsAdminController extends Controller
         }
 
         //Calculate the price of the moon for when it's updated
-        $moon = Moon::where([
+        $moon = RentalMoon::where([
             'System' => $system,
             'Planet' => $planet,
             'Moon' => $mn,
