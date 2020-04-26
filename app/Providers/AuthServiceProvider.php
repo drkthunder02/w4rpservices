@@ -18,8 +18,6 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
-     * These gates will always choose the highest roles
-     * We use gates in some of the graphics, but will work to utilize if statements instead shortly
      *
      * @return void
      */

@@ -184,21 +184,15 @@ class ContractAdminController extends Controller
     }
 
     private function NewContractMail() {
-        //Get all the users with a specific permission set
-        $users = UserPermission::where(['permission' => 'contract.canbid'])->get()->toArray();
-
         //Get the esi config
         $config = config('esi');
 
-        //Cycle through the users with the correct permission and send a mail to go out with the queue system.
-        foreach($users as $user) {
-                $mail = new JobSendEveMail;
-                $mail->sender = $config['primary'];
-                $mail->subject = 'New Alliance Contract Available';
-                $mail->recipient = $user['character_id'];
-                $mail->recipient_type = 'character';
-                $mail->body = "A new contract is available for the alliance contracting system.  Please check out <a href='https://services.w4rp.space'>Services Site</a>.";
-                ProcessSendEveMailJob::dispatch($mail)->onQueue('mail');
-        }
+        $mail = new JobSendEveMail;
+        $mail->sender = $config['primary'];
+        $mail->subject = 'New Alliance Production Contract Available';
+        $mail->recipient = $config['alliance'];
+        $mail->recipient_type = 'alliance';
+        $mail->body = "A new contract is available for the alliance contracting system.  Please check out <a href='https://services.w4rp.space'>Services Site</a> if you want to bid on the production contract.<br><br>Sincerely,<br>Warped Intentions Leadership";
+        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail');
     }
 }
