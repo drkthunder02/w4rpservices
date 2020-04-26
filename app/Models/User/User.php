@@ -120,7 +120,7 @@ class User extends Authenticatable
     }
 
     public function isMoonRenter() {
-        $moonRental = MoonRent::where([
+        $moonRental = MoonRental::where([
             'Contact' => $this->character_id,
         ])->first();
 
