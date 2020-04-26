@@ -20,6 +20,7 @@ class MoonRental extends Model
         'System',
         'Planet',
         'Moon',
+        'StructureId',
         'RentalCorp',
         'RentalEnd',
         'Contact',

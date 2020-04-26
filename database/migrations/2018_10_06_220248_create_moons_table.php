@@ -20,6 +20,7 @@ class CreateMoonsTable extends Migration
                 $table->string('System');
                 $table->string('Planet');
                 $table->string('Moon');
+                $table->unsignedBigInteger('StructureId')->nullable();
                 $table->string('StructureName')->default('No Name');
                 $table->string('FirstOre')->default('None');
                 $table->integer('FirstQuantity')->default('0');
@@ -41,6 +42,7 @@ class CreateMoonsTable extends Migration
                 $table->string('System');
                 $table->string('Planet');
                 $table->string('Moon');
+                $table->unsignedBigInteger('StructureId')->nullable();
                 $table->string('RentalCorp');
                 $table->dateTime('RentalEnd');
                 $table->string('Contact');

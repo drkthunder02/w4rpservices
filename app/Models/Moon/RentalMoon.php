@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Moon extends Model
 {
     // Table Name
-    protected $table = 'Moons';
+    protected $table = 'RentalMoons';
 
     //Primary Key
     public $primaryKey = 'id';
@@ -20,6 +20,7 @@ class Moon extends Model
         'System',
         'Planet',
         'Moon',
+        'StructureId',
         'StructureName',
         'FirstOre',
         'FirstQuantity',
