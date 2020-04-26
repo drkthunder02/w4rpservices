@@ -10,14 +10,14 @@
     <ul class="nav nav-pills">
         @foreach($structures as $key => $value)
         <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#W4RP-{{$value}}">{{$value}}</a>
+            <a class="nav-link" data-toggle="pill" href="#W4RP-{{str_replace(' ', '_', $value)}}">{{$value}}</a>
         </li>
         @endforeach
     </ul>
     <br>
     <div class="tab-content">
         @foreach($structures as $key => $value)
-            <div id="W4RP-{{ $value }}" class="tab-pane fade">
+            <div id="W4RP-{{str_replace(' ', '_', $value)}}" class="tab-pane fade">
                 <table class="table table-bordered">
                     <thead>
                         <th>Character</th>
