@@ -27,18 +27,16 @@
                         <th>Date</th>
                     </thead>
                     <tbody>
-                        @foreach($miningLedgers as $ledgers)
-                            @foreach($ledgers as $ledger)
-                                @if($ledger['structure'] == $value)
-                                <tr>
-                                    <td>{{ $ledger['character'] }}</td>
-                                    <td>{{ $ledger['corpTicker'] }}</td>
-                                    <td>{{ $ledger['ore'] }}</td>
-                                    <td>{{ $ledger['quantity'] }}</td>
-                                    <td>{{ $ledger['updated'] }}</td>
-                                </tr>
-                                @endif
-                            @endforeach
+                        @foreach($miningLedgers as $ledger)
+                            @if($ledger['structure'] == $value)
+                            <tr>
+                                <td>{{ $ledger['character'] }}</td>
+                                <td>{{ $ledger['corpTicker'] }}</td>
+                                <td>{{ $ledger['ore'] }}</td>
+                                <td>{{ $ledger['quantity'] }}</td>
+                                <td>{{ $ledger['updated'] }}</td>
+                            </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
