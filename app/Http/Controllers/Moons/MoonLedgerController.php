@@ -118,7 +118,7 @@ class MoonLedgerController extends Controller
                     $sortTime = Carbon::now()->subDays(30);
                     $current = Carbon::createFromFormat('Y-m-d', $ledger->last_updated);
                     if($current->greaterThanOrEqualTo($sortTime)) {
-                        array_push($tempMiningLedger, [
+                        array_push($miningLedgers, [
                             'structure' => $value,
                             'character' => $charInfo->name,
                             'corpTicker' => $corpInfo->ticker,
@@ -128,12 +128,11 @@ class MoonLedgerController extends Controller
                         ]);
                     }
                 }
-                
-                //Store the ledger permanently by structure name
-                array_push($miningLedgers, $tempMiningLedger);
             }
         }
 
+        dd($miningLedgers);
+        
         return view('moons.ledger.corpmoons')->with('miningLedgers', $miningLedgers)
                                              ->with('structures', $structures);
     }
