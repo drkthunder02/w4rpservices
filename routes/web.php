@@ -133,9 +133,8 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Moon Ledger Controller display pages
      */
-    Route::post('/moons/ledger/display/', 'Moons\MoonLedgerController@displayLedger');
-    Route::get('/moons/ledger/display/select', 'Moons\MoonLedgerController@displaySelection');
     Route::get('/moons/ledger/display/moons', 'Moons\MoonLedgerController@displayMoonLedger');
+    Route::get('/moons/ledger/display/rentals', 'Moons\MoonLedgerController@displayRentalMoonLedger');
 
     /**
      * Scopes Controller display pages

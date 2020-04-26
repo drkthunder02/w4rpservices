@@ -10,6 +10,7 @@ use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
+use App\Models\MoonRent\MoonRental;
 
 class User extends Authenticatable
 {
@@ -116,5 +117,17 @@ class User extends Authenticatable
         $role = UserRole::where(['character_id' => $this->character_id])->first();
 
         return $role->role;
+    }
+
+    public function isMoonRenter() {
+        $moonRental = MoonRent::where([
+            'Contact' => $this->character_id,
+        ])->first();
+
+        if($moonRental != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

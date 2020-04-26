@@ -14,7 +14,10 @@
                     <a class="dropdown-item" href="/moons/display/form/worth">Moon Worth</a>
                     <a class="dropdown-item" href="/moons/display/request">Moon Reservation</a>
                     @if(auth()->user()->hasPermission('corp.lead') && auth()->user()->hasEsiScope('esi-industry.read_corporation_mining.v1'))
-                    <a class="dropdown-item" href="/moons/ledger/display/select">Mining Ledger</a>
+                    <a class="dropdown-item" href="/moons/ledger/display/moons">Mining Ledger</a>
+                    @endif
+                    @if(auth()->user()->isMoonRenter())
+                    <a class="dropdown-item" href="/moons/ledger/display/rentals">Moon Rental Ledger</a>
                     @endif
                 </div>
             </li>

@@ -1,34 +1,47 @@
 @extends('layouts.b4')
 @section('content')
-<br>
-<div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h2>Moon Ledger</h2><br>
-            <p align="left">Shows mining from the last 30 days.</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="container">
+            <h2>Moon Ledger</h2>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <th>Character</th>
-                    <th>Corp Ticker</th>
-                    <th>Ore Name</th>
-                    <th>Quantity</th>
-                    <th>Date</th>
-                </thead>
-                <tbody>
-                    @foreach($mining as $min)
-                        <tr>
-                            <td>{{ $min['character'] }}</td>
-                            <td>{{ $min['corpTicker'] }}</td>
-                            <td>{{ $min['ore'] }}</td>
-                            <td>{{ $min['quantity'] }}</td>
-                            <td>{{ $min['updated'] }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+    </div>
+    <br>
+    <ul class="nav nav-pills">
+        @foreach($structures as $key => $value)
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="pill" href="#W4RP-{{str_replace(' ', '_', $value)}}">{{$value}}</a>
+        </li>
+        @endforeach
+    </ul>
+    <br>
+    <div class="tab-content">
+        @foreach($structures as $key => $value)
+            <div id="W4RP-{{str_replace(' ', '_', $value)}}" class="tab-pane fade">
+                <table class="table table-bordered">
+                    <thead>
+                        <th>Character</th>
+                        <th>Corp Ticker</th>
+                        <th>Ore Name</th>
+                        <th>Quantity</th>
+                        <th>Date</th>
+                    </thead>
+                    <tbody>
+                        @foreach($miningLedgers as $ledger)
+                            @if($ledger['structure'] == $value)
+                            <tr>
+                                <td>{{ $ledger['character'] }}</td>
+                                <td>{{ $ledger['corpTicker'] }}</td>
+                                <td>{{ $ledger['ore'] }}</td>
+                                <td>{{ $ledger['quantity'] }}</td>
+                                <td>{{ $ledger['updated'] }}</td>
+                            </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endforeach
     </div>
 </div>
 @endsection
