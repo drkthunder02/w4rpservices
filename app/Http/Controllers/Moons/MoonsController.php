@@ -240,7 +240,7 @@ class MoonsController extends Controller
         //Setup calls to the MoonCalc class
         $moonCalc = new MoonCalc();
         //get all of the rental moons from the database
-        $moons = DB::table('Moons')->orderBy('System', 'asc')->get();
+        $moons = DB::table('RentalMoons')->orderBy('System', 'asc')->get();
         //Set the rental date as last month for moons not rented
         $lastMonth = Carbon::now()->subMonth();
         //Set a variable for today's date
