@@ -133,9 +133,6 @@ class MoonLedgerController extends Controller
                 array_push($miningLedgers, $tempMiningLedger);
             }
         }
-        foreach($miningLedgers as $ledger) {
-            dd($ledger);
-        }
 
         return view('moons.ledger.corpmoons')->with('miningLedgers', $miningLedgers)
                                              ->with('structures', $structures);
