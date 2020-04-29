@@ -11,6 +11,7 @@ use App\Models\User\UserPermission;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\MoonRent\MoonRental;
+use App\Models\SRP\SRPShip;
 
 class User extends Authenticatable
 {
@@ -129,5 +130,27 @@ class User extends Authenticatable
         } else {
             return false;
         }
+    }
+
+    public function srpOpen() {
+               
+        return SRPShip::where([
+            'character_id' => $this->character_id,
+            'approved' => 'Under Review',
+        ])->count();
+    }
+
+    public function srpDenied() {
+        return SRPShip::where([
+            'character_id' => $this->character_id,
+            'approved' => 'Denied',
+        ])->count();
+    }
+
+    public function srpAccepted() {
+        return SRPShip::where([
+            'character_id' => $this->character_id,
+            'approved' => 'Approved',
+        ])->count();
     }
 }
