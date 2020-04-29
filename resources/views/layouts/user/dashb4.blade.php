@@ -64,19 +64,19 @@
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" href="#">
-          <i class="far fa-bell"></i>
+          <i class="fas fa-fighter-jet"></i>
           <span class="badge badge-warning navbar-badge">{{ auth()->user()->srpOpen() }}</span>
         </a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" href="#">
-            <i class="far fa-bell"></i>
+            <i class="fas fa-planet-slash"></i>
             <span class="badge badge-danger navbar-badge">{{ auth()->user()->srpDenied() }}</span>
         </a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" href="#">
-            <i class="far fa-bell"></i>
+            <i class="fas fa-space-shuttle"></i>
             <span class="badge badge-success navbar-badge">{{ auth()->user()->srpApproved() }}</span>
         </a>
       </li>
