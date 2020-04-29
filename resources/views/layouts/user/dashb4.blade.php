@@ -68,14 +68,20 @@
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">{{ auth()->user()->srpOpen() }}</span> <!-- SRP Requests Not Accepted / Denied -->
         </a>
+      </li>
+      <li class="nav-item dropdown">
         <a class="nav-link" href="/profile">
             <i classs="far fa-bell"></i>
             <span class="badge badge-danger navbar-badge">{{ auth()->user()->srpDenied() }}</span> <!-- SRP Requests Denied -->
         </a>
+      </li>
+      <li class="nav-item dropdown">
         <a class="nav-link" href="/profile">
             <i class="far fa-bell"></i>
             <span class="badge badge-primary navbar-badge">{{ auth()->user()->srpAccepted() }}</span> <!-- SRP Requests Accepted -->
         </a>
+      </li>
+      <li class="nav-item dropdown">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
       <li class="nav-item">
