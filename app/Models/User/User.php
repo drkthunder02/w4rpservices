@@ -147,7 +147,7 @@ class User extends Authenticatable
         ])->count();
     }
 
-    public function srpAccepted() {
+    public function srpApproved() {
         return SRPShip::where([
             'character_id' => $this->character_id,
             'approved' => 'Approved',
