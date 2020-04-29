@@ -63,22 +63,21 @@
     <ul class="navbar-nav ml-auto">
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
-        <!-- Link to the SRP Page with notifications based on how many open SRP requests there are -->
-        <a class="nav-link" href="/profile">
+        <a class="nav-link" href="#">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">{{ auth()->user()->srpOpen() }}</span> <!-- SRP Requests Not Accepted / Denied -->
         </a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="/profile">
+        <a class="nav-link" href="#">
             <i classs="far fa-bell"></i>
             <span class="badge badge-danger navbar-badge">{{ auth()->user()->srpDenied() }}</span> <!-- SRP Requests Denied -->
         </a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="/profile">
+        <a class="nav-link" href="#">
             <li class="far fa-bell"></i>
-            <span class="badge badge-primary navbar-badge">{{ auth()->user()->srpAccepted() }}</span> <!-- SRP Requests Accepted -->
+            <span class="badge badge-success navbar-badge">{{ auth()->user()->srpAccepted() }}</span> <!-- SRP Requests Accepted -->
         </a>
       </li>
       <li class="nav-item dropdown">
