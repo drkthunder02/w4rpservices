@@ -70,7 +70,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" href="#">
-            <i classs="far fa-bell"></i>
+            <i class="far fa-bell"></i>
             <span class="badge badge-danger navbar-badge">{{ auth()->user()->srpDenied() }}</span> <!-- SRP Requests Denied -->
         </a>
       </li>
