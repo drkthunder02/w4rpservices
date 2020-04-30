@@ -270,10 +270,10 @@
           @if(auth()->user()->hasPermission('srp.admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon far fa-building"></i>
               <p>
                 Structures<br>
-                <i class="right far fa-building"></i>
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
