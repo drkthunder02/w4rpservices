@@ -125,7 +125,7 @@ class MoonLedgerController extends Controller
             }
         }
         
-        return view('moons.ledger.corpmoons')->with('miningLedgers', $miningLedgers)
+        return view('moons.ledger.displayledger')->with('miningLedgers', $miningLedgers)
                                              ->with('structures', $structures);
     }
 
