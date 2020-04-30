@@ -1,4 +1,4 @@
-@extends('layouts.b4')
+@extends('layouts.user.dashb4')
 @section('content')
 <div class="container">
     <h2>Total Worth of the Moon / Month</h2>
