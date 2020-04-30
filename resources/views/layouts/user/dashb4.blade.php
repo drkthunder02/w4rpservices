@@ -158,7 +158,7 @@
           @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Renter') || auth()->user()->hasRole('Admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon far fa-moon"></i>
               <p>Moons<br>
                 <i class="right fas fa-angle-left"></i>
               </p>
@@ -212,7 +212,7 @@
           @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon far fa-money-bill-alt"></i>
               <p>SRP<br>
                 <i class="right fas fa-angle-left"></i>
               </p>
@@ -238,7 +238,7 @@
           @if(auth()->user()->hasPermission('moon.admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-file-contract"></i>
               <p>Contracts<br>
                 <i class="right fas fa-angle-left"></i>
               </p>
@@ -273,7 +273,7 @@
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Structures<br>
-                <i class="right fas fa-angle-left"></i>
+                <i class="right far fa-building"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -299,7 +299,7 @@
           @if(auth()->user()->hasPermission('contract.admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-file-contract"></i>
               <p>
                 Contract Admin<br>
                 <i class="right fas fa-angle-left"></i>
@@ -325,40 +325,40 @@
           <!-- Blacklist -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="nav-icon far fa-meh-blank"></i>
                 <p>Blacklist<br>
                 <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                  <a href="/blacklist/display" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Display</p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="/blacklist/display/search" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Search</p>
+                  </a>
+              </li>
+              @if(auth()->user()->hasPermission('alliance.recruiter'))
+              <li class="nav-item">
+                  <a href="/blacklist/display/add" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add To</p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="/blacklist/display/remove" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Remove From</p>
+                  </a>
+              </li>
+              @endif
+            </ul>
           </li>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-                <a href="/blacklist/display" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Display</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/blacklist/display/search" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Search</p>
-                </a>
-            </li>
-            @if(auth()->user()->hasPermission('alliance.recruiter'))
-            <li class="nav-item">
-                <a href="/blacklist/display/add" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add To</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/blacklist/display/remove" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Remove From</p>
-                </a>
-            </li>
-            @endif
-          </ul>
           <!-- End Blacklist -->
         </ul>
       </nav>
