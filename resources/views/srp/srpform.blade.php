@@ -1,4 +1,4 @@
-@extends('layouts.b4')
+@extends('layouts.user.dashb4')
 @section('content')
 <div class="container">
     <h2>Ship Replacement Program Form</h2>

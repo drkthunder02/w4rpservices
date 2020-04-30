@@ -1,4 +1,4 @@
-@extends('layouts.b4')
+@extends('layouts.user.dashb4')
 @section('content')
 <div class="container">
     <table class="table table-striped table-bordered">

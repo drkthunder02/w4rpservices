@@ -1,4 +1,4 @@
-@extends('layouts.b4');
+@extends('layouts.user.dashb4')
 @section('content')
 <?php
     $publicData = false;
