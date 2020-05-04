@@ -83,6 +83,7 @@ class FlexStructureCommand extends Command
 
             //Build the body of the mail
             $body = "Flex Structure Overhead Cost is due for the following structures:<br>";
+            dd($structures);
             foreach($structures as $structure) {
                 $body += "System: " . $structure->system . " - " . $structure->structure_type . ": " . $structure->structure_cost . " ISK<br>";
             }
