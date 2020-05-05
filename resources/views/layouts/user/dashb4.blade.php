@@ -110,8 +110,8 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          @if(auth()->user()->hasRole('User'))
           <!-- General Items -->
-          @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -152,7 +152,6 @@
               </li>
             </ul>
           </li>
-          @endif
           <!-- End General Items -->  
           <!-- Moon Items -->
           @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Renter') || auth()->user()->hasRole('Admin'))
@@ -209,7 +208,6 @@
           @endif
           <!-- End Moon Items -->
           <!-- SRP Items -->
-          @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-money-bill-alt"></i>
@@ -232,10 +230,8 @@
               </li>
             </ul>
           </li>
-          @endif
           <!-- SRP Items -->
           <!-- Contracts -->
-          @if(auth()->user()->hasPermission('moon.admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file-contract"></i>
@@ -264,10 +260,8 @@
               </li>
             </ul>
           </li>
-          @endif
           <!-- End Contracts -->
           <!-- Structures -->
-          @if(auth()->user()->hasPermission('srp.admin'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-building"></i>
@@ -293,35 +287,7 @@
               </li>
             </ul>
           </li>
-          @endif
           <!-- End SRP Admin -->
-          <!-- Contract Admin -->
-          @if(auth()->user()->hasPermission('contract.admin'))
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-file-contract"></i>
-              <p>
-                Contract Admin<br>
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/contracts/admin/display" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Admin Dashboard</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/contracts/admin/new" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>New Contract</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          @endif
-          <!-- End Contract Admin -->
           <!-- Blacklist -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -360,6 +326,39 @@
             </ul>
           </li>
           <!-- End Blacklist -->
+          <!-- Start of Wiki -->
+          @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Renter'))
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-meh-blank"></i>
+                <p>Wiki<br>
+                <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                  <a href="https://www.w4rp.space" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Wiki</p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="/wiki/register" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Registration</p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="/wiki/changepassword" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Change Password</p>
+                  </a>
+              </li>
+            </ul>
+          </li>
+          @endif
+          <!-- End of Wiki Stuff -->
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
