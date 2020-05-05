@@ -368,7 +368,8 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <br><br>
+    <!-- Included Messages -->
+    @include('inc.messages')
     <!-- Main content -->
     <div class="content">
         @yield('content')
