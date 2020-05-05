@@ -368,6 +368,7 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    <br><br>
     <!-- Main content -->
     <div class="content">
         @yield('content')
