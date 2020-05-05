@@ -330,7 +330,7 @@
           @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Renter'))
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-                <i class="nav-icon far fa-meh-blank"></i>
+                <i class="nav-icon fab fa-wikipedia-w"></i>
                 <p>Wiki<br>
                 <i class="right fas fa-angle-left"></i>
                 </p>
