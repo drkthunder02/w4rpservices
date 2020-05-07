@@ -134,7 +134,7 @@ class WikiHelper {
      */
     public function AddNewUserGroup($groupName, $description) {
         //Check if the user group already exists
-        DokuGroupNames::where(['gname' => $groupName])->count();
+        $count = DokuGroupNames::where(['gname' => $groupName])->count();
 
         if($count == 0) {
             DokuGroupNames::insert([
