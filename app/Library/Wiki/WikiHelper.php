@@ -44,7 +44,11 @@ class WikiHelper {
 
         //Set the alliance id
         $corp = $lookup->GetCorporationInfo($corpId);
-        $allianceId = $corp->alliance_id;
+        if(isset($corp->alliance_id)) {
+            $allianceId = $corp->alliance_id;
+        } else {
+            $allianceId = 0;
+        }
 
         if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {
             $purge = false;
