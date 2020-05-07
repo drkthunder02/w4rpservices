@@ -386,6 +386,8 @@ class AdminController extends Controller
             'groupname' => 'required',  //Group Id number
         ]);
 
+        dd($request);
+
         //Declare some helper variables
         $wikiHelper = new WikiHelper;
 
