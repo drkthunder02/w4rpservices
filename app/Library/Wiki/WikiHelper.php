@@ -63,7 +63,7 @@ class WikiHelper {
         $groups = DokuGroupNames::all();
 
         //Check if the user already belongs to the group
-        if(DokuMember::where(['gid' => $groupId])->count() > 0) {
+        if(DokuMember::where(['gid' => $groupId, 'uid' => $userId])->count() > 0) {
             //If the count is greater than zero then we don't need to do anything,
             //just return false to indicate nothing was changed
             return false;
