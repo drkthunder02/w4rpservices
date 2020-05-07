@@ -44,6 +44,7 @@ class WikiHelper {
 
         //Set the alliance id
         $corp = $lookup->GetCorporationInfo($corpId);
+        dd($corp);
         $allianceId = $corp->alliance_id;
 
         if(in_array($allianceId, $legacy) || in_array($allianceId, $renter) || $allianceId == 99004116) {
