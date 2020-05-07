@@ -386,7 +386,7 @@ class AdminController extends Controller
             'groupname' => 'required',  //Group Id number
         ]);
 
-        dd($request->groupname);
+        dd($request->user);
 
         //Declare some helper variables
         $wikiHelper = new WikiHelper;
@@ -397,9 +397,14 @@ class AdminController extends Controller
         }
 
         //Add the user to the wiki group
-        $wikiHelper->AddUserToGroup($request->user, $request->groupname);
+        $results = $wikiHelper->AddUserToGroup($request->user, $request->groupname);
 
-        return redirect('/admin/dashboard/wiki')->with('success', 'User added to group for the wiki.');
+        //Redirect based on the results of the add user to group function
+        if($results) {
+            return redirect('/admin/dashboard/wiki')->with('success', 'User added to group for the wiki.');
+        } else {
+            return redirect('/admin/dashboard/wiki')->with('error', 'Failed at add user to group, or user was already part of the group.');
+        }
     }
 
     /**
