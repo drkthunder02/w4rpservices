@@ -152,4 +152,11 @@ class WikiHelper {
         //Delete the user from the user table
         DokuUser::where(['id' => $userId])->delete();
     }
+
+    /**
+     * Get uid from name
+     */
+    public function GetUID($name) {
+        return DokuUser::where(['name' => $name])->first();
+    }
 }

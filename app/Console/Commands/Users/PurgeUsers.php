@@ -9,6 +9,7 @@ use Log;
 //Libraries
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
+use App\Library\Wiki\WikiHelper;
 
 //Models
 use App\Models\User\User;
@@ -18,6 +19,8 @@ use App\Models\Esi\EsiToken;
 use App\Models\User\UserPermission;
 use App\Models\User\UserRole;
 use App\Models\Admin\AllowedLogin;
+use App\Models\Doku\DokuMember;
+use App\Models\Doku\DokuUser;
 
 
 /**
@@ -184,6 +187,13 @@ class PurgeUsers extends Command
                             EsiToken::where([
                                 'character_id' => $user->character_id,
                             ])->delete();
+
+                            //Delete the user from the wiki
+                            $wikiHelper = new WikiHelper;
+
+                            //Get the uid from the wiki tables utilizing the character's name
+                            $uid = DokuUser::where(['name' => $user->name])->first();
+                            $wikiHelper->DeleteWikiUser($uid);                          
                         }
                     }
                 }

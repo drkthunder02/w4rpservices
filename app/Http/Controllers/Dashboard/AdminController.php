@@ -470,19 +470,24 @@ class AdminController extends Controller
         $lookup = new LookupHelper;
         $wikiHelper = new WikiHelper;
 
+        //Get all of the users from the database
+        $users = User::all();
+
         //Search the names and verify against the lookup table
         //to find the corporation and / or alliance they belong to.
         foreach($users as $user) {
             //Let's look up the character in the user table by their name.
             //If no name is found, then delete the user and have them start over with the wiki permissions
-            $count = User::where(['name' => $user])->count();
+            $count = DokuUser::where(['name' => $user->name])->count();
+
+            //If the user is found, then check if they are allowed on the wiki.
+            //If the the count == 0, then the user wasn't found on the wiki, so do nothing.
             if($count > 0) {
                 //If the user is not allowed, then delete the user, otherwise, leave the user untouched
-                if(!$wikiHelper->AllowedUser($user)) {
-                    $wikiHelper->DeleteWikiUser($user);
+                if(!$wikiHelper->AllowedUser($user->name)) {
+                    $uid = $wikiHelper->GetUID($user->name);
+                    $wikiHelper->DeleteWikiUser($uid);
                 }
-            } else {
-                $wikiHelper->DeleteWikiUser($user);
             }
         }
 
