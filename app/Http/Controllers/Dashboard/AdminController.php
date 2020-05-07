@@ -491,6 +491,27 @@ class AdminController extends Controller
             }
         }
 
+        //Get all of the DokuUsers and verify against the Users on the services page
+        $users = DokuUser::all();
+
+        //Search the names and verify against the lookup table to find the corporation / alliance the user belongs to.
+        foreach($users as $user) {
+            //Lookup the character in the user table on the services page
+            $count = User::where(['name' => $user->name])->count();
+
+            //If the user is found, then check if they are allowed on the wiki.
+            //If the count == 0, then delete the user anyways
+            if($count > 0 ) {
+                //If the user is not allowed, then delete the user, otherwise, leave them alone.
+                if(!$wikiHelper->AllowedUser($user->name)) {
+                    $uid = $wikiHelper->GetUID($user->name);
+                    $wikiHelper->DeleteWikiUser($uid);
+                } else {
+                    $wikiHelper->DeleteWikiUser($user->id);
+                }
+            }
+        }
+
         return redirect('/admin/dashboard/wiki')->with('success', 'Wiki has been purged.');
     }
 }
