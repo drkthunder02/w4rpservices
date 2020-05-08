@@ -3,8 +3,7 @@
 <div class="container">
     <h2>Total Worth of the Moon / Month</h2>
     <div class="jumbotron">
-        Total Moon Goo + Ore Worth: {{ $totalWorth }} ISK<br>
-        Total Moon Goo Worth: {{ $totalGoo }} ISK<br>
+        Total Moon Worth: {{ $totalWorth }} ISK<br>
     </div>
 </div>
 <br>

@@ -382,12 +382,6 @@ class MoonsController extends Controller
             $fourthQuantity = $fourthQuantity / $totalPercent;
         }
 
-        //Calculate the total moon goo value
-        $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
-                                                             $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
-        //Format the number to send to the blade
-        $totalGoo = number_format($totalGoo, 2, ".", ",");
-
         //Calculate the total worth of the moon
         $totalWorth = $moonCalc->SpatialMoonsTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
                                                         $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
@@ -552,7 +546,6 @@ class MoonsController extends Controller
         }
 
         return view('moons.user.displayTotalWorth')->with('totalWorth', $totalWorth)
-                                                   ->with('totalGoo', $totalGoo)
                                                    ->with('composition', $composition)
                                                    ->with('reprocessing', $reprocessing);
     }
