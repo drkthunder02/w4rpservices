@@ -25,7 +25,7 @@
                     @foreach($composition as $key => $value)
                         @if($value > 0)
                         <tr>
-                            <td>{{ $key }}</td>
+                            <td>{{ str_replace('_', ' ', $key) }}</td>
                             <td>{{ number_format($value, 0, ".", ",") }}</td>
                         </tr>
                         @endif
