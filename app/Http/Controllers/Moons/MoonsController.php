@@ -176,20 +176,6 @@ class MoonsController extends Controller
             return redirct('/moons/display/request')->with('error', 'Region was not found.');
         }
 
-        /*  Not working correctly with certain systems
-        //Check to see if the moon is not available
-        $future = AllianceMoon::where([
-            'Region' => (string)$region,
-            'System' => (string)$request->system,
-            'Planet' => (string)$request->planet,
-            'Moon' => (string)$request->moon,
-        ])->first();
-
-        if($future->Availability != 'Available') {
-            return redirect('/moons/display/request')->with('error', 'The moon has already been reserved by another party.');
-        }
-        */
-
         //Check to see if the moon has been previously inputted for
         $allMoons = AllianceMoon::all();
         foreach($allMoons as $moon) {
@@ -383,6 +369,15 @@ class MoonsController extends Controller
             $reprocessing = 0.84;
         }
 
+        //Get the total percentage of the ores, and normalize it to 1.00.
+        $totalPercent = $firstQuantity + $secondQuantity + $thirdQuantity + $fourthQuantity;
+        if($totalPercent < 1.00) {
+            $firstQuantity = $firstQuantity / $totalPercent;
+            $secondQuantity = $secondQuantity / $totalPercent;
+            $thirdQuantity = $thirdQuantity / $totalPercent;
+            $fourthQuantity = $fourthQuantity / $totalPercent;
+        }
+
         //Calculate the total moon goo value
         $totalGoo = $moonCalc->SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuantity, $secondOre, $secondQuantity,
                                                              $thirdOre, $thirdQuantity, $fourthOre, $fourthQuantity);
@@ -418,6 +413,10 @@ class MoonsController extends Controller
             $composition['Hydrocarbons'] += floor(($firstComp->Hydrocarbons * $rUnits) * $reprocessing);
             $composition['Silicates'] += floor(($firstComp->Silicates * $rUnits) * $reprocessing);
             $composition['Cobalt'] += floor(($firstComp->Cobalt * $rUnits) * $reprocessing);
+            $composition['Scandium'] += floor(($firstComp->Scandium * $rUnits) * $reprocessing);
+            $composition['Titanium'] += floor(($firstComp->Titanium * $rUnits) * $reprocessing);
+            $composition['Tungsten'] += floor(($firstComp->Tungsten * $rUnits) * $reprocessing);
+            $composition['Cadmium'] += floor(($firstComp->Cadmium * $rUnits) * $reprocessing);
             $composition['Platinum'] += floor(($firstComp->Platinium * $rUnits) * $reprocessing);
             $composition['Vanadium'] += floor(($firstComp->Vanadium * $rUnits) * $reprocessing);
             $composition['Chromium'] += floor(($firstComp->Chromium * $rUnits) * $reprocessing);
@@ -453,6 +452,10 @@ class MoonsController extends Controller
             $composition['Hydrocarbons'] += floor(($secondComp->Hydrocarbons * $rUnits) * $reprocessing);
             $composition['Silicates'] += floor(($secondComp->Silicates * $rUnits) * $reprocessing);
             $composition['Cobalt'] += floor(($secondComp->Cobalt * $rUnits) * $reprocessing);
+            $composition['Scandium'] += floor(($secondComp->Scandium * $rUnits) * $reprocessing);
+            $composition['Titanium'] += floor(($secondComp->Titanium * $rUnits) * $reprocessing);
+            $composition['Tungsten'] += floor(($secondComp->Tungsten * $rUnits) * $reprocessing);
+            $composition['Cadmium'] += floor(($secondComp->Cadmium * $rUnits) * $reprocessing);
             $composition['Platinum'] += floor(($secondComp->Platinium * $rUnits) * $reprocessing);
             $composition['Vanadium'] += floor(($secondComp->Vanadium * $rUnits) * $reprocessing);
             $composition['Chromium'] += floor(($secondComp->Chromium * $rUnits) * $reprocessing);
@@ -488,6 +491,10 @@ class MoonsController extends Controller
             $composition['Hydrocarbons'] += floor(($thirdComp->Hydrocarbons * $rUnits) * $reprocessing);
             $composition['Silicates'] += floor(($thirdComp->Silicates * $rUnits) * $reprocessing);
             $composition['Cobalt'] += floor(($thirdComp->Cobalt * $rUnits) * $reprocessing);
+            $composition['Scandium'] += floor(($thirdComp->Scandium * $rUnits) * $reprocessing);
+            $composition['Titanium'] += floor(($thirdComp->Titanium * $rUnits) * $reprocessing);
+            $composition['Tungsten'] += floor(($thirdComp->Tungsten * $rUnits) * $reprocessing);
+            $composition['Cadmium'] += floor(($thirdComp->Cadmium * $rUnits) * $reprocessing);
             $composition['Platinum'] += floor(($thirdComp->Platinium * $rUnits) * $reprocessing);
             $composition['Vanadium'] += floor(($thirdComp->Vanadium * $rUnits) * $reprocessing);
             $composition['Chromium'] += floor(($thirdComp->Chromium * $rUnits) * $reprocessing);
@@ -523,6 +530,10 @@ class MoonsController extends Controller
             $composition['Hydrocarbons'] += floor(($fourthComp->Hydrocarbons * $rUnits) * $reprocessing);
             $composition['Silicates'] += floor(($fourthComp->Silicates * $rUnits) * $reprocessing);
             $composition['Cobalt'] += floor(($fourthComp->Cobalt * $rUnits) * $reprocessing);
+            $composition['Scandium'] += floor(($fourthComp->Scandium * $rUnits) * $reprocessing);
+            $composition['Titanium'] += floor(($fourthComp->Titanium * $rUnits) * $reprocessing);
+            $composition['Tungsten'] += floor(($fourthComp->Tungsten * $rUnits) * $reprocessing);
+            $composition['Cadmium'] += floor(($fourthComp->Cadmium * $rUnits) * $reprocessing);
             $composition['Platinum'] += floor(($fourthComp->Platinium * $rUnits) * $reprocessing);
             $composition['Vanadium'] += floor(($fourthComp->Vanadium * $rUnits) * $reprocessing);
             $composition['Chromium'] += floor(($fourthComp->Chromium * $rUnits) * $reprocessing);
