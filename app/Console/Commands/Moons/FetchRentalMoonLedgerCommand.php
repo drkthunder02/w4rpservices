@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Moons;
 
 //Internal Library
 use Illuminate\Console\Command;

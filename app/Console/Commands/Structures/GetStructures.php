@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Structures;
 
 use Illuminate\Console\Command;
 use Log;

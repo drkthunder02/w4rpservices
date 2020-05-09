@@ -3,26 +3,22 @@
 namespace App\Console\Commands\Moons;
 
 use Illuminate\Console\Command;
-use Carbon\Carbon;
-use Commands\Library\CommandHelper;
 
-use App\Library\Moons\MoonCalc;
-
-class UpdateMoonPriceCommand extends Command
+class FetchMoonObserversCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'services:UpdateMoonPrice';
+    protected $signature = 'services:FetchMoonObservers';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update moon pricing on a scheduled basis';
+    protected $description = 'Fetch Moon Observers';
 
     /**
      * Create a new command instance.
@@ -42,14 +38,17 @@ class UpdateMoonPriceCommand extends Command
     public function handle()
     {
         //Create the command helper container
-        $task = new CommandHelper('CorpJournal');
-        //Add the entry into the jobs table saying the job is starting
+        $task = new CommandHelper('FetchMoonObservers');
+        //Add the entry into the jobs table saying the job has started
         $task->SetStartStatus();
 
-        $moonCalc = new MoonCalc();
-        $moonCalc->FetchNewPrices();
+        //Declare some variables
+        $lookup  = new LookupHelper;
+        $esi = new Esi;
 
-        //Mark the job as finished
-        $task->SetStopStatus();
+        //Get the configuration from the main site
+        $config = config('esi');
+
+        
     }
 }

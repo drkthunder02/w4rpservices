@@ -17,18 +17,22 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\GetCorpsCommand::class,
-        Commands\UpdateMoonPriceCommand::class,
-        Commands\HoldingFinancesCommand::class,
-        Commands\MoonMailerCommand::class,
-        Commands\GetStructuresCommand::class,
-        Commands\GetAssetsCommand::class,
-        Commands\PurgeUsers::class,
-        Commands\FlexStructureCommand::class,
-        Commands\EmptyJumpBridges::class,
-        Commands\PurgeWormholes::class,
-        Commands\SovBillsCommand::class,
-        Commands\CleanStaleDataCommand::class,
+        Commands\Corps\GetCorpsCommand::class,
+        Commands\Moons\UpdateMoonPriceCommand::class,
+        Commands\Finances\HoldingFinancesCommand::class,
+        Commands\Moons\MoonMailerCommand::class,
+        Commands\Structures\GetStructuresCommand::class,
+        Commands\Assets\GetAssetsCommand::class,
+        Commands\Users\PurgeUsers::class,
+        Commands\Flex\FlexStructureCommand::class,
+        Commands\Data\EmptyJumpBridges::class,
+        Commands\Wormholes\PurgeWormholes::class,
+        Commands\Finances\SovBillsCommand::class,
+        Commands\Data\CleanStaleDataCommand::class,
+        //Commands\Moons\FetchMoonLedgerCommand::class,
+        //Commands\Moons\FetchMoonObserversCommand::class,
+        //Commands\Moons\FetchRentalMoonLedgerCommand::class,
+        //Commands\Moons\FetchRentalMoonObserversCommand::class,
     ];
 
     /**
@@ -39,6 +43,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        //Horizon Graph Schedule
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
         //Command to get the holding journal finances
         $schedule->command('services:HoldingJournal')
                 ->hourly()
@@ -81,9 +87,21 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:CleanData')
                 ->weekly(7, '11:00')
                 ->withoutOverlapping();
-
-        //Horizon Graph Schedule
-        $schedule->command('horizon:snapshot')->everyFiveMinutes();
+        /**
+         * New Commands
+        */
+        //$schedule->command('services:FetchMoonLedgers')
+        //         ->hourlyAt(30)
+        //         ->withoutOverlapping();
+        //$schedule->command('services:FetchMoonObservers')
+        //         ->hourlyAt(15)
+        //         ->withoutOverlapping();
+        //$schedule->command('services:FetchRentalMoonObservers')
+        //         ->hourlyAt(15)
+        //         ->withoutOverlapping();
+        //$schedule->command('services:FetchRentalMoonLedgers')
+        //         ->hourlyAt(20)
+        //         ->withoutOverlapping();
     }
 
     /**

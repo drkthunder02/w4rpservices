@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Moons;
 
 //Internal Library
 use Illuminate\Console\Command;
@@ -15,7 +15,7 @@ use App\Library\Esi\Esi;
 use App\Models\Moon\RentalMoon;
 use App\Models\Moon\RentalMoonObserver;
 
-class FetchRentalMoonObservers extends Command
+class FetchRentalMoonObserversCommand extends Command
 {
     /**
      * The name and signature of the console command.

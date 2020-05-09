@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Wormholes;
 
 //Internal Library
 use Illuminate\Console\Command;

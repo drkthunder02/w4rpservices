@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Moons;
 
 use Illuminate\Console\Command;
 
@@ -11,7 +11,7 @@ class FetchMoonLedgerCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'services:FetchMoonLedgers';
 
     /**
      * The console command description.

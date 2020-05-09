@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Flex;
 
 //Internal Library
 use Illuminate\Console\Command;
