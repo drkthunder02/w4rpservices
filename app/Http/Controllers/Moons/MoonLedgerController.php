@@ -31,6 +31,8 @@ class MoonLedgerController extends Controller
     }
 
     public function registerStructures() {
+        $this->middleware('permission:corp.lead');
+
         //Declare variables
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
@@ -94,6 +96,10 @@ class MoonLedgerController extends Controller
         }
 
         return redirect('/dashboard')->with('success', 'Added mining structures to the database');
+    }
+
+    public function displayMoonLedgerNew() {
+
     }
 
     public function displayMoonLedger() {
