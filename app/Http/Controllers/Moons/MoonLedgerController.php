@@ -20,12 +20,18 @@ use App\Models\Esi\EsiScope;
 use App\Models\Lookups\ItemLookup;
 use App\Models\MoonRent\MoonRental;
 use App\Models\Moon\RentalMoon;
+use App\Models\Moon\CorpObserversRegistered;
 
 class MoonLedgerController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('role:User');
+    }
+
+    public function registerStructureLedger() {
+        //Declare variables
+        
     }
 
     public function displayMoonLedger() {

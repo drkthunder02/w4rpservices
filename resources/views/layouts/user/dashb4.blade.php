@@ -127,6 +127,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/scopes/select" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ESI Scopes</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/logistics/fuel/structures" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Jump Gate Fuel</p>
