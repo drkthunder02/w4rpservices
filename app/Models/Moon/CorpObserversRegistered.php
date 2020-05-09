@@ -4,10 +4,10 @@ namespace App\Models\Moon;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CorpMoonObserver extends Model
+class CorpObserversRegistered extends Model
 {
     //Table Name
-    protected $table = 'corp_mining_observers';
+    protected $table = 'corp_mining_observers_registered';
 
     //Primary Key
     public $primaryKey = 'id';
@@ -21,11 +21,9 @@ class CorpMoonObserver extends Model
      * @var array
      */
     protected $fillable = [
+        'character_id',
+        'character_name',
         'corporation_id',
         'corporation_name',
-        'observer_id',
-        'observer_name',
-        'observer_type',
-        'last_updated',
-    ];  
+    ];
 }

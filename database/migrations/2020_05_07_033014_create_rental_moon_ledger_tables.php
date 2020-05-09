@@ -76,6 +76,17 @@ class CreateRentalMoonLedgerTables extends Migration
                 $table->timestamps();
             });
         }
+
+        if(!Schema::hasTable('corp_mining_observers_registered')) {
+            Schema::create('corp_mining_observers_registered', function(Blueprint $table) {
+                $table->unsignedBigIncrements('id');
+                $table->unsignedBigInteger('character_id');
+                $table->string('character_name');
+                $table->unsignedBigInteger('corporation_id');
+                $table->string('corporation_name');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
