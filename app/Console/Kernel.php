@@ -30,9 +30,7 @@ class Kernel extends ConsoleKernel
         Commands\Finances\SovBillsCommand::class,
         Commands\Data\CleanStaleDataCommand::class,
         //Commands\Moons\FetchMoonLedgerCommand::class,
-        //Commands\Moons\FetchMoonObserversCommand::class,
         //Commands\Moons\FetchRentalMoonLedgerCommand::class,
-        //Commands\Moons\FetchRentalMoonObserversCommand::class,
     ];
 
     /**

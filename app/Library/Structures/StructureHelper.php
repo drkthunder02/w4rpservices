@@ -31,24 +31,30 @@ class StructureHelper {
     private $charId;
     private $corpId;
     private $page;
+    private $esi;
 
-    public function __construct($char, $corp) {
+    public function __construct($char, $corp, $esi = null) {
         $this->charId = $char;
         $this->corpId = $corp;
+        $this->esi = $esi;
     }
 
     public function GetStructuresByPage($page) {
         //Declare some variables
         $esiHelper = new Esi;
 
-        //Get the refresh token from the database
-        $token = $esiHelper->GetRefreshToken($this->charId);
-        //Create the esi authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
+        if($this->esi == null) {
+            //Get the refresh token from the database
+            $token = $esiHelper->GetRefreshToken($this->charId);
+            //Create the esi authentication container
+            $this->esi = $esiHelper->SetupEsiAuthentication($token);
+        }
+
+        
 
         //Try to get the ESI data
         try {
-            $structures = $esi->page($page)
+            $structures = $this->esi->page($page)
                               ->invoke('get', '/corporations/{corporation_id}/structures/', [
                                 'corporation_id' => $this->corpId,
                                 ]);
@@ -67,7 +73,7 @@ class StructureHelper {
         //Get the refresh token from the database
         $token = $esiHelper->GetRefreshToken($this->charId);
         //Setup the esi authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
+        $this->esi = $esiHelper->SetupEsiAuthentication($token);
 
         //Get the structure information
         $info = $this->GetStructureInfo($structure->structure_id);
@@ -86,14 +92,17 @@ class StructureHelper {
         //Declare some variables
         $esiHelper = new Esi;
 
-        //Get the refresh token
-        $token = $esiHelper->GetRefreshToken($this->charId);
-        //Setup the esi authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
+        if($this->esi == null) {
+            //Get the refresh token
+            $token = $esiHelper->GetRefreshToken($this->charId);
+            //Setup the esi authentication container
+            $this->esi = $esiHelper->SetupEsiAuthentication($token);
+        }
+        
 
         //Attempt to get the solar system name from ESI
         try {
-            $solar = $esi->invoke('get', '/universe/systems/{system_id}/', [
+            $solar = $this->esi->invoke('get', '/universe/systems/{system_id}/', [
                 'system_id' => $systemId,
             ]);
         } catch(RequestFailedException $e) {
@@ -111,10 +120,13 @@ class StructureHelper {
         //Declare some variables
         $esiHelper = new Esi;
 
-        //Get the refresh token
-        $token = $esiHelper->GetRefreshToken($this->charId);
-        //Setup the esi authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
+        if($this->esi == null) {
+            //Get the refresh token
+            $token = $esiHelper->GetRefreshToken($this->charId);
+            //Setup the esi authentication container
+            $this->esi = $esiHelper->SetupEsiAuthentication($token);
+        }
+        
 
         try {
             $info = $esi->invoke('get', '/universe/structures/{structure_id}/', [

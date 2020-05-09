@@ -1,60 +1,49 @@
 <?php
 
-namespace App\Console\Commands\Moons;
+namespace App\Jobs;
 
-//Internal Library
-use Illuminate\Console\Command;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Log;
-use Carbon\Carbon;
 
 //App Library
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
+use App\Library\Lookups\LookupHelper;
+use App\Library\Structures\StructureHelper;
+
 
 //App Models
 use App\Models\Moon\RentalMoon;
 use App\Models\Moon\RentalMoonObserver;
 
-class FetchRentalMoonObserversCommand extends Command
+class FetchRentalMoonObserversJob implements ShouldQueue
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'services:FetchRentalMoonObservers';
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Fetch the rental moon observers';
-
-    /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @return void
      */
     public function __construct()
     {
-        parent::__construct();
+        //
     }
 
     /**
-     * Execute the console command.
+     * Execute the job.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {
-        //Create the command helper container
-        $task = new CommandHelper('RentalMoonObservers');
-        //Add the entry into the jobs table saying the job has started
-        $task->SetStartStatus();
-
         //Declare some variables
         $lookup = new LookupHelper;
+        $structure = new StructureHelper;
         $esi = new Esi;
 
         //Get the configuration for the main site
@@ -99,8 +88,5 @@ class FetchRentalMoonObserversCommand extends Command
                 ]);
             }
         }
-
-        //Mark the job as finished
-        $task->SetStopStatus();
     }
 }
