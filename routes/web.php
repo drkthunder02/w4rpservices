@@ -22,9 +22,9 @@ Route::get('/', function () {
 /**
  * Login Display pages
  */
-Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('login');
-Route::get('/callback', 'Auth\LoginController@handleProviderCallback')->name('callback');
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/login', 'Auth\LoginController@redirectToProvider');
+Route::get('/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['middleware' => ['auth']], function(){
     /**
