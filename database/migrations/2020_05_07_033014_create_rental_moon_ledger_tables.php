@@ -53,6 +53,9 @@ class CreateRentalMoonLedgerTables extends Migration
                 $table->unsignedBigInteger('observer_id');
                 $table->string('observer_name');
                 $table->string('observer_type');
+                $table->unsignedBigInteger('observer_owner_id');
+                $table->unsignedBigInteger('solar_system_id');
+                $table->unsignedBigInteger('observer_type_id');
                 $table->dateTime('last_updated');
                 $table->timestamps();
             });
@@ -73,17 +76,6 @@ class CreateRentalMoonLedgerTables extends Migration
                 $table->unsignedBigInteger('recorded_corporation_id');
                 $table->string('record_corporation_name');
                 $table->dateTime('last_updated');
-                $table->timestamps();
-            });
-        }
-
-        if(!Schema::hasTable('corp_mining_observers_registered')) {
-            Schema::create('corp_mining_observers_registered', function(Blueprint $table) {
-                $table->unsignedBigIncrements('id');
-                $table->unsignedBigInteger('character_id');
-                $table->string('character_name');
-                $table->unsignedBigInteger('corporation_id');
-                $table->string('corporation_name');
                 $table->timestamps();
             });
         }

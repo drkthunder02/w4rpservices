@@ -135,6 +135,7 @@ Route::group(['middleware' => ['auth']], function(){
      */
     Route::get('/moons/ledger/display/moons', 'Moons\MoonLedgerController@displayMoonLedger');
     Route::get('/moons/ledger/display/rentals', 'Moons\MoonLedgerController@displayRentalMoonLedger');
+    Route::get('/moons/ledger/register', 'Moons\MoonLedgerController@registerStructures');
 
     /**
      * Scopes Controller display pages

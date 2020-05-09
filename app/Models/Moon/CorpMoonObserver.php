@@ -26,6 +26,9 @@ class CorpMoonObserver extends Model
         'observer_id',
         'observer_name',
         'observer_type',
+        'observer_owner_id',
+        'solar_system_id',
+        'observer_type_id',
         'last_updated',
     ];  
 }
