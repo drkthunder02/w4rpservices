@@ -85,7 +85,6 @@ class StructureHelper {
         } else {
             $this->UpdateExistingStructure($structure, $info);
         }
-            
     }
 
     private function GetSolarSystemName($systemId) {
