@@ -48,4 +48,8 @@ class Structure extends Model
         'reinforce_weekday',
         'unanchors_at',
     ];
+
+    public function services() {
+        return $this->hasMany('App\Models\Structure\Service', 'structure_id', 'structure_id');
+    }
 }

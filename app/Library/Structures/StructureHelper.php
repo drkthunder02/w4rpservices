@@ -3,8 +3,6 @@
 /**
  * W4RP Services
  * GNU Public License
- * 
- * Finally works in it's current state.  Need to move to a job process.
  */
 
 namespace App\Library\Structures;

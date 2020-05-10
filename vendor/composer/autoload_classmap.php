@@ -88,6 +88,7 @@ return array(
     'App\\Library\\Moons\\MiningLedgerHelper' => $baseDir . '/app/Library/Moons/MiningLedgerHelper.php',
     'App\\Library\\Moons\\MoonCalc' => $baseDir . '/app/Library/Moons/MoonCalc.php',
     'App\\Library\\SRP\\SRPHelper' => $baseDir . '/app/Library/SRP/SRPHelper.php',
+    'App\\Library\\Structures\\MarketHelper' => $baseDir . '/app/Library/Structures/MarketHelper.php',
     'App\\Library\\Structures\\StructureHelper' => $baseDir . '/app/Library/Structures/StructureHelper.php',
     'App\\Library\\Taxes\\TaxesHelper' => $baseDir . '/app/Library/Taxes/TaxesHelper.php',
     'App\\Library\\Wiki\\WikiHelper' => $baseDir . '/app/Library/Wiki/WikiHelper.php',

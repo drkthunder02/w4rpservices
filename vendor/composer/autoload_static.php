@@ -557,6 +557,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Library\\Moons\\MiningLedgerHelper' => __DIR__ . '/../..' . '/app/Library/Moons/MiningLedgerHelper.php',
         'App\\Library\\Moons\\MoonCalc' => __DIR__ . '/../..' . '/app/Library/Moons/MoonCalc.php',
         'App\\Library\\SRP\\SRPHelper' => __DIR__ . '/../..' . '/app/Library/SRP/SRPHelper.php',
+        'App\\Library\\Structures\\MarketHelper' => __DIR__ . '/../..' . '/app/Library/Structures/MarketHelper.php',
         'App\\Library\\Structures\\StructureHelper' => __DIR__ . '/../..' . '/app/Library/Structures/StructureHelper.php',
         'App\\Library\\Taxes\\TaxesHelper' => __DIR__ . '/../..' . '/app/Library/Taxes/TaxesHelper.php',
         'App\\Library\\Wiki\\WikiHelper' => __DIR__ . '/../..' . '/app/Library/Wiki/WikiHelper.php',

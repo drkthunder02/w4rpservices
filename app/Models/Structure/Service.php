@@ -25,4 +25,8 @@ class Service extends Model
         'name',
         'state',
     ];
+
+    public function structure() {
+        return $this->hasOne('App\Models\Structure\Structure', 'structure_id', 'structure_id');
+    }
 }
