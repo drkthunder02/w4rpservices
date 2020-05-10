@@ -13,10 +13,6 @@ use App\Models\SRP\SrpShipType;
 
 class SRPHelper {
 
-    public function __contruct() {
-        //
-    }
-
     public function GetAllianceSRPActual($start, $end) {
         $actual = 0.00;
 
@@ -37,75 +33,6 @@ class SRPHelper {
           ->sum('loss_value');
 
         return $loss;
-    }
-
-    public function GetLossesByFC($start, $end) {
-        $losses = array();
-        $fcs = null;
-
-        $fcs = SRPShip::whereBetween('created_at', [$start, $end])
-                      ->pluck('fleet_commander_name')
-                      ->toArray();
-
-        foreach($fcs as $fc) {
-            $tempLosses = SRPShip::where(['fleet_commander_name' => $fc])
-                                 ->whereBetween('created_at', [$start, $end])
-                                 ->sum('loss_value');
-            
-            $losses[$fc] = $tempLosses;
-        }
-
-        return $losses;
-    }
-
-    public function GetUnderReview($start, $end) {
-        $requests = 0.00;
-
-        $requests = SRPShip::where(['approved' => 'Under Review'])
-                            ->whereBetween('created_at', [$start, $end])
-                            ->sum('loss_value');
-
-        return $requests;
-    }
-
-    public function GetApprovedValue($start, $end) {
-        $requests = 0.00;
-
-        $requests = SRPShip::where(['approved' => 'Approved'])
-                            ->whereBetween('created_at', [$start, $end])
-                            ->sum('paid_value');
-        
-        return $requests;
-    }
-
-    public function GetApproved($start, $end, $type) {
-        $requests = 0.00;
-
-        $requests = SRPShip::where(['approved' => 'Approved'])
-                            ->whereBetween('created_at', [$start, $end])
-                            ->sum($type);
-
-        return $requests;
-    }
-
-    public function GetDeniedValue($start, $end) {
-        $requests = 0.00;
-
-        $requests = SRPShip::where(['approved' => 'Denied'])
-                            ->whereBetween('created_at', [$start, $end])
-                            ->sum('paid_value');
-
-        return $requests;
-    }
-
-    public function GetDenied($start, $end, $type) {
-        $requests = 0.00;
-
-        $requests = SRPShip::where(['approved' => 'Denied'])
-                            ->whereBetween('created_at', [$start, $end])
-                            -sum($type);
-
-        return $requests;
     }
 
     public function GetTimeFrame($months) {
