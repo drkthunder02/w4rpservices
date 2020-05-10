@@ -42,85 +42,16 @@ class MoonCalc {
         $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
         //Calculate the prices from the ores
-        $this->CalculateTotalPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
+        $this->CalculateTotalPrice($firstOre, $firstPerc, $firstTotal);
+        $this->CalculateTotalPrice($secondOre, $secondPerc, $secondTotal);
+        $this->CalculateTotalPrice($thirdOre, $thirdPerc, $thirdTotal);
+        $this->CalculateTotalPrice($fourthOre, $fourthPerc, $fourthTotal);
 
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
        
         //Return the rental price to the caller
         return $totalPriceMined;
-    }
-
-    public function SpatialMoonsOnlyGooTotalWorth($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Get the total moon pull in m3
-        $totalPull = $this->CalculateTotalMoonPull();
-
-        //Get the configuration for pricing calculations
-        $config = DB::table('Config')->get();
-        
-        //Convert the quantities into numbers we want to utilize
-        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
-
-        //Calculate the price of each ore
-        $this->CalculateOnlyGooPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
-
-        //Calculate the total to price to be mined in one month
-        $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
-       
-        //Return the rental price to the caller
-        return $totalPriceMined;
-    }
-
-    public function SpatialMoonsOnlyGooMailer($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Get the total moon pull in m3
-        $totalPull = $this->CalculateTotalMoonPull();
-
-        //Get the configuration for pricing calculations
-        $config = DB::table('Config')->get();
-
-        //Convert the quantities into numbers we want to utilize
-        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
-
-        //Calculate the price of each ore
-        $this->CalculateOnlyGooPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
-
-        //Calculate the total to price to be mined in one month
-        $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
-        
-        //Calculate the rental price.  Refined rate is already included in the price from rental composition
-        $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
-        $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
-       
-        //Return the rental price to the caller
-        return $rentalPrice;
-    }
-
-    public function SpatialMoonsOnlyGoo($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Get the total moon pull in m3
-        $totalPull = $this->CalculateTotalMoonPull();
-
-        //Get the configuration for pricing calculations
-        $config = DB::table('Config')->get();
-        
-        //Convert the quantities into numbers we want to utilize
-        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
-
-        //Calculate the price of each ore
-        $this->CalculateOnlyGooPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
-
-        //Calculate the total to price to be mined in one month
-        $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
-        
-        //Calculate the rental price.  Refined rate is already included in the price from rental composition
-        $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
-        $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
-        
-        //Format the rental price to the appropriate number
-        $rentalPrice['alliance'] = number_format($rentalPrice['alliance'], 0, ".", ",");
-        $rentalPrice['outofalliance'] = number_format($rentalPrice['outofalliance'], 0, ".", ",");
-       
-        //Return the rental price to the caller
-        return $rentalPrice;
     }
 
     public function SpatialMoons($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
@@ -134,7 +65,10 @@ class MoonCalc {
         $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
         //Calculate the prices from the ores
-        $this->CalculateTotalPrices($firstOre, $firstPerc, $firstTotal, $secondOre, $secondPerc, $secondTotal, $thirdOre, $thirdPerc, $thirdTotal, $fourthOre, $fourthPerc, $fourthTotal);
+        $this->CalculateTotalPrice($firstOre, $firstPerc, $firstTotal);
+        $this->CalculateTotalPrice($secondOre, $secondPerc, $secondTotal);
+        $this->CalculateTotalPrice($thirdOre, $thirdPerc, $thirdTotal);
+        $this->CalculateTotalPrice($fourthOre, $fourthPerc, $fourthTotal);
 
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
@@ -142,10 +76,6 @@ class MoonCalc {
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
         $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
         $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
-        
-        //Format the rental price to the appropriate number
-        $rentalPrice['alliance'] = number_format($rentalPrice['alliance'], 0, ".", ",");
-        $rentalPrice['outofalliance'] = number_format($rentalPrice['outofalliance'], 0, ".", ",");
        
         //Return the rental price to the caller
         return $rentalPrice;
@@ -382,7 +312,7 @@ class MoonCalc {
 
     private function CalcPrice($ore, $percentage) {
         //Specify the total pull amount
-        $totalPull = 5.55 * (3600.00 * 24.00 * 30.00);
+        $totalPull = $this->CalculateTotalMoonPull();
 
         //Find the size of the asteroid from the database
         $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
@@ -540,67 +470,15 @@ class MoonCalc {
         }
     }
 
-    private function CalculateTotalPrices($firstOre, $firstPerc, &$firstTotal, $secondOre, $secondPerc, &$secondTotal, $thirdOre, $thirdPerc, &$thirdTotal, $fourthOre, $fourthPerc, &$fourthTotal) {
+    /**
+     * Calculate the total price, then pass it by reference to the calling function
+     */
+    private function CalclulateTotalPrice($ore, $perc, &$total) {
         //Calculate the prices from the ores
-        if($firstOre != "None") {
-            $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
+        if($ore != 'None') {
+            $total = $this->CalcPrice($ore, $perc);
         } else {
-            $firstTotal = 0.00;
-        }
-        if($secondOre != "None") {
-            $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
-        } else {
-            $secondTotal = 0.00;
-        }
-        if($thirdOre != "None") {
-            $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
-        } else {
-            $thirdTotal = 0.00;
-        }
-        if($fourthOre != "None") {
-            $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
-        } else {
-            $fourthTotal = 0.00;
-        }
-    }
-
-    private function CalculateOnlyGooPrices($firstOre, $firstPerc, &$firstTotal, $secondOre, $secondPerc, &$secondTotal, $thirdOre, $thirdPerc, &$thirdTotal, $fourthOre, $fourthPerc, &$fourthTotal) {
-        //Calculate the price of each ore
-        if($firstOre != "None") {
-            if($this->IsRMoonGoo($firstOre)) {
-                $firstTotal = $this->CalcPrice($firstOre, $firstPerc);
-            } else {
-                $firstTotal = 0.00;
-            }
-        } else {
-            $firstTotal = 0.00;
-        }
-        if($secondOre != "None") {
-            if($this->IsRMoonGoo($secondOre)) {
-                $secondTotal = $this->CalcPrice($secondOre, $secondPerc);
-            } else {
-                $secondTotal = 0.00;
-            }
-        } else {
-            $secondTotal = 0.00;
-        }
-        if($thirdOre != "None") {
-            if($this->IsRMoonGoo($thirdOre)) {
-                $thirdTotal = $this->CalcPrice($thirdOre, $thirdPerc);
-            } else {
-                $thirdTotal = 0.00;
-            }
-        } else {
-            $thirdTotal = 0.00;
-        }
-        if($fourthOre != "None") {
-            if($this->IsRMoonGoo($fourthOre)) {
-                $fourthTotal = $this->CalcPrice($fourthOre, $fourthPerc);
-            } else {
-                $fourthTotal = 0.00;
-            }
-        } else {
-            $fourthTotal = 0.00;
+            $total = 0.00;
         }
     }
 }

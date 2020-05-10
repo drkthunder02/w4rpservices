@@ -52,7 +52,7 @@ class MiningLedgerHelper {
         //Check if the character has the correct ESI Scope.  If the character doesn't, then return false, but
         //also send a notice eve mail to the user.  The HaveEsiScope sends a mail for us.
         if(!$esiHelper->HaveEsiScope($this->charId, 'esi-industry.read_corporation_mining.v1')) {
-            
+            Log::warning('Character: ' . $this->charId . ' did not have the appropriate esi scope for the mining ledger.');
             return null;
         }
 

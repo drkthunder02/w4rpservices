@@ -186,8 +186,8 @@ class MoonMailerCommand extends Command
             //If today is greater than the rental end, then calculate the moon cost
             if($today->greaterThanOrEqualTo($end)) {
                 //Get the updated price for the moon
-                $price = $moonCalc->SpatialMoonsOnlyGooMailer($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                                              $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+                $price = $moonCalc->SpatialMoons($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
+                                                 $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
                 //Check the type and figure out which price to add in
                 if($rental->Type == 'alliance') {

@@ -230,8 +230,8 @@ class MoonsAdminController extends Controller
                 $color = 'table-danger';
             }
 
-            //Calculate hte price of the moon based on what is in the moon
-            $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+            //Calculate the price of the moon based on what is in the moon
+            $price = $moonCalc->SpatialMoons($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
             
             //Add the data to the html string to be passed to the view
             array_push($table, [
@@ -409,8 +409,8 @@ class MoonsAdminController extends Controller
         ])->first();
 
         //Calculate the price of the rental and store it in the database
-        $price = $moonCalc->SpatialMoonsOnlyGoo($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                                $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
+        $price = $moonCalc->SpatialMoons($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
+                                         $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
 
         //Count how many rentals we find for later database processing
         $count = MoonRental::where([
