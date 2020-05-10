@@ -117,7 +117,6 @@ class StructureHelper {
             //Setup the esi authentication container
             $this->esi = $esiHelper->SetupEsiAuthentication($token);
         }
-        
 
         try {
             $info = $esi->invoke('get', '/universe/structures/{structure_id}/', [
