@@ -59,6 +59,7 @@ class FetchRentalMoonLedgerJob implements ShouldQueue
         $lookup = new LookupHelper;
         $response = null;
         $structureInfo = null;
+        $entries = array();
 
         //Get the configuration for the main site
         $config = config('esi');
@@ -105,21 +106,31 @@ class FetchRentalMoonLedgerJob implements ShouldQueue
                     //Get the corporation information
                     $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
 
-                    $newLedger = new RentalMoonLedger;
-                    $newLedger->corporation_id = $corpId;
-                    $newLedger->corporation_name = $corpName;
-                    $newLedger->character_id = $ledger->character_id;
-                    $newLedger->character_name = $charInfo->name;
-                    $newLedger->observer_id = $observer->observer_id;
-                    $newLedger->observer_name = $observerName;
-                    $newLedger->type_id = $ledger->type_id;
-                    $newLedger->ore = $ore;
-                    $newLedger->quantity = $ledger->quantity;
-                    $newLedger->recorded_corporation_id = $ledger->recorded_corporation_id;
-                    $newLedger->recorded_corporation_name = $recordedCorpName;
-                    $newLedger->last_updated = $ledger->last_updated;
-                    $newLedger->save();
+                    $entries[] = [
+                        'corporation_id' => $corpId,
+                        'corporation_name' => $corpName,
+                        'character_id' => $ledger->character_id,
+                        'character_name' => $charInfo->name,
+                        'observer_id' => $observer->observer_id,
+                        'observer_name' => $observerName,
+                        'type_id' => $ledger->type_id,
+                        'ore' => $ore,
+                        'quantity' => $ledger->quantity,
+                        'recorded_corporation_id' => $ledger->recorded_corporation_id,
+                        'recorded_corporation_name' => $recordedCorpName,
+                        'last_updated' => $ledger->last_updated,
+                        'created_at' => $ledger->last_updated . ' 23:59:59',
+                        'updated_at' => $ledger->last_updated . ' 23:59:59',
+                    ];
                 }
+
+                //Insert or ignore each of the records saved into the array through the foreach loop
+                RentalMoonLedger::insertOrIgnore($entries);
+
+                Log::info(
+                    'FetchRentalMoonLedgerJob inserted up to ' .count($entires) . ' new ledger entries.'
+                );
+
             }
         } 
     }

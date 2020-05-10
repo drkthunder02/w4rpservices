@@ -23,4 +23,8 @@ class RentalMoonObserver extends Model
         'observer_type',
         'last_updated',
     ];
+
+    public function ledger() {
+        return $this->hasMany('App\Models\Moon\RentalMoonLedger', 'observer_id', 'observer_id');
+    }
 }

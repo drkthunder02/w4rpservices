@@ -56,6 +56,7 @@ class FetchRentalMoonObserversJob implements ShouldQueue
         //Declare some variables
         $lookup = new LookupHelper;
         $esi = new Esi;
+        $obss = array();
 
         //Get the configuration for the main site
         $config = config('esi');
@@ -83,21 +84,14 @@ class FetchRentalMoonObserversJob implements ShouldQueue
 
         //Run through the mining observers, and add them to the database as needed
         foreach($responses as $observer) {
-            RentalMoonObserver::where(['observer_id' => $observer->observer_id])->count();
-            //If the observer is not found, then add it to the database, otherwise we just need to update the last updated portion
-            if($count == 0) {
-                $obs = new RentalMoonObserver;
-                $obs->observer_id = $observer->observer_id;
-                $obs->observer_type = $observer->observer_type;
-                $obs->last_updated = $esi->DecodeDate($observer->last_updated);
-                $obs->save();
-            } else {
-                RentalMoonObserver::where([
-                    'observer_id' => $observer->observer_id,
-                ])->update([
-                    'last_updated' => $esi->DecodeDate($observer->last_updated),
-                ]);
-            }
+            //Populate the array with the data, so we can do an insert or ignore after the foreach loop is completed.
+            $obss[] = [
+                'observer_id' => $observer->observer_id,
+                'observer_type' => $observer->observer_type,
+                'last_updated' => $esi->DecodeDate($observer->last_updated)
+            ];
         }
+
+        RentalMoonObserver::insertOrIgnore($obss);
     }
 }
