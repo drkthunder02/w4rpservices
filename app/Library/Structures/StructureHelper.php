@@ -16,6 +16,7 @@ use Log;
 use App\Jobs\Library\JobHelper;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
+use App\Library\Lookups\LookupHelper;
 
 //App Models
 use App\Models\Jobs\JobProcessStructure;
@@ -49,8 +50,6 @@ class StructureHelper {
             //Create the esi authentication container
             $this->esi = $esiHelper->SetupEsiAuthentication($token);
         }
-
-        
 
         //Try to get the ESI data
         try {
@@ -90,6 +89,7 @@ class StructureHelper {
     private function GetSolarSystemName($systemId) {
         //Declare some variables
         $esiHelper = new Esi;
+        $lookup = new LookupHelper;
 
         if($this->esi == null) {
             //Get the refresh token
@@ -97,19 +97,11 @@ class StructureHelper {
             //Setup the esi authentication container
             $this->esi = $esiHelper->SetupEsiAuthentication($token);
         }
-        
 
-        //Attempt to get the solar system name from ESI
-        try {
-            $solar = $this->esi->invoke('get', '/universe/systems/{system_id}/', [
-                'system_id' => $systemId,
-            ]);
-        } catch(RequestFailedException $e) {
-            $solar = null;
-        }
+        $solar = $lookup->SystemIdToName($systemId);
 
         if($solar != null) {
-            return $solar->name;
+            return $solar;
         } else {
             return null;
         }

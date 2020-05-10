@@ -105,6 +105,27 @@ class LookupHelper {
         $newItem->save();
     }
 
+    public function SystemIdToName($systemId) {
+        //Check if the solar system is stored in our database first
+        $solarSystem = $this->LookupSolarSystemId($systemId);
+
+        if($solarSystem != null) {
+            return $solarSystem->name;
+        } else {
+            try {
+                $solar = $this->esi->invoke('get', '/universe/systems/{system_id}/', [
+                    'system_id' => $systemId,
+                ]);
+            } catch(RequestFailedException $e) {
+                Log::warning('Failed to get system id from /universe/systems in Lookup Helper.');
+                return null;
+            }
+
+            $this->StoreSolarSystem($solar);
+
+            return $solar->name;
+        }
+    }
 
     public function SystemNameToId($system) {
         //Check if the solar system is stored in our own database first
@@ -132,6 +153,14 @@ class LookupHelper {
         }
     }
 
+    private function LookupSolarSystemId($systemId) {
+        $solar = SolarSystem::where([
+            'solar_system_id' => $systemId,
+        ])->first();
+
+        return $solar;
+    }
+
     private function LookupSolarSystem($system) {
         $solar = SolarSystem::where([
             'name' => $system,
@@ -141,10 +170,22 @@ class LookupHelper {
     }
 
     private function StoreSolarSystem($system) {
-        $solar = new SolarSystem;
-        $solar->name = $system->name;
-        $solar->solar_system_id = $system->id;
-        $solar->save();
+        if(isset($system->id)) {
+            SolarSystem::insertOrIgnore([
+                'name' => $system->name,
+                'solar_system_id' => $system->id,
+            ]);
+        } else if(isset($system->system_id)) {
+            SolarSystem::insertOrIgnore([
+                'name' => $system->name,
+                'solar_system_id' => $system->system_id,
+            ]);
+        } else {
+            $solar = new SolarSystem;
+            $solar->name = $system->name;
+            $solar->solar_system_id = $system->id;
+            $solar->save();
+        }
     }
 
     public function GetCharacterInfo($charId) {
