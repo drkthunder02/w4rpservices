@@ -85,7 +85,10 @@ class FetchRentalMoonLedgerJob implements ShouldQueue
         //Foreach observer get the ledger
         foreach($observers as $observer) {
             //Get the observer name.
-            
+            $observerInfo = Structure::where([
+                'structure_id' => $observer->observer_id,
+            ])->first();
+
             try {
                 $ledgers = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
                     'corporation_id' => $character->corporation_id,
@@ -106,18 +109,21 @@ class FetchRentalMoonLedgerJob implements ShouldQueue
                     //Get the corporation information
                     $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
 
+                    //Get the recorded corporation information
+                    $recordedCorpInfo = $lookup->GetCorporationInfo($ledger->recorded_corporation_id);
+
                     $entries[] = [
-                        'corporation_id' => $corpId,
-                        'corporation_name' => $corpName,
+                        'corporation_id' => $corpInfo->corporation_id,
+                        'corporation_name' => $corpInfo->name,
                         'character_id' => $ledger->character_id,
                         'character_name' => $charInfo->name,
                         'observer_id' => $observer->observer_id,
-                        'observer_name' => $observerName,
+                        'observer_name' => $observerInfo->name,
                         'type_id' => $ledger->type_id,
                         'ore' => $ore,
                         'quantity' => $ledger->quantity,
                         'recorded_corporation_id' => $ledger->recorded_corporation_id,
-                        'recorded_corporation_name' => $recordedCorpName,
+                        'recorded_corporation_name' => $recordedCorpInfo->name,
                         'last_updated' => $ledger->last_updated,
                         'created_at' => $ledger->last_updated . ' 23:59:59',
                         'updated_at' => $ledger->last_updated . ' 23:59:59',

@@ -92,6 +92,7 @@ class FetchMoonLedgerJob implements ShouldQueue
         ])->get();
 
         foreach($observers as $observer) {
+            //Try to get the ledger data from the esi
             try {
                 $ledgers = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
                     'corporation_id' => $character->corporation_id,
@@ -111,9 +112,31 @@ class FetchMoonLedgerJob implements ShouldQueue
                     $charInfo = $lookup->GetCharacterInfo($ledger->character_id);
                     //Get the corporation info from the lookup helper
                     $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
+                    //Get the recorded corporation information
+                    $recordedCorpInfo = $lookup->GetCorporationInfo($ledger->recorded_corporation_id);
 
-                    
+                    $entries[] = [
+                        'corporation_id' => $corpInfo->corporation_id,
+                        'corporation_name' => $corpInfo->name,
+                        'character_id' => $charInfo->character_id,
+                        'character_name' => $charInfo->name,
+                        'observer_id' => $observer->observer_id,
+                        'observer_name' => $observer->observer_name,
+                        'type_id' => $ledger->type_id,
+                        'ore' => $ore,
+                        'quantity' => $ledger->quantity,
+                        'recorded_corporation_id' => $ledger->recorded_corporation_id,
+                        'recorded_corporation_name' => $recordedCorpInfo->name,
+                        'last_updated' => $ledger->last_updated,
+                        'created_at' => $ledger->last_updated . ' 23:59:59',
+                        'updated_at' => $ledger->last_updated . ' 23:59:59',
+                    ];
                 }
+
+                //Insert or ignore each entry into the database
+                CorpMoonLedger::insertOrIgnore($entries);
+
+                Log::info('FetchMoonLedgerJob inserted up to ' . count($entries) . 'into the database.');
             }
         }
     }
