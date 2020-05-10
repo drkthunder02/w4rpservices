@@ -22,5 +22,5 @@ class RentalMoonObserver extends Model
         'observer_name',
         'observer_type',
         'last_updated',
-    ];  
+    ];
 }

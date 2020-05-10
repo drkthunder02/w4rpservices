@@ -29,4 +29,13 @@ class RentalMoonLedger extends Model
         'recorded_corporation_name',
         'last_updated',
     ];
+
+    /**
+     * Get the observer this belongs to
+     */
+    public function observer() {
+        return $this->belongsTo('App\Models\Moon\RentalMoonObserver', 'observer_id', 'observer_id');
+    }
+
+    
 }

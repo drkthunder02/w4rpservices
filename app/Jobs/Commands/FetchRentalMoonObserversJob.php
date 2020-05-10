@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Commands;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -13,16 +13,28 @@ use Log;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Lookups\LookupHelper;
-use App\Library\Structures\StructureHelper;
 
 
 //App Models
-use App\Models\Moon\RentalMoon;
 use App\Models\Moon\RentalMoonObserver;
 
 class FetchRentalMoonObserversJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * Timeout in seconds
+     * 
+     * @var int
+     */
+    public $timeout = 3600;
+
+    /**
+     * Retries
+     * 
+     * @var int
+     */
+    public $retries = 3;
 
     /**
      * Create a new job instance.
@@ -43,7 +55,6 @@ class FetchRentalMoonObserversJob implements ShouldQueue
     {
         //Declare some variables
         $lookup = new LookupHelper;
-        $structure = new StructureHelper;
         $esi = new Esi;
 
         //Get the configuration for the main site

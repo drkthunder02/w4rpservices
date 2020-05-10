@@ -24,6 +24,20 @@ class FetchRentalMoonLedgerJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Timeout in seconds
+     * 
+     * @var int
+     */
+    public $timeout = 3600;
+
+    /**
+     * Retries
+     * 
+     * @var int
+     */
+    public $retries = 3;
+
+    /**
      * Create a new job instance.
      *
      * @return void
@@ -41,12 +55,8 @@ class FetchRentalMoonLedgerJob implements ShouldQueue
     public function handle()
     {
         //Declare variables
-        $structures = array();
-        $miningLedgers = array();
-        $tempMiningLedger = array();
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
-        $structure = new StructureHelper;
         $response = null;
         $structureInfo = null;
 
@@ -103,7 +113,7 @@ class FetchRentalMoonLedgerJob implements ShouldQueue
                     $newLedger->observer_id = $observer->observer_id;
                     $newLedger->observer_name = $observerName;
                     $newLedger->type_id = $ledger->type_id;
-                    $newLedger->ore = $ore        ;
+                    $newLedger->ore = $ore;
                     $newLedger->quantity = $ledger->quantity;
                     $newLedger->recorded_corporation_id = $ledger->recorded_corporation_id;
                     $newLedger->recorded_corporation_name = $recordedCorpName;
