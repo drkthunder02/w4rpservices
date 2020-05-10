@@ -1,13 +1,17 @@
 import Vue from 'vue';
 import Base from './base';
-import _ from 'lodash';
 import axios from 'axios';
 import Routes from './routes';
 import VueRouter from 'vue-router';
 import VueJsonPretty from 'vue-json-pretty';
-import moment from 'moment-timezone';
 
-require('bootstrap');
+window.Popper = require('popper.js').default;
+
+try {
+    window.$ = window.jQuery = require('jquery');
+
+    require('bootstrap');
+} catch (e) {}
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
@@ -19,20 +23,35 @@ if (token) {
 
 Vue.use(VueRouter);
 
-window.Popper = require('popper.js').default;
-
 Vue.prototype.$http = axios.create();
+
+window.Horizon.basePath = '/' + window.Horizon.path;
+
+let routerBasePath = window.Horizon.basePath + '/';
+
+if (window.Horizon.path === '' || window.Horizon.path === '/') {
+    routerBasePath = '/';
+    window.Horizon.basePath = '';
+}
 
 const router = new VueRouter({
     routes: Routes,
     mode: 'history',
-    base: '/' + window.Horizon.path + '/',
+    base: routerBasePath,
 });
 
 Vue.component('vue-json-pretty', VueJsonPretty);
 Vue.component('alert', require('./components/Alert.vue').default);
 
 Vue.mixin(Base);
+
+Vue.directive('tooltip', function(el, binding) {
+    $(el).tooltip({
+        title: binding.value,
+        placement: binding.arg,
+        trigger: 'hover',
+    });
+});
 
 new Vue({
     el: '#horizon',
