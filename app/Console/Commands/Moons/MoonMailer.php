@@ -125,10 +125,6 @@ class MoonMailerCommand extends Command
         $task->SetStopStatus();
     }
 
-    private function SendMail() {
-        return;
-    }
-
     private function UpdateNotPaid(MoonRental $rental) {
         MoonRental::where([
             'System' => $rental->System,
