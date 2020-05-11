@@ -17,11 +17,13 @@ use App\Jobs\ProcessSendEveMailJob;
 use App\Library\Moons\MoonCalc;
 use App\Library\Esi\Esi;
 use Seat\Eseye\Exceptions\RequestFailedException;
+use App\Library\Lookups\LookupHelper;
 
 //Models
 use App\Models\Moon\RentalMoon;
 use App\Models\MoonRent\MoonRental;
 use App\Models\Mail\SentMail;
+use App\Models\Moon\RentalMoonInvoice;
 
 class MoonRentalInvoiceCreate implements ShouldQueue
 {
@@ -87,9 +89,11 @@ class MoonRentalInvoiceCreate implements ShouldQueue
     {
         //Create needed variables
         $moonCalc = new MoonCalc;
+        $lookup = new LookupHelper;
         $body = null;
         $delay = 60;
         $config = config('esi');
+        $moons = null;
 
         //Get the rentals the contact is renting
         $this->rentals = MoonRental::where([
@@ -112,12 +116,30 @@ class MoonRentalInvoiceCreate implements ShouldQueue
         $body .= "Sincerely,<br>";
         $body .= "Warped Intentions Leadership<br>";
 
+        //Get the information compiled for creating the rental invoice
+        $charInfo = $lookup->GetCharacterInfo($this->contact);
+        $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
+        foreach($listItems as $item) {
+            $moons .= $item . ','
+        }
+        $moons = rtrim($moons, ',');
+
         //Create the moon invoice and save it to the database
-        
+        $invoice = new RentalMoonInvoice;
+        $invoice->character_id = $this->contact;
+        $invoice->character_name = $charInfo->name;
+        $invoice->corporation_id = $charInfo->character_id;
+        $invoice->corporation_name = $corpInfo->name;
+        $invoice->rental_moons = $moons;
+        $invoice->invoice_amount = $cost;
+        $invoice->due_date = Carbon::now()->addDays(3);
+        $invoice->paid = 'No';
+        $invoice->save();
 
         //Dispatch a new mail job
         $subject = "Warped Intentions Moon Rental Payment Due for " . $today->englishMonth;
-        ProcessSendEveMailJob::dispatch($body, (int)$contact->Contact, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($this->delay));
+        //ProcessSendEveMailJob::dispatch($body, (int)$contact->Contact, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($this->delay));
+        ProcessSendEveMailJob::dispatch($body, $config['primary'], 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($this->delay));
 
         MoonRentalUpdate::dispatch($this->rentals)->onQueue('moons');
     }

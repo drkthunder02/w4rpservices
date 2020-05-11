@@ -21,9 +21,9 @@ class CreateAllianceMoonRentalInvoicesTable extends Migration
                 $table->unsignedBigInteger('corporation_id');
                 $table->string('corporation_name');
                 $table->text('rental_moons');
-                $table->decimal('invoice_amount', 20, 2);
+                $table->decimal('invoice_amount', 17, 2);
                 $table->dateTime('due_date');
-                $table->enum('paid', ['Yes', 'No']);
+                $table->enum('paid', ['Yes', 'No'])->default('No');
                 $table->timestamps();
             });
         }
