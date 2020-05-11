@@ -29,6 +29,8 @@ class Kernel extends ConsoleKernel
         Commands\Wormholes\PurgeWormholes::class,
         Commands\Finances\SovBillsCommand::class,
         Commands\Data\CleanStaleDataCommand::class,
+        Commands\Moons\MoonsUpdateCommand::class,
+        Commands\Moons\RentalMoonCommand::class,
     ];
 
     /**
