@@ -41,7 +41,7 @@ class MoonLedgerController extends Controller
         $charId = auth()->user()->getId();
 
         //Check for the esi scope to be registered already
-        if(!$esiHelper->HaveEsiScope($charId, 'esi-industry.read_corporation_mining.v1') || !$esiHelper->HaveEsiScope($charId, 'Need to add scope for esi-universe.read_structures.v1')) {
+        if(!$esiHelper->HaveEsiScope($charId, 'esi-industry.read_corporation_mining.v1') || !$esiHelper->HaveEsiScope($charId, 'esi-universe.read_structures.v1')) {
             return redirect('/dashboard')->with('error', 'Please register corporation mining and universe structures scopes before continuing.');
         }
 

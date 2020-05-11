@@ -18,7 +18,7 @@ use App\Library\Lookups\LookupHelper;
 //App Models
 use App\Models\Moon\CorpMoonObserver;
 
-class FetchMoonObserversJob implements ShouldQueue
+class FetchMoonObserverJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

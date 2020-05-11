@@ -15,8 +15,7 @@ use App\Jobs\Commands\Moons\FetchMoonObserversJob;
 use Commands\Library\CommandHelper;
 
 //Models
-use App\Models\Moon\CorpMoonObserver;
-use App\Models\Moon\CorpMoonLedger;
+use App\Models\Esi\EsiScope;
 
 class MoonsUpdateCommand extends Command
 {
@@ -51,6 +50,43 @@ class MoonsUpdateCommand extends Command
      */
     public function handle()
     {
-        //
+        //Declare variables
+        $delay = 0;
+        $characters = array();
+
+        //Create the new command helper container
+        $task = new CommandHelper('MoonsUpdateCommand');
+        //Set the task start status
+        $task->SetStartStatus();
+
+        //Get all of the characters who have registered structures for moon ledgers
+        $miningChars = EsiScope::where([
+            'scope' => 'esi-industry.read_corporation_mining.v1',
+        ])->get();
+
+        foreach($miningChars as $mChars) {
+            $universe = EsiScope::where([
+                'character_id' => $mChars->character_id,
+                'scope' => 'esi-universe.read_structures.v1',
+            ])->first();
+
+            if($universe != null) {
+                array_push($characters, $universe->character_id);
+            }
+        }
+
+        //Cycle through each of the character Ids which have the correct scopes,
+        //and dispatch jobs accordingly.
+        foreach($characters as $charId) {
+            //Fetch all of the corp observers with the job dispatch
+            FetchMoonObserverJob::dispatch($charId);
+            //Fetch all of the corp ledgers with the job dispatch
+            FetchMoonLedgerJob::dispatch($charId);
+        }
+
+        
+
+        //Set task done status
+        $task->SetStopStatus();
     }
 }
