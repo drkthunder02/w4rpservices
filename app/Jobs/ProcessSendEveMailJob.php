@@ -22,7 +22,6 @@ use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\Jobs\JobStatus;
 use App\Models\Mail\SentMail;
-use App\Models\Jobs\JobSendEveMail;
 
 class ProcessSendEveMailJob implements ShouldQueue
 {
@@ -53,12 +52,12 @@ class ProcessSendEveMailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(JobSendEveMail $mail) {
-        $this->body = $mail->body;
-        $this->recipient = $mail->recipient;
-        $this->recipient_type = $mail->recipient_type;
-        $this->subject = $mail->subject;
-        $this->sender = $mail->sender;
+    public function __construct($body, $recipient, $recipient_type, $subject, $sender) {
+        $this->body = $body;
+        $this->recipient = $recipient;
+        $this->recipient_type = $recipient_type;
+        $this->subject = $subject;
+        $this->sender = $sender;
 
         $this->connection = 'redis';
     }

@@ -8,7 +8,6 @@ use Carbon\Carbon;
 //Models
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
-use App\Models\Jobs\JobSendEveMail;
 
 //Jobs
 use App\Jobs\ProcessSendEveMailJob;
@@ -41,14 +40,10 @@ class Esi {
         $check = EsiScope::where(['character_id' => $charId, 'scope' => $scope])->count();
         if($check == 0) {
             //Compose a mail to send to the user if the scope is not found
-            $mail  = new JobSendEveMail;
-            $mail->sender = $config['primary'];
-            $mail->subject = 'W4RP Services - Incorrect ESI Scope';
-            $mail->body = "Please register on https://services.w4rp.space with the scope: " . $scope;
-            $mail->recipient = (int)$charId;
-            $mail->recipient_type = 'character';
+            $subject = 'W4RP Services - Incorrect ESI Scope';
+            $body = "Please register on https://services.w4rp.space with the scope: " . $scope;
 
-            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+            ProcessSendEveMailJob::dispatch($body, (int)$charId, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
             return false;
         }
 

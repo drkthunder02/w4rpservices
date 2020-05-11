@@ -17,7 +17,6 @@ use App\Models\Moon\Price;
 use App\Models\MoonRent\MoonRental;
 use App\Models\Moon\AllianceMoon;
 use App\Models\Moon\AllianceMoonRequest;
-use App\Models\Jobs\JobSendEveMail;
 
 //Library
 use App\Library\Moons\MoonCalc;
@@ -130,13 +129,7 @@ class MoonsAdminController extends Controller
         }
 
         //Setup the mail model
-        $mail = new JobSendEveMail;
-        $mail->sender = $config['primary'];
-        $mail->subject = 'Warped Intentions Moon Request';
-        $mail->body = $body;
-        $mail->recipient = (int)$moon->requestor_id;
-        $mail->recipient_type = 'character';
-        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+        ProcessSendEveMailJob::dispatch($body, (int)$moon->requestor_id, 'character', 'Warped Intentions Moon Request', $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
 
         return redirect('/moons/admin/display/request')->with('success', 'Moon has been processed, and mail has been sent out.');
     }

@@ -15,7 +15,6 @@ use App\Library\Lookups\LookupHelper;
 
 //Models
 use App\Models\Logistics\AnchorStructure;
-use App\Models\Jobs\JobSendEveMail;
 use App\Models\User\UserPermission;
 
 class StructureRequestController extends Controller
@@ -72,13 +71,8 @@ class StructureRequestController extends Controller
             $body .= "Warped Intentions Leadership<br>";
             
             //Dispatch the mail job
-            $mail = new JobSendEveMail;
-            $mail->sender = $config['primary'];
-            $mail->subject = "New Structure Anchor Request";
-            $mail->body = $body;
-            $mail->recipient = (int)$fc->character_id;
-            $mail->recipient_type = 'character';
-            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
+            $subject = "New Structure Anchor Request";
+            ProcessSendEveMailJob::dispatch($body, (int)$fc->character_id, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
 
             $delay += 15;
         }

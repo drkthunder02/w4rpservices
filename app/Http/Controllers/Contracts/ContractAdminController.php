@@ -18,7 +18,6 @@ use App\Models\User\UserPermission;
 use App\Models\Contracts\Contract;
 use App\Models\Contracts\Bid;
 use App\Models\Contracts\AcceptedBid;
-use App\Models\Jobs\JobSendEveMail;
 
 class ContractAdminController extends Controller
 {
@@ -152,15 +151,8 @@ class ContractAdminController extends Controller
         $body .= 'Please remit contract when the items are ready to Spatial Forces.  Description should be the contract identification number.  Request ISK should be the bid amount.';
         $body .= 'Sincerely,<br>Spatial Forces Contracting Department';
 
-        //Setup the mail job
-        $mail = new JobSendEveMail;
-        $mail->subject = $subject;
-        $mail->recipient_type = 'character';
-        $mail->recipient = $bid['character_id'];
-        $mail->body = $body;
-        $mail->sender = $config['primary'];
         //Dispatch the mail job
-        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+        ProcessSendEveMailJob::dispatch($body, $bid['character_id'], 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
         
         //Tidy up the contract by doing a few things.
         $this->TidyContract($contract, $bid);
@@ -187,12 +179,8 @@ class ContractAdminController extends Controller
         //Get the esi config
         $config = config('esi');
 
-        $mail = new JobSendEveMail;
-        $mail->sender = $config['primary'];
-        $mail->subject = 'New Alliance Production Contract Available';
-        $mail->recipient = $config['alliance'];
-        $mail->recipient_type = 'alliance';
-        $mail->body = "A new contract is available for the alliance contracting system.  Please check out <a href='https://services.w4rp.space'>Services Site</a> if you want to bid on the production contract.<br><br>Sincerely,<br>Warped Intentions Leadership";
-        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+        $subject = 'New Alliance Production Contract Available';
+        $body = "A new contract is available for the alliance contracting system.  Please check out <a href='https://services.w4rp.space'>Services Site</a> if you want to bid on the production contract.<br><br>Sincerely,<br>Warped Intentions Leadership";
+        ProcessSendEveMailJob::dispatch($body, $config['alliance'], 'alliance', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
     }
 }

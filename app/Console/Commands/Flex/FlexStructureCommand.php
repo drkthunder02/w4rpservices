@@ -15,7 +15,6 @@ use Commands\Library\CommandHelper;
 //Models
 use App\Models\Flex\FlexStructure;
 use App\Models\Mail\SentMail;
-use App\Models\Jobs\JobSendEveMail;
 
 class FlexStructureCommand extends Command
 {
@@ -93,19 +92,14 @@ class FlexStructureCommand extends Command
             $body .= "Warped Intentions Leadership<br>";
 
             //Dispatch the mail job
-            $mail = new JobSendEveMail;
-            $mail->sender = $config['primary'];
-            $mail->subject = "Warped Intentions Flex Structures Payment Due for " . $today->englishMonth;
-            $mail->body = $body;
-            $mail->recipient = (int)$structure->requestor_id;
-            $mail->recipient_type = 'character';
-            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
+            $subject = "Warped Intentions Flex Structures Payment Due for " . $today->englishMonth;
+            ProcessSendEveMailJob::dispatch($body, (int)$structure->requestor_id, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
 
             //Increment the delay for the mail to not hit the rate limits
             $delay += 60;
 
             //After the mail is dispatched, save the sent mail record
-            $this->SaveSentRecord($mail->sender, $mail->subject, $mail->body, $mail->recipient, $mail->recipient_type);
+            $this->SaveSentRecord($config['primary'], $subject, $body, (int)$structure->requestor_id, 'character');
         }
 
         //Mark the job as finished

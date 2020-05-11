@@ -17,7 +17,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 //Models
 use App\Models\Moon\RentalMoon;
 use App\Models\MoonRent\MoonRental;
-use App\Models\Jobs\JobSendEveMail;
 use App\Models\Mail\SentMail;
 
 class MoonMailerCommand extends Command
@@ -101,13 +100,8 @@ class MoonMailerCommand extends Command
             $body .= "Warped Intentions Leadership<br>";
             
             //Dispatch the mail job
-            $mail = new JobSendEveMail;
-            $mail->sender = $config['primary'];
-            $mail->subject = "Warped Intentions Moon Rental Payment Due for " . $today->englishMonth;
-            $mail->body = $body;
-            $mail->recipient = (int)$contact->Contact;
-            $mail->recipient_type = 'character';
-            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
+            $subject = "Warped Intentions Moon Rental Payment Due for " . $today->englishMonth;
+            ProcessSendEveMailJob::dispatch($body, (int)$contact->Contact, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
             //Increment the delay for the mail to not hit rate limits
             $delay += 30;
 

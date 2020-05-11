@@ -9,7 +9,6 @@ use Log;
 
 //Models
 use App\Models\Logistics\AnchorStructure;
-use App\Models\Jobs\JobSendEveMail;
 
 class StructureRequestAdminController extends Controller
 {

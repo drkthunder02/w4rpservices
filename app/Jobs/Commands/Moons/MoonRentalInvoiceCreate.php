@@ -21,7 +21,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 //Models
 use App\Models\Moon\RentalMoon;
 use App\Models\MoonRent\MoonRental;
-use App\Models\Jobs\JobSendEveMail;
 use App\Models\Mail\SentMail;
 
 class MoonRentalInvoiceCreate implements ShouldQueue
@@ -117,13 +116,8 @@ class MoonRentalInvoiceCreate implements ShouldQueue
         
 
         //Dispatch a new mail job
-        $mail = new JobSendEveMail;
-        $mail->sender = $config['primary'];
-        $mail->subject = "Warped Intentions Moon Rental Payment Due for " . $today->englishMonth;
-        $mail->body = $body;
-        $mail->recipient = (int)$contact->Contact;
-        $mail->recipient_type = 'character';
-        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds($this->delay));
+        $subject = "Warped Intentions Moon Rental Payment Due for " . $today->englishMonth;
+        ProcessSendEveMailJob::dispatch($body, (int)$contact->Contact, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($this->delay));
 
         MoonRentalUpdate::dispatch($this->rentals)->onQueue('moons');
     }
