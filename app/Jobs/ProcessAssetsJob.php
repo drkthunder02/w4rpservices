@@ -20,7 +20,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Assets\AssetHelper;
 
 //App Models
-use App\Models\Jobs\JobProcessAsset;
 use App\Models\Jobs\JobStatus;
 use App\Models\Stock\Asset;
 

@@ -15,9 +15,6 @@ use Commands\Library\CommandHelper;
 use App\Library\Assets\AssetHelper;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
-//Models
-use App\Models\Jobs\JobProcessAsset;
-
 class GetAssetsCommand extends Command
 {
     /**
