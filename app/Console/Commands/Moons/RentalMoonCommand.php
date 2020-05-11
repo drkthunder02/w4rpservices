@@ -62,7 +62,7 @@ class RentalMoonCommand extends Command
         $contacts = MoonRental::select('Contact')->groupBy('Contact')->get();
 
         foreach($contacts as $contact) {
-            MoonrentalInvoiceCreate::dispatch($contact, $delay)->onQueue('moons');
+            MoonRentalInvoiceCreate::dispatch($contact, $delay)->onQueue('moons');
         }
 
         //Set the job as completed
