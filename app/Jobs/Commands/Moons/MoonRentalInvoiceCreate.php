@@ -113,6 +113,9 @@ class MoonRentalInvoiceCreate implements ShouldQueue
         $body .= "Sincerely,<br>";
         $body .= "Warped Intentions Leadership<br>";
 
+        //Create the moon invoice and save it to the database
+        
+
         //Dispatch a new mail job
         $mail = new JobSendEveMail;
         $mail->sender = $config['primary'];
@@ -122,7 +125,7 @@ class MoonRentalInvoiceCreate implements ShouldQueue
         $mail->recipient_type = 'character';
         ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds($this->delay));
 
-        MoonRentalUpdate::dispatch($this->rentals);
+        MoonRentalUpdate::dispatch($this->rentals)->onQueue('moons');
     }
 
     private function TotalizeMoonCost() {
