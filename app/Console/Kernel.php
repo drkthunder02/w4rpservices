@@ -29,8 +29,6 @@ class Kernel extends ConsoleKernel
         Commands\Wormholes\PurgeWormholes::class,
         Commands\Finances\SovBillsCommand::class,
         Commands\Data\CleanStaleDataCommand::class,
-        //Commands\Moons\FetchMoonLedgerCommand::class,
-        //Commands\Moons\FetchRentalMoonLedgerCommand::class,
     ];
 
     /**
@@ -85,21 +83,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:CleanData')
                 ->weekly(7, '11:00')
                 ->withoutOverlapping();
-        /**
-         * New Commands
-        */
-        //$schedule->command('services:FetchMoonLedgers')
-        //         ->hourlyAt(30)
-        //         ->withoutOverlapping();
-        //$schedule->command('services:FetchMoonObservers')
-        //         ->hourlyAt(15)
-        //         ->withoutOverlapping();
-        //$schedule->command('services:FetchRentalMoonObservers')
-        //         ->hourlyAt(15)
-        //         ->withoutOverlapping();
-        //$schedule->command('services:FetchRentalMoonLedgers')
-        //         ->hourlyAt(20)
-        //         ->withoutOverlapping();
     }
 
     /**
