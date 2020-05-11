@@ -473,7 +473,7 @@ class MoonCalc {
     /**
      * Calculate the total price, then pass it by reference to the calling function
      */
-    private function CalclulateTotalPrice($ore, $perc, &$total) {
+    private function CalculateTotalPrice($ore, $perc, &$total) {
         //Calculate the prices from the ores
         if($ore != 'None') {
             $total = $this->CalcPrice($ore, $perc);

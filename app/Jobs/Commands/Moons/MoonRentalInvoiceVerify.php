@@ -13,7 +13,7 @@ use Log;
 //App Library
 
 //App Models
-
+use App\Models\Finances\PlayerDonationJournal;
 
 class MoonRentalInvoiceVerify implements ShouldQueue
 {
