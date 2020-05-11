@@ -1,21 +1,14 @@
 <?php
 
-namespace App\Jobs\Commands\Moons;
+namespace App\Jobs;
 
-//Internal Library
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Log;
 
-//App Library
-
-//App Models
-
-
-class MoonRentalInvoiceVerify implements ShouldQueue
+class MoonRentalUpdate implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

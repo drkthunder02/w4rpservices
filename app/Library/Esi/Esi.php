@@ -48,7 +48,7 @@ class Esi {
             $mail->recipient = (int)$charId;
             $mail->recipient_type = 'character';
 
-            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(5);
+            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
             return false;
         }
 

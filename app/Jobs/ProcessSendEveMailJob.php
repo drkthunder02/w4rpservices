@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Log;
+use Carbon\Carbon;
 
 //Library
 use App\Library\Esi\Esi;
@@ -83,10 +84,6 @@ class ProcessSendEveMailJob implements ShouldQueue
 
         //Create the ESI authentication container
         $esi = $esiHelper->SetupEsiAuthentication($token);
-
-        //Set caching to null
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
 
         //Attemp to send the mail
         try {

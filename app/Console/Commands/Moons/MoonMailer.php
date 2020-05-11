@@ -107,7 +107,7 @@ class MoonMailerCommand extends Command
             $mail->body = $body;
             $mail->recipient = (int)$contact->Contact;
             $mail->recipient_type = 'character';
-            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
+            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
             //Increment the delay for the mail to not hit rate limits
             $delay += 30;
 

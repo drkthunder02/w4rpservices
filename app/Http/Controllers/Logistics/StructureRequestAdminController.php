@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Log;
 
-//Jobs
-use App\Jobs\ProcessSendEveMailJob;
-
 //Models
 use App\Models\Logistics\AnchorStructure;
 use App\Models\Jobs\JobSendEveMail;

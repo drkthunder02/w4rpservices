@@ -136,7 +136,7 @@ class MoonsAdminController extends Controller
         $mail->body = $body;
         $mail->recipient = (int)$moon->requestor_id;
         $mail->recipient_type = 'character';
-        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail');
+        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
 
         return redirect('/moons/admin/display/request')->with('success', 'Moon has been processed, and mail has been sent out.');
     }

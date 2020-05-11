@@ -78,7 +78,7 @@ class StructureRequestController extends Controller
             $mail->body = $body;
             $mail->recipient = (int)$fc->character_id;
             $mail->recipient_type = 'character';
-            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
+            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
 
             $delay += 15;
         }

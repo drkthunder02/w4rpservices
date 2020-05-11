@@ -160,7 +160,7 @@ class ContractAdminController extends Controller
         $mail->body = $body;
         $mail->sender = $config['primary'];
         //Dispatch the mail job
-        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail');
+        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
         
         //Tidy up the contract by doing a few things.
         $this->TidyContract($contract, $bid);
@@ -193,6 +193,6 @@ class ContractAdminController extends Controller
         $mail->recipient = $config['alliance'];
         $mail->recipient_type = 'alliance';
         $mail->body = "A new contract is available for the alliance contracting system.  Please check out <a href='https://services.w4rp.space'>Services Site</a> if you want to bid on the production contract.<br><br>Sincerely,<br>Warped Intentions Leadership";
-        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail');
+        ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
     }
 }

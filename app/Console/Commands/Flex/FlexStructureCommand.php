@@ -99,7 +99,7 @@ class FlexStructureCommand extends Command
             $mail->body = $body;
             $mail->recipient = (int)$structure->requestor_id;
             $mail->recipient_type = 'character';
-            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay($delay);
+            ProcessSendEveMailJob::dispatch($mail)->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
 
             //Increment the delay for the mail to not hit the rate limits
             $delay += 60;

@@ -9,9 +9,7 @@ namespace App\Library\Finances\Helper;
 
 //Internal Library
 use Log;
-
-//Job
-use App\Jobs\ProcessSendEveMailJob;
+use Carbon\Carbon;
 
 //Models
 use App\Models\Esi\EsiToken;
