@@ -93,11 +93,7 @@ class GetAssetsCommand extends Command
         $pages = $assets->pages;
         
         for($i = 1; $i <= $pages; $i++) {
-            $job = new JobProcessAsset;
-            $job->charId = $charId;
-            $job->corpId = $corpId;
-            $job->page = $i;
-            ProcessAssetsJob::dispatch($job)->onQueue('assets');
+            ProcessAssetsJob::dispatch($charId, $corpId, $i)->onQueue('assets');
         }
     }
 }

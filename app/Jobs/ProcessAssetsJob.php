@@ -58,11 +58,11 @@ class ProcessAssetsJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(JobProcessAsset $jpa)
+    public function __construct($charId, $corpId, $page)
     {
-        $this->charId = $jpa->charId;
-        $this->corpId = $jpa->corpId;
-        $this->page = $jpa->page;
+        $this->charId = $charId;
+        $this->corpId = $corpId;
+        $this->page = $page;
 
         //Set the connection for the job
         $this->connection = 'redis';
