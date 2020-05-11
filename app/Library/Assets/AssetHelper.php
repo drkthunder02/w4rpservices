@@ -11,7 +11,7 @@ use App\Jobs\Library\JobHelper;
 use App\Library\Esi\Esi;
 use Seat\Eseye\Exceptions\RequestFailedException;
 
-use App\Models\Jobs\JobProcessAsset;
+//Models
 use App\Models\Jobs\JobStatus;
 use App\Models\Stock\Asset;
 
