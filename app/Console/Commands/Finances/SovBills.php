@@ -12,7 +12,6 @@ use App\Library\Finances\Helper\FinanceHelper;
 use App\Jobs\ProcessWalletJournalJob;
 
 //Models
-use App\Models\Jobs\JobProcessWalletJournal;
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 
@@ -102,15 +101,6 @@ class SovBillsCommand extends Command
 
         //Get the total pages for the journal for the sov bills from the holding corporation
         $pages = $finance->GetJournalPageCount(6, $config['primary']);
-
-        //Dispatch a job for each page to process
-        //for($i = 1; $i <= $pages; $i++) {
-        //    $job = new JobProcessWalletJournal;
-        //    $job->division = 6;
-        //    $job->charId = $config['primary'];
-        //    $job->page = $i;
-        //    ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
-        //}
 
         //Try to figure it out from the command itself.
         for($i = 1; $i <= $pages; $i++) {

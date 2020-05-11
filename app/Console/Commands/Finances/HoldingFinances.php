@@ -11,9 +11,6 @@ use App\Library\Finances\Helper\FinanceHelper;
 //Jobs
 use App\Jobs\ProcessWalletJournalJob;
 
-//Models
-use App\Models\Jobs\JobProcessWalletJournal;
-
 class HoldingFinancesCommand extends Command
 {
     /**
@@ -64,11 +61,7 @@ class HoldingFinancesCommand extends Command
 
         //Dispatch a single job for each page to process
         for($i = 1; $i <= $pages; $i++) {
-            $job = new JobProcessWalletJournal;
-            $job->division = 1;
-            $job->charId = $config['primary'];
-            $job->page = $i;
-            ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
+            ProcessWalletJournalJob::dispatch(1, $config['primary'], $i)->onQueue('journal');
         }
 
         //Get the total pages for the journal for the sov bills from the holding corporation
@@ -76,11 +69,7 @@ class HoldingFinancesCommand extends Command
 
         //Dispatch a job for each page to process
         for($i = 1; $i <= $pages; $i++) {
-            $job = new JobProcessWalletJournal;
-            $job->division = 6;
-            $job->charId = $config['primary'];
-            $job->page = $i;
-            ProcessWalletJournalJob::dispatch($job)->onQueue('journal');
+            ProcessWalletJournalJob::dispatch(6, $config['primary'], $i)->onQueue('journal');
         }
 
         //Mark the job as finished
