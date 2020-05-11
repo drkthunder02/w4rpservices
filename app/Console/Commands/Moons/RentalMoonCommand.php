@@ -31,7 +31,7 @@ class RentalMoonCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Rental Moons jobs';
+    protected $description = 'Queues up the jobs for the rental moons.';
 
     /**
      * Create a new command instance.
