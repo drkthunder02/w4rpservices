@@ -13,7 +13,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Library\Structures\StructureHelper;
 
 //App Models
-use App\Models\Jobs\JobProcessStructure;
 use App\Models\Jobs\JobStatus;
 
 class ProcessStructureJob implements ShouldQueue
@@ -44,11 +43,11 @@ class ProcessStructureJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(JobProcessStructure $jps)
+    public function __construct($charId, $corpId, $page)
     {
-        $this->charId = $jps->charId;
-        $this->corpId = $jps->corpId;
-        $this->page = $jps->page;
+        $this->charId = $charId;
+        $this->corpId = $corpId;
+        $this->page = $page;
 
         //Set the connection for the job
         $this->connection = 'redis';

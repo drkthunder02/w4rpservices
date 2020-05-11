@@ -17,7 +17,6 @@ use App\Library\Esi\Esi;
 use App\Library\Lookups\LookupHelper;
 
 //App Models
-use App\Models\Jobs\JobProcessStructure;
 use App\Models\Jobs\JobStatus;
 use App\Models\Structure\Structure;
 use App\Models\Structure\Service;

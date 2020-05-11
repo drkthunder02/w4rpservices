@@ -15,7 +15,6 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Jobs\ProcessStructureJob;
 
 //Models
-use App\Models\Jobs\JobProcessStructure;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 
@@ -106,11 +105,7 @@ class GetStructuresCommand extends Command
         $totalPages = $structures->pages;
 
         for($i = 1; $i <= $totalPages; $i++) {
-            $job = new JobProcessStructure;
-            $job->charId = $charId;
-            $job->corpId = $corpId;
-            $job->page = $currentPage;
-            ProcessStructureJob::dispatch($job)->onQueue('structures');
+            ProcessStructureJob::dispatch($charId, $corpId, $currentPage)->onQueue('structures');
         }      
 
         //Mark the job as finished
