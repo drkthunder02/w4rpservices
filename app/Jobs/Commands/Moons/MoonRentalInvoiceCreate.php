@@ -120,7 +120,7 @@ class MoonRentalInvoiceCreate implements ShouldQueue
         $charInfo = $lookup->GetCharacterInfo($this->contact);
         $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
         foreach($listItems as $item) {
-            $moons .= $item . ','
+            $moons .= $item . ',';
         }
         $moons = rtrim($moons, ',');
 
