@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Commands;
+namespace App\Jobs\Commands\Moons;
 
 //Internal Library
 use Illuminate\Bus\Queueable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Commands\Moons;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
