@@ -63,6 +63,9 @@ class RentalMoonCommand extends Command
 
         foreach($contacts as $contact) {
             MoonRentalInvoiceCreate::dispatch($contact, $delay)->onQueue('moons');
+
+            //Increase the delay after each job to prevent mails from backing up later down the queue
+            $delay += 20;
         }
 
         //Set the job as completed
