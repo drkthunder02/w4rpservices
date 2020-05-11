@@ -1,8 +1,22 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Moons;
 
+//Internal Library
 use Illuminate\Console\Command;
+use Carbon\Carbon;
+use Log;
+
+//Jobs
+use App\Jobs\Commands\Moons\FetchMoonLedgerJob;
+use App\Jobs\Commands\Moons\FetchMoonObserversJob;
+
+//Library
+use Commands\Library\CommandHelper;
+
+//Models
+use App\Models\Moon\CorpMoonObserver;
+use App\Models\Moon\CorpMoonLedger;
 
 class MoonsUpdateCommand extends Command
 {
