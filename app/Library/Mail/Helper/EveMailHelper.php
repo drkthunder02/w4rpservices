@@ -47,10 +47,6 @@ class EveMailHelper {
         //Create the ESI authentication container
         $esi = $esiHelper->SetupEsiAuthentication($token);
 
-        //Set caching to null
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-
         //Attempt to send the mail
         try {
             $esi->setBody([
