@@ -30,6 +30,20 @@ class MoonRentalInvoiceCreate implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Timeout in seconds
+     * 
+     * @var int
+     */
+    public $timeout = 3600;
+
+    /**
+     * Retries
+     * 
+     * @var int
+     */
+    public $retries = 3;
+
+    /**
      * Today's date
      * 
      * @var Carbon

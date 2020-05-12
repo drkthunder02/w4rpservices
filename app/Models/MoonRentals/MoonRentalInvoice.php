@@ -21,6 +21,7 @@ class MoonRentalInvoice extends Model
      * @var array
      */
     protected $fillable = [
+        'invoice_id',
         'character_id',
         'character_name',
         'corporation_id',
