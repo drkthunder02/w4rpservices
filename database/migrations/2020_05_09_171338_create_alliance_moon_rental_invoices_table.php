@@ -16,11 +16,12 @@ class CreateAllianceMoonRentalInvoicesTable extends Migration
         if(!Schema::hasTable('alliance_moon_rental_invoices')) {
             Schema::create('alliance_moon_rental_invoices', function (Blueprint $table) {
                 $table->unsignedBigIncrements('id');
+                $table->string('invoice_id')->unique();
                 $table->unsignedBigInteger('character_id');
                 $table->string('character_name');
                 $table->unsignedBigInteger('corporation_id');
                 $table->string('corporation_name');
-                $table->text('rental_moons');
+                $table->text('rental_moons')->nullalbe();
                 $table->decimal('invoice_amount', 17, 2);
                 $table->dateTime('due_date');
                 $table->enum('paid', ['Yes', 'No'])->default('No');
@@ -31,9 +32,8 @@ class CreateAllianceMoonRentalInvoicesTable extends Migration
         if(!Schema::hasTable('alliance_moon_rental_payments')) {
             Schema::create('alliance_moon_rental_payments', function (Blueprint $table) {
                 $table->unsignedBigIncrements('id');
-                $table->unsignedBigInteger('invoice_id');
+                $table->string('invoice_id')->unique();
                 $table->decimal('payment_amount');
-                $table->unsignedBigInteger('reference_id');
                 $table->timestamps();
             });
         }

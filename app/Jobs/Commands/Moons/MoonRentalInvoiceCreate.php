@@ -106,6 +106,8 @@ class MoonRentalInvoiceCreate implements ShouldQueue
         //Get the list of the moons in a list format
         $listItems = $this->GetMoonList();
 
+        $invoiceId = $this->CreateInvoiceId();
+
         //Build a mail body to be sent to the renter
         $body = "Moon Rent is due for the following moons:<br>";
         foreach($listItems as $item) {
@@ -113,6 +115,7 @@ class MoonRentalInvoiceCreate implements ShouldQueue
         }
         $body .= "The price for the next's month rent is " . number_format($cost, 2, ".", ",") . " ISK<br>";
         $body .= "Please remit payment to Spatial Forces on the 1st should you continue to wish to rent the moon.<br>";
+        $body .= "In the description of the payment put the invoice number of: " . $invoiceId . "<br>";
         $body .= "Sincerely,<br>";
         $body .= "Warped Intentions Leadership<br>";
 
@@ -188,5 +191,24 @@ class MoonRentalInvoiceCreate implements ShouldQueue
 
         //Return the list
         return $list;
+    }
+
+    /**
+     * 
+     */
+    private function CreateInvoiceId() {
+        //Set continue to true as a default.
+        $continue  = true;
+        //Continually get a unique id until one is found where it's not used.
+        do {
+            $invoiceId = uniqid('rmi_', true);
+
+            $count = MoonRentalInvoice::where(['invoice_id' => $invoiceId])->count();
+            if($count == 0) {
+                $continue = false;
+            }
+        } while ($continue == true);
+        
+        return $invoiceId;
     }
 }
