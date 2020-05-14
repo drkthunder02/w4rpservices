@@ -51,6 +51,41 @@ class GetPublicContractItemsJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        //Get the items from esi
+        $responses = $this->esi->invoke('get', '/contracts/public/items/{contract_id}/', [
+            'contract_id' => $this->contract,
+        ]);
+
+        foreach($response as $resp) {
+            //See if the item exists
+            $count = PublicContractItems::where([
+                'record_id' => $resp->record_id,
+            ])->count();
+            
+            //If the item doesn't exist in the database, save it to the database
+            if($count == 0) {
+                $contractItem = new PublicContractItems;
+                if(isset($resp->is_blueprint_copy)) {
+                    $contractItem->is_blueprint_copy = $resp->is_blueprint_copy;
+                }
+                $contractItem->is_included = $resp->is_included;
+                if(isset($resp->item_id)) {
+                    $contractItem->item_id = $resp->item_id;
+                }
+                if(isset($resp->material_efficiency)) {
+                    $contractItem->material_efficiency = $resp->material_efficiency;
+                }
+                $contractItem->quantity = $resp->quantity;
+                $contractItem->recorded_id = $resp->recorded_id;
+                if(isset($resp->runs)) {
+                    $contractItem->runs = $resp->runs;
+                }
+                if(isset($resp->time_efficiency)) {
+                    $contractItem->time_efficiency = $resp->time_efficiency;
+                }
+                $contractItem->type_id = $resp->type_id;
+                $contractItem->save();
+            }
+        }
     }
 }
