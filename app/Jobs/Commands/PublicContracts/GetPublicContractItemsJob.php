@@ -28,13 +28,20 @@ class GetPublicContractItemsJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Private Variables
+     */
+    private $esi;
+    private $contractId;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($esi, $contract)
     {
-        //
+        $this->esi = $esi;
+        $this->contractId = $contract;
     }
 
     /**
