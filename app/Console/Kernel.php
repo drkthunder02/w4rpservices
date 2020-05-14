@@ -49,7 +49,7 @@ class Kernel extends ConsoleKernel
                 ->withoutOverlapping();
         //Command to update moon rental pricing
         $schedule->command('services:UpdateMoonPrice')
-                ->hourly()
+                ->hourlyAt('30')
                 ->withoutOverlapping();
         //Get the corps within the alliance
         $schedule->command('services:GetCorps')
@@ -57,8 +57,7 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
         //Update the moons, and send out mails for current moon rentals
         $schedule->command('services:MoonMailer')
-                ->monthlyOn(1, '00:01')
-                ->withoutOverlapping();
+                 ->monthlyOn(1, '00:01');
         //Get the structures within the alliance and their information
         $schedule->command('services:GetStructures')
                 ->dailyAt('09:00')
@@ -83,8 +82,8 @@ class Kernel extends ConsoleKernel
                 ->hourlyAt(20);
         //Purge old data from the database
         $schedule->command('services:CleanData')
-                ->weekly(7, '11:00')
-                ->withoutOverlapping();
+                 ->weekly(7, '11:00')
+                 ->withoutOverlapping();
     }
 
     /**
