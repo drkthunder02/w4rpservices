@@ -13,6 +13,14 @@ class CreateBuyPublicContractsTable extends Migration
      */
     public function up()
     {
+        if(!Schema::hasTable('eve_regions')) {
+            Schema::create('eve_regions', function (Blueprint $table) {
+                $table->unsignedBigIncrements('id');
+                $table->unsignedBigInteger('region_id');
+                $table->string('region_name');
+            });
+        }
+
         if(!Schema::hasTable('public_contracts')) {
             Schema::create('public_contracts', function(Blueprint $table) {
                 $table->unsignedBigIncrements('id');
