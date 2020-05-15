@@ -2,9 +2,16 @@
 
 namespace App\Console\Commands\Eve;
 
+//Internal Library
 use Illuminate\Console\Command;
 
-class GetEveRegions extends Command
+//Library
+use Commands\Library\CommandHelper;
+
+//Job
+use App\Jobs\Commands\Eve\GetEveRegionsJob;
+
+class GetEveRegionsCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -37,6 +44,6 @@ class GetEveRegions extends Command
      */
     public function handle()
     {
-        //
+        GetEveRegionsJob::dispatch();
     }
 }
