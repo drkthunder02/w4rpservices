@@ -34,9 +34,15 @@ class GetPublicContractsJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($esi, $regionId)
+    public function __construct($regionId, $esi = null)
     {
-        $this->esi = $esi;
+        //Setup the esi authentication container
+        if($esi == null) {
+            $this->esi = new Esi();
+        } else {
+            $this->esi = $esi;
+        }
+        //Set the region code
         $this->region = $regionId;
     }
 

@@ -11,14 +11,14 @@ class GetMarketDataCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'services:MarketData';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Get the market data for regions';
 
     /**
      * Create a new command instance.

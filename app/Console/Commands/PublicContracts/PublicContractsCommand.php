@@ -11,14 +11,14 @@ class PublicContractsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'services:PublicContracts';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Get the public contracts in a region';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,21 @@ class PublicContractsCommand extends Command
      */
     public function handle()
     {
-        //
+        $regions = [
+            'Immensea' => 10000025,
+            'Catch' => 10000014,
+            'Tenerifis' => 10000061,
+            'The Forge' => 10000002,
+            'Impass' => 10000031,
+            'Esoteria' => 10000039,
+            'Detorid' => 10000005,
+            'Omist' => 10000062,
+            'Feythabolis' => 10000056,
+            'Insmother' => 10000009,
+        ];
+
+        foreach($regions as $key => $value) {
+            PublicContractsJob::dispatch($value);
+        }
     }
 }
