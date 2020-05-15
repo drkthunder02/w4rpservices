@@ -1,22 +1,14 @@
 <?php
 
-namespace App\Jobs\Commands\Market;
+namespace App\Jobs;
 
-//Internal Library
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Carbon\Carbon;
-use Log;
 
-//App Library
-use Seat\Eseye\Exceptions\RequestFailedException;
-use App\Library\Esi\Esi;
-use App\Library\Lookups\LookupHelper;
-
-class GetMarketPricesJob implements ShouldQueue
+class PurgeMarketRegionOrderJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

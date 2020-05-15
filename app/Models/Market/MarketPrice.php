@@ -24,6 +24,5 @@ class MarketPrice extends Model
         'lowest_price',
         'highest_price',
         'order_count',
-        'volume',
     ];
 }

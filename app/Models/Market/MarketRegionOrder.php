@@ -18,6 +18,7 @@ class MarketRegionOrder extends Model
      * @var array
      */
     protected $fillable = [
+        'region_id',
         'duration',
         'is_buy_order',
         'issued',

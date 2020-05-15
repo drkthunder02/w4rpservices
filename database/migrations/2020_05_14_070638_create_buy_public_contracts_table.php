@@ -66,35 +66,10 @@ class CreateBuyPublicContractsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('market_groups')) {
-            Schema::create('market_groups', function (Blueprint $table) {
-                $table->unsignedIncrements('id');
-                $table->unsignedInteger('group');
-                $table->string('description');
-                $table->unsignedInteger('market_group_id');
-                $table->string('name');
-                $table->unsignedInteger('parent_group_id')->nullable();
-                $table->unsignedInteger('types');
-            });
-        }
-
-        if(!Schema::hasTable('market_prices')) {
-            Schema::create('market_prices', function (Blueprint $table) {
-                $table->unsignedBigIncrements('id');
-                $table->unsignedInteger('type_id');
-                $table->decimal('adjusted_price')->default(0.00);
-                $table->decimal('average_price')->default(0.00);
-                $table->decimal('lowest_price')->default(0.00);
-                $table->decimal('highest_price')->default(0.00);
-                $table->unsignedBigInteger('order_count');
-                $table->unsignedBigInteger('volume');
-                $table->timestamps();
-            });
-        }
-
         if(!Schema::hasTable('market_region_orders')) {
             Schema::create('market_region_orders', function (Blueprint $table) {
                 $table->unsignedBigIncrements('id');
+                $table->unsignedBigInteger('region_id');
                 $table->unsignedInteger('duration');
                 $table->boolean('is_buy_order');
                 $table->dateTime('issued');
