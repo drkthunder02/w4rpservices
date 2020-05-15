@@ -35,4 +35,8 @@ class PublicContract extends Model
         'type',
         'volume',
     ];
+
+    public function items() {
+        return $this->hasMany('App\Models\PublicContracts\PublicContractItem', 'contract_id', 'contract_id');
+    }
 }

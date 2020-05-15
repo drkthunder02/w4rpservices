@@ -44,6 +44,7 @@ class CreateBuyPublicContractsTable extends Migration
         if(!Schema::hasTable('public_contract_items')) {
             Schema::create('public_contract_items', function (Blueprint $table) {
                 $table->unsignedBigIncrements('id');
+                $table->unsignedBigInteger('contract_id');
                 $table->boolean('is_blueprint_copy')->nullable();
                 $table->boolean('is_included');
                 $table->unsignedBigInteger('item_id')->nullable();

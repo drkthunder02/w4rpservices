@@ -18,6 +18,7 @@ class PublicContractItem extends Model
      * @var array
      */
     protected $fillable = [
+        'contract_id',
         'is_blueprint_copy',
         'is_included',
         'item_id',
@@ -28,4 +29,8 @@ class PublicContractItem extends Model
         'time_efficiency',
         'type_id',
     ];
+
+    public function contract() {
+        return $this->hasOne('App\Models\PublicContracts\PublicContract', 'contract_id', 'contract_id');
+    }
 }
