@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Eve;
 
 use Illuminate\Console\Command;
 
@@ -11,14 +11,14 @@ class GetEveRegions extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'eve:getRegions';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Gets all of the information for regions from the eve esi';
 
     /**
      * Create a new command instance.
