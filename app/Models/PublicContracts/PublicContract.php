@@ -18,6 +18,7 @@ class PublicContract extends Model
      * @var array
      */
     protected $fillable = [
+        'region_id',
         'buyout',
         'collateral',
         'contract_id',

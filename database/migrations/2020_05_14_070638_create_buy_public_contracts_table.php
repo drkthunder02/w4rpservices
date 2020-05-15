@@ -16,6 +16,7 @@ class CreateBuyPublicContractsTable extends Migration
         if(!Schema::hasTable('public_contracts')) {
             Schema::create('public_contracts', function(Blueprint $table) {
                 $table->unsignedBigIncrements('id');
+                $table->unsignedBigInteger('region_id');
                 $table->decimal('buyout', 17,2 )->nullable();
                 $table->decimal('collateral', 17, 2)->nullable();
                 $table->unsignedInteger('contract_id');

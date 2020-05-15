@@ -58,6 +58,7 @@ class GetPublicContractsJob implements ShouldQueue
             ])->count();
             if($count == 0) {
                 $pub = new PublicContract;
+                $pub->region_id = $this->region;
                 if(isset($resp->buyout)) {
                     $pub->buyout = $resp->buyout;
                 }
