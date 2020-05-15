@@ -2,7 +2,15 @@
 
 namespace App\Console\Commands;
 
+//Internal Library
 use Illuminate\Console\Command;
+use Log;
+
+//Library
+use Commands\Library\CommandHelper;
+
+//Jobs
+use App\Jobs\Commands\Market\GetMarketRegionOrderJob;
 
 class GetMarketDataCommand extends Command
 {
@@ -37,6 +45,26 @@ class GetMarketDataCommand extends Command
      */
     public function handle()
     {
-        //
+        $task = new CommandHelper('GetMarketData');
+        $task->SetStartStatus();
+
+        $regions = [
+            'Immensea' => 10000025,
+            'Catch' => 10000014,
+            'Tenerifis' => 10000061,
+            'The Forge' => 10000002,
+            'Impass' => 10000031,
+            'Esoteria' => 10000039,
+            'Detorid' => 10000005,
+            'Omist' => 10000062,
+            'Feythabolis' => 10000056,
+            'Insmother' => 10000009,
+        ];
+
+        foreach($regions as $key => $value) {
+            GetMarketRegionOrderJob::dispatch($value);
+        }
+
+        $task->SetStopStatus();
     }
 }

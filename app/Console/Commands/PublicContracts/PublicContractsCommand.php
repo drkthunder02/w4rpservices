@@ -2,7 +2,15 @@
 
 namespace App\Console\Commands;
 
+//Internal Library
 use Illuminate\Console\Command;
+use Log;
+
+//Library
+use Commands\Library\CommandHelper;
+
+//Jobs
+use App\Jobs\Commands\PublicContracts\GetPublicContractsJob;
 
 class PublicContractsCommand extends Command
 {
@@ -37,6 +45,9 @@ class PublicContractsCommand extends Command
      */
     public function handle()
     {
+        $task = new CommandHelper('PublicContracts');
+        $task->SetStartStatus();
+
         $regions = [
             'Immensea' => 10000025,
             'Catch' => 10000014,
@@ -51,7 +62,9 @@ class PublicContractsCommand extends Command
         ];
 
         foreach($regions as $key => $value) {
-            PublicContractsJob::dispatch($value);
+            GetPublicContractsJob::dispatch($value);
         }
+
+        $task->SetStopStatus();
     }
 }
