@@ -286,8 +286,8 @@ class MoonsController extends Controller
                 'ThirdQuantity' => $moon->ThirdQuantity,
                 'FourthOre' => $moon->FourthOre,
                 'FourthQuantity' => $moon->FourthQuantity,
-                'Price' => $moonprice,
-                'Worth' => number_format($worth, "2", ".", ","),
+                'Price' => number_format($moonprice, 2, ".", ","),
+                'Worth' => number_format($worth, 2, ".", ","),
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
             ]);
