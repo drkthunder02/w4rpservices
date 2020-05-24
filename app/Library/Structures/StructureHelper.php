@@ -116,7 +116,7 @@ class StructureHelper {
         }
 
         try {
-            $info = $esi->invoke('get', '/universe/structures/{structure_id}/', [
+            $info = $this->esi->invoke('get', '/universe/structures/{structure_id}/', [
                 'structure_id' => $structureId,
             ]);
         } catch(RequestFailedException $e) {
