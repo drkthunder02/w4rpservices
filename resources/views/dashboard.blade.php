@@ -55,7 +55,7 @@
                                 <td>{{ $o['character_name'] }}</td>
                                 <td>{{ $o['fleet_commander_name'] }}</td>
                                 <td>{{ $o['ship_type'] }}</td>
-                                <td>{{ $o['loss_value'] }}</td>
+                                <td>{{ number_format($o['loss_value'], 2, ".", ",") }}</td>
                                 <td>{{ $o['approved'] }}</td>
                                 <td>{{ $o['created_at'] }}</td>
                             </tr>
@@ -97,7 +97,7 @@
                                 <td>{{ $d['character_name'] }}</th>
                                 <td>{{ $d['fleet_commander_name'] }}</td>
                                 <td>{{ $d['ship_type'] }}</td>
-                                <td>{{ $d['loss_value'] }}</td>
+                                <td>{{ number_format($d['loss_value'], 2, ".", ",") }}</td>
                                 <td>{{ $d['approved'] }}</td>
                                 <td>{{ $d['notes'] }}</td>
                                 <td>{{ $d['updated_at'] }}</td>
@@ -139,7 +139,7 @@
                                 <td>{{ $a['character_name'] }}</td>
                                 <td>{{ $a['fleet_commander_name'] }}</td>
                                 <td>{{ $a['ship_type'] }}</td>
-                                <td>{{ $a['loss_value'] }}</td>
+                                <td>{{ number_format($a['loss_value'], 2, ".", ",") }}</td>
                                 <td>{{ $a['approved'] }}</td>
                                 <td>{{ $a['updated_at'] }}</td>
                             </tr>
