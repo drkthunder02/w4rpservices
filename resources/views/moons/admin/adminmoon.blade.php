@@ -21,8 +21,8 @@
                 <tr class="{{ $row['RowColor'] }}">
                     <td>{{ $row['SPM'] }}</td>
                     <td>{{ $row['StructureName'] }}</td>
-                    <td>{{ $row['AlliancePrice'] }}</td>
-                    <td>{{ $row['OutOfAlliancePrice'] }}</td>
+                    <td>{{ number_format($row['AlliancePrice'], 0, ".", ",") }}</td>
+                    <td>{{ number_format($row['OutOfAlliancePrice'], 0, ".", ",") }}</td>
                     <td>{{ $row['Renter'] }}</td>
                     <td>{{ $row['Contact'] }}</td>
                     <td>{{ $row['RentalEnd'] }}</td>
