@@ -13,6 +13,7 @@ use App\Jobs\Commands\Moons\FetchMoonObserverJob;
 
 //Library
 use Commands\Library\CommandHelper;
+use App\Library\Structures\StructureHelper;
 
 //Models
 use App\Models\Esi\EsiScope;
