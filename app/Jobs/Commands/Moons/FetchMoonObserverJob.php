@@ -110,6 +110,7 @@ class FetchMoonObserverJob implements ShouldQueue
                 $obs->observer_owner_id = $structureInfo->owner_id;
                 $obs->solar_system_id = $structureInfo->solar_system_id;
                 $obs->observer_type = $observer->observer_type;
+                $obs->observer_type_id = $structureInfo->type_id;
                 $obs->last_updated = $observer->last_updated;
                 $obs->save();
             } else {
