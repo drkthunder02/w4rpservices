@@ -32,9 +32,6 @@ class Kernel extends ConsoleKernel
         Commands\Moons\MoonsUpdateCommand::class,
         Commands\Moons\RentalMoonCommand::class,
         Commands\Data\PurgeCorpMoonLedgers::class,
-        //Commands\Market\GetMarketDataCommand::class,
-        //Commands\Market\PurgeMarketDataCommand::class,
-        //Commands\PublicContracts\PublicContractsCommand::class,
     ];
 
     /**
