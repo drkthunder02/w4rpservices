@@ -9,7 +9,7 @@ use Log;
 
 //Jobs
 use App\Jobs\Commands\Moons\FetchMoonLedgerJob;
-use App\Jobs\Commands\Moons\FetchMoonObserversJob;
+use App\Jobs\Commands\Moons\FetchMoonObserverJob;
 
 //Library
 use Commands\Library\CommandHelper;
@@ -79,7 +79,7 @@ class MoonsUpdateCommand extends Command
         //and dispatch jobs accordingly.
         foreach($characters as $charId) {
             //Fetch all of the corp observers with the job dispatch
-            FetchMoonObserversJob::dispatch($charId);
+            FetchMoonObserverJob::dispatch($charId);
             //Fetch all of the corp ledgers with the job dispatch
             FetchMoonLedgerJob::dispatch($charId);
         }
