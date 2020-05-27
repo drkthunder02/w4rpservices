@@ -90,7 +90,7 @@ class FetchMoonObserverJob implements ShouldQueue
 
         //Run through the mining observers, and add them to the database as needed
         foreach($response as $observer) {
-            CorpMoonObserver::where(['observer_id' => $observer->observer_id])->count();
+            $count = CorpMoonObserver::where(['observer_id' => $observer->observer_id])->count();
             //If the observer is not found, then add it to the database
             if($count == 0) {
                 $obs = new CorpMoonObserver;
