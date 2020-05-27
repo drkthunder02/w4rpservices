@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('layouts.user.head')
+@include('layouts.user.dashboard.head')
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-@include('layouts.user.navbar')
-@include('layouts.user.main')
-@include('layouts.user.content')
-@include('layouts.user.control')
-@include('layouts.user.footer')
+@include('layouts.user.dashboard.navbar')
+@include('layouts.user.dashboard.main')
+@include('layouts.user.dashboard.content')
+@include('layouts.user.dashboard.control')
+@include('layouts.user.dashboard.footer')
 </div>
 <!-- ./wrapper -->
-@include('layouts.user.scripts')
+@include('layouts.user.dashboard.scripts')
 </body>
 </html>
