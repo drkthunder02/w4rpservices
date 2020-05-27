@@ -80,11 +80,17 @@ class FetchMoonLedgerJob implements ShouldQueue
         //Get the refresh token if the scope checks have passed
         $refreshToken = $esiHelper->GetRefreshToken($this->charId);
 
+        //Setup the esi information
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+
         //Get the character data from the lookup table
         $character = $lookup->GetCharacterInfo($this->charId);
 
         //Get the corporation data from the lookup table
         $corporation = $lookup->GetCorporationInfo($character->corporation_id);
+
+        //Setup the structure helper
+        $structure = new StructureHelper($this->charId, $character->corporation_id, $esi);
 
         //Get the moon observers from the database
         $observers = CorpMoonObserver::where([
