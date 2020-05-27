@@ -42,7 +42,7 @@ class UpdateMoonPriceCommand extends Command
     public function handle()
     {
         //Create the command helper container
-        $task = new CommandHelper('CorpJournal');
+        $task = new CommandHelper('UpdateMoonPricing');
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
 
