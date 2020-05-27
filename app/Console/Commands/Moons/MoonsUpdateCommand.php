@@ -79,7 +79,7 @@ class MoonsUpdateCommand extends Command
         //and dispatch jobs accordingly.
         foreach($characters as $charId) {
             //Fetch all of the corp observers with the job dispatch
-            FetchMoonObserverJob::dispatch($charId);
+            FetchMoonObserversJob::dispatch($charId);
             //Fetch all of the corp ledgers with the job dispatch
             FetchMoonLedgerJob::dispatch($charId);
         }
