@@ -60,7 +60,7 @@ class FetchMoonObserverJob implements ShouldQueue
     {
         //Declare some variables
         $lookup = new LookupHelper;
-        $esi = new Esi;
+        $esiHelper = new Esi;
 
         //Get the configuration from the main site
         $config = config('esi');
