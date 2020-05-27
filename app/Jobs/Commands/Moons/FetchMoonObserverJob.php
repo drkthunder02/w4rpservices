@@ -76,7 +76,7 @@ class FetchMoonObserverJob implements ShouldQueue
 
         //Get the mining observers for the corporation's from esi
         try {
-            $responses = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
+            $responses = $esiHelper->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
                 'corporation_id' => $character->corporation_id,
             ]);
         } catch(RequestFailedException $e) {
@@ -91,7 +91,7 @@ class FetchMoonObserverJob implements ShouldQueue
                 $obs = new CorpMoonObserver;
                 $obs->observer_id = $observer->observer_id;
                 $obs->observer_type = $observer->observer_type;
-                $obs->last_updated = $esi->DecodeDate($observer->last_updated);
+                $obs->last_updated = $esiHepler->DecodeDate($observer->last_updated);
                 $obs->save();
             } else {
                 CorpMoonObserver::where([
