@@ -41,7 +41,7 @@
         </a>
         <a class="nav-link" href="/profile">
             <i class="far fa-bell"></i>
-            <span class="badge badge-primary navbar-badge">{{ auth()->user()->srpAccepted() }}</span> <!-- SRP Requests Accepted -->
+            <span class="badge badge-primary navbar-badge">{{ auth()->user()->srpApproved() }}</span> <!-- SRP Requests Accepted -->
         </a>
         <a class="nav-link" href="/logout">Logout</a>
       </li>

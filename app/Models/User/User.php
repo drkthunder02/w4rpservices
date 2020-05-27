@@ -133,7 +133,6 @@ class User extends Authenticatable
     }
 
     public function srpOpen() {
-               
         return SRPShip::where([
             'character_id' => $this->character_id,
             'approved' => 'Under Review',
