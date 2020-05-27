@@ -73,10 +73,12 @@ class FetchMoonObserverJob implements ShouldQueue
 
         //Get the refresh token for the character
         $refreshToken = $esiHelper->GetRefreshToken($this->charId);
+        //Get the esi variable
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         //Get the mining observers for the corporation's from esi
         try {
-            $responses = $esiHelper->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
+            $responses = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
                 'corporation_id' => $character->corporation_id,
             ]);
         } catch(RequestFailedException $e) {
