@@ -31,6 +31,7 @@ class Kernel extends ConsoleKernel
         Commands\Data\CleanStaleDataCommand::class,
         Commands\Moons\MoonsUpdateCommand::class,
         Commands\Moons\RentalMoonCommand::class,
+        Commands\Moons\PurgeCorpMoonLedgers::class,
         //Commands\Market\GetMarketDataCommand::class,
         //Commands\Market\PurgeMarketDataCommand::class,
         //Commands\PublicContracts\PublicContractsCommand::class,
@@ -46,47 +47,54 @@ class Kernel extends ConsoleKernel
     {
         //Horizon Graph Schedule
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
+
         //Command to get the holding journal finances
         $schedule->command('services:HoldingJournal')
-                ->hourly()
+                ->hourlyAt('45')
                 ->withoutOverlapping();
         //Command to update moon rental pricing
         $schedule->command('services:UpdateMoonPrice')
-                ->hourlyAt('30')
-                ->withoutOverlapping();
+                ->hourlyAt('30');
+
         //Get the corps within the alliance
         $schedule->command('services:GetCorps')
-                 ->monthlyOn(1, '09:00')
-                 ->withoutOverlapping();
+                 ->monthlyOn(1, '09:00');
+
         //Update the moons, and send out mails for current moon rentals
         $schedule->command('services:MoonMailer')
                  ->monthlyOn(1, '00:01');
+
         //Get the structures within the alliance and their information
         $schedule->command('services:GetStructures')
-                ->dailyAt('09:00')
-                ->withoutOverlapping();
+                ->dailyAt('09:00');
+
         //Get the assets for the alliance.  Only saves the Liquid Ozone for jump bridges
         $schedule->command('services:GetAssets')
-                ->hourlyAt('22')
-                ->withoutOverlapping();
+                ->hourlyAt('22');
+
         //Clean old data from the database
         $schedule->command('services:CleanData')
                 ->monthlyOn(15, '18:00');
+
         //Purge users from the database which don't belong and reset the user roles as necessary
         $schedule->command('services:PurgeUsers')
-                ->dailyAt('23:00')
-                ->withoutOverlapping();
+                ->dailyAt('23:00');
+
         //Mail about payments for flex structures
         $schedule->command('services:FlexStructures')
-                ->monthlyOn(2, '00:01')
-                ->withoutOverlapping();
+                ->monthlyOn(2, '00:01');
+
         //Wormhole data purge
         $schedule->command('services:PurgeWormholeData')
                 ->hourlyAt(20);
+
         //Purge old data from the database
         $schedule->command('services:CleanData')
-                 ->weekly(7, '11:00')
-                 ->withoutOverlapping();
+                 ->weekly(7, '11:00');
+
+        //Purge old corp ledger data from the database
+        $schedule->command('data:PurgeCorpLedgers')
+                 ->monthly();
     }
 
     /**
