@@ -76,6 +76,9 @@ class FetchMoonObserverJob implements ShouldQueue
         //Get the esi variable
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
+        //With the lookup helper, get the character information
+        $character = $lookup->GetCharacterInfo($this->charId);
+
         //Get the mining observers for the corporation's from esi
         try {
             $responses = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
