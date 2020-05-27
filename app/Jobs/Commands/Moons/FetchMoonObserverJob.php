@@ -14,6 +14,7 @@ use Log;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Lookups\LookupHelper;
+use App\Library\Structures\StructureHelper;
 
 //App Models
 use App\Models\Moon\CorpMoonObserver;
@@ -74,10 +75,15 @@ class FetchMoonObserverJob implements ShouldQueue
         //Get the refresh token for the character
         $refreshToken = $esiHelper->GetRefreshToken($this->charId);
         //Get the esi variable
-        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);       
 
         //With the lookup helper, get the character information
         $character = $lookup->GetCharacterInfo($this->charId);
+        //With the lookup helper, get the corporation information
+        $corporation = $lookup->GetCorporationInfo($character->corporation_id);
+
+        //Delcare the structure helper since we have the necessary data
+        $structureHelper = new Structure($this->charId, $character->corporation_id, $esi);
 
         //Get the mining observers for the corporation's from esi
         try {
@@ -93,8 +99,16 @@ class FetchMoonObserverJob implements ShouldQueue
             $count = CorpMoonObserver::where(['observer_id' => $observer->observer_id])->count();
             //If the observer is not found, then add it to the database
             if($count == 0) {
+                //Get the structure information from the universe structure esi endpoint
+                $structureInfo = $structureHelper->GetStructureInfo($observer->observer_id);
+                //Create a new corp moon observer in the database
                 $obs = new CorpMoonObserver;
+                $obs->corporation_id = $character->corporation_id;
+                $obs->corporation_name = $corporation->name;
                 $obs->observer_id = $observer->observer_id;
+                $obs->observer_name = $structureInfo->name;
+                $obs->observer_owner_id = $structureInfo->owner_id;
+                $obs->solar_system_id = $structureInfo->solar_system_id;
                 $obs->observer_type = $observer->observer_type;
                 $obs->last_updated = $observer->last_updated;
                 $obs->save();

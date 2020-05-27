@@ -51,8 +51,8 @@ class CreateRentalMoonLedgerTables extends Migration
                 $table->unsignedBigInteger('corporation_id');
                 $table->string('corporation_name');
                 $table->unsignedBigInteger('observer_id');
-                $table->string('observer_name');
-                $table->string('observer_type');
+                $table->string('observer_name')->nullable();
+                $table->string('observer_type')->nullable();
                 $table->unsignedBigInteger('observer_owner_id');
                 $table->unsignedBigInteger('solar_system_id');
                 $table->unsignedBigInteger('observer_type_id');
