@@ -15,7 +15,7 @@ class CreateAllianceMoonRentalInvoicesTable extends Migration
     {
         if(!Schema::hasTable('alliance_moon_rental_invoices')) {
             Schema::create('alliance_moon_rental_invoices', function (Blueprint $table) {
-                $table->unsignedBigIncrements('id');
+                $table->bigIncrements('id');
                 $table->string('invoice_id')->unique();
                 $table->unsignedBigInteger('character_id');
                 $table->string('character_name');
@@ -31,7 +31,7 @@ class CreateAllianceMoonRentalInvoicesTable extends Migration
 
         if(!Schema::hasTable('alliance_moon_rental_payments')) {
             Schema::create('alliance_moon_rental_payments', function (Blueprint $table) {
-                $table->unsignedBigIncrements('id');
+                $table->bigIncrements('id');
                 $table->string('invoice_id')->unique();
                 $table->decimal('payment_amount');
                 $table->timestamps();
