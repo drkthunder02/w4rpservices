@@ -74,7 +74,7 @@ class CreateRentalMoonLedgerTables extends Migration
                 $table->string('ore');
                 $table->unsignedBigInteger('quantity');
                 $table->unsignedBigInteger('recorded_corporation_id');
-                $table->string('record_corporation_name')->nullable();
+                $table->string('recorded_corporation_name')->nullable();
                 $table->dateTime('last_updated');
                 $table->timestamps();
             });
