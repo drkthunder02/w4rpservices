@@ -32,7 +32,8 @@ class PurgePublicContracts implements ShouldQueue
      */
     public function __construct()
     {
-        //Nothing to do in this part of the job
+        //Set the connection
+        $this->connection = 'redis';
     }
 
     /**

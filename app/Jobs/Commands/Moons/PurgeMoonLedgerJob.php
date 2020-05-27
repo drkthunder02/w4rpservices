@@ -12,7 +12,7 @@ use Log;
 use Carbon\Carbon;
 
 //App Models
-use App\Models\CorpMoonLedger;
+use App\Models\Moon\CorpMoonLedger;
 
 class PurgeMoonLedgerJob implements ShouldQueue
 {
@@ -39,7 +39,8 @@ class PurgeMoonLedgerJob implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        //Set the connection for the job
+        $this->connection = 'redis';
     }
 
     /**

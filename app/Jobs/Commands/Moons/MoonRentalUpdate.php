@@ -19,7 +19,8 @@ class MoonRentalUpdate implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        //Setup the connection
+        $this->connection = 'redis';
     }
 
     /**

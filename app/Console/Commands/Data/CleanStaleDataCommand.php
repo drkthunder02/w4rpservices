@@ -5,6 +5,7 @@ namespace App\Console\Commands\Data;
 //Internal Library
 use Illuminate\Console\Command;
 use Carbon\Carbon;
+use Log;
 
 //Library
 use Commands\Library\CommandHelper;

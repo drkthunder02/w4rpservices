@@ -40,8 +40,12 @@ class GetPublicContractItemsJob implements ShouldQueue
      */
     public function __construct($esi, $contract)
     {
+        //Setup the variables
         $this->esi = $esi;
         $this->contractId = $contract;
+
+        //Set the connection
+        $this->connection = 'redis';
     }
 
     /**

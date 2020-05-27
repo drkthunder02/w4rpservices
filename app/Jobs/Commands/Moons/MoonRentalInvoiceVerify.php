@@ -43,7 +43,8 @@ class MoonRentalInvoiceVerify implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        //Set the connection
+        $this->connection = 'redis';
     }
 
     /**

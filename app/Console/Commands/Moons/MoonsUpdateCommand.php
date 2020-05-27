@@ -84,8 +84,6 @@ class MoonsUpdateCommand extends Command
             FetchMoonLedgerJob::dispatch($charId);
         }
 
-        
-
         //Set task done status
         $task->SetStopStatus();
     }

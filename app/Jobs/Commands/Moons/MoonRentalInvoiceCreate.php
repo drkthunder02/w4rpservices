@@ -92,6 +92,9 @@ class MoonRentalInvoiceCreate implements ShouldQueue
 
         //Null out unused variables when calling the construct
         $this->rentals = null;
+
+        //Set the connection
+        $this->connection = 'redis';
     }
 
     /**

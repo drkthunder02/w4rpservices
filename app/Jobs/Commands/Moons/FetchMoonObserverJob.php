@@ -49,7 +49,11 @@ class FetchMoonObserverJob implements ShouldQueue
      */
     public function __construct($charId)
     {
+        //Set the character id
         $this->charId = $charId;
+
+        //Set the connection
+        $this->connection = 'redis';
     }
 
     /**

@@ -44,6 +44,9 @@ class GetPublicContractsJob implements ShouldQueue
         }
         //Set the region code
         $this->region = $regionId;
+
+        //Set the connection
+        $this->connection = 'redis';
     }
 
     /**
