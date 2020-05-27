@@ -81,7 +81,7 @@ class FetchMoonObserverJob implements ShouldQueue
 
         //Get the mining observers for the corporation's from esi
         try {
-            $responses = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
+            $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
                 'corporation_id' => $character->corporation_id,
             ]);
         } catch(RequestFailedException $e) {
