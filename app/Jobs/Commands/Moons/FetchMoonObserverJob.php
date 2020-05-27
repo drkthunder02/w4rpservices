@@ -92,6 +92,7 @@ class FetchMoonObserverJob implements ShouldQueue
             ]);
         } catch(RequestFailedException $e) {
             Log::critical('FetchMoonObservers failed to get the moon observers for the corporation');
+            $response = null;
         }
 
         //Run through the mining observers, and add them to the database as needed
