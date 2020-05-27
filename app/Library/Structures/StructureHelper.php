@@ -104,7 +104,7 @@ class StructureHelper {
         }
     }
 
-    private function GetStructureInfo($structureId) {
+    public function GetStructureInfo($structureId) {
         //Declare some variables
         $esiHelper = new Esi;
 
