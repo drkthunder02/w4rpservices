@@ -23,8 +23,6 @@ class CorpMoonObserver extends Model
     protected $fillable = [
         'corporation_id',
         'corporation_name',
-        'character_id',
-        'character_name',
         'observer_id',
         'observer_name',
         'observer_type',

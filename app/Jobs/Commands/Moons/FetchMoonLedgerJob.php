@@ -123,7 +123,7 @@ class FetchMoonLedgerJob implements ShouldQueue
                     $entries[] = [
                         'corporation_id' => $corpInfo->corporation_id,
                         'corporation_name' => $corpInfo->name,
-                        'character_id' => $charInfo->character_id,
+                        'character_id' => $ledger->character_id,
                         'character_name' => $charInfo->name,
                         'observer_id' => $observer->observer_id,
                         'observer_name' => $observer->observer_name,
