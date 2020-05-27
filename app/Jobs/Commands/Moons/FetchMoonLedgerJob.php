@@ -64,7 +64,6 @@ class FetchMoonLedgerJob implements ShouldQueue
         //Declare Variables
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
-        $structure = new StructureHelper;
         $response = null;
         $structureInfo = null;
 
