@@ -84,6 +84,7 @@ class FetchMoonObserverJob implements ShouldQueue
 
         //Delcare the structure helper since we have the necessary data
         $structureHelper = new StructureHelper($this->charId, $character->corporation_id, $esi);
+        dd($structureHelper);
 
         //Get the mining observers for the corporation's from esi
         try {
