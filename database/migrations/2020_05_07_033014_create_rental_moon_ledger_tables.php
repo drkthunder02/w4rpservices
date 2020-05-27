@@ -15,7 +15,7 @@ class CreateRentalMoonLedgerTables extends Migration
     {
         if(!Schema::hasTable('alliance_mining_observers')) {
             Schema::create('alliance_mining_observers', function(Blueprint $table) {
-                $table->unsignedBigIncrements('id');
+                $table->bigIncrements('id');
                 $table->unsignedBigInteger('corporation_id');
                 $table->string('corporation_name');
                 $table->unsignedBigInteger('observer_id');
@@ -28,7 +28,7 @@ class CreateRentalMoonLedgerTables extends Migration
 
         if(!Schema::hasTable('alliance_rental_moon_ledgers')) {
             Schema::create('alliance_rental_moon_ledgers', function(Blueprint $table) {
-                $table->unsignedBigIncrements('id');
+                $table->bigIncrements('id');
                 $table->unsignedBigInteger('corporation_id');
                 $table->string('corporation_name');
                 $table->unsignedBigInteger('character_id');
@@ -47,7 +47,7 @@ class CreateRentalMoonLedgerTables extends Migration
 
         if(!Schema::hasTable('corp_mining_observers')) {
             Schema::create('corp_mining_observers', function(Blueprint $table) {
-                $table->unsignedBigIncrements('id');
+                $table->bigIncrements('id');
                 $table->unsignedBigInteger('corporation_id');
                 $table->string('corporation_name');
                 $table->unsignedBigInteger('observer_id');
@@ -63,7 +63,7 @@ class CreateRentalMoonLedgerTables extends Migration
 
         if(!Schema::hasTable('corp_moon_ledgers')) {
             Schema::create('corp_moon_ledgers', function(Blueprint $table) {
-                $table->unsignedBigIncrements('id');
+                $table->bigIncrements('id');
                 $table->unsignedBigInteger('corporation_id');
                 $table->string('corporation_name');
                 $table->unsignedBigInteger('character_id');
