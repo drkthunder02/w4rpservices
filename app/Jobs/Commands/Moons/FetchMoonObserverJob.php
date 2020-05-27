@@ -14,7 +14,6 @@ use Log;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Lookups\LookupHelper;
-use App\Library\Structures\StructureHelper;
 
 //App Models
 use App\Models\Moon\CorpMoonObserver;
@@ -61,7 +60,6 @@ class FetchMoonObserverJob implements ShouldQueue
     {
         //Declare some variables
         $lookup = new LookupHelper;
-        $structure = new StructureHelper;
         $esi = new Esi;
 
         //Get the configuration from the main site
