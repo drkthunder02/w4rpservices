@@ -17,8 +17,8 @@ use App\Library\Lookups\LookupHelper;
 use App\Library\Structures\StructureHelper;
 
 //App Models
-use App\Models\CorpMoonLedger;
-use App\Models\CorpMoonObserver;
+use App\Models\Moon\CorpMoonLedger;
+use App\Models\Moon\CorpMoonObserver;
 
 
 class FetchMoonLedgerJob implements ShouldQueue
