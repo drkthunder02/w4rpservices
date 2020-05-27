@@ -96,7 +96,7 @@ class FetchMoonObserverJob implements ShouldQueue
                 $obs = new CorpMoonObserver;
                 $obs->observer_id = $observer->observer_id;
                 $obs->observer_type = $observer->observer_type;
-                $obs->last_updated = $esiHelper->DecodeDate($observer->last_updated);
+                $obs->last_updated = $observer->last_updated;
                 $obs->save();
             } else {
                 CorpMoonObserver::where([
