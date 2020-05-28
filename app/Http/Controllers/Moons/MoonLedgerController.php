@@ -30,76 +30,8 @@ class MoonLedgerController extends Controller
         $this->middleware('role:User');
     }
 
-    public function registerStructures() {
-        $this->middleware('permission:corp.lead');
-
-        //Declare variables
-        $esiHelper = new Esi;
-        $lookup = new LookupHelper;
-        $skipped = false;
-
-        $charId = auth()->user()->getId();
-
-        //Check for the esi scope to be registered already
-        if(!$esiHelper->HaveEsiScope($charId, 'esi-industry.read_corporation_mining.v1') || !$esiHelper->HaveEsiScope($charId, 'esi-universe.read_structures.v1')) {
-            return redirect('/dashboard')->with('error', 'Please register corporation mining and universe structures scopes before continuing.');
-        }
-
-        //Get the refresh token for the user
-        $refreshToken = $esiHelper->GetRefreshToken($charId);
-
-        //Setup the esi container
-        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
-
-        //Get the character data from the lookup table if possible or from esi
-        $character = $lookup->GetCharacterInfo($charId);
-        //Get the corporation info from the lookup table
-        $corporation = $lookup->GetCorporationInfo($character->corporation_id);
-
-        //Try to get the mining observers for the corporation from esi
-        try {
-            $responses = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
-                'corporation_id' => $character->corporation_id,
-            ]);
-        } catch(RequestFailedException $e) {
-            //If an exception has occurred for some reason redirect back to the dashboard with an error message
-            return redirect('/dashboard')->with('error', 'Failed to get mining structures.');
-        }
-
-        foreach($responses as $response) {
-            //Try to get the structure information from esi
-            try {
-                $structureInfo = $esi->invoke('get', '/universe/structures/{structure_id}/', [
-                    'structure_id' => $response->observer_id,
-                ]);
-            } catch(RequestFailedException $e) {
-                Log::warning('Failed to get the structure information in MoonLedgerController.  Skipping structure');
-                $skipped = true;
-            }
-
-            if($skipper == false) {
-                $observer = new CorpMoonObserver;
-                $observer->corporation_id = $character->corporation_id;
-                $observer->corporation_name = $corporation->name;
-                $observer->observer_id = $response->observer_id;
-                $observer->observer_name = $structureInfo->name;
-                $observer->observer_type = $response->observer_type;
-                $observer->observer_owner_id = $structureInfo->owner_id;
-                $observer->solar_system_id = $structureInfo->solar_system_id;
-                $observer->observer_type_id = $structureInfo->observer_type_id;
-                $observer->last_updated = $response->last_updated;
-                $observer->save();
-            }
-
-            //Reset the skipped variable
-            $skipped = false;            
-        }
-
-        return redirect('/dashboard')->with('success', 'Added mining structures to the database');
-    }
-
     public function displayMoonLedgerNew() {
-
+        
     }
 
     public function displayMoonLedger() {

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
+use Log;
 
 //Models
 use App\Models\Moon\Config;
@@ -14,8 +15,9 @@ use App\Models\Moon\ItemComposition;
 use App\Models\Moon\RentalMoon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
-use App\Models\MoonRent\MoonRental;
-use App\Models\Moon\AllianceMoon;
+//use App\Models\MoonRent\MoonRental;
+//use App\Models\Moon\AllianceMoon;
+use App\Models\MoonRent\AllianceRentalMoon;
 use App\Models\Moon\AllianceMoonRequest;
 
 //Library
@@ -132,6 +134,216 @@ class MoonsAdminController extends Controller
         ProcessSendEveMailJob::dispatch($body, (int)$moon->requestor_id, 'character', 'Warped Intentions Moon Request', $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
 
         return redirect('/moons/admin/display/request')->with('success', 'Moon has been processed, and mail has been sent out.');
+    }
+
+    /**
+     * Function to display the ability for the admins to update moons with who is renting,
+     * and when it ends
+     */
+    public function updateMoonNew() {
+        $this->middleware('role:Admin');
+
+        //Declare the variables we need
+        $system = null;
+        $planet = null;
+        $moon = null;
+        $name = null;
+        $spmnTemp = array();
+        $spmn = array();
+
+        //Get the moons and put in order by System, Planet, Moon number
+        $moons = AllianceRentalMoon::orderBy('System', 'ASC')
+                                   ->orderBy('Planet', 'ASC')
+                                   ->orderBy('Moon', 'ASC')
+                                   ->get();
+
+        //Push our default value onto the stack
+        array_push($spmn, 'N/A');
+
+        //Form our array of strings for each system, planet, and moon combination
+        foreach($moons as $m) {
+            $temp = $m->system . " - " . $m->planet . " - " . $m->moon . " - " . $m->structure_name;
+            array_push($spmnTemp, $temp);
+        }
+
+        //From the temporary array, build the final array
+        foreach($spmnTemp as $key => $value) {
+            $spmn[$value] = $value;
+        }
+
+        //Pass the data to the blade display
+        return view('moons.admin.updatemoon')->with('spmn', $spmn);
+    }
+
+    /**
+     * Function to remove a renter from a moon
+     * New function based on new table.  Will
+     * update description in a future update.
+     */
+    public function storeMoonRemovalNew(Request $request) {
+        //Check for the correct role for the user to utilize this function
+        $this->middleware('role:Admin');
+
+        //Validate the request
+        $this->validate($request, [
+            'remove' => 'required',
+        ]);
+
+        //Explode the remove request to an array of strings
+        $str_array = explode(" - ", $request->remove);
+
+        //Decode the value for the SPM into a system, planet, and moon
+        $system = $str_array[0];
+        $planet = $str_array[1];
+        $moon = $str_array[2];
+
+        //Update the moon rental
+        AllianceMoonRental::where([
+            'system' => $system,
+            'planet' => $planet,
+            'moon' => $moon,
+        ])->update([
+            'rental_type' => 'Not Rented',
+            'rental_until' => null,
+            'rental_contact_id' => 0,
+            'rental_contact_type' => 'Not Rented',
+            'paid' => 'Not Rented',
+            'paid_until' => null,
+            'alliance_use_until' => null,
+        ]);
+    }
+
+    /**
+     * Function to display the moons to admins
+     * New function based on new table.  Will
+     * update description in a future update.
+     */
+    public function displayRentalMoonsAdminNew() {
+        //Declare variables for the function
+        $lookupHelper = new LookupHelper;
+        $moonCalc = new MoonCalc;
+        $contactId = null;
+        $contactType = null;
+        $paid = null;
+        $paidUntil = null;
+        $corpTicker = null;
+        $table = array();
+        //Setup the carbon date using Carbon\Carbon
+        $lastMonth = Carbon::now()->subMonth();
+        $today = Carbon::now();
+
+        //Get the moon rentals from the database
+        $rentalMoons = AllianceRentalMoon::all();
+
+        //For each of the moons compile different data for the view for formatting
+        foreach($rentalMoons as $moon) {
+            //Check if a current rental for the moon is on going
+            if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') && ($moon->paid == 'Yes')) {
+                $paid = $moon->paid;
+                $paidUntil = new Carbon($moon->paid_until);
+                $paidUntil = $paidUntil->format('m-d');
+
+                //Set the rental date up
+                $rentalTemp = new Carbon($moon->rental_end);
+                $rentalEnd = $rentalTemp->format('m-d');
+
+                //Set the contact name based on the contact type
+                if($moon->contact_type == 'Alliance') {
+                    $allianceInfo = $lookupHelper->GetAllianceInfo($moon->contact);
+                    $contact = $allianceInfo->name;
+                    $ticker = $allianceInfo->ticker;
+                } else if($moon->contact_type == 'Corporation') {
+                    $corporationInfo = $lookupHelper->GetCorporationInfo($moon->contact);
+                    $contact = $corporationInfo->name;
+                    $ticker = $corporationInfo->ticker;
+                } else if($moon->contact_type == 'Character') {
+                    $characterInfo = $lookupHelper->GetCharacterInfo($moon->contact);
+                    $contact = $characterInfo->name;
+                    $ticker = $characterInfo->ticker;
+                } else {
+                    $contact = 'N/A';
+                    $ticker = 'N/A';
+                    $type = 'N/A';
+                }
+
+                //Set up the moon rental type
+                if($moon->rental_type == 'In Alliance') {
+                    $type = 'W4RP';
+                } else if($moon->rental_type == 'Out of Alliance') {
+                    $type = 'OOA';
+                } else {
+                    $type = 'N/A';
+                }
+                
+            //Check if the moon is currently being utilized by the alliance
+            } else if($moon->rental_type == 'Alliance') {
+                //If the moon is in use by the alliance then the moon isn't paid for
+                $paid = 'No';
+
+                //Setup the rental end time as the end of the month
+                $rentalTemp = $today->endOfMonth();
+                $rentalEnd = $rentalTemp->format('m-d');
+
+                //Setup the paid time as the same as the rental end
+                $paidUntiltemp = $rentalTemp;
+                $paidUntil = $rentalEnd;
+
+                //Set the other information for the spreadsheet
+                $contact = 'Spatial Forces';
+                $renter = 'Spatial Forces';
+                $ticker = 'SP3C';
+                $type = 'Alliance';
+
+            //The last case is the moon is not utilized by the Alliance or is not being rented
+            } else {
+                //If the moon is not being rented, or being utilized by the alliance then set paid to No
+                $paid = 'No';
+
+                //Setup the rental time to end as last month to show it's free
+                $rentalTemp = $lastMonth;
+                $rentalEnd = $rentalTemp->format('m-d');
+
+                //Setup the paid until as last month to show it's free
+                $paidUntilTemp = $lastMonth;
+                $paidUntil = $lastMonth->format('m-d');
+
+                //Setup the other variables with the correct information
+                $contact = 'None';
+                $renter = 'None';
+                $ticker = 'N/A';
+                $type = 'N/A';
+            }
+
+            //Set the color for the table
+            if($moon->rental_type != 'Alliance') {
+                if($rentalTemp->diffInDays($today) < 3) {
+                    $color = 'table-warning';
+                } else if($today > $rentalTemp) {
+                    $color = 'table-success';
+                } else {
+                    $color = 'table-danger';
+                }
+            } else {
+                $color = 'table-info';
+            }
+
+            //Add the data to the html string to be passed to the view
+            array_push($table, [
+                'SPM' => $moon->system . " - " . $moon->planet . " - " . $moon->moon,
+                'StructureName' => $moon->structure_name,
+                'AlliancePrice' => $moon->alliance_rental_price,
+                'OutOfAlliancePrice' => $moon->out_of_alliance_rental_price,
+                'RentalEnd' => $moon->rental_until,
+                'RowColor' => $color,
+                'Paid' => $moon->paid,
+                'PaidUntil' => $moon->paid_until,
+                'Contact' => $contact,
+                'Type' => $moon->rental_type,
+                'Renter' => $ticker,
+            ]);
+        }
+
+        return view('moons.admin.adminmoon')->with('table', $table);
     }
 
     /**
