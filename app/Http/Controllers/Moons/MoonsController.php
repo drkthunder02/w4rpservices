@@ -216,6 +216,85 @@ class MoonsController extends Controller
     }
 
     /**
+     * Function to display the moons and pass to the blade template
+     * Function description will be updated in a future release.
+     */
+    public function displayRentalMoonsNew() {
+        //Declare variables
+        $rentalEnd = null;
+        $lastMonth = Carbon::now()->subMonth();
+        $today = Carbon::now();
+        $table = array();
+        $moonprice = null;
+
+        //Get the user type from the user Auth class
+        $type = auth()->user()->getUserType();
+        //Get all of the rental moons from the database
+        $moons = AllianceRentalMoon::orderBy('system', 'ASC')
+                                   ->orderBy('planet', 'ASC')
+                                   ->orderBy('moon', 'ASC')
+                                   ->get();
+        
+        foreach($moons as $moon) {
+
+            //Check if someone is currently renting the moon
+            if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') && ($moon->paid == 'Yes')) {
+                $rentalTemp = new Carbon($moon->rental_until);
+                $rentalEnd = $rentalTemp->format('m-d');
+            } else if($moon->rental_type == 'Alliance') {
+                $rentalTemp = $today->endOfMonth();
+                $rentalEnd = $rentalTemp->format('m-d');
+            } else {
+                //Set the rental date for if someone is not renting the moon
+                $rentalTemp = $lastMonth;
+                $rentalEnd = $rentalTemp->format('m-d');
+            }
+
+            //Get the price of the moon from the database based on if the person is in Warped Intentions
+            if($moon->rental_type == 'W4RP') {
+                $moonprice = $moon->alliance_price;
+            } else {
+                $moonprice = $moon->out_of_alliance_price;
+            }
+
+            //Get the color correct for the table
+            if($moon->rental_type != 'Alliance') {
+                if($rentalTemp->diffInDays($today) < 3) {
+                    $color = 'table-warning';
+                } else if($today > $rentalTemp) {
+                    $color = 'table-primary';
+                } else {
+                    $color = 'table-danger';
+                }
+            } else {
+                $color = 'table-info';
+            }
+            
+
+            //Add the data to the html array to be passed to the view
+            array_push($table, [
+                'SPM' => $moon->system . " - " . $moon->planet . " - " . $moon->moon,
+                'StructureName' => $moon->structure_name,
+                'FirstOre' => $moon->first_ore,
+                'FirstQuantity' => $moon->first_quantity,
+                'SecondOre' => $moon->second_ore,
+                'SecondQuantity' => $moon->second_quantity,
+                'ThirdOre' => $moon->third_ore,
+                'ThirdQuantity' => $moon->third_quantity,
+                'FourthOre' => $moon->fourth_ore,
+                'FourthQuantity' => $moon->fourth_quantity,
+                'Price' => number_format($moonprice, 0, ".", ","),
+                'Worth' => number_format($moon->worth),
+                'RentalEnd' => $rentalEnd,
+                'RowColor' => $color,
+            ]);
+        }
+
+        //Pass the data to the view
+        return view('moons.user.moon')->with('table', $table);
+    }
+
+    /**
      * Function to display the moons and pass data to the blade template
      */
     public function displayRentalMoons() {
