@@ -153,6 +153,28 @@ class MoonCalc {
         $this->UpdateItemPricing();
     }
 
+    public function CalcOreUnits($ore, $percentage) {
+        //Specify the total pull amount
+        $totalPull = 5.55 * (3600.00 * 24.00 *30.00);
+
+        //Find the size of the asteroid from the database
+        $item = ItemComposition::where([
+            'Name' => $ore,
+        ])->first();
+        
+        //Get the m3 size from the item composition
+        $m3Size = $item->m3Size;
+        
+        //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
+        $actualm3 = floor($totalPull * $percentage);
+        
+        //Calculate the units from the m3 pulled from the moon
+        $units = floor($actualm3 / $m3Size);   
+
+        //Return the calculated data
+        return $units;
+    }
+
     private function UpdateItemPricing() {
         //Get the configuration from the config table
         $config = DB::table('Config')->first();
@@ -278,28 +300,6 @@ class MoonCalc {
                 ]);
             }
         }
-    }
-
-    public function CalcOreUnits($ore, $percentage) {
-        //Specify the total pull amount
-        $totalPull = 5.55 * (3600.00 * 24.00 *30.00);
-
-        //Find the size of the asteroid from the database
-        $item = ItemComposition::where([
-            'Name' => $ore,
-        ])->first();
-        
-        //Get the m3 size from the item composition
-        $m3Size = $item->m3Size;
-        
-        //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
-        $actualm3 = floor($totalPull * $percentage);
-        
-        //Calculate the units from the m3 pulled from the moon
-        $units = floor($actualm3 / $m3Size);   
-
-        //Return the calculated data
-        return $units;
     }
 
     private function CalculateTotalMoonPull() {
