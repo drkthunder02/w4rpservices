@@ -2,11 +2,23 @@
 
 namespace App\Jobs\Commands\RentalMoons;
 
+//Internal Library
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Log;
+use Carbon\Carbon;
+
+//Library
+
+//Jobs
+use App\Jobs\ProcessSendEvveMailJob;
+
+//Models
+use App\Models\MoonRentals\AllianceRentalMoon;
+use App\Models\Mail\SentMail;
 
 class SendMoonRentalPaymentReminderJob implements ShouldQueue
 {
