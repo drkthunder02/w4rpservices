@@ -18,9 +18,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Corps\GetCorpsCommand::class,
-        Commands\Moons\UpdateMoonPriceCommand::class,
         Commands\Finances\HoldingFinancesCommand::class,
-        Commands\Moons\MoonMailerCommand::class,
         Commands\Structures\GetStructuresCommand::class,
         Commands\Assets\GetAssetsCommand::class,
         Commands\Users\PurgeUsers::class,
@@ -30,7 +28,6 @@ class Kernel extends ConsoleKernel
         Commands\Finances\SovBillsCommand::class,
         Commands\Data\CleanStaleDataCommand::class,
         Commands\Moons\MoonsUpdateCommand::class,
-        Commands\Moons\RentalMoonCommand::class,
         Commands\Data\PurgeCorpMoonLedgers::class,
     ];
 
