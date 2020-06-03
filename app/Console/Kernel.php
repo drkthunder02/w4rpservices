@@ -49,17 +49,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:HoldingJournal')
                 ->hourlyAt('45')
                 ->withoutOverlapping();
-        //Command to update moon rental pricing
-        $schedule->command('services:UpdateMoonPrice')
-                ->hourlyAt('30');
 
         //Get the corps within the alliance
         $schedule->command('services:GetCorps')
                  ->monthlyOn(1, '09:00');
-
-        //Update the moons, and send out mails for current moon rentals
-        $schedule->command('services:MoonMailer')
-                 ->monthlyOn(1, '00:01');
 
         //Get the structures within the alliance and their information
         $schedule->command('services:GetStructures')
