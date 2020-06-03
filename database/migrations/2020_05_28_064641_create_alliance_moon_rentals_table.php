@@ -41,7 +41,7 @@ class CreateAllianceMoonRentalsTable extends Migration
             $table->dateTime('rental_until')->nullable();
             $table->unsignedBigInteger('rental_contact_id')->default(0);
             $table->enum('rental_contact_type', [
-                'Player',
+                'Character',
                 'Corporation',
                 'Alliance',
                 'Unknown',
