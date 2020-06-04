@@ -16,6 +16,10 @@
                 {{ Form::text('contact', '', ['class' => 'form-control', 'placeholder' => 'Character']) }}
             </div>
             <div class="form-group col-md-6">
+                {{ Form::label('contact_type', 'Contact Type') }}
+                {{ Form::select('contact_type', ['Character' => 'Character', 'Corporation' => 'Corporation'], 'Character') }}
+            </div>
+            <div class="form-group col-md-6">
                 {{ Form::label('rental_end', 'Rental End Date') }}
                 {{ Form::date('rental_end', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}
             </div>

@@ -347,213 +347,119 @@ class MoonsAdminController extends Controller
     }
 
     /**
-     * Store the updated moon
+     * Function to store the updates from the moons.
+     * New function based on new table.  Will update
+     * the description in a future update
      */
-    public function storeUpdateMoon(Request $request) {
+    public function storeUpdateMoonNew(Request $request) {
+        //Require the site administration role
         $this->middleware('role:Admin');
 
-        //Declare some static variables as needed
+        //Declare some variables we will need
         $moonCalc = new MoonCalc;
         $lookup = new LookupHelper;
         $paid = false;
         $system = null;
         $planet = null;
         $mn = null;
-        $name = null;
 
         //Validate our request from the html form
         $this->validate($request, [
             'spmn' => 'required',
             'contact' => 'required',
+            'contact_type' => 'required',
             'paid_until' => 'required',
             'rental_end' => 'required',
         ]);
 
-        //Decode the System, Planet, Moon, Name combinatio sent from the controller
+        //Decode the spmn
         $str_array = explode(" - ", $request->spmn);
         $system = $str_array[0];
         $planet = $str_array[1];
         $mn = $str_array[2];
         $name = $str_array[3];
 
-        //Take the  contact name and create a character_id from it
-        if($request->contact == 'None') {
-            $contact = -1;
-        } else {
-            $contact = $lookup->CharacterNameToId($request->contact);
-        }
-
-        //After we get the contact, from his name to the character Id, let's do some other functions before continuing.
-        //Let's find the corporation and alliance information to ascertain whethery they are in Warped Intentions or another Legacy Alliance
-        $char = $lookup->GetCharacterInfo($contact);
-        //Takes the corp id and looks up the corporation info
-        $corp = $lookup->GetCorporationInfo($char->corporation_id);
-        $alliance = $lookup->GetAllianceInfo($corp->alliance_id);
-        $allianceId = $corp->alliance_id;
-
-        //Update the paid value for database entry
+        //Update the paid value from the request value
         if($request->paid == 'Yes') {
             $paid = 'Yes';
         } else {
             $paid = 'No';
         }
-        
-        //Create the rnetal ticker if the corp is in Warped Intentions, otherwise just display the alliance ticker
-        if($allianceId == 99004116) {
-            $renter = $corp->ticker;
-        } else {
-            $renter = $alliance->ticker;
-        }
 
-        //Create the paid until date
-        if(isset($request->paid_until)) {
-            $paidUntil = new Carbon($request->paid_until . '00:00:01');
-        } else {
-            $paidUntil = Carbon::now();
-        }
+        //Setup the rental end and paid until variables
+        $rentalEnd = $request->rental_end . " 23:59:59";
+        $paidUntil = $request->paid_until . " 23:59:59";
 
-        //Create the rental end date
-        if(isset($request->rental_end)) {
-            $rentalEnd = new Carbon($request->rental_end . '23:59:59');
-        } else {
-            $rentalEnd = Carbon::now();
-        }
+        //Check if the alliance is renting the moon for itself
+        if($request->contact_type == 'Corporation' && $request->contact == 'Spatial Forces') {
+            AllianceMoonRental::where([
+                'system' => $str_array[0],
+                'planet' => $str_array[1],
+                'moon' => $str_array[2],
+            ])->update([
+                'rental_type' => 'Alliance',
+                'rental_until' => $request->rental_end . " 23:59:59",
+                'rental_contact_id' => 98287666,
+                'rental_contact_type' => 'Alliance',
+                'paid' => 'No',
+                'paid_until' => null,
+                'alliance_use_until' => $request->rental_end . " 23:59:59",
+            ]);
+        } else if($request->contact_type == 'Character') {
+            //Get the character id from the lookup helper
+            $charId = $lookup->CharacterNameToId($request->contact);
+            //Get the corporation id from the lookup helper, followed by the alliance id
+            //so we can determine if it's in alliance or out of alliance
+            $corp = $lookup->GetCorporationInfo($charId);
 
-        //Calculate the price of the moon for when it's updated
-        $moon = RentalMoon::where([
-            'System' => $system,
-            'Planet' => $planet,
-            'Moon' => $mn,
-        ])->first();
-
-        //Calculate the price of the rental and store it in the database
-        $price = $moonCalc->SpatialMoons($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                         $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-
-        //Count how many rentals we find for later database processing
-        $count = MoonRental::where([
-            'System' => $system,
-            'Planet' => $planet,
-            'Moon' => $mn,
-            'Contact' => $contact,
-        ])->count();
-        
-        //If the database entry isn't found, then insert it into the database,
-        //otherwise, account for it being in the system already.
-        //Also check for the weird condition of more than one moon entry existing
-        if($count > 1) {
-            //If more than one entry is found for a particular system, planet, moon combo, then delete all the entries, and put in 
-            // a single new entry
-            MoonRental::where([
-                'System' => $system,
-                'Planet' => $planet,
-                'Moon' => $moon,
-            ])->delete();
-
-            if($allianceId == 99004116) {
-                $store = new MoonRental;
-                $store->System = $system;
-                $store->Planet = $planet;
-                $store->Moon = $mn;
-                $store->RentalCorp = $renter;
-                $store->RentalEnd = $rentalEnd;
-                $store->Contact = $contact;
-                $store->Price = $price['alliance'];
-                $store->Type = 'alliance';
-                $store->Paid = $paid;
-                $store->Paid_Until = $paidUntil;
-                $store->save();
+            if($corp->alliance_id == 99004116) {
+                $type = 'In Alliance';
             } else {
-                $store = new MoonRental;
-                $store->System = $system;
-                $store->Planet = $planet;
-                $store->Moon = $mn;
-                $store->RentalCorp = $renter;
-                $store->RentalEnd = $rentalEnd;
-                $store->Contact = $contact;
-                $store->Price = $price['outofalliance'];
-                $store->Type = 'outofalliance';
-                $store->Paid = $paid;
-                $store->Paid_Until = $paidUntil;
-                $store->save();
+                $type = 'Out of Alliance';
             }
-        } else if($count == 1) {
-            if($allianceId = 99004116) {
-                MoonRental::where([
-                    'System' => $system,
-                    'Planet' => $planet,
-                    'Moon' => $mn,
-                    'Contact' => $contact,
-                ])->update([
-                    'System' => $system,
-                    'Planet' => $planet,
-                    'Moon' => $mn,
-                    'RentalCorp' => $renter,
-                    'RentalEnd' => $rentalEnd,
-                    'Contact' => $contact,
-                    'Price' => $price['alliance'],
-                    'Type' => 'alliance',
-                    'Paid' => $paid,
-                    'Paid_Until' => $paidUntil,
-                ]);
-            } else {
-                MoonRental::where([
-                    'System' => $system,
-                    'Planet' => $planet,
-                    'Moon' => $mn,
-                    'Contact' => $contact,
-                ])->update([
-                    'System' => $system,
-                    'Planet' => $planet,
-                    'Moon' => $mn,
-                    'RentalCorp' => $renter,
-                    'RentalEnd' => $rentalEnd,
-                    'Contact' => $contact,
-                    'Price' => $price['outofalliance'],
-                    'Type' => 'outofalliance',
-                    'Paid' => $paid,
-                    'Paid_Until' => $paidUntil,
-                ]);
-            }
-        } else {
-            //If the entry is not found, then attempt to delete whatever existing data is there, then 
-            //insert the new data
-            MoonRental::where([
-                'System' => $system,
-                'Planet' => $planet,
-                'Moon' => $moon,
-            ])->delete();
-            
-            if($allianceId == 99004116) {
-                $store = new MoonRental;
-                $store->System = $system;
-                $store->Planet = $planet;
-                $store->Moon = $mn;
-                $store->RentalCorp = $renter;
-                $store->RentalEnd = $rentalEnd;
-                $store->Contact = $contact;
-                $store->Price = $price['alliance'];
-                $store->Type = 'alliance';
-                $store->Paid = $paid;
-                $store->Paid_Until = $paidUntil;
-                $store->save();
-            } else {
-                $store = new MoonRental;
-                $store->System = $system;
-                $store->Planet = $planet;
-                $store->Moon = $mn;
-                $store->RentalCorp = $renter;
-                $store->RentalEnd = $rentalEnd;
-                $store->Contact = $contact;
-                $store->Price = $price['outofalliance'];
-                $store->Type = 'outofalliance';
-                $store->Paid = $paid;
-                $store->Paid_Until = $paidUntil;
-                $store->save();
-            }
-        }
 
-        //Redirect to the update moon page
-        return redirect('/moons/admin/updatemoon')->with('success', 'Moon Updated');
+            AllianceMoonRental::where([
+                'system' => $str_array[0],
+                'planet' => $str_array[1],
+                'moon' => $str_array[2],
+            ])->update([
+                'rental_type' => $type,
+                'rental_until' => $request->rental_end . " 23:59:59",
+                'rental_contact_id' => $charId,
+                'rental_contact_type' => 'Character',
+                'paid' => $paid,
+                'paid_until' => $request->paid_until . " 23:59:59",
+                'alliance_use_until' => null,                
+            ]);
+
+        } else if($request->contact_type == 'Corporation') {
+            //Get the corporation id from the lookup helper
+            $corpId = $lookup->CorporationNameToId($request->contact);
+            //Get the corporation information to determine if they are in Warped Intentions or not.
+            $corporation = $lookup->GetCorporationInfo($request->contact);
+
+            if($corp->alliance_id == 99004116) {
+                $type = 'In Alliance';
+            } else {
+                $type = 'Out of Alliance';
+            }
+
+            AllianceMoonRental::where([
+                'system' => $str_array[0],
+                'planet' => $str_array[1],
+                'moon' => $str_array[2],
+            ])->update([
+                'rental_type' => $type,
+                'rental_until' => $request->rental_end . " 23:59:59",
+                'rental_contact_id' => $corpId,
+                'rental_contact_type' => 'Corporation',
+                'paid' => $paid,
+                'paid_until' => $request->paid_until . " 23:59:59",
+                'alliance_use_until' => null,
+            ]);
+        }
+                
+        //Redirect to the previous screen.
+        return redirect('/moons/admin/updatemoon')->with('success', 'Moon Rental updated.');
     }
 }
