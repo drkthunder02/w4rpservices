@@ -57,8 +57,6 @@ class CreateAllianceMoonRentalsTable extends Migration
             $table->timestamps();
         }
 
-        //Transfer the existing data into the table
-
         //Drop the older tables
         Schema::dropIfExists('moon_rents');
         Schema::dropIfExists('RentalMoons');

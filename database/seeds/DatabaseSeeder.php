@@ -12,6 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(SolarSystemSeeder::class);
+        //$this->call(SolarSystemSeeder::class);
     }
 }

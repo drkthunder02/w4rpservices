@@ -29,6 +29,10 @@ class Kernel extends ConsoleKernel
         Commands\Data\CleanStaleDataCommand::class,
         Commands\Moons\MoonsUpdateCommand::class,
         Commands\Data\PurgeCorpMoonLedgers::class,
+        /**
+         * Rental Moon Commands
+         */
+        Commands\RentalMoons\AllianceRentalMoonInvoiceCreationCommand::class,
     ];
 
     /**
