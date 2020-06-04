@@ -351,7 +351,7 @@ class MoonsAdminController extends Controller
      * New function based on new table.  Will update
      * the description in a future update
      */
-    public function storeUpdateMoonNew(Request $request) {
+    public function storeUpdateMoon(Request $request) {
         //Require the site administration role
         $this->middleware('role:Admin');
 
