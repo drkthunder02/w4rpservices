@@ -15,8 +15,9 @@ use App\Models\Moon\ItemComposition;
 use App\Models\Moon\RentalMoon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\Price;
-use App\Models\MoonRent\MoonRental;
+//use App\Models\MoonRent\MoonRental;
 use App\Models\Moon\AllianceMoon;
+use App\Models\MoonRentals\AllianceRentalMoon;
 use App\Models\Moon\AllianceMoonRequest;
 
 //Library
@@ -219,7 +220,7 @@ class MoonsController extends Controller
      * Function to display the moons and pass to the blade template
      * Function description will be updated in a future release.
      */
-    public function displayRentalMoonsNew() {
+    public function displayRentalMoons() {
         //Declare variables
         $rentalEnd = null;
         $lastMonth = Carbon::now()->subMonth();
@@ -291,87 +292,6 @@ class MoonsController extends Controller
         }
 
         //Pass the data to the view
-        return view('moons.user.moon')->with('table', $table);
-    }
-
-    /**
-     * Function to display the moons and pass data to the blade template
-     */
-    public function displayRentalMoons() {
-        $rentalEnd = '';
-
-        //Get the user type from the user Auth class
-        $type = Auth::user()->getUserType();
-        //Setup calls to the MoonCalc class
-        $moonCalc = new MoonCalc();
-        //get all of the rental moons from the database
-        $moons = DB::table('RentalMoons')->orderBy('System', 'asc')->get();
-        //Set the rental date as last month for moons not rented
-        $lastMonth = Carbon::now()->subMonth();
-        //Set a variable for today's date
-        $today = Carbon::now();
-
-        //declare the html variable and set it to null
-       
-        $table = array();
-        $moonprice = null;
-        foreach($moons as $moon) {
-            //get the rental data for the moon
-            $rental = MoonRental::where([
-                'System' => $moon->System,
-                'Planet' => $moon->Planet,
-                'Moon' => $moon->Moon,
-            ])->first();
-
-            if($rental == false) {
-                //If we don't find a rental record, set the rental date as last month
-                $rentalTemp = $lastMonth;
-                $rentalEnd = $rentalTemp->format('m-d');
-            } else {
-                //Set the rental date up
-                $rentalTemp = new Carbon($rental->RentalEnd);
-                $rentalEnd = $rentalTemp->format('m-d');
-            }
-
-            $price = $moonCalc->SpatialMoons($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                             $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-
-            $worth = $moonCalc->SpatialMoonsTotalWorth($moon->FirstOre, $moon->FirstQuantity, $moon->SecondOre, $moon->SecondQuantity, 
-                                                       $moon->ThirdOre, $moon->ThirdQuantity, $moon->FourthOre, $moon->FourthQuantity);
-
-            if($type == 'W4RP') {
-                $moonprice = $price['alliance'];
-            } else {
-                $moonprice = $price['outofalliance'];
-            }
-
-            if($rentalTemp->diffInDays($today) < 3 ) {
-                $color = 'table-warning';
-            } else if( $today > $rentalTemp) {
-                $color = 'table-primary';
-            } else {
-                $color = 'table-danger';
-            }
-            
-            //Add the data to the html string to be passed to the view
-            array_push($table, [
-                'SPM' => $moon->System . ' - ' . $moon->Planet . ' - ' . $moon->Moon,
-                'StructureName' => $moon->StructureName,
-                'FirstOre' => $moon->FirstOre,
-                'FirstQuantity' => $moon->FirstQuantity,
-                'SecondOre' => $moon->SecondOre,
-                'SecondQuantity' => $moon->SecondQuantity,
-                'ThirdOre' => $moon->ThirdOre,
-                'ThirdQuantity' => $moon->ThirdQuantity,
-                'FourthOre' => $moon->FourthOre,
-                'FourthQuantity' => $moon->FourthQuantity,
-                'Price' => number_format($moonprice, 0, ".", ","),
-                'Worth' => number_format($worth, 0, ".", ","),
-                'RentalEnd' => $rentalEnd,
-                'RowColor' => $color,
-            ]);
-        }
-
         return view('moons.user.moon')->with('table', $table);
     }
 
