@@ -210,6 +210,9 @@ class MoonsAdminController extends Controller
             'paid_until' => null,
             'alliance_use_until' => null,
         ]);
+
+        //Once the action is completed, redirect to the original page
+        return redirect('/moons/admin/display/rentals')->with('success', 'Renter removed from the moon.');
     }
 
     /**

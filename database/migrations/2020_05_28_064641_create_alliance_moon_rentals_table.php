@@ -55,6 +55,7 @@ class CreateAllianceMoonRentalsTable extends Migration
                 ])->default('Not Rented');
                 $table->dateTime('paid_until')->nullable();
                 $table->dateTime('alliance_use_until')->nullable();
+                $table->dateTime('next_moon_pull')->nullable();
                 $table->timestamps();
             });            
         }
