@@ -198,7 +198,7 @@ class MoonsAdminController extends Controller
         $moon = $str_array[2];
 
         //Update the moon rental
-        AllianceMoonRental::where([
+        AllianceRentalMoon::where([
             'system' => $system,
             'planet' => $planet,
             'moon' => $moon,
@@ -392,7 +392,7 @@ class MoonsAdminController extends Controller
 
         //Check if the alliance is renting the moon for itself
         if($request->contact_type == 'Corporation' && $request->contact == 'Spatial Forces') {
-            AllianceMoonRental::where([
+            AllianceRentalMoon::where([
                 'system' => $str_array[0],
                 'planet' => $str_array[1],
                 'moon' => $str_array[2],
@@ -420,7 +420,7 @@ class MoonsAdminController extends Controller
                 $type = 'Out of Alliance';
             }
 
-            AllianceMoonRental::where([
+            AllianceRentalMoon::where([
                 'system' => $str_array[0],
                 'planet' => $str_array[1],
                 'moon' => $str_array[2],
