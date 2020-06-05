@@ -234,11 +234,9 @@ class MoonsController extends Controller
                                    ->orderBy('planet', 'ASC')
                                    ->orderBy('moon', 'ASC')
                                    ->get();
-
-        dd($moons);
         
+        //For each of the moons let's format the data for the display table
         foreach($moons as $moon) {
-
             //Check if someone is currently renting the moon
             if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') && ($moon->paid == 'Yes')) {
                 $rentalTemp = new Carbon($moon->rental_until);
@@ -253,10 +251,11 @@ class MoonsController extends Controller
             }
 
             //Get the price of the moon from the database based on if the person is in Warped Intentions
-            if($moon->rental_type == 'W4RP') {
-                $moonprice = $moon->alliance_price;
+            $userType = auth()->user()->getUserType();
+            if($userType == 'W4RP') {
+                $moonprice = $moon->alliance_rental_price;
             } else {
-                $moonprice = $moon->out_of_alliance_price;
+                $moonprice = $moon->out_of_alliance_rental_price;
             }
 
             //Get the color correct for the table
