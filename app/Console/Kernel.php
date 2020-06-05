@@ -60,8 +60,11 @@ class Kernel extends ConsoleKernel
          * Holding Corp Finance Schedule
          */
         $schedule->command('services:HoldingJournal')
-                ->hourlyAt('45')
-                ->withoutOverlapping();
+                 ->hourlyAt('45')
+                 ->withoutOverlapping();
+        //$schedule->command('services:GetFinances')
+        //         ->hourlyAt('35')
+        //         ->withoutOverlapping();
 
         /**
          * Get Information Schedule
