@@ -413,7 +413,6 @@ class MoonsAdminController extends Controller
             //Get the corporation id from the lookup helper, followed by the alliance id
             //so we can determine if it's in alliance or out of alliance
             $corp = $lookup->GetCorporationInfo($char->corporation_id);
-            dd($corp);
 
             if($corp->alliance_id == 99004116) {
                 $type = 'In Alliance';
