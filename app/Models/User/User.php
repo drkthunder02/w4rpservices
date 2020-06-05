@@ -121,7 +121,7 @@ class User extends Authenticatable
     }
 
     public function isMoonRenter() {
-        $moonRental = AllianceMoonRental::where([
+        $moonRental = AllianceRentalMoon::where([
             'Contact' => $this->character_id,
         ])->first();
 
