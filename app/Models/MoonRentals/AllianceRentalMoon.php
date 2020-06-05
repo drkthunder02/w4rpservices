@@ -45,6 +45,7 @@ class AllianceRentalMoon extends Model
         'paid',
         'paid_until',
         'alliance_use_until',
+        'next_moon_pull',
     ];
 
 
