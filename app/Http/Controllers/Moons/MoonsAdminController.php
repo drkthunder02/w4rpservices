@@ -233,7 +233,7 @@ class MoonsAdminController extends Controller
         $today = Carbon::now();
 
         //Get the moon rentals from the database
-        $rentalMoons = AllianceRentalMoon::all();
+        $rentalMoons = AllianceRentalMoon::orderBy('system', 'asc')->get();
 
         //For each of the moons compile different data for the view for formatting
         foreach($rentalMoons as $moon) {
