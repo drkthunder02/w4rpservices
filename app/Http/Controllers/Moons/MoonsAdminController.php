@@ -408,10 +408,10 @@ class MoonsAdminController extends Controller
         } else if($request->contact_type == 'Character') {
             //Get the character id from the lookup helper
             $charId = $lookup->CharacterNameToId($request->contact);
-            dd($charId);
+            $char = $lookup->GetCharacterInfo($charId);
             //Get the corporation id from the lookup helper, followed by the alliance id
             //so we can determine if it's in alliance or out of alliance
-            $corp = $lookup->GetCorporationInfo($charId);
+            $corp = $lookup->GetCorporationInfo($char->corporation_id);
             dd($corp);
 
             if($corp->alliance_id == 99004116) {
