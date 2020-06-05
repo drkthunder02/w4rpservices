@@ -51,7 +51,7 @@ class Kernel extends ConsoleKernel
          * Rentals / Flex Schedule
          */
         $schedule->command('services:UpdateRentalPrice')
-                 ->hourlyAt('15')
+                 ->dailyAt('11:00')
                  ->withoutOverlapping();
         $schedule->command('services:FlexStructures')
                  ->monthlyOn(2, '00:01');
