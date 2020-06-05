@@ -33,6 +33,7 @@ class Kernel extends ConsoleKernel
          * Rental Moon Commands
          */
         Commands\RentalMoons\AllianceRentalMoonInvoiceCreationCommand::class,
+        Commands\RentalMoons\AllianceRentalMoonUpdatePricingCommand::class,
     ];
 
     /**
