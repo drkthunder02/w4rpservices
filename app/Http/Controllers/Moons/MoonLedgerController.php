@@ -18,7 +18,7 @@ use App\Library\Lookups\LookupHelper;
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 use App\Models\Lookups\ItemLookup;
-use App\Models\MoonRent\MoonRental;
+use App\Models\MoonRentals\AllianceRentalMoon;
 use App\Models\Moon\RentalMoon;
 use App\Models\Moon\CorpObserversRegistered;
 use App\Models\Moon\CorpMoonObserver;

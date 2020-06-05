@@ -10,7 +10,7 @@ use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
-use App\Models\MoonRent\MoonRental;
+use App\Models\MoonRentals\AllianceRentalMoon;
 use App\Models\SRP\SRPShip;
 
 class User extends Authenticatable
