@@ -59,6 +59,9 @@
                                 <tr class="table-warning">
                                     <td>Moon Rent Due</td>
                                 </tr>
+                                <tr class="table-info">
+                                    <td>Alliance Use</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

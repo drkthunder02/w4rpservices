@@ -259,6 +259,20 @@ class MoonsController extends Controller
             }
 
             //Get the color correct for the table
+            if($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') {
+                if($rentalTemp->diffInDays($today) < 3 && $today < $rentalTemp ) {
+                    $color = 'table-danger';
+                } else if($today > $rentalTemp) {
+                    $color = 'table-primary';
+                } else if($today < $rentalTemp) {
+                    $color = 'table-danger';
+                }
+            } else if($moon->rental_type == 'Alliance') {
+                $color = 'table-info';
+            } else {
+                $color = 'table-primary';
+            }
+            /*
             if($moon->rental_type != 'Alliance') {
                 if($rentalTemp->diffInDays($today) < 3) {
                     $color = 'table-warning';
@@ -270,6 +284,7 @@ class MoonsController extends Controller
             } else {
                 $color = 'table-info';
             }
+            */
             
 
             //Add the data to the html array to be passed to the view
