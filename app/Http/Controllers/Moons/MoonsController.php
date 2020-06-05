@@ -234,6 +234,8 @@ class MoonsController extends Controller
                                    ->orderBy('planet', 'ASC')
                                    ->orderBy('moon', 'ASC')
                                    ->get();
+
+        dd($moons);
         
         foreach($moons as $moon) {
 
@@ -284,7 +286,7 @@ class MoonsController extends Controller
                 'FourthOre' => $moon->fourth_ore,
                 'FourthQuantity' => $moon->fourth_quantity,
                 'Price' => number_format($moonprice, 0, ".", ","),
-                'Worth' => number_format($moon->worth),
+                'Worth' => number_format($moon->worth, 0, ".", ","),
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
             ]);
