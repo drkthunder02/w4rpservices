@@ -337,8 +337,6 @@ class MoonsAdminController extends Controller
                 $color = 'table-info';
             }
 
-            dd($table);
-
             //Add the data to the html string to be passed to the view
             array_push($table, [
                 'SPM' => $moon->system . " - " . $moon->planet . " - " . $moon->moon,
@@ -353,6 +351,8 @@ class MoonsAdminController extends Controller
                 'Type' => $moon->rental_type,
                 'Renter' => $ticker,
             ]);
+
+            dd($table);
         }
 
         dd($table);
