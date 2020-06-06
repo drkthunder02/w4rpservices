@@ -240,7 +240,7 @@ class MoonsAdminController extends Controller
         //For each of the moons compile different data for the view for formatting
         foreach($rentalMoons as $moon) {
             //Check if a current rental for the moon is on going
-            if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') && ($moon->paid == 'Yes')) {
+            if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance')) {
                 $paid = $moon->paid;
                 $paidUntil = new Carbon($moon->paid_until);
                 $paidUntil = $paidUntil->format('m-d');
@@ -252,16 +252,21 @@ class MoonsAdminController extends Controller
                 //Set the contact name based on the contact type
                 if($moon->contact_type == 'Alliance') {
                     $allianceInfo = $lookupHelper->GetAllianceInfo($moon->contact);
+                    //Set the contact name and ticker
                     $contact = $allianceInfo->name;
                     $ticker = $allianceInfo->ticker;
                 } else if($moon->contact_type == 'Corporation') {
                     $corporationInfo = $lookupHelper->GetCorporationInfo($moon->contact);
+                    //Set the contact name and ticker
                     $contact = $corporationInfo->name;
                     $ticker = $corporationInfo->ticker;
                 } else if($moon->contact_type == 'Character') {
                     $characterInfo = $lookupHelper->GetCharacterInfo($moon->contact);
+                    //Set the contact name
                     $contact = $characterInfo->name;
-                    $ticker = $characterInfo->ticker;
+                    //Get the ticker for the character from the corporation he belongs to
+                    $corpInfo = $lookupHelper->GetCorporationInfo($characterInfo->corporation_id);
+                    $ticker = $corpInfo->ticker;
                 } else {
                     $contact = 'N/A';
                     $ticker = 'N/A';
@@ -270,9 +275,11 @@ class MoonsAdminController extends Controller
 
                 //Set up the moon rental type
                 if($moon->rental_type == 'In Alliance') {
-                    $type = 'W4RP';
+                    $type = 'IA';
                 } else if($moon->rental_type == 'Out of Alliance') {
                     $type = 'OOA';
+                } else if($moon->rental_type == 'Alliance') {
+                    $type = 'W4RP';
                 } else {
                     $type = 'N/A';
                 }
@@ -292,7 +299,7 @@ class MoonsAdminController extends Controller
 
                 //Set the other information for the spreadsheet
                 $contact = 'Spatial Forces';
-                $renter = 'Spatial Forces';
+                $renter = 'SP3C';
                 $ticker = 'SP3C';
                 $type = 'Alliance';
 
