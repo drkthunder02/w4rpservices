@@ -338,6 +338,8 @@ class MoonsAdminController extends Controller
                 $color = 'table-info';
             }
 
+            dd($color);
+
             //Add the data to the html string to be passed to the view
             array_push($table, [
                 'SPM' => $moon->system . " - " . $moon->planet . " - " . $moon->moon,
