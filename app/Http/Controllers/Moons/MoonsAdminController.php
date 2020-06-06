@@ -248,7 +248,7 @@ class MoonsAdminController extends Controller
                 $paidUntil = $paidUntil->format('m-d');
 
                 //Set the rental date up
-                $rentalTemp = new Carbon($moon->rental_end);
+                $rentalTemp = new Carbon($moon->rental_until);
                 $rentalEnd = $rentalTemp->format('m-d');
 
                 //Set the contact name based on the contact type
@@ -337,8 +337,6 @@ class MoonsAdminController extends Controller
             } else {
                 $color = 'table-info';
             }
-
-            dd($rentalTemp);
 
             //Add the data to the html string to be passed to the view
             array_push($table, [
