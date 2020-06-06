@@ -3,6 +3,7 @@
 namespace App\Models\MoonRentals;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class AllianceRentalMoon extends Model
 {
@@ -48,5 +49,51 @@ class AllianceRentalMoon extends Model
         'next_moon_pull',
     ];
 
+    public function getPaidStatus() {
+        return $this->paid;
+    }
 
+    public function getNextMoonPull() {
+        return $this->next_moon_pull;
+    }
+
+    public function getRSPM() {
+        return $this->region . " - " . $this->system . " - " . $this->planet . " - " . $this->moon;
+    }
+
+    public function getOOARentalPrice() {
+        return $this->out_of_alliance_rental_price;
+    }
+
+    public function getIARentalPrice() {
+        return $this->alliance_rental_price;
+    }
+
+    public function getWorth() {
+        return $this->moon_worth;
+    }
+
+    public function getRentalType() {
+        return $this->rental_type;
+    }
+
+    public function isRented() {
+        $today = Carbon::now();
+
+        if($today->lessThan($this->rental_until)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isPaid() {
+        $today = Carbon::now();
+
+        if($today->lessThan($this->paid_until)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
