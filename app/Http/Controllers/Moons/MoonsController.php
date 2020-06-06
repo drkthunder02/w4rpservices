@@ -271,21 +271,7 @@ class MoonsController extends Controller
                 $color = 'table-info';
             } else {
                 $color = 'table-primary';
-            }
-            /*
-            if($moon->rental_type != 'Alliance') {
-                if($rentalTemp->diffInDays($today) < 3) {
-                    $color = 'table-warning';
-                } else if($today > $rentalTemp) {
-                    $color = 'table-primary';
-                } else {
-                    $color = 'table-danger';
-                }
-            } else {
-                $color = 'table-info';
-            }
-            */
-            
+            }            
 
             //Add the data to the html array to be passed to the view
             array_push($table, [
