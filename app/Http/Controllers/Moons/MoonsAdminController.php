@@ -243,8 +243,6 @@ class MoonsAdminController extends Controller
             //Check if a current rental for the moon is on going
             if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance')) {
 
-                dd($moon);
-
                 $paid = $moon->paid;
                 $paidUntil = new Carbon($moon->paid_until);
                 $paidUntil = $paidUntil->format('m-d');
@@ -254,17 +252,17 @@ class MoonsAdminController extends Controller
                 $rentalEnd = $rentalTemp->format('m-d');
 
                 //Set the contact name based on the contact type
-                if($moon->contact_type == 'Alliance') {
+                if($moon->rental_contact_type == 'Alliance') {
                     $allianceInfo = $lookupHelper->GetAllianceInfo($moon->contact);
                     //Set the contact name and ticker
                     $contact = $allianceInfo->name;
                     $ticker = $allianceInfo->ticker;
-                } else if($moon->contact_type == 'Corporation') {
+                } else if($moon->rental_contact_type == 'Corporation') {
                     $corporationInfo = $lookupHelper->GetCorporationInfo($moon->contact);
                     //Set the contact name and ticker
                     $contact = $corporationInfo->name;
                     $ticker = $corporationInfo->ticker;
-                } else if($moon->contact_type == 'Character') {
+                } else if($moon->rental_contact_type == 'Character') {
                     $characterInfo = $lookupHelper->GetCharacterInfo($moon->contact);
                     //Set the contact name
                     $contact = $characterInfo->name;
