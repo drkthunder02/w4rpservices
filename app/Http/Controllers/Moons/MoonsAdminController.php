@@ -354,8 +354,6 @@ class MoonsAdminController extends Controller
             ]);
         }
 
-        dd($table);
-
         return view('moons.admin.adminmoon')->with('table', $table);
     }
 
