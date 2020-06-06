@@ -253,17 +253,17 @@ class MoonsAdminController extends Controller
 
                 //Set the contact name based on the contact type
                 if($moon->rental_contact_type == 'Alliance') {
-                    $allianceInfo = $lookupHelper->GetAllianceInfo($moon->contact);
+                    $allianceInfo = $lookupHelper->GetAllianceInfo($moon->rental_contact_id);
                     //Set the contact name and ticker
                     $contact = $allianceInfo->name;
                     $ticker = $allianceInfo->ticker;
                 } else if($moon->rental_contact_type == 'Corporation') {
-                    $corporationInfo = $lookupHelper->GetCorporationInfo($moon->contact);
+                    $corporationInfo = $lookupHelper->GetCorporationInfo($moon->rental_contact_id);
                     //Set the contact name and ticker
                     $contact = $corporationInfo->name;
                     $ticker = $corporationInfo->ticker;
                 } else if($moon->rental_contact_type == 'Character') {
-                    $characterInfo = $lookupHelper->GetCharacterInfo($moon->contact);
+                    $characterInfo = $lookupHelper->GetCharacterInfo($moon->rental_contact_id);
                     //Set the contact name
                     $contact = $characterInfo->name;
                     //Get the ticker for the character from the corporation he belongs to
