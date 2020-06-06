@@ -352,8 +352,6 @@ class MoonsAdminController extends Controller
                 'Type' => $moon->rental_type,
                 'Renter' => $ticker,
             ]);
-
-            dd($table);
         }
 
         dd($table);
