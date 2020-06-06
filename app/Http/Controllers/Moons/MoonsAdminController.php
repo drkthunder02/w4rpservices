@@ -242,6 +242,9 @@ class MoonsAdminController extends Controller
 
             //Check if a current rental for the moon is on going
             if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance')) {
+
+                dd($moon->contact_type);
+
                 $paid = $moon->paid;
                 $paidUntil = new Carbon($moon->paid_until);
                 $paidUntil = $paidUntil->format('m-d');
