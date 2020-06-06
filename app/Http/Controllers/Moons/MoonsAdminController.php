@@ -350,7 +350,7 @@ class MoonsAdminController extends Controller
                 'PaidUntil' => $paidUntil,
                 'Contact' => $contact,
                 'Type' => $moon->rental_type,
-                'Renter' => $ticker,
+                'Renter' => $type,
             ]);
         }
 
