@@ -239,7 +239,7 @@ class MoonsAdminController extends Controller
 
         //For each of the moons compile different data for the view for formatting
         foreach($rentalMoons as $moon) {
-
+            dd($moon->rental_type);
             //Check if a current rental for the moon is on going
             if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance')) {
                 $paid = $moon->paid;
