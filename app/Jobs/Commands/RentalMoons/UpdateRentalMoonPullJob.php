@@ -53,6 +53,24 @@ class UpdateRentalMoonPullJob implements ShouldQueue
             return null;
         }
 
+        //Is this valid?
+        AllianceRentalMoon::update([
+            'next_moon_pull' => null,
+        ]);
+
+        //Reset all table entries to clear out the next moon pull entry
+        $allMoons = AllianceRentalMoon::all();
+        //Cycle through all of the moons, and make the next moon pull null
+        foreach($allMoons as $moon) {
+            AllianceRentalMoon::where([
+                'system' => $moon->system,
+                'planet' => $moon->planet,
+                'moon' => $moon->moon,
+            ])->update([
+                'next_moon_pull' => null,
+            ]);
+        }
+
         //Get the refresh token
         $token = $esiHelper->GetRefreshToken($config['primary']);
         //Setup the esi authentication container
@@ -67,11 +85,19 @@ class UpdateRentalMoonPullJob implements ShouldQueue
         }
 
         foreach($response as $response) {
-            AllianceRentalMoon::where([
+            //Get whether the structure is being used by the alliance or not.
+            $usage = AllianceRentalMoon::where([
                 'structure_id' => $response->structure_id,
-            ])->update([
-                'next_moon_pull' => $response->chunk_arrival_time,
-            ]);
+                'rental_type' => 'Alliance',
+            ])->count();
+
+            if($usage > 0) {
+                AllianceRentalMoon::where([
+                    'structure_id' => $response->structure_id,
+                ])->update([
+                    'next_moon_pull' => $response->chunk_arrival_time,
+                ]);
+            }
         }
     }
 }
