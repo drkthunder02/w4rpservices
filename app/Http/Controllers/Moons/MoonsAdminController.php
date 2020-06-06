@@ -338,7 +338,7 @@ class MoonsAdminController extends Controller
                 $color = 'table-info';
             }
 
-            dd($color);
+            dd($rentalTemp->diffInDays($today));
 
             //Add the data to the html string to be passed to the view
             array_push($table, [
