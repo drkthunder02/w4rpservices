@@ -27,6 +27,7 @@ class CreateFlexStructuresTable extends Migration
                     'Cyno Beacon',
                     'Jump Bridge',
                     'Super Construction Facilities',
+                    'Market',
                 ]);
                 $table->double('structure_cost', 20, 2);
                 $table->dateTime('paid_until');

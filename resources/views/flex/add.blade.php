@@ -26,6 +26,7 @@
                     'Cyno Beacon' => 'Cyno Beacon',
                     'Jump Bridge' => 'Jump Bridge',
                     'Super Construction Facilities' => 'Super Construction Facilities',
+                    'Market' => 'Market',
                 ], 'None', ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
