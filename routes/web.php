@@ -138,6 +138,15 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/moons/ledger/register', 'Moons\MoonLedgerController@registerStructures');
 
     /**
+     * Moon Rental Controller display pages
+     */
+    Route::get('/rentals/moons/alliance/display', 'Moons\RentalMoonsAdminController@displayAllianceUsageRentalMoons');
+    Route::get('/rentals/moons/alliance/request', 'Moons\RentalMoonsAdminController@displayRentalMoonForAllianceForm');
+    Route::post('/rentals/moons/alliance/request', 'Moons\RentalMoonsAdminController@storeREntalMoonForAlliance');
+    Route::get('/moons/composition/display', 'Moons\RentalMoonsAdminController@displayItemCompositionForm');
+    Route::post('/moons/composition/display', 'Moons\RentalMoonsAdminController@displayItemCompositionResults');
+
+    /**
      * Scopes Controller display pages
      */
     Route::get('/scopes/select', 'Auth\EsiScopeController@displayScopes');

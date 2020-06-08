@@ -22,6 +22,9 @@
           @include('layouts.user.sidebarmenu.general')
           @endif
           <!-- End General Items -->  
+          <!-- Wiki Items -->
+          @include('layouts.user.sidebarmenu.wiki')
+          <!-- End Wiki Items -->
           <!-- Moon Items -->
           @include('layouts.user.sidebarmenu.moon')
           <!-- End Moon Items -->
