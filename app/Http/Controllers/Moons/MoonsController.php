@@ -29,6 +29,10 @@ class MoonsController extends Controller
         $this->middleware('role:Renter');
     }
 
+    public function displayRentalMoonPage() {
+        return view('moons.user.requestrental');
+    }
+
     /**
      * Function to display all alliance moons and pass data to the blade template
      */
