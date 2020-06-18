@@ -24,6 +24,7 @@
         <a href="/moons/display/rental/request" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
           <p>Request Rental Moon</p>
+        </a>
       </li>
       <li class="nav-item">
         <a href="/moons/display/form/worth" class="nav-link">
