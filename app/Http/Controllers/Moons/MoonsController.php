@@ -296,9 +296,8 @@ class MoonsController extends Controller
                 'Worth' => number_format($moon->moon_worth, 0, ".", ","),
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
+                'Type' => $moon->rental_type,
             ]);
-
-            $color = null;
         }
 
         dd($table);
