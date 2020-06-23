@@ -245,7 +245,7 @@ class MoonsController extends Controller
             $rentalEnd = null;
 
             //Check if someone is currently renting the moon
-            if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') && ($moon->paid == 'Yes')) {
+            if($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') {
                 $rentalTemp = new Carbon($moon->rental_until);
                 $rentalEnd = $rentalTemp->format('m-d');
             } else if($moon->rental_type == 'Alliance') {
