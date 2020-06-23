@@ -252,10 +252,10 @@ class MoonsController extends Controller
                 //Setup the correct color for the table
                 if($rentalTemp->diffInDays($today) < 3 && $today->lessThan($rentalTemp)) {
                     $color = 'table-warning';
-                } else if($today->greaterThan($rentalTemp)) {
-                    $color = 'table-primary';
                 } else if($today->lessThan($rentalTemp)) {
                     $color = 'table-danger';
+                } else {
+                    $color = 'table-primary';
                 }
             } else if($moon->rental_type == 'Alliance') {
                 $rentalTemp = $today->endOfMonth();
