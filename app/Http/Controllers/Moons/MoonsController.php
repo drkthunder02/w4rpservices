@@ -295,6 +295,7 @@ class MoonsController extends Controller
                 'Type' => $moon->rental_type,
                 'Difference' => $rentalTemp->diffInDays($today),
                 'Paid' => $moon->paid,
+                'Until' => $moon->rental_until,
             ]);
         }
 
