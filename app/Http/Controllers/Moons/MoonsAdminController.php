@@ -317,8 +317,6 @@ class MoonsAdminController extends Controller
             //Set up the moon rental type
             if($moon->rental_type == 'In Alliance') {
                 $type = 'IA';
-
-                
             } else if($moon->rental_type == 'Out of Alliance') {
                 $type = 'OOA';
             } else if($moon->rental_type == 'Alliance') {
