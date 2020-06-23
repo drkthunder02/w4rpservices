@@ -246,11 +246,10 @@ class MoonsController extends Controller
             //Check if someone is currently renting the moon
             if($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') {
                 $rentalTemp = new Carbon($moon->rental_until);
-                dd($rentalTemp);
                 $rentalEnd = $rentalTemp->format('m-d');
 
                 //Setup the correct color for the table
-                if($rentalTemp->diffInDays($today) < 3 && $today->lessThan($rentalTemp)) {
+                if($rentalTemp->diffInDays(Carbon::now()) < 3 && $today->lessThan($rentalTemp)) {
                     $color = 'table-warning';
                 } else if($today->lessThan($rentalTemp)) {
                     $color = 'table-danger';
@@ -292,14 +291,8 @@ class MoonsController extends Controller
                 'Worth' => number_format($moon->moon_worth, 0, ".", ","),
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
-                'Type' => $moon->rental_type,
-                'Difference' => $rentalTemp->diffInDays($today),
-                'Paid' => $moon->paid,
-                'Until' => $moon->rental_until,
             ]);
         }
-
-        dd($table);
 
         //Pass the data to the view
         return view('moons.user.moon')->with('table', $table);
