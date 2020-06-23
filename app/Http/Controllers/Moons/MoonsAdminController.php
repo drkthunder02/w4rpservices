@@ -317,6 +317,8 @@ class MoonsAdminController extends Controller
             //Set up the moon rental type
             if($moon->rental_type == 'In Alliance') {
                 $type = 'IA';
+
+                
             } else if($moon->rental_type == 'Out of Alliance') {
                 $type = 'OOA';
             } else if($moon->rental_type == 'Alliance') {
@@ -327,12 +329,12 @@ class MoonsAdminController extends Controller
 
             //Set the color for the table
             if($moon->rental_type != 'Alliance') {
-                if($rentalTemp->diffInDays($today) < 3) {
+                if($rentalTemp->diffInDays(Carbon::now()) < 3 && $today->lessThan($rentalTemp)) {
                     $color = 'table-warning';
-                } else if($today > $rentalTemp) {
-                    $color = 'table-success';
-                } else {
+                } else if($today->lessThan($rentalTemp)) {
                     $color = 'table-danger';
+                } else {
+                    $color = 'table-primary';
                 }
             } else {
                 $color = 'table-info';
