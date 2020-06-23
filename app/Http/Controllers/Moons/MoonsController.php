@@ -257,7 +257,7 @@ class MoonsController extends Controller
                     $color = 'table-primary';
                 }
             } else if($moon->rental_type == 'Alliance') {
-                $rentalTemp = $today->endOfMonth();
+                $rentalTemp = Carbon::now()->endOfMonth();
                 $rentalEnd = $rentalTemp->format('m-d');
                 $color = 'table-info';
             } else {
@@ -291,11 +291,8 @@ class MoonsController extends Controller
                 'Worth' => number_format($moon->moon_worth, 0, ".", ","),
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
-                'Rental_Type' => $moon->rental_type,
             ]);
         }
-
-        dd($table);
 
         //Pass the data to the view
         return view('moons.user.moon')->with('table', $table);
