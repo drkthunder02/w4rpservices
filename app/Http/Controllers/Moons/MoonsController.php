@@ -229,6 +229,7 @@ class MoonsController extends Controller
         $today = Carbon::now();
         $table = array();
         $moonprice = null;
+        $color = null;
 
         //Get the user type from the user Auth class
         $type = auth()->user()->getUserType();
@@ -293,6 +294,8 @@ class MoonsController extends Controller
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
             ]);
+
+            $color = null;
         }
 
         dd($table);
