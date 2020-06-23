@@ -297,6 +297,7 @@ class MoonsController extends Controller
                 'RentalEnd' => $rentalEnd,
                 'RowColor' => $color,
                 'Type' => $moon->rental_type,
+                'Difference' => $rentalTemp->diffInDays($today),
             ]);
         }
 
