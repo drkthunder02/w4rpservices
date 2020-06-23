@@ -248,13 +248,24 @@ class MoonsController extends Controller
             if($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') {
                 $rentalTemp = new Carbon($moon->rental_until);
                 $rentalEnd = $rentalTemp->format('m-d');
+
+                //Setup the correct color for the table
+                if($rentalTemp->diffInDays($today) < 3 && $today->lessThan($rentalTemp)) {
+                    $color = 'table-warning';
+                } else if($today->greaterThan($rentalTemp)) {
+                    $color = 'table-primary';
+                } else if($today->lessThan($rentalTemp)) {
+                    $color = 'table-danger';
+                }
             } else if($moon->rental_type == 'Alliance') {
                 $rentalTemp = $today->endOfMonth();
                 $rentalEnd = $rentalTemp->format('m-d');
+                $color = 'table-info';
             } else {
                 //Set the rental date for if someone is not renting the moon
                 $rentalTemp = $lastMonth;
                 $rentalEnd = $rentalTemp->format('m-d');
+                $color = 'table-primary';
             }
 
             //Get the price of the moon from the database based on if the person is in Warped Intentions
@@ -263,21 +274,6 @@ class MoonsController extends Controller
                 $moonprice = $moon->alliance_rental_price;
             } else {
                 $moonprice = $moon->out_of_alliance_rental_price;
-            }
-
-            //Get the color correct for the table
-            if($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') {
-                if($rentalTemp->diffInDays($today) < 3 && $today->lessThan($rentalTemp) ) {
-                    $color = 'table-danger';
-                } else if($today->greaterThan($rentalTemp)) {
-                    $color = 'table-primary';
-                } else if($today->lessThan($rentalTemp)) {
-                    $color = 'table-danger';
-                }
-            } else if($moon->rental_type == 'Alliance') {
-                $color = 'table-info';
-            } else {
-                $color = 'table-primary';
             }
 
             //Add the data to the html array to be passed to the view
