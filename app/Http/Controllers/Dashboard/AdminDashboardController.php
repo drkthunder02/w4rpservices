@@ -43,17 +43,48 @@ class AdminDashboardController extends Controller
 
         //Declare variables we will need
         $days = 30;
-        $sovBills = array();
-        $pi = array();
-        $industry = array();
-        $reprocessing = array();
-        $office = array();
-        $sprActual = array();
-        $srpLoss = array();
+        $lava = new Lavacharts;
 
         //Get the data for the sov expenses for a graph
-        
 
+        //Setup the charts
+        //Setup the chart to be able the show the categories for income
+        /*
+        $iChart = $lava->DataTable();
+        $iChart->addStringColumn('Categories')
+               ->addNumberColumn('ISK')
+               ->addRow(['pi', $pi])
+               ->addRow(['industry', $industry])
+               ->addRow(['reprocessing', $reprocessing])
+               ->addRow(['offices', $office])
+               ->addRow(['industry', $industry])
+               ->addRow(['market', $market])
+               ->addRow(['gate', $gate])
+               ->addRow(['iBuyback', $iBuyback])
+               ->addRow(['renters', $renters])
+               ->addRow(['ops', $ops]);
+        */
+
+        //Setup the chart to be able to show the categories for expenses
+        /*
+        $eChart = $lava->DataTable();
+        $eCjart->addStringColumn('Categories')
+               ->addNumberColumn('ISK')
+               ->addRow(['sov', $sovBills])
+               ->addRow(['srp', $srpActual])
+               ->addRow(['maintenance', $maintenance])
+               ->addRow(['wardecs', $wardecs])
+               ->addRow(['fcs', $fcs])
+               ->addRow(['keepstar_fuel', $keepstarFuel])
+               ->addRow(['fortizar_fuel', $fortizarFuel])
+               ->addRow(['astrahus_fuel', $astrahusFuel])
+               ->addRow(['sotiyo_fuel', $sotiyoFuel])
+               ->addRow(['azbel_fuel', $azbelFuel])
+               ->addRow(['raitaru_fuel', $raitaruFuel])
+               ->addRow(['beacon_fuel', $beaconFuel])
+               ->addRow(['bridge_fuel', $bridgeFuel])
+               ->addRow(['jammer_fuel', $jammerFuel]);
+        */
         return view('admin.dashboards.dashboard');
     }
 }

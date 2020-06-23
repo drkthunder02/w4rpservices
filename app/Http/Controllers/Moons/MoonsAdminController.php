@@ -274,17 +274,6 @@ class MoonsAdminController extends Controller
                     $ticker = 'N/A';
                     $type = 'N/A';
                 }
-
-                //Set up the moon rental type
-                if($moon->rental_type == 'In Alliance') {
-                    $type = 'IA';
-                } else if($moon->rental_type == 'Out of Alliance') {
-                    $type = 'OOA';
-                } else if($moon->rental_type == 'Alliance') {
-                    $type = 'W4RP';
-                } else {
-                    $type = 'N/A';
-                }
                 
             //Check if the moon is currently being utilized by the alliance
             } else if($moon->rental_type == 'Alliance') {
@@ -322,6 +311,17 @@ class MoonsAdminController extends Controller
                 $contact = 'None';
                 $renter = 'None';
                 $ticker = 'N/A';
+                $type = 'N/A';
+            }
+
+            //Set up the moon rental type
+            if($moon->rental_type == 'In Alliance') {
+                $type = 'IA';
+            } else if($moon->rental_type == 'Out of Alliance') {
+                $type = 'OOA';
+            } else if($moon->rental_type == 'Alliance') {
+                $type = 'W4RP';
+            } else {
                 $type = 'N/A';
             }
 
