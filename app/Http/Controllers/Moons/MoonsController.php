@@ -224,7 +224,6 @@ class MoonsController extends Controller
      */
     public function displayRentalMoons() {
         //Declare variables
-        $rentalEnd = null;
         $lastMonth = Carbon::now()->subMonth();
         $today = Carbon::now();
         $table = array();
@@ -247,6 +246,7 @@ class MoonsController extends Controller
             //Check if someone is currently renting the moon
             if($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') {
                 $rentalTemp = new Carbon($moon->rental_until);
+                dd($rentalTemp);
                 $rentalEnd = $rentalTemp->format('m-d');
 
                 //Setup the correct color for the table
