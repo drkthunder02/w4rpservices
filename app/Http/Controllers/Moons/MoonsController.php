@@ -229,7 +229,6 @@ class MoonsController extends Controller
         $today = Carbon::now();
         $table = array();
         $moonprice = null;
-        $color = null;
 
         //Get the user type from the user Auth class
         $type = auth()->user()->getUserType();
@@ -241,6 +240,10 @@ class MoonsController extends Controller
         
         //For each of the moons let's format the data for the display table
         foreach($moons as $moon) {
+            $color = null;
+            $rentalTemp = null;
+            $rentalEnd = null;
+
             //Check if someone is currently renting the moon
             if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance') && ($moon->paid == 'Yes')) {
                 $rentalTemp = new Carbon($moon->rental_until);
@@ -271,10 +274,10 @@ class MoonsController extends Controller
                 } else if($today->lessThan($rentalTemp)) {
                     $color = 'table-danger';
                 }
-            }
-            
-            if($moon->rental_type == 'Alliance') {
+            } else if($moon->rental_type == 'Alliance') {
                 $color = 'table-info';
+            } else {
+                $color = 'table-primary';
             }
 
             //Add the data to the html array to be passed to the view
