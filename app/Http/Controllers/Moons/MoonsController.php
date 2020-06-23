@@ -295,6 +295,8 @@ class MoonsController extends Controller
             ]);
         }
 
+        dd($table);
+
         //Pass the data to the view
         return view('moons.user.moon')->with('table', $table);
     }
