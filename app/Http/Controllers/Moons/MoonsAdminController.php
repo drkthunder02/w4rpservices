@@ -242,7 +242,6 @@ class MoonsAdminController extends Controller
 
             //Check if a current rental for the moon is on going
             if(($moon->rental_type == 'In Alliance' || $moon->rental_type == 'Out of Alliance')) {
-
                 $paid = $moon->paid;
                 $paidUntil = new Carbon($moon->paid_until);
                 $paidUntil = $paidUntil->format('m-d');
@@ -251,17 +250,28 @@ class MoonsAdminController extends Controller
                 $rentalTemp = new Carbon($moon->rental_until);
                 $rentalEnd = $rentalTemp->format('m-d');
 
+                //Set the correct color for the table
+                if($rentalTemp->diffInDays(Carbon::now()) < 3 && $today->lessThan($rentalTemp)) {
+                    $color = 'table-warning';
+                } else if($today->lessThan($rentalTemp)) {
+                    $color = 'table-danger';
+                } else {
+                    $color = 'table-primary';
+                }
+
                 //Set the contact name based on the contact type
                 if($moon->rental_contact_type == 'Alliance') {
                     $allianceInfo = $lookupHelper->GetAllianceInfo($moon->rental_contact_id);
                     //Set the contact name and ticker
                     $contact = $allianceInfo->name;
                     $ticker = $allianceInfo->ticker;
+
                 } else if($moon->rental_contact_type == 'Corporation') {
                     $corporationInfo = $lookupHelper->GetCorporationInfo($moon->rental_contact_id);
                     //Set the contact name and ticker
                     $contact = $corporationInfo->name;
                     $ticker = $corporationInfo->ticker;
+
                 } else if($moon->rental_contact_type == 'Character') {
                     $characterInfo = $lookupHelper->GetCharacterInfo($moon->rental_contact_id);
                     //Set the contact name
@@ -269,10 +279,12 @@ class MoonsAdminController extends Controller
                     //Get the ticker for the character from the corporation he belongs to
                     $corpInfo = $lookupHelper->GetCorporationInfo($characterInfo->corporation_id);
                     $ticker = $corpInfo->ticker;
+
                 } else {
                     $contact = 'N/A';
                     $ticker = 'N/A';
                     $type = 'N/A';
+                    $color = 'table-primary';
                 }
                 
             //Check if the moon is currently being utilized by the alliance
@@ -281,8 +293,10 @@ class MoonsAdminController extends Controller
                 $paid = 'No';
 
                 //Setup the rental end time as the end of the month
-                $rentalTemp = $today->endOfMonth();
+                $rentalTemp = Carbon::now()->endOfMonth();
                 $rentalEnd = $rentalTemp->format('m-d');
+                //Set the color of the table
+                $color = 'table-info';
 
                 //Setup the paid time as the same as the rental end
                 $paidUntiltemp = $rentalTemp;
@@ -312,21 +326,15 @@ class MoonsAdminController extends Controller
                 $renter = 'None';
                 $ticker = 'N/A';
                 $type = 'N/A';
+
+                //Set the color of the table
+                $color = 'table-primary';
             }
 
             //Set up the moon rental type
             if($moon->rental_type == 'In Alliance') {
                 $type = 'IA';
-            } else if($moon->rental_type == 'Out of Alliance') {
-                $type = 'OOA';
-            } else if($moon->rental_type == 'Alliance') {
-                $type = 'W4RP';
-            } else {
-                $type = 'N/A';
-            }
-
-            //Set the color for the table
-            if($moon->rental_type != 'Alliance') {
+                //Setup the row color
                 if($rentalTemp->diffInDays(Carbon::now()) < 3 && $today->lessThan($rentalTemp)) {
                     $color = 'table-warning';
                 } else if($today->lessThan($rentalTemp)) {
@@ -334,8 +342,24 @@ class MoonsAdminController extends Controller
                 } else {
                     $color = 'table-primary';
                 }
-            } else {
+            } else if($moon->rental_type == 'Out of Alliance') {
+                $type = 'OOA';
+                //Setup the row color
+                if($rentalTemp->diffInDays(Carbon::now()) < 3 && $today->lessThan($rentalTemp)) {
+                    $color = 'table-warning';
+                } else if($today->lessThan($rentalTemp)) {
+                    $color = 'table-danger';
+                } else {
+                    $color = 'table-primary';
+                }
+            } else if($moon->rental_type == 'Alliance') {
+                $type = 'W4RP';
+                //Set the row color
                 $color = 'table-info';
+            } else {
+                $type = 'N/A';
+                //Set the row color
+                $color = 'table-primary';
             }
 
             //Add the data to the html string to be passed to the view
