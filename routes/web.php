@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/add/role', 'Dashboard\AdminController@addRole');
     Route::post('/admin/remove/role', 'Dashboard\AdminController@removeRole');
     Route::post('/admin/add/permission', 'Dashboard\AdminController@addPermission');
+    Route::post('/admin/modify/role', 'Dashboard\AdminController@modifyRole');
     Route::post('/admin/remove/user', 'Dashboard\AdminController@removeUser');
     Route::post('/admin/modify/user/display', 'Dashboard\AdminController@displayModifyUser');
     Route::post('/admin/add/allowedlogin', 'Dashboard\AdminController@addAllowedLogin');
