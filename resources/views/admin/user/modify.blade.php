@@ -21,14 +21,13 @@
                 <div class="card-body">
                     {{ Form::open(['action' => 'Dashboard\AdminController@addPermission', 'method' => 'POST']) }}
                     <div class="form-group">
-                    {{ Form::hidden('user', $user->name) }}
+                    {{ Form::hidden('user', $user->character_id) }}
                     {{ Form::select('permission', $permissions, 'None', ['class' => 'form-control']) }}
-                    {{ Form::hidden('type', 'addPermission') }}
                     </div>
                     <div class="form-group col-md-2">
                         {{ Form::submit('Add Permission', ['class' => 'btn btn-primary']) }}
-                        {!! Form::close() !!}
                     </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -38,7 +37,19 @@
                     <h2>Modify Role</h2>
                 </div>
                 <div class="card-body">
-
+                    <div class="container">
+                        <h2>Current Role: {{ $role }}</h2>
+                    </div>
+                    {{ Form::open(['action' => 'Dashboard\AdminConotroller@modifyRole', 'method' => 'POST']) }}
+                    <div class="form-group">
+                    {{ Form::hidden('user', $user->character_id) }}
+                    {{ Form::select('role', $roles, 'None', ['class' => 'form-control']) }}
+                    {{ Form::hidden('type', 'modifyRole') }}
+                    </div>
+                    <div class="form-group col-md-2">
+                        {{ Form::submit('Modify Role', ['class' => 'btn btn-primary']) }}
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

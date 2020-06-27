@@ -18,6 +18,7 @@ use App\Models\User\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\User\AvailableUserPermission;
+use App\Models\User\AvailableUserRole;
 use App\Models\Admin\AllowedLogin;
 use App\Models\Doku\DokuGroupNames;
 use App\Models\Doku\DokuMember;
@@ -220,37 +221,41 @@ class AdminController extends Controller
             $permissions[$p->permission] = $p->permission;
         }
 
+        $roles = AvailableUserRole::all();
+
+        $role = $user->getRole();
+
         //Pass the user information to the page for hidden text entries
         return view('admin.user.modify')->with('user', $user)
-                                        ->with('permissions', $permissions);
+                                        ->with('permissions', $permissions)
+                                        -with('role', $role)
+                                        ->with('roles', $roles);
     }
 
-    public function modifyUser(Request $request) {
-        $type = $request->type;
-        if(isset($request->permission)) {
-            $permission = $request->permission;
-        }
-        if(isset($request->user)) {
-            $user = $request->user;
-        }
+    public function modifyRole(Request $request) {
+        $this->validate($request, [
+            'user' => 'required',
+            'role' => 'required|role!=None',
+        ]);
 
-        return redirect('/admin/dashboard/users')->with('error', 'Not Implemented Yet.');
+        UserRole::where(['character_id' => $user])->update([
+            'role' => $request->role,
+        ]);
+
+        return redirect('/admin/dashboard/users')->with('success', "User: " . $user . " has been modified to a new role: " . $request->role . ".");
     }
 
     public function addPermission(Request $request) {
         //Get the user and permission from the form
-        $user = $request->user;
+        $character = $request->user;
         $permission = $request->permission;
 
-        //Get the character id from the username using the user table
-        $character = User::where(['name' => $user])->get(['character_id']);
-
         //Check to see if the character already has the permission
-        $check = UserPermission::where(['character_id' => $character[0]->character_id, 'permission' => $permission])->get(['permission']);
+        $check = UserPermission::where(['character_id' => $character, 'permission' => $permission])->get(['permission']);
         
         if(!isset($check[0]->permission)) {
             $perm = new UserPermission;
-            $perm->character_id = $character[0]->character_id;
+            $perm->character_id = $character;
             $perm->permission = $permission;
             $perm->save();
 
