@@ -18,7 +18,7 @@
             <p>Search</p>
           </a>
       </li>
-      @if(auth()->user()->hasPermission('alliance.recruiter'))
+      @if(auth()->user()->hasPermission('blacklist.admin'))
       <li class="nav-item">
           <a href="/blacklist/display/add" class="nav-link">
             <i class="far fa-circle nav-icon"></i>

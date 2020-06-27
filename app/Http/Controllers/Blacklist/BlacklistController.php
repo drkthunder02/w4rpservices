@@ -38,7 +38,7 @@ class BlacklistController extends Controller
 
     public function AddToBlacklist(Request $request) {
         //Middleware needed for the function
-        $this->middleware('permission:alliance.recruiter');
+        $this->middleware('permission:blacklist.admin');
 
         //Validate the user input
         $this->validate($request, [
@@ -108,7 +108,7 @@ class BlacklistController extends Controller
 
     public function RemoveFromBlacklist(Request $request) {
         //Middleware needed
-        $this->middleware('permission:alliance.recruiter');
+        $this->middleware('permission:blacklist.admin');
 
         //Validate the input request
         $this->validate($request, [
