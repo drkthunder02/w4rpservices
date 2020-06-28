@@ -526,6 +526,14 @@ class ContractController extends Controller
     }
 
     private function TidyContractNew($contract, $bid) {
-        
+        Contract::where(['contract_id' => $contract['contract_id']])->update(['finished' => true]);
+
+        //Create the accepted contract entry into the table
+        $accepted = new AcceptedBid;
+        $accepted->contract_id = $contract['contract_id'];
+        $accepted->bid_id = $bid['id'];
+        $accepted->bid_amount = $bid['bid_amount'];
+        $accepted->notes = $bid['notes'];
+        $accepted->save();
     }
 }
