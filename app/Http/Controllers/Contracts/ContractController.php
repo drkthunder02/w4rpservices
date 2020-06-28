@@ -102,7 +102,15 @@ class ContractController extends Controller
             'bid_amount' => 'required',
         ]);
 
-        $check = 
+        $contract = Contract::where([
+            'issuer_id' => auth()->user()->getId(),
+            'contract_id' => $request->contract_id,
+            'finished' => false
+        ])->count();
+
+        if($count == 0) {
+            redirect('/contracts/dashboard/main')->with('error', 'No contract of yours found to close.');
+        }
 
         Contract::where([
             'contract_id' => $request->contract_id,
@@ -111,6 +119,91 @@ class ContractController extends Controller
             'finished' => true,
             'final_cost' => $request->bid_amount,
         ]);
+
+        //Save the accepted bid in the database
+        $accepted = new AcceptedBid;
+        $accepted->contract_id = $request->contract_id;
+        $accepted->bid_id = $request->bid_id;
+        $accepted->bid_amount = $request->bid_amount;
+        $accepted->save();
+
+        return redirect('/contracts/dashboard/main')->with('success', 'Contract accepted and closed.');
+    }
+
+    /**
+     * Delete a contract from every user
+     */
+    public function deleteContractNew($id) {
+        Contract::where([
+            'issuer_id' => auth()->user()->getId(),
+            'contract_id' => $id,
+        ])->delete();
+
+        Bid::where([
+            'contract_id' => $id,
+        ])->delete();
+
+        return redirect('/contracts/dashboard/main')->with('success', 'Contract has been deleted.');
+    }
+
+    /**
+     * End Contract
+     */
+    public function displayEndContractNew($id) {
+        //Gather the information for the contract, and all bids on the contract
+        $contract = Contract::where([
+            'issuer_id' => auth()->user()->getId(),
+            'contract_id' => $id,
+        ])->first()->toArray();
+
+        $bids = Bid::where([
+            'contract_id' => $id,
+        ])->get()->toArray();
+
+        return view('contracts.dashboard.displayend')->with('contract', $contract)
+                                                     ->with('bids', $bids);
+    }
+
+    /**
+     * Store the finisehd contract
+     */
+    public function storeEndContractNew(Request $request) {
+        $this->validate($request, [
+            'issuer_id' => 'required',
+            'contract_id' => 'required',
+            'accept' => 'required',
+        ]);
+
+        //Get the esi config
+        $config = config('esi');
+
+        //Get the contract details
+        $contract = Contract::where([
+            'contract_id' => $request->contract_id,
+            'issuer_id' => $request->issuer_id,
+        ])->first()->toArray();
+
+        $bid = Bid::where([
+            'id' => $request->accept,
+            'contract_id' => $request->contract_id,
+        ])->first()->toArray();
+
+        //Send mail out to winner of the contract
+        $subject = 'Contract Won';
+        $body = 'You have been accepted to perform the following contract:<br>';
+        $body .= $contract['contract_id'] . ' : ' . $contract['title'] . '<br>';
+        $body .= 'Notes:<br>';
+        $body .= $contract['body'] . '<br>';
+        $body .= "Please remite contract when the items are ready to " . $contract['issuer_name'] . ".  Descriptions hould be the contract identification number.  Request ISK should be the bid amount.";
+        $body .= "Sincerely on behalf of,<br>" . $contract['issuer_name'] . "<br>";
+
+        //Dispatch the mail job
+        ProcessSendEveMailJob::dispatch($body, $bid['character_id'], 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+
+        $this->TidyContractNew($contract, $bid);
+
+        //Redirect back to the contract dashboard
+        return redirect('/contracts/dashboard/main')->with('success', 'Contract finalized.');
     }
 
     /**
@@ -408,6 +501,31 @@ class ContractController extends Controller
         } else {
             return redirect('/contracts/display/private')->with('success', 'Bid modified');
         }
+        
+    }
+
+    private function NewContractMail() {
+        //Get the esi config
+        $config = config('esi');
+
+        $subject = 'New Production Contract Available';
+        $body = "A new contract is available for the alliance contracting system.  Please check out <a href=https://services.w4rp.space>Services Site</a> if you want to bid on the production contract.<br><br>Sincerely,<br>Warped Intentions Leadership";
+        ProcessSendEveMailJob::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+    }
+
+    private function DeleteContractMail($contract) {
+        //Get the esi config
+        $config = config('esi');
+
+        $subject = 'Production Contract Removal';
+        $body = "A production contract has been deleted.<br>";
+        $body .= "Contract: " . $contract->title . "<br>";
+        $body .= "Notes: " . $contract->note . "<br>";
+        $body .= "<br>Sincerely on behalf of,<br>" . $contract->issuer_name;
+        ProcessSendEveMailJob::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+    }
+
+    private function TidyContractNew($contract, $bid) {
         
     }
 }
