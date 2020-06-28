@@ -180,7 +180,7 @@ class ContractAdminController extends Controller
         $config = config('esi');
 
         $subject = 'New Alliance Production Contract Available';
-        $body = "A new contract is available for the alliance contracting system.  Please check out <a href='https://services.w4rp.space'>Services Site</a> if you want to bid on the production contract.<br><br>Sincerely,<br>Warped Intentions Leadership";
+        $body = "A new contract is available for the alliance contracting system.  Please check out <a href=https://services.w4rp.space>Services Site</a> if you want to bid on the production contract.<br><br>Sincerely,<br>Warped Intentions Leadership";
         ProcessSendEveMailJob::dispatch($body, $config['alliance'], 'alliance', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
     }
 }
