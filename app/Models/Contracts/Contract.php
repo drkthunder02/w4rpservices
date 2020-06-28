@@ -18,6 +18,10 @@ class Contract extends Model
       * @var array
       */
      protected $fillable = [
+         'issuer_id',
+         'issuer_name',
+         'issuer_corp_id',
+         'issuer_corp_name',
          'title',
          'type',
          'end_date',

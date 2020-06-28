@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 //Libraries
 use App\Library\Esi\Mail;
+use App\Library\Lookups\LookupHelper;
 
 //Jobs
 use App\Jobs\ProcessSendEveMailJob;
@@ -181,6 +182,6 @@ class ContractAdminController extends Controller
 
         $subject = 'New Alliance Production Contract Available';
         $body = "A new contract is available for the alliance contracting system.  Please check out <a href=https://services.w4rp.space>Services Site</a> if you want to bid on the production contract.<br><br>Sincerely,<br>Warped Intentions Leadership";
-        ProcessSendEveMailJob::dispatch($body, $config['alliance'], 'alliance', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+        ProcessSendEveMailJob::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
     }
 }

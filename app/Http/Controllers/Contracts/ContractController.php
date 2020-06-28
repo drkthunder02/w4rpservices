@@ -23,6 +23,97 @@ class ContractController extends Controller
     }
 
     /**
+     * Display the contract dashboard and whether you have any outstanding contracts
+     */
+    public function displayContractDashboard() {
+        $contracts::where([
+            'finished' => false,
+            'issuer_id' => auth()->user()->getId(),
+        ])->get();
+
+        return view('contracts.dashboard.main');
+    }
+
+    /**
+     * Display past contracts for the user
+     */
+    public function displayPastContractsNew() {
+        $contracts = Contract::where([
+            'finished' => true,
+            'issuer_id' => auth()->user()->getId(),
+        ])->get();
+
+        return view('contracts.dashboard.past')->with('contracts', $contracts);
+    }
+
+    /**
+     * Display the page to create a new contract
+     */
+    public function displayNewContractNew() {
+        return view('contracts.dashboard.new');
+    }
+
+    /**
+     * Store a new contract
+     */
+    public function storeNewContractNew(Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'date' => 'required',
+            'body' => 'required',
+            'type' => 'required',
+        ]);
+
+        $lookup = new LookupHelper;
+
+        $date = new Carbon($request->date);
+        $body = nl2br($request->body);
+
+        $user_id = auth()->user()->getId();
+        $name = auth()->user()->getName();
+        $char = $lookup->GetCharacterInfo($user_id);
+        $corp = $lookup->GetCorporationInfo($char->corporation_id);
+
+        //Store the contract in the database
+        $contract = new Contract;
+        $contract->issuer_id = auth()->user()->getId();
+        $contract->issuer_name = auth()->user()->getName();
+        $contract->title = $request->name;
+        $contract->end_date = $request->date;
+        $contract->body = $body;
+        $contract->type = $request->type;
+        $contract->save();
+
+        //Send a mail out to all of the people who can bid on a contract
+        $this->NewContractMail();
+
+        return redirect('/contracts/dashboard/main')->with('success', 'Contract posted.');
+    }
+
+    public function storeAcceptContractNew(Request $request) {
+        /**
+         * If the user is the contract owner, then continue.
+         * Otherwise, exit out with an error stating the person is not the contract owner.
+         */
+        $this->validate($request, [
+            'contract_id' => 'required',
+            'bid_id' => 'required',
+            'character_id' => 'required',
+            'bid_amount' => 'required',
+        ]);
+
+        $check = 
+
+        Contract::where([
+            'contract_id' => $request->contract_id,
+            'issuer_id' => auth()->user()->getId(),
+        ])->update([
+            'finished' => true,
+            'final_cost' => $request->bid_amount,
+        ]);
+    }
+
+    /**
      * Controller function to display the bids placed on contracts
      */
     public function displayBids($id) {
