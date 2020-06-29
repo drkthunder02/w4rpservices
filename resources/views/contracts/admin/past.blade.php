@@ -27,10 +27,7 @@
                         End Date: {{ $contract['end_date'] }}
                     </div>
                     <div class="container">
-                        Accepted Bid Amount: {{ $contract['accepted']['bid_amount'] }}<br>
-                    </div>
-                    <div class="container">
-                        Accepted Bid Notes:  {{ $contract['accepted']['notes'] }}
+                        Final Cost: {{ $contract['final_cost'] }}<br>
                     </div>
                     <span class="border-dark">
                         <div class="container">

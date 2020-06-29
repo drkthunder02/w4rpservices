@@ -38,20 +38,7 @@ class ContractAdminController extends Controller
     }
 
     public function displayPastContracts() {
-        $contracts = Contract::where(['finished' => true])->where('updated_at', '>', Carbon::now()->subMonths(2))->get()->toArray();
-        
-        //Get the accepted bid for the contract and load it into the array
-        foreach($contracts as $contract) {
-            //Get the accepted bid for the contract and add it to the array
-            $accepted = AcceptedBid::where([
-                'contract_id' => $contract['contract_id'],
-            ])->get();
-            
-            $contract['accepted'] = $accepted->bid_amount;
-            $contract['accepted_notes'] = $accepted->notes;
-        }
-
-        dd($contracts);
+        $contractsTemp = Contract::where(['finished' => true])->where('updated_at', '>', Carbon::now()->subMonths(2))->get();
 
         return view('contracts.admin.past')->with('contracts', $contracts);
     }
