@@ -38,7 +38,7 @@ class ContractAdminController extends Controller
     }
 
     public function displayPastContracts() {
-        $contractsTemp = Contract::where(['finished' => true])->where('updated_at', '>', Carbon::now()->subMonths(2))->get();
+        $contracts = Contract::where(['finished' => true])->where('updated_at', '>', Carbon::now()->subMonths(2))->get();
 
         return view('contracts.admin.past')->with('contracts', $contracts);
     }
