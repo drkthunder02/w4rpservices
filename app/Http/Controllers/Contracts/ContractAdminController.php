@@ -50,7 +50,7 @@ class ContractAdminController extends Controller
             $contract['accepted'] = $accepted;
         }
 
-        return view('contracs.admin.past')->with('contracts', $contracts);
+        return view('contracts.admin.past')->with('contracts', $contracts);
     }
 
     /**
