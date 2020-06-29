@@ -46,7 +46,7 @@ class ContractAdminController extends Controller
             $accepted = AcceptedBid::where([
                 'contract_id' => $contract['contract_id'],
             ])->get()->toArray();
-
+            dd($accepted);
             $contract['accepted'] = $accepted;
         }
 
