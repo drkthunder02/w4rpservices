@@ -45,9 +45,10 @@ class ContractAdminController extends Controller
             //Get the accepted bid for the contract and add it to the array
             $accepted = AcceptedBid::where([
                 'contract_id' => $contract['contract_id'],
-            ])->get()->toArray();
-            dd($accepted);
-            $contract['accepted'] = $accepted;
+            ])->get();
+            
+            $contract['accepted'] = $accepted->bid_amount;
+            $contract['accepted_notes'] = $accepted->notes;
         }
 
         dd($contracts);
