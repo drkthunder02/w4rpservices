@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <h2>Bid on Contract</h2>
     </div>
-</div>
+</div>  
 <br>
 <div class="container">
     <div class="row justify-content-center">
@@ -14,15 +14,11 @@
                     Enter Bid
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['action' => 'Contracts\ContractController@storeBid', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Contracts\SupplyChainController@storeSupplyChainContractBid', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('bid', 'Bid') }}
-                        {{ Form::text('bid', '', ['class' => 'form-control', 'placeholder' => '1.0']) }}
+                        {{ Form::text('bid', '', ['class' => 'form-control', 'placeholder' => '0.00']) }}
                         {{ Form::hidden('contract_id', $contractId) }}
-                        {{ Form::label('suffix', 'M') }}
-                        {{ Form::radio('suffix', 'M', false) }}
-                        {{ Form::label('suffix', 'B') }}
-                        {{ Form::radio('suffix', 'B', false) }}
                     </div>
                     <div class="form-group">
                         {{ Form::label('notes', 'Notes') }}
@@ -35,5 +31,4 @@
         </div>
     </div>
 </div>
-
 @endsection

@@ -3,9 +3,10 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    No Contracts Issued
+                    <h2>No Supply Chain Contracts Currently</h2>
                 </div>
                 <div class="card-body">
+                    
                 </div>
             </div>
         </div>
