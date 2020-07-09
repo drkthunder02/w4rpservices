@@ -31,10 +31,6 @@ class CreateNewContractsTable extends Migration
                 $table->unsignedBigInteger('issuer_id');
                 $table->string('issuer_name');
                 $table->string('title');
-                $table->enum('type', [
-                    'public',
-                    'private',
-                ]);
                 $table->dateTime('end_date');
                 $table->dateTime('delivery_by');
                 $table->text('body')->nullable();
@@ -43,6 +39,7 @@ class CreateNewContractsTable extends Migration
                     'closed',
                     'completed',
                 ]);
+                $table->unsignedInteger('bids')->default(0);
                 $table->decimal('final_cost', 20, 2)->default(0.00);
                 $table->timestamps();
             });

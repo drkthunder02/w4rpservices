@@ -100,25 +100,24 @@ class SupplyChainController extends Controller
      */
     public function storeNewSupplyChainContract(Request $request) {
         $this->validate($request, [
-            'title' => 'required',
-            'type' => 'required',
-            'end_date' => 'required',
-            'delivery_by' => 'required',
+            'name' => 'required',
+            'date' => 'required',
+            'delivery' => 'required',
             'body' => 'required',
         ]);
 
         $contract = new SupplyChainContract;
         $contract->issuer_id = auth()->user()->getId();
         $contract->issuer_name = auth()->user()->getName();
-        $contract->title = $request->title;
-        $contract->type = $request->type;
-        $contract->end_date = $request->end_date;
-        $contract->delivery_by = $request->delivery_by;
+        $contract->title = $request->name;
+        $contract->end_date = $request->date;
+        $contract->delivery_by = $request->delivery;
         $contract->body = $request->body;
         $contract->state = 'open';
+        $contract->bids = 0;
         $contract->save();
 
-        $this->NewSupplyChainContractMail();
+        $this->NewSupplyChainContractMail($contract);
 
         return redirect('/supplychain/dashboard')->with('success', 'New Contract created.');
     }
@@ -135,7 +134,7 @@ class SupplyChainController extends Controller
      */
     public function deleteSupplyChainContract(Request $request) {
         $this->validate($request, [
-            'contract' => 'required',
+            'contractId' => 'required',
         ]);
 
         /**
@@ -143,20 +142,20 @@ class SupplyChainController extends Controller
          */
         $count = SupplyChainContract::where([
             'issuer_id' => auth()->user()->getId(),
-            'id' => $request->contract,
+            'id' => $request->contractId,
         ])->count();
 
         if($count > 0) {
             //Remove the supply chain contract
             SupplyChainContract::where([
                 'issuer_id' => auth()->user()->getId(),
-                'id' => $request->contract,
+                'id' => $request->contractId,
             ])->delete();
         }
         
         //Remove all the bids from the supply chain contract
         SupplyChainBid::where([
-            'contract_id' => $request->contract,
+            'contract_id' => $request->contractId,
         ])->delete();
 
         return redirect('/supplychain/dashboard')->with('success', 'Supply Chain Contract deleted successfully.');
@@ -174,8 +173,23 @@ class SupplyChainController extends Controller
      */
     public function storeEndSupplyChainContract(Request $request) {
         $this->validate($request, [
-
+            'accept' => 'required',
+            'contractId' => 'required',
         ]);
+
+        //Check to make sure the user owns the contract
+        $count = SupplyChainContract::where([
+            'issuer_name' => auth()->user()->getName(),
+            'contract_id' => $request->contractId,
+        ])->count();
+
+        //If the count is greater than 0, the user owns the contract.
+        //Proceed with ending the contract
+        if($count > 0) {
+
+        } else {
+            //If the count is zero, then redirect with error messsage
+        }
 
         return redirect('/supplychain/dashboard')->with('success', 'Contract ended, and mails sent to the winning bidder.');
     }
