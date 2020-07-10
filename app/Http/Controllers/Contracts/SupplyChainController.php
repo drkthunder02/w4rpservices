@@ -228,10 +228,37 @@ class SupplyChainController extends Controller
      */
     public function storeSupplyChainContractBid(Request $request) {
         $this->validate($request, [
-
+            'bid' => 'required',
+            'contract_id' => 'required',
         ]);
 
-        return redirect('/supplychain/dashboard')->with('success', 'Successfully stored supply chain contract bid.');
+        $count = SupplyChainBid::where([
+            'entity_id' => auth()->user()->getId(),
+            'entity_name' => auth()->user()->getName(),
+            'contract_id' => $request->contract_id,
+        ])->count();
+
+        //If the person already has a bid in, then deny them the option to place another bid on the same contract.
+        //Otherwise, enter the bid into the database
+        if($count > 0) {
+            redirect('/supplychain/dashboard')->with('error', 'Unable to insert bid as one is already present for the supply chain contract.');
+        } else {
+            //Sanitize the bid amount
+
+            //Create the database entry
+            $bid = new SupplyChainBid;
+            $bid->contract_id = $request->contract_id;
+            $bid->bid_amount = $request->bid;
+            $bid->entity_id = auth()->user()->getId();
+            $bid->entity_name = auth()->user()->getName();
+            $bid->entity_type = 'character';
+            if(isset($request->notes)) {
+                $bid->bid_note = $request->notes;
+            }
+            $bid->save();
+
+            redirect('/supplychain/dashboard')->with('success', 'Bid succesfully entered into the contract.');
+        }
     }
 
     /**
@@ -239,10 +266,41 @@ class SupplyChainController extends Controller
      */
     public function deleteSupplyChainContractBid(Request $request) {
         $this->validate($request, [
-
+            'contract_id' => 'required',
+            'bid_id' => 'required',
         ]);
 
-        return redirect('/suppplychain/dashboard')->with('success', 'Deleted supply chain contract bid.');
+        //See if the user has put in a bid.  If not, then redirect to failure.
+        $count = SupplyChainBid::where([
+            'contract_id' => $request->contract_id,
+            'entity_id' => auth()->user()->getId(),
+            'bid_id' => $request->bid_id,
+        ])->count();
+
+        if($count > 0) {
+            SupplyChainBid::where([
+                'contract_id' => $request->contract_id,
+                'entity_id' => auth()->user()->getId(),
+                'bid_id' => $request->bid_id,
+            ])->delete();
+
+            return redirect('/suppplychain/dashboard')->with('success', 'Deleted supply chain contract bid.');
+        } else {
+            return redirect('/supplychain/dashboard')->with('error', 'No bid found to delete.');
+        }
+    }
+
+    /**
+     * Display the modify a bid on supply chain contract page
+     */
+    public function displayModifySupplyChainContractBid(Request $request) {
+        $this->validate($request, [
+            'contract_id' => 'required',
+        ]);
+
+        $contractId = $request->contract_id;
+
+        return view('supplychain.forms.modifybid')->with('contractId', $contractId);
     }
 
     /**
@@ -250,10 +308,42 @@ class SupplyChainController extends Controller
      */
     public function modifySupplyChainContractBid(Request $request) {
         $this->validate($request, [
-
+            'bid_id' => 'required',
+            'contract_id' => 'required',
+            'bid_amount' => 'required',
         ]);
 
-        return redirect('/supplychain/dashboard')->with('success', 'Modified supply chain contract bid.');
+        //Check for the owner of the bid
+        $count = SupplyChainBid::where([
+            'bid_id' => $request->bid_id,
+            'contract_id' => $request->contract_id,
+            'entity_id' => auth()->user()->getId(),
+        ])->count();
+
+        if($count > 0) {
+            if(isset($request->bid_note)) {
+                SupplyChainBid::where([
+                    'bid_id' => $request->bid_id,
+                    'contract_id' => $request->contract_id,
+                    'entity_id' => auth()->user()->getId(),
+                ])->update([
+                    'bid_amount' => $request->bid_amount,
+                    'bid_note' => $request->bid_note,
+                ]);
+            } else {
+                SupplyChainBid::where([
+                    'bid_id' => $request->bid_id,
+                    'contract_id' => $request->contract_id,
+                    'entity_id' => auth()->user()->getId(),
+                ])->update([
+                    'bid_amount' => $request->bid_amount,
+                ]);
+            }
+
+            return redirect('/supplychain/dashboard')->with('success', 'Modified supply chain contract bid.');
+        } else {
+            return redirect('/supplychain/dashboard')->with('error', 'Not able to modify supply chain contract bid.');
+        }        
     }
 
     /**

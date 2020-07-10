@@ -47,7 +47,7 @@ class CreateNewContractsTable extends Migration
 
         if(!Schema::hasTable('supply_chain_bids')) {
             Schema::create('supply_chain_bids', function(Blueprint $table) {
-                $table->increments('id')->unique();
+                $table->increments('bid_id')->unique();
                 $table->unsignedBigInteger('contract_id');
                 $table->decimal('bid_amount', 20, 2)->default(0.00);
                 $table->unsignedBigInteger('entity_id');
