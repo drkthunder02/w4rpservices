@@ -298,9 +298,18 @@ class SupplyChainController extends Controller
             'contract_id' => 'required',
         ]);
 
+        //Get the contract id
         $contractId = $request->contract_id;
+        //Get the bid id to be modified later
+        $bid = SupplyChainBid::where([
+            'contract_id' => $contractId,
+            'entity_id' => auth()->user()->getId(),
+        ])->get();
 
-        return view('supplychain.forms.modifybid')->with('contractId', $contractId);
+        $bidId = $bid->id;
+
+        return view('supplychain.forms.modifybid')->with('contractId', $contractId)
+                                                  ->with('bidId', $bidId);
     }
 
     /**

@@ -52,7 +52,7 @@
                 <div class="card-body">
                     <table class="table table-striped">
                         <tbody>
-                            <tr class="table-success">
+                            <tr class="table-primary">
                                 <td>Moon Available</td>
                             </tr>
                             <tr class="table-danger">
