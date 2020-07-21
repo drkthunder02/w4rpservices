@@ -14,18 +14,6 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="/supplychain/contracts/open" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Open Contracts</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/supplychain/contracts/closed" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Closed Contracts</p>
-        </a>
-      </li>
-      <li class="nav-item">
         <a href="/supplychain/display/expired" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
           <p>Expired Contracts</p>
