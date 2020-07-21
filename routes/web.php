@@ -184,7 +184,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/supplychain/contracts/end', 'Contracts\SupplyChainController@displayEndSupplyChainContract');
     Route::post('/supplychain/contracts/end', 'Contracts\SupplyChainController@storeEndSupplyChainContract');
     Route::get('/supplychain/display/bids', 'Contracts\SupplyChainController@displaySupplyChainBids');
-    Route::get('/supplychain/display/expired', 'Contracts\SupplyChainController@displayExpiredSupplyChainContracts');
     Route::get('/supplychain/display/newbid', 'Contracts\SupplyChainController@displaySupplyChainContractBid');
     Route::post('/supplychain/display/newbid', 'Contracts\SupplyChainController@storeSupplyChainContractBid');
     Route::post('/supplychain/delete/bid', 'Contracts\SupplyChainController@deleteSupplyChainContractBid');
