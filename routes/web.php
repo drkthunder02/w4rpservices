@@ -179,7 +179,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/supplychain/dashboard', 'Contracts\SupplyChainController@displaySupplyChainDashboard');
     Route::get('/supplychain/contracts/open', 'Contracts\SupplyChainController@displayMyOpenContractsDashboard');
     Route::get('/supplychain/contracts/closed', 'Contracts\SupplyChainController@displayMyClosedContractsDashboard');
-    Route::get('/supplychain/contracts/past', 'Contracts\SupplyChainController@displayPastContractsDashboard');
     Route::get('/supplychain/contracts/new', 'Contracts\SupplyChainController@displayNewSupplyChainContract');
     Route::post('/supplychain/contracts/new', 'Contracts\SupplyChainController@storeNewSupplyChainContract');
     Route::get('/supplychain/contracts/delete', 'Contracts\SupplyChainController@displayDeleteSupplyChainContract');

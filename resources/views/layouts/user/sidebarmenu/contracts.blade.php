@@ -26,18 +26,6 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="/supplychain/contracts/past" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Past Contracts</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/supplychain/contracts/past" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Past Contracts</p>
-        </a>
-      </li>
-      <li class="nav-item">
         <a href="/supplychain/display/expired" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
           <p>Expired Contracts</p>
