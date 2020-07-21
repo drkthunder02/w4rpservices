@@ -190,10 +190,8 @@ class SupplyChainController extends Controller
             return redirect('/supplychain/dashboard')->with('success', 'Contract ended, and mails sent to the winning bidder.');
         } else {
             //If the count is zero, then redirect with error messsage
-            return redirect('/supplychain/dashboard')->with('error', '')
+            return redirect('/supplychain/dashboard')->with('error', 'Contract was not yours to end.');
         }
-
-        return redirect('/supplychain/dashboard')->with('success', 'Contract ended, and mails sent to the winning bidder.');
     }
 
     /**
