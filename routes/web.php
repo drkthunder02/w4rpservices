@@ -177,6 +177,7 @@ Route::group(['middleware' => ['auth']], function(){
      * Supply Chain Contracts Controller display pages
      */
     Route::get('/supplychain/dashboard', 'Contracts\SupplyChainController@displaySupplyChainDashboard');
+    Route::get('/supplychain/my/dashboard', 'Contracts\SupplyChainController@displayMySupplyChainDashboard');
     Route::get('/supplychain/contracts/new', 'Contracts\SupplyChainController@displayNewSupplyChainContract');
     Route::post('/supplychain/contracts/new', 'Contracts\SupplyChainController@storeNewSupplyChainContract');
     Route::get('/supplychain/contracts/delete', 'Contracts\SupplyChainController@displayDeleteSupplyChainContract');

@@ -14,6 +14,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a href="/supplychain/my/dashboard" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>My Dashboard</p>
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="/supplychain/contracts/new" class="nav-link">
           <i class="far fa-circle nav-icon"></i>
           <p>Create New Contract</p>

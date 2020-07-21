@@ -27,65 +27,49 @@ class SupplyChainController extends Controller
 
     /**
      * Display the supply chain dashboard
+     * Should contain a section for open contracts, closed contracts, and expired contracts.
      */
     public function displaySupplyChainDashboard() {
-        $contracts = SupplyChainContract::where([
+        $openContracts = SupplyChainContract::where([
             'state' => 'open',
         ])->get();
 
-        return view('supplychain.dashboard.main')->with('contracts', $contracts);
+        $closedContracts = SupplyChainContract::where([
+            'state' => 'closed',
+        ])->get();
+
+        $completedContracts = SupplyChainContract::where([
+            'state' => 'completed',
+        ])->get();
+
+        return view('supplychain.dashboard.main')->with('openContracts', $openContracts)
+                                                 ->with('closedContracts', $closedContracts)
+                                                 ->with('completedContracts', $completedContracts);
     }
 
     /**
-     * Show the user's open contracts
+     * Display my supply chain contracts dashboard
+     * Should contain a section for open contracts, closed contracts, and expired contracts
      */
-    public function displayMyOpenContractsDashboard() {
-        $contracts = SupplyChainContract::where([
+    public function displayMySupplyChainDashboard() {
+        $openContracts = SupplyChainContract::where([
             'issuer_id' => auth()->user()->getId(),
             'state' => 'open',
         ])->get();
 
-        return view('supplychain.dashboard.main')->with('contracts', $contracts);
-    }
-
-    /**
-     * Show the user's closed contracts
-     */
-    public function displayMyClosedContractsDashboard() {
-        $contracts = SupplyChainContract::where([
+        $closedContracts = SupplyChainContract::where([
             'issuer_id' => auth()->user()->getId(),
             'state' => 'closed',
         ])->get();
 
-        return view('supplychain.dashboard.main')->with('contracts', $contracts);
-    }
-
-    /**
-     * Show the past contracts bidded on
-     */
-    public function displayPastContractsDashboard() {
-        $contracts = array();
-
-        $acceptedBids = SupplyChainBid::where([
-            'bid_type' => 'accepted',
+        $completedContracts = SupplyChainContract::where([
+            'issuer_id' => auth()->user()->getId(),
+            'state' => 'completed',
         ])->get();
 
-        foreach($acceptedBids as $bid) {
-            $contracts = null;
-
-            $temp = SupplyChainContract::where([
-                'state' => 'closed',
-            ])->get()->toArray();
-
-            $temp2 = SupplyChainContract::where([
-                'state' => 'completed',
-            ])->get()->toArray();
-
-            array_push($contracts, $temp);
-            array_push($contracts, $temp2);
-        }
-
-        return view('supplychain.dashboard.past')->with('contracts', $contracts);
+        return view('supplychain.dashboard.main')->with('openContracts', $openContracts)
+                                                 ->with('closedContracts', $closedContracts)
+                                                 ->with('completedContracts', $completedContracts);
     }
 
     /**
@@ -126,7 +110,12 @@ class SupplyChainController extends Controller
      * Display the delete contract page
      */
     public function displayDeleteSupplyChainContract() {
-        return view('supplychain.forms.delete');
+        $contracts = SupplyChainContract::where([
+            'issuer_id' => auth()->user()->getId(),
+            'state' => 'open',
+        ])->get();
+
+        return view('supplychain.forms.delete')->with('contracts', $contracts);
     }
 
     /**
@@ -186,9 +175,22 @@ class SupplyChainController extends Controller
         //If the count is greater than 0, the user owns the contract.
         //Proceed with ending the contract
         if($count > 0) {
+            SupplyChainContract::where([
 
+            ])->update([
+
+            ]);
+
+            SupplyChainBid::where([
+
+            ])->update([
+
+            ]);
+
+            return redirect('/supplychain/dashboard')->with('success', 'Contract ended, and mails sent to the winning bidder.');
         } else {
             //If the count is zero, then redirect with error messsage
+            return redirect('/supplychain/dashboard')->with('error', '')
         }
 
         return redirect('/supplychain/dashboard')->with('success', 'Contract ended, and mails sent to the winning bidder.');
