@@ -232,6 +232,10 @@ class SupplyChainController extends Controller
             'contract_id' => 'required',
         ]);
 
+        //Declare some needed variables
+        $bidAmount = 0.00;
+
+        //See if a bid has been placed by the user for this contract
         $count = SupplyChainBid::where([
             'entity_id' => auth()->user()->getId(),
             'entity_name' => auth()->user()->getName(),
@@ -244,11 +248,26 @@ class SupplyChainController extends Controller
             redirect('/supplychain/dashboard')->with('error', 'Unable to insert bid as one is already present for the supply chain contract.');
         } else {
             //Sanitize the bid amount
+            if(preg_match('(m|M|b|B)', $request->bid) === 1) {
+                if(preg_match('(m|M)', $request->bid) === 1) {
+                    $cStringSize = strlen($request->bid);
+                    $tempCol = str_split($request->bid, $cStringSize - 1);
+                    $bidAmount = $tempCol[0];
+                    $bidAmount = $bidAmount * 1000000000.00;
+                } else if(preg_match('(b|B)', $request->bid) === 1) {
+                    $cStringSize = strlen($request->bid);
+                    $tempCol = str_split($request->bid, $cStringSize - 1);
+                    $bidAmount = $tempCol[0];
+                    $bidAmount = $bidAmount * 1000000000.00;
+                }
+            } else {
+                $bidAmount = $request->bid;
+            }
 
             //Create the database entry
             $bid = new SupplyChainBid;
             $bid->contract_id = $request->contract_id;
-            $bid->bid_amount = $request->bid;
+            $bid->bid_amount = $bidAmount;
             $bid->entity_id = auth()->user()->getId();
             $bid->entity_name = auth()->user()->getName();
             $bid->entity_type = 'character';
