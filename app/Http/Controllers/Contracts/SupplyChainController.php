@@ -258,7 +258,7 @@ class SupplyChainController extends Controller
                     $cStringSize = strlen($request->bid);
                     $tempCol = str_split($request->bid, $cStringSize - 1);
                     $bidAmount = $tempCol[0];
-                    $bidAmount = $bidAmount * 1000000000.00;
+                    $bidAmount = $bidAmount * 1000000000000.00;
                 }
             } else {
                 $bidAmount = $request->bid;
