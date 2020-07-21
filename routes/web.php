@@ -65,19 +65,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/blacklist/search', 'Blacklist\BlacklistController@SearchInBlacklist');
 
     /**
-     * Contract Controller display pages
-     */
-    Route::get('/contracts/display/all', 'Contracts\ContractController@displayContracts');
-    Route::get('/contracts/display/public', 'Contracts\ContractController@displayPublicContracts');
-    Route::get('/contracts/display/private', 'Contracts\ContractController@displayPrivateContracts');
-    Route::get('/contracts/display/newbid/{id}', 'Contracts\ContractController@displayNewBid');
-    Route::get('/contracts/modify/bid/{id}', 'Contracts\ContractController@displayModifyBid');
-    Route::get('/contracts/display/bids/{id}', 'Contracts\ContractController@displayBids');
-    Route::get('/contracts/delete/bid/{id}', 'Contracts\ContractController@deleteBid');
-    Route::post('/contracts/modify/bid', 'Contracts\ContractController@modifyBid');
-    Route::post('/contracts/bids/store', 'Contracts\ContractController@storeBid');
-
-    /**
      * Contract Admin Controller display pages
      */
     Route::get('/contracts/admin/display', 'Contracts\ContractAdminController@displayContractDashboard');
@@ -185,6 +172,27 @@ Route::group(['middleware' => ['auth']], function(){
      */
     Route::get('/structures/display/requests', 'Logistics\StructureRequestAdminController@displayRequests');
     Route::post('/structures/display/requests/delete', 'Logistics\StructureRequestAdminController@deleteRequest');
+
+    /**
+     * Supply Chain Contracts Controller display pages
+     */
+    Route::get('/supplychain/dashboard', 'Contracts\SupplyChainController@displaySupplyChainDashboard');
+    Route::get('/supplychain/contracts/open', 'Contracts\SupplyChainController@displayMyOpenContractsDashboard');
+    Route::get('/supplychain/contracts/closed', 'Contracts\SupplyChainController@displayMyClosedContractsDashboard');
+    Route::get('/supplychain/contracts/past', 'Contracts\SupplyChainController@displayPastContractsDashboard');
+    Route::get('/supplychain/contracts/new', 'Contracts\SupplyChainController@displayNewSupplyChainContract');
+    Route::post('/supplychain/contracts/new', 'Contracts\SupplyChainController@storeNewSupplyChainContract');
+    Route::get('/supplychain/contracts/delete', 'Contracts\SupplyChainController@displayDeleteSupplyChainContract');
+    Route::post('/supplychain/contracts/delete', 'Contracts\SupplyChainController@deleteSupplyChainContract');
+    Route::get('/supplychain/contracts/end', 'Contracts\SupplyChainController@displayEndSupplyChainContract');
+    Route::post('/supplychain/contracts/end', 'Contracts\SupplyChainController@storeEndSupplyChainContract');
+    Route::get('/supplychain/display/bids', 'Contracts\SupplyChainController@displaySupplyChainBids');
+    Route::get('/supplychain/display/expired', 'Contracts\SupplyChainController@displayExpiredSupplyChainContracts');
+    Route::get('/supplychain/display/newbid', 'Contracts\SupplyChainController@displaySupplyChainContractBid');
+    Route::post('/supplychain/display/newbid', 'Contracts\SupplyChainController@storeSupplyChainContractBid');
+    Route::post('/supplychain/delete/bid', 'Contracts\SupplyChainController@deleteSupplyChainContractBid');
+    Route::get('/supplychain/modify/bid', 'Contracts\SupplyChainController@displayModifySupplyChainContractBid');
+    Route::post('/supplychain/modify/bid', 'Contracts\SupplyChainController@modifySupplyChainContractBid');
 
     /**
      * Test Controller display pages
