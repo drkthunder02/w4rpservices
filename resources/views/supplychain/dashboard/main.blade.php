@@ -9,10 +9,10 @@
     </div>
     <br>
     <div class="row">
-        <div class="justify-content-left">
+        <div class="justify-content-start">
             <a class="btn btn-primary" href="/supplychain/contracts/new" role="button">Create Contract</a>
         </div>
-        <div class="justify-content-right">
+        <div class="justify-content-end">
             <a class="btn btn-danger" href="/supplychain/contracts/delete" role="button">Delete Contract</a>
         </div>
     </div>
