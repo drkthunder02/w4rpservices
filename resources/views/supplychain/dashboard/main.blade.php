@@ -8,13 +8,9 @@
         <!-- Create button for deleting own contracts -->
     </div>
     <br>
-    <div class="row">
-        <div class="text-left">
+    <div class="row justify-content-center">
             <a class="btn btn-primary" href="/supplychain/contracts/new" role="button">Create Contract</a>
-        </div>
-        <div class="text-right">
             <a class="btn btn-danger" href="/supplychain/contracts/delete" role="button">Delete Contract</a>
-        </div>
     </div>
 </div>
 <br>
