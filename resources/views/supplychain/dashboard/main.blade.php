@@ -23,12 +23,37 @@
 @if(count($openContracts))
     @include('supplychain.includes.opencontracts')
 @else
-    @include('supplychain.includes.nocontracts')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>No Open Supply Chain Contracts</h2>
+                    </div>
+                    <div class="card-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endif
 @if(count($closedContracts))
     @include('supplychain.includes.closedcontracts')
 @else
-    @include('supplychain.includes.nocontracts')
-@endif
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>No Open Personal Supply Chain Contracts</h2>
+                </div>
+                <div class="card-body">
 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 @endsection
