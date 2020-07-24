@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group">
                         {{ Form::label('allowedEntityType', 'Allowed Entity Type') }}
-                        {{ Form::select('allowedEtntityType', ['Corporation' => 'Corporation', 'Alliance' => 'Alliance'], null, ['class' => 'form-control']) }}
+                        {{ Form::select('allowedEntityType', ['Corporation' => 'Corporation', 'Alliance' => 'Alliance'], null, ['class' => 'form-control']) }}
                     </div>
                     <div class="form-group">
                         {{ Form::label('allowedEntityName', 'Allowed Entity Name') }}

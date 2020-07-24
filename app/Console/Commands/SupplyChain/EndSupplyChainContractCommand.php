@@ -11,14 +11,14 @@ class EndSupplyChainContractCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'services:supplychain';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Checks and ends any supply chain contracts needs to be closed.';
 
     /**
      * Create a new command instance.
