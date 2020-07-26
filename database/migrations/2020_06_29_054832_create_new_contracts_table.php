@@ -41,6 +41,7 @@ class CreateNewContractsTable extends Migration
                 ]);
                 $table->unsignedInteger('bids')->default(0);
                 $table->decimal('final_cost', 20, 2)->default(0.00);
+                $table->unsignedInteger('winning_bid_id')->default(0);
                 $table->timestamps();
             });
         }

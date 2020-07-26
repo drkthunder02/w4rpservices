@@ -21,7 +21,6 @@ class SupplyChainContract extends Model
         'issuer_id',
         'issuer_name',
         'title',
-        'type',
         'end_date',
         'delivery_by',
         'body',
