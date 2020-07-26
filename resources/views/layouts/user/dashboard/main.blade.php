@@ -21,10 +21,7 @@
           @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
           @include('layouts.user.sidebarmenu.general')
           @endif
-          <!-- End General Items -->  
-          <!-- Wiki Items -->
-          @include('layouts.user.sidebarmenu.wiki')
-          <!-- End Wiki Items -->
+          <!-- End General Items -->
           <!-- Moon Items -->
           @include('layouts.user.sidebarmenu.moon')
           <!-- End Moon Items -->
