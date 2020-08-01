@@ -40,7 +40,7 @@
                     <div class="container">
                         <h2>Current Role: {{ $role }}</h2>
                     </div>
-                    {{ Form::open(['action' => 'Dashboard\AdminConotroller@modifyRole', 'method' => 'POST']) }}
+                    {{ Form::open(['action' => 'Dashboard\AdminController@modifyRole', 'method' => 'POST']) }}
                     <div class="form-group">
                     {{ Form::hidden('user', $user->character_id) }}
                     {{ Form::select('role', $roles, 'None', ['class' => 'form-control']) }}
