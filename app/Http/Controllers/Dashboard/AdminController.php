@@ -228,7 +228,7 @@ class AdminController extends Controller
         //Pass the user information to the page for hidden text entries
         return view('admin.user.modify')->with('user', $user)
                                         ->with('permissions', $permissions)
-                                        -with('role', $role)
+                                        ->with('role', $role)
                                         ->with('roles', $roles);
     }
 
