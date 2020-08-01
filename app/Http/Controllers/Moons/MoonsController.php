@@ -22,6 +22,9 @@ use App\Models\Moon\AllianceMoonRequest;
 use App\Library\Moons\MoonCalc;
 use App\Library\Lookups\LookupHelper;
 
+//Jobs
+use App\Jobs\ProcessSendEveMailJob;
+
 class MoonsController extends Controller
 {
     public function __construct() {
@@ -214,6 +217,15 @@ class MoonsController extends Controller
         ])->update([
             'Availability' => 'Request Pending',
         ]);
+
+        //Send a mail over to the site admins to approve the moon request
+        $body = 'A new moon request has been entered into the services site.  Please approve or deny the request within 3 business days.<br><br>';
+        $body .= 'Sincerely,<br>';
+        $body .= 'W4RP Services Site';
+        $subject = 'New Moon Request Available';
+
+        ProcessSendEveMailJob::dispatch($body, 92947432, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(30));
+        ProcessSendEveMailJob::dispatch($body, 92626011, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(60));
 
         return redirect('/moons/display/request')->with('success', 'Moon request submitted.');
     }

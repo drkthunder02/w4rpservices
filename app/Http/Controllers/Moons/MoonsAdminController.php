@@ -130,7 +130,7 @@ class MoonsAdminController extends Controller
         }
 
         //Setup the mail model
-        ProcessSendEveMailJob::dispatch($body, (int)$moon->requestor_id, 'character', 'Warped Intentions Moon Request', $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+        ProcessSendEveMailJob::dispatch($body, (int)$moon->requestor_id, 'character', 'Warped Intentions Moon Request', $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(30));
 
         return redirect('/moons/admin/display/request')->with('success', 'Moon has been processed, and mail has been sent out.');
     }
