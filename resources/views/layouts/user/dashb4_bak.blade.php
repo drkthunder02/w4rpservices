@@ -205,7 +205,7 @@
                 </a>
               </li>
               @endif
-              @if(auth()->user()->isMoonRenter())
+              @if(auth()->user()->isMoonRenter() || auth()->user()->hasPermission('rentalmoon.viewer'))
               <li class="nav-item">
                 <a href="/moons/ledger/display/rentals" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
