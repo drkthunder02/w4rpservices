@@ -29,9 +29,6 @@
           <!-- SRP Admin -->
           @include('layouts.admin.sidebarmenu.srp')
           <!-- End SRP Admin -->
-          <!-- Contract Admin -->
-          @include('layouts.admin.sidebarmenu.contract')
-          <!-- End Contract Admin -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
