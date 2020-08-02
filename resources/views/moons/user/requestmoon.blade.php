@@ -21,6 +21,7 @@
                     'B-S347' => 'B-S347',
                     'B9E-H6' => 'B9E-H6',
                     'CJNF-J' => 'CJNF-J',
+                    'DY-P7Q' => 'DY-P7Q',
                     'E8-YS9' => 'E8-YS9',
                     'EA-HSA' => 'EA-HSA',
                     'FYI-49' => 'FYI-49',
