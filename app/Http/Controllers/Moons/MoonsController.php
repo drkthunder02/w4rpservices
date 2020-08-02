@@ -156,6 +156,7 @@ class MoonsController extends Controller
             'Z-H2MA',
             'B-KDOZ',
             'E8-YS9',
+            'DY-P7Q',
         ];
 
         //Declare lookup variables
