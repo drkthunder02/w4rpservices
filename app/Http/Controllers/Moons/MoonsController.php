@@ -219,6 +219,7 @@ class MoonsController extends Controller
         ]);
 
         //Send a mail over to the site admins to approve the moon request
+        $config = config('esi');
         $body = 'A new moon request has been entered into the services site.  Please approve or deny the request within 3 business days.<br><br>';
         $body .= 'Sincerely,<br>';
         $body .= 'W4RP Services Site';
