@@ -62,7 +62,7 @@ class StructureRequestController extends Controller
         ])->get();
 
         //Set the mail delay
-        $delay = 5;
+        $delay = 30;
 
         foreach($fcTeam as $fc) {
             $body = "Structure Anchor Request has been entered.<br>";
@@ -74,7 +74,7 @@ class StructureRequestController extends Controller
             $subject = "New Structure Anchor Request";
             ProcessSendEveMailJob::dispatch($body, (int)$fc->character_id, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($delay));
 
-            $delay += 15;
+            $delay += 30;
         }
 
         return redirect('/structures/display/requests');
