@@ -98,7 +98,7 @@ class SendMoonRentalPaymentReminderJob implements ShouldQueue
             }
             //Put the price for the moons 
             $body .= "The price for next month's rent is " . number_format($cost, 0, ".", ",") . "<br>";
-            $body .= "Rental Payment is due on the 1st of the month should you continue to want to rent the moons.<br>";
+            $body .= "Rental Payment is due on the 1st of the month.  If the rental payment is not remitted to Spatial Forces by the 3rd of the month, the rental claim shall be forfeited.<br>";
             $body .= "Rental Payment should be transferred to Spatial Forces.<br>";
             $body .= "In the description of the payment please put the following transaction identification: " . $transId . "<br>";
             $body .= "<br>";
