@@ -18,7 +18,7 @@
                             Issuer:  {{ $bid['issuer_name'] }}<br>
                         </div>
                         <div class="col-md" align="right">
-                            <a href="/supplychain/display/newbid/{{ $bid['contract_id'] }}/{{ $bid['bid_id'] }}  "><button type="button" class="btn btn-danger">Delete Bid</button></a>
+                            <a href="/supplychain/delete/bid/{{ $bid['contract_id'] }}/{{ $bid['bid_id'] }}  "><button type="button" class="btn btn-danger">Delete Bid</button></a>
                         </div>
                     </div>
                     <div class="card-body">
