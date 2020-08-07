@@ -353,6 +353,20 @@ class SupplyChainController extends Controller
                 'bid_id' => $bidId,
             ])->delete();
 
+            //Update the database entry for the supply chain contract bid number
+            $num = SupplyChainContract::where([
+                'contract_id' => $request->contract_id,
+            ])->select('bids')->first();
+
+            $numBids = $num->bid - 1;
+
+            //Update the database
+            SupplyChainContract::where([
+                'contract_id' => $request->contract_id,
+            ])->update([
+                'bids' => $numBids,
+            ]);
+
             return redirect('/supplychain/dashboard')->with('success', 'Deleted supply chain contract bid.');
         } else {
             return redirect('/supplychain/dashboard')->with('error', 'No bid found to delete.');
