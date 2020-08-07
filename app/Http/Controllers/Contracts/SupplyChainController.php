@@ -223,7 +223,7 @@ class SupplyChainController extends Controller
             $temp = array();
 
             //Get the contract information for the bid
-            $contract = SupplChainContract::where([
+            $contract = SupplyChainContract::where([
                 'contract_id' => $bid->contract_id,
             ])->get();
 
