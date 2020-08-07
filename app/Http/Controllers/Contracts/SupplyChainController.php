@@ -129,28 +129,32 @@ class SupplyChainController extends Controller
             'contractId' => 'required',
         ]);
 
+        $contractId = $request->contractId;
+
         /**
          * Remove the supply chain contract if it's yours.
          */
         $count = SupplyChainContract::where([
             'issuer_id' => auth()->user()->getId(),
-            'contract_id' => $request->contractId,
+            'contract_id' => $contractId,
         ])->count();
 
         if($count > 0) {
             //Remove the supply chain contract
             SupplyChainContract::where([
                 'issuer_id' => auth()->user()->getId(),
-                'contract_id' => $request->contractId,
+                'contract_id' => $contractId,
             ])->delete();
-        }
-        
-        //Remove all the bids from the supply chain contract
-        SupplyChainBid::where([
-            'contract_id' => $request->contractId,
-        ])->delete();
 
-        return redirect('/supplychain/dashboard')->with('success', 'Supply Chain Contract deleted successfully.');
+            //Remove all bids associated with the supply chain contract
+            SupplyChainBid::where([
+                'contract_id' => $contractId,
+            ])->delete();
+
+            return redirect('/supplychain/dashboard')->with('success', 'Supply Chain Contract deleted successfully.');
+        } else {
+            return redirect('/supplychain/dashboard')->with('error', 'Unable to delete supply chain contract.');
+        }
     }
 
     /**
@@ -201,8 +205,41 @@ class SupplyChainController extends Controller
      * Display supply chain contract bids page
      */
     public function displaySupplyChainBids() {
+        //Display bids for the user on a page
+        $bids = array();
 
-        return view('supplychain.dashboard.bids');
+        $bidsCount = SupplyChain::where([
+            'entity_id' => auth()->user()->getId(),
+            'bid_type' => 'pending',
+        ])->count();
+
+        $myBids = SupplyChainBid::where([
+            'entity_id' => auth()->user()->getId(),
+            'bid_type' => 'pending',
+        ])->get();
+
+        foreach($myBids as $bid) {
+            //Declare the temporary array
+            $temp = array();
+
+            //Get the contract information for the bid
+            $contract = SupplChainContract::where([
+                'contract_id' => $bid->contract_id,
+            ])->get();
+
+            $temp['bid_id'] = $bid->bid_id;
+            $temp['contract_id'] = $bid->contract_id;
+            $temp['issuer_name'] = $contract->issuer_name;
+            $temp['title'] = $contract->title;
+            $temp['end_date'] = $contract->end_date;
+            $temp['body'] = $contract->body;
+            $temp['bid_amount'] = $bid->bid_amount;
+
+            array_push($bids, $temp);
+        }
+
+        return view('supplychain.dashboard.bids')->with('bids', $bids)
+                                                 ->with('bidsCount', $bidsCount);
     }
 
     /**
@@ -273,7 +310,23 @@ class SupplyChainController extends Controller
             if(isset($request->notes)) {
                 $bid->bid_note = $request->notes;
             }
+            $bid->bid_type = 'pending';
             $bid->save();
+
+            //Update the database entry for the supply chain contract bid number
+            $numBids = SupplyChainContract::where([
+                'contract_id' => $request->contract_id,
+            ])->select('bids')->get();
+
+            //Increase the number of bids by 1
+            $numBids++;
+
+            //Update the database
+            SupplyChainContract::where([
+                'contract_id' => $request->contract_id,
+            ])->update([
+                'bids' => $numBids,
+            ]);
 
             return redirect('/supplychain/dashboard')->with('success', 'Bid succesfully entered into the contract.');
         }
@@ -409,10 +462,26 @@ class SupplyChainController extends Controller
      * Tidy up datatables from a completed supply chain contract
      */
     private function TidySupplyChainContract($contract, $bid) {
+        //Set the contract as finished
         SupplyChainContract::where([
             'contract_id' => $contract->contract_id,
         ])->update([
             'state' => 'finished',
+        ]);
+
+        //Set all of the bids as not_accepted as default
+        SupplyChainBid::where([
+            'contract_id' => $contract->contract_id,
+        ])->update([
+            'bid_type' => 'not_accepted',
+        ]);
+
+        //Set the correct bid as accepted
+        SupplyChainBid::where([
+            'contract_id' => $contract->contract_id,
+            'bid_id' => $bid->bid_id,
+        ])->update([
+            'bid_type' => 'accepted',
         ]);
     }
 }

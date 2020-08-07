@@ -8,14 +8,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @if(count($bids) > 0)
+            @if(count($bidsCount) > 0)
                 @foreach($bids as $bid)
                 <div class="card">
                     <div class="card-header">
-                        
+                        Contract Id: {{ $bid['contract_id'] }}<br>
+                        Contract Title: {{ $bid['title'] }}<br>
+                        Issuer:  {{ $bid['issuer_name'] }}<br>
                     </div>
                     <div class="card-body">
-
+                        Bid Id:  {{ $bid['bid_id'] }}<br>
+                        Bid Amount: {{ $bid['bid_amount'] }}<br>
                     </div>
                 </div>
                 @endforeach
