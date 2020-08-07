@@ -380,7 +380,7 @@ class SupplyChainController extends Controller
     private function NewSupplyChainContractMail(SupplyChainContract $contract) {
         //Get the config for the esi
         $config = config('esi');
-        $todayDate = Carbon::now()->toFormat('d-m-Y');
+        $todayDate = Carbon::now()->toFormattedDateString();
 
         $subject = 'New Supply Chain Contract ' . $todayDate;
         $body = "A supply chain contract is available.<br>";
