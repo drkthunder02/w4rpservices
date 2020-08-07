@@ -134,14 +134,14 @@ class SupplyChainController extends Controller
          */
         $count = SupplyChainContract::where([
             'issuer_id' => auth()->user()->getId(),
-            'id' => $request->contractId,
+            'contract_id' => $request->contractId,
         ])->count();
 
         if($count > 0) {
             //Remove the supply chain contract
             SupplyChainContract::where([
                 'issuer_id' => auth()->user()->getId(),
-                'id' => $request->contractId,
+                'contract_id' => $request->contractId,
             ])->delete();
         }
         
