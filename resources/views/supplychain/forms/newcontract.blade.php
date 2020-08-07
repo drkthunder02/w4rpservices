@@ -20,8 +20,8 @@
                         {{ Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Supply Chain Contract Name']) }}
                     </div>
                     <div class="form-group">
-                        {{ Form::label('body', 'Description') }}
-                        {{ Form::text('body', '', ['class' => 'form-control', 'placeholder' => 'Enter description.']) }}
+                        {{ Form::label('body', 'Contract Items') }}
+                        {{ Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Enter description.']) }}
                     </div>
                     <div class="form-group">
                         {{ Form::label('date', 'End Date') }}
