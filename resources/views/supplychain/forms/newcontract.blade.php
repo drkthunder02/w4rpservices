@@ -25,11 +25,11 @@
                     </div>
                     <div class="form-group">
                         {{ Form::label('date', 'End Date') }}
-                        {{ Form::label('date', \Carbon\Carbon::now()->addWeek(), ['class' => 'form-control']) }}
+                        {{ Form::date('date', \Carbon\Carbon::now()->addWeek(), ['class' => 'form-control']) }}
                     </div>
                     <div class="form-group">
                         {{ Form::label('delivery', 'Delivery Date') }}
-                        {{ Form::label('delivery', \Carbon\Carbon::now()->addWeeks(2), ['class' => 'form-control']) }}
+                        {{ Form::date('delivery', \Carbon\Carbon::now()->addWeeks(2), ['class' => 'form-control']) }}
                     </div>
                     {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                     {!! Form::close() !!}
