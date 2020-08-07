@@ -319,7 +319,7 @@ class SupplyChainController extends Controller
             ])->select('bids')->first();
 
             //Increment the number of bids
-            $numBids = $num->bid + 1;
+            $numBids = $num->bids + 1;
 
             //Update the database
             SupplyChainContract::where([
@@ -360,7 +360,7 @@ class SupplyChainController extends Controller
             ])->select('bids')->first();
 
             //Decrement the number of bids
-            $numBids = $num->bid - 1;
+            $numBids = $num->bids - 1;
 
             //Update the database
             SupplyChainContract::where([
