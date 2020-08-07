@@ -6,7 +6,8 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm" align="left">
-                            {{ $contract['title'] }}
+                            {{ $contract['title'] }}<br>
+                            {{ $contract['contract_id'] }}
                         </div>
                         <div class="col-sm" align="right">
                             <a href="/supplychain/display/newbid/" . {{ $contract['contract_id'] }}><button type="button" class="btn btn-primary">Bid</button></a>
