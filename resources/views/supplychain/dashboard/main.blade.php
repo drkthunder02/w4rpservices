@@ -3,9 +3,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <h2>Supply Chain Contracts</h2>
-        <!-- Create button for creating a new contract -->
-
-        <!-- Create button for deleting own contracts -->
     </div>
     <br>
     <div class="row justify-content-center">
@@ -46,7 +43,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h2>No Open Personal Supply Chain Contracts</h2>
+                    <h2>No Closed Supply Chain Contracts</h2>
                 </div>
                 <div class="card-body">
 
