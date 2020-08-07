@@ -375,7 +375,7 @@ class SupplyChainController extends Controller
         $bid = SupplyChainBid::where([
             'contract_id' => $contractId,
             'entity_id' => auth()->user()->getId(),
-        ])->get();
+        ])->first();
 
         $bidId = $bid->id;
 
