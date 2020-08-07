@@ -9,7 +9,7 @@
                             {{ $contract['title'] }}
                         </div>
                         <div class="col-sm" align="right">
-                            <button type="button" class="btn btn-primary"><a href="/supplychain/display/newbid/" . {{ $contract['contract_id'] }}>Bid</a></button>
+                            <a href="/supplychain/display/newbid/" . {{ $contract['contract_id'] }}><button type="button" class="btn btn-primary">Bid</button></a>
                         </div>
                     </div>
                 </div>
