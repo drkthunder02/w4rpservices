@@ -314,12 +314,12 @@ class SupplyChainController extends Controller
             $bid->save();
 
             //Update the database entry for the supply chain contract bid number
-            $numBids = SupplyChainContract::where([
+            $num = SupplyChainContract::where([
                 'contract_id' => $request->contract_id,
             ])->select('bids')->get();
 
             //Increase the number of bids by 1
-            $numBids++;
+            $numBids = $num->bids + 1;
 
             //Update the database
             SupplyChainContract::where([
