@@ -244,7 +244,7 @@ class SupplyChainController extends Controller
         //If the person already has a bid in, then deny them the option to place another bid on the same contract.
         //Otherwise, enter the bid into the database
         if($count > 0) {
-            redirect('/supplychain/dashboard')->with('error', 'Unable to insert bid as one is already present for the supply chain contract.');
+            return redirect('/supplychain/dashboard')->with('error', 'Unable to insert bid as one is already present for the supply chain contract.');
         } else {
             //Sanitize the bid amount
             if(preg_match('(m|M|b|B)', $request->bid) === 1) {
@@ -275,7 +275,7 @@ class SupplyChainController extends Controller
             }
             $bid->save();
 
-            redirect('/supplychain/dashboard')->with('success', 'Bid succesfully entered into the contract.');
+            return redirect('/supplychain/dashboard')->with('success', 'Bid succesfully entered into the contract.');
         }
     }
 
