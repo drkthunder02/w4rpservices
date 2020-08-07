@@ -318,8 +318,7 @@ class SupplyChainController extends Controller
                 'contract_id' => $request->contract_id,
             ])->select('bids')->get();
 
-            //Increase the number of bids by 1
-            $numBids = $num->bids + 1;
+            dd($num);
 
             //Update the database
             SupplyChainContract::where([
@@ -353,6 +352,11 @@ class SupplyChainController extends Controller
                 'entity_id' => auth()->user()->getId(),
                 'bid_id' => $bidId,
             ])->delete();
+
+            //Remove 1 from the supply chain contract total bids
+            $contractBids = SupplyChainContract::where([
+
+            ]);
 
             return redirect('/supplychain/dashboard')->with('success', 'Deleted supply chain contract bid.');
         } else {
