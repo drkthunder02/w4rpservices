@@ -30,17 +30,5 @@
             <p>Buyback Program</p>
         </a>
       </li>
-      <li class="nav-item">
-        <a href="/wormholes/display" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Wormholes</p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/wormholes/form" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Wormhole Form</p>
-        </a>
-      </li>
     </ul>
   </li>

@@ -24,7 +24,6 @@ class Kernel extends ConsoleKernel
         Commands\Users\PurgeUsers::class,
         Commands\Flex\FlexStructureCommand::class,
         Commands\Data\EmptyJumpBridges::class,
-        Commands\Wormholes\PurgeWormholes::class,
         Commands\Finances\SovBillsCommand::class,
         Commands\Data\CleanStaleDataCommand::class,
         Commands\Moons\MoonsUpdateCommand::class,
@@ -79,8 +78,6 @@ class Kernel extends ConsoleKernel
         /**
          * Purge Data Schedule
          */
-        $schedule->command('services:PurgeWormholeData')
-                ->hourlyAt(20);
         $schedule->command('services:CleanData')
                  ->weekly(7, '11:00');
         $schedule->command('data:PurgeCorpLedgers')
