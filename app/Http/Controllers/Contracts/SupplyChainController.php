@@ -216,13 +216,7 @@ class SupplyChainController extends Controller
     /**
      * Display the new bid on a supply chain contract page
      */
-    public function displaySupplyChainContractBid(Request $request) {
-        $this->validate($request, [
-            'contract_id' => 'required',
-        ]);
-
-        $contractId = $request->contract_id;
-
+    public function displaySupplyChainContractBid($contractId) {
         return view('supplychain.forms.enterbid')->with('contractId', $contractId);
     }
 
