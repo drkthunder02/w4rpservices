@@ -208,7 +208,7 @@ class SupplyChainController extends Controller
         //Display bids for the user on a page
         $bids = array();
 
-        $bidsCount = SupplyChain::where([
+        $bidsCount = SupplyChainBid::where([
             'entity_id' => auth()->user()->getId(),
             'bid_type' => 'pending',
         ])->count();
