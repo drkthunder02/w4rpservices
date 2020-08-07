@@ -318,6 +318,7 @@ class SupplyChainController extends Controller
                 'contract_id' => $request->contract_id,
             ])->select('bids')->first();
 
+            //Increment the number of bids
             $numBids = $num->bid + 1;
 
             //Update the database
@@ -355,14 +356,15 @@ class SupplyChainController extends Controller
 
             //Update the database entry for the supply chain contract bid number
             $num = SupplyChainContract::where([
-                'contract_id' => $request->contract_id,
+                'contract_id' => $contractId,
             ])->select('bids')->first();
 
+            //Decrement the number of bids
             $numBids = $num->bid - 1;
 
             //Update the database
             SupplyChainContract::where([
-                'contract_id' => $request->contract_id,
+                'contract_id' => $contractId,
             ])->update([
                 'bids' => $numBids,
             ]);
