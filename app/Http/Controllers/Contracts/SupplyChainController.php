@@ -15,6 +15,9 @@ use App\Models\User\User;
 use App\Models\Contracts\SupplyChainBid;
 use App\Models\Contracts\SupplyChainContract;
 
+//Jobs
+use App\Jobs\ProcessSendEveMailJob;
+
 class SupplyChainController extends Controller
 {
     /**
