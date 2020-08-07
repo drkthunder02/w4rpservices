@@ -227,6 +227,8 @@ class SupplyChainController extends Controller
                 'contract_id' => $bid->contract_id,
             ])->get();
 
+            dd($contract);
+
             $temp['bid_id'] = $bid->bid_id;
             $temp['contract_id'] = $bid->contract_id;
             $temp['issuer_name'] = $contract->issuer_name;
