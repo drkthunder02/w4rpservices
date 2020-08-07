@@ -9,7 +9,7 @@
                             {{ $contract['title'] }}
                         </div>
                         <div class="col-sm" align="right">
-                            {!! Form::open(['action' => 'Contracts\SupplyChainContract@displaySupplyChainContractBid', 'method' => 'POST']) !!}
+                            {!! Form::open(['action' => 'Contracts\SupplyChainController@displaySupplyChainContractBid', 'method' => 'POST']) !!}
                             {{ Form::hidden('contract_id', $contract['contract_id'], ['class' => 'form-control']) }}
                             {{ Form::submit('Bid', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
