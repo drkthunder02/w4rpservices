@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @if(count($bidsCount) > 0)
+            @if($bidsCount > 0)
                 @foreach($bids as $bid)
                 <div class="card">
                     <div class="card-header">
