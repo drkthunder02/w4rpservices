@@ -12,9 +12,14 @@
                 @foreach($bids as $bid)
                 <div class="card">
                     <div class="card-header">
-                        Contract Id: {{ $bid['contract_id'] }}<br>
-                        Contract Title: {{ $bid['title'] }}<br>
-                        Issuer:  {{ $bid['issuer_name'] }}<br>
+                        <div class="col-md" align="left">
+                            Contract Id: {{ $bid['contract_id'] }}<br>
+                            Contract Title: {{ $bid['title'] }}<br>
+                            Issuer:  {{ $bid['issuer_name'] }}<br>
+                        </div>
+                        <div class="col-md" align="right">
+                            <a href="/supplychain/display/newbid/{{ $bid['contract_id'] }}/{{ $bid['bid_id'] }}  "><button type="button" class="btn btn-danger">Delete Bid</button></a>
+                        </div>
                     </div>
                     <div class="card-body">
                         Bid Id:  {{ $bid['bid_id'] }}<br>

@@ -334,25 +334,24 @@ class SupplyChainController extends Controller
 
     /**
      * Delete a bid on a supply chain contract
+     * 
+     * @var contractId
+     * @var bidId
      */
-    public function deleteSupplyChainContractBid(Request $request) {
-        $this->validate($request, [
-            'contract_id' => 'required',
-            'bid_id' => 'required',
-        ]);
+    public function deleteSupplyChainContractBid($contractId, $bidId) {
 
         //See if the user has put in a bid.  If not, then redirect to failure.
         $count = SupplyChainBid::where([
-            'contract_id' => $request->contract_id,
+            'contract_id' => $contractId,
             'entity_id' => auth()->user()->getId(),
-            'bid_id' => $request->bid_id,
+            'bid_id' => $bidId,
         ])->count();
 
         if($count > 0) {
             SupplyChainBid::where([
-                'contract_id' => $request->contract_id,
+                'contract_id' => $contractId,
                 'entity_id' => auth()->user()->getId(),
-                'bid_id' => $request->bid_id,
+                'bid_id' => $bidId,
             ])->delete();
 
             return redirect('/suppplychain/dashboard')->with('success', 'Deleted supply chain contract bid.');
