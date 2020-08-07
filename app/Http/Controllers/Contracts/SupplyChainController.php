@@ -354,7 +354,7 @@ class SupplyChainController extends Controller
                 'bid_id' => $bidId,
             ])->delete();
 
-            return redirect('/suppplychain/dashboard')->with('success', 'Deleted supply chain contract bid.');
+            return redirect('/supplychain/dashboard')->with('success', 'Deleted supply chain contract bid.');
         } else {
             return redirect('/supplychain/dashboard')->with('error', 'No bid found to delete.');
         }
