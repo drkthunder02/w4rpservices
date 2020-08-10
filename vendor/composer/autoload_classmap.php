@@ -42,7 +42,7 @@ return array(
     'App\\Http\\Controllers\\Moons\\MoonsAdminController' => $baseDir . '/app/Http/Controllers/Moons/MoonsAdminController.php',
     'App\\Http\\Controllers\\Moons\\MoonsController' => $baseDir . '/app/Http/Controllers/Moons/MoonsController.php',
     'App\\Http\\Controllers\\Moons\\RentalMoonsAdminController' => $baseDir . '/app/Http/Controllers/Moons/RentalMoonsAdminController.php',
-    'App\\Http\\Controllers\\PublicContractController' => $baseDir . '/app/Http/Controllers/Contracts/PublicContractController.php',
+    'App\\Http\\Controllers\\RentalAdminController' => $baseDir . '/app/Http/Controllers/Rental/RentalAdminController.php',
     'App\\Http\\Controllers\\SRP\\SRPAdminController' => $baseDir . '/app/Http/Controllers/SRP/SRPAdminController.php',
     'App\\Http\\Controllers\\SRP\\SRPController' => $baseDir . '/app/Http/Controllers/SRP/SRPController.php',
     'App\\Http\\Controllers\\Test\\TestController' => $baseDir . '/app/Http/Controllers/Test/TestController.php',

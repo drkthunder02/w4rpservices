@@ -511,7 +511,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Http\\Controllers\\Moons\\MoonsAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moons/MoonsAdminController.php',
         'App\\Http\\Controllers\\Moons\\MoonsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moons/MoonsController.php',
         'App\\Http\\Controllers\\Moons\\RentalMoonsAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moons/RentalMoonsAdminController.php',
-        'App\\Http\\Controllers\\PublicContractController' => __DIR__ . '/../..' . '/app/Http/Controllers/Contracts/PublicContractController.php',
+        'App\\Http\\Controllers\\RentalAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Rental/RentalAdminController.php',
         'App\\Http\\Controllers\\SRP\\SRPAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/SRP/SRPAdminController.php',
         'App\\Http\\Controllers\\SRP\\SRPController' => __DIR__ . '/../..' . '/app/Http/Controllers/SRP/SRPController.php',
         'App\\Http\\Controllers\\Test\\TestController' => __DIR__ . '/../..' . '/app/Http/Controllers/Test/TestController.php',

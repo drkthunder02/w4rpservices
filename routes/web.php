@@ -192,6 +192,15 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/supplychain/modify/bid', 'Contracts\SupplyChainController@modifySupplyChainContractBid');
 
     /**
+     * System Rentals Controller display pages
+     */
+    Route::get('/system/rental/dashboard', 'RentalSystem\RentalAdminController@displayRentalSystems');
+    Route::get('/system/rental/add', 'RentalSystem\RentalAdminController@displayAddRentalSystem');
+    Route::post('/system/rental/add', 'RentalSystem\RentalAdminController@addRentalSystem');
+    Route::post('/system/rental/update', 'RentalSystem\RentalAdminController@updateRentalSystem');
+    Route::post('/system/rental/remove', 'RentalSystem\RentalAdminController@removeRentalSystem');
+
+    /**
      * Test Controller display pages
      */
     Route::get('/test/char/display', 'Test\TestController@displayCharTest');

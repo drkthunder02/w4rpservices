@@ -29,6 +29,9 @@
           <!-- SRP Admin -->
           @include('layouts.admin.sidebarmenu.srp')
           <!-- End SRP Admin -->
+          <!-- System Rental Admin -->
+          @include('layouts.admin.sidebarmenu.rentalsystem')
+          <!-- End System Rental Admin -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
