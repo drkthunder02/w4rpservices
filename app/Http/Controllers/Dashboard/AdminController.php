@@ -39,7 +39,7 @@ class AdminController extends Controller
         $dateInit = Carbon::now();
         $date = $dateInit->subDays(30);
 
-        $journal = DB::select('SELECT amount,reason,description,date FROM `player_donation_journal` WHERE corporation_id=98287666 AND date >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH) ORDER BY date DESC');
+        $journal = DB::select('SELECT amount,reason,description,date FROM `player_donation_journal` WHERE corporation_id=98287666 AND date >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 2 MONTH) ORDER BY date DESC');
         
         return view('admin.dashboards.walletjournal')->with('journal', $journal);
     }
