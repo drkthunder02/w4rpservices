@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Log;
 
 //Library
-use Command\Library\CommandHelper;
+use Commands\Library\CommandHelper;
 use App\Library\Moons\MoonCalc;
 
 class ItemPricesUpdateCommand extends Command
