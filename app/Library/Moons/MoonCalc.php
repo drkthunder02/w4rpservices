@@ -374,10 +374,6 @@ class MoonCalc {
 
     private function IsRMoon($ore) {
         $ores = [
-            'Prime Arkonor' => 'Null',
-            'Cubic Bistot' => 'Null',
-            'Pellucid Crokite' => 'Null',
-            'Jet Ochre' => 'Null',
             'Zeolites' => 'Gas',
             'Sylvite' => 'Gas',
             'Bitumens' => 'Gas',
