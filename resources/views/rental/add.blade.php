@@ -12,8 +12,8 @@
                 {{ Form::text('contact_name', '', ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
-                {{ Form::label('corporation_name', 'Corporation Name') }}
-                {{ Form::text('corporation_name', '', ['class' => 'form-control']) }}
+                {{ Form::label('contact_corp_name', 'Corporation Name') }}
+                {{ Form::text('contact_corp_name', '', ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('system', 'System') }}
@@ -22,6 +22,10 @@
             <div class="form-group">
                 {{ Form::label('rental_cost', 'Rental Cost') }}
                 {{ Form::text('rental_cost', '', ['class' => 'form-control']) }}
+            </div>
+            <div class="form-group">
+                {{ Form::label('paid_until', 'Paid Until') }}
+                {{ Form::dateTime('paid_until', \Carbon\Carbon::now()->addMonth(), ['class' => 'form-control']) }}
             </div>
             {{ Form::submit('Add Rental', ['class' => 'btn btn-primary']) }}
             {!! Form::close() !!}
