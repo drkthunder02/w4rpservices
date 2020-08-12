@@ -7,7 +7,7 @@
             <h2>Rental Systems</h2>
         </div>
         <div class="card-body">
-            <table clas="table table-bordered table-striped">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <th>Contact</th>
                     <th>Corporation</th>
@@ -24,7 +24,7 @@
                         <td>{{ $rental->contact_name }}</td>
                         <td>{{ $rental->corporation_name }}</td>
                         <td>{{ $rental->system }}</td>
-                        <td>{{ number_format($rental->rental_cost, "2", ".", ",") }}</td>
+                        <td>{{ number_format($rental->rental_cost, 0, ".", ",") }}</td>
                         <td>{{ $rental->paid_until }}</td>
                         <td>
                             {!! Form::open(['action' => 'SystemRentals\RentalAdminController@updateRentalSystem', 'method' => 'POST']) !!}
