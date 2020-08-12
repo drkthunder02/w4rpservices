@@ -47,7 +47,7 @@ class ItemPricesUpdateCommand extends Command
         $task = new CommandHelper('ItemPriceUpdate');
         $task->SetStartStatus();
 
-        ItemPricesUpdateJob::dispatch();
+        ItemPricesUpdateJob::dispatch()->onQueue('default');
 
         $task->SetStopStatus();
     }
