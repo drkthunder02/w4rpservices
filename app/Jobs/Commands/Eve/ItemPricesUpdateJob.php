@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Eve;
+namespace App\Jobs\Commands\Eve;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
