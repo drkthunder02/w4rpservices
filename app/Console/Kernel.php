@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         Commands\Data\CleanStaleDataCommand::class,
         Commands\Moons\MoonsUpdateCommand::class,
         Commands\Data\PurgeCorpMoonLedgers::class,
+        Commands\Eve\ItemPricesUpdateCommand::class,
         /**
          * Rental Moon Commands
          */
@@ -84,6 +85,13 @@ class Kernel extends ConsoleKernel
                  ->monthly();
         $schedule->command('services:PurgeUsers')
                  ->dailyAt('23:00');
+
+        /**
+         * Item Update Schedule
+         */
+        $schedule->command('services:ItemPriceUpdate')
+                 ->hourlyAt('30')
+                 ->withoutOverlapping();
     }
 
     /**
