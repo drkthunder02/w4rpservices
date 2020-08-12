@@ -25,7 +25,7 @@
                         <td>{{ $rental->corporation_name }}</td>
                         <td>{{ $rental->system_name }}</td>
                         <td>{{ number_format($rental->rental_cost, 0, ".", ",") }}</td>
-                        <td>{{ date_format($rental->paid_until, "Y-m-d") }}</td>
+                        <td>{{ $rental->paid_until }}</td>
                         <td>
                             {!! Form::open(['action' => 'SystemRentals\RentalAdminController@updateRentalSystem', 'method' => 'POST']) !!}
                             {{ Form::date('paid_until', \Carbon\Carbon::now()->endOfMonth(), ['class' => 'form-control']) }}

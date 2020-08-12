@@ -32,6 +32,20 @@ class RentalAdminController extends Controller
         //Get the rental systems from the database
         $rentals = RentalSystem::all();
 
+        foreach($rentals as $rental) {
+            //Format the rental cost
+            if($rental->rental_cost > 1000000000.00) {
+                $rental->rental_cost = $rental->rental_cost / 1000000000.00;
+                $rental->rental_cost = $rental->rental_cost . "B";
+            } else if($rental->rental_cost > 1000000.00 && $rental->rental_cost < 999999999.99) {
+                $rental->rental_cost = $rental->rental_cost / 1000000.00;
+                $rental->rental_cost = $rental->rental_cost . "M";
+            }
+
+            //Format the date
+            $rental->paid_until = Carbon::parse($rental->paid_until)->format('Y-m-d');
+        }
+
         //Return the view with the data
         return view('rental.list')->with('rentals', $rentals);
     }
