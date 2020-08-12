@@ -96,7 +96,7 @@ class RentalAdminController extends Controller
         $rental->paid_until = $request->paid_until;
         $rental->save();
 
-        return redirect('/system/rental/display')->with('success', 'Rental System Added.');
+        return redirect('/system/rental/dashboard')->with('success', 'Rental System Added.');
     }
 
     /**
