@@ -23,7 +23,7 @@
                     <tr>
                         <td>{{ $rental->contact_name }}</td>
                         <td>{{ $rental->corporation_name }}</td>
-                        <td>{{ $rental->system }}</td>
+                        <td>{{ $rental->system_name }}</td>
                         <td>{{ number_format($rental->rental_cost, 0, ".", ",") }}</td>
                         <td>{{ $rental->paid_until }}</td>
                         <td>
