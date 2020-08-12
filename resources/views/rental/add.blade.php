@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 {{ Form::label('paid_until', 'Paid Until') }}
-                {{ Form::dateTime('paid_until', \Carbon\Carbon::now()->addMonth(), ['class' => 'form-control']) }}
+                {{ Form::date('paid_until', \Carbon\Carbon::now()->addMonth(), ['class' => 'form-control']) }}
             </div>
             {{ Form::submit('Add Rental', ['class' => 'btn btn-primary']) }}
             {!! Form::close() !!}
