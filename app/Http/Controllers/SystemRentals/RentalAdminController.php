@@ -91,7 +91,7 @@ class RentalAdminController extends Controller
         $rental->corporation_id = $corpId;
         $rental->corporation_name = $request->contact_corp_name;
         $rental->system_id = $systemId;
-        $rental->system_name = $system_name;
+        $rental->system_name = $request->system;
         $rental->rental_cost = $rentalCost;
         $rental->paid_until = $request->paid_until;
         $rental->save();
