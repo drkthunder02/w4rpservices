@@ -29,8 +29,8 @@ class RentalAdminController extends Controller
      * the information regarding the rental systems
      */
     public function displayRentalSystems() {
-        //Get the rental systems form the database
-        $rentals = RentalSytem::all();
+        //Get the rental systems from the database
+        $rentals = RentalSystem::all();
 
         //Return the view with the data
         return view('rental.list')->with('rentals', $rentals);
