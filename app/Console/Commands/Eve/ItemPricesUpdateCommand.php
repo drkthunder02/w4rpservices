@@ -9,6 +9,9 @@ use Log;
 use Commands\Library\CommandHelper;
 use App\Library\Moons\MoonCalc;
 
+//Job
+use App\Jobs\Eve\ItemPricesUpdateJob;
+
 class ItemPricesUpdateCommand extends Command
 {
     /**
@@ -45,9 +48,7 @@ class ItemPricesUpdateCommand extends Command
         $task = new CommandHelper('ItemPriceUpdate');
         $task->SetStartStatus();
 
-        $moonHelper = new MoonCalc;
-
-        $moonHelper->FetchNewPrices();
+        ItemPricesUpdateJob::dispatch();
 
         $task->SetStopStatus();
     }
