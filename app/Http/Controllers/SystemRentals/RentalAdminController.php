@@ -87,12 +87,12 @@ class RentalAdminController extends Controller
                 $cStringSize = strlen($request->rental_cost);
                 $tempCol = str_split($request->rental_cost, $cStringSize - 1);
                 $rentalCost = $tempCol[0];
-                $rentalCost = $rentalCost * 1000000000.00;
+                $rentalCost = $rentalCost * 1000000.00;
             } else if(preg_match('(b|B)', $request->rental_cost) === 1) {
                 $cStringSize = strlen($request->rental_cost);
                 $tempCol = str_split($request->rental_cost, $cStringSize - 1);
                 $rentalCost = $tempCol[0];
-                $rentalCost = $rentalCost * 1000000000000.00;
+                $rentalCost = $rentalCost * 1000000000.00;
             }
         } else {
             $rentalCost = $request->rental_cost;
