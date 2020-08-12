@@ -10,7 +10,7 @@ use DB;
 use Carbon\Carbon;
 
 //Models
-use App\Models\Rentals\RentalSystem;
+use App\Models\SystemRentals\RentalSystem;
 
 //Library
 use App\Library\Lookups\LookupHelper;
