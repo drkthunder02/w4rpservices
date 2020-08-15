@@ -18,11 +18,11 @@
             </div>
             <div class="form-group">
                 {{ Form::label('structure_size', 'Structure Size') }}
-                {{ Form::select('structure_size', ['M', 'L', 'XL'], null, ['class' => 'form-control']) }}
+                {{ Form::select('structure_size', ['M' => 'M', 'L' => 'L', 'XL' => 'XL'], null, ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('structure_type', 'Structure Type') }}
-                {{ Form::select('structure_type', ['Flex', 'Citadel', 'Refinery', 'Engineering'], null, ['class' => 'form-control']) }}
+                {{ Form::select('structure_type', ['Citadel' => 'Citadel', 'Refinery' => 'Refinery', 'Engineering' => 'Engineering', 'Flex' => 'Flex'], null, ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('requested_drop_time', 'Requested Drop Time') }}
