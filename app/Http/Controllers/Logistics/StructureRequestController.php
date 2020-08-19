@@ -78,6 +78,6 @@ class StructureRequestController extends Controller
             $delay += 30;
         }
 
-        return redirect('/structures/display/requests');
+        return redirect('/dashboard')->with('success', 'Structure request successfully submitted.');
     }
 }
