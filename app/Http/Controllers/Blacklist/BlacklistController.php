@@ -115,10 +115,15 @@ class BlacklistController extends Controller
             'name' => 'required',
         ]);
 
-        //Delete the blacklist character
+        //Set the character on the blacklist to removed
         BlacklistEntity::where([
             'entity_name' => $request->name,
-        ])->delete();
+        ])->update([
+            'validity' => 'Invalid',
+            'removed_by_id' => auth()->user()->getId(),
+            'removed_by_name' => auth()->user()->getName(),
+            'removed_notes' => $request->notes,
+        ]);
 
         //Return the view
         return redirect('/blacklist/display')->with('success', 'Character removed from the blacklist.');
