@@ -121,13 +121,13 @@ class RentalAdminController extends Controller
             'paid_until' => 'required',
             'contact_id' => 'required',
             'corporation_id' => 'required',
-            'system' => 'required',
+            'system_id' => 'required',
         ]);
 
         RentalSystem::where([
             'character_id' => $request->contact_id,
             'corporation_id' => $request->corporation_id,
-            'system_id' => $request->system,
+            'system_id' => $request->system_id,
         ])->update([
             'paid_until' => $request->paid_until,
         ]);
@@ -142,13 +142,13 @@ class RentalAdminController extends Controller
         $this->validate($request, [
             'contact_id' => 'required',
             'corporation_id' => 'required',
-            'system' => 'reuquired',
+            'system_id' => 'reuquired',
         ]);
 
         RentalSystem::where([
             'contact_id' => $request->contact_id,
             'corporation_id' => $request->corporation_id,
-            'system_id' => $request->system,
+            'system_id' => $request->system_id,
         ])->delete();
 
         return redirect('/rental/display')->with('success', 'Removed renter from database.');
