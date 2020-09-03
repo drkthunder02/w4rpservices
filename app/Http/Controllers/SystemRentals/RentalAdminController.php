@@ -132,7 +132,7 @@ class RentalAdminController extends Controller
             'paid_until' => $request->paid_until,
         ]);
 
-        return redirect('/rental/display')->with('success', 'Rental System updated.');
+        return redirect('/system/rental/dashboard')->with('success', 'Rental System updated.');
     }
 
     /**
@@ -151,6 +151,6 @@ class RentalAdminController extends Controller
             'system_id' => $request->system_id,
         ])->delete();
 
-        return redirect('/rental/display')->with('success', 'Removed renter from database.');
+        return redirect('/system/rental/dashboard')->with('success', 'Removed renter from database.');
     }
 }
