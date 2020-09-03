@@ -142,7 +142,7 @@ class RentalAdminController extends Controller
         $this->validate($request, [
             'contact_id' => 'required',
             'corporation_id' => 'required',
-            'system_id' => 'reuquired',
+            'system_id' => 'required',
         ]);
 
         RentalSystem::where([
