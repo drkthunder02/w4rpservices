@@ -125,7 +125,7 @@ class RentalAdminController extends Controller
         ]);
 
         RentalSystem::where([
-            'character_id' => $request->contact_id,
+            'contact_id' => $request->contact_id,
             'corporation_id' => $request->corporation_id,
             'system_id' => $request->system_id,
         ])->update([
