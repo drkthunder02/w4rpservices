@@ -85,8 +85,13 @@ class SRPAdminController extends Controller
                 //Calculate the recommended srp amount
                 foreach($payouts as $p) {
                     if($r['ship_type'] == $p->code) {
-                        $temp['actual_srp'] = $r['loss_value'] * ($p->payout / 100.00 );
-                        $temp['payout_percentage'] = $p->payout;
+                        $payout = $p->payout;
+                        if($temp['character_name'] == $temp['fleet_commander_name']) {
+                            $payout = 100.00;
+                        }
+
+                        $temp['actual_srp'] = $r['loss_value'] * ($payout / 100.00 );
+                        $temp['payout_percentage'] = $payout;
                         $sum_actual += $temp['actual_srp'];
                     }
                 }
