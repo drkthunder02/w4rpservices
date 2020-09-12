@@ -314,20 +314,34 @@ class MoonCalc {
         //Specify the total pull amount
         $totalPull = $this->CalculateTotalMoonPull();
 
-        //Find the size of the asteroid from the database
-        $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
-        
-        //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
-        $actualm3 = floor($percentage * $totalPull);
-        
-        //Calculate the units once we have the size and actual m3 value
-        $units = floor($actualm3 / $m3Size);
-        
-        //Look up the unit price from the database
-        $unitPrice = DB::table('ore_prices')->where('Name', $ore)->value('UnitPrice');
-        
-        //Calculate the total amount from the units and unit price
-        $total = $units * $unitPrice;
+        //Setup the total value at 0.00
+        $total = 0.00;
+
+        //Check to see what type of moon goo the moon is
+        $calculatePrice = $this->IsMoonGoo($ore);
+
+        //Check to make 
+        if($calculatePrice != false) {
+            //Find the size of the asteroid from the database
+            $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
+            
+            //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
+            $actualm3 = floor($percentage * $totalPull);
+            
+            //Calculate the units once we have the size and actual m3 value
+            $units = floor($actualm3 / $m3Size);
+            
+            //Look up the unit price from the database
+            $unitPrice = DB::table('ore_prices')->where('Name', $ore)->value('UnitPrice');
+
+            //Calculate the total amount from the units and the unit price.  
+            //A 50% discount is given to Gas ores as they aren't worth much currently in the market.
+            if($calculatePrice == 'Gas') {
+                $total = ($units * $unitPrice)  / 2.00;
+            } else {
+                $total = $units * $unitPrice;
+            }
+        }
         
         //Return the value
         return $total;
@@ -365,7 +379,7 @@ class MoonCalc {
         foreach($ores as $key => $value) {
             
             if(strtolower($key) == strtolower($ore)) {
-                return true;
+                return $value;
             }
         }
 
