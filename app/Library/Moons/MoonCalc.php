@@ -320,6 +320,8 @@ class MoonCalc {
         //Check to see what type of moon goo the moon is
         $calculatePrice = $this->IsMoonGoo($ore);
 
+        dd($calculatePrice);
+
         //Check to make 
         if($calculatePrice != false) {
             //Find the size of the asteroid from the database
