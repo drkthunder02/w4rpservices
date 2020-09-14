@@ -340,29 +340,25 @@ class MoonCalc {
         $total = 0.00;
 
         //Check to see what type of moon goo the moon is
-        $calculatePrice = $this->IsRMoonGoo($ore);
+        $gasMoonOre = $this->IsGasMoonGoo($ore);
 
-        //Check to make
-        if($calculatePrice != false) {
-            //Find the size of the asteroid from the database
-            $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
+        //Find the size of the asteroid from the database
+        $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
             
-            //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
-            $actualm3 = floor($percentage * $totalPull);
-            
-            //Calculate the units once we have the size and actual m3 value
-            $units = floor($actualm3 / $m3Size);
-            
-            //Look up the unit price from the database
-            $unitPrice = DB::table('ore_prices')->where('Name', $ore)->value('UnitPrice');
+        //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
+        $actualm3 = floor($percentage * $totalPull);
+        
+        //Calculate the units once we have the size and actual m3 value
+        $units = floor($actualm3 / $m3Size);
+        
+        //Look up the unit price from the database
+        $unitPrice = DB::table('ore_prices')->where('Name', $ore)->value('UnitPrice');
 
-            //Calculate the total amount from the units and the unit price.  
-            //A 50% discount is given to Gas ores as they aren't worth much currently in the market.
-            if($calculatePrice == 'Gas') {
-                $total = ($units * $unitPrice)  / 2.00;
-            } else {
-                $total = $units * $unitPrice;
-            }
+        //If the ore is a gas ore, then take only 50% of the price.
+        if($gasMoonOre == true) {
+            $total = $units * $unitPrice * 0.50;
+        } else {
+            $total = $units * $unitPrice;
         }
 
         //Return the total
@@ -404,6 +400,26 @@ class MoonCalc {
     private function ConvertToPercentage($quantity) {
         //Perform the calculation and return the data
         return $quantity / 100.00;
+    }
+
+    /**
+     * Return if a type of ore is a gas moon goo
+     */
+    private function IsGasMoonGoo($ore) {
+        $ores = [
+            'Zeolites' => 'Gas',
+            'Sylvite' => 'Gas',
+            'Bitumens' => 'Gas',
+            'Coesite' => 'Gas',
+        ];
+
+        foreach($ores as $key => $value) {
+            if(strtolower($key) == strtolower($ore)) {
+                return $value;
+            }
+        }
+
+        return false;
     }
 
     /**
