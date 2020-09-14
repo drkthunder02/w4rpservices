@@ -94,6 +94,11 @@ class UpdateMoonRentalPrice implements ShouldQueue
                 'alliance_rental_price' => $rentalPrice['alliance'],
                 'out_of_alliance_rental_price' => $rentalPrice['outofalliance'],
             ]);
+
+            Log::info('Alliance Rental Moon: ' . $rental->region . ' : ' . $rental->system . ' : ' . $rental->planet . ' : ' . $rental->moon . ' : ' . $rental->structure_name);
+            Log::info('Total Worth: ' . $totalWorth);
+            Log::info('Alliance Rental Price: ' . $rentalPrice['alliance']);
+            Log::info('Out of Alliance Rental Price: ' . $rentalPrice['outofalliance']);
         }
     }
 }

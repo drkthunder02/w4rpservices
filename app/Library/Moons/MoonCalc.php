@@ -341,13 +341,12 @@ class MoonCalc {
             //A 50% discount is given to Gas ores as they aren't worth much currently in the market.
             if($calculatePrice == 'Gas') {
                 $total = ($units * $unitPrice)  / 2.00;
+                Log::info('Moon Ore: ' . $ore);
                 Log::info('Calculate price found a Gas.  It was named ' . $ore . '.');
                 Log::info('Price was: ' . number_format(($units * $unitPrice), "2", ".", ","));
-                Log::info('New price is: ' . number_format((($units * $unitPrice) / 2.00), "2", ".", ","));
-                Log::info('Total Price is ' . number_format($total, "2", ".", ","));
+                Log::info('New price is: ' . number_format($total, "2", ".", ","));
             } else {
                 $total = $units * $unitPrice;
-                Log::info('Current Total Price: ' . number_format($total, "2", ".", ","));
             }
         }
         
