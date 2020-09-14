@@ -337,10 +337,12 @@ class MoonCalc {
         $totalPull = $this->CalculateTotalMoonPull();
 
         //Setup the total value at 0.00
-        $total = 0.00;
+        $totalPrice = 0.00;
 
         //Check to see what type of moon goo the moon is
         $gasMoonOre = $this->IsGasMoonGoo($ore);
+
+        
 
         //Find the size of the asteroid from the database
         $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
@@ -356,13 +358,14 @@ class MoonCalc {
 
         //If the ore is a gas ore, then take only 50% of the price.
         if($gasMoonOre == true) {
-            $total = $units * $unitPrice * 0.50;
+            $totalPrice = $units * $unitPrice * 0.50;
+            Log::warning('Found gas ore: ' . $totalPrice);
         } else {
-            $total = $units * $unitPrice;
+            $totalPrice = $units * $unitPrice;
         }
 
         //Return the total
-        return $total;
+        return $totalPrice;
     }
 
     /**
@@ -373,7 +376,7 @@ class MoonCalc {
         $totalPull = $this->CalculateTotalMoonPull();
 
         //Setup the total value at 0.00
-        $total = 0.00;
+        $totalPrice = 0.00;
 
         //Find the size of the asteroid from the database
         $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
@@ -388,10 +391,10 @@ class MoonCalc {
         $unitPrice = DB::table('ore_prices')->where('Name', $ore)->value('UnitPrice');
 
         //Calculate the total amount from the units and the unit price.
-        $total = $units * $unitPrice;
+        $totalPrice = $units * $unitPrice;
 
         //Return the value
-        return $total;
+        return $totalPrice;
     }
 
     /**
