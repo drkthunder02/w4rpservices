@@ -21,8 +21,14 @@ use App\Models\Moon\RentalMoon;
 use App\Models\Moon\OrePrice;
 use App\Models\Moon\MineralPrice;
 
+/**
+ * MoonCalc Library
+ */
 class MoonCalc {
 
+    /** 
+     * Get the ore composition of an ore
+     */
     public function GetOreComposition($ore) {
         $composition = ItemComposition::where([
             'Name' => $ore,
@@ -31,10 +37,12 @@ class MoonCalc {
         return $composition;
     }
 
+    /**
+     * Calculate the total worth of a moon
+     */
     public function SpatialMoonsTotalWorth($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        
-        //Get the total moon pull in m3
-        $totalPull = $this->CalculateTotalMoonPull();
+        //Declare variables
+        $totalPriceMined = 0.00;
 
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
@@ -43,23 +51,24 @@ class MoonCalc {
         $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
         //Calculate the prices from the ores
-        $this->CalculateTotalPrice($firstOre, $firstPerc, $firstTotal);
-        $this->CalculateTotalPrice($secondOre, $secondPerc, $secondTotal);
-        $this->CalculateTotalPrice($thirdOre, $thirdPerc, $thirdTotal);
-        $this->CalculateTotalPrice($fourthOre, $fourthPerc, $fourthTotal);
+        $totalPriceMined += $this->CalcMoonPrice($firstOre, $firstPerc);
+        $totalPriceMined += $this->CalcMoonPrice($secondOre, $secondPerc);
+        $totalPriceMined += $this->CalcMoonPrice($thirdOre, $thirdPerc);
+        $totalPriceMined += $this->CalcMoonPrice($fourthOre, $fourthPerc);
 
-        //Calculate the total to price to be mined in one month
-        $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
-
-        Log::info('Total Price calculated to: ' . number_format($totalPriceMined, "2", ".", ","));
+        //Just some logging information
+        Log::info('Total Moon Price calculated to: ' . number_format($totalPriceMined, "2", ".", ","));
        
         //Return the rental price to the caller
         return $totalPriceMined;
     }
 
+    /**
+     * Calculate the rental price
+     */
     public function SpatialMoons($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Get the total moon pull in m3
-        $totalPull = $this->CalculateTotalMoonPull();
+        //Declare variables
+        $totalPrice = 0.00;
 
         //Get the configuration for pricing calculations
         $config = DB::table('Config')->get();
@@ -68,22 +77,25 @@ class MoonCalc {
         $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
         //Calculate the prices from the ores
-        $this->CalculateTotalPrice($firstOre, $firstPerc, $firstTotal);
-        $this->CalculateTotalPrice($secondOre, $secondPerc, $secondTotal);
-        $this->CalculateTotalPrice($thirdOre, $thirdPerc, $thirdTotal);
-        $this->CalculateTotalPrice($fourthOre, $fourthPerc, $fourthTotal);
-
-        //Calculate the total to price to be mined in one month
-        $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
+        $totalPrice += $this->CalcRentalPrice($firstOre, $firstPerc);
+        $totalPrice += $this->CalcRentalPrice($secondOre, $secondPerc);
+        $totalPrice += $this->CalcRentalPrice($thirdOre, $thirdPerc);
+        $totalPrice += $this->CalcRentalPrice($fourthOre, $fourthPerc);
         
+        //Just some logging information
+        Log::info('Total Rental Price calculated to: ' . number_format($totalPriceMined, "2", ".", ","));
+
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
-        $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
-        $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
+        $rentalPrice['alliance'] = $totalPrice * ($config[0]->RentalTax / 100.00);
+        $rentalPrice['outofalliance'] = $totalPrice * ($config[0]->AllyRentalTax / 100.00);
        
         //Return the rental price to the caller
         return $rentalPrice;
     }
 
+    /**
+     * Fetch new prices for items from the market
+     */
     public function FetchNewPrices() {
         //Create the item id array which we will pull data for from Fuzzwork market api
         $ItemIDs = array(
@@ -156,6 +168,9 @@ class MoonCalc {
         $this->UpdateItemPricing();
     }
 
+    /**
+     * Calculate the ore units
+     */
     public function CalcOreUnits($ore, $percentage) {
         //Specify the total pull amount
         $totalPull = 5.55 * (3600.00 * 24.00 *30.00);
@@ -178,6 +193,9 @@ class MoonCalc {
         return $units;
     }
 
+    /**
+     * Update item pricing after new prices were pulled
+     */
     private function UpdateItemPricing() {
         //Get the configuration from the config table
         $config = DB::table('Config')->first();
@@ -305,15 +323,22 @@ class MoonCalc {
         }
     }
 
+    /**
+     * Calculate the total amount pulled from a moon
+     */
     private function CalculateTotalMoonPull() {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
         $totalPull = 5.55 * (3600.00 * 24.00 *30.00);
 
+        //Return the total pull
         return $totalPull;
     }
 
-    private function CalcPrice($ore, $percentage) {
+    /**
+     * Calculate the rental price of a moon ore from the moon
+     */
+    private function CalcRentalPrice($ore, $percentage) {
         //Specify the total pull amount
         $totalPull = $this->CalculateTotalMoonPull();
 
@@ -323,7 +348,7 @@ class MoonCalc {
         //Check to see what type of moon goo the moon is
         $calculatePrice = $this->IsRMoonGoo($ore);
 
-        //Check to make 
+        //Check to make
         if($calculatePrice != false) {
             //Find the size of the asteroid from the database
             $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
@@ -349,16 +374,51 @@ class MoonCalc {
                 $total = $units * $unitPrice;
             }
         }
+
+        //Return the total
+        return $total;
+    }
+
+    /**
+     * Calculate the moon's total price
+     */
+    private function CalcMoonPrice($ore, $percentage) {
+        //Specify the total pull amount
+        $totalPull = $this->CalculateTotalMoonPull();
+
+        //Setup the total value at 0.00
+        $total = 0.00;
+
+        //Find the size of the asteroid from the database
+        $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
+            
+        //Calculate the actual m3 from the total pull amount in m3 using the percentage of the ingredient
+        $actualm3 = floor($percentage * $totalPull);
         
+        //Calculate the units once we have the size and actual m3 value
+        $units = floor($actualm3 / $m3Size);
+        
+        //Look up the unit price from the database
+        $unitPrice = DB::table('ore_prices')->where('Name', $ore)->value('UnitPrice');
+
+        //Calculate the total amount from the units and the unit price.
+        $total = $units * $unitPrice;
+
         //Return the value
         return $total;
     }
 
+    /**
+     * Convert a number to a percentage
+     */
     private function ConvertToPercentage($quantity) {
         //Perform the calculation and return the data
         return $quantity / 100.00;
     }
 
+    /**
+     * Return the type of ore a particular moon ore is.
+     */
     private function IsRMoonGoo($ore) {
         $ores = [
             'Zeolites' => 'Gas',
@@ -384,17 +444,19 @@ class MoonCalc {
         ];
 
         foreach($ores as $key => $value) {
-            
             if(strtolower($key) == strtolower($ore)) {
-                Log::info('Found a Moon Ore Type: ' . $value);
                 return $value;
             }
         }
 
-        Log::info('Did not find a moon ore.');
+        //Return false if the ore is not found in an array
         return false;
     }
 
+    /**
+     * Return true if a moon ore is a moon ore, and false
+     * if the ore is not a moon ore.
+     */
     private function IsRMoonOre($ore) {
         $ores = [
             'Zeolites' => 'Gas',
@@ -429,6 +491,9 @@ class MoonCalc {
         return false;
     }
 
+    /**
+     * Convert percentages from quantities into a normalized percentage
+     */
     private function ConvertPercentages(&$firstPerc, $firstQuan, &$secondPerc, $secondQuan, &$thirdPerc, $thirdQuan, &$fourthPerc, $fourthQuan) {
         //Set the base percentages for the if statements
         $firstPerc = 0.00;
@@ -486,19 +551,6 @@ class MoonCalc {
             } else {
                 $fourthPerc = 0.00;
             }
-        }
-    }
-
-    /**
-     * Calculate the total price, then pass it by reference to the calling function
-     */
-    private function CalculateTotalPrice($ore, $perc, &$total) {
-        //Calculate the prices from the ores
-        if($ore != 'None') {
-
-            $total = $this->CalcPrice($ore, $perc);
-        } else {
-            $total = 0.00;
         }
     }
 }
