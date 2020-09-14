@@ -342,8 +342,6 @@ class MoonCalc {
         //Check to see what type of moon goo the moon is
         $gasMoonOre = $this->IsGasMoonGoo($ore);
 
-        
-
         //Find the size of the asteroid from the database
         $m3Size = DB::table('ItemComposition')->where('Name', $ore)->value('m3Size');
             
@@ -358,7 +356,7 @@ class MoonCalc {
 
         //If the ore is a gas ore, then take only 50% of the price.
         if($gasMoonOre == true) {
-            $totalPrice = $units * $unitPrice * 0.50;
+            $totalPrice = $units * ($unitPrice / 2.00);
             Log::warning('Found gas ore: ' . $totalPrice);
         } else {
             $totalPrice = $units * $unitPrice;

@@ -62,9 +62,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:HoldingJournal')
                  ->hourlyAt('45')
                  ->withoutOverlapping();
-        //$schedule->command('services:GetFinances')
-        //         ->hourlyAt('35')
-        //         ->withoutOverlapping();
 
         /**
          * Get Information Schedule
