@@ -79,9 +79,6 @@ class MoonCalc {
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
         $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
         $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
-
-        Log::info('Alliance Rental Price: ' . number_format($rentalPrice['alliance'], "0", ".", ","));
-        Log::info('Out of Alliance Rental Price: ' . number_format($rentalPrice['outofalliance'], "0", ".", ","));
        
         //Return the rental price to the caller
         return $rentalPrice;
@@ -390,7 +387,7 @@ class MoonCalc {
         foreach($ores as $key => $value) {
             
             if(strtolower($key) == strtolower($ore)) {
-                Log::info('Found a Moon Ore: ' . $key);
+                Log::info('Found a Moon Ore Type: ' . $value);
                 return $value;
             }
         }
