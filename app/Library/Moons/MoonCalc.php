@@ -51,11 +51,19 @@ class MoonCalc {
         $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
         //Calculate the prices from the ores
-        $totalPriceMined += $this->CalcMoonPrice($firstOre, $firstPerc);
-        $totalPriceMined += $this->CalcMoonPrice($secondOre, $secondPerc);
-        $totalPriceMined += $this->CalcMoonPrice($thirdOre, $thirdPerc);
-        $totalPriceMined += $this->CalcMoonPrice($fourthOre, $fourthPerc);
-       
+        if($firstOre != 'None') {
+            $totalPriceMined += $this->CalcMoonPrice($firstOre, $firstPerc);
+        }
+        if($secondOre != 'None') {
+            $totalPriceMined += $this->CalcMoonPrice($secondOre, $secondPerc);
+        }
+        if($thirdOre != 'None') {
+            $totalPriceMined += $this->CalcMoonPrice($thirdOre, $thirdPerc);
+        }
+        if($fourthOre != 'None') {
+            $totalPriceMined += $this->CalcMoonPrice($fourthOre, $fourthPerc);
+        }  
+
         //Return the rental price to the caller
         return $totalPriceMined;
     }
@@ -74,10 +82,18 @@ class MoonCalc {
         $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
 
         //Calculate the prices from the ores
-        $totalPrice += $this->CalcRentalPrice($firstOre, $firstPerc);
-        $totalPrice += $this->CalcRentalPrice($secondOre, $secondPerc);
-        $totalPrice += $this->CalcRentalPrice($thirdOre, $thirdPerc);
-        $totalPrice += $this->CalcRentalPrice($fourthOre, $fourthPerc);
+        if($firstOre != 'None') {
+            $totalPrice += $this->CalcRentalPrice($firstOre, $firstPerc);
+        }
+        if($secondOre != 'None') {
+            $totalPrice += $this->CalcRentalPrice($secondOre, $secondPerc);
+        }
+        if($thirdOre != 'None') {
+            $totalPrice += $this->CalcRentalPrice($thirdOre, $thirdPerc);
+        }
+        if($fourthOre != 'None') {
+            $totalPrice += $this->CalcRentalPrice($fourthOre, $fourthPerc);
+        }
 
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
         $rentalPrice['alliance'] = $totalPrice * ($config[0]->RentalTax / 100.00);
@@ -323,7 +339,7 @@ class MoonCalc {
     private function CalculateTotalMoonPull() {
         //Always assume a 1 month pull which equates to 5.55m3 per second or 2,592,000 seconds
         //Total pull size is 14,385,600 m3
-        $totalPull = 5.55 * (3600.00 * 24.00 *30.00);
+        $totalPull = 5.55 * 3600.00 * 24.00 *30.00;
 
         //Return the total pull
         return $totalPull;
