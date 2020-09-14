@@ -12,6 +12,7 @@ use DB;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use Log;
 
 //Models
 use App\Models\Moon\Config;
@@ -318,9 +319,7 @@ class MoonCalc {
         $total = 0.00;
 
         //Check to see what type of moon goo the moon is
-        $calculatePrice = $this->IsMoonGoo($ore);
-
-        dd($calculatePrice);
+        $calculatePrice = $this->IsRMoonGoo($ore);
 
         //Check to make 
         if($calculatePrice != false) {
@@ -340,6 +339,9 @@ class MoonCalc {
             //A 50% discount is given to Gas ores as they aren't worth much currently in the market.
             if($calculatePrice == 'Gas') {
                 $total = ($units * $unitPrice)  / 2.00;
+                Log::warning('Calculate price found a Gas.  It was named ' . $ore . '.');
+                Log::warning('Price was: ' . number_format(($units * $unitPrice), "2", ".", ","));
+                Log::warning('New price is: ' . number_format((($units * $unitPrice) / 2.00), "2", ".", ","));
             } else {
                 $total = $units * $unitPrice;
             }
@@ -388,7 +390,7 @@ class MoonCalc {
         return false;
     }
 
-    private function IsRMoon($ore) {
+    private function IsRMoonOre($ore) {
         $ores = [
             'Zeolites' => 'Gas',
             'Sylvite' => 'Gas',
