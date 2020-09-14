@@ -55,9 +55,6 @@ class MoonCalc {
         $totalPriceMined += $this->CalcMoonPrice($secondOre, $secondPerc);
         $totalPriceMined += $this->CalcMoonPrice($thirdOre, $thirdPerc);
         $totalPriceMined += $this->CalcMoonPrice($fourthOre, $fourthPerc);
-
-        //Just some logging information
-        Log::info('Total Moon Price calculated to: ' . number_format($totalPriceMined, "2", ".", ","));
        
         //Return the rental price to the caller
         return $totalPriceMined;
@@ -81,9 +78,6 @@ class MoonCalc {
         $totalPrice += $this->CalcRentalPrice($secondOre, $secondPerc);
         $totalPrice += $this->CalcRentalPrice($thirdOre, $thirdPerc);
         $totalPrice += $this->CalcRentalPrice($fourthOre, $fourthPerc);
-        
-        //Just some logging information
-        Log::info('Total Rental Price calculated to: ' . number_format($totalPriceMined, "2", ".", ","));
 
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
         $rentalPrice['alliance'] = $totalPrice * ($config[0]->RentalTax / 100.00);
@@ -366,10 +360,6 @@ class MoonCalc {
             //A 50% discount is given to Gas ores as they aren't worth much currently in the market.
             if($calculatePrice == 'Gas') {
                 $total = ($units * $unitPrice)  / 2.00;
-                Log::info('Moon Ore: ' . $ore);
-                Log::info('Calculate price found a Gas.  It was named ' . $ore . '.');
-                Log::info('Price was: ' . number_format(($units * $unitPrice), "2", ".", ","));
-                Log::info('New price is: ' . number_format($total, "2", ".", ","));
             } else {
                 $total = $units * $unitPrice;
             }
