@@ -50,6 +50,8 @@ class MoonCalc {
 
         //Calculate the total to price to be mined in one month
         $totalPriceMined = $firstTotal + $secondTotal + $thirdTotal + $fourthTotal;
+
+        Log::info('Total Price calculated to: ' . number_format($totalPriceMined, "2", ".", ","));
        
         //Return the rental price to the caller
         return $totalPriceMined;
@@ -77,6 +79,9 @@ class MoonCalc {
         //Calculate the rental price.  Refined rate is already included in the price from rental composition
         $rentalPrice['alliance'] = $totalPriceMined * ($config[0]->RentalTax / 100.00);
         $rentalPrice['outofalliance'] = $totalPriceMined * ($config[0]->AllyRentalTax / 100.00);
+
+        Log::info('Alliance Rental Price: ' . number_format($rentalPrice['alliance'], "0", ".", ","));
+        Log::info('Out of Alliance Rental Price: ' . number_format($rentalPrice['outofalliance'], "0", ".", ","));
        
         //Return the rental price to the caller
         return $rentalPrice;
@@ -339,11 +344,13 @@ class MoonCalc {
             //A 50% discount is given to Gas ores as they aren't worth much currently in the market.
             if($calculatePrice == 'Gas') {
                 $total = ($units * $unitPrice)  / 2.00;
-                Log::warning('Calculate price found a Gas.  It was named ' . $ore . '.');
-                Log::warning('Price was: ' . number_format(($units * $unitPrice), "2", ".", ","));
-                Log::warning('New price is: ' . number_format((($units * $unitPrice) / 2.00), "2", ".", ","));
+                Log::info('Calculate price found a Gas.  It was named ' . $ore . '.');
+                Log::info('Price was: ' . number_format(($units * $unitPrice), "2", ".", ","));
+                Log::info('New price is: ' . number_format((($units * $unitPrice) / 2.00), "2", ".", ","));
+                Log::info('Total Price is ' . number_format($total, "2", ".", ","));
             } else {
                 $total = $units * $unitPrice;
+                Log::info('Current Total Price: ' . number_format($total, "2", ".", ","));
             }
         }
         
@@ -383,10 +390,12 @@ class MoonCalc {
         foreach($ores as $key => $value) {
             
             if(strtolower($key) == strtolower($ore)) {
+                Log::info('Found a Moon Ore: ' . $key);
                 return $value;
             }
         }
 
+        Log::info('Did not find a moon ore.');
         return false;
     }
 
@@ -490,6 +499,7 @@ class MoonCalc {
     private function CalculateTotalPrice($ore, $perc, &$total) {
         //Calculate the prices from the ores
         if($ore != 'None') {
+
             $total = $this->CalcPrice($ore, $perc);
         } else {
             $total = 0.00;
