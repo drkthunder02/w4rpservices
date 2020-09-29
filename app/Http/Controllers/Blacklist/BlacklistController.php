@@ -146,9 +146,9 @@ class BlacklistController extends Controller
         ]);
 
         $blacklist = DB::table('alliance_blacklist')->where('entity_name', 'like', $request->parameter . "%")
-                                       ->orWhere('entity_type', 'like', $request->parameter . "%")
-                                       ->orWhere('alts', 'like', $request->parameter . "%")
-                                       ->orWhere('reason', 'like', $request->parameter . "%")
+                                       ->orWhere('entity_type', 'like', "%" . $request->parameter . "%")
+                                       ->orWhere('alts', 'like', "%" . $request->parameter . "%")
+                                       ->orWhere('reason', 'like', "%" . $request->parameter . "%")
                                        ->orderBy('entity_name', 'asc')
                                        ->paginate(50);
 

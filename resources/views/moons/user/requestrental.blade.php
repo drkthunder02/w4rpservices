@@ -6,7 +6,7 @@
             <h2>Request Rental Moon</h2>
         </div>
         <div class="card-body">
-            Send an in game mail to Minerva Arbosa about requesting a rental moon.
+            Send an in game mail to Rock Onzo about requesting a rental moon.
         </div>
     </div>
 </div>

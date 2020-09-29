@@ -42,8 +42,14 @@ class AdminDashboardController extends Controller
         }
 
         //Declare variables we will need
+        $tHelper = new TaxesHelper();
+        $srpHelper = new SRPHelper();
         $days = 30;
+        $months = 1;
         $lava = new Lavacharts;
+
+        //Get the dates for the information being requested
+        $dates = $tHelper->GetTimeFrameInMonths($months);
 
         //Get the data for the sov expenses for a graph
 
