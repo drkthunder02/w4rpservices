@@ -7,6 +7,7 @@ use Log;
 
 //Library
 use Commands\Library\CommandHelper;
+use App\Library\Moons\MoonCalc;
 
 //Job
 use App\Jobs\Commands\Eve\ItemPricesUpdateJob;
