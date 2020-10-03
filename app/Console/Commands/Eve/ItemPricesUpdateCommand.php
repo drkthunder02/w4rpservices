@@ -49,7 +49,7 @@ class ItemPricesUpdateCommand extends Command
         $task->SetStartStatus();
 
         $moonHelper = new MoonCalc;
-        $moonHelper->FetchNewItemPrices();
+        $moonHelper->FetchNewPrices();
 
         //ItemPricesUpdateJob::dispatch()->onQueue('default');
 
