@@ -123,7 +123,7 @@ class FlexAdminController extends Controller
         $count = FlexStructure::where([
             'requestor_id' => $request->requestor_id,
             'requestor_corp_id' => $request->requestor_corp_id,
-            'system' => $request->system_id,
+            'system_id' => $request->system_id,
             'structure_type' => $request->structure_type,
         ])->count();
 
