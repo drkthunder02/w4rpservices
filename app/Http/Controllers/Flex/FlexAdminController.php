@@ -120,8 +120,6 @@ class FlexAdminController extends Controller
             'structure_type' => 'required',
         ]);
 
-        dd($request);
-
         $count = FlexStructure::where([
             'requestor_id' => $request->requestor_id,
             'requestor_corp_id' => $request->requestor_corp_id,
@@ -133,7 +131,7 @@ class FlexAdminController extends Controller
             FlexStructure::where([
                 'requestor_id' => $request->requestor_id,
                 'requestor_corp_id' => $request->requestor_corp_id,
-                'system' => $request->system_id,
+                'system_id' => $request->system_id,
                 'structure_type' => $request->structure_type,
             ])->delete();
 
