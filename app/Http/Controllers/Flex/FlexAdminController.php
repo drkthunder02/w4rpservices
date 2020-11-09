@@ -120,6 +120,8 @@ class FlexAdminController extends Controller
             'structure_type' => 'required',
         ]);
 
+        dd($request);
+
         $count = FlexStructure::where([
             'requestor_id' => $request->requestor_id,
             'requestor_corp_id' => $request->requestor_corp_id,
