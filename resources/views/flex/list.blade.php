@@ -17,7 +17,6 @@
                     <th>Paid Until</th>
                     <th>Update</th>
                     <th>Remove?</th>
-                    <th> </th>
                 </thead>
                 <tbody>
                     @foreach($structures as $structure)
@@ -40,15 +39,13 @@
                             {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
                         </td>
+                        
                         <td>
                             {!! Form::open(['action' => 'Flex\FlexAdminController@removeFlexStructure', 'method' => 'POST']) !!}
-                            {{ Form::radio('remove', 'Yes', false, ['class' => 'form-control']) }}
                             {{ Form::hidden('structure_type', $structure->structure_type) }}
                             {{ Form::hidden('requestor_id', $structure->requestor_id) }}
                             {{ Form::hidden('requestor_corp_id', $structure->requestor_corp_id) }}
                             {{ Form::hidden('system_id', $structure->system_id) }}
-                        </td>
-                        <td>
                             {{ Form::submit('Remove', ['class' => 'btn btn-danger']) }}
                             {!! Form::close() !!}
                         </td>

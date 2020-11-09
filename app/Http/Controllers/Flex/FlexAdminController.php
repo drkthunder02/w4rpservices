@@ -120,14 +120,14 @@ class FlexAdminController extends Controller
             'structure_type' => 'required',
         ]);
 
-        $count = FlexStructure::where([
+        FlexStructure::where([
             'requestor_id' => $request->requestor_id,
             'requestor_corp_id' => $request->requestor_corp_id,
             'system' => $request->system_id,
             'structure_type' => $request->structure_type,
-        ])->count();
+        ])->delete();
 
-        return redirect('/flex/display')->with('success', 'Flex Structure Entry Removed.' . $count);
+        return redirect('/flex/display')->with('success', 'Flex Structure Entry Removed.');
     }
 
 }
