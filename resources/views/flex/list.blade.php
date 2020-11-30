@@ -39,7 +39,6 @@
                             {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
                         </td>
-                        
                         <td>
                             {!! Form::open(['action' => 'Flex\FlexAdminController@removeFlexStructure', 'method' => 'POST']) !!}
                             {{ Form::hidden('structure_type', $structure->structure_type) }}
