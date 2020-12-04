@@ -83,19 +83,17 @@ class BlacklistController extends Controller
                 return redirect('/blacklist/display/add')->with('error', 'Entity Id was not found.');
             }
 
-
-
             //Store the entity in the table
-            BlacklistEntity::insert([
-                'entity_id' => $entityId,
-                'entity_name' => $request->name,
-                'entity_type' => $request->type,
-                'reason' => $request->reason,
-                'alts' => $request->alts,
-                'lister_id' => auth()->user()->getId(),
-                'lister_name' => auth()->user()->getName(),
-                'validity' => 'Valid',
-            ]);
+            $blacklist = new BlacklistEntity;
+            $blacklist->entity_id = $entityId;
+            $blacklist->entity_name = $request->name;
+            $blacklist->entity_type = $request->type;
+            $blacklist->reason = $request->reason;
+            $blacklist->alts = $request->alts;
+            $blacklist->lister_id = auth()->user()->getId();
+            $blacklist->lister_name = auth()->user()->getName();
+            $blacklist->validity = 'Valid';
+            $blacklist->save();
 
             //Return to the view
             return redirect('/blacklist/display/add')->with('success', $request->name . ' added to the blacklist.');
