@@ -83,6 +83,8 @@ class BlacklistController extends Controller
                 return redirect('/blacklist/display/add')->with('error', 'Entity Id was not found.');
             }
 
+
+
             //Store the entity in the table
             BlacklistEntity::insert([
                 'entity_id' => $entityId,
@@ -92,6 +94,7 @@ class BlacklistController extends Controller
                 'alts' => $request->alts,
                 'lister_id' => auth()->user()->getId(),
                 'lister_name' => auth()->user()->getName(),
+                'validity' => 'Valid',
             ]);
 
             //Return to the view
@@ -132,7 +135,9 @@ class BlacklistController extends Controller
     public function DisplayBlacklist() {
 
         //Get the entire blacklist
-        $blacklist = BlacklistEntity::orderBy('entity_name', 'asc')->paginate(50);
+        $blacklist = BlacklistEntity::where([
+            'validity' => 'Valid',
+        ])->orderBy('entity_name', 'asc')->paginate(50);
 
         //Return the view with the data
         return view('blacklist.list')->with('blacklist', $blacklist);
