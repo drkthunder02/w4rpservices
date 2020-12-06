@@ -5,9 +5,9 @@
  * Remember to use the same vendor files as the CDN ones,
  * otherwise the hashes won't match!
  *
- * Copyright 2017-2019 The Bootstrap Authors
- * Copyright 2017-2019 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * Copyright 2017-2020 The Bootstrap Authors
+ * Copyright 2017-2020 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
 'use strict'
@@ -49,7 +49,7 @@ const files = [
   }
 ]
 
-files.forEach((file) => {
+files.forEach(file => {
   fs.readFile(file.file, 'utf8', (err, data) => {
     if (err) {
       throw err
