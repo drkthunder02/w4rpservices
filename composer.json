@@ -11,7 +11,7 @@
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
         "khill/lavacharts": "3.1.*",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "^6.0",
         "laravel/horizon": "^3.1",
         "laravel/socialite": "^3.1",
         "laravel/tinker": "^1.0",
