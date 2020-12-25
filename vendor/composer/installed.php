@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '516105c492788aee680ef1dce3d45e514d703747',
+    'reference' => '0ddd2983509921acf00db95c3cd019abf733acb1',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -97,6 +97,15 @@
       ),
       'reference' => 'ca90a3291eee1538cd48ff25163240695bd95448',
     ),
+    'eveseat/eseye' => 
+    array (
+      'pretty_version' => '2.3.0',
+      'version' => '2.3.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e1e310592ea03aa8a68728d8c15d7f04cf29f957',
+    ),
     'facade/ignition-contracts' => 
     array (
       'pretty_version' => '1.0.2',
@@ -105,6 +114,15 @@
       array (
       ),
       'reference' => '3c921a1cdba35b68a7f0ccffc6dffc1995b18267',
+    ),
+    'fgrosse/phpasn1' => 
+    array (
+      'pretty_version' => 'v2.2.0',
+      'version' => '2.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd1978f7abd580f3fc33561e7f71d4c12c7531fad',
     ),
     'fideloper/proxy' => 
     array (
@@ -422,7 +440,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '516105c492788aee680ef1dce3d45e514d703747',
+      'reference' => '0ddd2983509921acf00db95c3cd019abf733acb1',
     ),
     'laravel/socialite' => 
     array (
@@ -662,6 +680,15 @@
       ),
       'reference' => '8e86be391a58104ef86037ba8a846524528d784e',
     ),
+    'predis/predis' => 
+    array (
+      'pretty_version' => 'v1.1.6',
+      'version' => '1.1.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9930e933c67446962997b05201c69c2319bf26de',
+    ),
     'psr/container' => 
     array (
       'pretty_version' => '1.0.0',
@@ -877,6 +904,15 @@
       array (
       ),
       'reference' => '99732be0ddb3361e16ad77b68ba41efc8e979019',
+    ),
+    'spomky-labs/base64url' => 
+    array (
+      'pretty_version' => 'v2.0.4',
+      'version' => '2.0.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '7752ce931ec285da4ed1f4c5aa27e45e097be61d',
     ),
     'swiftmailer/swiftmailer' => 
     array (
@@ -1195,6 +1231,78 @@
       array (
       ),
       'reference' => '80953678b19901e5165c56752d087fc11526017c',
+    ),
+    'web-token/jwt-checker' => 
+    array (
+      'pretty_version' => 'v2.2.6',
+      'version' => '2.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '73ffe42041b0b8d6ddce56e42533a931d249629c',
+    ),
+    'web-token/jwt-core' => 
+    array (
+      'pretty_version' => 'v2.2.6',
+      'version' => '2.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '8115d846f3a9ee817dca03024eb4c17a3c0ff81a',
+    ),
+    'web-token/jwt-easy' => 
+    array (
+      'pretty_version' => 'v2.2.6',
+      'version' => '2.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'cc59f479dd6b5014586be5d2d40ce84bbd9b4539',
+    ),
+    'web-token/jwt-encryption' => 
+    array (
+      'pretty_version' => 'v2.2.6',
+      'version' => '2.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '36afc9f25fe8546840dc63c3fc1c6fe166879052',
+    ),
+    'web-token/jwt-signature' => 
+    array (
+      'pretty_version' => 'v2.2.6',
+      'version' => '2.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f4d83f77031c9d27edebbea053931074030d3b09',
+    ),
+    'web-token/jwt-signature-algorithm-ecdsa' => 
+    array (
+      'pretty_version' => 'v2.2.6',
+      'version' => '2.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3ae6e56ccf34e8b7b65ec988497d5d1bceca9864',
+    ),
+    'web-token/jwt-signature-algorithm-hmac' => 
+    array (
+      'pretty_version' => 'v2.2.6',
+      'version' => '2.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f4fd8166e6830298fc820a8d5776c124cc2496c4',
+    ),
+    'web-token/jwt-signature-algorithm-rsa' => 
+    array (
+      'pretty_version' => 'v2.2.6',
+      'version' => '2.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ba94b8868bd8fdd481f448097ab900a8cb2c0eed',
     ),
     'webmozart/assert' => 
     array (
