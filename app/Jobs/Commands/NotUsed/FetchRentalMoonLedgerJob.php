@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Commands;
+namespace App\Jobs\Commands\NotUsed;
 
 //Internal Libraries
 use Illuminate\Bus\Queueable;

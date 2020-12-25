@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Commands;
+namespace App\Jobs\Commands\NotUsed;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
