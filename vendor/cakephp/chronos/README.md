@@ -1,9 +1,10 @@
 # CakePHP Chronos
 
+[![Build Status](https://img.shields.io/travis/com/cakephp/chronos/master?style=flat-square)](https://travis-ci.com/cakephp/chronos)
+[![Latest Stable Version](https://img.shields.io/github/v/release/cakephp/chronos?sort=semver&style=flat-square)](https://packagist.org/packages/cakephp/chronos)
+[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/chronos?style=flat-square)](https://packagist.org/packages/cakephp/chronos/stats)
+[![Code Coverage](https://img.shields.io/coveralls/cakephp/chronos/master.svg?style=flat-square)](https://coveralls.io/r/cakephp/chronos?branch=master)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://img.shields.io/travis/cakephp/chronos/master.svg?style=flat-square)](https://travis-ci.org/cakephp/chronos)
-[![Coverage Status](https://img.shields.io/coveralls/cakephp/chronos/master.svg?style=flat-square)](https://coveralls.io/r/cakephp/chronos?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/chronos.svg?style=flat-square)](https://packagist.org/packages/cakephp/chronos)
 
 Chronos aims to be a drop-in replacement for `nesbot/carbon`. It focuses on providing
 immutable date/datetime objects. Immutable objects help ensure that datetime objects
@@ -37,15 +38,13 @@ since developers don't have to manually copy the instance every time they need a
 Another important feature it offers is the `Date` class, which is used for representing dates without time (calendar dates).
 Any time method called on this type of object is basically a no-op.
 
-A minor but still noticeable difference is that `Chronos` has no external dependencies, it is completely standalone.
-
 There are other implementation changes, but one that users might not notice is ``Chronos`` considers Monday as
 the start of the week instead of Sunday.  This follows the ISO-8601 and current versions of PHP 5.6 and PHP 7.
 
+A minor but still noticeable difference is that `Chronos` has no external dependencies, it is completely standalone.
+
 Finally, Chronos is faster than Carbon as it has been optimized for the creation of hundreds of instances with minimal
 overhead.
-
-Chronos also strives for HHVM compatibility, this library can be used safely with HHVM 3.11.
 
 # Migrating from Carbon
 
@@ -121,10 +120,11 @@ $fixed = $date->toImmutable();
 
 # Calendar Dates
 
-PHP only offers datetime objects as part of the native extensions. Chronos
-adds a number of conveniences to the traditional DateTime object and introduces
-a `Date` object. `Date` instances offer compatibility with the `ChronosInterface`, but
-have their time & timezone frozen to `00:00:00 UTC`. This makes them ideal when working with
+PHP only offers datetime objects as part of the native extensions. Chronos adds
+a number of conveniences to the traditional DateTime object and introduces
+a `Date` object. `Date` instances offer compatibility with the
+`ChronosInterface`, but have their time frozen to `00:00:00` and the timezone
+set to the server default timezone. This makes them ideal when working with
 calendar dates as the time components will always match.
 
 ```php
@@ -138,12 +138,12 @@ echo $today->modify('+3 hours');
 // Outputs '2015-10-21'
 ```
 
-Like instances of `Chronos`, `Date` objects are also *immutable*. The `MutableDate` class provides
-a mutable variant of `Date`.
+Like instances of `Chronos`, `Date` objects are also *immutable*. The
+`MutableDate` class provides a mutable variant of `Date`.
 
 # Documentation
 
-A more descriptive documentation can be found at [book.cakephp.org/chronos/1.x/en/](https://book.cakephp.org/chronos/1.x/en/).
+A more descriptive documentation can be found at [book.cakephp.org/chronos/2/en/](https://book.cakephp.org/chronos/2/en/).
 
 # API Documentation
 

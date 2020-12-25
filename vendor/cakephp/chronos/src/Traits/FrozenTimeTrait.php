@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -11,6 +13,8 @@
  */
 namespace Cake\Chronos\Traits;
 
+use Cake\Chronos\ChronosInterface;
+use DateTimeImmutable;
 use DateTimeInterface;
 
 /**
@@ -27,29 +31,26 @@ trait FrozenTimeTrait
      *
      * Used to ensure constructed objects always lack time.
      *
-     * @param string|int|\DateTimeInterface $time The input time. Integer values will be assumed
+     * @param \DateTime|\DateTimeImmutable|string|int|null $time The input time. Integer values will be assumed
      *   to be in UTC. The 'now' and '' values will use the current local time.
+     * @param \DateTimeZone|null $tz The timezone in which the date is taken
      * @return string The date component of $time.
      */
-    protected function stripTime($time)
+    protected function stripTime($time, $tz): string
     {
-        if (is_int($time) || ctype_digit($time)) {
+        if (is_int($time)) {
             return gmdate('Y-m-d 00:00:00', $time);
         }
-        if ($time instanceof DateTimeInterface) {
-            $time = $time->format('Y-m-d 00:00:00');
-        }
-        if (substr($time, 0, 1) === '@') {
-            return gmdate('Y-m-d 00:00:00', substr($time, 1));
-        }
-        if ($time === null || $time === 'now' || $time === '') {
-            return date('Y-m-d 00:00:00');
-        }
-        if ($this->hasRelativeKeywords($time)) {
-            return date('Y-m-d 00:00:00', strtotime($time));
+
+        if (is_string($time) && substr($time, 0, 1) === '@') {
+            return gmdate('Y-m-d 00:00:00', (int)substr($time, 1));
         }
 
-        return preg_replace('/\d{1,2}:\d{1,2}:\d{1,2}(?:\.\d+)?/', '00:00:00', $time);
+        if (!($time instanceof DateTimeInterface)) {
+            $time = new DateTimeImmutable($time ?? 'now', $tz);
+        }
+
+        return $time->format('Y-m-d 00:00:00');
     }
 
     /**
@@ -58,7 +59,7 @@ trait FrozenTimeTrait
      * @param string $time The input expression
      * @return string The output expression with no time modifiers.
      */
-    protected function stripRelativeTime($time)
+    protected function stripRelativeTime(string $time): string
     {
         return preg_replace('/([-+]\s*\d+\s(?:minutes|seconds|hours|microseconds))/', '', $time);
     }
@@ -74,13 +75,9 @@ trait FrozenTimeTrait
      * @param int $microseconds The microseconds to set (ignored)
      * @return static A modified Date instance.
      */
-    public function setTime($hours, $minutes, $seconds = null, $microseconds = null)
+    public function setTime($hours, $minutes, $seconds = null, $microseconds = null): ChronosInterface
     {
-        if (CHRONOS_SUPPORTS_MICROSECONDS) {
-            return parent::setTime(0, 0, 0, 0);
-        }
-
-        return parent::setTime(0, 0, 0);
+        return parent::setTime(0, 0, 0, 0);
     }
 
     /**
@@ -91,7 +88,7 @@ trait FrozenTimeTrait
      * @param \DateInterval $interval The interval to modify this date by.
      * @return static A modified Date instance
      */
-    public function add($interval)
+    public function add($interval): ChronosInterface
     {
         return parent::add($interval)->setTime(0, 0, 0);
     }
@@ -104,7 +101,7 @@ trait FrozenTimeTrait
      * @param \DateInterval $interval The interval to modify this date by.
      * @return static A modified Date instance
      */
-    public function sub($interval)
+    public function sub($interval): ChronosInterface
     {
         return parent::sub($interval)->setTime(0, 0, 0);
     }
@@ -157,7 +154,7 @@ trait FrozenTimeTrait
      * @param int $value The timestamp value to set.
      * @return static
      */
-    public function setTimestamp($value)
+    public function setTimestamp($value): ChronosInterface
     {
         return parent::setTimestamp($value)->setTime(0, 0, 0);
     }
@@ -171,7 +168,7 @@ trait FrozenTimeTrait
      * @param string $relative The relative change to make.
      * @return static A new date with the applied date changes.
      */
-    public function modify($relative)
+    public function modify($relative): ChronosInterface
     {
         if (preg_match('/hour|minute|second/', $relative)) {
             return $this;

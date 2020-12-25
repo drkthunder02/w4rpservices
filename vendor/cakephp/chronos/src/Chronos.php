@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -28,10 +30,11 @@ use DateTimeZone;
  * @property-read int $hour
  * @property-read int $minute
  * @property-read int $second
- * @property-read int $timestamp seconds since the Unix Epoch
- * @property-read DateTimeZone $timezone the current timezone
- * @property-read DateTimeZone $tz alias of timezone
  * @property-read int $micro
+ * @property-read int $microsecond
+ * @property-read int $timestamp seconds since the Unix Epoch
+ * @property-read \DateTimeZone $timezone the current timezone
+ * @property-read \DateTimeZone $tz alias of timezone
  * @property-read int $dayOfWeek 1 (for Monday) through 7 (for Sunday)
  * @property-read int $dayOfYear 0 through 365
  * @property-read int $weekOfMonth 1 through 5
@@ -64,7 +67,7 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
      * There is a single test now for all date/time classes provided by Chronos.
      * This aims to emulate stubbing out 'now' which is a single global fact.
      *
-     * @var \Cake\Chronos\ChronosInterface
+     * @var \Cake\Chronos\ChronosInterface|null
      */
     protected static $testNow;
 
@@ -81,7 +84,7 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
      * Please see the testing aids section (specifically static::setTestNow())
      * for more on the possibility of this constructor returning a test instance.
      *
-     * @param string|null $time Fixed or relative time
+     * @param \DateTime|\DateTimeImmutable|string|int|null $time Fixed or relative time
      * @param \DateTimeZone|string|null $tz The timezone for the instance
      */
     public function __construct($time = 'now', $tz = null)
@@ -90,10 +93,14 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
             $tz = $tz instanceof DateTimeZone ? $tz : new DateTimeZone($tz);
         }
 
+        if ($time instanceof \DateTimeInterface) {
+            $time = $time->format('Y-m-d H:i:s.u');
+        }
+
         static::$_lastErrors = [];
         $testNow = static::getTestNow();
         if ($testNow === null) {
-            parent::__construct($time === null ? 'now' : $time, $tz);
+            parent::__construct($time ?? 'now', $tz);
 
             return;
         }
@@ -106,13 +113,13 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
         }
 
         $testNow = clone $testNow;
-        if ($relative) {
-            $testNow = $testNow->modify($time);
+        $relativetime = static::isTimeExpression($time);
+        if (!$relativetime && $tz !== $testNow->getTimezone()) {
+            $testNow = $testNow->setTimezone($tz ?? date_default_timezone_get());
         }
 
-        $relativeTime = static::isTimeExpression($time);
-        if (!$relativeTime && $tz !== $testNow->getTimezone()) {
-            $testNow = $testNow->setTimezone($tz === null ? date_default_timezone_get() : $tz);
+        if ($relative) {
+            $testNow = $testNow->modify($time);
         }
 
         $time = $testNow->format('Y-m-d H:i:s.u');
@@ -124,7 +131,7 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
      *
      * @return \Cake\Chronos\MutableDateTime
      */
-    public function toMutable()
+    public function toMutable(): MutableDateTime
     {
         return MutableDateTime::instance($this);
     }
@@ -132,11 +139,11 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
     /**
      * Get a copy of the instance
      *
-     * @return $this
+     * @return static
      */
-    public function copy()
+    public function copy(): ChronosInterface
     {
-        return $this;
+        return clone $this;
     }
 
     /**
@@ -157,7 +164,7 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
      * @param \Cake\Chronos\ChronosInterface|string|null $testNow The instance to use for all future instances.
      * @return void
      */
-    public static function setTestNow($testNow = null)
+    public static function setTestNow($testNow = null): void
     {
         static::$testNow = is_string($testNow) ? static::parse($testNow) : $testNow;
     }
@@ -166,9 +173,9 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
      * Get the ChronosInterface instance (real or mock) to be returned when a "now"
      * instance is created.
      *
-     * @return \Cake\Chronos\ChronosInterface The current instance used for testing
+     * @return \Cake\Chronos\ChronosInterface|null The current instance used for testing
      */
-    public static function getTestNow()
+    public static function getTestNow(): ?ChronosInterface
     {
         return static::$testNow;
     }
@@ -179,7 +186,7 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
      *
      * @return bool True if there is a test instance, otherwise false
      */
-    public static function hasTestNow()
+    public static function hasTestNow(): bool
     {
         return static::$testNow !== null;
     }
@@ -189,7 +196,7 @@ class Chronos extends DateTimeImmutable implements ChronosInterface
      *
      * @return array
      */
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         $properties = [
             'hasFixedNow' => static::hasTestNow(),

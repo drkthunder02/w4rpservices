@@ -114,6 +114,8 @@
                         setTimeout(() => {
                             this.retryingJobs = _.reject(this.retryingJobs, job => job == id);
                         }, 5000);
+                    }).catch(error => {
+                        this.retryingJobs = _.reject(this.retryingJobs, job => job == id);
                     });
             },
 
@@ -217,14 +219,17 @@
 
                 <tr v-for="job in jobs" :key="job.id">
                     <td>
-                        <span v-if="job.status != 'failed'" :title="job.name">{{jobBaseName(job.name)}}</span>
-                        <router-link v-if="job.status === 'failed'" :title="job.name" :to="{ name: 'failed-jobs-preview', params: { jobId: job.id }}">
+                        <router-link :title="job.name" :to="{ name: 'failed-jobs-preview', params: { jobId: job.id }}">
                             {{ jobBaseName(job.name) }}
                         </router-link>
                         <br>
 
                         <small class="text-muted">
-                            Queue: {{job.queue}} | Tags: {{ job.payload.tags && job.payload.tags.length ? job.payload.tags.join(', ') : '' }}
+                            Queue: {{job.queue}}
+                            | Attempts: {{ job.payload.attempts }}
+                            <span v-if="job.payload.tags && job.payload.tags.length" class="text-break">
+                            | Tags: {{ job.payload.tags && job.payload.tags.length ? job.payload.tags.join(', ') : '' }}
+                            </span>
                         </small>
                     </td>
 

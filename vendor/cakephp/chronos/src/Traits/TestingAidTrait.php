@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -22,7 +24,6 @@ use Cake\Chronos\ChronosInterface;
  */
 trait TestingAidTrait
 {
-
     /**
      * Set the test now used by Date and Time classes provided by Chronos
      *
@@ -30,7 +31,7 @@ trait TestingAidTrait
      * @param \Cake\Chronos\ChronosInterface|string|null $testNow The instance to use for all future instances.
      * @return void
      */
-    public static function setTestNow($testNow = null)
+    public static function setTestNow($testNow = null): void
     {
         Chronos::setTestNow($testNow);
     }
@@ -41,7 +42,7 @@ trait TestingAidTrait
      * @see \Cake\Chronos\Chronos::getTestNow()
      * @return \Cake\Chronos\ChronosInterface|null the current instance used for testing or null.
      */
-    public static function getTestNow()
+    public static function getTestNow(): ?ChronosInterface
     {
         return Chronos::getTestNow();
     }
@@ -52,7 +53,7 @@ trait TestingAidTrait
      * @see \Cake\Chronos\Chronos::hasTestNow()
      * @return bool True if there is a test instance, otherwise false
      */
-    public static function hasTestNow()
+    public static function hasTestNow(): bool
     {
         return Chronos::hasTestNow();
     }

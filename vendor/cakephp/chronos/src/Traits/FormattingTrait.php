@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -27,7 +29,7 @@ trait FormattingTrait
      *
      * @return void
      */
-    public static function resetToStringFormat()
+    public static function resetToStringFormat(): void
     {
         static::setToStringFormat(ChronosInterface::DEFAULT_TO_STRING_FORMAT);
     }
@@ -38,7 +40,7 @@ trait FormattingTrait
      * @param string $format The format to use in future __toString() calls.
      * @return void
      */
-    public static function setToStringFormat($format)
+    public static function setToStringFormat($format): void
     {
         static::$toStringFormat = $format;
     }
@@ -48,7 +50,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->format(static::$toStringFormat);
     }
@@ -58,7 +60,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toDateString()
+    public function toDateString(): string
     {
         return $this->format('Y-m-d');
     }
@@ -68,7 +70,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toFormattedDateString()
+    public function toFormattedDateString(): string
     {
         return $this->format('M j, Y');
     }
@@ -78,7 +80,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toTimeString()
+    public function toTimeString(): string
     {
         return $this->format('H:i:s');
     }
@@ -88,7 +90,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toDateTimeString()
+    public function toDateTimeString(): string
     {
         return $this->format('Y-m-d H:i:s');
     }
@@ -98,7 +100,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toDayDateTimeString()
+    public function toDayDateTimeString(): string
     {
         return $this->format('D, M j, Y g:i A');
     }
@@ -108,7 +110,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toAtomString()
+    public function toAtomString(): string
     {
         return $this->format(DateTime::ATOM);
     }
@@ -118,7 +120,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toCookieString()
+    public function toCookieString(): string
     {
         return $this->format(DateTime::COOKIE);
     }
@@ -128,7 +130,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toIso8601String()
+    public function toIso8601String(): string
     {
         return $this->format(DateTime::ATOM);
     }
@@ -138,7 +140,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toRfc822String()
+    public function toRfc822String(): string
     {
         return $this->format(DateTime::RFC822);
     }
@@ -148,7 +150,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toRfc850String()
+    public function toRfc850String(): string
     {
         return $this->format(DateTime::RFC850);
     }
@@ -158,7 +160,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toRfc1036String()
+    public function toRfc1036String(): string
     {
         return $this->format(DateTime::RFC1036);
     }
@@ -168,7 +170,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toRfc1123String()
+    public function toRfc1123String(): string
     {
         return $this->format(DateTime::RFC1123);
     }
@@ -178,7 +180,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toRfc2822String()
+    public function toRfc2822String(): string
     {
         return $this->format(DateTime::RFC2822);
     }
@@ -188,7 +190,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toRfc3339String()
+    public function toRfc3339String(): string
     {
         return $this->format(DateTime::RFC3339);
     }
@@ -198,7 +200,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toRssString()
+    public function toRssString(): string
     {
         return $this->format(DateTime::RSS);
     }
@@ -208,7 +210,7 @@ trait FormattingTrait
      *
      * @return string
      */
-    public function toW3cString()
+    public function toW3cString(): string
     {
         return $this->format(DateTime::W3C);
     }
@@ -218,7 +220,7 @@ trait FormattingTrait
      *
      * @return string UNIX timestamp
      */
-    public function toUnixString()
+    public function toUnixString(): string
     {
         return $this->format('U');
     }
@@ -229,9 +231,9 @@ trait FormattingTrait
      * @param bool $range Range.
      * @return int|array 1, 2, 3, or 4 quarter of year or array if $range true
      */
-    public function toQuarter($range = false)
+    public function toQuarter(bool $range = false)
     {
-        $quarter = ceil($this->format('m') / 3);
+        $quarter = (int)ceil($this->format('m') / 3);
         if ($range === false) {
             return $quarter;
         }
@@ -244,15 +246,15 @@ trait FormattingTrait
                 return [$year . '-04-01', $year . '-06-30'];
             case 3:
                 return [$year . '-07-01', $year . '-09-30'];
-            case 4:
+            default:
                 return [$year . '-10-01', $year . '-12-31'];
         }
     }
 
     /**
-     * @return int
+     * @inheritDoc
      */
-    public function toWeek()
+    public function toWeek(): int
     {
         return (int)$this->format('W');
     }
