@@ -75,7 +75,7 @@ class AdminDashboardController extends Controller
                ->addRow(['market', $market])
                ->addRow(['gate', $gate]);
 
-        $lava->PieChart('Income', $iChart, [
+        Lava::PieChart('Income', $iChart, [
             'title' => 'Alliance Income',
             'is3D' => true,
         ]);
@@ -102,6 +102,6 @@ class AdminDashboardController extends Controller
                ->addRow(['bridge_fuel', $bridgeFuel])
                ->addRow(['jammer_fuel', $jammerFuel]);
         */
-        return view('admin.dashboards.dashboard')->with('lava', $lava);
+        return view('admin.dashboards.dashboard');
     }
 }
