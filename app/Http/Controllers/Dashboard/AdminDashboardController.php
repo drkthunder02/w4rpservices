@@ -56,7 +56,7 @@ class AdminDashboardController extends Controller
         $industry = $tHelper->GetIndustryGross($dates['start'], $dates['end']);
         $reprocessing = $tHelper->GetReprocessingGross($dates['start'], $dates['end']);
         $office = $tHelper->GetOfficeGross($dates['start'], $dates['end']);
-        $market = $tHelper->GetMarketGross($dates['start'], $dates['end']);
+        $market = $tHelper->GetAllianceMarketGross($dates['start'], $dates['end']);
         $gate = $tHelper->GetJumpGateGross($dates['start'], $dates['end']);
 
         //Get the data for the sov expenses for a graph
