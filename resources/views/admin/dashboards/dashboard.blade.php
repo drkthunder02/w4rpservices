@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="container-fluid">
                 <div id="income-div"></div>
-                {!! $lava->render('PieChart', 'Alliance Income', 'income-div') !!}
+                {!! $lava->render('PieChart', 'Income', 'income-div') !!}
             </div>
         </div>
     </div>
