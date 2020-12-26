@@ -51,11 +51,20 @@ class AdminDashboardController extends Controller
         //Get the dates for the information being requested
         $dates = $tHelper->GetTimeFrameInMonths($months);
 
+        //Get the data for the alliance income for a graph
+        $pi = $tHelper->GetPIGross($dates['start'], $dates['end']);
+        $industry = $tHelper->GetIndustryGross($dates['start'], $dates['end']);
+        $reprocessing = $tHelper->GetReprocessingGross($dates['start'], $dates['end']);
+        $office = $tHelper->GetOfficeGross($dates['start'], $dates['end']);
+        $market = $tHelper->GetMarketGross($dates['start'], $dates['end']);
+        $gate = $tHelper->GetJumpGateGross($dates['start'], $dates['end']);
+
         //Get the data for the sov expenses for a graph
 
         //Setup the charts
         //Setup the chart to be able the show the categories for income
-        /*
+        //This will be a pi-chart
+        
         $iChart = $lava->DataTable();
         $iChart->addStringColumn('Categories')
                ->addNumberColumn('ISK')
@@ -63,15 +72,24 @@ class AdminDashboardController extends Controller
                ->addRow(['industry', $industry])
                ->addRow(['reprocessing', $reprocessing])
                ->addRow(['offices', $office])
-               ->addRow(['industry', $industry])
                ->addRow(['market', $market])
-               ->addRow(['gate', $gate])
-               ->addRow(['iBuyback', $iBuyback])
-               ->addRow(['renters', $renters])
-               ->addRow(['ops', $ops]);
-        */
+               ->addRow(['gate', $gate]);
+
+        $lava->PieChart('Income', $iChart, [
+            'title' => 'Alliance Income',
+            'is3D' => true,
+            'slices' => [
+                ['offset' => 0.1],
+                ['offset' => 0.15],
+                ['offset' => 0.20],
+                ['offset' => 0.25],
+                ['offset' => 0.30]
+            ]
+        ]);
+        
 
         //Setup the chart to be able to show the categories for expenses
+        //This will be a pi-chart
         /*
         $eChart = $lava->DataTable();
         $eCjart->addStringColumn('Categories')
@@ -91,6 +109,6 @@ class AdminDashboardController extends Controller
                ->addRow(['bridge_fuel', $bridgeFuel])
                ->addRow(['jammer_fuel', $jammerFuel]);
         */
-        return view('admin.dashboards.dashboard');
+        return view('admin.dashboards.dashboard')->with('lava', $lava);
     }
 }

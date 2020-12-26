@@ -6,7 +6,10 @@
             <h2>Admin Dashboard</h2>
         </div>
         <div class="card-body">
-            Draw a graph of income and expenses.
+            <div class="container-fluid">
+                <div id="income-div"></div>
+                {!! $lava->render('PieChart', 'Alliance Income', 'income-div') !!}
+            </div>
         </div>
     </div>
 </div>
