@@ -7,10 +7,12 @@
         </div>
         <div class="card-body">
             <div class="container-fluid">
-                <div id="income-div"></div>
-                {!! $lava->render('PieChart', 'Income', 'income-div') !!}
+                
             </div>
         </div>
     </div>
+
+    <div id="income-div"></div>
+    @piechart('Income', 'income-div')
 </div>
 @endsection
