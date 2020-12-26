@@ -13,6 +13,6 @@
     </div>
 
     <div id="income-div"></div>
-    @piechart('Income', 'income-div')
+    {!! $lava->render('PieChart', 'Alliance Income', 'income-div') !!}
 </div>
 @endsection
