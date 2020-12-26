@@ -78,13 +78,6 @@ class AdminDashboardController extends Controller
         $lava->PieChart('Income', $iChart, [
             'title' => 'Alliance Income',
             'is3D' => true,
-            'slices' => [
-                ['offset' => 0.1],
-                ['offset' => 0.15],
-                ['offset' => 0.20],
-                ['offset' => 0.25],
-                ['offset' => 0.30]
-            ]
         ]);
         
 
