@@ -25,6 +25,7 @@ class RentalMoonInvoice extends Model
         'character_name',
         'corporation_id',
         'corporation_name',
+        'invoice_id',
         'rental_moons',
         'invoice_amount',
         'due_date',

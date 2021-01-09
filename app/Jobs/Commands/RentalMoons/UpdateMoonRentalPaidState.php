@@ -107,47 +107,6 @@ class UpdateMoonRentalPaidState implements ShouldQueue
                     'paid' => 'No',
                 ]);
             }
-
-            //If the moon hasn't been paid for in two weeks, then remove the renter,
-            //then send the renter and w4rp leadership a mail.
-            if($paidUntil->greaterThanOrEqualTo($today->subWeeks(2))) {
-                //Declare the lookup helper as it will be needed
-                $lookupHelper = new LookupHelper;
-
-                //Get the character id for Minerva Arbosa and Rock Onzo
-                $minerva = $lookupHelper->CharacterNameToId('Minerva Arbosa');
-                $rock = $lookupHelper->CharacterNameToId('Rock Onzo');
-
-                //Remove the renter
-                AllianceMoonRental::where([
-                    'region' => $rental->region,
-                    'system' => $rental->system,
-                    'planet' => $rental->planet,
-                    'moon' => $rental->moon,
-                ])->update([
-                    'rental_type' => 'Not Rented',
-                    'rental_until' => null,
-                    'rental_contact_id' => 0,
-                    'rental_contact_type' => null,
-                    'paid' => 'Not Rented',
-                    'paid_until' => null,
-                ]);
-
-                //Send a mail over to the alliance leadership, and the former renter with
-                //why the moon was removed.
-                $subject = "W4RP Moon Rental Cancelled";
-
-                //Dispatch the mail job
-                ProcessSendEveMailJob::dispatch($body, (int)$rental->rental_contact_id, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
-                $mailDelay += 30;
-                if($minerva != null) {
-                    ProcessSendEveMailJob::dispatch($body, (int)$minerva, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
-                    $mailDelay += 30;
-                }
-                if($rock != null) {
-                    ProcessSendEveMailJob::dispatch($body, (int)$rock, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
-                }
-            }
         }
     }
 }
