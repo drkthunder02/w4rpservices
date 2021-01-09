@@ -20,7 +20,7 @@ class EmptyJumpBridges extends Command
      *
      * @var string
      */
-    protected $signature = 'services:EmptyJumpBridges';
+    protected $signature = 'data:EmptyJumpBridges';
 
     /**
      * The console command description.

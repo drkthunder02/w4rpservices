@@ -35,7 +35,7 @@ class PurgeUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'services:PurgeUsers';
+    protected $signature = 'data:PurgeUsers';
 
     /**
      * The console command description.

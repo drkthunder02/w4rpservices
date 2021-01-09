@@ -31,7 +31,7 @@ class CleanStaleDataCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'services:CleanData';
+    protected $signature = 'data:CleanData';
 
     /**
      * The console command description.

@@ -48,6 +48,17 @@ class Kernel extends ConsoleKernel
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
         /**
+         * Moon Update Schedule
+         */
+
+        /**
+         * System Rental Schedule
+         */
+        $schedule->command('services:SystemRentals')
+                 ->monthlyOn(1, '00:01')
+                 ->withoutOverlapping();
+
+        /**
          * Rentals / Flex Schedule
          */
         $schedule->command('services:UpdateRentalPrice')
@@ -76,11 +87,11 @@ class Kernel extends ConsoleKernel
         /**
          * Purge Data Schedule
          */
-        $schedule->command('services:CleanData')
+        $schedule->command('data:CleanData')
                  ->weekly(7, '11:00');
         $schedule->command('data:PurgeCorpLedgers')
                  ->monthly();
-        $schedule->command('services:PurgeUsers')
+        $schedule->command('data:PurgeUsers')
                  ->dailyAt('23:00');
 
         /**
