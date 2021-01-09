@@ -44,7 +44,7 @@ return [
     | this timezone.
     |
     */
-    'timezone' => 'America/Los_Angeles',
+    'timezone' => 'UTC',
 
 
     /*
