@@ -69,9 +69,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:GetCorps')
                  ->monthlyOn(1, '09:00');
         $schedule->command('services:GetStructures')
-                ->dailyAt('09:00');
+                 ->dailyAt('09:00');
         $schedule->command('services:GetAssets')
-                ->hourlyAt('22');        
+                 ->hourlyAt('22');     
 
         /**
          * Purge Data Schedule
