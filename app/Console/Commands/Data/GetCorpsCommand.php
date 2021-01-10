@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Corps;
+namespace App\Console\Commands\Data;
 
 //Internal Library
 use Illuminate\Console\Command;
@@ -21,7 +21,7 @@ class GetCorpsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'services:GetCorps';
+    protected $signature = 'data:GetCorps';
 
     /**
      * The console command description.

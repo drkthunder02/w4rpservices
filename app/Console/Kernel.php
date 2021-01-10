@@ -24,14 +24,11 @@ class Kernel extends ConsoleKernel
         Commands\Data\EmptyJumpBridges::class,
         Commands\Data\CleanStaleDataCommand::class,
         Commands\Data\PurgeCorpMoonLedgers::class,
+        Commands\Data\GetCorpsCommand::class,
         /**
          * Assets Commands
          */
         Commands\Assets\GetAssetsCommand::class,
-        /**
-         * Corp Commands
-         */
-        Commands\Corps\GetCorpsCommand::class,
         /**
          * Eve Commands
          */
