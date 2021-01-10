@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ModifyAllianceMoonRentalInvoicesTable extends Migration
+class RemoveContractTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class ModifyAllianceMoonRentalInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::table('alliance_moon_rental_invoices', function (Blueprint $table) {
-            $table->bigInteger('invoice_id')->nullable();
-        });
+        Schema::dropIfExists('public_contracts');
+        Schema::dropIfExists('public_contract_items');
+        Schema::dropIfExists('market_groups');
+        Schema::dropIfExists('market_prices');
+        Schema::dropIfExists('market_region_orders');
     }
 
     /**
@@ -25,8 +27,6 @@ class ModifyAllianceMoonRentalInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::table('alliance_moon_rental_invoices', function (Blueprint $table) {
-            $table->dropColumn('invoice_id');
-        });
+        //
     }
 }

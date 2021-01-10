@@ -111,5 +111,7 @@ class CreateBuyPublicContractsTable extends Migration
         Schema::dropIfExists('market_groups');
         Schema::dropIfExists('market_prices');
         Schema::dropIfExists('market_region_orders');
+        Schema::dropIfExists('alliance_wormholes');
+        Schema::dropIfExists('wormhole_types');
     }
 }
