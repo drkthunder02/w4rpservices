@@ -33,6 +33,23 @@ class CreateUsersTable extends Migration
             });
         }
 
+        if(!Schema::hasTable('user_alts')) {
+            Schema::create('user_alts', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->integer('main_id')->unsigned();
+                $table->integer('character_id')->unsigned()->unique();
+                $table->string('avatar');
+                $table->string('access_token')->nullable();
+                $table->string('refresh_token')->nullable();
+                $table->integer('inserted_at')->default(0);
+                $table->integer('expires_in')->default(0);
+                $table->string('owner_hash');
+                $table->rememberToken();
+                $table->timestamps();
+            });
+        }
+
         if(!Schema::hasTable('user_roles')) {
             Schema::create('user_roles', function (Blueprint $table) {
                 $table->increments('id');
@@ -178,6 +195,7 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('user_alts');
         Schema::dropIfExists('available_user_roles');
         Schema::dropIfExists('user_roles');
         Schema::dropIfExists('EsiTokens');

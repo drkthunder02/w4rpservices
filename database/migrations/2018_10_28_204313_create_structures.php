@@ -60,6 +60,28 @@ class CreateStructures extends Migration
                 $table->timestamps();
             });
         }
+
+        if(!Schema::hasTable('alliance_flex_structures')) {
+            Schema::create('alliance_flex_structures', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->unsignedBigInteger('requestor_id');
+                $table->string('requestor_name');
+                $table->unsignedBigInteger('requestor_corp_id');
+                $table->string('requestor_corp_name');
+                $table->unsignedBigInteger('system_id');
+                $table->string('system');
+                $table->enum('structure_type', [
+                    'Cyno Jammer',
+                    'Cyno Beacon',
+                    'Jump Bridge',
+                    'Super Construction Facilities',
+                    'Market',
+                ]);
+                $table->double('structure_cost', 20, 2);
+                $table->dateTime('paid_until');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -72,5 +94,6 @@ class CreateStructures extends Migration
         Schema::dropIfExists('Structures');
         Schema::dropIfExists('CorpStructures');
         Schema::dropIfExists('corp_tax_ratios');
+        Schema::dropIfExists('flex_structures');
     }
 }
