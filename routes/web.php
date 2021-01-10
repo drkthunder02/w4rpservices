@@ -17,12 +17,12 @@ Route::get('/', function () {
     }
 
     return view('login');
-})->name('/');
+})->name('login');
 
 /**
  * Login Display pages
  */
-Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('/login');
+Route::get('/login', 'Auth\LoginController@redirectToProvider');
 Route::get('/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('/logout', 'Auth\LoginController@logout');
 
