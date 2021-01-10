@@ -22,7 +22,7 @@ Route::get('/', function () {
 /**
  * Login Display pages
  */
-Route::get('/login', 'Auth\LoginController@redirectToProvider');
+Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('/login');
 Route::get('/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('/logout', 'Auth\LoginController@logout');
 
@@ -63,18 +63,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/blacklist/add', 'Blacklist\BlacklistController@AddToBlacklist');
     Route::post('/blacklist/remove', 'Blacklist\BlacklistController@RemoveFromBlacklist');
     Route::post('/blacklist/search', 'Blacklist\BlacklistController@SearchInBlacklist');
-
-    /**
-     * Contract Admin Controller display pages
-     */
-    Route::get('/contracts/admin/display', 'Contracts\ContractAdminController@displayContractDashboard');
-    Route::get('/contracts/admin/past', 'Contracts\ContractAdminController@displayPastContracts');
-    Route::get('/contracts/admin/new', 'Contracts\ContractAdminController@displayNewContract');
-    Route::post('/contracts/admin/new', 'Contracts\ContractAdminController@storeNewContract');
-    Route::post('/contracts/admin/store', 'Contracts\ContractAdminController@storeAcceptContract');
-    Route::get('/contracts/admin/delete/{id}', 'Contracts\ContractAdminController@deleteContract');
-    Route::get('/contracts/admin/end/{id}', 'Contracts\ContractAdminController@displayEndContract');
-    Route::post('/contracts/admin/end', 'Contracts\ContractAdminController@storeEndContract');
     
     /**
      * Dashboard Controller Display pages
@@ -213,12 +201,4 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/wiki/changepassword', 'Wiki\WikiController@displayChangePassword');
     Route::post('/wiki/changepassword', 'Wiki\WikiController@changePassword');
     Route::post('/wiki/purge', 'Wiki\WikiController@purgeUsers');
-
-    /**
-     * Wormhole Controller display pages
-     */
-    Route::get('/wormholes/form', 'Wormholes\WormholeController@displayWormholeForm');
-    Route::post('/wormholes/form', 'Wormholes\WormholeController@storeWormhole');
-    Route::get('/wormholes/display', 'Wormholes\WormholeController@displayWormholes');
-
 });

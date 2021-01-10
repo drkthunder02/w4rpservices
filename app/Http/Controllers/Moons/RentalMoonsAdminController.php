@@ -19,7 +19,7 @@ class RentalMoonsAdminController extends Controller
      */
     public function __construct() {
         $this->middleware('auth');
-        $this->middelware('role:user');
+        $this->middleware('role:user');
         $this->middleware('permission:mining.director');
     }
 
