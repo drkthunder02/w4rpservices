@@ -17,6 +17,8 @@ use App\Jobs\ProcessStructureJob;
 //Models
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
+use App\Models\Structure\Structure;
+use App\Models\Structure\Service;
 
 class GetStructuresCommand extends Command
 {
@@ -102,7 +104,12 @@ class GetStructuresCommand extends Command
             return null;
         }
 
+        //Get the total number of pages of all the structures
         $totalPages = $structures->pages;
+
+        //Truncate the structures and the structure services in order to prepare to put new structures in the database
+        Structure::truncate();
+        Service::truncate();
 
         for($i = 1; $i <= $totalPages; $i++) {
             ProcessStructureJob::dispatch($charId, $corpId, $currentPage)->onQueue('structures');
