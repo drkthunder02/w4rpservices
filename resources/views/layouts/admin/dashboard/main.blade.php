@@ -20,9 +20,6 @@
           <!-- General Administrative Stuff -->
           @include('layouts.admin.sidebarmenu.general')
           <!-- End General Administrative Stuff -->
-          <!-- Flex Structure -->
-          @include('layouts.admin.sidebarmenu.flex')
-          <!-- End Flex Structure -->
           <!-- Moon Admin -->
           @include('layouts.admin.sidebarmenu.moon')
           <!-- End Moon Admin -->

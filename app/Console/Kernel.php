@@ -39,10 +39,6 @@ class Kernel extends ConsoleKernel
         Commands\Finances\HoldingFinancesCommand::class,
         Commands\Finances\SovBillsCommand::class,
         /**
-         * Flex Commands
-         */
-        Commands\Flex\FlexStructureCommand::class,
-        /**
          * Moon Commands
          */
         Commands\Moons\MoonsUpdateCommand::class,
