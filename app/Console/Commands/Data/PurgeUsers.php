@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Users;
+namespace App\Console\Commands\Data;
 
 //Internal Library
 use Illuminate\Console\Command;

@@ -17,23 +17,47 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\Corps\GetCorpsCommand::class,
-        Commands\Finances\HoldingFinancesCommand::class,
-        Commands\Structures\GetStructuresCommand::class,
-        Commands\Assets\GetAssetsCommand::class,
-        Commands\Users\PurgeUsers::class,
-        Commands\Flex\FlexStructureCommand::class,
+        /**
+         * Data Commands
+         */
+        Commands\Data\PurgeUsers::class,
         Commands\Data\EmptyJumpBridges::class,
-        Commands\Finances\SovBillsCommand::class,
         Commands\Data\CleanStaleDataCommand::class,
-        Commands\Moons\MoonsUpdateCommand::class,
         Commands\Data\PurgeCorpMoonLedgers::class,
+        /**
+         * Assets Commands
+         */
+        Commands\Assets\GetAssetsCommand::class,
+        /**
+         * Corp Commands
+         */
+        Commands\Corps\GetCorpsCommand::class,
+        /**
+         * Eve Commands
+         */
         Commands\Eve\ItemPricesUpdateCommand::class,
+        /**
+         * Finances Commands
+         */
+        Commands\Finances\HoldingFinancesCommand::class,
+        Commands\Finances\SovBillsCommand::class,
+        /**
+         * Flex Commands
+         */
+        Commands\Flex\FlexStructureCommand::class,
+        /**
+         * Moon Commands
+         */
+        Commands\Moons\MoonsUpdateCommand::class,
         /**
          * Rental Moon Commands
          */
         Commands\RentalMoons\AllianceRentalMoonInvoiceCreationCommand::class,
         Commands\RentalMoons\AllianceRentalMoonUpdatePricingCommand::class,
+        /**
+         * Structures Command
+         */
+        Commands\Structures\GetStructuresCommand::class,
     ];
 
     /**
