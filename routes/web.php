@@ -77,6 +77,11 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/logistics/fuel/structures', 'Logistics\FuelController@displayStructures');
 
     /**
+     * Mining Moon Tax display pages
+     */
+    //Route::get('/mining/display', 'Mining\MiningsController@displayMiningTax');
+
+    /**
      * Moon Controller display pages
      */
     Route::get('/moons/display/rentals', 'Moons\MoonsController@displayRentalMoons');
