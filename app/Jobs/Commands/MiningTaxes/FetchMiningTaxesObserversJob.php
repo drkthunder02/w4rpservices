@@ -2,11 +2,22 @@
 
 namespace App\Jobs\Commands\MiningTaxes;
 
+//Internal Library
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Log;
+
+//App Library
+use Seat\Eseye\Exceptions\RequestFailedException;
+use App\Library\Esi\Esi;
+use App\Library\Lookups\LookupHelper;
+use App\Library\Structures\StructureHelper;
+
+//App Models
+use App\Models\MiningTax\Observer;
 
 class FetchMiningTaxesObserversJob implements ShouldQueue
 {
@@ -57,21 +68,58 @@ class FetchMiningTaxesObserversJob implements ShouldQueue
     {
         //Declare variables
         $sHelper = new StructureHelper($this->charId, $this->corpId);
+        $lookup = new LookupHelper;
+        $esiHelper = new Esi;
+
+        //Get the configuration from the main site
+        $config = config('esi');
+
+        //Check for the esi scope
+        if(!$esiHelper->HaveEsiScope($this->charId, 'esi-industry.read_corporation_mining.v1') || !$esiHelper->HaveEsiScope($this->charId, 'esi-universe.read_structures.v1')) {
+            Log::critical('Esi scopes were not found for FetchMiningTaxesObserversJob.');
+            return;
+        }
+
+        //Get the refresh token for the character
+        $refreshToken = $esiHelper->GetRefreshToken($this->charId);
+        //Get the esi variable
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+
+        try {
+            $response = $esi->invoke('get', '/corporations/{corporation_id}/mining/observers', [
+                'corporation_id' => $this->corpId,
+            ]);
+        } catch(RequestFailedException $e) {
+            Log::critical("Failed to get moon observers in FetchMiningTaxesObservers");
+        }
+
+        //Run through the mining observers, and add them to the database
+        foreach($response as $observer) {
+            //Count how many observers have the observer_id stated.
+            //May change this to a more efficient function later
+            $count = Observer::where([
+                'observer_id' => $observer->observer_id,
+            ])->count();
+
+            if($count == 0) {
+                $obs = new Observer;
+                $obs->last_updated = $observer->last_updated;
+                $obs->observer_id = $observer->observer_id;
+                $obs->observer_type = $observer->observer_type;
+                $obs->save();
+            } else {
+                Observer::where([
+                    'observer_id' => $observer->observer_id,
+                ])->update([
+                    'last_updated' => $observer->last_updated,
+                ]);
+            }
+        }
 
         /**
-         * Remove the current observers from the database.
+         * Cleanup stale data that hasn't been updated in at least 1 week.
          */
-
-        /**
-         * Create the esi call to get the current observers
-         */
-
-        /**
-         * Add the current observers in the database
-         */
-
-        /**
-         * Cleanup
-         */
+        $date = Carbon::now()->subDay(7);
+        Observer::where('updated_at', '<', $date)->delete();
     }
 }
