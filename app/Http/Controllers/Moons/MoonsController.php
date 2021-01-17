@@ -23,7 +23,7 @@ use App\Library\Moons\MoonCalc;
 use App\Library\Lookups\LookupHelper;
 
 //Jobs
-use App\Jobs\ProcessSendEveMailJob;
+use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
 class MoonsController extends Controller
 {

@@ -4,7 +4,6 @@ namespace App\Console\Commands\Data;
 
 //Internal Library
 use Illuminate\Console\Command;
-use Commands\Library\CommandHelper;
 
 //Models
 use App\Models\Corporation\AllianceCorp;
@@ -47,11 +46,6 @@ class GetCorpsCommand extends Command
      */
     public function handle()
     {
-        //Create the command helper container
-        $task = new CommandHelper('CorpJournal');
-        //Add the entry into the jobs table saying the job is starting
-        $task->SetStartStatus();
-
         //Declare some variables
         $esiHelper = new Esi;
         
@@ -82,8 +76,5 @@ class GetCorpsCommand extends Command
             $entry->name = $corpInfo->name;
             $entry->save();
         }
-
-        //Mark the job as finished
-        $task->SetStopStatus();
     }
 }

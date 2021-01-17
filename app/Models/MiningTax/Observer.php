@@ -4,10 +4,10 @@ namespace App\Models\MiningTax;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ledger extends Model
+class Observer extends Model
 {
     //Table Name
-    protected $table = 'alliance_mining_tax_ledgers';
+    protected $table = 'alliance_mining_tax_observers';
 
     //Timestamps
     public $timestamps = true;
@@ -18,10 +18,8 @@ class Ledger extends Model
      * @var array
      */
     protected $fillable = [
-        'character_id',
         'last_updated',
-        'type_id',
-        'ore_name',
-        'quantity',
+        'observer_id',
+        'observer_type',
     ];
 }

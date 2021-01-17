@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Stock;
+namespace App\Models\Structure;
 
 use Illuminate\Database\Eloquent\Model;
 

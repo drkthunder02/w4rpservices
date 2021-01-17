@@ -10,7 +10,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 
 //Jobs
-use App\Jobs\ProcessSendEveMailJob;
+use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
 //Seat Stuff
 use Seat\Eseye\Cache\NullCache;

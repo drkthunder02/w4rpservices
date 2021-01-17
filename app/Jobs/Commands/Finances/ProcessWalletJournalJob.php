@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Commands\Finances;
 
 //Internal Libraries
 use Illuminate\Bus\Queueable;

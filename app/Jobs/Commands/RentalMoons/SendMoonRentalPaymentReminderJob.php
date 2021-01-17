@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use App\Library\Lookups\LookupHelper;
 
 //Jobs
-use App\Jobs\ProcessSendEvveMailJob;
+use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
 //Models
 use App\Models\MoonRentals\AllianceRentalMoon;

@@ -7,7 +7,7 @@ use DB;
 use Log;
 
 //Job
-use App\Jobs\ProcessAssetsJob;
+use App\Jobs\Commands\Structures\ProcessAssetsJob;
 
 //Library
 use App\Library\Esi\Esi;
@@ -48,49 +48,13 @@ class GetAssetsCommand extends Command
      */
     public function handle()
     {
-        $assets = null;
-        $pages = 0;
-
         //Create the command helper container
         $task = new CommandHelper('GetAssets');
         //Add the entry into the jobs table saying the job is starting
         $task->SetStartStatus();
 
-        //Setup the esi authentication container
-        $config = config('esi');
+        ProcessAssetsJob::dispatch($charId, $corpId)->onQueue('assets');
 
-        //Declare some variables
-        $charId = $config['primary'];
-        $corpId = 98287666;
-
-        //ESI Scope Check
-        $esiHelper = new Esi();
-        $assetScope = $esiHelper->HaveEsiScope($config['primary'], 'esi-assets.read_corporation_assets.v1');
-
-        if($assetScope == false) {
-            Log::critical("Scope check for esi-assets.read_corporation_assets.v1 failed.");
-            return null;
-        }
-        
-        //Get the refresh token from the database
-        $token = $esiHelper->GetRefreshToken($charId);
-        //Create the authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
-
-        try {
-            $assets = $esi->page(1)
-                          ->invoke('get', '/corporations/{corporation_id}/assets/', [
-                              'corporation_id' => $corpId,
-                          ]);
-        } catch (RequestFailedException $e) {
-            Log::critical("Failed to get asset list.");
-            return null;
-        }
-
-        $pages = $assets->pages;
-        
-        for($i = 1; $i <= $pages; $i++) {
-            ProcessAssetsJob::dispatch($charId, $corpId, $i)->onQueue('assets');
-        }
+        $task->SetStopStatus();
     }
 }

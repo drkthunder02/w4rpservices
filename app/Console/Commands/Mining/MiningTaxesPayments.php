@@ -1,30 +1,24 @@
 <?php
 
-namespace App\Console\Commands\Data;
+namespace App\Console\Commands;
 
-//Internal Library
 use Illuminate\Console\Command;
 
-//Models
-use App\Models\Structure\Structure;
-use App\Models\Structure\Service;
-use App\Models\Structure\Asset;
-
-class EmptyJumpBridges extends Command
+class MiningTaxesPayments extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'data:EmptyJumpBridges';
+    protected $signature = 'command:name';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Reset the jump bridge fuel related tables.';
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
@@ -39,12 +33,10 @@ class EmptyJumpBridges extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
     {
-        Structure::truncate();
-        Service::truncate();
-        Asset::truncate();
+        return 0;
     }
 }

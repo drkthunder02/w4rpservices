@@ -4,11 +4,6 @@ namespace App\Console\Commands\Data;
 
 //Internal Library
 use Illuminate\Console\Command;
-use Carbon\Carbon;
-use Log;
-
-//Library
-use Commands\Library\CommandHelper;
 
 //Jobs
 use App\Jobs\Commands\Moons\PurgeMoonLedgerJob;
@@ -46,11 +41,6 @@ class PurgeCorpMoonLedgers extends Command
      */
     public function handle()
     {
-        $task = new CommandHelper('PurgeCorpLedgers');
-        $task->SetStartStatus();
-
         PurgeMoonLedgerJob::dispatch();
-
-        $task->SetStopStatus();
     }
 }

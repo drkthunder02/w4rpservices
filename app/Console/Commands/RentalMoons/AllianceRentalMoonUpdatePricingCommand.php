@@ -4,10 +4,6 @@ namespace App\Console\Commands\RentalMoons;
 
 //Internal Library
 use Illuminate\Console\Command;
-use Log;
-
-//Library
-use Commands\Library\CommandHelper;
 
 //Job
 use App\Jobs\Commands\RentalMoons\UpdateMoonRentalPrice;
@@ -45,12 +41,6 @@ class AllianceRentalMoonUpdatePricingCommand extends Command
      */
     public function handle()
     {
-        //Setup the task handler
-        $task = new CommandHelper('AllianceRentalMoonPriceUpdater');
-        $task->SetStartStatus();
-
         UpdateMoonRentalPrice::dispatch();
-
-        $task->SetStopStatus();
     }
 }

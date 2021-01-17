@@ -9,7 +9,7 @@ use Log;
 use Carbon\Carbon;
 
 //Jobs
-use App\Jobs\ProcessSendEveMailJob;
+use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
 //Library Helpers
 use App\Library\Lookups\LookupHelper;

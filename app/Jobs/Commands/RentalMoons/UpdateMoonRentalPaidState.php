@@ -18,7 +18,7 @@ use App\Library\Lookups\LookupHelper;
 use App\Models\MoonRentals\AllianceRentalMoon;
 
 //Jobs
-use App\Jobs\ProcessSendEveMailJob;
+use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
 class UpdateMoonRentalPaidState implements ShouldQueue
 {

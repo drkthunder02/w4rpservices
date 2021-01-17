@@ -13,24 +13,22 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 
 //Models
 use App\Models\Jobs\JobStatus;
-use App\Models\Stock\Asset;
+use App\Models\Structure\Asset;
 
 class AssetHelper {
 
     private $charId;
     private $corpId;
-    private $page;
 
-    public function __construct($char, $corp, $pg = null) {
+    public function __construct($char, $corp) {
         $this->charId = $char;
         $this->corpId = $corp;
-        $this->page = $pg;
-    }
+    }    
 
     /**
      * Get Assets By Page in order to store in the database
      */
-    public function GetAssetsByPage() {
+    public function GetAssetsByPage($page) {
         //Declare the variable for the esi helper
         $esiHelper = new Esi;
 

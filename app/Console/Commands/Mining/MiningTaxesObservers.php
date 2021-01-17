@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Console\Commands\Mining;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class MiningTaxesCommand extends Command
+class MiningTaxesObservers extends Command
 {
     /**
      * The name and signature of the console command.

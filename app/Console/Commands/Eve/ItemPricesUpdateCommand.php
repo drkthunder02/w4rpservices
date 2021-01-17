@@ -3,10 +3,8 @@
 namespace App\Console\Commands\Eve;
 
 use Illuminate\Console\Command;
-use Log;
 
 //Library
-use Commands\Library\CommandHelper;
 use App\Library\Moons\MoonCalc;
 
 //Job
@@ -45,14 +43,9 @@ class ItemPricesUpdateCommand extends Command
      */
     public function handle()
     {
-        $task = new CommandHelper('ItemPriceUpdate');
-        $task->SetStartStatus();
-
         $moonHelper = new MoonCalc;
         $moonHelper->FetchNewPrices();
 
         //ItemPricesUpdateJob::dispatch()->onQueue('default');
-
-        $task->SetStopStatus();
     }
 }

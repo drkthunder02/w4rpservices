@@ -5,14 +5,10 @@ namespace App\Console\Commands\Moons;
 //Internal Library
 use Illuminate\Console\Command;
 use Carbon\Carbon;
-use Log;
 
 //Jobs
 use App\Jobs\Commands\Moons\FetchMoonLedgerJob;
 use App\Jobs\Commands\Moons\FetchMoonObserverJob;
-
-//Library
-use Commands\Library\CommandHelper;
 
 //Models
 use App\Models\Esi\EsiScope;
@@ -54,11 +50,6 @@ class MoonsUpdateCommand extends Command
         $delay = 0;
         $characters = array();
 
-        //Create the new command helper container
-        $task = new CommandHelper('MoonsUpdateCommand');
-        //Set the task start status
-        $task->SetStartStatus();
-
         //Get all of the characters who have registered structures for moon ledgers
         $miningChars = EsiScope::where([
             'scope' => 'esi-industry.read_corporation_mining.v1',
@@ -83,8 +74,5 @@ class MoonsUpdateCommand extends Command
             //Fetch all of the corp ledgers with the job dispatch
             FetchMoonLedgerJob::dispatch($charId);
         }
-
-        //Set task done status
-        $task->SetStopStatus();
     }
 }

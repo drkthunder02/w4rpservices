@@ -3,13 +3,11 @@
 namespace App\Console\Commands\Finances;
 
 use Illuminate\Console\Command;
-use Log;
 
-use Commands\Library\CommandHelper;
 use App\Library\Finances\Helper\FinanceHelper;
 
 //Jobs
-use App\Jobs\ProcessWalletJournalJob;
+use App\Jobs\Commands\Finances\ProcessWalletJournalJob;
 
 class HoldingFinancesCommand extends Command
 {
@@ -44,12 +42,6 @@ class HoldingFinancesCommand extends Command
      */
     public function handle()
     {
-        //Create the command helper container
-        $task = new CommandHelper('HoldingFinances');
-
-        //Add the entry into the jobs table saying the job is starting
-        $task->SetStartStatus();
-
         //Setup the Finances container
         $finance = new FinanceHelper();
 
@@ -71,8 +63,5 @@ class HoldingFinancesCommand extends Command
         for($i = 1; $i <= $pages; $i++) {
             ProcessWalletJournalJob::dispatch(6, $config['primary'], $i)->onQueue('journal');
         }
-
-        //Mark the job as finished
-        $task->SetStopStatus();
     }
 }

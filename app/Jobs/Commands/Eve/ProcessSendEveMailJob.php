@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Commands\Eve;
 
 //Internal Library
 use Illuminate\Bus\Queueable;

@@ -3,22 +3,9 @@
 namespace App\Console\Commands\Structures;
 
 use Illuminate\Console\Command;
-use Log;
-
-//Library
-use App\Library\Structures\StructureHelper;
-use App\Library\Esi\Esi;
-use Commands\Library\CommandHelper;
-use Seat\Eseye\Exceptions\RequestFailedException;
 
 //Job
-use App\Jobs\ProcessStructureJob;
-
-//Models
-use App\Models\Esi\EsiScope;
-use App\Models\Esi\EsiToken;
-use App\Models\Structure\Structure;
-use App\Models\Structure\Service;
+use App\Jobs\Commands\Structures\ProcessStructureJob;
 
 class GetStructuresCommand extends Command
 {
@@ -53,69 +40,14 @@ class GetStructuresCommand extends Command
      */
     public function handle()
     {
-        //Create the command helper container
-        $task = new CommandHelper('GetStructures');
-        //Add the entry into the jobs table saying the job is starting
-        $task->SetStartStatus();
-
         //Get the esi config
         $config = config('esi');
 
         //Declare some variables
         $charId = $config['primary'];
         $corpId = 98287666;
-        $sHelper = new StructureHelper($charId, $corpId);
-        $structures = null;
 
-        //ESI Scope Check
-        $esiHelper = new Esi;
-        $structureScope = $esiHelper->HaveEsiScope($charId, 'esi-universe.read_structures.v1');
-        $corpStructureScope = $esiHelper->HaveEsiScope($charId, 'esi-corporations.read_structures.v1');
-
-        //Check scopes
-        if($structureScope == false || $corpStructureScope == false) {
-            if($structureScope == false) {
-                Log::critical("Scope check for esi-universe.read_structures.v1 has failed.");
-            }
-            if($corpStructureScope == false) {
-                Log::critical("Scope check for esi-corporations.read_structures.v1 has failed.");
-            }
-            return null;
-        }
-
-        //Get the refresh token from the database
-        $token = $esiHelper->GetRefreshToken($charId);
-        //Create the esi authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
-
-        //Set the current page
-        $currentPage = 1;
-        //Set our default total pages, and we will refresh this later
-        $totalPages = 1;
-
-        //Try to get the ESI data
-        try {
-            $structures = $esi->page($currentPage)
-                              ->invoke('get', '/corporations/{corporation_id}/structures/', [
-                                'corporation_id' => $corpId,
-                                ]);
-        } catch (RequestFailedException $e) {
-            Log::critical("Failed to get structure list.");
-            return null;
-        }
-
-        //Get the total number of pages of all the structures
-        $totalPages = $structures->pages;
-
-        //Truncate the structures and the structure services in order to prepare to put new structures in the database
-        Structure::truncate();
-        Service::truncate();
-
-        for($i = 1; $i <= $totalPages; $i++) {
-            ProcessStructureJob::dispatch($charId, $corpId, $currentPage)->onQueue('structures');
-        }      
-
-        //Mark the job as finished
-        $task->SetStopStatus();
+        //Dispatch the job to be done when the application has time
+        ProcessStructureJob::dispatch($charId, $corpId);
     }
 }

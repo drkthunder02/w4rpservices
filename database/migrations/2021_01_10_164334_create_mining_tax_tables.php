@@ -15,16 +15,53 @@ class CreateMiningTaxTables extends Migration
     {
         Schema::create('alliance_mining_tax_invoices', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('character_id');
+            $table->string('character_name');
+            $table->unsignedBigInteger('invoice_id');
+            $table->float('invoice_amount');
+            $table->dateTime('date_issued');
+            $table->dateTime('date_due');
+            $table->enum('status', [
+                'Pending',
+                'Paid',
+                'Late',
+                'Paid Late',
+                'Deferred',
+            ]);
+            $table->timestamps();
+        });
+
+        Schema::create('alliance_mining_tax_observers', function (Blueprint $table) {
+            $table->id();
+            $table->dateTime('last_updated');
+            $table->unsignedBigInteger('observer_id');
+            $table->string('observer_type');
             $table->timestamps();
         });
 
         Schema::create('alliance_mining_tax_ledgers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('character_id');
+            $table->dateTime('last_updated');
+            $table->unsignedBigInteger('type_id');
+            $table->string('ore_name');
+            $table->unsignedBigInteger('quantity');
             $table->timestamps();
         });
 
         Schema::create('alliance_mining_tax_payments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('character_id');
+            $table->string('character_name');
+            $table->unsignedBigInteger('invoice_id');
+            $table->float('invoice_amount');
+            $table->float('payment_amount');
+            $table->dateTime('payment_date');
+            $table->enum('status', [
+                'Pending',
+                'Accepted',
+                'Rejected',
+            ]);
             $table->timestamps();
         });
     }

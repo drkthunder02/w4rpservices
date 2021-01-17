@@ -25,7 +25,7 @@ use App\Library\Esi\Esi;
 use App\Library\Lookups\LookupHelper;
 
 //Jobs
-use App\Jobs\ProcessSendEveMailJob;
+use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
 class MoonsAdminController extends Controller
 {

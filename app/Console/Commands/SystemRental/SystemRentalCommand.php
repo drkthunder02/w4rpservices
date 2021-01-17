@@ -7,10 +7,7 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 
 //Jobs
-use App\Jobs\ProcessSendEveMailJob;
-
-//Library
-use Command\Library\CommandHelper;
+use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
 //Models
 use App\Models\Rentals\RentalSystem;
@@ -49,11 +46,6 @@ class SystemRentalCommand extends Command
      */
     public function handle()
     {
-        //Create the new command helper container
-        $task = new CommandHelper('SystemRentalMailer');
-        //Add the entry into the jobs table saying the job has started
-        $task->SetStartStatus();
-
         //Create other variables
         $body = null;
         $delay = 30;
@@ -104,10 +96,6 @@ class SystemRentalCommand extends Command
             //After the mail is dispatched, save the sent mail record
             $this->SaveSentRecord($config['primary'], $subject, $body, (int)$contact->contact_id, 'character');
         }
-
-        //Mark the job as finished
-        $task->SetStopStatus();
-
     }
 
     private function TotalizeCost($systems) {

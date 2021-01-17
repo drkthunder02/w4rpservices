@@ -4,11 +4,7 @@ namespace App\Console\Commands\RentalMoons;
 
 //Internal Library
 use Illuminate\Console\Command;
-use Log;
 use Carbon\Carbon;
-
-//Library
-use Commands\Library\CommandHelper;
 
 //Jobs
 use App\Jobs\Commands\RentalMoons\SendMoonRentalPaymentReminderJob;
@@ -47,17 +43,10 @@ class AllianceRentalMoonInvoiceCreationCommand extends Command
      */
     public function handle()
     {
-        //Set the task as started
-        $task = new CommandHelper('AllianceRentalInvoice');
-        $task->SetStartStatus();
-
         //Send the job for the invoice creation command
         SendMoonRentalPaymentReminderJob::dispatch()->delay(Carbon::now()->addSeconds(10));
 
         //Update the paid state for the moons
         UpdateMoonRentalPaidState::dispatch()->delay(Carbon::now()->addSeconds(600));
-
-        //Set the task as stopped
-        $task->SetStopStatus();
     }
 }

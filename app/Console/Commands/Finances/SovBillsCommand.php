@@ -3,13 +3,12 @@
 namespace App\Console\Commands\Finances;
 
 use Illuminate\Console\Command;
-use Log;
 
-use Commands\Library\CommandHelper;
+
 use App\Library\Finances\Helper\FinanceHelper;
 
 //Jobs
-use App\Jobs\ProcessWalletJournalJob;
+use App\Jobs\Commands\Finances\ProcessWalletJournalJob;
 
 //Models
 use App\Models\Esi\EsiToken;
@@ -71,14 +70,7 @@ class SovBillsCommand extends Command
         $sovBill = new SovBillExpenses;
         $esiHelper = new Esi;
         $finance = new FinanceHelper();
-        $lookup = new LookupHelper;
-
-        //Create the command helper container
-        $task = new CommandHelper('SovBills');
-
-        //Add the entry into the jobs table saying the job is starting
-        $task->SetStartStatus();
-        
+        $lookup = new LookupHelper;        
 
         //Get the esi configuration
         $config = config('esi');
@@ -125,8 +117,5 @@ class SovBillsCommand extends Command
                 }
             }
         }
-
-        //Mark the job as finished
-        $task->SetStopStatus();
     }
 }
