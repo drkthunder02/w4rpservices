@@ -64,37 +64,25 @@ class AssetHelper {
      * Store a new asset record in the database
      */
     public function StoreNewAsset($asset) {
-        //See if we find any assets which already exist
-        $found = Asset::where([
+        Asset::updateOrCreate([
             'item_id' => $asset->item_id,
-        ])->count();
-
-        //If nothing is found 
-        if($found == 0) {
-            $item = new Asset;
-            if(isset($asset->is_blueprint_copy)) {
-                $item->is_blueprint_copy = $asset->is_blueprint_copy;
-            }
-            $item->is_singleton = $asset->is_singleton;
-            $item->item_id = $asset->item_id;
-            $item->location_flag = $asset->location_flag;
-            $item->location_id = $asset->location_id;
-            $item->location_type = $asset->location_type;
-            $item->quantity = $asset->quantity;
-            $item->type_id = $asset->type_id;
-            $item->save();
-        }  else {
-            $this->UpdateAsset($asset);
-        }      
+        ], [
+            'is_blueprint_copy' => $asset->is_blueprint_copy,
+            'is_singleton' => $asset->is_singleton,
+            'item_id' => $asset->item_id,
+            'location_flag' => $asset->location_flag,
+            'location_id' => $asset->location_id,
+            'location_type' => $asset->location_type,
+            'quantity' => $asset->quantity,
+            'type_id' => $asset->type_id,
+        ]);     
     }
 
     /**
      * Purge old data, so we don't run into data issues
      */
     public function PurgeStaleData() {
-        $date = Carbon::now()->subDay(1);
-
-        Asset::where('updated_at', '<', $date)->delete();
+        Asset::where('updated_at', '<', Carbon::now()->subDay())->delete();
     }
 
     /**
@@ -119,24 +107,6 @@ class AssetHelper {
         } else {
             return $asset['quantity'];
         }
-    }
-
-    /**
-     * Update an existing asset based off the esi pull
-     */
-    private function UpdateAsset($asset) {
-
-        Asset::where([
-            'item_id' => $asset->item_id,
-        ])->update([
-            'is_singleton' => $asset->is_singleton,
-            'location_flag' => $asset->location_flag,
-            'location_id' => $asset->location_id,
-            'location_type' => $asset->location_type,
-            'quantity' => $asset->quantity,
-            'type_id' => $asset->type_id,
-            'updated_at' => Carbon::now(),
-        ]);
     }
 }
 

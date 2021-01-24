@@ -80,6 +80,7 @@ class MiningLedgerHelper {
     public function GetMiningStructureInfo($observerId) {
         //Declare variables
         $esiHelper = new Esi;
+        $lookup = new LookupHelper;
 
         //Check for ESI scopes
         if(!$esiHelper->HaveEsiScope($this->charId, 'esi-universe.read_structures.v1')) {
@@ -98,7 +99,7 @@ class MiningLedgerHelper {
             return null;
         }
 
-        $system = $this->GetSolarSystemName($info->solar_system_id);
+        $system = $lookup->SystemIdToName($info->solar_system_id);
 
         return [
             'name' => $info->name,
@@ -161,7 +162,7 @@ class MiningLedgerHelper {
         //Sort through the array and replace character id with name and item id with name
         foreach($items as $item) {
             $charName = $lookup->CharacterIdToName($item->character_id);
-            $typeName = $this->GetItemName($item->type_id);
+            $typeName = $lookup->ItemIdToName($item->type_id);
             $corpName = $lookup->CorporationIdToName($item->recorded_corporation_id);
 
             if(isset($final[$charName])) {
@@ -183,59 +184,5 @@ class MiningLedgerHelper {
 
         return $final;
     }
-
-    /**
-     * Get the type id and return the name of the ore
-     * 
-     * @var typeId
-     * @return string
-     */
-    private function GetItemName($typeId) {
-        //Setup the esi helper variable
-        $esiHelper = new Esi;
-
-        //Setup the authentication container for ESI
-        $esi = $esiHelper->SetupEsiAuthentication();
-
-        try {
-            $item = $esi->invoke('get', '/universe/types/{type_id}/', [
-                'type_id' => $typeId,
-            ]);
-        } catch(RequestFailedException $e) {
-            return null;
-        }
-
-        return $item->name;
-    }
-
-    /**
-     * Get the solar system name
-     * 
-     * @var systemId
-     * @return string
-     */
-    private function GetSolarSystemName($systemId) {
-        //Setup the esi helper variable
-        $esiHelper = new Esi;
-
-        //Setup the authentication container for ESI
-        $esi = $esiHelper->SetupEsiAuthentication();
-
-        //Attempt to get the solar system name from ESI
-        try {
-            $solar = $esi->invoke('get', '/universe/systems/{system_id}/', [
-                'system_id' => $systemId,
-            ]);
-        } catch(RequestFailedException $e) {
-            $solar = null;
-        }
-
-        if($solar != null) {
-            return $solar->name;
-        } else {
-            return null;
-        }
-    }
-
 }
 ?>

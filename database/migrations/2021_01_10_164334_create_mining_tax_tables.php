@@ -42,6 +42,7 @@ class CreateMiningTaxTables extends Migration
         Schema::create('alliance_mining_tax_ledgers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('character_id');
+            $table->string('character_name');
             $table->dateTime('last_updated');
             $table->unsignedBigInteger('type_id');
             $table->string('ore_name');
