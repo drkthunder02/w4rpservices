@@ -12,14 +12,21 @@ class CreateMiningTaxesInvoiceJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    //Private Variables
+    private $ores;
+    private $totalPrices;
+    private $charId;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($ores, $totalPrice, $charId)
     {
-        //
+        $this->ores = $ores;
+        $this->totalPrice = $totalPrice;
+        $this->charId = $charId;
     }
 
     /**

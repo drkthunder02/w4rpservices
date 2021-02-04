@@ -33,6 +33,30 @@ class LookupHelper {
         $this->esi = $esiHelper->SetupEsiAuthentication();
     }
 
+    public function ItemNameToId($itemName) {
+        $item = ItemLookup::where([
+            'name' => $itemName,
+        ])->first();
+
+        if($item != null) {
+            return $item->type_id;
+        } else {
+            try {
+                $response = $this->esi->setBody(array(
+                    $itemName,
+                ))->invoke('post', '/universe/ids/');
+            } catch(RequestFailedException $e) {
+                Log::warning('Failed to get item information from /universe/');
+            }
+
+            if(isset($response->inventory_types)) {
+                return $response->inventory_types[0]->id;
+            } else {
+                return null;
+            }
+        }
+    }
+
     public function ItemIdToName($itemId) {
         //Check if the item is stored in our own database first
         $item = $this->LookupItem($itemId);

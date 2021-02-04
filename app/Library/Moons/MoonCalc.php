@@ -14,6 +14,9 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Log;
 
+//Library
+use App\Library\Lookups\LookupHelper;
+
 //Models
 use App\Models\Moon\Config;
 use App\Models\Moon\ItemComposition;
@@ -201,6 +204,88 @@ class MoonCalc {
 
         //Return the calculated data
         return $units;
+    }
+
+    /**
+     * Calculate the per item price of a unit of ore
+     */
+    public function CalculateOrePrice($oreId) {
+        //Declare variables
+        $lookupHelper = new LookupHelper;
+        $finalName = '';
+
+        //Get the price of the moongoo
+        $atmosphericGasesPrice = MineralPrice::where(['ItemId' => 16634])->where('Time', '>', $pastTime)->avg('Price');
+        $evaporiteDepositsPirce = MineralPrice::where(['ItemId' => 16635])->where('Time', '>', $pastTime)->avg('Price');
+        $hydrocarbonsPrice = MineralPrice::where(['ItemId' => 16633])->where('Time', '>', $pastTime)->avg('Price');
+        $silicatesPrice = MineralPrice::where(['ItemId' => 16636])->where('Time', '>', $pastTime)->avg('Price');
+        $cobaltPrice = MineralPrice::where(['ItemId' => 16640])->where('Time', '>', $pastTime)->avg('Price');
+        $scandiumPrice = MineralPrice::where(['ItemId' => 16639])->where('Time', '>', $pastTime)->avg('Price');
+        $titaniumPrice = MineralPrice::where(['ItemId' => 16638])->where('Time', '>', $pastTime)->avg('Price');
+        $tungstenPrice = MineralPrice::where(['ItemId' => 16637])->where('Time', '>', $pastTime)->avg('Price');
+        $cadmiumPrice = MineralPrice::where(['ItemId' => 16643])->where('Time', '>', $pastTime)->avg('Price');
+        $platinumPrice = MineralPrice::where(['ItemId' => 16644])->where('Time', '>', $pastTime)->avg('Price');
+        $vanadiumPrice = MineralPrice::where(['ItemId' => 16642])->where('Time', '>', $pastTime)->avg('Price');
+        $chromiumPrice = MineralPrice::where(['ItemId' => 16641])->where('Time', '>', $pastTime)->avg('Price');
+        $technetiumPrice = MineralPrice::where(['ItemId' => 16649])->where('Time', '>', $pastTime)->avg('Price');
+        $hafniumPrice = MineralPrice::where(['ItemId' => 16648])->where('Time', '>', $pastTime)->avg('Price');
+        $caesiumPrice = MineralPrice::where(['ItemId' => 16647])->where('Time', '>', $pastTime)->avg('Price');
+        $mercuryPrice = MineralPrice::where(['ItemId' => 16646])->where('Time', '>', $pastTime)->avg('Price');
+        $dysprosiumPrice = MineralPrice::where(['ItemId' => 16650])->where('Time', '>', $pastTime)->avg('Price');
+        $neodymiumPrice = MineralPrice::where(['ItemId' => 16651])->where('Time', '>', $pastTime)->avg('Price');
+        $promethiumPrice = MineralPrice::where(['ItemId' => 16652])->where('Time', '>', $pastTime)->avg('Price');
+        $thuliumPrice = MineralPrice::where(['ItemId' => 16653])->where('Time', '>', $pastTime)->avg('Price');
+
+        //Get the name through the lookup table
+        $oreName = $lookupHelper->ItemIdToName($oreId);
+
+        //Strip the prefix from the ore name if it has one.
+        //Then change the ore id if necessary
+        $tempName = str_split($oreName);
+        if(sizeof($tempName) == 1) {
+            $finalName = $tempName[0];
+        } else {
+            $finalName = $tempName[sizeof($tempName) - 1];
+            $oreId = $lookupHelper->ItemNameToId($finalName);
+        }
+
+        //Get the item composition for the ore
+        $composition = ItemComposition::where('ItemId', $oreId)->first();
+
+        //Calculate the Batch Price
+        $batchPrice = ( ($composition->Tritanium * $tritaniumPrice) +
+                        ($composition->Pyerite * $pyeritePrice) +
+                        ($composition->Mexallon * $mexallonPrice) +
+                        ($composition->Isogen * $isogenPrice) +
+                        ($composition->Nocxium * $nocxiumPrice) +
+                        ($composition->Zydrine * $zydrinePrice) +
+                        ($composition->Megacyte * $megacytePrice) +
+                        ($composition->AtmosphericGases * $atmosphericGasesPrice) +
+                        ($composition->EvaporiteDeposits * $evaporiteDepositsPirce) +
+                        ($composition->Hydrocarbons * $hydrocarbonsPrice) +
+                        ($composition->Silicates * $silicatesPrice) +
+                        ($composition->Cobalt * $cobaltPrice) +
+                        ($composition->Scandium * $scandiumPrice) +
+                        ($composition->Titanium * $titaniumPrice) +
+                        ($composition->Tungsten * $tungstenPrice) +
+                        ($composition->Cadmium * $cadmiumPrice) +
+                        ($composition->Platinum * $platinumPrice) +
+                        ($composition->Vanadium * $vanadiumPrice) +
+                        ($composition->Chromium * $chromiumPrice)+
+                        ($composition->Technetium * $technetiumPrice) +
+                        ($composition->Hafnium * $hafniumPrice) +
+                        ($composition->Caesium * $caesiumPrice) +
+                        ($composition->Mercury * $mercuryPrice) +
+                        ($composition->Dysprosium * $dysprosiumPrice) +
+                        ($composition->Neodymium * $neodymiumPrice) + 
+                        ($composition->Promethium * $promethiumPrice) +
+                        ($composition->Thulium * $thuliumPrice));
+
+        //Take the batch price, and divide by batch size to get unit price
+        $price = $batchPrice / $composition->BatchSize;
+
+        //Return the price to the calling function
+        return $price;
     }
 
     /**

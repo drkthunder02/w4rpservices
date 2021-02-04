@@ -47,6 +47,10 @@ class CreateMiningTaxTables extends Migration
             $table->unsignedBigInteger('type_id');
             $table->string('ore_name');
             $table->unsignedBigInteger('quantity');
+            $table->enum('invoiced', [
+                'No',
+                'Yes',
+            ])->default('No');
             $table->timestamps();
         });
 
