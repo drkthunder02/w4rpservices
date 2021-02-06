@@ -8,6 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Spatie\RateLimitedMiddleware\RateLimited;
 use Log;
 use Carbon\Carbon;
 
@@ -29,17 +30,17 @@ class ProcessSendEveMailJob implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     * With new rate limiting, we shouldn't use this timeout
      * @var int
      */
-    public $timeout = 3600;
+    //public $timeout = 3600;
 
     /**
      * Retries
-     * 
+     * With new rate limiting, we shouldn't use this timeout
      * @var int
      */
-    public $retries = 3;
+    //public $retries = 3;
 
     private $sender;
     private $body;
@@ -105,6 +106,32 @@ class ProcessSendEveMailJob implements ShouldQueue
         $this->SaveSentRecord($this->sender, $this->subject, $this->body, $this->recipient, $this->recipient_type);
         
         $this->delete();
+    }
+
+    /**
+     * Middleware to only allow 4 jobs to be run per minute
+     * After a failed job, the job is released back into the queue for at least 1 minute x the number of times attempted
+     * 
+     */
+    public function middleware() {
+        
+        //Allow 4 jobs per minute, and implement a rate limited backoff on failed jobs
+        $rateLimitedMiddleware = (new RateLimited())
+            ->allow(4)
+            ->everySeconds(60)
+            ->releaseAfterOneMinute()
+            ->releaseAfterBackoff($this->attempts());
+
+        return [new RateLimited()];
+    }
+
+    /*
+    * Determine the time at which the job should timeout.
+    *
+    */
+    public function retryUntil() :  \DateTime
+    {
+        return Carbon::now()->addDay();
     }
 
     /**
