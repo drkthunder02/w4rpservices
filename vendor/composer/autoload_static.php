@@ -84,6 +84,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
             'Symfony\\Component\\ErrorHandler\\' => 31,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
+            'Spatie\\RateLimitedMiddleware\\' => 29,
             'Seat\\Eseye\\' => 11,
         ),
         'R' => 
@@ -317,6 +318,10 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
+        'Spatie\\RateLimitedMiddleware\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/laravel-rate-limited-job-middleware/src',
+        ),
         'Seat\\Eseye\\' => 
         array (
             0 => __DIR__ . '/..' . '/eveseat/eseye/src',
@@ -547,6 +552,10 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Console\\Commands\\Files\\UpdateItemCompositionFromSDECommand' => __DIR__ . '/../..' . '/app/Console/Commands/Files/UpdateItemCompositionFromSDECommand.php',
         'App\\Console\\Commands\\Finances\\HoldingFinancesCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Finances/HoldingFinancesCommand.php',
         'App\\Console\\Commands\\Finances\\SovBillsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Finances/SovBillsCommand.php',
+        'App\\Console\\Commands\\MiningTaxes\\MiningTaxesInvoices' => __DIR__ . '/../..' . '/app/Console/Commands/MiningTaxes/MiningTaxesInvoices.php',
+        'App\\Console\\Commands\\MiningTaxes\\MiningTaxesLedgers' => __DIR__ . '/../..' . '/app/Console/Commands/MiningTaxes/MiningTaxesLedgers.php',
+        'App\\Console\\Commands\\MiningTaxes\\MiningTaxesObservers' => __DIR__ . '/../..' . '/app/Console/Commands/MiningTaxes/MiningTaxesObservers.php',
+        'App\\Console\\Commands\\MiningTaxes\\MiningTaxesPayments' => __DIR__ . '/../..' . '/app/Console/Commands/MiningTaxes/MiningTaxesPayments.php',
         'App\\Console\\Commands\\Moons\\MoonsUpdateCommand' => __DIR__ . '/../..' . '/app/Console/Commands/Moons/MoonsUpdateCommand.php',
         'App\\Console\\Commands\\RentalMoons\\AllianceRentalMoonInvoiceCreationCommand' => __DIR__ . '/../..' . '/app/Console/Commands/RentalMoons/AllianceRentalMoonInvoiceCreationCommand.php',
         'App\\Console\\Commands\\RentalMoons\\AllianceRentalMoonUpdatePricingCommand' => __DIR__ . '/../..' . '/app/Console/Commands/RentalMoons/AllianceRentalMoonUpdatePricingCommand.php',
@@ -4671,6 +4680,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'SolarSystemSeeder' => __DIR__ . '/../..' . '/database/seeds/SolarSystemSeeder.php',
+        'Spatie\\RateLimitedMiddleware\\RateLimited' => __DIR__ . '/..' . '/spatie/laravel-rate-limited-job-middleware/src/RateLimited.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'Symfony\\Component\\Console\\Application' => __DIR__ . '/..' . '/symfony/console/Application.php',
         'Symfony\\Component\\Console\\Color' => __DIR__ . '/..' . '/symfony/console/Color.php',

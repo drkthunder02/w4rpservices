@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'f11360e5e8490dfa475f7ba449245d5eae66c5be',
+    'reference' => 'df510b86806490c95eaa14064e89e5968cc541e0',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -463,7 +463,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'f11360e5e8490dfa475f7ba449245d5eae66c5be',
+      'reference' => 'df510b86806490c95eaa14064e89e5968cc541e0',
     ),
     'laravel/socialite' => 
     array (
@@ -927,6 +927,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '99732be0ddb3361e16ad77b68ba41efc8e979019',
+    ),
+    'spatie/laravel-rate-limited-job-middleware' => 
+    array (
+      'pretty_version' => '1.5.0',
+      'version' => '1.5.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '7b72592e0d823e2948c413f5e661de0fd3431db5',
     ),
     'spomky-labs/base64url' => 
     array (
