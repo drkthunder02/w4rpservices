@@ -74,6 +74,9 @@ class CalculateMiningTaxesJob implements ShouldQueue
                 $totalPrice += $price * $quantity;
             }
 
+            //Reduce the total price by the take percentage
+            $totalPrice = $totalPrice * 0.20;
+
             //Create the invoice job
             CreateMiningTaxesInvoiceJob::dispatch($ores, $totalPrice, $char->character_id);
         }
