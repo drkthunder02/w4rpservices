@@ -44,8 +44,7 @@ class StructureHelper {
     }
 
     public function GetExtractions() {
-        //Declare some variables
-
+        //Try to get the ESI data
     }
 
     public function GetStructuresByPage($page) {
