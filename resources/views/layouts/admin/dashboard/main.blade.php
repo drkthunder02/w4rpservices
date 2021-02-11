@@ -20,15 +20,9 @@
           <!-- General Administrative Stuff -->
           @include('layouts.admin.sidebarmenu.general')
           <!-- End General Administrative Stuff -->
-          <!-- Moon Admin -->
-          @include('layouts.admin.sidebarmenu.moon')
-          <!-- End Moon Admin -->
           <!-- SRP Admin -->
           @include('layouts.admin.sidebarmenu.srp')
           <!-- End SRP Admin -->
-          <!-- System Rental Admin -->
-          @include('layouts.admin.sidebarmenu.rentalsystem')
-          <!-- End System Rental Admin -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

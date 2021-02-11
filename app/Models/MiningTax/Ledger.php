@@ -25,5 +25,6 @@ class Ledger extends Model
         'quantity',
         'amount',
         'invoiced',
+        'invoice_id',
     ];
 }

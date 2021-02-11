@@ -22,18 +22,12 @@
           @include('layouts.user.sidebarmenu.general')
           @endif
           <!-- End General Items -->
-          <!-- Moon Items -->
-          @include('layouts.user.sidebarmenu.moon')
-          <!-- End Moon Items -->
           <!-- SRP Items -->
           @include('layouts.user.sidebarmenu.srp')
           <!-- SRP Items -->
           <!-- Contracts -->
           @include('layouts.user.sidebarmenu.contracts')
           <!-- End Contracts -->
-          <!-- Structures -->
-          @include('layouts.user.sidebarmenu.structures')
-          <!-- End SRP Admin -->
           <!-- Blacklist -->
           @include('layouts.user.sidebarmenu.blacklist')
           <!-- End Blacklist -->

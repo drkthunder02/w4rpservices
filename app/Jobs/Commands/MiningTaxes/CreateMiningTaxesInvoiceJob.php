@@ -59,6 +59,8 @@ class CreateMiningTaxesInvoiceJob implements ShouldQueue
         //Generate an invoice id
         $invoiceId = uniqid();
 
+        //Get the mining ledgers, and totalize the price
+
         $invoice = new Invoice;
         $invoice->character_id = $this->charId;
         $invoice->character_name = $charName;
@@ -75,6 +77,7 @@ class CreateMiningTaxesInvoiceJob implements ShouldQueue
             'invoiced' => 'No',
         ])->update([
             'invoiced' => 'Yes',
+            'invoice_id' => $invoiceId,
         ]);
 
         $body .= "Dear Miner,<br><br>";

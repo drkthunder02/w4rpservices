@@ -27,6 +27,7 @@ class CreateMiningTaxTables extends Migration
                 'Late',
                 'Paid Late',
                 'Deferred',
+                'Deleted',
             ])->default('Pending');
             $table->timestamps();
         });
