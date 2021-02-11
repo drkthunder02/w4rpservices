@@ -196,6 +196,7 @@ class DashboardController extends Controller
         /**
          * Mining Tax Items
          */
+        /*
         $invoice = Ledger::where([
             'character_id' => auth()->user()->getId(),
             'invoiced' => 'No',
@@ -209,7 +210,7 @@ class DashboardController extends Controller
         foreach($rows as $row) {
             $ores[$row->ore_name] = $ores[$row->ore_name] + $row->quantity;
         }
-
+        */
         return view('dashboard')->with('openCount', $openCount)
                                 ->with('approvedCount', $approvedCount)
                                 ->with('deniedCount', $deniedCount)
