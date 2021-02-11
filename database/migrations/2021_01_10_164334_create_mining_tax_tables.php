@@ -48,6 +48,7 @@ class CreateMiningTaxTables extends Migration
             $table->unsignedBigInteger('type_id');
             $table->string('ore_name');
             $table->unsignedBigInteger('quantity');
+            $table->decimal('amount', 20, 2)->default(0.00);
             $table->enum('invoiced', [
                 'No',
                 'Yes',
@@ -79,6 +80,9 @@ class CreateMiningTaxTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mining_tax_tables');
+        Schema::dropIfExists('alliance_mining_tax_invoices');
+        Schema::dropIfExists('alliance_mining_tax_observers');
+        Schema::dropIfExists('alliance_mining_tax_payments');
+        Schema::dropIfExists('alliance_mining_tax_ledgers');
     }
 }
