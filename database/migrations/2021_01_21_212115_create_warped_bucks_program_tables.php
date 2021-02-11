@@ -14,15 +14,15 @@ class CreateWarpedBucksProgramTables extends Migration
     public function up()
     {
         Schema::create('bucks_character_wallet_entries', function(Blueprint $table) {
-
+            $table->id();
         });
 
         Schema::create('bucks_alliance_systems', function(Blueprint $table) {
-
+            $table->id();
         });
 
         Schema::create('bucks_ratting_daily_pool', function(Blueprint $table) {
-
+            $table->id();
         });
     }
 
@@ -33,6 +33,8 @@ class CreateWarpedBucksProgramTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warped_bucks_program_tables');
+        Schema::dropIfExists('bucks_character_wallet_entries');
+        Schema::dropIfExists('bucks_alliance_systems');
+        Schema::dropIfExists('bucks_ratting_daily_pool');
     }
 }
