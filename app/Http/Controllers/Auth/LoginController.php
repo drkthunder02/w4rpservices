@@ -84,7 +84,7 @@ class LoginController extends Controller
     public function handleProviderCallback() {
         //Get the sso user from the socialite driver
         $ssoUser = Socialite::driver('eveonline')->user();
-        dd($ssoUser);
+        
         if(Auth::check()) {
             //If a refresh token is present, then we are doing a scope callback
             //to update scopes for an access token
