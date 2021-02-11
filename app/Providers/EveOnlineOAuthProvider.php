@@ -35,7 +35,7 @@ class EveOnlineOAuthProvider extends AbstractProvider implements ProviderInterfa
      * @return array
      */
     protected function getUserByToken($token) {
-        $reponse = $this->getHttpClient()->get('https://login.eveonline.com/v2/oauth/verify', [
+        $reponse = $this->getHttpClient()->get('https://login.eveonline.com/oauth/verify', [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
             ],
