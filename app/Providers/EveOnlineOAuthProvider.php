@@ -52,25 +52,15 @@ class EveOnlineOAuthProvider extends AbstractProvider implements ProviderInterfa
      */
     protected function mapUserToObject(array $user) {
 
-        dd($user);
-
         return (new User)->setRaw($user)->map([
             'id' => $user['CharacterID'],
             'name' => $user['CharacterName'],
-            'owner_hash' => $user['CharacterOwnerHash'],
+            'nickname' => $user['CharacterName'],
+            'character_owner_hash' => $user['CharacterOwnerHash'],
             'avatar' => 'https://image.eveonline.com/Character/' . $user['CharacterID'] . '_128.jpg',
+            'token_type' => $user['TokenType'],
+            'expires_on' => $user['ExpiresOn'],
         ]);
-        /*
-        return (new User)->setRaw($user)->map([
-            'id'                   => $character_id,
-            'name'                 => $user['name'],
-            'nickname'             => $user['name'],
-            'character_owner_hash' => $user['owner'],
-            'scopes'               => is_array($user['scp']) ? $user['scp'] : [$user['scp']],
-            'expires_on'           => $user['exp'],
-            'avatar'               => $avatar,
-        ]);
-        */
     }
 
     /**
