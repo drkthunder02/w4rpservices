@@ -66,7 +66,7 @@ class EveOnlineOAuthProvider extends AbstractProvider implements ProviderInterfa
             'id' => $user['CharacterID'],
             'name' => $user['CharacterName'],
             'nickname' => $user['CharacterName'],
-            'character_owner_hash' => $user['CharacterOwnerHash'],
+            'owner_hash' => $user['CharacterOwnerHash'],
             'avatar' => 'https://image.eveonline.com/Character/' . $user['CharacterID'] . '_128.jpg',
             //'token_type' => $user['TokenType'],
             //'expires_on' => $user['ExpiresOn'],
