@@ -217,9 +217,7 @@ class DashboardController extends Controller
                                 ->with('open', $open)
                                 ->with('approved', $approved)
                                 ->with('denied', $denied)
-                                ->with('lava', $lava)
-                                ->with('invoice', $invoice)
-                                ->with('ores', $ores);
+                                ->with('lava', $lava);
     }
 
     /**
