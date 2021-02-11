@@ -16,7 +16,7 @@ class EveOnlineOAuthProvider extends AbstractProvider implements ProviderInterfa
      * @return string
      */
     protected function getAuthUrl($state) {
-        return $this->buildAuthUrlFromBase('https://login.eveonline.com/oauth/authorize', $state);
+        return $this->buildAuthUrlFromBase('https://login.eveonline.com/v2/oauth/authorize', $state);
     }
 
     /**
@@ -25,7 +25,7 @@ class EveOnlineOAuthProvider extends AbstractProvider implements ProviderInterfa
      * @return string
      */
     protected function getTokenUrl() {
-        return 'https://login.eveonline.com/oauth/token';
+        return 'https://login.eveonline.com/v2/oauth/token';
     }
 
     /**
