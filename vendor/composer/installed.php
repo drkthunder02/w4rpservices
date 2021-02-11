@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'df510b86806490c95eaa14064e89e5968cc541e0',
+    'reference' => '0a11a5d23d14c0dbc4537b5219a99b5ffa1a03fd',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -440,7 +440,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'df510b86806490c95eaa14064e89e5968cc541e0',
+      'reference' => '0a11a5d23d14c0dbc4537b5219a99b5ffa1a03fd',
     ),
     'laravel/socialite' => 
     array (
@@ -1261,12 +1261,12 @@
     ),
     'web-token/jwt-easy' => 
     array (
-      'pretty_version' => 'v2.2.6',
-      'version' => '2.2.6.0',
+      'pretty_version' => 'v2.2.8',
+      'version' => '2.2.8.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'cc59f479dd6b5014586be5d2d40ce84bbd9b4539',
+      'reference' => 'b4d1a4581a796244fdd69694548766403daeca97',
     ),
     'web-token/jwt-encryption' => 
     array (
@@ -1288,30 +1288,30 @@
     ),
     'web-token/jwt-signature-algorithm-ecdsa' => 
     array (
-      'pretty_version' => 'v2.2.6',
-      'version' => '2.2.6.0',
+      'pretty_version' => 'v2.2.8',
+      'version' => '2.2.8.0',
       'aliases' => 
       array (
       ),
-      'reference' => '3ae6e56ccf34e8b7b65ec988497d5d1bceca9864',
+      'reference' => '44cbbb4374c51f1cf48b82ae761efbf24e1a8591',
     ),
     'web-token/jwt-signature-algorithm-hmac' => 
     array (
-      'pretty_version' => 'v2.2.6',
-      'version' => '2.2.6.0',
+      'pretty_version' => 'v2.2.8',
+      'version' => '2.2.8.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f4fd8166e6830298fc820a8d5776c124cc2496c4',
+      'reference' => 'd208b1c50b408fa711bfeedeed9fb5d9be1d3080',
     ),
     'web-token/jwt-signature-algorithm-rsa' => 
     array (
-      'pretty_version' => 'v2.2.6',
-      'version' => '2.2.6.0',
+      'pretty_version' => 'v2.2.8',
+      'version' => '2.2.8.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'ba94b8868bd8fdd481f448097ab900a8cb2c0eed',
+      'reference' => '513ad90eb5ef1886ff176727a769bda4618141b0',
     ),
     'webmozart/assert' => 
     array (

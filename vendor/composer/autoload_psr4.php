@@ -62,7 +62,7 @@ return array(
     'Laravel\\Horizon\\' => array($vendorDir . '/laravel/horizon/src'),
     'Khill\\Lavacharts\\' => array($vendorDir . '/khill/lavacharts/src'),
     'Jose\\Easy\\' => array($vendorDir . '/web-token/jwt-easy'),
-    'Jose\\Component\\Signature\\Algorithm\\' => array($vendorDir . '/web-token/jwt-signature-algorithm-ecdsa', $vendorDir . '/web-token/jwt-signature-algorithm-hmac', $vendorDir . '/web-token/jwt-signature-algorithm-rsa'),
+    'Jose\\Component\\Signature\\Algorithm\\' => array($vendorDir . '/web-token/jwt-signature-algorithm-hmac', $vendorDir . '/web-token/jwt-signature-algorithm-rsa', $vendorDir . '/web-token/jwt-signature-algorithm-ecdsa'),
     'Jose\\Component\\Signature\\' => array($vendorDir . '/web-token/jwt-signature'),
     'Jose\\Component\\Encryption\\' => array($vendorDir . '/web-token/jwt-encryption'),
     'Jose\\Component\\Core\\' => array($vendorDir . '/web-token/jwt-core'),
