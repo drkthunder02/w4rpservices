@@ -167,9 +167,7 @@ class FinanceHelper {
             return null;
         }
 
-        $pages = $journals->pages;
-
-        return $pages;
+        return $journals->pages;
     }
 
     public function GetCorpWalletJournalPage($division, $charId, $corpId, $page = 1) {
