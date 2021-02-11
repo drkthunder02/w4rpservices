@@ -14,10 +14,13 @@ use Carbon\Carbon;
 use Seat\Eseye\Exceptions\RequestionFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Lookups\LookupHelper;
+use App\Library\Moons\MoonCalc;
 
 //App Models
 use App\Models\MiningTax\Observer;
 use App\Models\MiningTax\Ledger;
+use App\Models\Moon\MineralPrice;
+use App\Models\Moon\ItemComposition;
 
 class FetchMiningTaxesLedgersJob implements ShouldQueue
 {
@@ -81,6 +84,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
     {
         //Declare variables
         $lookup = new LookupHelper;
+        $mHelper = new MoonCalc;
         $final = array();
         $items = array();
         $notSorted = array();
@@ -103,6 +107,9 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
             $typeName = $lookup->ItemIdToName($ledger->ore);
             $updated = $this->esi->DecodeDate($ledger->last_updated);
 
+            $price = $mHelper->CalculateOrePrice($ledger->type_id);
+            $amount = $price * $ledger->quantity;
+
             //Insert or update the entry in the database
             $item = Ledger::updateOrCreate([
                 'character_id' => $ledger->character_id,
@@ -111,6 +118,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
                 'type_id' => $ledger->type_id,
                 'ore_name' => $typeName,
                 'quantity' => $ledger->quantity,
+                'price' => $amount,
             ], [
                 'character_id' => $ledger->character_id,
                 'character_name' => $charName,
@@ -118,6 +126,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
                 'type_id' => $ledger->type_id,
                 'ore_name' => $typeName,
                 'quantity' => $ledger->quantity,
+                'price' => $amount,
             ]);
         }
 

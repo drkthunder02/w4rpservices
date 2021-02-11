@@ -58,20 +58,16 @@ class CalculateMiningTaxesJob implements ShouldQueue
             $rows = Ledger::where([
                 'character_id' => $char->character_id,
                 'invoiced' => 'No',
-            ]);
+            ])->get();
 
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
                 $ores[$row->type_id] = $ores[$row->type_id] + $row->quantity;
             }
 
-            //From the item composition for each of the totaled ores, let's get the components and find the price
-            foreach($ores as $itemId => $quantity) {
-                //Get the price from the helper function for each unit of ore
-                $price = $this->mHelper->CalculateOrePrice($itemId);
-
-                //Add up the total and keep a running total
-                $totalPrice += $price * $quantity;
+            //Add up the total price from the ledger rows
+            foreach($rows as $row) {
+                $totalPrice = $totalPrice + $row->price;
             }
 
             //Reduce the total price by the take percentage

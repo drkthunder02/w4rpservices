@@ -17,6 +17,8 @@ use App\Models\User\UserPermission;
 use App\Models\User\UserRole;
 use App\Models\SRP\SRPShip;
 use App\Models\User\UserAlt;
+use App\Models\MiningTax\Invoice;
+use App\Models\MiningTax\Ledger;
 
 class DashboardController extends Controller
 {
@@ -42,9 +44,13 @@ class DashboardController extends Controller
         $open = array();
         $approved = array();
         $denied = array();
+        $ores = array();
         $altCount = null;
         $alts = null;
 
+        /**
+         * Alt Counts
+         */
         //Get the number of the user's alt which are registered so we can process the alt's on the main dashboard page
         $altCount = UserAlt::where([
             'main_id' => auth()->user()->character_id,
@@ -57,6 +63,9 @@ class DashboardController extends Controller
             ])->get();
         }
 
+        /**
+         * SRP Items
+         */
         //See if we can get all of the open SRP requests
         $openCount = SRPShip::where([
             'character_id' => auth()->user()->character_id,
@@ -184,13 +193,32 @@ class DashboardController extends Controller
             ],
         ]);
 
+        /**
+         * Mining Tax Items
+         */
+        $invoice = Ledger::where([
+            'character_id' => auth()->user()->getId(),
+            'invoiced' => 'No',
+        ])->sum('amount');
+
+        $rows = Ledger::where([
+            'character_id' => auth()->user()->getId(),
+            'invoiced' => 'No',
+        ])->get();
+
+        foreach($rows as $row) {
+            $ores[$row->ore_name] = $ores[$row->ore_name] + $row->quantity;
+        }
+
         return view('dashboard')->with('openCount', $openCount)
                                 ->with('approvedCount', $approvedCount)
                                 ->with('deniedCount', $deniedCount)
                                 ->with('open', $open)
                                 ->with('approved', $approved)
                                 ->with('denied', $denied)
-                                ->with('lava', $lava);
+                                ->with('lava', $lava)
+                                ->with('invoice', $invoice)
+                                ->with('ores', $ores);
     }
 
     /**

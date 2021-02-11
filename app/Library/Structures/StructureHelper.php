@@ -43,10 +43,6 @@ class StructureHelper {
         }       
     }
 
-    public function GetExtractions() {
-        //Try to get the ESI data
-    }
-
     public function GetStructuresByPage($page) {
         
         //Try to get the ESI data

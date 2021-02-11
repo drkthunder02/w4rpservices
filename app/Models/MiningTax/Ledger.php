@@ -23,6 +23,7 @@ class Ledger extends Model
         'type_id',
         'ore_name',
         'quantity',
+        'amount',
         'invoiced',
     ];
 }
