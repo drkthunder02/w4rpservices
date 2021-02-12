@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserRole extends Model
 {
+    /**
+     * Database Table
+     */
     protected $table = 'user_roles';
 
     protected $fillable = [

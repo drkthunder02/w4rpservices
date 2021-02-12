@@ -18,6 +18,11 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * Database Table
+     */
+    protected $table = 'users';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -29,12 +34,11 @@ class User extends Authenticatable
         'owner_hash', 
         'character_id',
         'inserted_at',
-        'expires_in', 
-        'access_token',
+        'expires_in',
         'user_type',
     ];
 
-    protected $table = 'users';
+    
 
     public function role() {
         return $this->hasOne('\App\Models\User\UserRole', 'character_id', 'character_id');
@@ -118,18 +122,6 @@ class User extends Authenticatable
         $role = UserRole::where(['character_id' => $this->character_id])->first();
 
         return $role->role;
-    }
-
-    public function isMoonRenter() {
-        $moonRental = AllianceRentalMoon::where([
-            'rental_contact_id' => $this->character_id,
-        ])->first();
-
-        if($moonRental != null) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public function srpOpen() {
