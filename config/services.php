@@ -36,9 +36,10 @@ return [
     ],
 
     'eveonline' => [
-        'client_id' => env('EVEONLINE_CLIENT_ID'),
-        'client_secret' => env('EVEONLINE_CLIENT_SECRET'),
-        'redirect' => env('EVEONLINE_REDIRECT'),
+        'client_id' => env('ESI_CLIENT_ID'),
+        'client_secret' => env('ESI_SECRET_KEY'),
+        'redirect' => env('ESI_CALLBACK_URI'),
+        'useragent' => env('ESI_USERAGENT'),
     ],
 
 ];
