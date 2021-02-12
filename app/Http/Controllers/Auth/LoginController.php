@@ -74,8 +74,13 @@ class LoginController extends Controller
      * 
      * @return Socialite
      */
-    public function redirectToProvider() {
-        return Socialite::driver('eveonline')->redirect();
+    public function redirectToProvider($profile = null, Socialite $social) {
+        
+        return $socialite->driver('eveonline')
+                         ->scopes(['publicData'])
+                         ->redirect();
+        
+        //return Socialite::driver('eveonline')->redirect();
     }
 
     /**
