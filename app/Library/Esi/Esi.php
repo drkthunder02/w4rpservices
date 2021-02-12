@@ -107,7 +107,9 @@ class Esi {
                 $scopesArr = EsiScope::where([
                     'character_id' => $token->character_id,
                 ])->get(['scope'])->toArray();
-                
+
+                dd($scopesArr);
+
                 //Create string separated by %20 = space from the array of scopes
                 $scopes = implode(" ", $scopesArr);
                 $scopes = str_replace(" ", "%20", $scopes);
