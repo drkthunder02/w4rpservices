@@ -83,8 +83,12 @@ class LoginController extends Controller
             $extraScopes = EsiScope::where([
                 'character_id' => auth()->user()->getId(),
             ])->get(['scope']);
-            dd($extraScopes);
-            array_push($scopes, $extraScopes);
+            
+            foreach($extraScopes as $extra) {
+                array_push($scopes, $extra->scope);
+            }
+
+            //array_push($scopes, $extraScopes);
         }
 
         //Place the scopes in the session to verify later after the redirect
