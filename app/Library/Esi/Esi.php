@@ -113,10 +113,10 @@ class Esi {
                 $i = 0;
                 foreach($scopesArr as $scp) {
                     $scopes .= $scp['scope'];
+                    $i++;
                     if($i < sizeof($scopesArr)) {
                         $scopes .= "%20";
                     }
-                    $i++;
                 }
 
                 dd($scopes);
