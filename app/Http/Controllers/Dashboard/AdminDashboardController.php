@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 //Libraries
 use App\Library\Taxes\TaxesHelper;
-use App\Library\Wiki\WikiHelper;
 use App\Library\Lookups\LookupHelper;
 use App\Library\SRP\SRPHelper;
 
