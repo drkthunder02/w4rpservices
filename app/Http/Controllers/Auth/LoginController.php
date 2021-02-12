@@ -75,7 +75,8 @@ class LoginController extends Controller
      * @return Socialite
      */
     public function redirectToProvider() {
-        return Socialite::driver('eveonline')->redirect();
+        //return Socialite::driver('eveonline')->redirect();
+        return Socialite::with('eveonline')->redirect();
     }
 
     /**
@@ -84,7 +85,8 @@ class LoginController extends Controller
      */
     public function handleProviderCallback() {
         //Get the sso user from the socialite driver
-        $ssoUser = Socialite::driver('eveonline')->user();
+        //$ssoUser = Socialite::driver('eveonline')->user();
+        $ssoUser = Socialite::with('eveonline')->user();
         
         if(Auth::check()) {
             //If a refresh token is present, then we are doing a scope callback
