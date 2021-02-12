@@ -95,13 +95,14 @@ class Esi {
             $esi = new Eseye();
         } else {
             $expires = $token->inserted_at + $token->expires_in;
+            $token_expired = Carbon::createFromTimestamp($expires)->toDateTimeString();
 
             $authentication = new EsiAuthentication([
                 'client_id' => $config['client_id'],
                 'secret' => $config['secret'],
                 'refresh_token' => $token->refresh_token,
                 'access_token' => $token->access_token,
-                'token_expires' => $expires,
+                'token_expires' => $token_expired,
             ]);
 
             //Setup the esi variable
