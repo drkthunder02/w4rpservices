@@ -23,6 +23,7 @@ Route::get('/', function () {
  * Login Display pages
  */
 Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('login');
+Route::get('/altlogin', 'Auth\LoginController@redirectToProviderAlt')->name('altlogin');
 Route::get('/callback', 'Auth\LoginController@handleProviderCallback')->name('callback');
 Route::get('/logout', 'Auth\LoginController@logout');
 

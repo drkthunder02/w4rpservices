@@ -136,7 +136,7 @@
             <h2>Register Alts for SRP Form</h2>
         </div>
         <div class="card-body">
-            <a href="/login"><img src="{{asset('/img/eve-sso-login-white-large.png')}}"></a>
+            <a href="/altlogin"><img src="{{asset('/img/eve-sso-login-white-large.png')}}"></a>
         </div>
     </div>
 </div>
