@@ -82,7 +82,7 @@ class LoginController extends Controller
         if(Auth::check()) {
             $extraScopes = EsiScope::where([
                 'character_id' => auth()->user()->getId(),
-            ])->get(['scope'])->toArray();
+            ])->get(['scope']);
             dd($extraScopes);
             array_push($scopes, $extraScopes);
         }
