@@ -117,6 +117,9 @@ class EveOnlineOAuthProvider extends AbstractProvider {
      * @throws \Exception
      */
     private function validateJwtToken(string $access_token): array {      
+        //Declare variables
+        $jws = null;
+        
         //$scopes = session()->pull('scopes', []);
         $scopes = array();
 
@@ -127,7 +130,20 @@ class EveOnlineOAuthProvider extends AbstractProvider {
         $jwk_sets = JWKSet::createFromKeyData($sets);
 
         // attempt to parse the JWT and collect payload
-        $jws = Load::jws($access_token)
+        if($scopes == null) {
+            $jws = Load::jws($access_token)
+            ->algs(['RS256', 'ES256', 'HS256'])
+            ->exp()
+            ->iss('login.eveonline.com')
+            ->header('typ', new TypeChecker(['JWT'], true))
+            ->claim('sub', new SubEveCharacterChecker())
+            ->claim('azp', new AzpChecker(config('esi.client_id')))
+            ->claim('name', new NameChecker())
+            ->claim('owner', new OwnerChecker())
+            ->keyset($jwk_sets)
+            ->run();
+        } else {
+            $jws = Load::jws($access_token)
             ->algs(['RS256', 'ES256', 'HS256'])
             ->exp()
             ->iss('login.eveonline.com')
@@ -139,6 +155,8 @@ class EveOnlineOAuthProvider extends AbstractProvider {
             ->claim('owner', new OwnerChecker())
             ->keyset($jwk_sets)
             ->run();
+        }
+        
 
         return $jws->claims->all();
     }
