@@ -61,7 +61,8 @@ class EveOnlineOAuthProvider extends AbstractProvider {
         //Get the character Id from the token returned
         $characterId = strtr($user['sub'], ['CHARACTER:EVE:' => '']);
 
-        if($user['scp'] == null) {
+        
+        if(isset($user['scp'])) {
             //Return a user object with the mapped out variables below
             return (new User)->setRaw($user)->map([
                 'id' => $characterId,
