@@ -103,6 +103,8 @@ class Esi {
             
             //If the access token has expired, we need to do a request for a new access token
             if($currentTime > $token_expiration) {
+                $scopes = null;
+
                 //Get the scopes to pass to the guzzle client
                 $scopesArr = EsiScope::where([
                     'character_id' => $token->character_id,
