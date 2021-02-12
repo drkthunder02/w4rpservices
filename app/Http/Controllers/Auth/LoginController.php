@@ -264,8 +264,16 @@ class LoginController extends Controller
             'character_id' => $eve_user->getId(),
             'inserted_at' => time(),
             'expires_in' => $eve_user->expiresIn,
-            'access_token' => $eve_user->token,
+            //'access_token' => $eve_user->token,
             'user_type' => $this->GetAccountType(null, $eve_user->id),
+        ]);
+
+        $token = EsiToken::create([
+            'character_id' => $eve_user->id,
+            'access_token' => $eve_user->token,
+            'refresh_token' => null,
+            'inserted_at' => time(),
+            'expires_in' => $eve_user->expiresIn,
         ]);
 
         return $user;
