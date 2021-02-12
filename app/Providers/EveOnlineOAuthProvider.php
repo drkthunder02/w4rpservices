@@ -61,36 +61,19 @@ class EveOnlineOAuthProvider extends AbstractProvider {
         //Get the character Id from the token returned
         $characterId = strtr($user['sub'], ['CHARACTER:EVE:' => '']);
 
-        
-        if(isset($user['scp'])) {
-            //Return a user object with the mapped out variables below
-            return (new User)->setRaw($user)->map([
-                'id' => $characterId,
-                'name' => $user['name'],
-                'nickname' => $user['name'],
-                'owner_hash' => $user['owner'],
-                'scopes' => null,
-                'expires_on' => $user['exp'],
-                'avatar' => 'https://image.eveonline.com/Character/' . $characterId . '_128.jpg',
-                'iss' => $user['iss'],
-                'region' => $user['region'],
-                'tier' => $user['tier']
-            ]);
-        } else {
-            //Return a user object with the mapped out variables below
-            return (new User)->setRaw($user)->map([
-                'id' => $characterId,
-                'name' => $user['name'],
-                'nickname' => $user['name'],
-                'owner_hash' => $user['owner'],
-                'scopes' => is_array($user['scp']) ? $user['scp'] : [$user['scp']],
-                'expires_on' => $user['exp'],
-                'avatar' => 'https://image.eveonline.com/Character/' . $characterId . '_128.jpg',
-                'iss' => $user['iss'],
-                'region' => $user['region'],
-                'tier' => $user['tier']
-            ]);
-        }
+        //Return a user object with the mapped out variables below
+        return (new User)->setRaw($user)->map([
+            'id' => $characterId,
+            'name' => $user['name'],
+            'nickname' => $user['name'],
+            'owner_hash' => $user['owner'],
+            'scopes' => is_array($user['scp']) ? $user['scp'] : [$user['scp']],
+            'expires_on' => $user['exp'],
+            'avatar' => 'https://image.eveonline.com/Character/' . $characterId . '_128.jpg',
+            'iss' => $user['iss'],
+            'region' => $user['region'],
+            'tier' => $user['tier']
+        ]);
 
         
     }
@@ -139,8 +122,7 @@ class EveOnlineOAuthProvider extends AbstractProvider {
         //Declare variables
         $jws = null;
         
-        //$scopes = session()->pull('scopes', []);
-        $scopes = array();
+        $scopes = session()->pull('scopes', []);
 
         // pulling JWK sets from CCP
         $sets = $this->getJwkSets();
@@ -149,34 +131,20 @@ class EveOnlineOAuthProvider extends AbstractProvider {
         $jwk_sets = JWKSet::createFromKeyData($sets);
 
         // attempt to parse the JWT and collect payload
-        if($scopes == null) {
-            $jws = Load::jws($access_token)
-            ->algs(['RS256', 'ES256', 'HS256'])
-            ->exp()
-            ->iss('login.eveonline.com')
-            ->header('typ', new TypeChecker(['JWT'], true))
-            ->claim('sub', new SubEveCharacterChecker())
-            ->claim('azp', new AzpChecker(config('esi.client_id')))
-            ->claim('name', new NameChecker())
-            ->claim('owner', new OwnerChecker())
-            ->keyset($jwk_sets)
-            ->run();
-        } else {
-            $jws = Load::jws($access_token)
-            ->algs(['RS256', 'ES256', 'HS256'])
-            ->exp()
-            ->iss('login.eveonline.com')
-            ->header('typ', new TypeChecker(['JWT'], true))
-            ->claim('scp', new ScpChecker($scopes))
-            ->claim('sub', new SubEveCharacterChecker())
-            ->claim('azp', new AzpChecker(config('esi.client_id')))
-            ->claim('name', new NameChecker())
-            ->claim('owner', new OwnerChecker())
-            ->keyset($jwk_sets)
-            ->run();
-        }
+        $jws = Load::jws($access_token)
+        ->algs(['RS256', 'ES256', 'HS256'])
+        ->exp()
+        ->iss('login.eveonline.com')
+        ->header('typ', new TypeChecker(['JWT'], true))
+        ->claim('scp', new ScpChecker($scopes))
+        ->claim('sub', new SubEveCharacterChecker())
+        ->claim('azp', new AzpChecker(config('esi.client_id')))
+        ->claim('name', new NameChecker())
+        ->claim('owner', new OwnerChecker())
+        ->keyset($jwk_sets)
+        ->run();
         
-
+        //Return the data collected
         return $jws->claims->all();
     }
 }

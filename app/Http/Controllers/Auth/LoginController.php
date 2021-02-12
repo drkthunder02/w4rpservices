@@ -75,12 +75,21 @@ class LoginController extends Controller
      * @return Socialite
      */
     public function redirectToProvider($profile = null, Socialite $social) {
-        
+        //The default scope is public data for everyone due to OAuth2 Tokens
+        $scopes = ['publicData'];
+
+        //Collect any other scopes we need if we are logged in.
+        if(Auth::check()) {
+            $extraScopes = EsiScope::where([
+                'character_id' => auth()->user()->getId(),
+            ])->get(['scope'])->toArray();
+
+            array_push($scopes, $extraScopes);
+        }
+
         return $social->driver('eveonline')
-                         ->scopes([])
+                         ->scopes($scopes)
                          ->redirect();
-        
-        //return Socialite::driver('eveonline')->redirect();
     }
 
     /**
