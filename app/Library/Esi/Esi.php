@@ -120,8 +120,8 @@ class Esi {
                 }
                 
                 //Setup the new guzzle client
-                $client = new Client();
-                $response = $client->request('POST', 'https://login.eveonline.com/v2/oauth/token', [
+                $client = new Client(['base_uri' => 'https://login.eveonline.com']);
+                $response = $client->request('POST', '/v2/oauth/token', [
                     'headers' => [
                         'Content-Type' => 'application/x-www-form-urlencoded',
                         'Host' => 'login.eveonline.com',
@@ -133,7 +133,7 @@ class Esi {
                     ]
                 ]);
 
-                dd($response->getBody());
+                dd(json_decode($response->getBody(), true));
             }
 
             $authentication = new EsiAuthentication([
