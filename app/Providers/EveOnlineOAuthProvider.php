@@ -87,7 +87,7 @@ class EveOnlineOAuthProvider extends AbstractProvider {
      */
     private function getJwkUri(): string {
         $response = $this->getHttpClient()
-                         ->get('https://login.eveonline.com/.well-knonw/oauth-authorization-server');
+                         ->get('https://login.eveonline.com/.well-known/oauth-authorization-server');
 
         $metadata = json_decode($response->getBody());
 
