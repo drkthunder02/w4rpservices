@@ -158,8 +158,10 @@ class LoginController extends Controller
      * @param \Laravel\Socialite\Two\User $user
      */
     private function createAlt($user, $orgCharacter) {
+
         $altCount = UserAlt::where('character_id', $user->id)->count();
         if($altCount == 0) {
+            //Create the new alt in the table
             $newAlt = new UserAlt;
             $newAlt->name = $user->getName();
             $newAlt->main_id = $orgCharacter;
@@ -170,8 +172,23 @@ class LoginController extends Controller
             $newAlt->inserted_at = time();
             $newAlt->expires_in = $user->expiresIn;
             $newAlt->save();
+
+            //Create the entry into the EsiToken table
+            //Create the entry into the EsiToken table
+            if(EsiToken::where(['character_id' => $user->id])->count() == 0) {
+                $this->SaveEsiToken($user);
+            } else {
+                $this->UpdateEsiToken($user);
+            }
+
+            //Create the entry into the EsiScopes table
+            if(sizeof($user->scopes) > 1) {
+                $this->SetScopes($user->scopes, $user->id);
+            }
+            //Return the successfull conclusion of the function
             return 1;
         } else {
+            //Return the unsuccessfull conclusion of the function
             return 0;
         }
     }
