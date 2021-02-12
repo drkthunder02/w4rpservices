@@ -104,7 +104,7 @@ class LoginController extends Controller
         //Get the sso user from the socialite driver
         $ssoUser = $social->driver('eveonline')->user();
 
-        dd($ssoUser);
+        $scpSession = session()->get('scopes');
 
         //If the user was already logged in, let's do some checks to see if we are adding
         //additional scopes to the user's account
