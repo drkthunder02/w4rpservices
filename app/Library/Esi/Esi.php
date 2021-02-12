@@ -50,34 +50,6 @@ class Esi {
         return true;
     }
 
-    public function GetCharacterData($charId) {
-        $esi = $this->SetupEsiAuthentication();
-
-        try {
-            $character = $esi->invoke('get', '/characters/{character_id}/', [
-                'character_id' => $charId,
-            ]);
-        } catch(RequestFailedException $e) {
-            return null;
-        }
-        
-        return $character;
-    }
-
-    public function GetCorporationData($corpId) {
-        $esi = $this->SetupEsiAuthentication();
-
-        try {
-            $corporation = $esi->invoke('get', '/corporations/{corporation_id}/', [
-                'corporation_id' => $corpId,
-            ]);
-        } catch(RequestFailedException $e) {
-            return null;
-        }
-
-        return $corporation;
-    }
-
     public function DecodeDate($date) {
         //Find the end of the date
         $dateEnd = strpos($date, "T");
@@ -108,7 +80,7 @@ class Esi {
             'character_id' => $charId,
         ])->first();
 
-        return $token->refresh_token;
+        return $token;
     }
 
     public function SetupEsiAuthentication($token = null) {
@@ -125,7 +97,8 @@ class Esi {
             $authentication = new EsiAuthentication([
                 'client_id' => $config['client_id'],
                 'secret' => $config['secret'],
-                'refresh_token' => $token,
+                'refresh_token' => $token->refresh_token,
+                'access_token' => $token->access_token,
             ]);
 
             //Setup the esi variable
