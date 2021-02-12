@@ -113,7 +113,7 @@ class EveOnlineOAuthProvider extends AbstractProvider {
      * @throws \Exception
      */
     private function validateJwtToken(string $access_token): array {
-        dd($access_token);
+        //dd($access_token);
         
         $scopes = session()->pull('scopes', []);
 
@@ -131,7 +131,7 @@ class EveOnlineOAuthProvider extends AbstractProvider {
             ->header('typ', new TypeChecker(['JWT'], true))
             ->claim('scp', new ScpChecker($scopes))
             ->claim('sub', new SubEveCharacterChecker())
-            ->claim('azp', new AzpChecker(config('esi.eseye_client_id')))
+            ->claim('azp', new AzpChecker(config('esi.client_id')))
             ->claim('name', new NameChecker())
             ->claim('owner', new OwnerChecker())
             ->keyset($jwk_sets)
