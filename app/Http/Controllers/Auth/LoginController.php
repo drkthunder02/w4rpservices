@@ -84,22 +84,36 @@ class LoginController extends Controller
                 'character_id' => auth()->user()->getId(),
             ])->get(['scope']);
             
+            //Pop each scope onto the array of scopes
             foreach($extraScopes as $extra) {
                 array_push($scopes, $extra->scope);
             }
-
-            //array_push($scopes, $extraScopes);
         }
 
         //Place the scopes in the session to verify later after the redirect
         //has been completed and a token is received
         session()->put('scopes', $scopes);
 
-        dd($scopes);
-
         return $social->driver('eveonline')
                          ->scopes($scopes)
                          ->redirect();
+    }
+
+    /**
+     * Redirect to the provider's website
+     * 
+     * @return Socialite
+     */
+    public function redirectToProviderAlt($profile = null, Socialite $social) {
+        //The default scope is public data for everyone due to the OAuth2 Token
+        $scopes = ['publicData'];
+
+        //Let's put some information in the session to designate this is an alt call
+        session()->put('altCall', true);
+
+        return $social->driver('eveonline')
+                      ->scopes($scopes)
+                      ->redirect();
     }
 
     /**
@@ -137,6 +151,9 @@ class LoginController extends Controller
                 //Redirect to the dashboard with the correct message
                 return redirect()->to('/dashboard')->with('success', 'Successfully updated ESI Scopes.');
             } else {
+                //Retrieve the session data for altCall, and delete it from the session
+                $alt = session()->pull('altCall');
+
                 if($this->createAlt($ssoUser)) {
                     return redirect()->to('/profile')->with('success', 'Alt registered.');
                 } else {
