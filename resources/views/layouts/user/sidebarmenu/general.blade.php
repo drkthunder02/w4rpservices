@@ -19,12 +19,6 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="/logistics/fuel/structures" class="nav-link">
-          <i class="far fa-circle nav-icon"></i>
-          <p>Jump Gate Fuel</p>
-        </a>
-      </li>
-      <li class="nav-item">
         <a href="https://buyback.w4rp.space" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>Buyback Program</p>

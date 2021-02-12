@@ -28,12 +28,6 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="/admin/dashboard/wiki" class="nav-link">
-        <i class="far fa-circle nav-icon"></i>
-        <p>Wiki</p>
-      </a>
-    </li>
-    <li class="nav-item">
       <a href="/admin/dashboard/journal" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Wallet Journal</p>

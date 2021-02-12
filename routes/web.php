@@ -43,13 +43,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/add/allowedlogin', 'Dashboard\AdminController@addAllowedLogin');
     Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminController@removeAllowedLogin');
     Route::get('/admin/dashboard/journal', 'Dashboard\AdminController@showJournalEntries');
-    Route::get('/admin/dashboard/wiki', 'Dashboard\AdminController@displayWikiDashboard');
-    Route::post('/admin/dashboard/wiki/deleteuser', 'Dashboard\AdminController@deleteWikiUser');
-    Route::post('/admin/dashboard/wiki/adduser', 'Dashboard\AdminController@addWikiUserGroup');
-    Route::post('/admin/dashboard/wiki/removegroup', 'Dashboard\AdminController@removeWikiUserGroup');
-    Route::post('/admin/dashboard/wiki/removeallgroups', 'Dashboard\AdminController@removeWikiUserAllGroups');
-    Route::post('/admin/dashboard/wiki/newgroup', 'Dashboard\AdminController@insertNewWikiUserGroup');
-    Route::post('/admin/dashboard/wiki/purge', 'Dashboard\AdminController@purgeWikiUsers');
     Route::get('/admin/dashboard/test', 'Dashboard\AdminController@displayTestAdminDashboard');
     Route::get('/admin/dashboard', 'Dashboard\AdminDashboardController@displayAdminDashboard');
 
@@ -82,41 +75,9 @@ Route::group(['middleware' => ['auth']], function(){
     //Route::get('/mining/display', 'Mining\MiningsController@displayMiningTax');
 
     /**
-     * Moon Controller display pages
-     */
-    Route::get('/moons/display/rentals', 'Moons\MoonsController@displayRentalMoons');
-    Route::get('/moons/display/form/worth', 'Moons\MoonsController@displayTotalWorthForm');
-    Route::post('/moons/worth', 'Moons\MoonsController@displayTotalWorth');
-    Route::get('/moons/display/all', 'Moons\MoonsController@displayMoons');
-    Route::get('/moons/display/request', 'Moons\MoonsController@displayRequestAllianceMoon');
-    Route::post('/moon/display/request', 'Moons\MoonsController@storeRequestAllianceMoon');
-    Route::get('/moons/display/rental/request', 'Moons\MoonsController@displayRentalMoonPage');
-
-    /**
-     * Moon Admin Controller display pages
-     */
-    Route::get('/moons/admin/display/rentals', 'Moons\MoonsAdminController@displayRentalMoonsAdmin');
-    Route::get('/moons/admin/updatemoon', 'Moons\MoonsAdminController@updateMoon');
-    Route::post('/moons/admin/updatemoon', 'Moons\MoonsAdminController@storeUpdateMoon');
-    Route::post('/moons/admin/display/rentals', 'Moons\MoonsAdminController@storeMoonRemoval');
-    Route::get('/moons/admin/display/request', 'Moons\MoonsAdminController@displayMoonRequests');
-    Route::post('/moons/admin/display/request', 'Moons\MoonsAdminController@storeApprovedMoonRequest');
-
-    /**
      * Moon Ledger Controller display pages
      */
     Route::get('/moons/ledger/display/moons', 'Moons\MoonLedgerController@displayMoonLedger');
-    Route::get('/moons/ledger/display/rentals', 'Moons\MoonLedgerController@displayRentalMoonLedger');
-    Route::get('/moons/ledger/register', 'Moons\MoonLedgerController@registerStructures');
-
-    /**
-     * Moon Rental Controller display pages
-     */
-    Route::get('/rentals/moons/alliance/display', 'Moons\RentalMoonsAdminController@displayAllianceUsageRentalMoons');
-    Route::get('/rentals/moons/alliance/request', 'Moons\RentalMoonsAdminController@displayRentalMoonForAllianceForm');
-    Route::post('/rentals/moons/alliance/request', 'Moons\RentalMoonsAdminController@storeREntalMoonForAlliance');
-    Route::get('/moons/composition/display', 'Moons\RentalMoonsAdminController@displayItemCompositionForm');
-    Route::post('/moons/composition/display', 'Moons\RentalMoonsAdminController@displayItemCompositionResults');
 
     /**
      * Scopes Controller display pages
@@ -145,17 +106,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/srp/admin/update/shiptype/{id}/{value}', 'SRP\SRPAdminController@updateShipType');
     Route::get('/srp/admin/update/lossvalue/{id}/{value}', 'SRP\SRPAdminController@updateLossValue');
 
-    /**
-     * Structure Request Controller display pages
-     */
-    Route::get('/structures/display/form', 'Logistics\StructureRequestController@displayForm');
-    Route::post('/structures/display/form', 'Logistics\StructureRequestController@storeForm');
-
-    /**
-     * Structure Request Admin Controller display pages
-     */
-    Route::get('/structures/display/requests', 'Logistics\StructureRequestAdminController@displayRequests');
-    Route::post('/structures/display/requests/delete', 'Logistics\StructureRequestAdminController@deleteRequest');
 
     /**
      * Supply Chain Contracts Controller display pages
@@ -176,25 +126,10 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/supplychain/modify/bid', 'Contracts\SupplyChainController@modifySupplyChainContractBid');
 
     /**
-     * System Rentals Controller display pages
-     */
-    Route::get('/system/rental/dashboard', 'SystemRentals\RentalAdminController@displayRentalSystems');
-    Route::get('/system/rental/add', 'SystemRentals\RentalAdminController@displayAddRentalSystem');
-    Route::post('/system/rental/add', 'SystemRentals\RentalAdminController@addRentalSystem');
-    Route::post('/system/rental/update', 'SystemRentals\RentalAdminController@updateRentalSystem');
-    Route::post('/system/rental/remove', 'SystemRentals\RentalAdminController@removeRentalSystem');
-
-    /**
      * Test Controller display pages
      */
     Route::get('/test/char/display', 'Test\TestController@displayCharTest');
 
-    /**
-     * Wiki Controller display pages
-     */
-    Route::get('/wiki/register', 'Wiki\WikiController@displayRegister');
-    Route::post('/wiki/register', 'Wiki\WikiController@storeRegister');
-    Route::get('/wiki/changepassword', 'Wiki\WikiController@displayChangePassword');
-    Route::post('/wiki/changepassword', 'Wiki\WikiController@changePassword');
-    Route::post('/wiki/purge', 'Wiki\WikiController@purgeUsers');
 });
+
+?>
