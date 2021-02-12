@@ -94,11 +94,14 @@ class Esi {
         if($token == null) {
             $esi = new Eseye();
         } else {
+            $expires = $token->inserted_at + $token->expires_in;
+
             $authentication = new EsiAuthentication([
                 'client_id' => $config['client_id'],
                 'secret' => $config['secret'],
                 'refresh_token' => $token->refresh_token,
                 'access_token' => $token->access_token,
+                'token_expires' => $expires,
             ]);
 
             //Setup the esi variable
