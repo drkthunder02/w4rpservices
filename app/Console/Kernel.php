@@ -23,7 +23,6 @@ class Kernel extends ConsoleKernel
         Commands\Data\PurgeUsers::class,
         Commands\Data\EmptyJumpBridges::class,
         Commands\Data\CleanStaleDataCommand::class,
-        Commands\Data\PurgeCorpMoonLedgers::class,
         Commands\Data\GetCorpsCommand::class,
         /**
          * Assets Commands
@@ -38,15 +37,6 @@ class Kernel extends ConsoleKernel
          */
         Commands\Finances\HoldingFinancesCommand::class,
         Commands\Finances\SovBillsCommand::class,
-        /**
-         * Moon Commands
-         */
-        Commands\Moons\MoonsUpdateCommand::class,
-        /**
-         * Rental Moon Commands
-         */
-        Commands\RentalMoons\AllianceRentalMoonInvoiceCreationCommand::class,
-        Commands\RentalMoons\AllianceRentalMoonUpdatePricingCommand::class,
         /**
          * Structures Command
          */
@@ -74,16 +64,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:SystemRentals')
                  ->monthlyOn(1, '00:01')
                  ->withoutOverlapping();
-
-        /**
-         * Rentals / Flex Schedule
-         */
-        $schedule->command('services:UpdateRentalPrice')
-                 ->dailyAt('11:00')
-                 ->withoutOverlapping();
-        $schedule->command('services:FlexStructures')
-                 ->monthlyOn(2, '00:01');
-
         /**
          * Holding Corp Finance Schedule
          */

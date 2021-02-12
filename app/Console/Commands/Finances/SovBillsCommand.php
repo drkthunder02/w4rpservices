@@ -16,18 +16,7 @@ use App\Models\Esi\EsiScope;
 
 //Library
 use App\Library\Esi\Esi;
-use App\Library\Finances\AllianceMarketTax;
-use App\Library\Finances\CorpMarketTax;
-use App\Library\Finances\MarketTax;
-use App\Library\Finances\PlayerDonation;
-use App\Library\Finances\ReprocessingTax;
-use App\Library\Finances\JumpBridgeTax;
-use App\Library\Finances\StructureIndustryTax;
-use App\Library\Finances\OfficeFee;
-use App\Library\Finances\PlanetProductionTax;
-use App\Library\Finances\PISale;
 use App\Library\Lookups\LookupHelper;
-use App\Library\Finances\SovBillExpenses;
 
 //Seat Stuff
 use Seat\Eseye\Exceptions\RequestFailedException;
