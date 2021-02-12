@@ -49,7 +49,7 @@ class EveOnlineOAuthProvider extends AbstractProvider {
      * @param string $token
      * @return array
      */
-    protected function getUserByToken2($token) {
+    protected function getUserByToken($token) {
         return $this->validateJwtToken($token);
     }
 
