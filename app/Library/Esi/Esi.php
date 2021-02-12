@@ -133,7 +133,7 @@ class Esi {
                     ]
                 ]);
 
-                dd($response);
+                dd($response->getBody());
             }
 
             $authentication = new EsiAuthentication([
