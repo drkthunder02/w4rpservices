@@ -91,6 +91,8 @@ class LoginController extends Controller
         //has been completed and a token is received
         session()->put('scopes', $scopes);
 
+        dd($scopes);
+
         return $social->driver('eveonline')
                          ->scopes($scopes)
                          ->redirect();
