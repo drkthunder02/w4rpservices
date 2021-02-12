@@ -105,7 +105,7 @@ class Esi {
             if($currentTime > $token_expiration) {
                 //Setup the new guzzle client
                 $guzzle = new Client();
-                $response = $client->request('POST', 'https://login.eveonline.com/v2/oauth/token', [
+                $response = $guzzle->request('POST', 'https://login.eveonline.com/v2/oauth/token', [
                     'Content-Type' => 'application/x-www-form-urlencoded',
                     'Host' => 'login.eveonline.com',
                     'Authorization' => base64_encode("Basic " . $config['client_id'] . ":" . $config['secret']),
