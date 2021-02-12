@@ -4,6 +4,9 @@ namespace App\Library\Esi;
 
 //Internal Libraries
 use Carbon\Carbon;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+use Log;
 
 //Models
 use App\Models\Esi\EsiToken;
@@ -86,6 +89,7 @@ class Esi {
     public function SetupEsiAuthentication($token = null) {
         //Get the platform configuration
         $config = config('esi');
+        $currentTime = Carbon::now();
 
         //Declare some variables
         $authentication = null;
@@ -95,14 +99,27 @@ class Esi {
             $esi = new Eseye();
         } else {
             $expires = $token->inserted_at + $token->expires_in;
-            $token_expired = Carbon::createFromTimestamp($expires)->toDateTimeString();
+            $token_expiration = Carbon::createFromTimestamp($expires)->toDateTimeString();
+
+            //If the access token has expired, we need to do a request for a new access token
+            if($currentTime > $token_expiration) {
+                //Setup the new guzzle client
+                $guzzle = new GuzzleHttp\Client();
+                $response = $client->request('POST', 'https://login.eveonline.com/v2/oauth/token', [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'Host' => 'login.eveonline.com',
+                    'Authorization' => base64_encode("Basic " . $config['client_id'] . ":" . $config['secret']),
+                ]);
+
+                dd($response);
+            }
 
             $authentication = new EsiAuthentication([
                 'client_id' => $config['client_id'],
                 'secret' => $config['secret'],
                 'refresh_token' => $token->refresh_token,
                 'access_token' => $token->access_token,
-                'token_expires' => $token_expired,
+                'token_expires' => $token_expiration,
             ]);
 
             //Setup the esi variable
