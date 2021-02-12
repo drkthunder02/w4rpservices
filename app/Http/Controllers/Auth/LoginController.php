@@ -111,6 +111,8 @@ class LoginController extends Controller
         //Let's put some information in the session to designate this is an alt call
         session()->put('altCall', true);
 
+        dd($social);
+
         return $social->driver('eveonline')
                       ->scopes($scopes)
                       ->redirect();
