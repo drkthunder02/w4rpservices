@@ -108,7 +108,8 @@ class Esi {
                     'character_id' => $token->character_id,
                 ])->get()->toArray();
                 //Create string separated by %20 = space from the array of scopes
-                $scopes = implode('%20', $scopesArr);
+                $scopes = implode(" ", $scopesArr);
+                $scopes = str_replace(" ", "%20", $scopes);
                 
                 //Setup the new guzzle client
                 $client = new Client();
