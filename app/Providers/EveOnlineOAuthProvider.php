@@ -61,19 +61,37 @@ class EveOnlineOAuthProvider extends AbstractProvider {
         //Get the character Id from the token returned
         $characterId = strtr($user['sub'], ['CHARACTER:EVE:' => '']);
 
-        //Return a user object with the mapped out variables below
-        return (new User)->setRaw($user)->map([
-            'id' => $characterId,
-            'name' => $user['name'],
-            'nickname' => $user['name'],
-            'owner_hash' => $user['owner'],
-            'scopes' => is_array($user['scp']) ? $user['scp'] : [$user['scp']],
-            'expires_on' => $user['exp'],
-            'avatar' => 'https://image.eveonline.com/Character/' . $characterId . '_128.jpg',
-            'iss' => $user['iss'],
-            'region' => $user['region'],
-            'tier' => $user['tier']
-        ]);
+        if($user['scp'] == null) {
+            //Return a user object with the mapped out variables below
+            return (new User)->setRaw($user)->map([
+                'id' => $characterId,
+                'name' => $user['name'],
+                'nickname' => $user['name'],
+                'owner_hash' => $user['owner'],
+                'scopes' => null,
+                'expires_on' => $user['exp'],
+                'avatar' => 'https://image.eveonline.com/Character/' . $characterId . '_128.jpg',
+                'iss' => $user['iss'],
+                'region' => $user['region'],
+                'tier' => $user['tier']
+            ]);
+        } else {
+            //Return a user object with the mapped out variables below
+            return (new User)->setRaw($user)->map([
+                'id' => $characterId,
+                'name' => $user['name'],
+                'nickname' => $user['name'],
+                'owner_hash' => $user['owner'],
+                'scopes' => is_array($user['scp']) ? $user['scp'] : [$user['scp']],
+                'expires_on' => $user['exp'],
+                'avatar' => 'https://image.eveonline.com/Character/' . $characterId . '_128.jpg',
+                'iss' => $user['iss'],
+                'region' => $user['region'],
+                'tier' => $user['tier']
+            ]);
+        }
+
+        
     }
 
     /**
