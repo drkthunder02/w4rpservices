@@ -105,39 +105,44 @@ class LoginController extends Controller
         $ssoUser = $social->driver('eveonline')->user();
 
         dd($ssoUser);
-        
-        if(Auth::check()) {
-            //If a refresh token is present, then we are doing a scope callback
-            //to update scopes for an access token
 
-            if(isset($ssoUser->refreshToken)) {
-                //See if an access token is present already
-                $tokenCount = EsiToken::where('character_id', $ssoUser->id)->count();
+        //If the user was already logged in, let's do some checks to see if we are adding
+        //additional scopes to the user's account
+        if(Auth::check()) {
+            //If more scopes than just public Data are present on the return, then we are doing
+            //a scope callback to update scopes for an access token
+            if(sizeof($ssoUser->scopes) > 1) {
+                //Check to see if an access token is present already for the character
+                $tokenCount = EsiToken::where([
+                    'character_id' => $ssoUser->id,
+                ])->count();
+                //If a token is present, we need to update it.
                 if($tokenCount > 0) {
-                    //Update the esi token
+                    //Update the Esi Token
                     $this->UpdateEsiToken($ssoUser);
                 } else {
-                    //Save the ESI token
+                    //Save the ESI token as it is new
                     $this->SaveEsiToken($ssoUser);
                 }
 
-                //After creating the token, we need to update the table for scopes
-                $this->SetScopes($ssoUser->user['Scopes'], $ssoUser->id);
+                //After either creating the new token or updating an old token, we need to set the scopes available for the token
+                $this->SetScopes($ssoUser->scopes, $ssoUser->id);
 
+                //Redirect to the dashboard with the correct message
                 return redirect()->to('/dashboard')->with('success', 'Successfully updated ESI Scopes.');
             } else {
-                $created = $this->createAlt($ssoUser);
-                if($created == 1) {
+                if($this->createAlt($ssoUser)) {
                     return redirect()->to('/profile')->with('success', 'Alt registered.');
                 } else {
-                    return redirect()->to('/profile')->with('error', 'Alt was previously registered.');
+                    return redirect()->to('/profile')->with('error', 'Unable to register alt or it was previously registered.');
                 }
             }
         } else {
+            //If the user wasn't logged in, then create a new user
             $user = $this->createOrGetUser($ssoUser);
-
+            //Login in the new user
             auth()->login($user, true);
-
+            //Redirect back to the dashboard
             return redirect()->to('/dashboard')->with('success', 'Successfully Logged In.');
         }
     }
@@ -173,44 +178,48 @@ class LoginController extends Controller
      * 
      * @param \Laravel\Socialite\Two\User $user
      */
-    private function createOrGetUser($eve_user) {
+    private function createOrGetUser($eveUser) {
         $authUser = null;
 
         //Search to see if we have a matching user in the database.
         //At this point we don't care about the information
-        $userCount = User::where('character_id', $eve_user->id)->count();
+        $userCount = User::where([
+            'character_id' => $eveUser->id,
+        ])->count();
         
         //If the user is found, do more checks to see what type of login we are doing
         if($userCount > 0) {
             //Search for user in the database
-            $authUser = User::where('character_id', $eve_user->id)->first();
+            $authUser = User::where([
+                'character_id' => $eveUser->id,
+            ])->first();
 
             //Check to see if the owner has changed
             //If the owner has changed, then update their roles and permissions
-            if($this->OwnerHasChanged($authUser->owner_hash, $eve_user->owner_hash)) {
+            if($this->OwnerHasChanged($authUser->owner_hash, $eveUser->owner_hash)) {
                 //Get the right role for the user
-                $role = $this->GetRole(null, $eve_user->id);
+                $role = $this->GetRole(null, $eveUser->id);
                 //Set the role for the user
-                $this->SetRole($role, $eve_user->id);
+                $this->SetRole($role, $eveUser->id);
 
                 //Update the user information never the less.
-                $this->UpdateUser($eve_user, $role);
+                $this->UpdateUser($eveUser, $role);
 
                 //Update the user's roles and permission
-                $this->UpdatePermission($eve_user, $role);
+                $this->UpdatePermission($eveUser, $role);
             }
 
             //Return the user to the calling auth function
             return $authUser;
         } else {
             //Get the role for the character to be stored in the database
-            $role = $this->GetRole(null, $eve_user->id);
+            $role = $this->GetRole(null, $eveUser->id);
 
             //Create the user account
-            $user = $this->CreateNewUser($eve_user);
+            $user = $this->CreateNewUser($eveUser);
 
             //Set the role for the user
-            $this->SetRole($role, $eve_user->id);
+            $this->SetRole($role, $eveUser->id);
 
             //Create a user account
             return $user;
@@ -220,45 +229,45 @@ class LoginController extends Controller
     /**
      * Update the ESI Token
      */
-    private function UpdateEsiToken($eve_user) {
-        EsiToken::where('character_id', $eve_user->id)->update([
-            'character_id' => $eve_user->getId(),
-            'access_token' => $eve_user->token,
-            'refresh_token' => $eve_user->refreshToken,
+    private function UpdateEsiToken($eveUser) {
+        EsiToken::where('character_id', $eveUser->id)->update([
+            'character_id' => $eveUser->getId(),
+            'access_token' => $eveUser->token,
+            'refresh_token' => $eveUser->refreshToken,
             'inserted_at' => time(),
-            'expires_in' => $eve_user->expiresIn,
+            'expires_in' => $eveUser->expiresIn,
         ]);
     }
 
     /**
      * Create a new ESI Token in the database
      */
-    private function SaveEsiToken($eve_user) {
+    private function SaveEsiToken($eveUser) {
         $token = new EsiToken;
-        $token->character_id  = $eve_user->id;
-        $token->access_token = $eve_user->token;
-        $token->refresh_token = $eve_user->refreshToken;
+        $token->character_id  = $eveUser->id;
+        $token->access_token = $eveUser->token;
+        $token->refresh_token = $eveUser->refreshToken;
         $token->inserted_at = time();
-        $token->expires_in = $eve_user->expiresIn;
+        $token->expires_in = $eveUser->expiresIn;
         $token->save();
     }
 
     /**
      * Update avatar
      */
-    private function UpdateAvatar($eve_user) {
-        User::where('character_id', $eve_user->id)->update([
-            'avatar' => $eve_user->avatar,
+    private function UpdateAvatar($eveUser) {
+        User::where('character_id', $eveUser->id)->update([
+            'avatar' => $eveUser->avatar,
         ]);
     }
 
     /**
      * Update user permission
      */
-    private function UpdatePermission($eve_user, $role) {
-        UserPermission::where(['character_id' => $eve_user->id])->delete();
+    private function UpdatePermission($eveUser, $role) {
+        UserPermission::where(['character_id' => $eveUser->id])->delete();
         $perm = new UserPermission();
-        $perm->character_id = $eve_user->id;
+        $perm->character_id = $eveUser->id;
         $perm->permission = $role;
         $perm->save();
     }
@@ -266,10 +275,10 @@ class LoginController extends Controller
     /**
      * Update the user
      */
-    private function UpdateUser($eve_user, $role) {
-        User::where('character_id', $eve_user->id)->update([
-            'avatar' => $eve_user->avatar,
-            'owner_hash' => $eve_user->owner_hash,
+    private function UpdateUser($eveUser, $role) {
+        User::where('character_id', $eveUser->id)->update([
+            'avatar' => $eveUser->avatar,
+            'owner_hash' => $eveUser->owner_hash,
             'role' => $role,
         ]);
     }
@@ -277,24 +286,23 @@ class LoginController extends Controller
     /**
      * Create a new user account
      */
-    private function CreateNewUser($eve_user) {
+    private function CreateNewUser($eveUser) {
         $user = User::create([
-            'name' => $eve_user->getName(),
-            'avatar' => $eve_user->avatar,
-            'owner_hash' => $eve_user->owner_hash,
-            'character_id' => $eve_user->getId(),
+            'name' => $eveUser->getName(),
+            'avatar' => $eveUser->avatar,
+            'owner_hash' => $eveUser->owner_hash,
+            'character_id' => $eveUser->getId(),
             'inserted_at' => time(),
-            'expires_in' => $eve_user->expiresIn,
-            //'access_token' => $eve_user->token,
-            'user_type' => $this->GetAccountType(null, $eve_user->id),
+            'expires_in' => $eveUser->expiresIn,
+            'user_type' => $this->GetAccountType(null, $eveUser->id),
         ]);
 
         $token = EsiToken::create([
-            'character_id' => $eve_user->id,
-            'access_token' => $eve_user->token,
-            'refresh_token' => null,
+            'character_id' => $eveUser->id,
+            'access_token' => $eveUser->token,
+            'refresh_token' => $eveUser->refreshToken,
             'inserted_at' => time(),
-            'expires_in' => $eve_user->expiresIn,
+            'expires_in' => $eveUser->expiresIn,
         ]);
 
         return $user;
@@ -322,7 +330,6 @@ class LoginController extends Controller
     private function SetScopes($scopes, $charId) {
         //Delete the current scopes, so we can add new scopes into the database
         EsiScope::where('character_id', $charId)->delete();
-        $scopes = explode(' ', $scopes);
         foreach($scopes as $scope) {
             $data = new EsiScope;
             $data->character_id = $charId;
