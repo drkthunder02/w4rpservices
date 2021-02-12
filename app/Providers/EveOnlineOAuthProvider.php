@@ -61,6 +61,8 @@ class EveOnlineOAuthProvider extends AbstractProvider {
      */
     protected function mapUserToObject(array $user) {
 
+        dd($user);
+
         return (new User)->setRaw($user)->map([
             'id' => $user['CharacterID'],
             'name' => $user['CharacterName'],
