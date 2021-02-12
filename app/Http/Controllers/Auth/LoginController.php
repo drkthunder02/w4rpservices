@@ -100,25 +100,6 @@ class LoginController extends Controller
     }
 
     /**
-     * Redirect to the provider's website
-     * 
-     * @return Socialite
-     */
-    public function redirectToProviderAlt($profile = null, Socialite $social) {
-        //The default scope is public data for everyone due to the OAuth2 Token
-        $scopes = ['publicData'];
-
-        //Let's put some information in the session to designate this is an alt call
-        session()->put('altCall', true);
-
-        dd($social);
-
-        return $social->driver('eveonline')
-                      ->scopes($scopes)
-                      ->redirect();
-    }
-
-    /**
      * Get token from callback
      * Redirect to the dashboard if logging in successfully. 
      */
