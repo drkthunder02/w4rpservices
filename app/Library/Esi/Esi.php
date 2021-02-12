@@ -100,9 +100,16 @@ class Esi {
         } else {
             $expires = $token->inserted_at + $token->expires_in;
             $token_expiration = Carbon::createFromTimestamp($expires)->toDateTimeString();
-
+            
             //If the access token has expired, we need to do a request for a new access token
             if($currentTime > $token_expiration) {
+                //Get the scopes to pass to the guzzle client
+                $scopesArr = EsiScope::where([
+                    'character_id' => $token->character_id,
+                ])->get()->toArray();
+                //Create string separated by %20 = space from the array of scopes
+                $scopes = implode('%20', $scopesArr);
+                
                 //Setup the new guzzle client
                 $client = new Client();
                 $response = $client->request('POST', 'https://login.eveonline.com/v2/oauth/token', [
@@ -114,6 +121,7 @@ class Esi {
                     'form_params' => [
                         'grant_type' => 'refresh_token',
                         'refresh_token' => $token->refresh_token,
+                        'scope' => $scopes,
                     ]
                 ]);
 
