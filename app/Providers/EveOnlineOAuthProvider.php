@@ -61,16 +61,21 @@ class EveOnlineOAuthProvider extends AbstractProvider {
      */
     protected function mapUserToObject(array $user) {
 
-        dd($user);
+        //Get the character Id from the token returned
+        $characterId = strtr($user['sub'], ['CHARACTER:EVE:' => '']);
 
+        //Return a user object with the mapped out variables below
         return (new User)->setRaw($user)->map([
-            'id' => $user['CharacterID'],
-            'name' => $user['CharacterName'],
-            'nickname' => $user['CharacterName'],
-            'owner_hash' => $user['CharacterOwnerHash'],
-            'avatar' => 'https://image.eveonline.com/Character/' . $user['CharacterID'] . '_128.jpg',
-            'token_type' => $user['TokenType'],
-            'expires_on' => $user['ExpiresOn'],
+            'id' => $characterId,
+            'name' => $user['name'],
+            'nickname' => $user['name'],
+            'owner_hash' => $user['owner'],
+            'scopes' => is_array($user['scp']) ? $user['scp'] : [$user['scp']],
+            'expires_on' => $user['exp'],
+            'avatar' => 'https://image.eveonline.com/Character/' . $characterId . '_128.jpg',
+            'iss' => $user['iss'],
+            'region' => $user['region'],
+            'tier' => $user['tier']
         ]);
     }
 
