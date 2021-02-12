@@ -108,7 +108,16 @@ class Esi {
                     'character_id' => $token->character_id,
                 ])->get(['scope'])->toArray();
 
-                dd($scopesArr);
+                $i = 0;
+                foreach($scopesArr as $scp) {
+                    $scopes .= $scp['scope'];
+                    if($i < sizeof($scopesArr)) {
+                        $scopes .= "%20";
+                    }
+                    $i++;
+                }
+
+                dd($scopes);
 
                 //Create string separated by %20 = space from the array of scopes
                 $scopes = implode(" ", $scopesArr);
