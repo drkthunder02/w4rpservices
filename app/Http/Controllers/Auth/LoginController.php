@@ -87,6 +87,10 @@ class LoginController extends Controller
             array_push($scopes, $extraScopes);
         }
 
+        //Place the scopes in the session to verify later after the redirect
+        //has been completed and a token is received
+        session()->put('scopes', $scopes);
+
         return $social->driver('eveonline')
                          ->scopes($scopes)
                          ->redirect();
