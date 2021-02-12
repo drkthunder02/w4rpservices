@@ -130,7 +130,6 @@ class Esi {
                     'form_params' => [
                         'grant_type' => 'refresh_token',
                         'refresh_token' => $token->refresh_token,
-                        'scope' => $scopes,
                     ]
                 ]);
 
