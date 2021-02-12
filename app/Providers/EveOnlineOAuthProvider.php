@@ -113,6 +113,8 @@ class EveOnlineOAuthProvider extends AbstractProvider {
      * @throws \Exception
      */
     private function validateJwtToken(string $access_token): array {
+        dd($access_token);
+        
         $scopes = session()->pull('scopes', []);
 
         // pulling JWK sets from CCP
