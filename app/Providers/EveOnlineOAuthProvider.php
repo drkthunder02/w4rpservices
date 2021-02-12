@@ -4,12 +4,17 @@ namespace App\Providers;
 
 use Jose\Component\Core\JWKSet;
 use Jose\Easy\Load;
+use SocialiteProviders\Manager\OAuth2\AbstractProvider;
+use SocialiteProviders\Manager\OAuth2\User;
+use App\Providers\Socialite\EveOnline\Checker\Claim\AzpChecker;
+use App\Providers\Socialite\EveOnline\Checker\Claim\NameChecker;
+use App\Providers\Socialite\EveOnline\Checker\Claim\OwnerChecker;
+use App\Providers\Socialite\EveOnline\Checker\Claim\ScpChecker;
+use App\Providers\Socialite\EveOnline\Checker\Claim\SubEveCharacterChecker;
+use App\Providers\Socialite\EveOnline\Checker\Header\TypeChecker;
 //use Laravel\Socialite\Two\ProviderInterface;
 //use Laravel\Socialite\Two\AbstractProvider;
 //use Laravel\Socialite\Two\User;
-use SocialiteProviders\Manager\OAuth2\AbstractProvider;
-use SocialiteProviders\Manager\OAuth2\User;
-
 
 class EveOnlineOAuthProvider extends AbstractProvider {
     /**
