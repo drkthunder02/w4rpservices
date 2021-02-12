@@ -118,12 +118,6 @@ class Esi {
                         $scopes .= "%20";
                     }
                 }
-
-                dd($scopes);
-
-                //Create string separated by %20 = space from the array of scopes
-                $scopes = implode(" ", $scopesArr);
-                $scopes = str_replace(" ", "%20", $scopes);
                 
                 //Setup the new guzzle client
                 $client = new Client();
