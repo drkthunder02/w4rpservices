@@ -6,8 +6,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Socialite;
 use Auth;
+use Laravel\Socialite\Contracts\Factory as Socialite;
+use Laravel\Socialite\Two\User as SocialiteUser;
 
 //Library
 use Seat\Eseye\Cache\NullCache;
