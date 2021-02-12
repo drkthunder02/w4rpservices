@@ -108,7 +108,7 @@ class Esi {
                 $response = $guzzle->request('POST', 'https://login.eveonline.com/v2/oauth/token', [
                     'Content-Type' => 'application/x-www-form-urlencoded',
                     'Host' => 'login.eveonline.com',
-                    'Authorization' => base64_encode("Basic " . $config['client_id'] . ":" . $config['secret']),
+                    'Authorization' => "Basic " . base64_encode($config['client_id'] . ":" . $config['secret']),
                 ]);
 
                 dd($response);
