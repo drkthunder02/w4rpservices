@@ -12,9 +12,6 @@ use App\Providers\Socialite\EveOnline\Checker\Claim\OwnerChecker;
 use App\Providers\Socialite\EveOnline\Checker\Claim\ScpChecker;
 use App\Providers\Socialite\EveOnline\Checker\Claim\SubEveCharacterChecker;
 use App\Providers\Socialite\EveOnline\Checker\Header\TypeChecker;
-//use Laravel\Socialite\Two\ProviderInterface;
-//use Laravel\Socialite\Two\AbstractProvider;
-//use Laravel\Socialite\Two\User;
 
 class EveOnlineOAuthProvider extends AbstractProvider {
     /**
@@ -119,9 +116,7 @@ class EveOnlineOAuthProvider extends AbstractProvider {
      * @return array
      * @throws \Exception
      */
-    private function validateJwtToken(string $access_token): array {
-        //dd($access_token);
-        
+    private function validateJwtToken(string $access_token): array {      
         $scopes = session()->pull('scopes', []);
 
         // pulling JWK sets from CCP
