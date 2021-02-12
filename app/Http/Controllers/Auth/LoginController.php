@@ -79,6 +79,8 @@ class LoginController extends Controller
         $scopes = ['publicData'];
 
         //Collect any other scopes we need if we are logged in.
+        //If we are logged in we are linking another character to this one.
+        //Attempt to use the same scopes for this character as the original one
         if(Auth::check()) {
             $extraScopes = EsiScope::where([
                 'character_id' => auth()->user()->getId(),
@@ -88,11 +90,14 @@ class LoginController extends Controller
             foreach($extraScopes as $extra) {
                 array_push($scopes, $extra->scope);
             }
-        }
 
-        //Place the scopes in the session to verify later after the redirect
-        //has been completed and a token is received
-        session()->put('scopes', $scopes);
+            /**
+             * Place the scopes in the session.
+             * Place the original character id in the session.
+             */
+            session()->put('scopes', $scopes);
+            session()->put('orgCharacter', auth()->user()->getId());
+        }
 
         return $social->driver('eveonline')
                          ->scopes($scopes)
@@ -107,40 +112,33 @@ class LoginController extends Controller
         //Get the sso user from the socialite driver
         $ssoUser = $social->driver('eveonline')->user();
 
-        $scpSession = session()->get('scopes');
+        $scpSession = session()->pull('scopes');
 
         //If the user was already logged in, let's do some checks to see if we are adding
         //additional scopes to the user's account
         if(Auth::check()) {
-            //If more scopes than just public Data are present on the return, then we are doing
-            //a scope callback to update scopes for an access token
-            if(sizeof($ssoUser->scopes) > 1) {
-                //Check to see if an access token is present already for the character
-                $tokenCount = EsiToken::where([
-                    'character_id' => $ssoUser->id,
-                ])->count();
-                //If a token is present, we need to update it.
-                if($tokenCount > 0) {
-                    //Update the Esi Token
-                    $this->UpdateEsiToken($ssoUser);
-                } else {
-                    //Save the ESI token as it is new
-                    $this->SaveEsiToken($ssoUser);
-                }
+            //If we are logged in already and the session contains the original characters, then we are creating an alt
+            //for the original character
+            if(session()->has('orgCharacter')) {
+                $orgCharacter = session()->pull('orgCharacter');
 
-                //After either creating the new token or updating an old token, we need to set the scopes available for the token
-                $this->SetScopes($ssoUser->scopes, $ssoUser->id);
-
-                //Redirect to the dashboard with the correct message
-                return redirect()->to('/dashboard')->with('success', 'Successfully updated ESI Scopes.');
-            } else {
-                //Retrieve the session data for altCall, and delete it from the session
-                $alt = session()->pull('altCall');
-
-                if($this->createAlt($ssoUser)) {
+                if($this->createAlt($ssoUser, $orgCharacter)) {
                     return redirect()->to('/profile')->with('success', 'Alt registered.');
-                } else {
+                } else {    
                     return redirect()->to('/profile')->with('error', 'Unable to register alt or it was previously registered.');
+                }
+            } else {
+                if(sizeof($ssoUser->scopes) > 1) {
+                    $tokenCount = EsiToken::where([
+                        'character_id' => $ssoUser->id,
+                    ])->count();
+                    if($tokenCount > 0) {
+                        $this->UpdateEsiToken($ssoUser);
+                    } else {
+                        $this->SaveEsiToken($ssoUser);
+                    }
+                    $this->SetScopes($ssoUser->scopes, $ssoUser->id);
+                    return redirect()->to('/dashboard')->with('success', 'Successfully updated ESI scopes.');
                 }
             }
         } else {
@@ -159,12 +157,12 @@ class LoginController extends Controller
      * 
      * @param \Laravel\Socialite\Two\User $user
      */
-    private function createAlt($user) {
+    private function createAlt($user, $orgCharacter) {
         $altCount = UserAlt::where('character_id', $user->id)->count();
         if($altCount == 0) {
             $newAlt = new UserAlt;
             $newAlt->name = $user->getName();
-            $newAlt->main_id = auth()->user()->getId();
+            $newAlt->main_id = $orgCharacter;
             $newAlt->character_id = $user->id;
             $newAlt->avatar = $user->avatar;
             $newAlt->access_token = $user->token;
