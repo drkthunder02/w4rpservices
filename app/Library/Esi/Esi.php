@@ -104,7 +104,7 @@ class Esi {
             //If the access token has expired, we need to do a request for a new access token
             if($currentTime > $token_expiration) {
                 //Setup the new guzzle client
-                $guzzle = new GuzzleHttp\Client();
+                $guzzle = new Client();
                 $response = $client->request('POST', 'https://login.eveonline.com/v2/oauth/token', [
                     'Content-Type' => 'application/x-www-form-urlencoded',
                     'Host' => 'login.eveonline.com',
