@@ -12,6 +12,8 @@ use App\Models\ScheduledTask\ScheduleJob;
 //Library
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
+use Seat\Eseye\Cache\NullCache;
+use Seat\Eseye\Configuration;
 
 class Test extends Command
 {
@@ -49,6 +51,10 @@ class Test extends Command
         //Declare some variables
         $esiHelper = new Esi;
         $config = config('esi');
+
+        //Set caching to null
+        $configuration = Configuration::getInstance();
+        $configuration->cache = NullCache::class;
 
         //Get the ESI Token
         $token = $esiHelper->GetRefreshToken($config['primary']);
