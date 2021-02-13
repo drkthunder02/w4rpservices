@@ -14,9 +14,9 @@ class SentMail extends Model
 
     protected $fillable = [
         'sender',
+        'recipient',
+        'reicpient_type',
         'subject',
         'body',
-        'recipient',
-        'recipient_type',
     ];
 }
