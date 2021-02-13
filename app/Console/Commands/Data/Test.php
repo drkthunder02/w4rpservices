@@ -52,7 +52,7 @@ class Test extends Command
 
         //Get the ESI Token
         $token = $esiHelper->GetRefreshToken($config['primary']);
-        $esi = $esiHelper->SetupAuthenticationToken($token);
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         try {
             $stuff = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
