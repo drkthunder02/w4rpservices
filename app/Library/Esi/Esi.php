@@ -119,6 +119,7 @@ class Esi {
             ]);
             //Decode the body of the response which has the token information
             $body = json_decode($response->getBody(), true);
+            dd($body);
             //Update the old token, then send the new token back to the calling function
             EsiToken::where([
                 'character_id' => $charId,
