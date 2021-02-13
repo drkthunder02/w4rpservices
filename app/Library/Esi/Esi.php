@@ -150,11 +150,13 @@ class Esi {
         $esi = null;
         $config = config('esi');
 
-        $tokenExpires = time() + $token->expires_in;
+        dd($token);
 
         if($token == null) {
             $esi = new Eseye();
         } else {
+            $tokenExpires = $token->inserted_at + $token->expires_in;
+
             //Setup the esi authentication container
             $authentication = new EsiAuthentication([
                 'client_id' => $config['client_id'],
