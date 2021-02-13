@@ -56,6 +56,7 @@ class FinanceHelper {
             return null;
         }
         $token = $esiHelper->GetRefreshToken($charId);
+        dd($token);
         if($token == null) {
             return null;
         }
@@ -65,10 +66,6 @@ class FinanceHelper {
         //Reference to see if the character is in our look up table for corporations and characters
         $char = $lookup->GetCharacterInfo($charId);
         $corpId = $char->corporation_id;
-
-        //Set caching to null
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
         
         //Set our current page to 1 which is the one we are starting on.
         $currentPage = 1;
@@ -106,7 +103,7 @@ class FinanceHelper {
                 } else if($entry['ref_type'] == 'structure_gate_jump') {
                     $jb->InsertJumpBridgeTax($entry, $corpId, $division);
                 } else if($entry['ref_type'] == 'player_donation' ||
-                            ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
+                         ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
                     $other->InsertPlayerDonation($entry, $corpId, $division);
                 } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
                     $industry->InsertStructureIndustryTax($entry, $corpId, $division);
