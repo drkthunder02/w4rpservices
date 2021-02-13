@@ -160,6 +160,8 @@ class Esi {
         $esi = null;
         $config = config('esi');
 
+        dd($token);
+
         $tokenExpires = time() + $token->expires_in;
 
         if($token == null) {
