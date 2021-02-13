@@ -136,6 +136,8 @@ class Esi {
             $newToken->inserted_at = time();
             $newToken->expires_in = $body->expires_in;
 
+            dd($newToken);
+
             //Return the new token model
             return $newToken;
 
@@ -157,8 +159,6 @@ class Esi {
         $authentication = null;
         $esi = null;
         $config = config('esi');
-
-        dd($token);
 
         $tokenExpires = time() + $token->expires_in;
 
