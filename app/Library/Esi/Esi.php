@@ -119,7 +119,32 @@ class Esi {
             ]);
             //Decode the body of the response which has the token information
             $body = json_decode($response->getBody(), true);
-            
+            //Update the old token, then send the new token back to the calling function
+            EsiToken::where([
+                'character_id' => $charId,
+            ])->update([
+                'access_token' => $body->access_token,
+                'refresh_token' => $body->refresh_token,
+                'expires_in' => $body->expires_in,
+                'inserted_at' => time(),
+            ]);
+
+            $newToken = new EsiToken;
+            $newToken->character_id = $charId;
+            $newToken->access_token = $body->access_token;
+            $newToken->refresh_token = $body->refresh_token;
+            $newToken->inserted_at = time();
+            $newToken->expires_in = $body->expires_in;
+
+            //Return the new token model
+            return $newToken;
+
+            /*
+            //Return the freshly saved token
+            return EsiToken::where([
+                'character_id' => $charId,
+            ])->first();
+            */
 
         } else {
             //If we had a good token which has not expired yet, return the data
