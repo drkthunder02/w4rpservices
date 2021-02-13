@@ -18,8 +18,6 @@ use App\Models\Esi\EsiScope;
 //Library
 use App\Library\Esi\Esi;
 use App\Library\Finances\AllianceMarketTax;
-use App\Library\Finances\CorpMarketTax;
-use App\Library\Finances\MarketTax;
 use App\Library\Finances\PlayerDonation;
 use App\Library\Finances\ReprocessingTax;
 use App\Library\Finances\JumpBridgeTax;
@@ -39,7 +37,7 @@ class FinanceHelper {
 
     public function GetWalletJournal($division, $charId) {
         //Declare new class variables
-        $market = new MarketTax();
+        $market = new AllianceMarketTax();
         $reprocessing = new ReprocessingTax();
         $jb = new JumpBridgeTax();
         $other = new PlayerDonation();
@@ -56,7 +54,6 @@ class FinanceHelper {
             return null;
         }
         $token = $esiHelper->GetRefreshToken($charId);
-        dd($token);
         if($token == null) {
             return null;
         }
@@ -118,165 +115,6 @@ class FinanceHelper {
             $currentPage++;
         //Continue looping through the do while loop until the current page is greater than or equal to the total pages.
         } while ($currentPage < $totalPages);
-    }
-
-    public function GetJournalPageCount($division, $charId) {
-        //Declare class variables
-        $lookup = new LookupHelper;
-        $esiHelper = new Esi;
-        
-        //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
-        if($hasScope == false) {
-            Log::critical('Esi Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
-            return null;
-        }
-        $token = $esiHelper->GetRefreshToken($charId);
-        if($token == null) {
-            return null;
-        }
-
-        //Refrence to see if the character is in our look up table for corporation and characters
-        $char = $lookup->GetCharacterInfo($charId);
-        $corpId = $char->corporation_id;
-
-        //Create the ESI authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
-
-        //Set the esi version to v4
-        $esi->setVersion('v4');
-
-        //Set caching to null
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-
-        //Call the first page so we can get the header data for the number of pages
-        try {
-            $journals = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
-                'corporation_id' => $corpId,
-                'division'  => $division,
-            ]);
-        } catch(RequestFailedException $e) {
-            Log::warning($e->getEsiResponse());
-            return null;
-        }
-
-        return $journals->pages;
-    }
-
-    public function GetCorpWalletJournalPage($division, $charId, $corpId, $page = 1) {
-        //Declare new class variables
-        $corpMarket = new MarketTax();
-        $esiHelper = new Esi;
-
-        //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $token = $esiHelper->GetRefreshToken($charId);
-
-        //Setup the esi authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
-        $esi->setVersion('v4');
-
-        //Set caching to null
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-
-        //Call the page of the wallet journal
-        try {
-            $journals = $esi->page($page)
-                            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
-                                'corporation_id' => $corpId,
-                                'division' => $division,
-                            ]);
-        } catch(RequestFailedException $e) {
-            Log::warning($e->getEsiResponse());
-            return null;
-        }
-
-        //Decode the wallet from json into an array
-        $wallets = json_decode($journals->raw, true);
-
-        //For each journal entry, attempt to store the information into the database
-        foreach($wallets as $wallet) {
-            if($wallet['amount'] > 0) {
-                if($wallet['ref_type'] == 'brokers_fee') {
-                    $corpMarket->InsertCorpMarketTax($wallet, $corpId, $division);
-                }
-            }
-        }
-    }
-
-    public function GetWalletJournalPage($division, $charId, $page = 1) {
-        //Declare new class variables
-        $market = new AllianceMarketTax;
-        $reprocessing = new ReprocessingTax;
-        $jb = new JumpBridgeTax;
-        $other = new PlayerDonation;
-        $industry = new StructureIndustryTax;
-        $office = new OfficeFee;
-        $pi = new PlanetProductionTax;
-        $esiHelper = new Esi;
-        $lookup = new LookupHelper;
-        $sovBill = new SovBillExpenses;
-
-        //Get the ESI refresh token for the corporation to add new wallet journals into the database
-        $hasScope = $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1');
-        if($hasScope == false) {
-            Log::critical('Esi Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
-            return null;
-        }
-        $token = $esiHelper->GetRefreshToken($charId);
-        if($token == null) {
-            return null;
-        }       
-        
-        //Reference to see if the character is in our look up table for corporations and characters
-        $char = $lookup->GetCharacterInfo($charId);
-        $corpId = $char->corporation_id;
-
-        //Create an ESI authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
-        $esi->setVersion('v4');
-
-        //Set caching to null
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-
-        //Call the first page of the wallet journal, as we are always going to get at least one page.
-        //If we have more pages, then we will continue through the while loop.
-        try {
-            $journals = $esi->page($page)
-                            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
-                'corporation_id' => $corpId,
-                'division'  => $division,
-            ]);
-        } catch(RequestFailedException $e) {
-            return null;
-        }
-
-        //Decode the wallet from json into an array
-        $wallet = json_decode($journals->raw, true);
-        //For each journal entry, attempt to store it in the database.
-        //The PutWalletJournal function checks to see if it's already in the database.
-        foreach($wallet as $entry) {
-            if($entry['ref_type'] == 'brokers_fee') {
-                $market->InsertMarketTax($entry, $corpId, $division);
-            } else if($entry['ref_type'] == 'reprocessing_tax') {
-                $reprocessing->InsertReprocessingTax($entry, $corpId, $division);
-            } else if($entry['ref_type'] == 'structure_gate_jump') {
-                $jb->InsertJumpBridgeTax($entry, $corpId, $division);
-            } else if($entry['ref_type'] == 'player_donation' ||
-                        ($entry['ref_type'] == 'corporation_account_withdrawal' && $entry['second_party_id'] == 98287666)) {
-                $other->InsertPlayerDonation($entry, $corpId, $division);
-            } else if($entry['ref_type'] == 'industry_job_tax' && $entry['second_party_id'] == 98287666) {
-                $industry->InsertStructureIndustryTax($entry, $corpId, $division);
-            } else if($entry['ref_type'] == 'office_rental_fee' && $entry['second_party_id'] == 98287666) {
-                $office->InsertOfficeFee($entry, $corpId, $division);
-            } else if($entry['ref_type'] == 'planetary_export_tax' || $entry['ref_type'] == 'planetary_import_tax') {
-                $pi->InsertPlanetProductionTax($entry, $corpId, $division);
-            } else if($entry['ref_type'] == 'infrastructure_hub_maintenance' && $entry['first_party_id'] == 98287666) {
-                $sovBill->InsertSovBillExpense($entry, $corpId, $division);
-            }
-        }
     }
 
     private function GetPIMaterialsArray() {
