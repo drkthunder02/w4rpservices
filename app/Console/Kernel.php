@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
         Commands\Data\EmptyJumpBridges::class,
         Commands\Data\CleanStaleDataCommand::class,
         Commands\Data\GetCorpsCommand::class,
+        Commands\Data\Test::class,
         /**
          * Assets Commands
          */
