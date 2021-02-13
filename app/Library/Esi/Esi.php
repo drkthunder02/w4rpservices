@@ -76,7 +76,7 @@ class Esi {
         $config = config('esi');
 
         //If the program doesn't find an ESI Token, there is nothing to return
-        if(EsiToken::where(['character_id' => $charId])->count() === 0) {
+        if(EsiToken::where(['character_id' => $charId])->count() == 0) {
             return null;
         }
 
