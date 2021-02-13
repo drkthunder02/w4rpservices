@@ -89,7 +89,7 @@ class Esi {
         $expires = $token->inserted_at + $token->expires_in;
         $tokenExpiration = Carbon::createFromTimestamp($expires)->toDateTimeString();
         //If the access token has expired, we need to do a request for a new access token
-        if($currentTime > $token_expiration) {
+        if($currentTime > $tokenExpiration) {
             //Get the current scopes of the token
             $scopesArr = EsiScope::where([
                 'character_id' => $token->character_id,
@@ -158,6 +158,8 @@ class Esi {
         $esi = null;
         $config = config('esi');
 
+        $tokenExpires = time() + $token->expires_in;
+
         if($token == null) {
             $esi = new Eseye();
         } else {
@@ -167,7 +169,7 @@ class Esi {
                 'secret' => $config['secret'],
                 'refresh_token' => $token->refresh_token,
                 'access_token' => $token->access_token,
-                'token_expires' => $token_expiration,
+                'token_expires' => $tokenExpires,
             ]);
 
             //Setup the esi variable
