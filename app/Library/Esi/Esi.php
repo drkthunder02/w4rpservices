@@ -150,8 +150,6 @@ class Esi {
         $esi = null;
         $config = config('esi');
 
-        dd($token);
-
         if($token == null) {
             $esi = new Eseye();
         } else {
