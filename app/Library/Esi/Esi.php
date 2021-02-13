@@ -136,22 +136,12 @@ class Esi {
             $newToken->inserted_at = time();
             $newToken->expires_in = $body->expires_in;
 
-            dd($newToken);
-
             //Return the new token model
             return $newToken;
-
-            /*
-            //Return the freshly saved token
-            return EsiToken::where([
-                'character_id' => $charId,
-            ])->first();
-            */
-
-        } else {
-            //If we had a good token which has not expired yet, return the data
-            return $token;
-        }     
+        } 
+        
+        //If we had a good token which has not expired yet, return the data
+        return $token;
     }
 
     public function SetupEsiAuthentication($token = null) {
