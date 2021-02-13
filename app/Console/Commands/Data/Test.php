@@ -58,6 +58,7 @@ class Test extends Command
 
         //Get the ESI Token
         $token = $esiHelper->GetRefreshToken($config['primary']);
+        dd($token);
         $esi = $esiHelper->SetupEsiAuthentication($token);
 
         try {

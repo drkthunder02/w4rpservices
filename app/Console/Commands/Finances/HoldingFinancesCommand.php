@@ -48,20 +48,8 @@ class HoldingFinancesCommand extends Command
         //Get the esi configuration
         $config = config('esi');
 
-        //Get the total pages for the journal for the holding corporation
-        $pages = $finance->GetJournalPageCount(1, $config['primary']);
-
-        //Dispatch a single job for each page to process
-        for($i = 1; $i <= $pages; $i++) {
-            ProcessWalletJournalJob::dispatch(1, $config['primary'], $i)->onQueue('journal');
-        }
-
-        //Get the total pages for the journal for the sov bills from the holding corporation
-        $pages = $finance->GetJournalPageCount(6, $config['primary']);
-
-        //Dispatch a job for each page to process
-        for($i = 1; $i <= $pages; $i++) {
-            ProcessWalletJournalJob::dispatch(6, $config['primary'], $i)->onQueue('journal');
+        for($i = 1; $i <= 6; $i++) {
+            ProcessWalletJournalJob::dispatch($i, $config['primary'])->onQueue('journal');
         }
     }
 }

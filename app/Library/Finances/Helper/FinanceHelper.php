@@ -58,16 +58,13 @@ class FinanceHelper {
         $token = $esiHelper->GetRefreshToken($charId);
         if($token == null) {
             return null;
-        }        
+        }
+        //Create an ESI authentication container
+        $esi = $esiHelper->SetupEsiAuthentication($token);
         
         //Reference to see if the character is in our look up table for corporations and characters
         $char = $lookup->GetCharacterInfo($charId);
         $corpId = $char->corporation_id;
-
-        //Create an ESI authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($token);
-        //Set the version
-        $esi->setVersion('v4');
 
         //Set caching to null
         $configuration = Configuration::getInstance();
