@@ -39,6 +39,13 @@ class Kernel extends ConsoleKernel
         Commands\Finances\HoldingFinancesCommand::class,
         Commands\Finances\SovBillsCommand::class,
         /**
+         * Mining Tax Commands
+         */
+        Commands\MiningTaxes\MiningTaxesInvoices::class,
+        Commands\MiningTaxes\MiningTaxesLedgers::class,
+        Commands\MiningTaxes\MiningTaxesObservers::class,
+        Commands\MiningTaxes\MiningTaxesPayments::class,
+        /**
          * Structures Command
          */
         Commands\Structures\GetStructuresCommand::class,
@@ -98,6 +105,19 @@ class Kernel extends ConsoleKernel
         $schedule->command('services:ItemPriceUpdate')
                  ->hourlyAt('30')
                  ->withoutOverlapping();
+
+        /**
+         * Mining Tax Schedule
+         */
+        $schedule->command('MiningTaxes:Observers')
+                 ->dailyAt('22:00');
+        $schedule->command('MiningTaxes:Ledgers')
+                 ->hourlyAt('05')
+                 ->withoutOverlapping();
+        $schedule->command('MiningTaxes:Invoices')
+                 ->dailyAt('23:00');
+        $schedule->command('MiningTaxes:Payments')
+                 ->dailyAt('23:50');
     }
 
     /**

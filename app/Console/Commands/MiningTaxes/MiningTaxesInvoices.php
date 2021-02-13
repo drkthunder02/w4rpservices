@@ -11,14 +11,14 @@ class MiningTaxesInvoices extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'MiningTax:Invoice';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Mining Taxes Invoice Command';
 
     /**
      * Create a new command instance.

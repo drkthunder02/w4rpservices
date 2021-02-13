@@ -11,14 +11,14 @@ class MiningTaxesLedgers extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'MiningTax:Ledgers';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Start getting the mining ledgers.';
 
     /**
      * Create a new command instance.

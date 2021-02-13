@@ -11,14 +11,14 @@ class MiningTaxesObservers extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'MiningTax:Observer';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Get mining tax observers.';
 
     /**
      * Create a new command instance.
