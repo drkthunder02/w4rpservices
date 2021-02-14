@@ -17,6 +17,7 @@
         "laravel/ui": "^2.0",
         "laravelcollective/html": "^6.0",
         "predis/predis": "^1.1",
+        "socialiteproviders/manager": "^4.0",
         "spatie/laravel-rate-limited-job-middleware": "^1.5",
         "twbs/bootstrap": "^4.5",
         "web-token/jwt-easy": "^2.2",

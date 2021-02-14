@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '0a11a5d23d14c0dbc4537b5219a99b5ffa1a03fd',
+    'reference' => '4b72a59e62d368371546246a68aef55ee21c2705',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -463,7 +463,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '0a11a5d23d14c0dbc4537b5219a99b5ffa1a03fd',
+      'reference' => '4b72a59e62d368371546246a68aef55ee21c2705',
     ),
     'laravel/socialite' => 
     array (
@@ -927,6 +927,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '99732be0ddb3361e16ad77b68ba41efc8e979019',
+    ),
+    'socialiteproviders/manager' => 
+    array (
+      'pretty_version' => '4.0.1',
+      'version' => '4.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '0f5e82af0404df0080bdc5c105cef936c1711524',
     ),
     'spatie/laravel-rate-limited-job-middleware' => 
     array (
