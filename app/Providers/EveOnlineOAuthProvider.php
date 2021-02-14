@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Jose\Component\Core\JWKSet;
 use Jose\Easy\Load;
+use App\Providers\Socialite\EveOnline\EveOnlineExtendSocialite;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
 use App\Providers\Socialite\EveOnline\Checker\Claim\AzpChecker;
