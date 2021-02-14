@@ -2,7 +2,15 @@
 
 namespace App\Console\Commands\MiningTaxes;
 
+//Internal Library
 use Illuminate\Console\Command;
+use Log;
+
+//Application Library
+use Commands\Library\CommandHelper;
+
+//Jobs
+use App\Jobs\Commands\MiningTaxes\CalculateMiningTaxesJob;
 
 class MiningTaxesInvoices extends Command
 {
@@ -37,6 +45,15 @@ class MiningTaxesInvoices extends Command
      */
     public function handle()
     {
+        $task = new CommandHelper('MiningTaxesInvoices');
+        //Set the task as started
+        $task->SetStartStatus();
+
+        CalculateMiningTaxesJob::dispatch()->onQueue('miningtaxes');
+
+        //Set the task as stopped
+        $task->SetStopStatus();
+
         return 0;
     }
 }

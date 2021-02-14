@@ -2,13 +2,14 @@
 
 namespace App\Jobs\Commands\MiningTaxes;
 
-//App Library
+//Internal Library
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Carbon\Carbon;
+use Log;
 
 //Library
 use App\Library\Lookups\LookupHelper;
@@ -34,11 +35,13 @@ class CreateMiningTaxesInvoiceJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($ores, $totalPrice, $charId)
+    public function __construct($ores = [], $totalPrice, $charId)
     {
         $this->ores = $ores;
         $this->totalPrice = $totalPrice;
         $this->charId = $charId;
+
+        $this->connection = 'redis';
     }
 
     /**
@@ -87,7 +90,7 @@ class CreateMiningTaxesInvoiceJob implements ShouldQueue
             $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
         }
         $body .= "Please remit " . number_format($this->totalPrice, 2, ".", ",") . " ISK to Spatial Forces by " . $invoice->date_due . "<br>";
-        $body .= "Set the reason for transfer as " . $invoice->invoice_id . "<br>";
+        $body .= "Set the reason for transfer as MMT: " . $invoice->invoice_id . "<br>";
         $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
 
         //Mail the invoice to the character if the character is in

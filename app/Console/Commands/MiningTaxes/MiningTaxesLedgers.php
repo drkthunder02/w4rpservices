@@ -2,7 +2,15 @@
 
 namespace App\Console\Commands\MiningTaxes;
 
+//Internal Library
 use Illuminate\Console\Command;
+use Log;
+
+//Application Library
+use Commands\Library\CommandHelper;
+
+//Jobs
+use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgersJob;
 
 class MiningTaxesLedgers extends Command
 {
@@ -37,6 +45,14 @@ class MiningTaxesLedgers extends Command
      */
     public function handle()
     {
+        //Create the command helper container
+        $task = new CommandHelper('MiningTaxesLedger');
+        //Set the task as started
+        $task->SetStartStatus();
+
+        FetchMiningTaxesLedgersJob::dispatch()->onQueue('miningtaxes');
+
+        //Return 0
         return 0;
     }
 }

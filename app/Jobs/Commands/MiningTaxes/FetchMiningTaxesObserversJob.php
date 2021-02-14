@@ -95,25 +95,14 @@ class FetchMiningTaxesObserversJob implements ShouldQueue
 
         //Run through the mining observers, and add them to the database
         foreach($response as $observer) {
-            //Count how many observers have the observer_id stated.
-            //May change this to a more efficient function later
-            $count = Observer::where([
-                'observer_id' => $observer->observer_id,
-            ])->count();
 
-            if($count == 0) {
-                $obs = new Observer;
-                $obs->last_updated = $observer->last_updated;
-                $obs->observer_id = $observer->observer_id;
-                $obs->observer_type = $observer->observer_type;
-                $obs->save();
-            } else {
-                Observer::where([
-                    'observer_id' => $observer->observer_id,
-                ])->update([
-                    'last_updated' => $observer->last_updated,
-                ]);
-            }
+            Observer::updateOrInsert([
+                'observer_id' => $observer->observer_id,
+            ], [
+                'observer_id' => $observer->observer_id,
+                'observer_type' => $observer->observer_type,
+                'last_updated' => $observer->last_updated,
+            ]);
         }
 
         /**

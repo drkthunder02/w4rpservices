@@ -3,6 +3,13 @@
 namespace App\Console\Commands\MiningTaxes;
 
 use Illuminate\Console\Command;
+use Log;
+
+//Application Library
+use Commands\Library\CommandHelper;
+
+//Jobs
+use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPaymentsJob;
 
 class MiningTaxesPayments extends Command
 {
@@ -37,6 +44,17 @@ class MiningTaxesPayments extends Command
      */
     public function handle()
     {
+        //Create the command helper container
+        $task = new CommandHelper('MiningTaxesPayments');
+        //Set the task as started
+        $task->SetStartStatus();
+
+        //Dispatch the job
+        ProcessMiningTaxesPaymentsJob::dispatch()->onQueue('miningtaxes');
+
+        //Set the task as stopped
+        $task->SetStopStatus();
+
         return 0;
     }
 }

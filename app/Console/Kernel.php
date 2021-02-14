@@ -114,10 +114,12 @@ class Kernel extends ConsoleKernel
         $schedule->command('MiningTaxes:Ledgers')
                  ->hourlyAt('05')
                  ->withoutOverlapping();
+        /*
         $schedule->command('MiningTaxes:Invoices')
                  ->dailyAt('23:00');
         $schedule->command('MiningTaxes:Payments')
                  ->dailyAt('23:50');
+        */
     }
 
     /**
