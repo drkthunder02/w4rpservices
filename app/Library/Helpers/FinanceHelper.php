@@ -16,7 +16,7 @@ use Seat\Eseye\Configuration;
 
 //Application Library
 use App\Library\Esi\Esi;
-use App\Library\Lookups\LookupHelper;
+use App\Library\Helpers\LookupHelper;
 
 //Models
 use App\Models\Finances\AllianceWalletJournal;
