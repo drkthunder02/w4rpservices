@@ -137,7 +137,7 @@ class FinanceHelper {
                         if(isset($entry['tax_receiver_id'])) {
                             $awj->tax_receiver_id = $entry['tax_receiver_id'];
                         }
-                        $awj-save();
+                        $awj->save();
 
                     }
                     
