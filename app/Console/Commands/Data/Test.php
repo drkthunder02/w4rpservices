@@ -51,9 +51,9 @@ class Test extends Command
     {
         $helper = new FinanceHelper;
         $config = config('esi');
-        $startTime = now();
+        $startTime = time();
         $receipt = $helper->GetApiWalletJournal(1, $config['primary']);
-        $endTime = now();
+        $endTime = time();
         var_dump($endTime - $startTime);
     }
 }
