@@ -93,8 +93,10 @@ class FetchMiningTaxesObserversJob implements ShouldQueue
             Log::critical("Failed to get moon observers in FetchMiningTaxesObservers");
         }
 
+        $resp = json_decode($response, false);
+
         //Run through the mining observers, and add them to the database
-        foreach($response as $observer) {
+        foreach($resp as $observer) {
 
             Observer::updateOrInsert([
                 'observer_id' => $observer->observer_id,
