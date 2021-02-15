@@ -96,8 +96,7 @@ class FinanceHelper {
 
                 
                 //Foreach journal entry, add the journal entry to the table
-                foreach($wallet as $entry) {
-                    dd($entry);                    
+                foreach($wallet as $entry) {                 
                     //See if we find the entry id in the database already
                     $found = AllianceWalletJournal::where([
                         'id' => $entry['id'],
