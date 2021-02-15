@@ -140,24 +140,6 @@ class FinanceHelper {
                         $awj->save();
 
                     }
-                    
-                    /*
-                    AllianceWalletJournal::insertOrIgnore([
-                        'id' => $entry->id,
-                        'corporation_id' => $corpId,
-                        'divison' => $division,
-                        'amount' => $entry->amount,
-                        'balance' => $entry->balance,
-                        'context_id' => $entry->context_id,
-                        'date' => $esi->DecodeDate($entry->date),
-                        'description' => $entry->description,
-                        'first_party_id' => $entry->first_party_id,
-                        'reason' => $entry->reason,
-                        'ref_type' => $entry->ref_type,
-                        'tax' => $entry->tax,
-                        'tax_receiver_id' => $entry->tax_receiver_id,
-                    ]);
-                    */
                 }
             } else {
                 /**
