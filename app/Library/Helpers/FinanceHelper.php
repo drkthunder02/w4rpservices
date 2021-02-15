@@ -96,7 +96,7 @@ class FinanceHelper {
                 
                 //Foreach journal entry, add the journal entry to the table
                 foreach($wallet as $entry) {
-                    /*
+                    
                     //See if we find the entry id in the database already
                     $found = AllianceWalletJournal::where([
                         'id' => $entry['id'],
@@ -138,8 +138,8 @@ class FinanceHelper {
                         }
 
                     }
-                    */
-
+                    
+                    /*
                     AllianceWalletJournal::insertOrIgnore([
                         'id' => $entry->id,
                         'corporation_id' => $corpId,
@@ -155,6 +155,7 @@ class FinanceHelper {
                         'tax' => $entry->tax,
                         'tax_receiver_id' => $entry->tax_receiver_id,
                     ]);
+                    */
                 }
             } else {
                 /**
