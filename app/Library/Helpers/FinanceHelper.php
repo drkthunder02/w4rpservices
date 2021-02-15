@@ -73,6 +73,8 @@ class FinanceHelper {
                                 ]);
             } catch(RequestFailedException $e) {
                 Log::warning('Failed to get wallet journal page ' . $currentPage . ' for character id: ' . $charId);
+                Log::warning($e);
+                dd($e);
                 $pageFailed = true;
             }
 
@@ -153,7 +155,7 @@ class FinanceHelper {
 
             //Increment the current page counter
             $currentPage++;
-        } while($currentPage < $totalPages);
+        } while($currentPage <= $totalPages);
 
         return 0;
     }
