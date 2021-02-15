@@ -14,7 +14,6 @@ use Log;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Helpers\LookupHelper;
-use App\Library\Helpers\StructureHelper;
 
 //App Models
 use App\Models\MiningTax\Observer;
@@ -67,7 +66,6 @@ class FetchMiningTaxesObserversJob implements ShouldQueue
     public function handle()
     {
         //Declare variables
-        $sHelper = new StructureHelper($this->charId, $this->corpId);
         $lookup = new LookupHelper;
         $esiHelper = new Esi;
 
