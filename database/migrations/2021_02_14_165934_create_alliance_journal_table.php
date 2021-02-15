@@ -34,7 +34,7 @@ class CreateAllianceJournalTable extends Migration
                     'planet_id',
                     'system_id',
                     'type_id',
-                ]);
+                ])->nullable();
                 $table->dateTime('date')->nullable();
                 $table->string('description')->nullable();
                 $table->unsignedBigInteger('first_party_id')->nulalble();
