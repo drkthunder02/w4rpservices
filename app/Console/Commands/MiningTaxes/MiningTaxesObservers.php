@@ -48,7 +48,9 @@ class MiningTaxesObservers extends Command
         //Set the task as started
         $task->SetStartStatus();
 
-        FetchMiningTaxesObserversJob::dispatch()->onQueue('miningtaxes');
+        $config = config('esi');
+
+        FetchMiningTaxesObserversJob::dispatch($config['primary'], $config['corporation'])->onQueue('miningtaxes');
 
         $task->SetStopStatus();
 

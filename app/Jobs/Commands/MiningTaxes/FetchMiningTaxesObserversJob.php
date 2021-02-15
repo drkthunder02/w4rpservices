@@ -48,7 +48,7 @@ class FetchMiningTaxesObserversJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($charId, $corpId)
+    public function __construct($charId = null, $corpId = null)
     {
         $this->charId = $charId;
         $this->corpId = $corpId;
