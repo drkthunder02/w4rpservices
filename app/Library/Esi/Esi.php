@@ -68,6 +68,20 @@ class Esi {
         return $realDate;
     }
 
+    public function TokenExpired($token) {
+        $currentTime = Carbon::now();
+
+        //Create the carbon time for expiration time 
+        $expires = $token->inserted_at + $token->expires_in;
+        $tokenExpiration = Carbon::createFromTimeStamp($expires)->toDateTimeString();
+
+        if($currentTime->greaterThan($tokenExpiration->subSeconds(5))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function GetRefreshToken($charId) {
         //Declare variables
         $currentTime = Carbon::now();
@@ -89,7 +103,8 @@ class Esi {
         $expires = $token->inserted_at + $token->expires_in;
         $tokenExpiration = Carbon::createFromTimestamp($expires)->toDateTimeString();
         //If the access token has expired, we need to do a request for a new access token
-        if($currentTime > $tokenExpiration) {
+        //We give ourselves around 5 seconds leeway in order to deal with an expired token
+        if($currentTime->greaterThan($tokenExpiration->subSeconds(5))) {
             //Get the current scopes of the token
             $scopesArr = EsiScope::where([
                 'character_id' => $token->character_id,

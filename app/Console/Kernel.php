@@ -23,21 +23,11 @@ class Kernel extends ConsoleKernel
         Commands\Data\PurgeUsers::class,
         Commands\Data\EmptyJumpBridges::class,
         Commands\Data\CleanStaleDataCommand::class,
-        Commands\Data\GetCorpsCommand::class,
         Commands\Data\Test::class,
-        /**
-         * Assets Commands
-         */
-        Commands\Assets\GetAssetsCommand::class,
         /**
          * Eve Commands
          */
         Commands\Eve\ItemPricesUpdateCommand::class,
-        /**
-         * Finances Commands
-         */
-        Commands\Finances\HoldingFinancesCommand::class,
-        Commands\Finances\SovBillsCommand::class,
         /**
          * Mining Tax Commands
          */
@@ -45,10 +35,6 @@ class Kernel extends ConsoleKernel
         Commands\MiningTaxes\MiningTaxesLedgers::class,
         Commands\MiningTaxes\MiningTaxesObservers::class,
         Commands\MiningTaxes\MiningTaxesPayments::class,
-        /**
-         * Structures Command
-         */
-        Commands\Structures\GetStructuresCommand::class,
     ];
 
     /**
@@ -61,34 +47,6 @@ class Kernel extends ConsoleKernel
     {
         //Horizon Graph Schedule
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
-
-        /**
-         * Moon Update Schedule
-         */
-
-        /**
-         * System Rental Schedule
-         */
-        $schedule->command('services:SystemRentals')
-                 ->monthlyOn(1, '00:01')
-                 ->withoutOverlapping();
-        /**
-         * Holding Corp Finance Schedule
-         */
-        $schedule->command('services:HoldingJournal')
-                 ->hourlyAt('45')
-                 ->withoutOverlapping();
-
-        /**
-         * Get Information Schedule
-         */
-        $schedule->command('services:GetCorps')
-                 ->monthlyOn(1, '09:00');
-        $schedule->command('services:GetStructures')
-                 ->dailyAt('09:00');
-        $schedule->command('services:GetAssets')
-                 ->hourlyAt('22');     
-
         /**
          * Purge Data Schedule
          */

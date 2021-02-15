@@ -6,7 +6,7 @@
  * 
  */
 
-namespace App\Library\Moons;
+namespace App\Library\Helpers;
 
 //Internal Library
 use Log;

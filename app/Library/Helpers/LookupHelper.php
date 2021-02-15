@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Lookups;
+namespace App\Library\Helpers;
 
 //Internal Libraries
 use Log;

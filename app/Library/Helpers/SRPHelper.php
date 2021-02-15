@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\SRP;
+namespace App\Library\Helpers;
 
 //Internal Libraries
 use Carbon\Carbon;

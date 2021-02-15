@@ -8,9 +8,9 @@ use DB;
 use Carbon\Carbon;
 
 //Libraries
-use App\Library\Taxes\TaxesHelper;
-use App\Library\Lookups\LookupHelper;
-use App\Library\SRP\SRPHelper;
+use App\Library\Helpers\TaxesHelper;
+use App\Library\Helpers\LookupHelper;
+use App\Library\Helpers\SRPHelper;
 
 //Models
 use App\Models\User\User;

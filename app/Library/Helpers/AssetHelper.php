@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Assets;
+namespace App\Library\Helpers;
 
 //Internal Library
 use Log;

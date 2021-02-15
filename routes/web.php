@@ -65,19 +65,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/profile', 'Dashboard\DashboardController@profile');
 
     /**
-     * Fuel Controller display pages
-     */
-    Route::get('/logistics/fuel/structures', 'Logistics\FuelController@displayStructures');
-
-    /**
      * Mining Moon Tax display pages
      */
     //Route::get('/mining/display', 'Mining\MiningsController@displayMiningTax');
-
-    /**
-     * Moon Ledger Controller display pages
-     */
-    Route::get('/moons/ledger/display/moons', 'Moons\MoonLedgerController@displayMoonLedger');
 
     /**
      * Scopes Controller display pages

@@ -11,8 +11,8 @@ use Khill\Lavacharts\Lavacharts;
 use Auth;
 
 //Library Helpers
-use App\Library\Lookups\LookupHelper;
-use App\Library\Structures\StructureHelper;
+use App\Library\Helpers\LookupHelper;
+use App\Library\Helpers\StructureHelper;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 

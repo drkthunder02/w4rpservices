@@ -14,6 +14,7 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
+use App\Library\Helpers\FinanceHelper;
 
 class Test extends Command
 {
@@ -48,27 +49,11 @@ class Test extends Command
      */
     public function handle()
     {
-        //Declare some variables
-        $esiHelper = new Esi;
+        $helper = new FinanceHelper;
         $config = config('esi');
+        
+        $receipt = $helper->GetApiWalletJournal(1, $config['primary']);
 
-        //Set caching to null
-        $configuration = Configuration::getInstance();
-        $configuration->cache = NullCache::class;
-
-        //Get the ESI Token
-        $token = $esiHelper->GetRefreshToken($config['primary']);
-        $esi = $esiHelper->SetupEsiAuthentication($token);
-
-        try {
-            $stuff = $esi->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
-                'corporation_id' => $config['corporation'],
-                'division' => 1,
-            ]);
-        } catch(RequestFailedException $e) {
-            dd($e);
-        }
-
-        dd(json_decode($stuff->raw, true));
+        var_dump($receipt);
     }
 }

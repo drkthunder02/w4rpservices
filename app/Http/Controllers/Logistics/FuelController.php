@@ -13,11 +13,13 @@ use Auth;
 use Charts;
 
 //Library Helpers
-use App\Library\Assets\AssetHelper;
-use App\Library\Structures\StructureHelper;
+use App\Library\Helpers\AssetHelper;
+use App\Library\Helpers\StructureHelper;
 
 //Models
 use App\Models\Structure\Structure;
+use App\Models\Structure\Asset;
+use App\Models\Structure\Service;
 
 class FuelController extends Controller
 {

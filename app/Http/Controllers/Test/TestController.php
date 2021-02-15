@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Test;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Library\Lookups\LookupHelper;
+use App\Library\Helpers\LookupHelper;
 
 class TestController extends Controller
 {

@@ -4,12 +4,12 @@ namespace App\Models\Finances;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SovBillJournal extends Model
+class AllianceWalletJournal extends Model
 {
     /**
      * Table Name
      */
-    protected $table = 'sov_bill_journal';
+    protected $table = 'alliance_wallet_journal';
 
     /**
      * Timestamps

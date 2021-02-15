@@ -10,7 +10,7 @@ use Khill\Lavacharts\Lavacharts;
 use Carbon\Carbon;
 
 //User Libraries
-use App\Library\SRP\SRPHelper;
+use App\Library\Helpers\SRPHelper;
 
 //Models
 use App\Models\SRP\SRPShip;

@@ -5,7 +5,7 @@
  * GNU Public License
  */
 
-namespace App\Library\Structures;
+namespace App\Library\Helpers;
 
 //Internal Library
 use Log;

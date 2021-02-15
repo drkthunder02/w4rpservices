@@ -9,7 +9,7 @@ use Log;
 use DB;
 
 //Library
-use App\Library\Lookups\LookupHelper;
+use App\Library\Helpers\LookupHelper;
 
 //Models
 use App\Models\Blacklist\BlacklistEntity;

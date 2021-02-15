@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Taxes;
+namespace App\Library\Helpers;
 
 //Internal Library
 use Carbon\Carbon;

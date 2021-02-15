@@ -31,10 +31,6 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
             return in_array($user->name, [
                 'Minerva Arbosa',
                 'Rock Onzo',
-                'Niloh Shuran',
-                'Lowjack Tzetsu',
-                'Amaren Otsada',
-                'Resource',
             ]);
         });
     }

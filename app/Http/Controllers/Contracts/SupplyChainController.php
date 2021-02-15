@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
 //Libraries
-use App\Library\Lookups\LookupHelper;
+use App\Library\Helpers\LookupHelper;
 
 //Models
 use App\Models\User\User;
