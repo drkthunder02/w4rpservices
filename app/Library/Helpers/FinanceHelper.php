@@ -94,22 +94,20 @@ class FinanceHelper {
                 $wallet = json_decode($journals->raw, true);
                 //Foreach journal entry, add the journal entry to the table
                 foreach($wallet as $entry) {
-                    dd($entry);
-
                     AllianceWalletJournal::insertOrIgnore([
-                        'id' => $entry->id,
+                        'id' => $entry['id'],
                         'corporation_id' => $corpId,
                         'divison' => $division,
-                        'amount' => $entry->amount,
-                        'balance' => $entry->balance,
-                        'context_id' => $entry->context_id,
-                        'date' => $esi->DecodeDate($entry->date),
-                        'description' => $entry->description,
-                        'first_party_id' => $entry->first_party_id,
-                        'reason' => $entry->reason,
-                        'ref_type' => $entry->ref_type,
-                        'tax' => $entry->tax,
-                        'tax_receiver_id' => $entry->tax_receiver_id,
+                        'amount' => $entry['amount'],
+                        'balance' => $entry['balance'],
+                        'context_id' => $entry['context_id'],
+                        'date' => $esi->DecodeDate($entry['date']),
+                        'description' => $entry['description'],
+                        'first_party_id' => $entry['first_party_id'],
+                        'reason' => $entry['reason'],
+                        'ref_type' => $entry['ref_type'],
+                        'tax' => $entry['tax'],
+                        'tax_receiver_id' => $entry['tax_receiver_id'],
                     ]);
                 }
             } else {
