@@ -94,6 +94,8 @@ class FinanceHelper {
                 $wallet = json_decode($journals->raw, true);
                 //Foreach journal entry, add the journal entry to the table
                 foreach($wallet as $entry) {
+                    dd($entry);
+
                     AllianceWalletJournal::insertOrIgnore([
                         'id' => $entry->id,
                         'corporation_id' => $corpId,
