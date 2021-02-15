@@ -19,9 +19,6 @@ use App\Models\User\UserPermission;
 use App\Models\User\AvailableUserPermission;
 use App\Models\User\AvailableUserRole;
 use App\Models\Admin\AllowedLogin;
-use App\Models\Doku\DokuGroupNames;
-use App\Models\Doku\DokuMember;
-use App\Models\Doku\DokuUser;
 
 class AdminController extends Controller
 {

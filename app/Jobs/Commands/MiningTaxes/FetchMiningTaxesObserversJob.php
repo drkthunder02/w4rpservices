@@ -13,8 +13,8 @@ use Log;
 //App Library
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
-use App\Library\Lookups\LookupHelper;
-use App\Library\Structures\StructureHelper;
+use App\Library\Helpers\LookupHelper;
+use App\Library\Helpers\StructureHelper;
 
 //App Models
 use App\Models\MiningTax\Observer;

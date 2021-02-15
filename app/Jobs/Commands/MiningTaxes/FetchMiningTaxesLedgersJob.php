@@ -13,7 +13,7 @@ use Carbon\Carbon;
 //App Library
 use Seat\Eseye\Exceptions\RequestionFailedException;
 use App\Library\Esi\Esi;
-use App\Library\Lookups\LookupHelper;
+use App\Library\Helpers\LookupHelper;
 use App\Library\Moons\MoonCalc;
 
 //App Models

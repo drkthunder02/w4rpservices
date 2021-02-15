@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 //Internal Library
-use App\Library\Lookups\LookupHelper;
+use App\Library\Helpers\LookupHelper;
 use App\Library\Moons\MoonCalc;
 
 //Models
