@@ -93,7 +93,7 @@ class FinanceHelper {
             if($pageFailed == false) {
                 $wallet = json_decode($journals->raw, false);
 
-                dd($wallet);
+                
                 //Foreach journal entry, add the journal entry to the table
                 foreach($wallet as $entry) {
                     /*
