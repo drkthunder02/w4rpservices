@@ -7,6 +7,14 @@ use Illuminate\Console\Command;
 use Log;
 use Commands\Library\CommandHelper;
 
+//Application Library
+use Seat\Eseye\Exceptions\RequestFailedException;
+use App\Library\Esi\Esi;
+use App\Library\Helpers\LookupHelper;
+
+//App Models
+use App\Models\MiningTax\Observer;
+
 //Jobs
 use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObserversJob;
 
