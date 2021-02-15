@@ -91,9 +91,53 @@ class FinanceHelper {
              * where we can.
              */
             if($pageFailed == false) {
-                $wallet = json_decode($journals->raw, true);
+                $wallet = json_decode($journals->raw, false);
+
+                dd($wallet);
                 //Foreach journal entry, add the journal entry to the table
                 foreach($wallet as $entry) {
+                    //See if we find the entry id in the database already
+                    $found = AllianceWalletJournal::where([
+                        'id' => $entry['id'],
+                    ])->count();
+
+                    if($found == 0) {
+                        $awj = new AllianceWalletJournal;
+                        $awj->corporation_id = $corpId;
+                        $awj->division = $division;
+                        if(isset($entry['amount'])) {
+                            $awj->amount = $entry['amount'];
+                        }
+                        if(isset($entry['balance'])) {
+                            $awj->balance = $entry['balance'];
+                        }
+                        if(isset($entry['context_id'])) {
+                            $awj->context_id = $entry['context_id'];
+                        }
+                        if(isset($entry['date'])) {
+                            $awj->date = $esi->DecodeDate($entry['date']);
+                        }
+                        if(isset($entry['description'])) {
+                            $awj->description = $entry['description'];
+                        }
+                        if(isset($entry['first_party_id'])) {
+                            $awj->first_party_id = $entry['first_party_id'];
+                        }
+                        if(isset($entry['rason'])) {
+                            $awj->reason = $entry['reason'];
+                        }
+                        if(isset($entry['ref_type'])) {
+                            $awj->ref_type = $entry['ref_type'];
+                        }
+                        if(isset($entry['tax'])) {
+                            $awj->tax = $entry['tax'];
+                        }
+                        if(isset($entry['tax_receiver_id'])) {
+                            $awj->tax_receiver_id = $entry['tax_receiver_id'];
+                        }
+
+                    }
+
                     AllianceWalletJournal::insertOrIgnore([
                         'id' => $entry['id'],
                         'corporation_id' => $corpId,
