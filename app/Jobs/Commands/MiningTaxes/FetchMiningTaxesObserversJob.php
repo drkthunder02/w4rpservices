@@ -91,6 +91,7 @@ class FetchMiningTaxesObserversJob implements ShouldQueue
             ]);
         } catch(RequestFailedException $e) {
             Log::critical("Failed to get moon observers in FetchMiningTaxesObservers");
+            Log::critical($e);
         }
 
         $resp = json_decode($response, false);
