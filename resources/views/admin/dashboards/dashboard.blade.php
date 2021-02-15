@@ -12,7 +12,5 @@
         </div>
     </div>
 
-    <div id="income-div"></div>
-    {!! $lava->render('PieChart', 'Alliance Income', 'income-div') !!}
 </div>
 @endsection
