@@ -73,7 +73,7 @@ class Esi {
 
         //Create the carbon time for expiration time 
         $expires = $token->inserted_at + $token->expires_in;
-        $tokenExpiration = Carbon::createFromTimeStamp($expires)->toDateTimeString();
+        $tokenExpiration = Carbon::createFromTimeStamp($expires);
 
         if($currentTime->greaterThan($tokenExpiration->subSeconds(5))) {
             return true;
@@ -101,7 +101,7 @@ class Esi {
 
         //Check the expiration of the token to see if the token has expired and needs to be refreshed using the refresh token
         $expires = $token->inserted_at + $token->expires_in;
-        $tokenExpiration = Carbon::createFromTimestamp($expires)->toDateTimeString();
+        $tokenExpiration = Carbon::createFromTimestamp($expires);
         //If the access token has expired, we need to do a request for a new access token
         //We give ourselves around 5 seconds leeway in order to deal with an expired token
         if($currentTime->greaterThan($tokenExpiration->subSeconds(5))) {
