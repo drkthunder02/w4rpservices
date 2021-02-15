@@ -83,7 +83,7 @@ class FinanceHelper {
             if($currentPage == 1 && $pageFailed == false) {
                 $totalPages = $journals->pages;
             } else {
-                dd($totalPages);
+                dd("Total Pages: " . $totalPages);
                 return null;
             }
 
@@ -151,8 +151,9 @@ class FinanceHelper {
                 $pageFailed = false;
             }
 
+            //Increment the current page counter
             $currentPage++;
-        } while($currentPage <= $totalPages);
+        } while($currentPage < $totalPages);
 
         return 0;
     }
