@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'prefix' => env('HORIZON_PREFIX', 'horizon:'),
+    'prefix' => env('HORIZON_PREFIX', 'horizon_services:'),
 
     /*
     |--------------------------------------------------------------------------
@@ -125,7 +125,7 @@ return [
     |
     */
 
-    'memory_limit' => 64,
+    'memory_limit' => 128,
 
     /*
     |--------------------------------------------------------------------------
@@ -150,7 +150,7 @@ return [
                     'miningtaxes',
                 ],
                 'balance' => 'auto',
-                'processes' => 12,
+                'processes' => 10,
                 'tries' => 3,
             ],
         ],
@@ -166,7 +166,7 @@ return [
                     'miningtaxes',
                 ],
                 'balance' => 'auto',
-                'processes' => 12,
+                'processes' => 10,
                 'tries' => 3,
             ],
         ],

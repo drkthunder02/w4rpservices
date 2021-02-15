@@ -153,6 +153,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+        SocialiteProviders\Manager\OAuth2\AbstractProvider::class,
 
         /*
          * Application Service Providers...
