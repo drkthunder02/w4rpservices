@@ -104,6 +104,7 @@ class FinanceHelper {
 
                     if($found == 0) {
                         $awj = new AllianceWalletJournal;
+                        $awj->id = $entry['id'];
                         $awj->corporation_id = $corpId;
                         $awj->division = $division;
                         if(isset($entry['amount'])) {

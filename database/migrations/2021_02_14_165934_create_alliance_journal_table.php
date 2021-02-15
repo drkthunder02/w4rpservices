@@ -15,8 +15,7 @@ class CreateAllianceJournalTable extends Migration
     {
         if(!Schema::hasTable('alliance_wallet_journal')) {
             Schema::create('alliance_wallet_journal', function (Blueprint $table) {
-                $table->unsignedBigInteger('row')->increments();
-                $table->unsignedBigInteger('id')->unique()->default(-1);
+                $table->unsignedBigInteger('id')->unique();
                 $table->unsignedBigInteger('corporation_id');
                 $table->unsignedInteger('division');
                 $table->decimal('amount', 20, 2)->nullable();
