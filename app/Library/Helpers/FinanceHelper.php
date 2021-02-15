@@ -117,7 +117,7 @@ class FinanceHelper {
                             $awj->context_id = $entry['context_id'];
                         }
                         if(isset($entry['date'])) {
-                            $awj->date = $esi->DecodeDate($entry['date']);
+                            $awj->date = $esiHelper->DecodeDate($entry['date']);
                         }
                         if(isset($entry['description'])) {
                             $awj->description = $entry['description'];
