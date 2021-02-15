@@ -91,7 +91,8 @@ class FinanceHelper {
              * where we can.
              */
             if($pageFailed == false) {
-                $wallet = json_decode($journals->raw, false);
+                //Decode the json data, and return it as an array
+                $wallet = json_decode($journals->raw, true);
 
                 
                 //Foreach journal entry, add the journal entry to the table
@@ -136,6 +137,7 @@ class FinanceHelper {
                         if(isset($entry['tax_receiver_id'])) {
                             $awj->tax_receiver_id = $entry['tax_receiver_id'];
                         }
+                        $awj-save();
 
                     }
                     
