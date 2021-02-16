@@ -79,6 +79,7 @@ class MiningTaxesObservers extends Command
         } catch(RequestFailedException $e) {
             Log::critical("Failed to get moon observers in FetchMiningTaxesObservers");
             Log::critical($e);
+            dd($e);
         }
 
         $resp = json_decode($response, false);
