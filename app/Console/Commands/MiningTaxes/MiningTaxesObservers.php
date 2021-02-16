@@ -76,7 +76,7 @@ class MiningTaxesObservers extends Command
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         try {
-            $response = $esi->invoke('get', '/corporations/{corporation_id}/mining/observers', [
+            $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
                 'corporation_id' => $char->corporation_id,
             ]);
         } catch(RequestFailedException $e) {
