@@ -64,6 +64,7 @@ class MiningTaxesObservers extends Command
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1') || !$esiHelper->HaveEsiScope($config['corporation'], 'esi-universe.read_structures.v1')) {
             Log::critical('Esi scopes were not found for FetchMiningTaxesObserversJob.');
+            print("Esi scopes not found.");
             return;
         }
 
