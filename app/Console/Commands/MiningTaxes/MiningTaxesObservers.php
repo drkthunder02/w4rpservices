@@ -84,7 +84,7 @@ class MiningTaxesObservers extends Command
             Log::critical($e);
             dd($e);
         }
-
+        dd($response);
         $resp = json_decode($response, false);
 
         dd($resp);
