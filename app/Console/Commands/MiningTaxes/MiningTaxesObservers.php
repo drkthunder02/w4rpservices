@@ -69,7 +69,7 @@ class MiningTaxesObservers extends Command
         }
 
         //Get the refresh token for the character
-        $refreshToken = $esiHelper->GetRefreshToken($this->charId);
+        $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
         //Get the esi variable
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
