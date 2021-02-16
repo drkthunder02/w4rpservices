@@ -68,6 +68,8 @@ class MiningTaxesObservers extends Command
             return;
         }
 
+        $char = $lookup->GetCharacterInfo($config['primary']);
+
         //Get the refresh token for the character
         $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
         //Get the esi variable
@@ -75,7 +77,7 @@ class MiningTaxesObservers extends Command
 
         try {
             $response = $esi->invoke('get', '/corporations/{corporation_id}/mining/observers', [
-                'corporation_id' => $this->corpId,
+                'corporation_id' => $char->corporation_id,
             ]);
         } catch(RequestFailedException $e) {
             Log::critical("Failed to get moon observers in FetchMiningTaxesObservers");
