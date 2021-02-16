@@ -55,6 +55,7 @@ class MiningTaxesObservers extends Command
         $task = new CommandHelper('MiningTaxesObservers');
         //Set the task as started
         $task->SetStartStatus();
+        $startTime = time();
 
         //Declare variables
         $config = config('esi');
@@ -87,8 +88,6 @@ class MiningTaxesObservers extends Command
         
         $resp = json_decode($response->raw, false);
 
-        dd($resp);
-
         //Run through the mining observers, and add them to the database
         foreach($resp as $observer) {
 
@@ -110,6 +109,8 @@ class MiningTaxesObservers extends Command
 
 
         $task->SetStopStatus();
+        $endTime = time();
+        printr("Time to complete: " . ($endTime - $startTime));
 
         //Return 0 saying everything is fine
         return 0;
