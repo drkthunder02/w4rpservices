@@ -91,7 +91,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
 
         //Get the ledger from ESI
         try {
-            $ledgers = $this->esi->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
+            $response = $this->esi->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
                 'corporation_id' => $this->corpId,
                 'observer_id' => $this->observerId,
             ]);
@@ -99,6 +99,8 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
             Log::warning('Failed to get the mining ledger in FetchMiningTaxesLedgersJob for observer id: ' . $this->observerId);
             return null;
         }
+
+        $ledgers = json_decode($response);
 
         //Sort through the array, and create the variables needed for database entries
         foreach($ledgers as $ledger) {
