@@ -21,6 +21,8 @@ use App\Models\MiningTax\Observer;
 use App\Models\MiningTax\Ledger;
 use App\Models\Moon\MineralPrice;
 use App\Models\Moon\ItemComposition;
+use App\Models\Esi\EsiToken;
+use App\Models\Esi\EsiScope;
 
 class FetchMiningTaxesLedgersJob implements ShouldQueue
 {
