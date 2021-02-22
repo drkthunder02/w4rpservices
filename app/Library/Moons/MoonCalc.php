@@ -214,6 +214,8 @@ class MoonCalc {
         $lookupHelper = new LookupHelper;
         $finalName = '';
 
+        $pastTime = Carbon::now()->subDays(30);
+
         //Get the price of the moongoo
         $atmosphericGasesPrice = MineralPrice::where(['ItemId' => 16634])->where('Time', '>', $pastTime)->avg('Price');
         $evaporiteDepositsPirce = MineralPrice::where(['ItemId' => 16635])->where('Time', '>', $pastTime)->avg('Price');
