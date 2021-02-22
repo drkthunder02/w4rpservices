@@ -217,6 +217,13 @@ class MoonCalc {
         $pastTime = Carbon::now()->subDays(30);
 
         //Get the price of the moongoo
+        $tritaniumPrice = MineralPrice::where(['ItemId' => 34])->where('Time', '>', $pastTime)->avg('Price');
+        $pyeritePrice = MineralPrice::where(['ItemId' => 35])->where('Time', '>', $pastTime)->avg('Price');
+        $mexallonPrice = MineralPrice::where(['ItemId' => 36])->where('Time', '>', $pastTime)->avg('Price');
+        $isogenPrice = MineralPrice::where(['ItemId' => 37])->where('Time', '>', $pastTime)->avg('Price');
+        $nocxiumPrice = MineralPrice::where(['ItemId' => 38])->where('Time', '>', $pastTime)->avg('Price');
+        $zydrinePrice = MineralPrice::where(['ItemId' => 39])->where('Time', '>', $pastTime)->avg('Price');
+        $megacytePrice = MineralPrice::where(['ItemId' => 40])->where('Time', '>', $pastTime)->avg('Price');
         $atmosphericGasesPrice = MineralPrice::where(['ItemId' => 16634])->where('Time', '>', $pastTime)->avg('Price');
         $evaporiteDepositsPirce = MineralPrice::where(['ItemId' => 16635])->where('Time', '>', $pastTime)->avg('Price');
         $hydrocarbonsPrice = MineralPrice::where(['ItemId' => 16633])->where('Time', '>', $pastTime)->avg('Price');
