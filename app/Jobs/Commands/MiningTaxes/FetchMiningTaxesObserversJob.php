@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Log;
+use Carbon\Carbon;
 
 //App Library
 use Seat\Eseye\Exceptions\RequestFailedException;
