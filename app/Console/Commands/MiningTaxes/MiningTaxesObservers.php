@@ -6,6 +6,7 @@ namespace App\Console\Commands\MiningTaxes;
 use Illuminate\Console\Command;
 use Log;
 use Commands\Library\CommandHelper;
+use Carbon\Carbon;
 
 //Application Library
 use Seat\Eseye\Exceptions\RequestFailedException;
