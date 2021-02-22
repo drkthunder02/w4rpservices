@@ -115,7 +115,7 @@ class MiningTaxesLedgers extends Command
                         'type_id' => $ledger->type_id,
                         'ore_name' => $typeName,
                         'quantity' => $ledger->quantity,
-                        'price' => $amount,
+                        'amount' => $amount,
                     ], [
                         'character_id' => $ledger->character_id,
                         'character_name' => $charName,
@@ -124,7 +124,7 @@ class MiningTaxesLedgers extends Command
                         'type_id' => $ledger->type_id,
                         'ore_name' => $typeName,
                         'quantity' => $ledger->quantity,
-                        'price' => $amount,
+                        'amount' => $amount,
                     ]);
             }
         }
