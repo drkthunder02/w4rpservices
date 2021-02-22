@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ledger extends Model
 {
-
-    use ReplaceableModel;
-
     //Table Name
     protected $table = 'alliance_mining_tax_ledgers';
 
