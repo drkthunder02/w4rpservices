@@ -64,7 +64,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
         $this->corpId = $corpId;
         $this->observerId = $observerId;
 
-        $this->$esi = new Esi;
+        $this->esi = new Esi;
 
         //Setup the private esi variables
         if(!$this->esi->haveEsiScope($this->charId, 'esi-industry.read_corporation_mining.v1')) {
