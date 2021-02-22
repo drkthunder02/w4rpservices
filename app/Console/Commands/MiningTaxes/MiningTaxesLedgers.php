@@ -103,7 +103,7 @@ class MiningTaxesLedgers extends Command
                 $typeName = $lookup->ItemIdToName($ledger->type_id);
                 //Decode the date and store it.
                 //$updated = $esiHelper->DecodeDate($ledger->last_updated);
-
+                dd($ledger);
                 $price = $mHelper->CalculateOrePrice($ledger->type_id);
                 $amount = $price * $ledger->quantity;
 
