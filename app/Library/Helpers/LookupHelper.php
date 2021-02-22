@@ -47,7 +47,10 @@ class LookupHelper {
                 ))->invoke('post', '/universe/ids/');
             } catch(RequestFailedException $e) {
                 Log::warning('Failed to get item information from /universe/');
+                return null;
             }
+
+            dd($response);
 
             if(isset($response->inventory_types)) {
                 return $response->inventory_types[0]->id;
