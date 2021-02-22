@@ -9,6 +9,9 @@ use Log;
 //Application Library
 use Commands\Library\CommandHelper;
 
+//Models
+use App\Models\MiningTax\Observer;
+
 //Jobs
 use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgersJob;
 
@@ -50,7 +53,16 @@ class MiningTaxesLedgers extends Command
         //Set the task as started
         $task->SetStartStatus();
 
-        FetchMiningTaxesLedgersJob::dispatch()->onQueue('miningtaxes');
+        //Get the site configuration which holds some data we need
+        $config = config('esi');
+        //Get the observers from the database
+        $observers = Observer::all();
+
+        //For each of the observers, send a job to fetch the mining ledger
+        foreach($observers as $obs) {
+            //Dispatch the mining taxes ledger jobs
+            FetchMiningTaxesLedgersJob::dispatch($config['corporation'], $obs->observer_id)->onQueue('miningtaxes');
+        }
 
         //Return 0
         return 0;
