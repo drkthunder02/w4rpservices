@@ -244,14 +244,14 @@ class MoonCalc {
         //Strip the prefix from the ore name if it has one.
         //Then change the ore id if necessary
         $tempName = explode(' ', $oreName);
-        dd($tempName);
+        
         if(sizeof($tempName) == 1) {
             $finalName = $tempName[0];
         } else {
             $finalName = $tempName[sizeof($tempName) - 1];
             $oreId = $lookupHelper->ItemNameToId($finalName);
         }
-
+        dd($oreId);
         //Get the item composition for the ore
         $composition = ItemComposition::where('ItemId', $oreId)->first();
 
