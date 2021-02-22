@@ -212,7 +212,8 @@ class MoonCalc {
     public function CalculateOrePrice($oreId) {
         //Declare variables
         $lookupHelper = new LookupHelper;
-        $finalName = '';
+        $finalName = null;
+        $oreId = null;
 
         $pastTime = Carbon::now()->subDays(30);
 
@@ -243,7 +244,7 @@ class MoonCalc {
 
         //Strip the prefix from the ore name if it has one.
         //Then change the ore id if necessary
-        $tempName = str_split($oreName);
+        $tempName = explode(' ', $oreName);
         if(sizeof($tempName) == 1) {
             $finalName = $tempName[0];
         } else {
@@ -253,6 +254,8 @@ class MoonCalc {
 
         //Get the item composition for the ore
         $composition = ItemComposition::where('ItemId', $oreId)->first();
+
+        dd($composition);
 
         //Calculate the Batch Price
         $batchPrice = ( ($composition->Tritanium * $tritaniumPrice) +
