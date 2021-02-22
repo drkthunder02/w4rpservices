@@ -85,6 +85,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
         //Declare variables
         $lookup = new LookupHelper;
         $mHelper = new MoonCalc;
+        $esiHelper = new Esi;
 
         //Get the ledger from ESI
         try {
@@ -104,7 +105,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
             //Get the type name from the ledger ore stuff
             $typeName = $lookup->ItemIdToName($ledger->type_id);
             //Decode the date and store it.
-            $updated = $this->esi->DecodeDate($ledger->last_updated);
+            $updated = $esiHelper->DecodeDate($ledger->last_updated);
 
             $price = $mHelper->CalculateOrePrice($ledger->type_id);
             $amount = $price * $ledger->quantity;
