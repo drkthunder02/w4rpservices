@@ -72,7 +72,9 @@ class LookupHelper {
                     'type_id' => $itemId,
                 ]);
             } catch(RequestFailedException $e) {
-                printf("Failed to get the item name from the id.");
+                printf("Failed to get the item name from the id.\r\n");
+                var_dump($e);
+                printf("\r\n");
                 Log::warning('Failed to get item information from /universe/types/{type_id}/ in LookupHelper.');
                 return null;
             }
