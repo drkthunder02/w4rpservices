@@ -89,6 +89,8 @@ class MiningTaxesObservers extends Command
         
         $resp = json_decode($response->raw, false);
 
+        dd($resp);
+
         //Run through the mining observers, and add them to the database
         foreach($resp as $observer) {
 
