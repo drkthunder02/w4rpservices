@@ -251,7 +251,7 @@ class MoonCalc {
             $finalName = $tempName[sizeof($tempName) - 1];
             $oreId = $lookupHelper->ItemNameToId($finalName);
         }
-        dd($oreId);
+        
         //Get the item composition for the ore
         $composition = ItemComposition::where('ItemId', $oreId)->first();
 
