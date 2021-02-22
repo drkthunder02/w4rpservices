@@ -46,7 +46,6 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
     private $charId;
     private $corpId;
     private $observerId;
-    private $refreshToken;
     private $esi;
 
     /**
@@ -64,15 +63,16 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
         $this->corpId = $corpId;
         $this->observerId = $observerId;
 
-        $this->esi = new Esi;
+        //Setup the ESI stuff
+        $esiHelper = new Esi;
 
         //Setup the private esi variables
-        if(!$this->esi->haveEsiScope($this->charId, 'esi-industry.read_corporation_mining.v1')) {
+        if(!$esiHelper->haveEsiScope($this->charId, 'esi-industry.read_corporation_mining.v1')) {
             Log::critical('Character: ' . $this->charId . ' did not have the correct esi scope in FetchMiningTaxesLedgersJob.');
             return null;
         }
-        $this->refreshToken = $this->esi->GetRefreshToken($this->charId);
-        $this->esi = $this->esi->SetupEsiAuthentication($this->refreshToken);
+        $refreshToken = $esiHelper->GetRefreshToken($this->charId);
+        $this->esi = $esiHelper->SetupEsiAuthentication($refreshToken);
     }
 
     /**
