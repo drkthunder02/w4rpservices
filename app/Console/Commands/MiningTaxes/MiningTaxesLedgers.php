@@ -94,7 +94,7 @@ class MiningTaxesLedgers extends Command
                 return null;
             }
 
-            $ledgets = json_decode($ledgers);
+            $ledgers = json_decode($ledgers);
 
             foreach($ledgers as $ledger) {
                 //Get some basic information we need to work with
