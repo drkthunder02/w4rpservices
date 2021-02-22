@@ -241,7 +241,7 @@ class MoonCalc {
 
         //Get the name through the lookup table
         $oreName = $lookupHelper->ItemIdToName($oreId);
-
+        dd($oreName);
         //Strip the prefix from the ore name if it has one.
         //Then change the ore id if necessary
         $tempName = explode(' ', $oreName);
