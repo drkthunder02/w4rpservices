@@ -110,7 +110,7 @@ class MiningTaxesLedgers extends Command
                 $item = Ledger::updateOrCreate([
                         'character_id' => $ledger->character_id,
                         'character_name' => $charName,
-                        'observer_id' => $this->observerId,
+                        'observer_id' => $obs->observerId,
                         'last_updated' => $ledger->last_updated,
                         'type_id' => $ledger->type_id,
                         'ore_name' => $typeName,
@@ -119,7 +119,7 @@ class MiningTaxesLedgers extends Command
                     ], [
                         'character_id' => $ledger->character_id,
                         'character_name' => $charName,
-                        'observer_id' => $this->observerId,
+                        'observer_id' => $obs->observerId,
                         'last_updated' => $ledger->last_updated,
                         'type_id' => $ledger->type_id,
                         'ore_name' => $typeName,
