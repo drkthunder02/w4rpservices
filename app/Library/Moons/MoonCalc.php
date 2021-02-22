@@ -213,7 +213,6 @@ class MoonCalc {
         //Declare variables
         $lookupHelper = new LookupHelper;
         $finalName = null;
-        $oreId = null;
 
         $pastTime = Carbon::now()->subDays(30);
 
@@ -239,7 +238,6 @@ class MoonCalc {
         $promethiumPrice = MineralPrice::where(['ItemId' => 16652])->where('Time', '>', $pastTime)->avg('Price');
         $thuliumPrice = MineralPrice::where(['ItemId' => 16653])->where('Time', '>', $pastTime)->avg('Price');
 
-        dd($oreId);
         //Get the name through the lookup table
         $oreName = $lookupHelper->ItemIdToName($oreId);
         dd($oreName);
