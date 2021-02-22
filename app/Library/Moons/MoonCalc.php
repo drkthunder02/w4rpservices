@@ -15,7 +15,7 @@ use GuzzleHttp\Client;
 use Log;
 
 //Library
-use App\Library\Lookups\LookupHelper;
+use App\Library\Helpers\LookupHelper;
 
 //Models
 use App\Models\Moon\Config;
