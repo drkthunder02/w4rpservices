@@ -107,7 +107,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
             //Get the type name from the ledger ore stuff
             $typeName = $lookup->ItemIdToName($ledger->type_id);
             //Decode the date and store it.
-            $updated = $esiHelper->DecodeDate($ledger->last_updated);
+            //$updated = $esiHelper->DecodeDate($ledger->last_updated);
 
             $price = $mHelper->CalculateOrePrice($ledger->type_id);
             $amount = $price * $ledger->quantity;
@@ -117,7 +117,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
                 'character_id' => $ledger->character_id,
                 'character_name' => $charName,
                 'observer_id' => $this->observerId,
-                'last_updated' => $updated,
+                'last_updated' => $ledger->last_updated,
                 'type_id' => $ledger->type_id,
                 'ore_name' => $typeName,
                 'quantity' => $ledger->quantity,
@@ -126,7 +126,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
                 'character_id' => $ledger->character_id,
                 'character_name' => $charName,
                 'observer_id' => $this->observerId,
-                'last_updated' => $updated,
+                'last_updated' => $ledger->last_updated,
                 'type_id' => $ledger->type_id,
                 'ore_name' => $typeName,
                 'quantity' => $ledger->quantity,
