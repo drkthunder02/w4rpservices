@@ -26,4 +26,28 @@ class Invoice extends Model
         'date_due',
         'status',
     ];
+
+    public function getPayment() {
+        return $this->hasMany('App\Models\MiningTax\Payment', 'invoice_id', 'invoice_id');
+    }
+
+    public function getCharacterId() {
+        return $this->character_id;
+    }
+
+    public function getCharacterName() {
+        return $this->character_name;
+    }
+
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function getLedgers() {
+        return $this->hasMany('App\Models\MiningTax\Ledger', 'invoice_id', 'invoice_id');
+    }
+
+    public function getInvoiceAmount() {
+        return $this->invoice_amount;
+    }
 }

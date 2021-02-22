@@ -22,4 +22,10 @@ class Observer extends Model
         'observer_id',
         'observer_type',
     ];
+
+    public function getLedgers() {
+        return $this->hasMany('App\Models\MiningTax\Ledger', 'observer_id', 'observer_id');
+    }
+
+    
 }

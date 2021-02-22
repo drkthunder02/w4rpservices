@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ledger extends Model
 {
+
+    use ReplaceableModel;
+
     //Table Name
     protected $table = 'alliance_mining_tax_ledgers';
 
@@ -19,6 +22,8 @@ class Ledger extends Model
      */
     protected $fillable = [
         'character_id',
+        'character_name',
+        'observer_id',
         'last_updated',
         'type_id',
         'ore_name',
@@ -27,4 +32,10 @@ class Ledger extends Model
         'invoiced',
         'invoice_id',
     ];
+
+    public function getInvoice() {
+        return $this->belongsTo('App\Models\MiningTax\Invoice', 'invoice_id', 'invoice_id');
+    }
+
+    
 }

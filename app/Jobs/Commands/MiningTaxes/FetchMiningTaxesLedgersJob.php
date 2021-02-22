@@ -114,6 +114,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
             $item = Ledger::updateOrCreate([
                 'character_id' => $ledger->character_id,
                 'character_name' => $charName,
+                'observer_id' => $this->observerId,
                 'last_updated' => $updated,
                 'type_id' => $ledger->type_id,
                 'ore_name' => $typeName,
@@ -122,6 +123,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
             ], [
                 'character_id' => $ledger->character_id,
                 'character_name' => $charName,
+                'observer_id' => $this->observerId,
                 'last_updated' => $updated,
                 'type_id' => $ledger->type_id,
                 'ore_name' => $typeName,

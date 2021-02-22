@@ -18,8 +18,8 @@ class CreateMiningTaxTables extends Migration
                 $table->id();
                 $table->unsignedBigInteger('character_id');
                 $table->string('character_name');
-                $table->unsignedBigInteger('invoice_id');
-                $table->float('invoice_amount');
+                $table->unsignedBigInteger('invoice_id')->nullable();
+                $table->float('invoice_amount')->default(0.00);
                 $table->dateTime('date_issued');
                 $table->dateTime('date_due');
                 $table->enum('status', [
@@ -49,9 +49,10 @@ class CreateMiningTaxTables extends Migration
                 $table->id();
                 $table->unsignedBigInteger('character_id');
                 $table->string('character_name');
+                $table->unsignedBigInteger('observer_id')->nullable();
                 $table->dateTime('last_updated');
-                $table->unsignedBigInteger('type_id');
-                $table->string('ore_name');
+                $table->unsignedBigInteger('type_id')->default(0);
+                $table->string('ore_name')->default('None');
                 $table->unsignedBigInteger('quantity');
                 $table->decimal('amount', 20, 2)->default(0.00);
                 $table->enum('invoiced', [

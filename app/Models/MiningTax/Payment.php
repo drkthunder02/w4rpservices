@@ -26,4 +26,8 @@ class Payment extends Model
         'payment_date',
         'status',
     ];
+
+    public function getInvoice() {
+        return $this->belongsTo('App\Models\MiningTax\Invoice', 'invoice_id', 'invoice_id');
+    }
 }
