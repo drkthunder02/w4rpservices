@@ -101,10 +101,9 @@ class MiningTaxesLedgers extends Command
                 $charName = $lookup->CharacterIdToName($ledger->character_id);
                 //Get the type name from the ledger ore stuff
                 $typeName = $lookup->ItemIdToName($ledger->type_id);
-                //Decode the date and store it.
-                //$updated = $esiHelper->DecodeDate($ledger->last_updated);
-                
+                //Get the price from the helper function
                 $price = $mHelper->CalculateOrePrice($ledger->type_id);
+                //Calculate the total price based on the amount
                 $amount = $price * $ledger->quantity;
 
                 //Insert or update the entry in the database
