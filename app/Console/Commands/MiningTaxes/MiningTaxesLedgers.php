@@ -130,7 +130,7 @@ class MiningTaxesLedgers extends Command
         }
 
         //Clean up old data
-        Ledger::where(['updated_at', '<', Carbon::now()->subDays(120)])->delete();
+        //Ledger::where(['updated_at', '<', Carbon::now()->subDays(120)])->delete();
 
         //Return 0
         return 0;
