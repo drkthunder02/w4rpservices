@@ -79,8 +79,6 @@ class LookupHelper {
                 return null;
             }
 
-            dd($response);
-
             if(isset($response->description)) {
                 $this->StoreItem($response);
 

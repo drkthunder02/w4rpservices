@@ -255,8 +255,6 @@ class MoonCalc {
         //Get the item composition for the ore
         $composition = ItemComposition::where('ItemId', $oreId)->first();
 
-        dd($composition);
-
         //Calculate the Batch Price
         $batchPrice = ( ($composition->Tritanium * $tritaniumPrice) +
                         ($composition->Pyerite * $pyeritePrice) +
