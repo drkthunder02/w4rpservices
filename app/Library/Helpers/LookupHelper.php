@@ -46,11 +46,10 @@ class LookupHelper {
                     $itemName,
                 ))->invoke('post', '/universe/ids/');
             } catch(RequestFailedException $e) {
+                printf("Failed to get the item information");
                 Log::warning('Failed to get item information from /universe/');
                 return null;
             }
-
-            dd($response);
 
             if(isset($response->inventory_types)) {
                 return $response->inventory_types[0]->id;
@@ -73,9 +72,12 @@ class LookupHelper {
                     'type_id' => $itemId,
                 ]);
             } catch(RequestFailedException $e) {
+                printf("Failed to get the item name from the id.");
                 Log::warning('Failed to get item information from /universe/types/{type_id}/ in LookupHelper.');
                 return null;
             }
+
+            dd($response);
 
             if(isset($response->description)) {
                 $this->StoreItem($response);
