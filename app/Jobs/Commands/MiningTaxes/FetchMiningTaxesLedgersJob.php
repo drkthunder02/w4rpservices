@@ -54,7 +54,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($corpId, $observerId)
+    public function __construct($charId, $corpId, $observerId)
     {
         //Set the connection for the job
         $this->connection = 'redis';

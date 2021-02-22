@@ -61,7 +61,7 @@ class MiningTaxesLedgers extends Command
         //For each of the observers, send a job to fetch the mining ledger
         foreach($observers as $obs) {
             //Dispatch the mining taxes ledger jobs
-            FetchMiningTaxesLedgersJob::dispatch($config['corporation'], $obs->observer_id)->onQueue('miningtaxes');
+            FetchMiningTaxesLedgersJob::dispatch($config['primary'], $config['corporation'], $obs->observer_id)->onQueue('miningtaxes');
         }
 
         //Return 0
