@@ -110,7 +110,7 @@ class FetchMiningTaxesObserversJob implements ShouldQueue
         /**
          * Cleanup stale data that hasn't been updated in at least 1 week.
          */
-        $date = Carbon::now()->subDay(7);
+        $date = Carbon::now()->subDays(60);
         Observer::where('updated_at', '<', $date)->delete();
     }
 }
