@@ -28,6 +28,8 @@ class Ledger extends Model
         'amount',
         'invoiced',
         'invoice_id',
+        'created_at',
+        'updated_at',
     ];
 
     public function getInvoice() {
