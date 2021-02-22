@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Carbon\Carbon;
 
 //App Library
-use Seat\Eseye\Exceptions\RequestionFailedException;
+use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Helpers\LookupHelper;
 use App\Library\Moons\MoonCalc;
