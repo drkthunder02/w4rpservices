@@ -245,6 +245,7 @@ class MoonCalc {
         //Strip the prefix from the ore name if it has one.
         //Then change the ore id if necessary
         $tempName = explode(' ', $oreName);
+        dd($tempName);
         if(sizeof($tempName) == 1) {
             $finalName = $tempName[0];
         } else {
