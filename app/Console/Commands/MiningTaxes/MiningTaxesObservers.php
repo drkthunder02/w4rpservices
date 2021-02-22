@@ -111,7 +111,7 @@ class MiningTaxesObservers extends Command
 
         $task->SetStopStatus();
         $endTime = time();
-        printf("Time to complete: " . ($endTime - $startTime));
+        printf("Time to complete: " . ($endTime - $startTime) . "\n\r");
 
         //Return 0 saying everything is fine
         return 0;
