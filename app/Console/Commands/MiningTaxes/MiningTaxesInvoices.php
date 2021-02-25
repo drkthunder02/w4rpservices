@@ -120,8 +120,7 @@ class MiningTaxesInvoices extends Command
             //Create the mail body
             $body .= "Dear Miner,<br><br>";
             $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
-            foreach($rows as $ore => $quantity) {
-                dd($quantity);
+            foreach($ores as $ore => $quantity) {
                 $oreName = $lookup->ItemIdToName($ore);
                 $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
             }
