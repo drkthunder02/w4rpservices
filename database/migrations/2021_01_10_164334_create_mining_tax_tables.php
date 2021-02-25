@@ -18,7 +18,7 @@ class CreateMiningTaxTables extends Migration
                 $table->id();
                 $table->unsignedBigInteger('character_id');
                 $table->string('character_name');
-                $table->unsignedBigInteger('invoice_id')->nullable();
+                $table->string('invoice_id')->nullable();
                 $table->float('invoice_amount')->default(0.00);
                 $table->dateTime('date_issued');
                 $table->dateTime('date_due');
