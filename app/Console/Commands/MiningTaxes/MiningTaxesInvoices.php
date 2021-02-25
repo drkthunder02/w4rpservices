@@ -16,7 +16,6 @@ use App\Models\MiningTaxes\Invoice;
 use App\Models\MiningTaxes\Ledger;
 
 //Jobs
-//use App\Jobs\Commands\MiningTaxes\CalculateMiningTaxesJob;
 use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
 class MiningTaxesInvoices extends Command
