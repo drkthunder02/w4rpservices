@@ -73,9 +73,7 @@ class MiningTaxesInvoices extends Command
             $rows = Ledger::where([
                 'character_id' => $charId,
                 'invoiced' => 'No',
-            ])->get();
-
-            dd($rows);           
+            ])->get();        
 
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
