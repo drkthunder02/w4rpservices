@@ -68,7 +68,6 @@ class MiningTaxesInvoices extends Command
             $invoice = array();
             $ores = array();
             $totalPrice = 0.00;
-            dd($charId);
 
             //Get the rows from the database for each character and the requirement of not been invoiced yet
             $rows = Ledger::where([
@@ -76,7 +75,7 @@ class MiningTaxesInvoices extends Command
                 'invoiced' => 'No',
             ])->get();
 
-            
+            dd($rows);           
 
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
@@ -84,12 +83,9 @@ class MiningTaxesInvoices extends Command
                     $ores[$row->type_id] = 0;
                 }
                 $ores[$row->type_id] = $ores[$row->type_id] + $row->quantity;
-            }
 
-            //Add up the total price from the ledger rows
-            foreach($rows as $row) {
+                //Add up the total price from the ledger rows for the report later
                 $totalPrice = $totalPrice + $row->amount;
-                printf("Current Total: " . $totalPrice . "\r\n");
             }
 
             //Reduce the total price by the take percentage
