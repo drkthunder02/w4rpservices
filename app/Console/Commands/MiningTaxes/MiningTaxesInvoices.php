@@ -121,6 +121,7 @@ class MiningTaxesInvoices extends Command
             $body .= "Dear Miner,<br><br>";
             $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
             foreach($rows as $ore => $quantity) {
+                dd($quantity);
                 $oreName = $lookup->ItemIdToName($ore);
                 $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
             }
