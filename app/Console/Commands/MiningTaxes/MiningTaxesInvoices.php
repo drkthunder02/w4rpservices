@@ -76,7 +76,6 @@ class MiningTaxesInvoices extends Command
             ])->get()->toArray();        
 
             var_dump($rows);
-            die();
 
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
