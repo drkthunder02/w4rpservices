@@ -91,20 +91,20 @@ class MiningTaxesInvoices extends Command
             }
 
             //Reduce the total price by the take percentage
-            $totalPrice = $totalPrice * $config['mining_tax'];
+            $invoiceAmount = $totalPrice * 0.10;
 
             //Get the character name from the character id
             $charName = $lookup->CharacterIdToName($charId);
 
             //Generate a unique invoice id
             $invoiceId = uniqid();
-
+            dd($invoiceId);
             //Save the invoice model
             $invoice = new Invoice;
             $invoice->character_id = $charId;
             $invoice->character_name = $charName;
             $invoice->invoice_id = $invoiceId;
-            $invoice->invoice_amount = $totalPrice;
+            $invoice->invoice_amount = $invoiceAmount;
             $invoice->date_issued = Carbon::now();
             $invoice->date_due = Carbon::now()->addDays(7);
             $invoice->status = 'Pending';
