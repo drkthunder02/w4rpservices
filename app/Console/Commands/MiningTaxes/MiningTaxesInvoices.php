@@ -77,6 +77,9 @@ class MiningTaxesInvoices extends Command
 
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
+                if(!isset($ores[$row->type_id])) {
+                    $ores[$row->type_id] = 0;
+                }
                 $ores[$row->type_id] = $ores[$row->type_id] + $row->quantity;
             }
 
