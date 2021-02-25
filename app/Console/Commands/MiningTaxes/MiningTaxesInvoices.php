@@ -90,6 +90,7 @@ class MiningTaxesInvoices extends Command
 
             //Reduce the total price by the take percentage
             $invoiceAmount = $totalPrice * 0.10;
+            $invoiceAmount = round($invoiceAmount, 2);
             
             //Get the character name from the character id
             $charName = $lookup->CharacterIdToName($charId);
