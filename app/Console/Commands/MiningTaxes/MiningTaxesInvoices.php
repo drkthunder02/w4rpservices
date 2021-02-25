@@ -75,8 +75,6 @@ class MiningTaxesInvoices extends Command
                 'invoiced' => 'No',
             ])->get();
 
-            dd($rows);
-
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
                 if(!isset($ores[$row->type_id])) {
