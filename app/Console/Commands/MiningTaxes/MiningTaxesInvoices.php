@@ -87,7 +87,7 @@ class MiningTaxesInvoices extends Command
 
             //Add up the total price from the ledger rows
             foreach($rows as $row) {
-                $totalPrice = $totalPrice + $row->price;
+                $totalPrice = $totalPrice + $row->amount;
                 printf("Current Total: " . $totalPrice . "\r\n");
             }
 
