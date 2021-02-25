@@ -86,8 +86,10 @@ class MiningTaxesInvoices extends Command
                 $totalPrice = $totalPrice + $row->amount;
             }
 
+            dd($totalPrice);
+
             //Reduce the total price by the take percentage
-            $totalPrice = $totalPrice * $config['mining_tax'];
+            $totalPrice = $totalPrice * ($config['mining_tax'] / 100.0);
             dd($totalPrice);
 
             //Get the character name from the character id
