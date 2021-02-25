@@ -60,10 +60,10 @@ class MiningTaxesInvoices extends Command
         $task->SetStartStatus();
 
         //Get the characters for each non-invoiced ledger entry
-        $chars = Ledger::distinct('character_id')->pluck('character_id');
+        $charIds = Ledger::distinct('character_id')->pluck('character_id');
 
         //Foreach character tally up the mining ledger.
-        foreach($chars as $char) {
+        foreach($charIds as $charId) {
             //Declare some variables we need for each iteration of the loop
             $invoice = array();
             $ores = array();
@@ -71,7 +71,7 @@ class MiningTaxesInvoices extends Command
             //Get the rows from the database for each character and the requirement of not been
             //invoiced yet
             $rows = Ledger::where([
-                'character_id' => $char->character_id,
+                'character_id' => $charId,
                 'invoiced' => 'No',
             ])->get();
 
@@ -89,14 +89,14 @@ class MiningTaxesInvoices extends Command
             $totalPrice = $totalPrice * $config['mining_tax'];
 
             //Get the character name from the character id
-            $charName = $lookup->CharacterIdToName($char);
+            $charName = $lookup->CharacterIdToName($charId);
 
             //Generate a unique invoice id
             $invoiceId = uniqid();
 
             //Save the invoice model
             $invoice = new Invoice;
-            $invoice->character_id = $char;
+            $invoice->character_id = $charId;
             $invoice->character_name = $charName;
             $invoice->invoice_id = $invoiceId;
             $invoice->invoice_amount = $totalPrice;
@@ -107,7 +107,7 @@ class MiningTaxesInvoices extends Command
 
             //Update the ledger entries
             Ledger::where([
-                'character_id' => $char,
+                'character_id' => $charId,
                 'invoiced' => 'No',
             ])->update([
                 'invoiced' => 'Yes',
