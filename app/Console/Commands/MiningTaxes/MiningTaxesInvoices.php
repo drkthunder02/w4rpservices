@@ -73,7 +73,7 @@ class MiningTaxesInvoices extends Command
             $rows = Ledger::where([
                 'character_id' => $charId,
                 'invoiced' => 'No',
-            ])->get();        
+            ])->get()->toArray();        
 
             var_dump($rows);
             die();
