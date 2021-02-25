@@ -59,6 +59,7 @@ class CreateMiningTaxTables extends Migration
                     'No',
                     'Yes',
                 ])->default('No');
+                $table->string('invoice_id')->nullable();
                 $table->timestamps();
             });
         }
