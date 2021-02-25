@@ -68,6 +68,8 @@ class MiningTaxesInvoices extends Command
             $invoice = array();
             $ores = array();
             $totalPrice = 0.00;
+            dd($charId);
+
             //Get the rows from the database for each character and the requirement of not been invoiced yet
             $rows = Ledger::where([
                 'character_id' => $charId,
@@ -78,8 +80,6 @@ class MiningTaxesInvoices extends Command
 
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
-                var_dump($row);
-                dd();
                 if(!isset($ores[$row->type_id])) {
                     $ores[$row->type_id] = 0;
                 }
