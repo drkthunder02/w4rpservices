@@ -61,7 +61,7 @@ class MiningTaxesInvoices extends Command
 
         //Get the characters for each non-invoiced ledger entry
         $charIds = Ledger::distinct('character_id')->pluck('character_id');
-
+        dd($charIds);
         //Foreach character tally up the mining ledger.
         foreach($charIds as $charId) {
             //Declare some variables we need for each iteration of the loop
@@ -75,7 +75,7 @@ class MiningTaxesInvoices extends Command
                 'invoiced' => 'No',
             ])->get();
 
-            dd($rows);
+            
 
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
