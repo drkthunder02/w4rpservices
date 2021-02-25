@@ -79,14 +79,14 @@ class MiningTaxesInvoices extends Command
 
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
-                if(!isset($ores[$row->type_id])) {
-                    $ores[$row->type_id] = 0;
+                if(!isset($ores[$row['type_id']])) {
+                    $ores[$row['type_id']] = 0;
                 }
-                $ores[$row->type_id] = $ores[$row->type_id] + $row->quantity;
+                $ores[$row['type_id']] = $ores[$row['type_id']] + $row['quantity'];
 
                 //Add up the total price from the ledger rows for the report later
-                $totalPrice = $totalPrice + $row->amount;
-                dd($row->amount);
+                $totalPrice = $totalPrice + $row['amount'];
+                dd($row['amount']);
             }
 
             //Reduce the total price by the take percentage
