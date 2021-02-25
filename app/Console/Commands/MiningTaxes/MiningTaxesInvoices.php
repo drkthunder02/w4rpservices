@@ -84,13 +84,11 @@ class MiningTaxesInvoices extends Command
 
                 //Add up the total price from the ledger rows for the report later
                 $totalPrice = $totalPrice + $row->amount;
+                dd($row->amount);
             }
 
-            dd($totalPrice);
-
             //Reduce the total price by the take percentage
-            $totalPrice = $totalPrice * ($config['mining_tax'] / 100.0);
-            dd($totalPrice);
+            $totalPrice = $totalPrice * $config['mining_tax'];
 
             //Get the character name from the character id
             $charName = $lookup->CharacterIdToName($charId);
