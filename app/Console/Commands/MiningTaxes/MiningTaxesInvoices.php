@@ -5,12 +5,19 @@ namespace App\Console\Commands\MiningTaxes;
 //Internal Library
 use Illuminate\Console\Command;
 use Log;
+use Carbon\Carbon;
 
 //Application Library
 use Commands\Library\CommandHelper;
+use App\Library\Helpers\LookupHelper;
+
+//Models
+use App\Models\MiningTaxes\Invoice;
+use App\Models\MiningTaxes\Ledger;
 
 //Jobs
-use App\Jobs\Commands\MiningTaxes\CalculateMiningTaxesJob;
+//use App\Jobs\Commands\MiningTaxes\CalculateMiningTaxesJob;
+use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
 class MiningTaxesInvoices extends Command
 {
@@ -45,11 +52,92 @@ class MiningTaxesInvoices extends Command
      */
     public function handle()
     {
+        //Declare variables
+        $lookup = new LookupHelper;
+        $config = config('esi');
+        $body = null;
         $task = new CommandHelper('MiningTaxesInvoices');
         //Set the task as started
         $task->SetStartStatus();
 
-        CalculateMiningTaxesJob::dispatch()->onQueue('miningtaxes');
+        //Get the characters for each non-invoiced ledger entry
+        $chars = Ledger::distinct('character_id')->pluck('character_id');
+
+        //Foreach character tally up the mining ledger.
+        foreach($chars as $char) {
+            //Declare some variables we need for each iteration of the loop
+            $invoice = array();
+            $ores = array();
+            $totalPrice = 0.00;
+            //Get the rows from the database for each character and the requirement of not been
+            //invoiced yet
+            $rows = Ledger::where([
+                'character_id' => $char->character_id,
+                'invoiced' => 'No',
+            ])->get();
+
+            //Taly up the item composition from each row and multiply by the quantity
+            foreach($rows as $row) {
+                $ores[$row->type_id] = $ores[$row->type_id] + $row->quantity;
+            }
+
+            //Add up the total price from the ledger rows
+            foreach($rows as $row) {
+                $totalPrice = $totalPrice + $row->price;
+            }
+
+            //Reduce the total price by the take percentage
+            $totalPrice = $totalPrice * $config['mining_tax'];
+
+            //Get the character name from the character id
+            $charName = $lookup->CharacterIdToName($char);
+
+            //Generate a unique invoice id
+            $invoiceId = uniqid();
+
+            //Save the invoice model
+            $invoice = new Invoice;
+            $invoice->character_id = $char;
+            $invoice->character_name = $charName;
+            $invoice->invoice_id = $invoiceId;
+            $invoice->invoice_amount = $totalPrice;
+            $invoice->date_issued = Carbon::now();
+            $invoice->date_due = Carbon::now()->addDays(7);
+            $invoice->status = 'Pending';
+            $invoice->save();
+
+            //Update the ledger entries
+            Ledger::where([
+                'character_id' => $char,
+                'invoiced' => 'No',
+            ])->update([
+                'invoiced' => 'Yes',
+                'invoice_id' => $invoiceId,
+            ]);
+
+            //Create the mail body
+            $body .= "Dear Miner,<br><br>";
+            $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
+            foreach($rows as $ore => $quantity) {
+                $oreName = $lookup->ItemIdToName($ore);
+                $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
+            }
+            $body .= "Please remit " . number_format($totalPrice, 2, ".", ",") . " ISK to Spatial Forces by " . $invoice->date_due . "<br>";
+            $body .= "Set the reason for transfer as MMT: " . $invoice->invoice_id . "<br>";
+            $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
+
+            //Mail the invoice to the character if the character is in
+            //Warped Intentions or Legacy
+            $subject = 'Warped Intentions Mining Taxes';
+            $sender = $config['primary'];
+            $recipienttype = 'character';
+            $recipient = $config['primary'];
+
+            //Send the Eve Mail Job to the queue to be dispatched
+            ProcessSendEveMailJob::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail');
+        }
+
+        //CalculateMiningTaxesJob::dispatch()->onQueue('miningtaxes');
 
         //Set the task as stopped
         $task->SetStopStatus();
