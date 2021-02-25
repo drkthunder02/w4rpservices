@@ -132,7 +132,7 @@ class MiningTaxesInvoices extends Command
             //Warped Intentions or Legacy
             $subject = 'Warped Intentions Mining Taxes';
             $sender = $config['primary'];
-            $recipienttype = 'character';
+            $recipientType = 'character';
             $recipient = $config['primary'];
 
             //Send the Eve Mail Job to the queue to be dispatched
