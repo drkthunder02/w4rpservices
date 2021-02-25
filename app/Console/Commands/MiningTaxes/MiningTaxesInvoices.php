@@ -12,8 +12,8 @@ use Commands\Library\CommandHelper;
 use App\Library\Helpers\LookupHelper;
 
 //Models
-use App\Models\MiningTaxes\Invoice;
-use App\Models\MiningTaxes\Ledger;
+use App\Models\MiningTax\Invoice;
+use App\Models\MiningTax\Ledger;
 
 //Jobs
 use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
