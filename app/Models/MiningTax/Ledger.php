@@ -10,7 +10,7 @@ class Ledger extends Model
     protected $table = 'alliance_mining_tax_ledgers';
 
     //Timestamps
-    public $timestamps = true;
+    public $timestamps = false;
 
     /**
      * Items which are mass assignable
