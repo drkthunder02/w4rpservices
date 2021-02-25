@@ -90,13 +90,13 @@ class MiningTaxesInvoices extends Command
 
             //Reduce the total price by the take percentage
             $invoiceAmount = $totalPrice * 0.10;
-            dd($invoiceAmount);
+            
             //Get the character name from the character id
             $charName = $lookup->CharacterIdToName($charId);
 
             //Generate a unique invoice id
             $invoiceId = uniqid();
-            dd($invoiceId);
+            
             //Save the invoice model
             $invoice = new Invoice;
             $invoice->character_id = $charId;
