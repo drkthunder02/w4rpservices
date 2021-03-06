@@ -31,7 +31,7 @@ class MiningTaxesAdminController extends Controller
             'status' => 'Late',
         ])->orWhere([
             'status' => 'Deferred',
-        ])->get();
+        ])->get()->paginate(50);
 
         return view('miningtax.admin.display.unpaid')->with('invoices', $invoices);
     }
@@ -79,7 +79,7 @@ class MiningTaxesAdminController extends Controller
             'status' => 'Paid',
         ])->orWhere([
             'status' => 'Paid Late',
-        ])->get();
+        ])->get()->paginate(50);
 
         return view('miningtax.admin.display.paidinvoices')->with('invoices', $invoices);
     }

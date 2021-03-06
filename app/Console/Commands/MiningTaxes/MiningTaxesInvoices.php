@@ -134,13 +134,11 @@ class MiningTaxesInvoices extends Command
             $subject = 'Warped Intentions Mining Taxes';
             $sender = $config['primary'];
             $recipientType = 'character';
-            $recipient = $config['primary'];
+            $recipient = $charId;
 
             //Send the Eve Mail Job to the queue to be dispatched
             ProcessSendEveMailJob::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail');
         }
-
-        //CalculateMiningTaxesJob::dispatch()->onQueue('miningtaxes');
 
         //Set the task as stopped
         $task->SetStopStatus();

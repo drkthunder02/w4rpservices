@@ -36,6 +36,56 @@ class MiningTaxesController extends Controller
     }
 
     /**
+     * Display the users invoices
+     */
+    public function DisplayMiningTaxInvoices() {
+        //Declare variables
+        $paidAmount = 0.00;
+        $unpaidAmount = 0.00;
+
+        //Get the unpaid invoices
+        $unpaid = Invoice::where([
+            'status' => 'Pending',
+            'character_id' => auth()->user()->getId(),
+        ])->get()->paginate(15);
+
+        //Get the late invoices
+        $late = Invoice::where([
+            'status' => 'Late',
+            'character_id' => auth()->user()->getId(),
+        ])->get()->paginate(10);
+        
+        //Get the deferred invoices
+        $deferred = Invoice::where([
+            'status' => 'Deferred',
+            'character_id' => auth()->user()->getId(),
+        ])->get()->paginate(10);
+
+        //Get the paid invoices
+        $paid = Invoice::where([
+            'status' => 'Paid',
+            'character_id' => auth()->user()->getId(),
+        ])->get()->paginate(15);
+
+        //Total up the unpaid invoices
+        foreach($unpaid as $un) {
+            $unpaidAmount += $un->amount;
+        }
+
+        //Total up the paid invoices
+        foreach($paid as $p) {
+            $paidAmount += $p;
+        }
+
+        return view('miningtax.user.display.invoices')->with('unpaid', $unpaid)
+                                                      ->with('late', $late)
+                                                      ->with('deferred', $deferred)
+                                                      ->with('paid', $paid)
+                                                      ->with('unpaidAmount', $unpaidAmount)
+                                                      ->with('paidAmount', $paidAmount);
+    }
+
+    /**
      * Display all of the upcoming extractions
      */
     public function DisplayUpcomingExtractions() {
@@ -57,12 +107,16 @@ class MiningTaxesController extends Controller
         //Basically get the structure info and attach it to the variable set
         foreach($extractions as $ex) {
             $sName = $sHelper->GetStructureInfo($ex->structure_id);
-            $ex->structure_name = $sName;
-
+            array_push($structures, [
+                'structure_name' => $sName,
+                'start_time' => $ex->extraction_start_time,
+                'arrival_time' => $ex->chunk_arrival_time,
+                'decay_time' => $ex->natural_decay_time,
+            ]);
         }
 
         //Return the view with the extractions variable for html processing
-        return view('miningtax.display.upcoming')->with('extractions', $extractions);
+        return view('miningtax.user.display.upcoming')->with('extractions', $extractions);
     }
 
     /**
@@ -128,12 +182,16 @@ class MiningTaxesController extends Controller
                         'quantity' => $ledger->quantity,
                         'updated' => $ledger->last_updated,
                     ]);
+
+                    array_push($structures, [
+                        'name' => $structure->name,
+                    ]);
                 }
             }
         }
 
         //Return the view
-        return view('miningtax.display.ledger')->with('miningLedgers', $miningLedgers)
+        return view('miningtax.user.display.ledger')->with('miningLedgers', $miningLedgers)
                                                ->with('structures', $structures);
     }
 }
