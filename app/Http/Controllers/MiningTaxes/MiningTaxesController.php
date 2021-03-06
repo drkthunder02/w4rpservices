@@ -93,10 +93,16 @@ class MiningTaxesController extends Controller
         //Declare variables
         $structures = array();
         $sHelper = new StructureHelper;
+        $esiHelper = new Esi;
+        $config = config('esi');
+
+        if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
+            return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the correct scopes for the services site.');
+        }
 
         //Get the esi data for extractions
         try {
-            $extractions = $this->esi->invoke('get', '/corporation/{corporation_id}/mining/extractions/', [
+            $extractions = $esi->invoke('get', '/corporation/{corporation_id}/mining/extractions/', [
                 'corporation_id' => $config['corporation'],
             ]);
         } catch(RequestFailedException $e) {
@@ -117,6 +123,78 @@ class MiningTaxesController extends Controller
 
         //Return the view with the extractions variable for html processing
         return view('miningtax.user.display.upcoming')->with('extractions', $extractions);
+    }
+
+    /**
+     * Display a calendar of upcoming extractions
+     */
+    public function DisplayExtractionCalendar() {
+        //Declare variables
+        $structures = array();
+        $sHelper = new StructureHelper;
+        $lava = new Lavacharts;
+        $esiHelper = new Esi;
+        $config = config('esi');
+
+        //Check for the correct scopes
+        if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
+            return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the correct scopes for the services site.');
+        }
+
+        //Get the esi data for extractions
+        try {
+            $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/extractions', [
+                'corporation_id' => $config['corporation'],
+            ]);
+        } catch(RequestFailedException $e) {
+            Log::critical('Could not retrieve the extractions from ESI in DisplayExtractionCalendar in MiningTaxesController');
+            return redirect('/dashboard')->with('error', 'Failed to get extraction data from ESI');
+        }
+
+        //Decode the extraction data from ESI
+        $extractions = json_decode($response, false);
+
+        /**
+         * Create a 3 month calendar for the past, current, and future extractions
+         */
+        //Create the data tables
+        $calendar = $lava->DataTable();
+        
+        $calendar->addDateTimeColumn('Date')
+                 ->addBooleanColumn('YesNo')
+                 ->addStringColumn('Extractions');
+
+        foreach($extractions as $extract) {
+            $calendar->addRow([
+                $extract->chunk_arrival_time,
+                1
+            ]);
+        }    
+                
+        $lava->CalendarChart('Extractions', $calendar, [
+            'title' => 'Upcoming Extractions',
+            'unusedMonthOutlineColor' => [
+                'stroke' => '#ECECEC',
+                'strokeOpacity' => 0.75,
+                'strokeWidth' => 1,
+            ],
+            'dayOfWeekLabel' => [
+                'color' => '#4f5b0d',
+                'fontSize' => 16,
+                'italic' => true,
+            ],
+            'noDataPattern' => [
+                'color' => '#DDD',
+                'backgroundColor' => '#11FFFF',
+            ],
+            'colorAxis' => [
+                'values' => [0, 100],
+                'colors' => ['black', 'green'],
+            ],
+        ]);
+
+        return view('miningtax.user.display.calendar')->with('calendar', $calendar)
+                                                      ->with('lava', $lava);
     }
 
     /**

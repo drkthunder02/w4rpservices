@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\MiningTaxes;
 
+//Internal Library
 use Illuminate\Console\Command;
 use Log;
 use Carbon\Carbon;
@@ -9,6 +10,8 @@ use Carbon\Carbon;
 //Application Library
 use Commands\Library\CommandHelper;
 use App\Library\Lookup\LookupHelper;
+use Seat\Eseye\Exceptions\RequestFailedException;
+use App\Library\Esi\Esi;
 
 //Models
 use App\Models\MiningTaxes\Invoice;
@@ -122,7 +125,7 @@ class MiningTaxesPayments extends Command
             } else {
                 //If we didn't found a journal entry, then we shall check the contracts for a correct entry
                 foreach($contracts as $contract) {
-                    if(($contract->title == $invoice->invoice_id) && ($currentTime->lessThanOrEqualTo($invoice->due_date))) {
+                    if(($contract->title == ("MMT: " . $invoice->invoice_id)) && ($currentTime->lessThanOrEqualTo($invoice->due_date))) {
                         Invoice::where([
                             'invoice_i' => $invoice->invoice_id,
                         ])->update([
@@ -130,7 +133,7 @@ class MiningTaxesPayments extends Command
                         ]);
                     }
 
-                    if(($contract->title == $invoice_id) && ($currentTime->greaterThan($invoice->due_date))) {
+                    if(($contract->title == ("MMT: " . $invoice_id)) && ($currentTime->greaterThan($invoice->due_date))) {
                         Invoice::where([
                             'invoice_id' => $invoice->invoice_id,
                         ])->update([

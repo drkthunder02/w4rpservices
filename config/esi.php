@@ -7,6 +7,6 @@
         'primary' => env('ESI_PRIMARY_CHAR', 93738489),
         'alliance' => env('ESI_ALLIANCE', 99004116),
         'corporation' => env('ESI_CORPORATION', 98287666),
-        'mining_tax' => 0.10,
+        'mining_tax' => 0.15,
     ];
 ?>

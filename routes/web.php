@@ -69,12 +69,12 @@ Route::group(['middleware' => ['auth']], function(){
      */
     Route::get('/miningtax/display/invoices', 'MiningTaxes\MiningTaxesController@DisplayMiningTaxesInvoices');
     Route::get('/miningtax/display/extractions', 'MiningTaxes\MiningTaxesController@DisplayUpcomingExtractions');
-    Route::get('miningtax/display/ledgers', 'MiningTaxes\MiningTaxesController@DisplayMoonLedgers');
+    Route::get('/miningtax/display/ledgers', 'MiningTaxes\MiningTaxesController@DisplayMoonLedgers');
+    Route::get('/miningtax/display/calendar', 'MiningTaxes\MiningTaxesController@DisplayExtractionCalendar');
     Route::get('/miningtax/admin/display/unpaid', 'MiningTaxes\MiningTaxesAdminController@DisplayUnpaidInvoice');
     Route::post('/miningtax/admin/update/invoice', 'MiningTaxes\MiningTaxesAdminController@UpdateInvoice');
     Route::post('/miningtax/admin/delete/invoice', 'MiningTaxes\MiningTaxesAdminController@DeleteInvoice');
     Route::get('/miningtax/admin/display/paid', 'MiningTaxes\MiningTaxesAdminController@DisplayPaidInvoices');
-    Route::get('/miningtax/admin/display/monthly/ledgers', 'MiningTaxes\MiningTaxesAdminController@DisplayMonthlyMiningLedgers');
     
     /**
      * Scopes Controller display pages

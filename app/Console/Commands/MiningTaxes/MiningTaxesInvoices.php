@@ -123,10 +123,17 @@ class MiningTaxesInvoices extends Command
             $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
             foreach($ores as $ore => $quantity) {
                 $oreName = $lookup->ItemIdToName($ore);
-                $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
+                $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
             }
             $body .= "Please remit " . number_format($totalPrice, 2, ".", ",") . " ISK to Spatial Forces by " . $invoice->date_due . "<br>";
             $body .= "Set the reason for transfer as MMT: " . $invoice->invoice_id . "<br>";
+            $body .= "<br><br>";
+            $body .= "You can also send a contract with the following ores in the contract with the reason set as MMT: " . $invoice->invoice_id . "<br>";
+            foreach($ores as $ore => $quantity) {
+                $oreName = $lookup->ItemIdToName($ore);
+                $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), ".", ",") . "<br>";
+            }
+            $body .= "<br>";
             $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
 
             //Mail the invoice to the character if the character is in
