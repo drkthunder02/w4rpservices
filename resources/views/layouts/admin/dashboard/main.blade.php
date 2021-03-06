@@ -23,6 +23,9 @@
           <!-- SRP Admin -->
           @include('layouts.admin.sidebarmenu.srp')
           <!-- End SRP Admin -->
+          <!-- Mining Tax Admin -->
+          @include('layouts.admin.sidebarmenu.miningtax')
+          <!-- End Mining Tax Admin -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

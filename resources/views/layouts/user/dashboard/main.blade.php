@@ -22,6 +22,9 @@
           @include('layouts.user.sidebarmenu.general')
           @endif
           <!-- End General Items -->
+          <!-- Mining Tax Items -->
+          @include('layouts.user.sidebarmenu.miningtax')
+          <!-- End Mining Tax Items -->
           <!-- SRP Items -->
           @include('layouts.user.sidebarmenu.srp')
           <!-- SRP Items -->
