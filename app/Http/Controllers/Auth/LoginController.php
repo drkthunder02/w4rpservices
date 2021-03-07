@@ -418,7 +418,7 @@ class LoginController extends Controller
         $configuration->cache = NullCache::class;
 
         //Get the character information
-        $characte_info = $lookup->GetCharacterInfo($charId);
+        $character_info = $lookup->GetCharacterInfo($charId);
 
         //Get the corporation information
         $corp_info = $lookup->GetCorporationInfo($character_info->corporation_id);
