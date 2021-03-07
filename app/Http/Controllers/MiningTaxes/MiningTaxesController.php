@@ -225,8 +225,8 @@ class MiningTaxesController extends Controller
         $ledgers = array();
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
-        $sHelper = new StructureHelper;
         $config = config();
+        $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
