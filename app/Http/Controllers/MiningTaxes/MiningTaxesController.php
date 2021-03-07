@@ -229,7 +229,8 @@ class MiningTaxesController extends Controller
         $config = config();
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
-        dd($esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1'));
+        $check = EsiScope::where(['character_id' => $config['primary']])->get();
+        dd($check);
 
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
