@@ -229,6 +229,8 @@ class MiningTaxesController extends Controller
         $config = config();
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
+        dd($esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1'));
+
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
             return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the ESI for the holding corp for corp mining.');
