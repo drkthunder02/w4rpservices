@@ -47,25 +47,25 @@ class MiningTaxesController extends Controller
         $unpaid = Invoice::where([
             'status' => 'Pending',
             'character_id' => auth()->user()->getId(),
-        ])->get()->paginate(15);
+        ])->paginate(15);
 
         //Get the late invoices
         $late = Invoice::where([
             'status' => 'Late',
             'character_id' => auth()->user()->getId(),
-        ])->get()->paginate(10);
+        ])->paginate(10);
         
         //Get the deferred invoices
         $deferred = Invoice::where([
             'status' => 'Deferred',
             'character_id' => auth()->user()->getId(),
-        ])->get()->paginate(10);
+        ])->paginate(10);
 
         //Get the paid invoices
         $paid = Invoice::where([
             'status' => 'Paid',
             'character_id' => auth()->user()->getId(),
-        ])->get()->paginate(15);
+        ])->paginate(15);
 
         //Total up the unpaid invoices
         foreach($unpaid as $un) {
