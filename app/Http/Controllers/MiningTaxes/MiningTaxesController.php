@@ -92,9 +92,9 @@ class MiningTaxesController extends Controller
         
         //Declare variables
         $structures = array();
-        $sHelper = new StructureHelper;
         $esiHelper = new Esi;
         $config = config('esi');
+        $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
             return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the correct scopes for the services site.');
