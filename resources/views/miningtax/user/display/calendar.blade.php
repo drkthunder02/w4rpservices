@@ -7,7 +7,7 @@
             <h2>Mining Calendar</h2>
         </div>
         <div class="card-body">
-            @calendarchart('calendar', 'calendar_div')
+            @calendarchart('Extractions', 'calendar_div')
         </div>
     </div>
 </div>
