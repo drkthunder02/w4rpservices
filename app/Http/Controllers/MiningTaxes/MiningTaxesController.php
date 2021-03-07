@@ -144,7 +144,7 @@ class MiningTaxesController extends Controller
             return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the correct scopes for the services site.');
         }
 
-        $refreshToken = $esiHelper->GetRefreshToken($config['primar']);
+        $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         //Get the esi data for extractions
