@@ -38,7 +38,7 @@ class MiningTaxesController extends Controller
     /**
      * Display the users invoices
      */
-    public function DisplayMiningTaxInvoices() {
+    public function DisplayInvoices() {
         //Declare variables
         $paidAmount = 0.00;
         $unpaidAmount = 0.00;
