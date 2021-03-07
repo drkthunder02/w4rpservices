@@ -1,8 +1,9 @@
 <li class="nav-item has-treeview">
     <a href="#" class="nav-link">
         <i class="nav-icon far fa-meh-blank"></i>
-        <p>Mining Taxes</p>
-        <i class="right fas fa-angle-left"></li>
+        <p>Mining Taxes
+            <i class="right fas fa-angle-left"></li>
+        </p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
