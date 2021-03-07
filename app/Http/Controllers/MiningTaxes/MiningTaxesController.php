@@ -170,7 +170,7 @@ class MiningTaxesController extends Controller
         foreach($extractions as $extract) {
             $calendar->addRow([
                 $esiHelper->DecodeDate($extract->chunk_arrival_time),
-                rand(1,10),
+                true,
             ]);
         }    
                 
