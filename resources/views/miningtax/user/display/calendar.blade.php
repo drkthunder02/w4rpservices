@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
             <div id="extractions_div"></div>
-            {{ $lava->render('CalendarChart', 'Extractions', 'extractions_div') }}
+            {!! $lava->render('CalendarChart', 'Extractions', 'extractions_div') !!}
         </div>
     </div>
 </div>
