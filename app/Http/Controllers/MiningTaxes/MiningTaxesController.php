@@ -124,8 +124,6 @@ class MiningTaxesController extends Controller
             ]);
         }
 
-        dd($structures);
-
         //Return the view with the extractions variable for html processing
         return view('miningtax.user.display.upcoming')->with('structures', $structures);
     }

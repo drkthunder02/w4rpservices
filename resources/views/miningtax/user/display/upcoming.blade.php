@@ -17,10 +17,10 @@
                 <tbody>
                 @foreach($structures as $ex)
                 <tr>
-                    <td>{{ $ex['structure_name'] }}</td>
-                    <td>{{ $ex['start_time'] }}</td>
-                    <td>{{ $ex['arrival_time'] }}</td>
-                    <td>{{ $ex['decay_time'] }}</td>
+                    <td>{{ $ex['structure_name'] }} UTC</td>
+                    <td>{{ $ex['start_time'] }} UTC</td>
+                    <td>{{ $ex['arrival_time'] }} UTC</td>
+                    <td>{{ $ex['decay_time'] }} UTC</td>
                 </tr>
                 @endforeach
                 </tbody>
