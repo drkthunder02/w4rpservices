@@ -14,6 +14,7 @@ use Laravel\Socialite\Two\User as SocialiteUser;
 use Seat\Eseye\Cache\NullCache;
 use Seat\Eseye\Configuration;
 use App\Library\Esi\Esi;
+use App\Library\Helpers\LookupHelper;
 
 //Models
 use App\Models\User\User;
@@ -407,6 +408,7 @@ class LoginController extends Controller
     private function GetAccountType($refreshToken, $charId) {
         //Declare some variables
         $esiHelper = new Esi;
+        $lookup = new LookupHelper;
 
         //Instantiate a new ESI isntance
         $esi = $esiHelper->SetupEsiAuthentication();
@@ -416,10 +418,10 @@ class LoginController extends Controller
         $configuration->cache = NullCache::class;
 
         //Get the character information
-        $character_info = $esiHelper->GetCharacterData($charId);
+        $characte_info = $lookup->GetCharacterInfo($charId);
 
         //Get the corporation information
-        $corp_info = $esiHelper->GetCorporationData($character_info->corporation_id);
+        $corp_info = $lookup->GetCorporationInfo($character_info->corporation_id);
 
         if($character_info == null || $corp_info == null) {
             return redirect('/')->with('error', 'Could not create user at this time.');
