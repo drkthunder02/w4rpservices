@@ -118,9 +118,9 @@ class MiningTaxesController extends Controller
             $sName = $sHelper->GetStructureInfo($ex->structure_id);
             array_push($structures, [
                 'structure_name' => $sName,
-                'start_time' => $ex->extraction_start_time,
-                'arrival_time' => $ex->chunk_arrival_time,
-                'decay_time' => $ex->natural_decay_time,
+                'start_time' => $esiHelper->DecodeDate($ex->extraction_start_time),
+                'arrival_time' => $esiHelper->DecodeDate($ex->chunk_arrival_time),
+                'decay_time' => $esiHelper->DecodeDate($ex->natural_decay_time),
             ]);
         }
 
