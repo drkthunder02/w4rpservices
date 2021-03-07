@@ -149,16 +149,13 @@ class MiningTaxesController extends Controller
 
         //Get the esi data for extractions
         try {
-            $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/extractions', [
+            $extractions = $esi->invoke('get', '/corporation/{corporation_id}/mining/extractions', [
                 'corporation_id' => $config['corporation'],
             ]);
         } catch(RequestFailedException $e) {
             Log::critical('Could not retrieve the extractions from ESI in DisplayExtractionCalendar in MiningTaxesController');
             return redirect('/dashboard')->with('error', 'Failed to get extraction data from ESI');
         }
-
-        //Decode the extraction data from ESI
-        $extractions = json_decode($response, false);
 
         /**
          * Create a 3 month calendar for the past, current, and future extractions
@@ -172,7 +169,7 @@ class MiningTaxesController extends Controller
 
         foreach($extractions as $extract) {
             $calendar->addRow([
-                $extract->chunk_arrival_time,
+                $esiHelper->DecodeDate($extract->chunk_arrival_time),
                 1
             ]);
         }    
