@@ -7,7 +7,8 @@
             <h2>Mining Calendar</h2>
         </div>
         <div class="card-body">
-            @calendarchart('Extractions', 'extractions_div')
+            <div id="extractions_div"></div>
+            {{ $lava->render('CalendarChart', 'Extractions', 'extractions_div') }}
         </div>
     </div>
 </div>
