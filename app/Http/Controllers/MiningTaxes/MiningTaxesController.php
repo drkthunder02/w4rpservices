@@ -24,6 +24,7 @@ use App\Models\MiningTax\Observer;
 use App\Models\MiningTax\Invoice;
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
+use App\Models\User\User;
 
 class MiningTaxesController extends Controller
 {
@@ -230,10 +231,10 @@ class MiningTaxesController extends Controller
 
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
-            return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the ESI for the holding corp.');
+            return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the ESI for the holding corp for corp mining.');
         } else {
             if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-universe.read_structures.v1')) {
-                return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the ESI for the holding corp.');
+                return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the ESI for the holding corp for structures.');
             }
         }
 
@@ -249,6 +250,8 @@ class MiningTaxesController extends Controller
         //Get the observers from the database
         $observers = Observer::all();
 
+        $corpInfo = $lookup->GetCorporationInfo(auth()->user()->getId());
+
         //Get the ledgers for each structure one at a time
         foreach($observers as $obs) {
             /**
@@ -262,18 +265,12 @@ class MiningTaxesController extends Controller
 
             if($ledger != null) {
                 foreach($ledgers as $ledger) {
-                    $tempArray = array();
-
-                    //Get the character information from the character id
-                    $charInfo = $lookup->GetCharacterInfo($ledger->character_id);
-                    //Get the corp ticker
-                    $corpInfo = $lookup->GetCorporationInfo($charInfo->corporation_id);
                     //Get the structure name from the database
                     $structure = $sHelper->GetStructureInfo($obs->observer_id);
 
                     array_push($miningLedgers, [
                         'structure' => $structure->name,
-                        'character' => $charInfo->name,
+                        'character' => auth()->user()->getName(),
                         'corpTicker' => $corpInfo->ticker,
                         'ore' => $ore,
                         'quantity' => $ledger->quantity,
