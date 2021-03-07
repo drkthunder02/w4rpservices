@@ -164,15 +164,30 @@ class MiningTaxesController extends Controller
         $calendar = $lava->DataTable();
         
         $calendar->addDateTimeColumn('Date')
-                 ->addBooleanColumn('YesNo')
-                 ->addStringColumn('Extractions');
+                 ->addNumberColumn('Total');
 
-        foreach($extractions as $extract) {
-            $calendar->addRow([
-                $esiHelper->DecodeDate($extract->chunk_arrival_time),
-                true,
+        foreach($extractions as $extraction) {
+            $sInfo = $sHelper->GetStructureInfo($extraction->structure_id);
+            array_push($structures, [
+                'date' => $esiHelper->DecodeDate($extraction->chunk_arrival_time),
+                'total' => 0,
             ]);
-        }    
+        }
+
+        foreach($extractions as $extraction) {
+            foreach($structures as $structure) {
+                if($structure['date'] == $esiHelper->DecodeDate($extraction->chunk_arrival_time)) {
+                    $structure['total'] = $structure['total'] + 1;
+                }
+            }
+        }
+
+        foreach($structures as $structure) {
+            $calendar->addRow([
+                $structure['date'],
+                $structure['total'],
+            ]);
+        }  
                 
         $lava->CalendarChart('Extractions', $calendar, [
             'title' => 'Upcoming Extractions',
