@@ -13,7 +13,7 @@
           </a>
       </li>
       <li class="nav-item">
-          <a href="miningtax/display/extractions" class="nav-link">
+          <a href="/miningtax/display/extractions" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>Extractions</p>
           </a>
