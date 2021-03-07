@@ -257,6 +257,7 @@ class MiningTaxesController extends Controller
              */
             $ledgers = Ledger::where([
                 'observer_id' => $obs->structure_id,
+                'character_id' => auth()->user()->getId(),
             ])->where('last_updated', '>=', Carbon::now()->subDays(30))->get();
 
             if($ledger != null) {
