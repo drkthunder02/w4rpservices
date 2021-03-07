@@ -223,6 +223,7 @@ class MiningTaxesController extends Controller
         //Declare variables
         $structures = array();
         $tempLedgers = array();
+        $miningLedgers = array();
         $ledgers = array();
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
