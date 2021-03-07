@@ -105,15 +105,13 @@ class MiningTaxesController extends Controller
 
         //Get the esi data for extractions
         try {
-            $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/extractions/', [
+            $extractions = $esi->invoke('get', '/corporation/{corporation_id}/mining/extractions/', [
                 'corporation_id' => $config['corporation'],
             ]);
         } catch(RequestFailedException $e) {
             Log::warning('Could not retrieve extractions from ESI in MiningTaxesController.php');
             return redirect('/dashboard')->with('error', "Could not pull extractions from ESI data.");
         }
-
-        $extractions = json_decode($response, false);
 
         //Basically get the structure info and attach it to the variable set
         foreach($extractions as $ex) {
@@ -127,7 +125,7 @@ class MiningTaxesController extends Controller
         }
 
         //Return the view with the extractions variable for html processing
-        return view('miningtax.user.display.upcoming')->with('extractions', $extractions);
+        return view('miningtax.user.display.upcoming')->with('structures', $structures);
     }
 
     /**

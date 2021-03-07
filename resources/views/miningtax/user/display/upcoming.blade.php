@@ -15,7 +15,7 @@
                     <th>Decay Time</th>
                 </thead>
                 <tbody>
-                @foreach($extractions as $ex)
+                @foreach($structures as $ex)
                 <tr>
                     <td>{{ $ex['structure_name'] }}</td>
                     <td>{{ $ex['start_time'] }}</td>
