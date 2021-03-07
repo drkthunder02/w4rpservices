@@ -196,8 +196,6 @@ class MiningTaxesController extends Controller
             ],
         ]);
 
-        dd($lava);
-
         return view('miningtax.user.display.calendar')->with('calendar', $calendar)
                                                       ->with('lava', $lava);
     }
