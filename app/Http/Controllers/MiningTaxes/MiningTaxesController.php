@@ -101,7 +101,7 @@ class MiningTaxesController extends Controller
         }
 
         $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
-        $esi = $esiHelper->EsiSetupAuthentication($refreshToken);
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         //Get the esi data for extractions
         try {
@@ -134,15 +134,18 @@ class MiningTaxesController extends Controller
     public function DisplayExtractionCalendar() {
         //Declare variables
         $structures = array();
-        $sHelper = new StructureHelper;
         $lava = new Lavacharts;
         $esiHelper = new Esi;
         $config = config('esi');
+        $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
         //Check for the correct scopes
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
             return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the correct scopes for the services site.');
         }
+
+        $refreshToken = $esiHelper->GetRefreshToken($config['primar']);
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         //Get the esi data for extractions
         try {
