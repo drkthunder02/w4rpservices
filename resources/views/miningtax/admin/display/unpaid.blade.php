@@ -1,4 +1,4 @@
-@extends('layouts.admin.dashb4')
+@extends('layouts.admin.b4')
 @section('content')
 <br>
 <div class="container-fluid">
