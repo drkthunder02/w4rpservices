@@ -270,6 +270,6 @@ class MiningTaxesController extends Controller
 
         //Return the view
         return view('miningtax.user.display.ledger')->with('miningLedgers', $miningLedgers)
-                                               ->with('structures', $structures);
+                                                    ->with('structures', $structures);
     }
 }
