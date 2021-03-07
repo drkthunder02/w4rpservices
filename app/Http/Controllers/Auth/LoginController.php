@@ -318,14 +318,31 @@ class LoginController extends Controller
             'expires_in' => $eveUser->expiresIn,
             'user_type' => $this->GetAccountType(null, $eveUser->id),
         ]);
-
-        $token = EsiToken::create([
+        
+        //Look for an existing token for the characters
+        $tokenFound = EsiToken::where([
             'character_id' => $eveUser->id,
-            'access_token' => $eveUser->token,
-            'refresh_token' => $eveUser->refreshToken,
-            'inserted_at' => time(),
-            'expires_in' => $eveUser->expiresIn,
-        ]);
+        ])->count();
+
+        if($tokenFound == 0) {
+            $token = new EsiToken;
+            $token->character_id = $eveUser->id;
+            $token->access_token = $eveUser->token;
+            $token->refresh_token = $eveUser->refreshToken;
+            $token->inserted_at = time();
+            $token->expires_in = $eveUser->expiresIn;
+            $token->save();
+        } else {
+            EsiToken::where([
+                'character_id' => $eveUser->id,
+            ])->update([
+                'character_id' => $eveUser->id,
+                'access_token' => $eveUser->token,
+                'refresh_token' => $eveUser->refreshToken,
+                'inserted_at' => time(),
+                'expires_in' => $eveUser->expiresIn,
+            ]);
+        }
 
         return $user;
     }
