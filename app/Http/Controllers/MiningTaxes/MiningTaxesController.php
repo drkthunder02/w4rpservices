@@ -263,7 +263,7 @@ class MiningTaxesController extends Controller
                 'character_id' => auth()->user()->getId(),
             ])->where('last_updated', '>=', Carbon::now()->subDays(30))->get();
 
-            if($ledger != null) {
+            if($ledgers != null) {
                 foreach($ledgers as $ledger) {
                     //Get the structure name from the database
                     $structure = $sHelper->GetStructureInfo($obs->observer_id);
@@ -281,6 +281,8 @@ class MiningTaxesController extends Controller
                         'name' => $structure->name,
                     ]);
                 }
+            } else {
+                redirect('/dashboard')->with('error', 'No available data for the mining ledger to be displayed.');
             }
         }
 
