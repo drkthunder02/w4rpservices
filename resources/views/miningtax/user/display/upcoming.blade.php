@@ -17,10 +17,10 @@
                 <tbody>
                 @foreach($extractions as $ex)
                 <tr>
-                    <td>{{ $ex->structure_name }}</td>
-                    <td>{{ $ex->start_time }}</td>
-                    <td>{{ $ex->arrival_time }}</td>
-                    <td>{{ $ex->decay_time }}</td>
+                    <td>{{ $ex['structure_name'] }}</td>
+                    <td>{{ $ex['start_time'] }}</td>
+                    <td>{{ $ex['arrival_time'] }}</td>
+                    <td>{{ $ex['decay_time'] }}</td>
                 </tr>
                 @endforeach
                 </tbody>
