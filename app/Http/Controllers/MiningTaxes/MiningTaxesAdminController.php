@@ -53,7 +53,7 @@ class MiningTaxesAdminController extends Controller
      */
     public function UpdateInvoice(Request $request) {
         $this->validate($request, [
-            'invoice_id' => 'required',
+            'invoiceId' => 'required',
             'status' => 'required',
         ]);
 
