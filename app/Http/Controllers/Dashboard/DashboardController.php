@@ -12,6 +12,7 @@ use Carbon\Carbon;
 
 //Application Library
 use App\Library\Esi\Esi;
+use App\Library\Helpers\StructureHelper;
 
 //Models
 use App\Models\Esi\EsiScope;
