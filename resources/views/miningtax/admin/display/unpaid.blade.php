@@ -30,11 +30,11 @@
                             {!! Form::open(['action' => 'MiningTaxes\MiningTaxesAdminController@UpdateInvoice', 'method' => 'POST']) !!}
                             {{ Form::hidden('invoiceId', $invoice->invoice_id) }}
                             {{ Form::label('status', 'Paid') }}
-                            {{ Form::radio('status', 'Paid', true, ['class' => 'form-control']) }}
+                            {{ Form::radio('status', 'Paid', true) }}
                             {{ Form::label('status', 'Deferred') }}
-                            {{ Form::radio('status', 'Deferred', ['class' => 'form-control']) }}
+                            {{ Form::radio('status', 'Deferred') }}
                             {{ Form::label('status', 'Delete') }}
-                            {{ Form::radio('status', 'Deleted', ['class' => 'form-control']) }}
+                            {{ Form::radio('status', 'Deleted') }}
                             {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
                         </td>
