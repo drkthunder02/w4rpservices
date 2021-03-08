@@ -178,8 +178,8 @@ class MiningTaxesController extends Controller
         foreach($extractions as $extraction) {
             foreach($structures as $structure) {
                 //Create the dates in a carbon object, then only get the Y-m-d to compare.
-                $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structure['date'])->toDateString();
-                $extractionDate = Carbon::createFromFormat('Y-m-d H:i:s', $esiHelper->DecodeDate($extraction->chunk_arrival_time))->toDateString();
+                $tempStructureDate = Carbon::createFromFormat('Y-m-d', $structure['date']);
+                $extractionDate = Carbon::createFromFormat('Y-m-d', $esiHelper->DecodeDate($extraction->chunk_arrival_time));
                 //Check if the dates are equal then increase the total by 1
                 if($tempStructureDate->equalTo($extractionDate)) {
                     $structure['total'] = $structure['total'] + 1;
