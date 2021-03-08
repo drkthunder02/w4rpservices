@@ -31,6 +31,10 @@
                             {{ Form::hidden('invoiceId', $invoice->invoice_id, ['class' => 'form-control']) }}
                             {{ Form::label('status', 'Paid') }}
                             {{ Form::radio('status', 'Paid', ['class' => 'form-control']) }}
+                            {{ Form::label('status', 'Deferred') }}
+                            {{ Form::radio('status', 'Deferred', ['class' => 'form-control']) }}
+                            {{ Form::label('status', 'Deleted') }}
+                            {{ Form::radio('status', 'Deleted', ['class' => 'form-control']) }}
                             {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
                         </td>

@@ -67,23 +67,6 @@ class MiningTaxesAdminController extends Controller
     }
 
     /**
-     * Delete an invoice and mark items paid
-     */
-    public function DeleteInvoice(Request $request) {
-        $this->validate($request, [
-            'invoice_id' => 'required',
-        ]);
-
-        Invoice::where([
-            'invoice_id' => $request->invoice_id,
-        ])->update([
-            'status' => 'Deleted',
-        ]);
-
-        return redirect('/admin/dashboard/miningtaxes')->with('error', 'Invoice successfully deleted.');
-    }
-
-    /**
      * Display past paid invoices
      */
     public function DisplayPaidInvoices() {
