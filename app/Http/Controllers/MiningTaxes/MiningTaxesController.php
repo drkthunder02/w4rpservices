@@ -96,6 +96,8 @@ class MiningTaxesController extends Controller
         $esiHelper = new Esi;
         $config = config('esi');
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
+        $structures = array();
+        $lava = new Lavacharts;
 
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
             return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the correct scopes for the services site.');
@@ -124,6 +126,64 @@ class MiningTaxesController extends Controller
                 'decay_time' => $esiHelper->DecodeDate($ex->natural_decay_time),
             ]);
         }
+
+        /**
+         * Create a 3 month calendar for the past, current, and future extractions
+         */
+        //Create the data tables
+        $calendar = $lava->DataTable();
+        
+        $calendar->addDateTimeColumn('Date')
+                 ->addNumberColumn('Total');
+
+        foreach($extractions as $extraction) {
+            $sInfo = $sHelper->GetStructureInfo($extraction->structure_id);
+            array_push($structures, [
+                'date' => $esiHelper->DecodeDate($extraction->chunk_arrival_time),
+                'total' => 0,
+            ]);
+        }
+
+        foreach($extractions as $extraction) {
+            for($i = 0; $i < sizeof($structures); $i++) {
+                //Create the dates in a carbon object, then only get the Y-m-d to compare.
+                $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structures[$i]['date'])->toDateString();
+                $extractionDate = Carbon::createFromFormat('Y-m-d H:i:s', $esiHelper->DecodeDate($extraction->chunk_arrival_time))->toDateString();
+                //check if the dates are equal then increase the total by 1
+                if($tempStructureDate == $extractionDate) {
+                    $structures[$i]['total'] += 1;
+                }
+            }
+        }
+
+        foreach($structures as $structure) {
+            $calendar->addRow([
+                $structure['date'],
+                $structure['total'],
+            ]);
+        }  
+                
+        $lava->CalendarChart('Extractions', $calendar, [
+            'title' => 'Upcoming Extractions',
+            'unusedMonthOutlineColor' => [
+                'stroke' => '#ECECEC',
+                'strokeOpacity' => 0.75,
+                'strokeWidth' => 1,
+            ],
+            'dayOfWeekLabel' => [
+                'color' => '#4f5b0d',
+                'fontSize' => 16,
+                'italic' => true,
+            ],
+            'noDataPattern' => [
+                'color' => '#DDD',
+                'backgroundColor' => '#11FFFF',
+            ],
+            'colorAxis' => [
+                'values' => [0, 5],
+                'colors' => ['green', 'red'],
+            ],
+        ]);
 
         //Return the view with the extractions variable for html processing
         return view('miningtax.user.display.upcoming')->with('structures', $structures);
