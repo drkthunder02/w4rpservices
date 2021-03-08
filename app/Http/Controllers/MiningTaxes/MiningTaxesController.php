@@ -9,6 +9,9 @@ use Log;
 use Carbon\Carbon;
 use Khill\Lavacharts\Lavacharts;
 use Auth;
+//Collection Stuff
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 //Library Helpers
 use App\Library\Helpers\LookupHelper;
@@ -127,6 +130,12 @@ class MiningTaxesController extends Controller
                 'decay_time' => $esiHelper->DecodeDate($ex->natural_decay_time),
             ]);
         }
+
+        //Sort extractions by arrival time
+        $structuresCollection = collect($structures);
+        $sorted = $structuresCollection->sortBy('arrival_time');
+        $structures = $sorted->all()->values();
+        dd($structures);
 
         /**
          * Create a 3 month calendar for the past, current, and future extractions
