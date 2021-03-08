@@ -97,6 +97,7 @@ class MiningTaxesController extends Controller
         $config = config('esi');
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
         $structures = array();
+        $structuresCalendar = array();
         $lava = new Lavacharts;
 
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
@@ -134,32 +135,34 @@ class MiningTaxesController extends Controller
         $calendar = $lava->DataTable();
         
         $calendar->addDateTimeColumn('Date')
-                 ->addNumberColumn('Total');
+                 ->addNumberColumn('Total')
+                 ->addStringColumn('Structure');
 
         foreach($extractions as $extraction) {
             $sInfo = $sHelper->GetStructureInfo($extraction->structure_id);
-            array_push($structures, [
+            array_push($structuresCalendar, [
                 'date' => $esiHelper->DecodeDate($extraction->chunk_arrival_time),
                 'total' => 0,
+                'name' => $sInfo->name,
             ]);
         }
 
         foreach($extractions as $extraction) {
             for($i = 0; $i < sizeof($structures); $i++) {
                 //Create the dates in a carbon object, then only get the Y-m-d to compare.
-                $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structures[$i]['date'])->toDateString();
+                $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structuresCalendar[$i]['date'])->toDateString();
                 $extractionDate = Carbon::createFromFormat('Y-m-d H:i:s', $esiHelper->DecodeDate($extraction->chunk_arrival_time))->toDateString();
                 //check if the dates are equal then increase the total by 1
                 if($tempStructureDate == $extractionDate) {
-                    $structures[$i]['total'] += 1;
+                    $structuresCalendar[$i]['total'] += 1;
                 }
             }
         }
 
-        foreach($structures as $structure) {
+        foreach($structuresCalendar as $str) {
             $calendar->addRow([
-                $structure['date'],
-                $structure['total'],
+                $str['date'],
+                $str['total'],
             ]);
         }  
                 
