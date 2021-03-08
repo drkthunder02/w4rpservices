@@ -177,7 +177,9 @@ class MiningTaxesController extends Controller
 
         foreach($extractions as $extraction) {
             foreach($structures as $structure) {
-                if($structure['date'] == $esiHelper->DecodeDate($extraction->chunk_arrival_time)) {
+                $tempStructureDate = Carbon::createFromFormat('Y-d-m H:m', $structure['date'])->toDateString();
+                $extractionDate = Carbon::createFromFormat('Y-d-m H:m', $esiHelper->DecodeDate($extraction->chunk_arrival_time))->toDateString();
+                if($tempStructureDate == $extractionDate) {
                     $structure['total'] = $structure['total'] + 1;
                 }
             }
@@ -207,8 +209,8 @@ class MiningTaxesController extends Controller
                 'backgroundColor' => '#11FFFF',
             ],
             'colorAxis' => [
-                'values' => [0, 100],
-                'colors' => ['black', 'green'],
+                'values' => [0, 10],
+                'colors' => ['green', 'red'],
             ],
         ]);
 
