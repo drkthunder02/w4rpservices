@@ -19,12 +19,6 @@
           </a>
       </li>
       <li class="nav-item">
-          <a href="/miningtax/display/calendar" class="nav-link">
-            <i class="fas fa-cog nav-icon"></i>
-            <p>Calendar</p>
-          </a>
-      </li>
-      <li class="nav-item">
           <a href="/miningtax/display/ledgers" class="nav-link">
             <i class="fas fa-cog nav-icon"></i>
             <p>Ledgers</p>
