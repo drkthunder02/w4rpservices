@@ -33,7 +33,7 @@
                             {{ Form::radio('status', 'Paid', ['class' => 'form-control']) }}
                             {{ Form::label('status', 'Deferred') }}
                             {{ Form::radio('status', 'Deferred', ['class' => 'form-control']) }}
-                            {{ Form::label('status', 'Deleted') }}
+                            {{ Form::label('status', 'Delete') }}
                             {{ Form::radio('status', 'Deleted', ['class' => 'form-control']) }}
                             {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
