@@ -135,12 +135,11 @@ class MiningTaxesController extends Controller
         $calendar = $lava->DataTable();
         
         $calendar->addDateTimeColumn('Date')
-                 ->addNumberColumn('Total')
-                 ->addStringColumn('Structure');
+                 ->addNumberColumn('Total');
 
         foreach($extractions as $extraction) {
             $sInfo = $sHelper->GetStructureInfo($extraction->structure_id);
-            array_push($structuresCalendar, [
+            array_push($structures, [
                 'date' => $esiHelper->DecodeDate($extraction->chunk_arrival_time),
                 'total' => 0,
             ]);
@@ -149,19 +148,19 @@ class MiningTaxesController extends Controller
         foreach($extractions as $extraction) {
             for($i = 0; $i < sizeof($structures); $i++) {
                 //Create the dates in a carbon object, then only get the Y-m-d to compare.
-                $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structuresCalendar[$i]['date'])->toDateString();
+                $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structures[$i]['date'])->toDateString();
                 $extractionDate = Carbon::createFromFormat('Y-m-d H:i:s', $esiHelper->DecodeDate($extraction->chunk_arrival_time))->toDateString();
                 //check if the dates are equal then increase the total by 1
                 if($tempStructureDate == $extractionDate) {
-                    $structuresCalendar[$i]['total'] += 1;
+                    $structures[$i]['total'] += 1;
                 }
             }
         }
 
-        foreach($structuresCalendar as $str) {
+        foreach($structures as $structure) {
             $calendar->addRow([
-                $str['date'],
-                $str['total'],
+                $structure['date'],
+                $structure['total'],
             ]);
         }  
                 
