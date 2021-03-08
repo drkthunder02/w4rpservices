@@ -211,7 +211,7 @@ class MiningTaxesController extends Controller
                 'backgroundColor' => '#11FFFF',
             ],
             'colorAxis' => [
-                'values' => [0, 10],
+                'values' => [0, 5],
                 'colors' => ['green', 'red'],
             ],
         ]);
