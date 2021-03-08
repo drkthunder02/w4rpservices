@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 use Khill\Lavacharts\Lavacharts;
 use Carbon\Carbon;
 
+//Application Library
+use App\Library\Esi\Esi;
+
 //Models
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
