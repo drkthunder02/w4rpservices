@@ -163,6 +163,7 @@ class MiningTaxesController extends Controller
             $calendar->addRow([
                 $str['date'],
                 $str['total'],
+                $str['name'],
             ]);
         }  
                 
