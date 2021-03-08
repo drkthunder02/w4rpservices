@@ -187,8 +187,6 @@ class MiningTaxesController extends Controller
             }
         }
 
-        dd($structures);
-
         foreach($structures as $structure) {
             $calendar->addRow([
                 $structure['date'],
