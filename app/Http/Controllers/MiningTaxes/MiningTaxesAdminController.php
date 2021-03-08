@@ -63,7 +63,7 @@ class MiningTaxesAdminController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect('/admin/dashboard/miningtaxes')->with('success', 'Invoice successfully updated.');
+        return redirect('/miningtax/admin/display/unpaid')->with('success', 'Invoice successfully updated.');
     }
 
     /**
