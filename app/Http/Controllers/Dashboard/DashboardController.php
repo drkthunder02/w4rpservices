@@ -47,6 +47,12 @@ class DashboardController extends Controller
         $ores = array();
         $altCount = null;
         $alts = null;
+        $structures = array();
+        $esiHelper = new Esi;
+        $config = config('esi');
+        $sHelper = new StructureHelper($config['primary'], $config['corporation']);
+        $lava = new Lavacharts;
+
 
         /**
          * Alt Counts
@@ -169,8 +175,6 @@ class DashboardController extends Controller
         }
 
         //Create a chart of number of approved, denied, and open requests via a fuel gauge chart
-        $lava = new Lavacharts;
-
         $adur = $lava->DataTable();
 
         $adur->addStringColumn('Type')
@@ -196,28 +200,90 @@ class DashboardController extends Controller
         /**
          * Mining Tax Items
          */
-        /*
-        $invoice = Ledger::where([
-            'character_id' => auth()->user()->getId(),
-            'invoiced' => 'No',
-        ])->sum('amount');
-
-        $rows = Ledger::where([
-            'character_id' => auth()->user()->getId(),
-            'invoiced' => 'No',
-        ])->get();
-
-        foreach($rows as $row) {
-            $ores[$row->ore_name] = $ores[$row->ore_name] + $row->quantity;
+        //Check for the correct scopes
+        if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
+            return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the correct scopes for the services site.');
         }
-        */
+
+        $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+
+        //Get the esi data for extractions
+        try {
+            $extractions = $esi->invoke('get', '/corporation/{corporation_id}/mining/extractions', [
+                'corporation_id' => $config['corporation'],
+            ]);
+        } catch(RequestFailedException $e) {
+            Log::critical('Could not retrieve the extractions from ESI in DisplayExtractionCalendar in MiningTaxesController');
+            return redirect('/dashboard')->with('error', 'Failed to get extraction data from ESI');
+        }
+
+        /**
+         * Create a 3 month calendar for the past, current, and future extractions
+         */
+        //Create the data tables
+        $calendar = $lava->DataTable();
+        
+        $calendar->addDateTimeColumn('Date')
+                 ->addNumberColumn('Total');
+
+        foreach($extractions as $extraction) {
+            $sInfo = $sHelper->GetStructureInfo($extraction->structure_id);
+            array_push($structures, [
+                'date' => $esiHelper->DecodeDate($extraction->chunk_arrival_time),
+                'total' => 0,
+            ]);
+        }
+
+        foreach($extractions as $extraction) {
+            for($i = 0; $i < sizeof($structures); $i++) {
+                //Create the dates in a carbon object, then only get the Y-m-d to compare.
+                $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structures[$i]['date'])->toDateString();
+                $extractionDate = Carbon::createFromFormat('Y-m-d H:i:s', $esiHelper->DecodeDate($extraction->chunk_arrival_time))->toDateString();
+                //check if the dates are equal then increase the total by 1
+                if($tempStructureDate == $extractionDate) {
+                    $structures[$i]['total'] += 1;
+                }
+            }
+        }
+
+        foreach($structures as $structure) {
+            $calendar->addRow([
+                $structure['date'],
+                $structure['total'],
+            ]);
+        }  
+                
+        $lava->CalendarChart('Extractions', $calendar, [
+            'title' => 'Upcoming Extractions',
+            'unusedMonthOutlineColor' => [
+                'stroke' => '#ECECEC',
+                'strokeOpacity' => 0.75,
+                'strokeWidth' => 1,
+            ],
+            'dayOfWeekLabel' => [
+                'color' => '#4f5b0d',
+                'fontSize' => 16,
+                'italic' => true,
+            ],
+            'noDataPattern' => [
+                'color' => '#DDD',
+                'backgroundColor' => '#11FFFF',
+            ],
+            'colorAxis' => [
+                'values' => [0, 5],
+                'colors' => ['green', 'red'],
+            ],
+        ]);
+
         return view('dashboard')->with('openCount', $openCount)
                                 ->with('approvedCount', $approvedCount)
                                 ->with('deniedCount', $deniedCount)
                                 ->with('open', $open)
                                 ->with('approved', $approved)
                                 ->with('denied', $denied)
-                                ->with('lava', $lava);
+                                ->with('lava', $lava)
+                                ->with('calendar', $calendar);
     }
 
     /**
