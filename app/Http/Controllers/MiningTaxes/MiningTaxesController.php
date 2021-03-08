@@ -135,7 +135,6 @@ class MiningTaxesController extends Controller
         $structuresCollection = collect($structures);
         $sorted = $structuresCollection->sortBy('arrival_time');
         $structures = $sorted->all();
-        dd($structures);
 
         /**
          * Create a 3 month calendar for the past, current, and future extractions
