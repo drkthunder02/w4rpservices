@@ -143,7 +143,6 @@ class MiningTaxesController extends Controller
             array_push($structuresCalendar, [
                 'date' => $esiHelper->DecodeDate($extraction->chunk_arrival_time),
                 'total' => 0,
-                'name' => $sInfo->name,
             ]);
         }
 
@@ -163,7 +162,6 @@ class MiningTaxesController extends Controller
             $calendar->addRow([
                 $str['date'],
                 $str['total'],
-                $str['name'],
             ]);
         }  
                 
@@ -191,7 +189,8 @@ class MiningTaxesController extends Controller
 
         //Return the view with the extractions variable for html processing
         return view('miningtax.user.display.upcoming')->with('structures', $structures)
-                                                      ->with('lava', $lava);
+                                                      ->with('lava', $lava)
+                                                      ->with('calendar', $calendar);
     }
 
     /**
