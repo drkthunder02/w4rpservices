@@ -30,7 +30,7 @@
                             {!! Form::open(['action' => 'MiningTaxes\MiningTaxesAdminController@UpdateInvoice', 'method' => 'POST']) !!}
                             {{ Form::hidden('invoiceId', $invoice->invoice_id) }}
                             {{ Form::label('status', 'Paid') }}
-                            {{ Form::radio('status', 'Paid', ['class' => 'form-control']) }}
+                            {{ Form::radio('status', 'Paid', true, ['class' => 'form-control']) }}
                             {{ Form::label('status', 'Deferred') }}
                             {{ Form::radio('status', 'Deferred', ['class' => 'form-control']) }}
                             {{ Form::label('status', 'Delete') }}

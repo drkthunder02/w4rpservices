@@ -57,10 +57,8 @@ class MiningTaxesAdminController extends Controller
             'status' => 'required',
         ]);
 
-        dd($request->status);
-
         Invoice::where([
-            'invoice_id' => $request->invoice_id,
+            'invoice_id' => $request->invoiceId,
         ])->update([
             'status' => $request->status,
         ]);
