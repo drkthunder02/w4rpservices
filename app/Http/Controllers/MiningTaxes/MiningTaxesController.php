@@ -179,6 +179,9 @@ class MiningTaxesController extends Controller
             foreach($structures as $structure) {
                 $tempStructureDate = Carbon::createFromFormat('Y-d-m H:i:s', $structure['date'])->toDateString();
                 $extractionDate = Carbon::createFromFormat('Y-d-m H:i:s', $esiHelper->DecodeDate($extraction->chunk_arrival_time))->toDateString();
+                var_dump($tempStructureDate);
+                var_dump($extractionDate);
+                dd();
                 if($tempStructureDate == $extractionDate) {
                     $structure['total'] = $structure['total'] + 1;
                 }
