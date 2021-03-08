@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 //Library
 use App\Library\Moons\MoonCalc;
+use Comamnds\Library\CommandHelper;
 
 //Job
 use App\Jobs\Commands\Eve\ItemPricesUpdateJob;
@@ -43,9 +44,19 @@ class ItemPricesUpdateCommand extends Command
      */
     public function handle()
     {
+        //Declare variables
         $moonHelper = new MoonCalc;
+        $task = new CommandHelper('ItemPricesUpdateCommand');
+
+        //Set the task as started
+        $task->SetStartStatus();
+
+        //Fetch new prices from fuzzwork.co.uk for the item pricing schemes
         $moonHelper->FetchNewPrices();
 
-        //ItemPricesUpdateJob::dispatch()->onQueue('default');
+        //Set the task as completed
+        $task->SetStopStatus();
+
+        return 0;
     }
 }

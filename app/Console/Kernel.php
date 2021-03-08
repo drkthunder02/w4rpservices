@@ -29,6 +29,10 @@ class Kernel extends ConsoleKernel
          */
         Commands\Eve\ItemPricesUpdateCommand::class,
         /**
+         * Finance Commands
+         */
+        Commands\Finances\UpdateAllianceWalletJournal::class,
+        /**
          * Mining Tax Commands
          */
         Commands\MiningTaxes\MiningTaxesInvoices::class,
@@ -56,6 +60,13 @@ class Kernel extends ConsoleKernel
                  ->monthly();
         $schedule->command('data:PurgeUsers')
                  ->dailyAt('23:00');
+
+        /**
+         * Finances Update Schedule
+         */
+        $schedule->command('finances:UpdateJournals')
+                 ->hourlyAt('45')
+                 ->withoutOverlapping();
 
         /**
          * Item Update Schedule

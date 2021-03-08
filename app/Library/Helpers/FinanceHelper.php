@@ -127,7 +127,7 @@ class FinanceHelper {
                         if(isset($entry['first_party_id'])) {
                             $awj->first_party_id = $entry['first_party_id'];
                         }
-                        if(isset($entry['rason'])) {
+                        if(isset($entry['reason'])) {
                             $awj->reason = $entry['reason'];
                         }
                         if(isset($entry['ref_type'])) {

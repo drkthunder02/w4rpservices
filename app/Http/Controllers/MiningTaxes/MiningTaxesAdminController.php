@@ -51,7 +51,7 @@ class MiningTaxesAdminController extends Controller
     /**
      * Mark an invoice paid
      */
-    public function UpdateInvoice() {
+    public function UpdateInvoice(Request $request) {
         $this->validate($request, [
             'invoice_id' => 'required',
             'status' => 'required',
@@ -69,7 +69,7 @@ class MiningTaxesAdminController extends Controller
     /**
      * Delete an invoice and mark items paid
      */
-    public function DeleteInvoice() {
+    public function DeleteInvoice(Request $request) {
         $this->validate($request, [
             'invoice_id' => 'required',
         ]);
