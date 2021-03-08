@@ -138,29 +138,28 @@ class MiningTaxesController extends Controller
                  ->addNumberColumn('Total');
 
         foreach($extractions as $extraction) {
-            $sInfo = $sHelper->GetStructureInfo($extraction->structure_id);
-            array_push($structures, [
+            array_push($structuresCalendar, [
                 'date' => $esiHelper->DecodeDate($extraction->chunk_arrival_time),
                 'total' => 0,
             ]);
         }
 
         foreach($extractions as $extraction) {
-            for($i = 0; $i < sizeof($structures); $i++) {
+            for($i = 0; $i < sizeof($structuresCalendar); $i++) {
                 //Create the dates in a carbon object, then only get the Y-m-d to compare.
-                $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structures[$i]['date'])->toDateString();
+                $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structuresCalendar[$i]['date'])->toDateString();
                 $extractionDate = Carbon::createFromFormat('Y-m-d H:i:s', $esiHelper->DecodeDate($extraction->chunk_arrival_time))->toDateString();
                 //check if the dates are equal then increase the total by 1
                 if($tempStructureDate == $extractionDate) {
-                    $structures[$i]['total'] += 1;
+                    $structuresCalendar[$i]['total'] += 1;
                 }
             }
         }
 
-        foreach($structures as $structure) {
+        foreach($structuresCalendar as $structureC) {
             $calendar->addRow([
-                $structure['date'],
-                $structure['total'],
+                $structureC['date'],
+                $structureC['total'],
             ]);
         }  
                 
