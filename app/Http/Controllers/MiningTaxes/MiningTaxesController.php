@@ -134,6 +134,7 @@ class MiningTaxesController extends Controller
         //Sort extractions by arrival time
         $structuresCollection = collect($structures);
         $sorted = $structuresCollection->sortBy('arrival_time');
+        //Store the sorted collection back into the variable before being used again.
         $structures = $sorted->all();
 
         /**
