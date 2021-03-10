@@ -17,7 +17,7 @@ Route::get('/', function () {
     }
 
     return view('login');
-})->name('login');
+})->name('notloggedin');
 
 /**
  * Login Display pages

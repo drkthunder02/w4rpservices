@@ -23,8 +23,19 @@ class AfterActionReportsController extends Controller
 
     public function StoreReport(Request $request) {
         $this->validate($request, [
-
+            'fc' => 'required',
+            'location' => 'required',
+            'time' => 'required',
+            'comms' => 'required',
+            'doctrine' => 'required',
+            'objective' => 'required',
+            'result' => 'required',
+            'summary' => 'required',
+            'improvements' => 'required',
+            'well' => 'required',
+            'comments' => 'required',
         ]);
+        
     }
 
     public function StoreComment(Request $request) {
@@ -34,7 +45,7 @@ class AfterActionReportsController extends Controller
     }
 
     public function DisplayAllReports() {
-        
+
 
         return view('reports.user.displayreports');
     }
