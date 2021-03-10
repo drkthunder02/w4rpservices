@@ -18,18 +18,24 @@ class AfterActionReportsController extends Controller
     }
 
     public function DisplayReportForm() {
-        //
+        return view('reports.user.displayform');
     }
 
-    public function StoreReport() {
-        
+    public function StoreReport(Request $request) {
+        $this->validate($request, [
+
+        ]);
     }
 
-    public function StoreComment() {
+    public function StoreComment(Request $request) {
+        $this->validate($request, [
 
+        ]);
     }
 
     public function DisplayAllReports() {
+        
 
+        return view('reports.user.displayreports');
     }
 }
