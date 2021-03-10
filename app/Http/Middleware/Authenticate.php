@@ -15,8 +15,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if(!$this->auth->check()){
-            dd($request);
-            return redirect('/');
+            return redirect()->route('notloggedin');
         }
     }
 }
