@@ -53,8 +53,13 @@ class UpdateAllianceWalletJournal extends Command
         $task = new CommandHelper('UpdateAllianceWalletJournal');
         //Set the task as started
         $task->SetStartStatus();
+        $startTime = time();
 
         $fHelper->GetApiWalletJournal(1, $config['primary']);
+
+        $endTime = time();
+
+        printf("Updating the wallets took " . ($endTime - $startTime) . " seconds.\r\n");
 
         //Set the task as stopped
         $task->SetStopStatus();
