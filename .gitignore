@@ -5,5 +5,5 @@
 /public/logs/*
 worker.log
 /public/cache/*
-/.env
+.env
 .vscode
