@@ -9,6 +9,9 @@ class JobStatus extends Model
     //Table Name
     public $table = 'job_statuses';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestaps = true;
 

@@ -22,6 +22,6 @@ class SrpPayout extends Model
     ];
 
     public function shipType() {
-        return $this->belongsTo(SrpShipType::class);
+        return $this->belongsTo(SrpShipType::class, 'code', 'code');
     }
 }

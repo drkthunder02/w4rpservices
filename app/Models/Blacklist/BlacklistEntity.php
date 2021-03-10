@@ -9,6 +9,9 @@ class BlacklistEntity extends Model
     //Table Name
     public $table = 'alliance_blacklist';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = true;
 

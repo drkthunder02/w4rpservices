@@ -50,6 +50,10 @@ class Structure extends Model
     ];
 
     public function services() {
-        return $this->hasMany('App\Models\Structure\Service', 'structure_id', 'structure_id');
+        return $this->hasMany(App\Models\Structure\Service::class, 'structure_id', 'structure_id');
+    }
+
+    public function assets() {
+        return $this->hasMany(App\Models\Structure\Asset::class, 'location_id', 'structure_id');
     }
 }

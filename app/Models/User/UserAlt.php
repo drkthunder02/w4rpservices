@@ -9,6 +9,10 @@ class UserAlt extends Model
     //Table Name
     public $table = 'user_alts';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
+    //Timestamps
     public $timestamps = false;
 
     /**

@@ -9,6 +9,9 @@ class AvailableUserRole extends Model
     //Table Name
     protected $table = 'available_user_roles';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = false;
 

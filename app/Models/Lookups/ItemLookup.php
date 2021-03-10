@@ -11,6 +11,9 @@ class ItemLookup extends Model
      */
     public $table = 'item_lookup';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     /**
      * Timestamps
      */

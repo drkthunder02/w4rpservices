@@ -9,6 +9,9 @@ class EsiScope extends Model
     // Table Name
     protected $table = 'EsiScopes';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     // Timestamps
     public $timestamps = true;
 
@@ -23,6 +26,6 @@ class EsiScope extends Model
     ];
 
     public function user() {
-        return $this->belongsTo('App\Models\User\User', 'character_id', 'character_id');
+        return $this->belongsTo(App\Models\User\User::class, 'character_id', 'character_id');
     }
 }

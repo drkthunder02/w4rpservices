@@ -27,6 +27,6 @@ class Service extends Model
     ];
 
     public function structure() {
-        return $this->hasOne('App\Models\Structure\Structure', 'structure_id', 'structure_id');
+        return $this->belongsTo(App\Models\Structure\Structure::class, 'structure_id', 'structure_id');
     }
 }

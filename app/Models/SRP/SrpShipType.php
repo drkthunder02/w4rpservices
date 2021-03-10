@@ -22,6 +22,10 @@ class SrpShipType extends Model
     ];
 
     public function costCode() {
-        return $this->hasOne('App\Models\SRP\SrpPayout', 'code', 'code');
+        return $this->hasOne(App\Models\SRP\SrpPayout::class, 'code', 'code');
+    }
+
+    public function fleetType() {
+        return $this->belongsTo(App\Models\SRP\SrpFleetType::class, 'code', 'code');
     }
 }

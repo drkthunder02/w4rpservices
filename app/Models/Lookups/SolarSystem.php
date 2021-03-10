@@ -9,6 +9,9 @@ class SolarSystem extends Model
     //Table Name
     public $table = 'solar_systems';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = false;
 

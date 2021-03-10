@@ -11,6 +11,9 @@ class AllianceWalletJournal extends Model
      */
     protected $table = 'alliance_wallet_journal';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     /**
      * Timestamps
      */

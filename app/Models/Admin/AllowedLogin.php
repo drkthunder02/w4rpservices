@@ -9,6 +9,9 @@ class AllowedLogin extends Model
     //Table Name
     public $table = 'allowed_logins';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = true;
 

@@ -11,6 +11,9 @@ class UserPermission extends Model
      */
     protected $table = 'user_permissions';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable
      * 

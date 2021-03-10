@@ -9,6 +9,9 @@ class Ledger extends Model
     //Table Name
     protected $table = 'alliance_mining_tax_ledgers';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = false;
 
@@ -31,7 +34,7 @@ class Ledger extends Model
     ];
 
     public function getInvoice() {
-        return $this->belongsTo('App\Models\MiningTax\Invoice', 'invoice_id', 'invoice_id');
+        return $this->belongsTo(App\Models\MiningTax\Invoice::class, 'invoice_id', 'invoice_id');
     }
 
     

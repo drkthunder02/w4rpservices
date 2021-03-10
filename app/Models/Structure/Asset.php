@@ -36,4 +36,8 @@ class Asset extends Model
         'type_id',
         'updated_at',
     ];
+
+    public function structure() {
+        return $this->belongsTo(App\Models\Structure\Structure::class, 'structure_id', 'location_id');
+    }
 }

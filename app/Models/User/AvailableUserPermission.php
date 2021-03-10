@@ -11,6 +11,9 @@ class AvailableUserPermission extends Model
      */
     protected $table = 'available_user_permissions';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     /**
      * Timestamps enabled for the rows
      */

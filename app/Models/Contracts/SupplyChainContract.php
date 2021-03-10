@@ -9,6 +9,9 @@ class SupplyChainContract extends Model
     //Table Name
     public $table = 'supply_chain_contracts';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = true;
 

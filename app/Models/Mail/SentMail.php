@@ -9,6 +9,9 @@ class SentMail extends Model
     //Table Name
     protected $table = 'sent_mails';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = false;
 

@@ -9,6 +9,9 @@ class AllianceLookup extends Model
     //Table Name
     public $table = 'alliance_lookup';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = false;
 

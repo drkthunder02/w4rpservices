@@ -28,7 +28,11 @@ class EsiToken extends Model
         'expires_in',
     ];
 
+    public function user() {
+        return $this->belongsTo(App\Models\User\User::class, 'character_id', 'character_id');
+    }
+
     public function esiscopes() {
-        return $this->hasMany('App\Models\EsiScope', 'character_id', 'character_id');
+        return $this->hasMany(App\Models\EsiScope::class, 'character_id', 'character_id');
     }
 }

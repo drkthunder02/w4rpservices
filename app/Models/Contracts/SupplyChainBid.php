@@ -9,6 +9,9 @@ class SupplyChainBid extends Model
     //Table Name
     public $table = 'supply_chain_bids';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     // Timestamps
     public $timestamps = true;
 
@@ -29,11 +32,11 @@ class SupplyChainBid extends Model
 
     //Relationships
     public function ContractId() {
-        return $this->hasOne('App\Models\Contracts\SupplyChainContract', 'contract_id', 'contract_id');
+        return $this->belongsTo(App\Models\Contracts\SupplyChainContract::class, 'contract_id', 'contract_id');
     }
 
     public function Contract() {
-        return $this->belongsTo(SupplyChainContract::class);
+        return $this->belongsTo(App\Models\Contracts\SupplyChainContract::class);
     }
 
     //Model functions

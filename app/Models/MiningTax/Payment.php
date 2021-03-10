@@ -9,6 +9,9 @@ class Payment extends Model
     //Table Name
     protected $table = 'alliance_mining_tax_payments';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = true;
 
@@ -28,6 +31,6 @@ class Payment extends Model
     ];
 
     public function getInvoice() {
-        return $this->belongsTo('App\Models\MiningTax\Invoice', 'invoice_id', 'invoice_id');
+        return $this->belongsTo(App\Models\MiningTax\Invoice::class, 'invoice_id', 'invoice_id');
     }
 }

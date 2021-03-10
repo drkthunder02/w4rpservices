@@ -9,6 +9,9 @@ class Invoice extends Model
     //Table Name
     protected $table = 'alliance_mining_tax_invoices';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = true;
 
@@ -28,7 +31,7 @@ class Invoice extends Model
     ];
 
     public function getPayment() {
-        return $this->hasMany('App\Models\MiningTax\Payment', 'invoice_id', 'invoice_id');
+        return $this->hasOne(App\Models\MiningTax\Payment::class, 'invoice_id', 'invoice_id');
     }
 
     public function getCharacterId() {
@@ -44,7 +47,7 @@ class Invoice extends Model
     }
 
     public function getLedgers() {
-        return $this->hasMany('App\Models\MiningTax\Ledger', 'invoice_id', 'invoice_id');
+        return $this->hasMany(App\Models\MiningTax\Ledger::class, 'invoice_id', 'invoice_id');
     }
 
     public function getInvoiceAmount() {

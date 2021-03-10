@@ -9,6 +9,9 @@ class Observer extends Model
     //Table Name
     protected $table = 'alliance_mining_tax_observers';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = true;
 
@@ -21,11 +24,5 @@ class Observer extends Model
         'last_updated',
         'observer_id',
         'observer_type',
-    ];
-
-    public function getLedgers() {
-        return $this->hasMany('App\Models\MiningTax\Ledger', 'observer_id', 'observer_id');
-    }
-
-    
+    ];    
 }

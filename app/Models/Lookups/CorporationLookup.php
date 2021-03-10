@@ -9,6 +9,9 @@ class CorporationLookup extends Model
     //Table Name
     public $table = 'corporation_lookup';
 
+    //Primary Key
+    public $primaryKey = 'id';
+
     //Timestamps
     public $timestamps = false;
 
