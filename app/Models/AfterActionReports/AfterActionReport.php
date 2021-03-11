@@ -23,6 +23,7 @@ class AfterActionReport extends Model
     protected $fillable = [
         'fc_id',
         'fc_name',
+        'formup_time',
         'formup_location',
         'comms',
         'doctrine',

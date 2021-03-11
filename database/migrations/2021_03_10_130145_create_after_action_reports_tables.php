@@ -18,6 +18,7 @@ class CreateAfterActionReportsTables extends Migration
                 $table->id();
                 $table->unsignedBigInteger('fc_id');
                 $table->string('fc_name');
+                $table->dateTime('formup_time');
                 $table->string('formup_location');
                 $table->enum('comms', [
                     'W4RP',
