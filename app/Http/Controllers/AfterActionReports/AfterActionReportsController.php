@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AfterActionReports;
 //Internal Library
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 //Models
 use App\Models\AfterActionReports\Report;
@@ -70,7 +71,13 @@ class AfterActionReportsController extends Controller
     }
 
     public function DisplayAllReports() {
+        //Declare variables
+        $comments = array();
+
+        //Grab all the reports
+        $reports = AfterActionReports::where('created_at', '>=', Carbon::now()->subDays(30));
         
+
 
         return view('reports.user.displayreports');
     }

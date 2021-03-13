@@ -127,7 +127,7 @@ class MiningTaxesPayments extends Command
                 foreach($contracts as $contract) {
                     if(($contract->title == ("MMT: " . $invoice->invoice_id)) && ($currentTime->lessThanOrEqualTo($invoice->due_date))) {
                         Invoice::where([
-                            'invoice_i' => $invoice->invoice_id,
+                            'invoice_id' => $invoice->invoice_id,
                         ])->update([
                             'stauts' => 'Paid'
                         ]);
