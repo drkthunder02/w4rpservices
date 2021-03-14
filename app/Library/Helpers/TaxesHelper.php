@@ -29,7 +29,6 @@ class TaxesHelper {
         $revenue = 0.00;
 
         $revenue = AllianceWalletJournal::where([
-            'second_party_id' => '98287666',
             'ref_type' => 'brokers_fee',
         ])->whereBetween('date', [$start, $end])
           ->sum('amount');
@@ -42,7 +41,6 @@ class TaxesHelper {
 
         $revenue = AllianceWalletJournal::where([
             'ref_type' => 'structure_gate_jump', 
-            'second_party_id' => '98287666',
             ])->whereBetween('date', [$start, $end])
               ->sum('amount');
 
@@ -54,7 +52,6 @@ class TaxesHelper {
 
         $revenue = AllianceWalletJournal::where([
             'ref_type' => 'industry_job_tax', 
-            'second_party_id'  => '98287666',
             ])->whereBetween('date', [$start, $end])
               ->sum('amount');
 
@@ -65,8 +62,7 @@ class TaxesHelper {
         $revenue = 0.00;
 
         $revenue = AllianceWalletJournal::where([
-            'ref_type' => 'reprocessing_tax', 
-            'second_party_id' => '98287666',
+            'ref_type' => 'reprocessing_tax',
             ])->whereBetween('date', [$start, $end])
               ->sum('amount');
 
@@ -79,15 +75,13 @@ class TaxesHelper {
 
         //Get the import revenue from the database
         $revenueImport = AllianceWalletJournal::where([
-            'ref_type' => 'planetary_import_tax', 
-            'second_party_id' => '98287666',
+            'ref_type' => 'planetary_import_tax',
             ])->whereBetween('date', [$start, $end])
               ->sum('amount');
 
         //Get the export revenue from the database      
         $revenueExport = AllianceWalletJournal::where([
-            'ref_type' => 'planetary_export_tax', 
-            'second_party_id' => '98287666',
+            'ref_type' => 'planetary_export_tax',
             ])->whereBetween('date', [$start, $end])
               ->sum('amount');
 
@@ -103,7 +97,6 @@ class TaxesHelper {
 
         $revenue = AllianceWalletJournal::where([
             'ref_type' => 'office_rental_fee', 
-            'second_party_id' => '98287666',
             ])->whereBetween('date', [$start, $end])
               ->sum('amount');
 
