@@ -9,15 +9,7 @@ use Carbon\Carbon;
 use App\Models\User\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
-
-use App\Models\Finances\ReprocessingTaxJournal;
-use App\Models\Finances\StructureIndustryTaxJournal;
-use App\Models\Finances\PlanetProductionTaxJournal;
-use App\Models\Finances\OfficeFeesJournal;
-use App\Models\Finances\JumpBridgeJournal;
-use App\Models\Finances\PISaleJournal;
-use App\Models\Finances\AllianceMarketJournal;
-use App\Models\SRP\SRPShip;
+use App\Models\Finances\AllianceWalletJournal;
 
 class TaxesHelper {
 
@@ -36,7 +28,7 @@ class TaxesHelper {
     public function GetAllianceMarketGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = AllianceMarketJournal::where([
+        $revenue = AllianceWalletJournal::where([
             'second_party_id' => '98287666',
             'ref_type' => 'brokers_fee',
         ])->whereBetween('date', [$start, $end])
@@ -48,7 +40,7 @@ class TaxesHelper {
     public function GetJumpGateGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = JumpBridgeJournal::where([
+        $revenue = AllianceWalletJournal::where([
             'ref_type' => 'structure_gate_jump', 
             'second_party_id' => '98287666',
             ])->whereBetween('date', [$start, $end])
@@ -60,7 +52,7 @@ class TaxesHelper {
     public function GetIndustryGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = StructureIndustryTaxJournal::where([
+        $revenue = AllianceWalletJournal::where([
             'ref_type' => 'industry_job_tax', 
             'second_party_id'  => '98287666',
             ])->whereBetween('date', [$start, $end])
@@ -72,7 +64,7 @@ class TaxesHelper {
     public function GetReprocessingGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = ReprocessingTaxJournal::where([
+        $revenue = AllianceWalletJournal::where([
             'ref_type' => 'reprocessing_tax', 
             'second_party_id' => '98287666',
             ])->whereBetween('date', [$start, $end])
@@ -86,14 +78,14 @@ class TaxesHelper {
         $revenueExport = 0.00;
 
         //Get the import revenue from the database
-        $revenueImport = PlanetProductionTaxJournal::where([
+        $revenueImport = AllianceWalletJournal::where([
             'ref_type' => 'planetary_import_tax', 
             'second_party_id' => '98287666',
             ])->whereBetween('date', [$start, $end])
               ->sum('amount');
 
         //Get the export revenue from the database      
-        $revenueExport = PlanetProductionTaxJournal::where([
+        $revenueExport = AllianceWalletJournal::where([
             'ref_type' => 'planetary_export_tax', 
             'second_party_id' => '98287666',
             ])->whereBetween('date', [$start, $end])
@@ -109,23 +101,11 @@ class TaxesHelper {
     public function GetOfficeGross($start, $end) {
         $revenue = 0.00;
 
-        $revenue = OfficeFeesJournal::where([
+        $revenue = AllianceWalletJournal::where([
             'ref_type' => 'office_rental_fee', 
             'second_party_id' => '98287666',
             ])->whereBetween('date', [$start, $end])
               ->sum('amount');
-
-        return $revenue;
-    }
-
-    public function GetPiSalesGross($start, $end) {
-        $revenue = 0.00;
-
-        $grosses = PISaleJournal::whereBetween('date', [$start, $end])->get()->toArray();
-
-        foreach($grosses as $gross) {
-            $revenue += ($gross['quantity'] * $gross['unit_price']);
-        }
 
         return $revenue;
     }

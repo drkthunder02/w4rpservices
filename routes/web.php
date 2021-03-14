@@ -30,20 +30,18 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Admin Controller display pages
      */
-    Route::get('/admin/dashboard/users', 'Dashboard\AdminController@displayUsersPaginated');
-    Route::post('/admin/dashboard/users', 'Dashboard\AdminController@searchUsers');
-    Route::get('/admin/dashboard/taxes', 'Dashboard\AdminController@displayTaxes');
-    Route::get('/admin/dashboard/logins', 'Dashboard\AdminController@displayAllowedLogins');
-    Route::post('/admin/add/role', 'Dashboard\AdminController@addRole');
-    Route::post('/admin/remove/role', 'Dashboard\AdminController@removeRole');
-    Route::post('/admin/add/permission', 'Dashboard\AdminController@addPermission');
-    Route::post('/admin/modify/role', 'Dashboard\AdminController@modifyRole');
-    Route::post('/admin/remove/user', 'Dashboard\AdminController@removeUser');
-    Route::post('/admin/modify/user/display', 'Dashboard\AdminController@displayModifyUser');
-    Route::post('/admin/add/allowedlogin', 'Dashboard\AdminController@addAllowedLogin');
-    Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminController@removeAllowedLogin');
-    Route::get('/admin/dashboard/journal', 'Dashboard\AdminController@showJournalEntries');
-    Route::get('/admin/dashboard/test', 'Dashboard\AdminController@displayTestAdminDashboard');
+    Route::get('/admin/dashboard/users', 'Dashboard\AdminDasbharodController@displayUsersPaginated');
+    Route::post('/admin/dashboard/users', 'Dashboard\AdminDashboardController@searchUsers');
+    Route::get('/admin/dashboard/taxes', 'Dashboard\AdminDashboardController@displayTaxes');
+    Route::get('/admin/dashboard/logins', 'Dashboard\AdminDashboardController@displayAllowedLogins');
+    Route::post('/admin/add/role', 'Dashboard\AdminDashboardController@addRole');
+    Route::post('/admin/remove/role', 'Dashboard\AdminDashboardController@removeRole');
+    Route::post('/admin/add/permission', 'Dashboard\AdminDashboardController@addPermission');
+    Route::post('/admin/modify/role', 'Dashboard\AdminDashboardController@modifyRole');
+    Route::post('/admin/remove/user', 'Dashboard\AdminDashboardController@removeUser');
+    Route::post('/admin/modify/user/display', 'Dashboard\AdminDashboardController@displayModifyUser');
+    Route::post('/admin/add/allowedlogin', 'Dashboard\AdminDashboardController@addAllowedLogin');
+    Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminDashboardController@removeAllowedLogin');
     Route::get('/admin/dashboard', 'Dashboard\AdminDashboardController@displayAdminDashboard');
 
     /**
