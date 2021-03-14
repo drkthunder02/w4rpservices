@@ -36,7 +36,8 @@ class AfterActionReport extends Model
     ];
 
     public function comments() {
-        return $this->hasMany(App\Models\AfterActionReports\AfterActionReportComment::class, 'report_id', 'id');
-        
+        return $this->hasMany(App\Models\AfterActionReports\AfterActionReportComment::class, 'report_id', 'id');   
     }
+
+    
 }

@@ -48,7 +48,7 @@ class AfterActionReportsController extends Controller
         $report->summary = $request->summary;
         $report->improvements = $request->improvements;
         $report->worked_well = $request->well;
-        $report->additon_comments = $request->comments;
+        $report->additonal_comments = $request->comments;
         $report->save();
         
         return redirect('/reports/display/all')->with('success', 'Added report to the database.');
@@ -71,9 +71,6 @@ class AfterActionReportsController extends Controller
     }
 
     public function DisplayAllReports() {
-        //Declare variables
-        $comments = array();
-
         //Grab all the reports
         $reports = AfterActionReports::where('created_at', '>=', Carbon::now()->subDays(30))->toArray();
         
