@@ -95,6 +95,9 @@ class MiningTaxesInvoices extends Command
 
             //Generate a unique invoice id
             $invoiceId = uniqid();
+            //Set the due date of the invoice
+            $dateDue = Carbon::now()->addDays(7);
+            $invoiceDate = Carbon::now();
 
             //Create the mail body
             $body .= "Dear Miner,<br><br>";
@@ -103,10 +106,10 @@ class MiningTaxesInvoices extends Command
                 $oreName = $lookup->ItemIdToName($ore);
                 $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
             }
-            $body .= "Please remit " . number_format($totalPrice, 2, ".", ",") . " ISK to Spatial Forces by " . $invoice->date_due . "<br>";
-            $body .= "Set the reason for transfer as MMT: " . $invoice->invoice_id . "<br>";
+            $body .= "Please remit " . number_format($totalPrice, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
+            $body .= "Set the reason for transfer as MMT: " . $invoiceId . "<br>";
             $body .= "<br><br>";
-            $body .= "You can also send a contract with the following ores in the contract with the reason set as MMT: " . $invoice->invoice_id . "<br>";
+            $body .= "You can also send a contract with the following ores in the contract with the reason set as MMT: " . $invoiceId . "<br>";
             foreach($ores as $ore => $quantity) {
                 $oreName = $lookup->ItemIdToName($ore);
                 $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
@@ -130,8 +133,8 @@ class MiningTaxesInvoices extends Command
             $invoice->character_name = $charName;
             $invoice->invoice_id = $invoiceId;
             $invoice->invoice_amount = $invoiceAmount;
-            $invoice->date_issued = Carbon::now();
-            $invoice->date_due = Carbon::now()->addDays(7);
+            $invoice->date_issued = $invoiceDate;
+            $invoice->date_due = $dateDue;
             $invoice->status = 'Pending';
             $invoice->mail_body = $body;
             $invoice->save();
