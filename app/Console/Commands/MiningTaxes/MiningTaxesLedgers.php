@@ -9,18 +9,9 @@ use Carbon\Carbon;
 
 //Application Library
 use Commands\Library\CommandHelper;
-use Seat\Eseye\Exceptions\RequestFailedException;
-use App\Library\Esi\Esi;
-use App\Library\Helpers\LookupHelper;
-use App\Library\Moons\MoonCalc;
 
 //Models
 use App\Models\MiningTax\Observer;
-use App\Models\MiningTax\Ledger;
-use App\Models\Moon\MineralPrice;
-use App\Models\Moon\ItemComposition;
-use App\Models\Esi\EsiToken;
-use App\Models\Esi\EsiScope;
 
 //Jobs
 //use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgersJob;
@@ -63,88 +54,20 @@ class MiningTaxesLedgers extends Command
         //Set the task as started
         $task->SetStartStatus();
 
-        //Get the current time to mark when the process started
-        $startTime = time();
-
         //Get the site configuration which holds some data we need
         $config = config('esi');
         //Get the observers from the database
         $observers = Observer::all();
-        //Job Variables to be moved later
-        $esiHelper = new Esi;
-        $lookup = new LookupHelper;
-        $mHelper = new MoonCalc;
-        $esiHelper = new Esi;
-        /*
+        
         //For each of the observers, send a job to fetch the mining ledger
         foreach($observers as $obs) {
             //Dispatch the mining taxes ledger jobs
             FetchMiningTaxesLedgersJob::dispatch($config['primary'], $config['corporation'], $obs->observer_id)->onQueue('miningtaxes');
         }
-        */
 
-        $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
-        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
-
-        foreach($observers as $obs) {
-            $startObserverTime = time();
-
-            try {
-                $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
-                    'corporation_id' => $config['corporation'],
-                    'observer_id' => $obs->observer_id,
-                ]);
-            } catch(RequestFailedException $e) {
-                Log::warning('Failed to get the mining ledger in FetchMiningTaxesLedgersCommand for observer id: ' . $this->observerId);
-                return null;
-            }
-
-            $ledgers = json_decode($response->raw);
-
-            foreach($ledgers as $ledger) {
-                $startLedgerTime = time();
-
-                //Get some basic information we need to work with
-                $charName = $lookup->CharacterIdToName($ledger->character_id);
-                //Get the type name from the ledger ore stuff
-                $typeName = $lookup->ItemIdToName($ledger->type_id);
-                //Get the price from the helper function
-                $price = $mHelper->CalculateOrePrice($ledger->type_id);
-                //Calculate the total price based on the amount
-                $amount = $price * $ledger->quantity;
-
-                //Insert or update the entry in the database
-                $item = Ledger::updateOrCreate([
-                        'character_id' => $ledger->character_id,
-                        'character_name' => $charName,
-                        'observer_id' => $obs->observer_id,
-                        'last_updated' => $ledger->last_updated,
-                        'type_id' => $ledger->type_id,
-                        'ore_name' => $typeName,
-                        'quantity' => $ledger->quantity,
-                        'amount' => $amount,
-                    ], [
-                        'character_id' => $ledger->character_id,
-                        'character_name' => $charName,
-                        'observer_id' => $obs->observer_id,
-                        'last_updated' => $ledger->last_updated,
-                        'type_id' => $ledger->type_id,
-                        'ore_name' => $typeName,
-                        'quantity' => $ledger->quantity,
-                        'amount' => $amount,
-                    ]);
-
-                printf("Current cycle time for this ledger entry is: " . (time() - $startLedgerTime) . "s.\r\n");
-            }
-
-            printf("Current time taken is: " . (time() - $startObserverTime) . "s.\r\n");
-        }
-
-        //Clean up old data
-        //Ledger::where(['updated_at', '<', Carbon::now()->subDays(120)])->delete();
-
-        printf("Total time taken is: " . (time() - $startTime) . "s.\r\n");
-
+        //Set the task as finished
+        $task->SetStopStatus();
+    
         //Return 0
         return 0;
     }

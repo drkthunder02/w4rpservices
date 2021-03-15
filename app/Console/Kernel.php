@@ -36,6 +36,7 @@ class Kernel extends ConsoleKernel
         Commands\MiningTaxes\MiningTaxesLedgers::class,
         Commands\MiningTaxes\MiningTaxesObservers::class,
         Commands\MiningTaxes\MiningTaxesPayments::class,
+        Commands\MiningTaxes\MiningTaxesDataCleanup::class,
     ];
 
     /**
@@ -52,7 +53,8 @@ class Kernel extends ConsoleKernel
          * Purge Data Schedule
          */
         $schedule->command('data:CleanData')
-                 ->weekly(7, '11:00');
+                 ->weekly(7, '11:00')
+                 ->withoutOverlapping();
         $schedule->command('data:PurgeCorpLedgers')
                  ->monthly();
         $schedule->command('data:PurgeUsers')
@@ -86,7 +88,10 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
         $schedule->command('MiningTaxes:Payments')
                  ->hourlyAt('15')
-                 ->withoutOverlapping();        
+                 ->withoutOverlapping();
+        $schedule->command('MiningTaxes:CleanupData')
+                 ->weekly(7, '11:15')
+                 ->withoutOverlapping();
     }
 
     /**
