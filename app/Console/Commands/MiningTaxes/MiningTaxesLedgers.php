@@ -87,6 +87,8 @@ class MiningTaxesLedgers extends Command
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         foreach($observers as $obs) {
+            $startObserverTime = time();
+
             try {
                 $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
                     'corporation_id' => $config['corporation'],
@@ -132,16 +134,16 @@ class MiningTaxesLedgers extends Command
                         'amount' => $amount,
                     ]);
 
-                printf("Current cycle time for this ledger entry is: " . time() - $startLedgerTime . "s.\r\n");
+                printf("Current cycle time for this ledger entry is: " . (time() - $startLedgerTime) . "s.\r\n");
             }
 
-            printf("Current time taken is: " . time() - $startTime . "s.\r\n");
+            printf("Current time taken is: " . (time() - $startObserverTime) . "s.\r\n");
         }
 
         //Clean up old data
         //Ledger::where(['updated_at', '<', Carbon::now()->subDays(120)])->delete();
 
-        printf("Total time taken is: " . time() - $startTime . "s.\r\n");
+        printf("Total time taken is: " . (time() - $startTime) . "s.\r\n");
 
         //Return 0
         return 0;
