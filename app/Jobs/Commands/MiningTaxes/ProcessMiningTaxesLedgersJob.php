@@ -80,7 +80,6 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
             'character_id' => $this->ledger->character_id,
             'observer_id' => $this->observerId,
             'type_id' => $this->ledger->type_id,
-            'quantity' => $this->ledger->quantity,
             'last_updated' => $this->ledger->last_updated,
         ])->count();
 
