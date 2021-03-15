@@ -5,13 +5,13 @@ namespace App\Console\Commands\MiningTaxes;
 //Internal Library
 use Illuminate\Console\Command;
 use Log;
-use Commands\Library\CommandHelper;
 use Carbon\Carbon;
 
 //Application Library
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Helpers\LookupHelper;
+use Commands\Library\CommandHelper;
 
 //App Models
 use App\Models\MiningTax\Observer;
