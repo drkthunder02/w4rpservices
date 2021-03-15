@@ -70,8 +70,6 @@ class ProcessSendEveMailJob implements ShouldQueue
         $this->recipient_type = $recipient_type;
         $this->subject = $subject;
         $this->sender = $sender;
-
-        
     }
 
     /**
