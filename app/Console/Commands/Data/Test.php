@@ -71,6 +71,6 @@ class Test extends Command
             return null;
         }
 
-        dd($response->rawFetch());
+        dd($response->getErrorCode());
     }
 }
