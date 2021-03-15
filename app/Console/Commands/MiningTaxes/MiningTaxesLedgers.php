@@ -14,7 +14,7 @@ use Commands\Library\CommandHelper;
 use App\Models\MiningTax\Observer;
 
 //Jobs
-//use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgersJob;
+use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgersJob;
 
 class MiningTaxesLedgers extends Command
 {
