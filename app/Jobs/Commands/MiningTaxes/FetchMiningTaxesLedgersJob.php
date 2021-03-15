@@ -80,6 +80,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
         $mHelper = new MoonCalc;
         $esiHelper = new Esi;
         $pageFailed = false;
+        $config = config('esi');
 
         //Check for the correct scope
         if(!$esiHelper->haveEsiScope($this->charId, 'esi-industry.read_corporation_mining.v1')) {
