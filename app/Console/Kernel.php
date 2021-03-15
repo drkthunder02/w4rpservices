@@ -76,16 +76,16 @@ class Kernel extends ConsoleKernel
         /**
          * Mining Tax Schedule
          */
-        $schedule->command('MiningTaxes:Observers')
+        $schedule->command('MiningTax:Observers')
                  ->dailyAt('22:00')
                  ->withoutOverlapping();
-        $schedule->command('MiningTaxes:Ledgers')
+        $schedule->command('MiningTax:Ledgers')
                  ->dailyAt('20:00')
                  ->withoutOverlapping();
-        $schedule->command('MiningTaxes:Invoices')
+        $schedule->command('MiningTax:Invoices')
                  ->weeklyOn(1, '8:00')
                  ->withoutOverlapping();
-        $schedule->command('MiningTaxes:Payments')
+        $schedule->command('MiningTax:Payments')
                  ->hourlyAt('15')
                  ->withoutOverlapping();
     }
