@@ -54,7 +54,6 @@ class MiningTaxesInvoices extends Command
         //Declare variables
         $lookup = new LookupHelper;
         $config = config('esi');
-        $body = null;
         $task = new CommandHelper('MiningTaxesInvoices');
         //Set the task as started
         $task->SetStartStatus();
@@ -68,14 +67,13 @@ class MiningTaxesInvoices extends Command
             $invoice = array();
             $ores = array();
             $totalPrice = 0.00;
+            $body = null;
 
             //Get the rows from the database for each character and the requirement of not been invoiced yet
             $rows = Ledger::where([
                 'character_id' => $charId,
                 'invoiced' => 'No',
-            ])->get()->toArray();        
-
-            var_dump($rows);
+            ])->get()->toArray();
 
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
