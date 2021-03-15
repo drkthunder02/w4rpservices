@@ -115,7 +115,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
                 $response = $esi->page($currentPage)
                                 ->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}/', [
                     'corporation_id' => $config['corporation'],
-                    'observer_id' => $obs->observer_id,
+                    'observer_id' => $this->observerId,
                 ]);
             } catch(RequestFailedException $e) {
                 Log::warning('Failed to get the mining ledger in FetchMiningTaxesLedgersCommand for observer id: ' . $this->observerId);
