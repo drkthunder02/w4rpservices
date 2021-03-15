@@ -141,7 +141,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
 
                 //Dispatch jobs to process each of the mining ledger entries
                 foreach($ledgers as $ledger) {
-                    ProcessMiningTaxesLedgersJob::dispatch($ledger)->onQueue('miningtaxes');
+                    ProcessMiningTaxesLedgersJob::dispatch($ledger, $this->observerId)->onQueue('miningtaxes');
                 }                
             }
 

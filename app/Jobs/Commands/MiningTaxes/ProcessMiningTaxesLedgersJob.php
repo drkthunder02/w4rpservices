@@ -40,19 +40,21 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
      * Job Variables
      */
     private $ledger;
+    private $observerId;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($ledger)
+    public function __construct($ledger, $observerId)
     {
         //Set the connection for the job
         $this->connection = 'redis';
 
         //Import variables from the calling function
         $this->ledger = $ledger;
+        $this->observerId = $observerId;
     }
 
     /**
@@ -74,25 +76,38 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
         //Calculate the total price based on the amount
         $amount = $price * $this->ledger->quantity;
 
-        //Insert or update the entry in the database
-        $item = Ledger::updateOrCreate([
-            'character_id' => $ledger->character_id,
-            'character_name' => $charName,
-            'observer_id' => $obs->observer_id,
-            'last_updated' => $ledger->last_updated,
-            'type_id' => $ledger->type_id,
-            'ore_name' => $typeName,
-            'quantity' => $ledger->quantity,
-            'amount' => $amount,
-        ], [
-            'character_id' => $ledger->character_id,
-            'character_name' => $charName,
-            'observer_id' => $obs->observer_id,
-            'last_updated' => $ledger->last_updated,
-            'type_id' => $ledger->type_id,
-            'ore_name' => $typeName,
-            'quantity' => $ledger->quantity,
-            'amount' => $amount,
-        ]);
+        $found = Ledger::where([
+
+        ])->count();
+
+        if($found > 0) {
+            Ledger::where([
+                'character_id' => $this->ledger->character_id,
+                'character_name' => $charName,
+                'observer_id' => $this->observerId,
+                'type_id' => $this->ledger->type_id,
+                'ore_name' => $typeName,
+            ])->update([
+                'character_id' => $this->ledger->character_id,
+                'character_name' => $charName,
+                'observer_id' => $this->observerId,
+                'last_updated' => $this->ledger->last_updated,
+                'type_id' => $this->ledger->type_id,
+                'ore_name' => $typeName,
+                'quantity' => $this->ledger->quantity,
+                'amount' => $amount,
+            ]);
+        } else {
+            $ledg = new Ledger;
+            $ledg->character_id = $this->character_id;
+            $ledg->character_name = $charName;
+            $ledg->observer_id = $this->observerId;
+            $ledg->last_updated = $ledger->last_updated;
+            $ledg->type_id = $ledger->type_id;
+            $ledg->ore_name = $typeName;
+            $ledg->quantity = $ledger->quantity;
+            $ledg->amount = $amount;
+            $ledg->save();
+        }
     }
 }

@@ -95,26 +95,6 @@ class MiningTaxesInvoices extends Command
 
             //Generate a unique invoice id
             $invoiceId = uniqid();
-            
-            //Save the invoice model
-            $invoice = new Invoice;
-            $invoice->character_id = $charId;
-            $invoice->character_name = $charName;
-            $invoice->invoice_id = $invoiceId;
-            $invoice->invoice_amount = $invoiceAmount;
-            $invoice->date_issued = Carbon::now();
-            $invoice->date_due = Carbon::now()->addDays(7);
-            $invoice->status = 'Pending';
-            $invoice->save();
-
-            //Update the ledger entries
-            Ledger::where([
-                'character_id' => $charId,
-                'invoiced' => 'No',
-            ])->update([
-                'invoiced' => 'Yes',
-                'invoice_id' => $invoiceId,
-            ]);
 
             //Create the mail body
             $body .= "Dear Miner,<br><br>";
@@ -143,6 +123,27 @@ class MiningTaxesInvoices extends Command
 
             //Send the Eve Mail Job to the queue to be dispatched
             ProcessSendEveMailJob::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail');
+
+            //Save the invoice model
+            $invoice = new Invoice;
+            $invoice->character_id = $charId;
+            $invoice->character_name = $charName;
+            $invoice->invoice_id = $invoiceId;
+            $invoice->invoice_amount = $invoiceAmount;
+            $invoice->date_issued = Carbon::now();
+            $invoice->date_due = Carbon::now()->addDays(7);
+            $invoice->status = 'Pending';
+            $invoice->mail_body = $body;
+            $invoice->save();
+
+            //Update the ledger entries
+            Ledger::where([
+                'character_id' => $charId,
+                'invoiced' => 'No',
+            ])->update([
+                'invoiced' => 'Yes',
+                'invoice_id' => $invoiceId,
+            ]);
         }
 
         //Set the task as stopped

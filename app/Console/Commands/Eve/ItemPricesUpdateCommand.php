@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 //Library
 use App\Library\Moons\MoonCalc;
-use Comamnds\Library\CommandHelper;
+use Commands\Library\CommandHelper;
 
 //Job
 use App\Jobs\Commands\Eve\ItemPricesUpdateJob;

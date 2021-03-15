@@ -36,7 +36,6 @@ class Kernel extends ConsoleKernel
         Commands\MiningTaxes\MiningTaxesLedgers::class,
         Commands\MiningTaxes\MiningTaxesObservers::class,
         Commands\MiningTaxes\MiningTaxesPayments::class,
-        Commands\MiningTaxes\MiningTaxesDataCleanup::class,
     ];
 
     /**
@@ -88,9 +87,6 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
         $schedule->command('MiningTaxes:Payments')
                  ->hourlyAt('15')
-                 ->withoutOverlapping();
-        $schedule->command('MiningTaxes:CleanupData')
-                 ->weekly(7, '11:15')
                  ->withoutOverlapping();
     }
 

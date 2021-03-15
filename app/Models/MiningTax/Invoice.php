@@ -28,6 +28,7 @@ class Invoice extends Model
         'date_issued',
         'date_due',
         'status',
+        'mail_body',
     ];
 
     public function getPayment() {

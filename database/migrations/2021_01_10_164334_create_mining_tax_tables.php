@@ -30,6 +30,7 @@ class CreateMiningTaxTables extends Migration
                     'Deferred',
                     'Deleted',
                 ])->default('Pending');
+                $table->text('mail_body')->nullable();
                 $table->timestamps();
             });
         }     
