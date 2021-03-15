@@ -49,11 +49,28 @@ class Test extends Command
      */
     public function handle()
     {
-        $helper = new FinanceHelper;
+        $esiHelper = new Esi;
         $config = config('esi');
-        $startTime = time();
-        $receipt = $helper->GetApiWalletJournal(1, $config['primary']);
-        $endTime = time();
-        var_dump($endTime - $startTime);
+
+        $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+
+        try {
+            $response = $esi->setBody([
+                'approved_cost' => 100,
+                'body' => "Welcome to this test message.",
+                'recipients' => [[
+                    'recipient_id' => $config['primary'],
+                    'recipient_type' => 'character',
+                ]],
+                'subject' => 'Just a Test',
+            ])->invoke('post', '/characters/{character_id}/mail/', [
+                'character_id' => $config['primary'],
+            ]);
+        } catch(RequestFailedException $e) {
+            return null;
+        }
+
+        dd($response);
     }
 }

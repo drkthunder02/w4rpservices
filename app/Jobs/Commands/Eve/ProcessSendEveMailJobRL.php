@@ -24,7 +24,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\Jobs\JobStatus;
 use App\Models\Mail\SentMail;
 
-class ProcessSendEveMailJob implements ShouldQueue
+class ProcessSendEveMailJobRL implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -63,6 +63,8 @@ class ProcessSendEveMailJob implements ShouldQueue
     public function __construct($body, $recipient, $recipient_type, $subject, $sender) {
         //Set the connection
         $this->connection = 'redis';
+        
+
 
         //Private variables
         $this->body = $body;
@@ -91,19 +93,13 @@ class ProcessSendEveMailJob implements ShouldQueue
         $config = config('esi');
 
         //Retrieve the token for main character to send mails from
-        $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
+        $token = $esiHelper->GetRefreshToken($config['primary']);
         //Create the ESI authentication container
-        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
-
-        //Check to see if the token is valid or not
-        if($esiHelper->TokenExpired($refreshToken)) {
-            $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
-            $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
-        }
+        $esi = $esiHelper->SetupEsiAuthentication($token);
 
         //Attemp to send the mail
         try {
-            $reponse = $esi->setBody([
+            $esi->setBody([
                 'approved_cost' => 100,
                 'body' => $this->body,
                 'recipients' => [[

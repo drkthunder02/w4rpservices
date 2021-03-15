@@ -55,6 +55,7 @@ class MiningTaxesInvoices extends Command
         $lookup = new LookupHelper;
         $config = config('esi');
         $task = new CommandHelper('MiningTaxesInvoices');
+        $mailDelay = 15;
         //Set the task as started
         $task->SetStartStatus();
 
@@ -125,7 +126,7 @@ class MiningTaxesInvoices extends Command
             $recipient = $charId;
 
             //Send the Eve Mail Job to the queue to be dispatched
-            ProcessSendEveMailJob::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail');
+            ProcessSendEveMailJob::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
 
             //Save the invoice model
             $invoice = new Invoice;
@@ -147,6 +148,9 @@ class MiningTaxesInvoices extends Command
                 'invoiced' => 'Yes',
                 'invoice_id' => $invoiceId,
             ]);
+
+            //update the delay
+            $mailDelay = $mailDelay + 20;
         }
 
         //Set the task as stopped
