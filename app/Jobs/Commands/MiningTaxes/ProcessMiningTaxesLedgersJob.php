@@ -102,10 +102,10 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
             $ledg->character_id = $this->ledger->character_id;
             $ledg->character_name = $charName;
             $ledg->observer_id = $this->observerId;
-            $ledg->last_updated = $ledger->last_updated;
-            $ledg->type_id = $ledger->type_id;
+            $ledg->last_updated = $this->ledger->last_updated;
+            $ledg->type_id = $this->ledger->type_id;
             $ledg->ore_name = $typeName;
-            $ledg->quantity = $ledger->quantity;
+            $ledg->quantity = $this->ledger->quantity;
             $ledg->amount = $amount;
             $ledg->save();
         }
