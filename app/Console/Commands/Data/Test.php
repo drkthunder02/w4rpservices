@@ -71,6 +71,6 @@ class Test extends Command
             return null;
         }
 
-        dd($response);
+        dd($response->response_code);
     }
 }
