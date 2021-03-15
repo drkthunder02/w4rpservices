@@ -63,6 +63,9 @@ class MiningTaxesLedgers extends Command
         //Set the task as started
         $task->SetStartStatus();
 
+        //Get the current time to mark when the process started
+        $startTime = time();
+
         //Get the site configuration which holds some data we need
         $config = config('esi');
         //Get the observers from the database
@@ -97,6 +100,8 @@ class MiningTaxesLedgers extends Command
             $ledgers = json_decode($response->raw);
 
             foreach($ledgers as $ledger) {
+                $startLedgerTime = time();
+
                 //Get some basic information we need to work with
                 $charName = $lookup->CharacterIdToName($ledger->character_id);
                 //Get the type name from the ledger ore stuff
@@ -126,11 +131,17 @@ class MiningTaxesLedgers extends Command
                         'quantity' => $ledger->quantity,
                         'amount' => $amount,
                     ]);
+
+                printf("Current cycle time for this ledger entry is: " . time() - $startLedgerTime . "s.\r\n");
             }
+
+            printf("Current time taken is: " . time() - $startTime . "s.\r\n");
         }
 
         //Clean up old data
         //Ledger::where(['updated_at', '<', Carbon::now()->subDays(120)])->delete();
+
+        printf("Total time taken is: " . time() - $startTime . "s.\r\n");
 
         //Return 0
         return 0;
