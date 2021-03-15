@@ -77,7 +77,11 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
         $amount = $price * $this->ledger->quantity;
 
         $found = Ledger::where([
-
+            'character_id' => $this->ledger->character_id,
+            'observer_id' => $this->observerId,
+            'type_id' => $this->ledger->type_id,
+            'quantity' => $this->ledger->quantity,
+            'last_updated' => $this->ledger->last_updated,
         ])->count();
 
         if($found > 0) {
@@ -86,7 +90,8 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
                 'character_name' => $charName,
                 'observer_id' => $this->observerId,
                 'type_id' => $this->ledger->type_id,
-                'ore_name' => $typeName,
+                'quantity' => $this->ledger->quantity,
+                'last_updated' => $this->ledger->last_updated,
             ])->update([
                 'character_id' => $this->ledger->character_id,
                 'character_name' => $charName,
