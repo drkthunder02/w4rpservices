@@ -117,6 +117,38 @@ class ProcessSendEveMailJob implements ShouldQueue
             return null;
         }
 
+        //Get the error code and take the appropriate action
+        $errorCode = $response->getErrorCode();
+
+        switch($errorCode) {
+            case 400:  //Bad Request
+                $this->release(15);
+                break;
+            case 401:  //Unauthorized Request
+                $this->release(15);
+                break;
+            case 403:  //Forbidden
+                $this->release(15);
+                break;
+            case 420:  //Error Limited
+                $this->release(15);
+                break;
+            case 500:  //Internal Server Error
+                $this->release(15);
+                break;
+            case 503:  //Service Unavailable
+                $this->release(15);
+                break;
+            case 504:  //Gateway Timeout
+                $this->release(15);
+                break;
+            case 520:  //Internal Error -- Mostly comes when rate limited hit
+                $this->release(15);
+                break;
+            default:   //If not an error, then just break out of the switch statement
+                break;
+        }
+
         $this->SaveSentRecord($this->sender, $this->subject, $this->body, $this->recipient, $this->recipient_type);
         
         $this->delete();
