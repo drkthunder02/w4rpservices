@@ -61,7 +61,7 @@ class MiningTaxesInvoices extends Command
 
         //Get the characters for each non-invoiced ledger entry
         $charIds = Ledger::where([
-            'invoiced' => 'No',
+            'invoiced' => 'Yes',
                        ])->distinct('character_id')
                          ->pluck('character_id');
 
