@@ -87,6 +87,8 @@ class MiningTaxesInvoices extends Command
                 $totalPrice = $totalPrice + $row['amount'];
             }
 
+            dd($totalPrice);
+
             //Reduce the total price by the take percentage
             $invoiceAmount = $totalPrice * $config['mining_tax'];
             $invoiceAmount = round($invoiceAmount, 2);
