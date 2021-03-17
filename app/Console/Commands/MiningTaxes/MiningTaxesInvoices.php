@@ -88,7 +88,7 @@ class MiningTaxesInvoices extends Command
             }
 
             //Reduce the total price by the take percentage
-            $invoiceAmount = $totalPrice * 0.10;
+            $invoiceAmount = $totalPrice * $config['mining_tax'];
             $invoiceAmount = round($invoiceAmount, 2);
             
             //Get the character name from the character id
@@ -100,15 +100,21 @@ class MiningTaxesInvoices extends Command
             $dateDue = Carbon::now()->addDays(7);
             $invoiceDate = Carbon::now();
 
+            //Format the mining tax into a human readable number
+            $numberMiningTax = number_format(($config['mining_tax'] * 100.00), 2, ".", ",");
+
             //Create the mail body
             $body .= "Dear Miner,<br><br>";
             $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
             foreach($ores as $ore => $quantity) {
                 $oreName = $lookup->ItemIdToName($ore);
-                $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
+                $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
             }
-            $body .= "Please remit " . number_format($totalPrice, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
+            $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
+            $body .= "<br><br>";
+            $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
             $body .= "Set the reason for transfer as MMT: " . $invoiceId . "<br>";
+            $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
             $body .= "<br><br>";
             $body .= "You can also send a contract with the following ores in the contract with the reason set as MMT: " . $invoiceId . "<br>";
             foreach($ores as $ore => $quantity) {
