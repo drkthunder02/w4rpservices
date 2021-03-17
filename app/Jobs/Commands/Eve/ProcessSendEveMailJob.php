@@ -113,7 +113,7 @@ class ProcessSendEveMailJob implements ShouldQueue
             ]);
         } catch(RequestFailedException $e) {
             Log::warning($e);
-            return null;
+            $this->release(20);
         }
 
         if($response == null) {
