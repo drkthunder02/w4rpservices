@@ -82,6 +82,7 @@ class ProcessSendEveMailJob implements ShouldQueue
     {
         //Declare some variables
         $esiHelper = new Esi;
+        $response = null;
 
         //Get the esi configuration
         $config = config('esi');
@@ -113,6 +114,10 @@ class ProcessSendEveMailJob implements ShouldQueue
         } catch(RequestFailedException $e) {
             Log::warning($e);
             return null;
+        }
+
+        if($response == null) {
+            $this->release(30);
         }
 
         //Get the error code and take the appropriate action

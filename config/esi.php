@@ -8,5 +8,6 @@
         'alliance' => env('ESI_ALLIANCE', 99004116),
         'corporation' => env('ESI_CORPORATION', 98287666),
         'mining_tax' => 0.15,
+        'refine_rate' => 0.7948248,
     ];
 ?>

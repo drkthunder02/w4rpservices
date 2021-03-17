@@ -66,6 +66,7 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
     {
         $lookup = new LookupHelper;
         $mHelper = new MoonCalc;
+        $config = config('esi');
 
         //Get some of the basic information we need to work with
         $charName = $lookup->CharacterIdToName($this->ledger->character_id);
@@ -74,7 +75,7 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
         //Get the price from the helper function
         $price = $mHelper->CalculateOrePrice($this->ledger->type_id);
         //Calculate the total price based on the amount
-        $amount = $price * $this->ledger->quantity;
+        $amount = (($price * $this->ledger->quantity) * $config['refine_rate']);
 
         $found = Ledger::where([
             'character_id' => $this->ledger->character_id,
