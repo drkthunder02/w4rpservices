@@ -101,7 +101,7 @@ class ProcessSendEveMailJob implements ShouldQueue
         //Attemp to send the mail
         try {
             $reponse = $esi->setBody([
-                'approved_cost' => 100,
+                'approved_cost' => 10000,
                 'body' => $this->body,
                 'recipients' => [[
                     'recipient_id' => $this->recipient,
