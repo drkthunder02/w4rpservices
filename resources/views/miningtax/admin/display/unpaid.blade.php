@@ -22,7 +22,7 @@
                     <tr>
                         <td>{{ $invoice->character_name }}</td>
                         <td>{{ $invoice->invoice_id }}</td>
-                        <td>{{ $invoice->amount }}</td>
+                        <td>{{ number_format($invoice->invoice_amount, 2, ".", ",") }}</td>
                         <td>{{ $invoice->date_issued }}</td>
                         <td>{{ $invoice->date_due }}</td>
                         <td>{{ $invoice->status }}</td>
