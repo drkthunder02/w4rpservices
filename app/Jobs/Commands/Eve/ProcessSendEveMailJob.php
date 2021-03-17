@@ -42,13 +42,6 @@ class ProcessSendEveMailJob implements ShouldQueue
      */
     //public $retries = 3;
 
-    /**
-     * Middleware for the job
-     * 
-     * @var \Spatie\RateLimitedMiddleware\RateLimited
-     */
-    private $middleware;
-
     private $sender;
     private $body;
     private $recipient;
@@ -60,9 +53,12 @@ class ProcessSendEveMailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($body, $recipient, $recipient_type, $subject, $sender) {
+    public function __construct($body, $recipient, $recipient_type, $subject, $sender) {      
         //Set the connection
         $this->connection = 'redis';
+
+        //Set the middleware for the job
+        $this->middleware = $this->middleware();
 
         //Private variables
         $this->body = $body;
@@ -70,6 +66,8 @@ class ProcessSendEveMailJob implements ShouldQueue
         $this->recipient_type = $recipient_type;
         $this->subject = $subject;
         $this->sender = $sender;
+
+        
     }
 
     /**
