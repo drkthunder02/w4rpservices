@@ -60,15 +60,15 @@ class MiningTaxesInvoices extends Command
         $task->SetStartStatus();
 
         //Get the characters for each non-invoiced ledger entry
-        $charIds = Ledger::where([
-            'invoiced' => 'Yes',
-                       ])->distinct('character_id')
+        $charIds = Ledger::distinct('character_id')
                          ->pluck('character_id');
 
         dd($charIds);
 
         if($charIds == null) {
-
+            //Set the task status as done and Log the issue
+            $task->SetStopStatus();
+            Log::warning("No characters found to send invoices to in MiningTaxesInvoices Command.");
             return 0;
         }
 
