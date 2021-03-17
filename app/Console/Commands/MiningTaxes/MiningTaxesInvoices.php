@@ -60,7 +60,17 @@ class MiningTaxesInvoices extends Command
         $task->SetStartStatus();
 
         //Get the characters for each non-invoiced ledger entry
-        $charIds = Ledger::distinct('character_id')->pluck('character_id');
+        $charIds = Ledger::where([
+            'invoiced' => 'No',
+                       ])->distinct('character_id')
+                         ->pluck('character_id');
+
+        dd($charIds);
+
+        if($charIds == null) {
+
+            return 0;
+        }
 
         //Foreach character tally up the mining ledger.
         foreach($charIds as $charId) {
@@ -76,8 +86,6 @@ class MiningTaxesInvoices extends Command
                 'invoiced' => 'No',
             ])->get()->toArray();
 
-            dd($rows);
-
             //Taly up the item composition from each row and multiply by the quantity
             foreach($rows as $row) {
                 if(!isset($ores[$row['type_id']])) {
@@ -89,13 +97,9 @@ class MiningTaxesInvoices extends Command
                 $totalPrice = $totalPrice + $row['amount'];
             }
 
-            dd($totalPrice);
-
             //Reduce the total price by the take percentage
             $invoiceAmount = $totalPrice * $config['mining_tax'];
             $invoiceAmount = round($invoiceAmount, 2);
-
-            dd($invoiceAmount);
             
             //Get the character name from the character id
             $charName = $lookup->CharacterIdToName($charId);
