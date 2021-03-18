@@ -14,8 +14,8 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 
 //Models
-use App\Models\MiningTaxes\Invoice;
-use App\Models\MiningTaxes\Payment;
+use App\Models\MiningTax\Invoice;
+use App\Models\MiningTax\Payment;
 use App\Models\Finances\PlayerDonationJournal;
 
 //Jobs
