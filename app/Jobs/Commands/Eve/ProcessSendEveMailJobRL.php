@@ -42,13 +42,6 @@ class ProcessSendEveMailJobRL implements ShouldQueue
      */
     //public $retries = 3;
 
-    /**
-     * Middleware for the job
-     * 
-     * @var \Spatie\RateLimitedMiddleware\RateLimited
-     */
-    private $middleware;
-
     private $sender;
     private $body;
     private $recipient;
@@ -126,15 +119,38 @@ class ProcessSendEveMailJobRL implements ShouldQueue
      * 
      */
     public function middleware() {
-        
-        //Allow 4 jobs per minute, and implement a rate limited backoff on failed jobs
+
         $rateLimitedMiddleware = (new RateLimited())
+            ->enabled()
+            ->key('PSEMJ')
+            ->connectionName('redis')
             ->allow(4)
             ->everySeconds(60)
             ->releaseAfterOneMinute()
             ->releaseAfterBackoff($this->attempts());
 
         return [$rateLimitedMiddleware];
+    }
+
+    private function OtherCode() {
+        //Can also specify middleware when dispatch a job.
+        //SomeJob::dispatch()->through([new SomeMiddleware]);
+
+        //Current method of creating job handle with redis throttle
+        /**
+         * public function handle() 
+         *   {
+         *       Redis::throttle('key')->allow(10)->every(60)->then(function () {
+         *           // Job logic...
+         *       }, function () {
+         *           // Could not obtain lock...
+         *           return $this->release(10);
+         *       });
+         *   }
+         */
+
+
+
     }
 
     /*

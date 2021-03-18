@@ -37,10 +37,10 @@ class ProcessSendEveMailJob implements ShouldQueue
 
     /**
      * Retries
-     * With new rate limiting, we shouldn't use this timeout
+     * With new rate limiting, we need a retry basis versus timeout basis
      * @var int
      */
-    //public $retries = 3;
+    public $retries = 5;
 
     private $sender;
     private $body;
@@ -166,6 +166,9 @@ class ProcessSendEveMailJob implements ShouldQueue
         
         //Allow 4 jobs per minute, and implement a rate limited backoff on failed jobs
         $rateLimitedMiddleware = (new RateLimited())
+            ->enabled()
+            ->key('psemj')
+            ->connectionName('redis')
             ->allow(4)
             ->everySeconds(60)
             ->releaseAfterOneMinute()
