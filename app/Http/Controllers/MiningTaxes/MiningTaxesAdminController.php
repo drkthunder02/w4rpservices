@@ -85,6 +85,13 @@ class MiningTaxesAdminController extends Controller
             'status' => 'Paid Late',
         ])->paginate(50);
 
-        return view('miningtax.admin.display.paidinvoices')->with('invoices', $invoices);
+        $totalAmount = Invoice::where([
+            'status' => 'Paid',
+        ])->orWhere([
+            'status' => 'Paid Late',
+        ])->sum('invoice_amount');
+
+        return view('miningtax.admin.display.paidinvoices')->with('invoices', $invoices)
+                                                           ->with('totalAmount', $totalAmount);
     }    
 }
