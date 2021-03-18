@@ -18,7 +18,7 @@
                 <tr>
                     <td>{{ $un->invoice_id }}</td>
                     <td>{{ number_format($un->invoice_amount, 2, ".", ",") }}</td>
-                    <td>{{ $un->due_date }}</td>
+                    <td>{{ $un->date_due }}</td>
                 </tr>
             @endforeach()
             </tbody>
@@ -45,7 +45,7 @@
                 <tr>
                     <td>{{ $p->invoice_id }}</td>
                     <td>{{ number_format($p->invoice_amount, 2, ".", ",") }}</td>
-                    <td>{{ $p->due_date }}</td>
+                    <td>{{ $p->date_due }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -71,7 +71,7 @@
             <tr>
                 <td>{{ $l->invoice_id }}</td>
                 <td>{{ number_format($l->invoice_amount, 2, ".", ",") }}</td>
-                <td>{{ $l->due_date }}</td>
+                <td>{{ $l->date_due }}</td>
             </tr>
             @endforeach
             </tbody>
@@ -97,7 +97,7 @@
             <tr>
                 <td>{{ $d->invoice_id }}</td>
                 <td>{{ number_format($d->invoice_amount, 2, ".", ",") }}</td>
-                <td>{{ $d->due_date }}</td>
+                <td>{{ $d->date_due }}</td>
             </tr>
             @endforeach
             </tbody>
