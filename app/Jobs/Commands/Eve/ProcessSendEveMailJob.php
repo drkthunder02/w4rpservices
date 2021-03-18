@@ -134,15 +134,19 @@ class ProcessSendEveMailJob implements ShouldQueue
                 $this->release(15);
                 break;
             case 420:  //Error Limited
-                $this->release(15);
+                Log::warning("Error rate limit occurred in ProcessSendEveMailJob.  Restarting job in 120 seconds.");
+                $this->release(120);
                 break;
             case 500:  //Internal Server Error
-                $this->release(15);
+                Log::critical("Internal Server Error for ESI in ProcessSendEveMailJob");
+                return 0;
                 break;
             case 503:  //Service Unavailable
+                Log::critical("Service Unavailabe for ESI in ProcessSendEveMailJob");
                 $this->release(15);
                 break;
             case 504:  //Gateway Timeout
+                Log::critical("Gateway timeout in ProcessSendEveMailJob");
                 $this->release(15);
                 break;
             case 520:  //Internal Error -- Mostly comes when rate limited hit
