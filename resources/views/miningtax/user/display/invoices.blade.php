@@ -17,7 +17,7 @@
             @foreach($unpaid as $un)
                 <tr>
                     <td>{{ $un->invoice_id }}</td>
-                    <td>{{ $un->amount }}</td>
+                    <td>{{ $un->invoice_amount }}</td>
                     <td>{{ $un->due_date }}</td>
                 </tr>
             @endforeach()
@@ -44,7 +44,7 @@
                 @foreach($paid as $p)
                 <tr>
                     <td>{{ $p->invoice_id }}</td>
-                    <td>{{ $p->amount }}</td>
+                    <td>{{ $p->invoice_amount }}</td>
                     <td>{{ $p->due_date }}</td>
                 </tr>
                 @endforeach
@@ -70,7 +70,7 @@
             @foreach($late as $l)
             <tr>
                 <td>{{ $l->invoice_id }}</td>
-                <td>{{ $l->amount }}</td>
+                <td>{{ $l->invoice_amount }}</td>
                 <td>{{ $l->due_date }}</td>
             </tr>
             @endforeach
@@ -96,7 +96,7 @@
             @foreach($deferred as $d)
             <tr>
                 <td>{{ $d->invoice_id }}</td>
-                <td>{{ $d->amount }}</td>
+                <td>{{ $d->invoice_amount }}</td>
                 <td>{{ $d->due_date }}</td>
             </tr>
             @endforeach
