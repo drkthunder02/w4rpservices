@@ -51,7 +51,7 @@ class MiningTaxesDataCleanup extends Command
         $task->SetStartStatus();
 
         //Clean up old data
-        Ledger::where(['updated_at', '<', Carbon::now()->subDays(120)])->delete();
+        Ledger::where(['updated_at', '<', Carbon::now()->subDays(90)])->delete();
 
         //Set the task as finished
         $task->SetStopStatus();

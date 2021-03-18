@@ -134,6 +134,18 @@ class MiningTaxesInvoices extends Command
             $body .= "<br>";
             $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
 
+            //Check if the mail body is greater than 2000 characters.  If greater than 2,000 characters, then 
+            if(sizeof($body) > 2000) {
+                $body = "Dear Miner,<br><br>";
+                $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
+                $body .= "<br><br>";
+                $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
+                $body .= "Set the reason for transfer as MMT: " . $invoiceId . "<br>";
+                $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
+                $body .= "<br>";
+                $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
+            }
+
             //Mail the invoice to the character if the character is in
             //Warped Intentions or Legacy
             $subject = 'Warped Intentions Mining Taxes';

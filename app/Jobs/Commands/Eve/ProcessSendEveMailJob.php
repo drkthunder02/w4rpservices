@@ -125,40 +125,46 @@ class ProcessSendEveMailJob implements ShouldQueue
 
         switch($errorCode) {
             case 400:  //Bad Request
-                $this->release(15);
+                Log::critical("Bad request has occurred in ProcessSendEveMailJob.  Job has been discarded");
+                return 0;
                 break;
             case 401:  //Unauthorized Request
-                $this->release(15);
+                Log::critical("Unauthorized request has occurred in ProcessSendEveMailJob at " . Carbon::now()->toDateTimeString() . ".\r\nCancelling the job.");
+                return 0;
                 break;
             case 403:  //Forbidden
-                $this->release(15);
+                Log::critical("ProcessSendEveMailJob has incurred a forbidden error.  Cancelling the job.");
+                return 0;
                 break;
             case 420:  //Error Limited
                 Log::warning("Error rate limit occurred in ProcessSendEveMailJob.  Restarting job in 120 seconds.");
                 $this->release(120);
                 break;
             case 500:  //Internal Server Error
-                Log::critical("Internal Server Error for ESI in ProcessSendEveMailJob");
-                return 0;
+                Log::critical("Internal Server Error for ESI in ProcessSendEveMailJob.  Attempting a restart in 120 seconds.");
+                $this->release(120);
                 break;
             case 503:  //Service Unavailable
-                Log::critical("Service Unavailabe for ESI in ProcessSendEveMailJob");
-                $this->release(15);
+                Log::critical("Service Unavailabe for ESI in ProcessSendEveMailJob.  Releasing the job back to the queue in 30 seconds.");
+                $this->release(30);
                 break;
             case 504:  //Gateway Timeout
-                Log::critical("Gateway timeout in ProcessSendEveMailJob");
-                $this->release(15);
+                Log::critical("Gateway timeout in ProcessSendEveMailJob.  Releasing the job back to the queue in 30 seconds.");
+                $this->release(30);
                 break;
             case 520:  //Internal Error -- Mostly comes when rate limited hit
-                $this->release(15);
+                Log::warning("Rate limit hit for ProcessSendEveMailJob.  Releasing the job back to the queue in 30 seconds.");
+                $this->release(30);
+                break;
+            case 201:
+                $this->SaveSentRecord($this->sender, $this->subject, $this->body, $this->recipient, $this->recipient_type);
+                $this->delete();
                 break;
             default:   //If not an error, then just break out of the switch statement
                 break;
         }
-
-        $this->SaveSentRecord($this->sender, $this->subject, $this->body, $this->recipient, $this->recipient_type);
         
-        $this->delete();
+        return 0;
     }
 
     /**
