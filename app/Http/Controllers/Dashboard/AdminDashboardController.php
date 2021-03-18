@@ -219,7 +219,7 @@ class AdminDashboardController extends Controller
 
             $miningTaxes[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($thelper->GetMoonMiningTaxesGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetMoonMiningTaxesGross($date['start'], $date['end']), 2, ".", ","),
             ];
         }
 
