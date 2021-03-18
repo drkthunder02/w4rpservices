@@ -104,7 +104,7 @@ class MiningTaxesObservers extends Command
         /**
          * Cleanup stale data that hasn't been updated in at least 1 week.
          */
-        $date = Carbon::now()->subDays(60);
+        $date = Carbon::now()->subDays(7);
         Observer::where('last_updated', '<', $date)->delete();
 
         //Set the task as completed
