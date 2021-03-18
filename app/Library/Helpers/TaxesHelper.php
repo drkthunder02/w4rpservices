@@ -10,6 +10,7 @@ use App\Models\User\User;
 use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Finances\AllianceWalletJournal;
+use App\Models\MiningTax\Invoice;
 
 class TaxesHelper {
 
