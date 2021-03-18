@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 //Application Library
 use Commands\Library\CommandHelper;
-use App\Library\Helplers\LookupHelper;
+use App\Library\Helpers\LookupHelper;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 
