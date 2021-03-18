@@ -160,6 +160,29 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
+                    Mining Taxes
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <th>Month</th>
+                            <th>SRP Actual</th>
+                        </thead>
+                        <tbody>
+                            @foreach($miningTaxes as $mining)
+                                <tr>
+                                    <td>{{ $mining['date'] }}</td>
+                                    <td>{{ $mining['gross'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
                     SRP Actual Paid Out
                 </div>
                 <div class="card-body">

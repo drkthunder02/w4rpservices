@@ -25,6 +25,19 @@ class TaxesHelper {
         $this->end = $en;
     }
 
+    public function GetMoonMiningTaxesGross($start, $end) {
+        $revenue = 0.00;
+
+        $revenue = Invoice::where([
+            'status' => 'Paid',
+        ])->orWhere([
+            'status' => 'Paid Late',
+        ])->whereBetween('date_issued', [$start, $end])
+          ->sum('invoice_amount');
+
+        return $revenue;
+    }
+
     public function GetAllianceMarketGross($start, $end) {
         $revenue = 0.00;
 
