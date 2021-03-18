@@ -99,6 +99,8 @@ class MiningTaxesPayments extends Command
        //Use the player donation and the journal in order to check over the pending contracts to attempt
        //to pay the contract
        foreach($outstanding as $invoice) {
+
+            dd($invoice);
             //See if we have a reason with the correct uniqid from the player donation journal
             $found = AllianceWalletJournal::where([
                 'ref_type' => 'player_donation',
