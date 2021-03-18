@@ -28,7 +28,7 @@
                 </tbody>
             </table>
             {{ $invoices->links() }}
-            <h2>Total Paid: {{ $totalAmount }}</h2>
+            <h2>Total Paid: {{ number_format($totalAmount, 2, ".", ",") }}</h2>
         </div>
     </div>
 </div>
