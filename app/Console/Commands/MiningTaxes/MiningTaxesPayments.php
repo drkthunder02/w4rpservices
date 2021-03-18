@@ -16,7 +16,7 @@ use App\Library\Esi\Esi;
 //Models
 use App\Models\MiningTax\Invoice;
 use App\Models\MiningTax\Payment;
-use App\Models\Finances\PlayerDonationJournal;
+use App\Models\Finances\AllianceWalletJournal;
 
 //Jobs
 use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPaymentsJob;
@@ -100,7 +100,8 @@ class MiningTaxesPayments extends Command
        //to pay the contract
        foreach($outstanding as $invoice) {
             //See if we have a reason with the correct uniqid from the player donation journal
-            $found = PlayerDonationJournal::where([
+            $found = AllianceWalletJournal::where([
+                'ref_type' => 'player_donation',
                'reason' => "MMT: " . $invoice->invoice_id,
             ])->count();
             
