@@ -100,7 +100,7 @@ class MiningTaxesPayments extends Command
        //to pay the contract
        foreach($outstanding as $invoice) {
 
-            dd($invoice);
+            
             //See if we have a reason with the correct uniqid from the player donation journal
             $found = AllianceWalletJournal::where([
                 'ref_type' => 'player_donation',
@@ -126,6 +126,8 @@ class MiningTaxesPayments extends Command
                     ]);
                 }
             } else {
+                dd($invoice);
+
                 //If we didn't found a journal entry, then we shall check the contracts for a correct entry
                 foreach($contracts as $contract) {
                     if(($contract->title == ("MMT: " . $invoice->invoice_id)) && ($currentTime->lessThanOrEqualTo($invoice->due_date))) {
