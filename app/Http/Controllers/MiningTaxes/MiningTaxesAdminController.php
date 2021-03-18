@@ -45,7 +45,16 @@ class MiningTaxesAdminController extends Controller
             'status' => 'Deferred',
         ])->paginate(50);
 
-        return view('miningtax.admin.display.unpaid')->with('invoices', $invoices);
+        $totalAmount = Invoice::where([
+            'status' => 'Pending',
+        ])->orWhere([
+            'status' => 'Late',
+        ])->orWhere([
+            'status' => 'Deferred',
+        ])->sum('invoice_amount');
+
+        return view('miningtax.admin.display.unpaid')->with('invoices', $invoices)
+                                                     ->with('totalAmount', $totalAmount);
     }
 
     /**
