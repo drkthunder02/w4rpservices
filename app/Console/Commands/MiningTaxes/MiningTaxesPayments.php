@@ -126,10 +126,10 @@ class MiningTaxesPayments extends Command
                     ]);
                 }
             } else {
-                dd($invoice);
-
                 //If we didn't found a journal entry, then we shall check the contracts for a correct entry
                 foreach($contracts as $contract) {
+                    dd($invoice);
+
                     if(($contract->title == ("MMT: " . $invoice->invoice_id)) && ($currentTime->lessThanOrEqualTo($invoice->due_date))) {
                         Invoice::where([
                             'invoice_id' => $invoice->invoice_id,
