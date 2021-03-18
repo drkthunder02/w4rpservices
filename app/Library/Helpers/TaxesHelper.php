@@ -31,10 +31,18 @@ class TaxesHelper {
 
         $revenue = Invoice::where([
             'status' => 'Paid',
-        ])->orWhere([
-            'status' => 'Paid Late',
         ])->whereBetween('date_issued', [$start, $end])
           ->sum('invoice_amount');
+
+        return $revenue;
+    }
+
+    public function GetMoonMiningTaxesLateGross($start, $end) {
+        $revenue = 0.00;
+
+        $revenue = Invoice::where([
+            'status' => 'Paid Late',
+        ])->whereBetween('date_issued', [$start, $end])->sum('invoice_amount');
 
         return $revenue;
     }

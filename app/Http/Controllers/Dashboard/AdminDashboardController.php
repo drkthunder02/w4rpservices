@@ -164,6 +164,7 @@ class AdminDashboardController extends Controller
         $srpActual = array();
         $srpLoss = array();
         $miningTaxes = array();
+        $miningTaxesLate = array();
 
         /** Taxes Pane */
         //Declare classes needed for displaying items on the page
@@ -221,6 +222,11 @@ class AdminDashboardController extends Controller
                 'date' => $date['start']->toFormattedDateString(),
                 'gross' => number_format($tHelper->GetMoonMiningTaxesGross($date['start'], $date['end']), 2, ".", ","),
             ];
+
+            $miningTaxesLate[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetMoonMiningTaxesLateGross($date['start'], $date['end']), 2, ".", ","),
+            ];
         }
 
         return view('admin.dashboards.taxes')->with('pis', $pis)
@@ -231,7 +237,8 @@ class AdminDashboardController extends Controller
                                             ->with('reprocessings', $reprocessings)
                                             ->with('srpActual', $srpActual)
                                             ->with('srpLoss', $srpLoss)
-                                            ->with('miningTaxes', $miningTaxes);
+                                            ->with('miningTaxes', $miningTaxes)
+                                            ->with('miningTaxesLate', $miningTaxesLate);
     }
 
     /**

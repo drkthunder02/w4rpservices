@@ -166,7 +166,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <th>Month</th>
-                            <th>SRP Actual</th>
+                            <th>Mining Taxes Paid</th>
                         </thead>
                         <tbody>
                             @foreach($miningTaxes as $mining)
@@ -180,6 +180,34 @@
                 </div>
             </div>
         </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Mining Taxes
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <th>Month</th>
+                            <th>Mining Taxes Paid Late</th>
+                        </thead>
+                        <tbody>
+                            @foreach($miningTaxesLate as $mining)
+                                <tr>
+                                    <td>{{ $mining['date'] }}</td>
+                                    <td>{{ $mining['gross'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-header">
