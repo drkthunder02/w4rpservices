@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 //Models
-use App\Models\AfterActionReports\Report;
-use App\Models\AfterActionReports\Comment;
+use App\Models\AfterActionReports\AfterActionReport;
+use App\Models\AfterActionReports\AfterActionReportComment;
 
 class AfterActionReportsController extends Controller
 {
