@@ -22,7 +22,7 @@ class CreateAfterActionReportsTables extends Migration
                 $table->string('formup_location');
                 $table->enum('comms', [
                     'W4RP',
-                    'Brave',
+                    'Voltron',
                     'TEST',
                     'Other',
                 ]);

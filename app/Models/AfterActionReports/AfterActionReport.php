@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AfterActionReport extends Model
 {
     //Table Name
-    public $table = '';
+    public $table = 'fc_after_action_reports';
 
     //Primary Key
     public $primaryKey = 'id';

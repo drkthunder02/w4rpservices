@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AfterActionReportComment extends Model
 {
     //Table Name
-    public $table = '';
+    public $table = 'fc_aar_comments';
 
     //Primary Key
     public $primaryKey = 'id';

@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                 {{ Form::label('comms', 'Comms') }}
-                {{ Form::text('comms', '', ['class' => 'form-control']) }}
+                {{ Form::select('comms', ['W4RP', 'Voltron', 'TEST', 'Other'], ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('doctrine', 'Doctrine') }}
