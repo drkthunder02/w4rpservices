@@ -41,8 +41,21 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/remove/user', 'Dashboard\AdminDashboardController@removeUser');
     Route::post('/admin/modify/user/display', 'Dashboard\AdminDashboardController@displayModifyUser');
     Route::post('/admin/add/allowedlogin', 'Dashboard\AdminDashboardController@addAllowedLogin');
-    Route::post('/admin/rmoeve/allowedlogin', 'Dashboard\AdminDashboardController@removeAllowedLogin');
+    Route::post('/admin/remove/allowedlogin', 'Dashboard\AdminDashboardController@removeAllowedLogin');
     Route::get('/admin/dashboard', 'Dashboard\AdminDashboardController@displayAdminDashboard');
+
+    /**
+     * After Action Report display pages
+     */
+    Route::get('/reports/display/all', 'AfterActionReports\AfterActionReportsController@DisplayAllReports');
+    Route::get('/reports/display/report/form', 'AfterActionReports\AfterActionReportsController@DisplayReportForm');
+    Route::get('/reports/display/comment/form/{id}', 'AfterActionReports\AfterActionReportsController@DisplayCommentForm');
+    Route::post('/reports/store/new/report', 'AfterActionReports\AfterActionReportsController@StoreReport');
+    Route::post('/reports/store/new/comments', 'AfterActionReports\AfterActionReportsController@StoreComment');
+
+    /**
+     * After Action Reports Admin display pages
+     */
 
     /**
      * Blacklist Controller display pages

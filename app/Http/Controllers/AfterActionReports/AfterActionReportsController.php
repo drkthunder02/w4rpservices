@@ -19,7 +19,7 @@ class AfterActionReportsController extends Controller
     }
 
     public function DisplayReportForm() {
-        return view('reports.user.displayform');
+        return view('reports.user.form.report');
     }
 
     public function StoreReport(Request $request) {
@@ -54,14 +54,18 @@ class AfterActionReportsController extends Controller
         return redirect('/reports/display/all')->with('success', 'Added report to the database.');
     }
 
+    public function DisplayCommentForm($id) {
+        return view('reports.user.form.comment')->with('id', $id);
+    }
+
     public function StoreComment(Request $request) {
         $this->validate($request, [
-            'report_id' => 'required',
+            'reportId' => 'required',
             'comments' => 'required',
         ]);
 
         $comment = new AfterActionReportComment;
-        $comment->report_id = $request->report_id;
+        $comment->report_id = $request->reportId;
         $comment->character_id = auth()->user()->getId();
         $comment->character_name = auth()->user()->getName();
         $comment->comments = $required->comments;
@@ -72,8 +76,10 @@ class AfterActionReportsController extends Controller
 
     public function DisplayAllReports() {
         //Grab all the reports
-        $reports = AfterActionReports::where('created_at', '>=', Carbon::now()->subDays(30))->toArray();
+        $reports = AfterActionReports::where('created_at', '>=', Carbon::now()->subDays(30));
+        $comments = AfterActionReportComment::where('created_at', '>=', Carbon::now()->subDays(30));
         
-        return view('reports.user.displayreports')->with('reports', $reports);
+        return view('reports.user.displayreports')->with('reports', $reports)
+                                                  ->with('comments', $comments);
     }
 }

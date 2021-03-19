@@ -25,6 +25,11 @@
           <!-- Mining Tax Items -->
           @include('layouts.user.sidebarmenu.miningtax')
           <!-- End Mining Tax Items -->
+          <!-- After Action Reports -->
+          @if(auth()->user()->hasPermission('fc.team'))
+          @include('layouts.user.sidebarmenu.reports')
+          @endif
+          <!-- End After Action Reports -->
           <!-- SRP Items -->
           @include('layouts.user.sidebarmenu.srp')
           <!-- SRP Items -->
