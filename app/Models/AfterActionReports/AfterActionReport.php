@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\AfterActionreports;
+namespace App\Models\AfterActionReports;
 
 use Illuminate\Database\Eloquent\Model;
 
