@@ -133,7 +133,7 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h2>Register Alts for SRP Form</h2>
+            <h2>Register Alts for SRP Form and Mining Taxes</h2>
         </div>
         <div class="card-body">
             <a href="/login"><img src="{{asset('/img/eve-sso-login-white-large.png')}}"></a>
