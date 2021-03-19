@@ -1,7 +1,7 @@
 @extends('layouts.user.dashb4')
 @section('content')
 <br>
-@if($reports != null)
+@if($reportCount > 0)
 @foreach($reports as $report)
 <div class="card">
     <div class="card-header">

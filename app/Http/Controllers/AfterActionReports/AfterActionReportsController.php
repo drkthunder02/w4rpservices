@@ -78,8 +78,10 @@ class AfterActionReportsController extends Controller
         //Grab all the reports
         $reports = AfterActionReport::where('created_at', '>=', Carbon::now()->subDays(30));
         $comments = AfterActionReportComment::where('created_at', '>=', Carbon::now()->subDays(30));
+        $reportCount = AfterActionReport::where('created_at', '>=', Carbon::now()->subDays(30))->count();
         
         return view('reports.user.displayreports')->with('reports', $reports)
-                                                  ->with('comments', $comments);
+                                                  ->with('comments', $comments)
+                                                  ->with('reportCount', $reportCount);
     }
 }
