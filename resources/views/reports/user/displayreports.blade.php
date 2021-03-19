@@ -30,12 +30,14 @@
 </div>
 @endforeach
 @else
-<div class="card">
-    <div class="card-header">
-        <h2>Heads Be Rolling Soon</h2>
-    </div>
-    <div class="card-body">
-        No fc's have submitted reports recently.
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2>Heads Be Rolling Soon</h2>
+        </div>
+        <div class="card-body">
+            No fc's have submitted reports recently.
+        </div>
     </div>
 </div>
 @endif
