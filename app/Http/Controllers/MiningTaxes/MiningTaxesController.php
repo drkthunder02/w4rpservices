@@ -236,8 +236,8 @@ class MiningTaxesController extends Controller
         //Get the observers from the database
         $observers = Observer::all();
 
+        dd(auth()->user()->getId());
         $corpInfo = $lookup->GetCorporationInfo(auth()->user()->getId());
-        dd($corpInfo);
 
         //Get the ledgers for each structure one at a time
         foreach($observers as $obs) {
