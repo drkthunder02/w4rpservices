@@ -234,8 +234,8 @@ class MiningTaxesController extends Controller
         $character = $lookup->GetCharacterInfo($config['primary']);
         
         //Get the corporation information from the character id
-        $corpInfo = $lookup->GetCorporationInfo(auth()->user()->getId());
-        dd($corpInfo);
+        $corpInfo = $lookup->GetCorporationInfo($character->corporation_id);
+        
         //Get the observers from the database
         $observers = Observer::all();
 

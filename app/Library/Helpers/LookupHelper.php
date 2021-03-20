@@ -29,9 +29,7 @@ class LookupHelper {
     public function __construct() {
         //Declare a variable for use by the construct
         $esiHelper = new Esi;
-        $config = config('esi');
-        $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
-        $this->esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+        $this->esi = $esiHelper->SetupEsiAuthentication();
     }
 
     public function ItemNameToId($itemName) {
