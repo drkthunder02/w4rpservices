@@ -73,12 +73,12 @@ class MiningTaxesController extends Controller
 
         //Total up the unpaid invoices
         foreach($unpaid as $un) {
-            $unpaidAmount += $un->amount;
+            $unpaidAmount += $un->invoice_amount;
         }
 
         //Total up the paid invoices
         foreach($paid as $p) {
-            $paidAmount += $p;
+            $paidAmount += $p->invoice_amount;
         }
 
         return view('miningtax.user.display.invoices')->with('unpaid', $unpaid)
