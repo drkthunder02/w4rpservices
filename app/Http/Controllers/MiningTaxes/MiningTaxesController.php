@@ -245,9 +245,7 @@ class MiningTaxesController extends Controller
             $structureInfo = $sHelper->GetStructureInfo($obs->observer_id);
 
             //Add the name to the structures array
-            array_push($structures, [
-                'name' => $structureInfo->name,
-            ]);
+            array_push($structures, $structureInfo->name);
             /**
              * Get the ledger from each observer.
              * We don't care about observer type as it can only be an Athanor or Tatara
