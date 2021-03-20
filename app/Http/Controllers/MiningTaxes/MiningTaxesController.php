@@ -251,10 +251,10 @@ class MiningTaxesController extends Controller
             if($ledgers != null) {
                 foreach($ledgers as $ledger) {
                     //Get the structure name from the database
-                    $structure = $sHelper->GetStructureInfo($obs->observer_id);
+                    $structureInfo = $sHelper->GetStructureInfo($obs->observer_id);
 
                     array_push($miningLedgers, [
-                        'structure' => $structure->name,
+                        'structure' => $structureInfo->name,
                         'character' => auth()->user()->getName(),
                         'corpTicker' => $corpInfo->ticker,
                         'ore' => $ore,
@@ -263,7 +263,7 @@ class MiningTaxesController extends Controller
                     ]);
 
                     array_push($structures, [
-                        'name' => $structure->name,
+                        'name' => $structureInfo->name,
                     ]);
                 }
             } else {
