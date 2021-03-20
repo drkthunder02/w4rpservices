@@ -212,7 +212,6 @@ class MiningTaxesController extends Controller
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
         $config = config('esi');
-        $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
@@ -228,6 +227,8 @@ class MiningTaxesController extends Controller
         
         //Setup the esi container
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+        //Declare the structure helper after the esi container has been created
+        $sHelper = new StructureHelper($config['primary'], $config['corporation'], $esi);
 
         //Get the character data from the lookup table if possible or esi
         $character = $lookup->GetCharacterInfo($config['primary']);
@@ -239,22 +240,26 @@ class MiningTaxesController extends Controller
 
         //Get the ledgers for each structure one at a time
         foreach($observers as $obs) {
-            dd($obs);
+            //Get the structure information
+            $structureInfo = $sHelper->GetStructureInfo($obs->observer_id);
+            dd($structureInfo);
 
+            //Add the name to the structures array
+            array_push($structures, [
+                'name' => $structureInfo->name,
+            ]);
             /**
              * Get the ledger from each observer.
              * We don't care about observer type as it can only be an Athanor or Tatara
              */
             $ledgers = Ledger::where([
-                'observer_id' => $obs->structure_id,
+                'observer_id' => $obs->observer_id,
                 'character_id' => auth()->user()->getId(),
             ])->where('last_updated', '>=', Carbon::now()->subDays(30))->get();
 
-            if($ledgers != null) {
+            if($ledgers->count() > 0) {
                 foreach($ledgers as $ledger) {
-                    //Get the structure name from the database
-                    $structureInfo = $sHelper->GetStructureInfo($obs->observer_id);
-                    dd($structureInfo);
+                    //Foreach ledger add it to the array
                     array_push($miningLedgers, [
                         'structure' => $structureInfo->name,
                         'character' => auth()->user()->getName(),
@@ -263,13 +268,7 @@ class MiningTaxesController extends Controller
                         'quantity' => $ledger->quantity,
                         'updated' => $ledger->last_updated,
                     ]);
-
-                    array_push($structures, [
-                        'name' => $structureInfo->name,
-                    ]);
                 }
-            } else {
-                redirect('/dashboard')->with('error', 'No available data for the mining ledger to be displayed.');
             }
         }
 
