@@ -103,6 +103,8 @@ class StructureHelper {
             $info = null;
         }
 
+        dd($info);
+
         return $info;
     }
 
