@@ -11,7 +11,7 @@
     <ul class="nav nav-pills">
         @foreach($structures as $structure)
         <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#W4RP-{{$structure}}">{{$structure}}</a>
+            <a class="nav-link" data-toggle="pill" href="#W4RP-{!! $structure !!}">{{$structure}}</a>
         </li>
         @endforeach
     </ul>
