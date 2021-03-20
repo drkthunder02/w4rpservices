@@ -239,6 +239,8 @@ class MiningTaxesController extends Controller
 
         //Get the ledgers for each structure one at a time
         foreach($observers as $obs) {
+            dd($obs);
+
             /**
              * Get the ledger from each observer.
              * We don't care about observer type as it can only be an Athanor or Tatara
