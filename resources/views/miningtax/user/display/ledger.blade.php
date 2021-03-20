@@ -30,7 +30,7 @@
                 </thead>
                 <tbody>
                     @foreach($miningLedgers as $ledger)
-                        @if($ledger['structure'] == $structure['name'])
+                        @if($ledger['structure'] == $structure)
                             <tr>
                                 <td>{{ $ledger['structure'] }}</td>
                                 <td>{{ $ledger['character'] }}</td>
