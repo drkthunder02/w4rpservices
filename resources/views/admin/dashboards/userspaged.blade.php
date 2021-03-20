@@ -7,7 +7,7 @@
         </div>
         <div class="card-body">
             <div class="container">
-                {!! Form::open(['action' => 'Dashboard\AdminController@searchUsers', 'method' => 'POST']) !!}
+                {!! Form::open(['action' => 'Dashboard\AdminDashboardController@searchUsers', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {{ Form::label('parameter', 'Seach For A User') }}
                     {{ Form::text('parameter', '', ['class' => 'form-control', 'placeholder' => 'CCP Antiquarian']) }}
