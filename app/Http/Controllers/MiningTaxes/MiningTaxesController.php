@@ -232,12 +232,12 @@ class MiningTaxesController extends Controller
 
         //Get the character data from the lookup table if possible or esi
         $character = $lookup->GetCharacterInfo($config['primary']);
-
+        
+        //Get the corporation information from the character id
+        $corpInfo = $lookup->GetCorporationInfo(auth()->user()->getId());
+        dd($corpInfo);
         //Get the observers from the database
         $observers = Observer::all();
-
-        dd(auth()->user()->getId());
-        $corpInfo = $lookup->GetCorporationInfo(auth()->user()->getId());
 
         //Get the ledgers for each structure one at a time
         foreach($observers as $obs) {
