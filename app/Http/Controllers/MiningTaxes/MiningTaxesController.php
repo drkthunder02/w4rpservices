@@ -252,7 +252,7 @@ class MiningTaxesController extends Controller
                 foreach($ledgers as $ledger) {
                     //Get the structure name from the database
                     $structureInfo = $sHelper->GetStructureInfo($obs->observer_id);
-
+                    dd($structureInfo);
                     array_push($miningLedgers, [
                         'structure' => $structureInfo->name,
                         'character' => auth()->user()->getName(),
