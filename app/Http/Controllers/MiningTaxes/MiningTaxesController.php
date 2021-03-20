@@ -242,7 +242,6 @@ class MiningTaxesController extends Controller
         foreach($observers as $obs) {
             //Get the structure information
             $structureInfo = $sHelper->GetStructureInfo($obs->observer_id);
-            dd($structureInfo);
 
             //Add the name to the structures array
             array_push($structures, [
@@ -271,8 +270,6 @@ class MiningTaxesController extends Controller
                 }
             }
         }
-
-        dd($structures);
 
         //Return the view
         return view('miningtax.user.display.ledger')->with('miningLedgers', $miningLedgers)
