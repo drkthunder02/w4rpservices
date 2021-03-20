@@ -264,7 +264,7 @@ class MiningTaxesController extends Controller
                         'structure' => $structureInfo->name,
                         'character' => auth()->user()->getName(),
                         'corpTicker' => $corpInfo->ticker,
-                        'ore' => $ore,
+                        'ore' => $ledger->ore_name,
                         'quantity' => $ledger->quantity,
                         'updated' => $ledger->last_updated,
                     ]);
