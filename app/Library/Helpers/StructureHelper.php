@@ -90,7 +90,7 @@ class StructureHelper {
     public function GetStructureInfo($structureId) {
         //Declare some variables
         $esiHelper = new Esi;
-
+        dd($structureId);
         try {
             $info = $this->esi->invoke('get', '/universe/structures/{structure_id}/', [
                 'structure_id' => $structureId,
