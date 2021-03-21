@@ -100,9 +100,7 @@ class StructureHelper {
             $info = null;
         }
 
-        dd($info->name);
-
-        return $info->name;
+        return (string)$info->name;
     }
 
     public function GetStructureInfo($structureId) {
