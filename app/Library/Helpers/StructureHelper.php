@@ -87,9 +87,23 @@ class StructureHelper {
         }
     }
 
+    public function GetStructureName($structureId) {
+        try {
+            $info = $this->esi->invoke('get', '/universe/structures/{structure_id}/', [
+                'structure_id' => $structureId,
+            ]);
+        } catch(RequestFailedException $e) {
+            Log::warning("Failed to get structure information for structure with id " . $structureId);
+            Log::warning($e->getCode());
+            Log::warning($e->getMessage());
+            Log::warning($e->getEsiResponse());
+            $info = null;
+        }
+
+        return $info->name;
+    }
+
     public function GetStructureInfo($structureId) {
-        //Declare some variables
-        $esiHelper = new Esi;
         try {
             $info = $this->esi->invoke('get', '/universe/structures/{structure_id}/', [
                 'structure_id' => $structureId,

@@ -96,14 +96,14 @@ class MiningTaxesObservers extends Command
             $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
             //Get the structure name from the universe endpoint to store in the database
-            $observerInfo = $sHelper->GetStructureInfo($observer->observer_id);
+            $observerName = $sHelper->GetStructureName($observer->observer_id);
 
             Observer::updateOrInsert([
                 'observer_id' => $observer->observer_id,
             ], [
                 'observer_id' => $observer->observer_id,
                 'observer_type' => $observer->observer_type,
-                'observer_name' => $observerInfo->name,
+                'observer_name' => $observerName,
                 'last_updated' => $observer->last_updated,
             ]);
         }
