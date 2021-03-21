@@ -101,15 +101,15 @@ class MiningTaxesInvoicesNew extends Command
 
             //Build a character Id list for the characters before processing the ledgers.
             $alts = UserAlt::where([
-                'main_id' => $mainId,
+                'main_id' => 95366854,
             ])->get();
-
-            dd($alts);
 
             //Get the ledgers for the main character
             $rows = Ledger::where([
-                'character_id' => $mainId,
+                'character_id' => 95366854,
             ])->get();
+
+            dd($rows);
 
             foreach($alts as $alt) {
                 $altLedger = Ledger::where([
