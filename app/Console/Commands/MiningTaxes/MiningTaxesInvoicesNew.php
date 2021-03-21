@@ -109,7 +109,7 @@ class MiningTaxesInvoicesNew extends Command
                 'character_id' => 2114000847,
             ])->get();
             
-            $rows->push($temps);
+            $rows->add($temps);
             dd($rows);
 
             //Get the ledgers for the main character
