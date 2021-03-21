@@ -93,7 +93,7 @@ class MiningTaxesObservers extends Command
         //Run through the mining observers, and add them to the database
         foreach($resp as $observer) {
             //Declare the structure helper
-            $sHelper = new StructureHelper($config['primary'], $config['corporation'], $esi);
+            $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
             //Get the structure name from the universe endpoint to store in the database
             $observerInfo = $sHelper->GetStructureInfo($observer->observer_id);
