@@ -56,7 +56,7 @@ class MiningTaxesInvoicesNew extends Command
         //Declare variables
         $lookup = new LookupHelper;
         $config = config('esi');
-        $task = new CommandHelper('MiningTaxesInvoices');
+        $task = new CommandHelper('MiningTaxesInvoicesNew');
         $mainsAlts = array();
         $mailDelay = 15;
         //Set the task as started
@@ -103,6 +103,8 @@ class MiningTaxesInvoicesNew extends Command
             $alts = UserAlt::where([
                 'main_id' => $mainId,
             ])->get();
+
+            dd($alts);
 
             //Get the ledgers for the main character
             $rows = Ledger::where([
