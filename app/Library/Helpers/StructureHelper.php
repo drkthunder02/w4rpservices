@@ -100,6 +100,10 @@ class StructureHelper {
             $info = null;
         }
 
+        $structure = json_decode($info->raw, true);
+
+        dd($structure);
+
         return (string)$info->name;
     }
 
