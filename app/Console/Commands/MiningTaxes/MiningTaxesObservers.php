@@ -92,33 +92,27 @@ class MiningTaxesObservers extends Command
 
         //Run through the mining observers, and add them to the database
         foreach($resp as $observer) {
-            //Declare the structure helper
-            $sHelper = new StructureHelper($config['primary'], $config['corporation']);
-
-            //Get the structure name from the universe endpoint to store in the database
-            $observerName = $sHelper->GetStructureName($observer->observer_id);
-            var_dump($observerName);
-            $found = Observer::where([
-                'observer_id' => $observer->observer_id,
-            ])->count();
-
-            if($found > 0) {
-                Observer::where([
+            if($observer->observer_id > 1030000000000) {
+                $found = Observer::where([
                     'observer_id' => $observer->observer_id,
-                ])->update([
-                    'observer_id' => $observer->observer_id,
-                    'observer_type' => $observer->observer_type,
-                    'observer_name' => $observerName,
-                    'last_updated' => $observer->last_updated,
-                ]);
-            } else {
-                $newObs = new Observer;
-                $newObs->observer_id = $observer->observer_id;
-                $newObs->observer_type = $observer->observer_type;
-                $newObs->observer_name = $observerName;
-                $newObs->last_updated = $observer->last_updated;
-                $newObs->save();
-            }
+                ])->count();
+    
+                if($found > 0) {
+                    Observer::where([
+                        'observer_id' => $observer->observer_id,
+                    ])->update([
+                        'observer_id' => $observer->observer_id,
+                        'observer_type' => $observer->observer_type,
+                        'last_updated' => $observer->last_updated,
+                    ]);
+                } else {
+                    $newObs = new Observer;
+                    $newObs->observer_id = $observer->observer_id;
+                    $newObs->observer_type = $observer->observer_type;
+                    $newObs->last_updated = $observer->last_updated;
+                    $newObs->save();
+                }
+            }            
         }
 
         /**
