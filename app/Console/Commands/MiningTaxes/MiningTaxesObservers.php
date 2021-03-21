@@ -95,6 +95,8 @@ class MiningTaxesObservers extends Command
             //Declare the structure helper
             $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
+            dd($observer);
+
             //Get the structure name from the universe endpoint to store in the database
             $observerName = $sHelper->GetStructureName($observer->observer_id);
             
