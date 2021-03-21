@@ -104,7 +104,13 @@ class MiningTaxesInvoicesNew extends Command
                 'main_id' => 95366854,
             ])->get();
 
-            dd($alts);
+            $rows = new Ledger();
+            $temps = Ledger::where([
+                'character_id' => 2114000847,
+            ])->get();
+            
+            $rows->push($temps);
+            dd($rows);
 
             //Get the ledgers for the main character
             $rows = Ledger::where([
