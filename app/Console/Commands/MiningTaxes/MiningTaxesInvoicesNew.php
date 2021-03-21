@@ -80,7 +80,24 @@ class MiningTaxesInvoicesNew extends Command
          * From the list of character ids, create an array of mains and alts to group together.
          */
         foreach($charIds as $charId) {
-            
+            $invoice = array();
+            $ores = array();
+            $totalPrice = 0.00;
+            $body = null;
+            $mainId = null;
+
+            //Determine if this character is an alt of someone else
+            $foundAlt = UserAlt::where([
+                'character_id' => $charId,
+            ])->get();
+
+            if($foundAlt > 0) {
+                $mainId = $foundAlt->main_id;
+            } else {
+                $mainId = $charId;
+            }
+
+
         }
 
         //Set the task as stopped

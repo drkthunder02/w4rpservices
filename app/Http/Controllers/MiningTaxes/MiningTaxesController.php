@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MiningTaxes;
 //Internal Library
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 use Log;
 use Carbon\Carbon;
 use Khill\Lavacharts\Lavacharts;

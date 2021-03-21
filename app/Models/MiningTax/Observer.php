@@ -24,5 +24,6 @@ class Observer extends Model
         'last_updated',
         'observer_id',
         'observer_type',
+        'observer_name',
     ];    
 }

@@ -12,6 +12,7 @@ use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Helpers\LookupHelper;
 use Commands\Library\CommandHelper;
+use App\Library\Helpers\StructureHelper;
 
 //App Models
 use App\Models\MiningTax\Observer;
@@ -91,12 +92,18 @@ class MiningTaxesObservers extends Command
 
         //Run through the mining observers, and add them to the database
         foreach($resp as $observer) {
+            //Declare the structure helper
+            $sHelper = new StructureHelper($config['primary'], $config['corporation'], $refreshToken);
+
+            //Get the structure name from the universe endpoint to store in the database
+            $observerInfo = $sHelper->GetStructureInfo($observer->observer_id);
 
             Observer::updateOrInsert([
                 'observer_id' => $observer->observer_id,
             ], [
                 'observer_id' => $observer->observer_id,
                 'observer_type' => $observer->observer_type,
+                'observer_name' => $observerInfo->name,
                 'last_updated' => $observer->last_updated,
             ]);
         }

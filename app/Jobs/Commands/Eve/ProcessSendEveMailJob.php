@@ -29,13 +29,6 @@ class ProcessSendEveMailJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Timeout in seconds
-     * With new rate limiting, we shouldn't use this timeout
-     * @var int
-     */
-    //public $timeout = 3600;
-
-    /**
      * Retries
      * With new rate limiting, we need a retry basis versus timeout basis
      * @var int
