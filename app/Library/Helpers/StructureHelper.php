@@ -102,7 +102,11 @@ class StructureHelper {
 
         $structure = json_decode($info->raw, true);
 
-        return (string)$structure['name'];
+        if($structure == null) {
+            return null;
+        } else {
+            return (string)$structure['name'];
+        }
     }
 
     public function GetStructureInfo($structureId) {
