@@ -102,7 +102,7 @@ class StructureHelper {
 
         $structure = json_decode($info->raw, true);
 
-        if($structure == null) {
+        if(!isset($structure['name'])) {
             return null;
         } else {
             return (string)$structure['name'];
