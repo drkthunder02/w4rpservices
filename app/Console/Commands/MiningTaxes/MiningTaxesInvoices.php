@@ -144,7 +144,7 @@ class MiningTaxesInvoices extends Command
                 $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
     
                 //Check if the mail body is greater than 2000 characters.  If greater than 2,000 characters, then 
-                if(sizeof($body) > 2000) {
+                if(strlen($body) > 2000) {
                     $body = "Dear Miner,<br><br>";
                     $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
                     $body .= "<br><br>";
