@@ -171,7 +171,6 @@ class ProcessSendEveMailJob implements ShouldQueue
         $rateLimitedMiddleware = (new RateLimited())
             ->enabled()
             ->key('psemj')
-            ->connectionName('redis')
             ->allow(4)
             ->everySeconds(60)
             ->releaseAfterOneMinute()
