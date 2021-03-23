@@ -181,7 +181,7 @@ class MiningTaxesInvoicesNew extends Command
                 $subject = 'Warped Intentions Mining Taxes';
                 $sender = $config['primary'];
                 $recipientType = 'character';
-                $recipient = $charId;
+                $recipient = $config['primary'];
     
                 //Send the Eve Mail Job to the queue to be dispatched
                 ProcessSendEveMailJob::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
