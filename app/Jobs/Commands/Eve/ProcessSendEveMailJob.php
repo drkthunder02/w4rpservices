@@ -75,7 +75,6 @@ class ProcessSendEveMailJob implements ShouldQueue
         //Declare some variables
         $esiHelper = new Esi;
         $errorCode = null;
-        $response = new EsiResponse;
 
         //Get the esi configuration
         $config = config('esi');
@@ -151,11 +150,13 @@ class ProcessSendEveMailJob implements ShouldQueue
                 Log::warning("Rate limit hit for ProcessSendEveMailJob.  Releasing the job back to the queue in 30 seconds.");
                 $this->release(30);
                 break;
-            case 201:
+            case 201:   //Good response code
                 $this->SaveSentRecord($this->sender, $this->subject, $this->body, $this->recipient, $this->recipient_type);
                 $this->delete();
                 break;
-            default:   //If not an error, then just break out of the switch statement
+            //If no code is given, then log and break out of switch.
+            default:
+                Log::warning("No response code received from esi call in processSendEveMailJob.\r\n");
                 break;
         }
         
