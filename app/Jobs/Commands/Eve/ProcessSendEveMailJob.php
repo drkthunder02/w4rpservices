@@ -23,6 +23,7 @@ use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
 use App\Models\Jobs\JobStatus;
 use App\Models\Mail\SentMail;
+use Seat\Eseye\Containers\EsiResponse;
 
 class ProcessSendEveMailJob implements ShouldQueue
 {
@@ -73,7 +74,8 @@ class ProcessSendEveMailJob implements ShouldQueue
     {
         //Declare some variables
         $esiHelper = new Esi;
-        $response = null;
+        $errorCode = null;
+        $response = new EsiResponse;
 
         //Get the esi configuration
         $config = config('esi');
@@ -108,7 +110,9 @@ class ProcessSendEveMailJob implements ShouldQueue
         }
 
         //Get the response code and take the appropriate action
-        $errorCode = $response->getErrorCode();
+        if($response != null) {
+            $errorCode = $response->getErrorCode();
+        }        
 
         if($errorCode === null) {
             $this->release(30);
