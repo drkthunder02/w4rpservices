@@ -72,7 +72,7 @@ class Test extends Command
         } catch(RequestFailedException $e) {
             return null;
         }
-        var_dump($reponse);
+        var_dump($response);
         dd($response->getErrorCode());
     }
 }
