@@ -108,6 +108,7 @@ class MiningTaxesInvoicesNew extends Command
             $totalPrice = 0.00;
             $body = null;
             $lookup = new LookupHelper;
+            $config = config('esi');
 
             //Get the actual rows
             $rows = Ledger::where([
