@@ -59,8 +59,6 @@ class ProcessSendEveMailJob implements ShouldQueue
         $this->recipient_type = $recipient_type;
         $this->subject = $subject;
         $this->sender = $sender;
-
-        
     }
 
     /**
@@ -115,8 +113,6 @@ class ProcessSendEveMailJob implements ShouldQueue
         if($errorCode === null) {
             $this->release(30);
         }
-
-        
 
         switch($errorCode) {
             case 400:  //Bad Request
