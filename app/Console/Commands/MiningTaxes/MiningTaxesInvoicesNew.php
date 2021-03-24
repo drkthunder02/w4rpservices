@@ -203,7 +203,7 @@ class MiningTaxesInvoicesNew extends Command
                     'character_id' => $charId,
                     'invoiced' => 'No',
                 ])->update([
-                    'invoiced' => 'Yes',
+                    'invoiced' => 'No',
                     'invoice_id' => $invoiceId,
                 ]);
     
