@@ -109,12 +109,14 @@ class ProcessSendEveMailJob implements ShouldQueue
             $this->release(20);
         }
 
-        if($response == null) {
+        //Get the error code and take the appropriate action
+        $errorCode = $response->getErrorCode();
+
+        if($errorCode === null) {
             $this->release(30);
         }
 
-        //Get the error code and take the appropriate action
-        $errorCode = $response->getErrorCode();
+        
 
         switch($errorCode) {
             case 400:  //Bad Request
