@@ -77,7 +77,8 @@ class LoginController extends Controller
      */
     public function redirectToProvider($profile = null, Socialite $social) {
         //The default scope is public data for everyone due to OAuth2 Tokens
-        $scopes = ['publicData'];
+        //We also add the send mail scope in order to be able to send mails more efficiently through jobs when other scopes are required.
+        $scopes = ['publicData', 'esi-mail.send_mail.v1'];
 
         //Collect any other scopes we need if we are logged in.
         //If we are logged in we are linking another character to this one.
