@@ -53,8 +53,7 @@ class Kernel extends ConsoleKernel
          * Purge Data Schedule
          */
         $schedule->command('data:CleanData')
-                 ->weekly(7, '11:00')
-                 ->withoutOverlapping();
+                 ->weekly(7, '11:00');
         $schedule->command('data:PurgeCorpLedgers')
                  ->monthly();
         $schedule->command('data:PurgeUsers')
@@ -71,24 +70,19 @@ class Kernel extends ConsoleKernel
          * Item Update Schedule
          */
         $schedule->command('services:ItemPriceUpdate')
-                 ->hourlyAt('30')
-                 ->withoutOverlapping();
+                 ->hourlyAt('30');
 
         /**
          * Mining Tax Schedule
          */
         //$schedule->command('MiningTax:Observers')
-        //         ->dailyAt('22:00')
-        //         ->withoutOverlapping();
+        //         ->dailyAt('22:00');
         $schedule->command('MiningTax:Ledgers')
-                 ->dailyAt('20:00')
-                 ->withoutOverlapping();
+                 ->dailyAt('20:00');
         $schedule->command('MiningTax:Invoices')
-                 ->weeklyOn(1, '8:00')
-                 ->withoutOverlapping();
+                 ->weeklyOn(1, '8:00');
         $schedule->command('MiningTax:Payments')
-                 ->hourlyAt('15')
-                 ->withoutOverlapping();
+                 ->hourlyAt('15');
     }
 
     /**
