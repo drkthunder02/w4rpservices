@@ -59,7 +59,7 @@ class EndSupplyChainContractJob implements ShouldQueue
     public function __construct(SupplyChainContract $contract)
     {
         //Set the queue connection up
-        $this->connection = 'redis';
+        //$this->connection = 'redis';
 
         //Set the variables
         $contractId = $contract->contract_id;

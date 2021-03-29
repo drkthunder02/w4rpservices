@@ -51,7 +51,7 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
     public function __construct($ledger, $observerId)
     {
         //Set the connection for the job
-        $this->connection = 'redis';
+        //$this->connection = 'redis';
 
         //Import variables from the calling function
         $this->ledger = $ledger;

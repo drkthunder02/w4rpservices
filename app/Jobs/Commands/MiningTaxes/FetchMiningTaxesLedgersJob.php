@@ -60,7 +60,7 @@ class FetchMiningTaxesLedgersJob implements ShouldQueue
     public function __construct($charId, $corpId, $observerId)
     {
         //Set the connection for the job
-        $this->connection = 'redis';
+        //$this->connection = 'redis';
 
         //Import the variables from the calling function
         $this->charId = $charId;
