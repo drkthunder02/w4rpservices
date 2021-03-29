@@ -52,12 +52,10 @@ class Kernel extends ConsoleKernel
         /**
          * Purge Data Schedule
          */
-        $schedule->command('data:CleanData')
-                 ->weekly(7, '11:00');
-        $schedule->command('data:PurgeCorpLedgers')
-                 ->monthly();
-        $schedule->command('data:PurgeUsers')
-                 ->dailyAt('23:00');
+        //$schedule->command('data:CleanData')
+        //         ->weekly(7, '11:00');
+        //$schedule->command('data:PurgeUsers')
+        //         ->dailyAt('23:00');
 
         /**
          * Finances Update Schedule
