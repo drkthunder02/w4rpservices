@@ -30,6 +30,11 @@ class ProcessSendEveMailJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * The queue connection that should handle the job
+     */
+    public $connection = 'queue';
+
+    /**
      * Retries
      * With new rate limiting, we need a retry basis versus timeout basis
      * @var int
