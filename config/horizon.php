@@ -80,6 +80,7 @@ return [
 
     'waits' => [
         'redis:default' => 60,
+        'redis:critical,high' => 90,
     ],
 
     /*

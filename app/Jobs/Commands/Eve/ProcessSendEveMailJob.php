@@ -199,6 +199,10 @@ class ProcessSendEveMailJob implements ShouldQueue
         }
     }
 
+    public function tags() {
+        return ['ProcessEveMails'];
+    }
+
     private function SaveSentRecord($sender, $subject, $body, $recipient, $recipientType) {
         $sentmail = new SentMail;
         $sentmail->sender = $sender;
