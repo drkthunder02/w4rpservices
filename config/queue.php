@@ -81,8 +81,6 @@ return [
             'block_for' => null,
         ],
 
-        
-
     ],
 
     /*

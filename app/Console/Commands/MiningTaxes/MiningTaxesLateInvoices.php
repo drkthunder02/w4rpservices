@@ -11,7 +11,7 @@ class MiningTaxesLateInvoices extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'mining:late';
 
     /**
      * The console command description.

@@ -23,7 +23,7 @@ class MiningTaxesLedgers extends Command
      *
      * @var string
      */
-    protected $signature = 'MiningTax:Ledgers';
+    protected $signature = 'mining:Ledgers';
 
     /**
      * The console command description.

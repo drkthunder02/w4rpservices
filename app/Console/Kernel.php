@@ -6,6 +6,15 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+//Jobs
+use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgersJob;
+use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObserversJob;
+use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPaymentsJob;
+use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoicesJob;
+use App\Jobs\Commands\Finances\UpdateAllianceWalletJournalJob;
+use App\Jobs\Commands\Finances\UpdateItemPricesJob;
+use App\Jobs\Commands\Data\PurgeUsersJob;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -18,6 +27,7 @@ class Kernel extends ConsoleKernel
         Commands\Data\Test::class,
         Commands\Eve\ItemPricesUpdateCommand::class,
         Commands\Finances\UpdateAllianceWalletJournal::class,
+        Commands\MiningTaxes\MiningTaxesDataCleanup::class,
         Commands\MiningTaxes\MiningTaxesInvoices::class,
         Commands\MiningTaxes\MiningTaxesInvoicesNew::class,
         Commands\MiningTaxes\MiningTaxesLedgers::class,
@@ -42,32 +52,39 @@ class Kernel extends ConsoleKernel
         /**
          * Purge Data Schedule
          */
-        $schedule->command('data:PurgeUsers')
-                 ->dailyAt('23:00');
+        $schedule->job(new PurgeUsersJob)->onQueue('default')
+                 ->weekly();
 
         /**
          * Finances Update Schedule
          */
-        $schedule->command('finances:UpdateJournals')
+        $schedule->job(new UpdateAllianceWalletJournalJob)->onQueue('default')
+                 ->timezone('UTC')
                  ->hourlyAt('45')
                  ->withoutOverlapping();
 
         /**
          * Item Update Schedule
          */
-        $schedule->command('services:ItemPriceUpdate')
-                 ->hourlyAt('30');
+        $schedule->job(new UpdateItemPricesJob)->onQueue('default')
+                 ->timezone('UTC')
+                 ->hourlyAT('30')
+                 ->withoutOverlapping();
 
         /**
          * Mining Tax Schedule
          */
-        $schedule->command('MiningTax:Observers')
+        $schedule->job(new FetchMiningTaxesObserversJob)->onQueue('miningtaxes')
+                 ->timezone('UTC')
                  ->dailyAt('22:00');
-        $schedule->command('MiningTax:Ledgers')
+        $schedule->job(new FetchMiningTaxesLedgersJob)->onQueue('miningtaxes')
+                 ->timezone('UTC')
                  ->dailyAt('20:00');
-        $schedule->command('MiningTax:Invoices')
-                 ->weeklyOn(1, '6:00');
-        $schedule->command('MiningTax:Payments')
+        $schedule->job(new SendMiningTaxesInvoicesJob)->onQueue('miningtaxes')
+                 ->timezone('UTC')
+                 ->weeklyOn(1, '06:00');
+        $schedule->job(new ProcessMiningTaxesPaymentsJob)->onQueue('miningtaxes')
+                 ->timezone('UTC')
                  ->hourlyAt('15');
     }
 

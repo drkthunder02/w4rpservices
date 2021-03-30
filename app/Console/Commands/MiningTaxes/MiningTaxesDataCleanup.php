@@ -19,7 +19,7 @@ class MiningTaxesDataCleanup extends Command
      *
      * @var string
      */
-    protected $signature = 'MiningTaxes:CleanupData';
+    protected $signature = 'mining:cleanup';
 
     /**
      * The console command description.

@@ -1,0 +1,193 @@
+<?php
+
+namespace App\Jobs\Commands\Data;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Log;
+use Carbon\Carbon;
+
+//Libraries
+use Seat\Eseye\Exceptions\RequestFailedException;
+use App\Library\Esi\Esi;
+
+//Models
+use App\Models\User\User;
+use App\Models\User\UserAlt;
+use App\Models\Esi\EsiScope;
+use App\Models\Esi\EsiToken;
+use App\Models\User\UserPermission;
+use App\Models\User\UserRole;
+use App\Models\Admin\AllowedLogin;
+
+class PurgeUsersJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * Timeout in seconds
+     * 
+     * @var int
+     */
+    public $timeout = 3600;
+
+    /**
+     * Retries
+     * 
+     * @var int
+     */
+    public $retries = 3;
+
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        //Declare some variables
+        $esiHelper = new Esi;
+
+        //Setup the esi variable
+        $esi = $esiHelper->SetupEsiAuthentication();
+
+        //Get all of the users from the database
+        $users = User::all();
+
+        //Get the allowed logins
+        $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
+        $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
+
+        //Cycle through all of the users, and either update their role, or delete them.
+        foreach($users as $user) {
+            //Set the fail bit to false for the next user to check
+            $failed = false;
+
+            //Note a screen entry for when doing cli stuff
+            printf("Processing character with id of " . $user->character_id . "\r\n");
+
+            //Get the character information
+            try {
+                $character_info = $esi->invoke('get', '/characters/{character_id}/', [
+                    'character_id' => $user->character_id,
+                ]);
+
+                $corp_info = $esi->invoke('get', '/corporations/{corporation_id}/', [
+                    'corporation_id' => $character_info->corporation_id,
+                ]);
+            } catch(RequestFailedException $e) {
+                Log::warning('Failed to get character information in purge user command for user ' . $user->character_id);
+                $failed = true;
+            }
+
+            //If the fail bit is still false, then continue
+            if($failed === false) {
+                //Get the user's role
+                $role = UserRole::where(['character_id' => $user->character_id])->first();
+                
+                //We don't want to modify Admin and SuperUsers.  Admins and SuperUsers are removed via a different process.
+                if($role->role != 'Admin') {
+                    //Check if the user is allowed to login
+                    if(isset($corp_info->alliance_id)) {
+                        //Warped Intentions is allowed to login
+                        if($corp_info->alliance_id == '99004116') {
+                            //If the alliance is Warped Intentions, then modify the role if we need to
+                            if($role->role != 'User') {
+                                //Upate the role of the user
+                                UserRole::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'role' => 'User',
+                                ]);
+
+                                //Update the user type
+                                User::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'user_type' => 'W4RP',
+                                ]);
+                            }
+                        } else if(in_array($corp_info->alliance_id, $legacy)) {  //Legacy Users
+                            if($role->role != 'User') {
+                                //Update the role of the user
+                                UserRole::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'role' => 'User',
+                                ]);
+
+                                //Update the user type
+                                User::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'user_type' => 'Legacy',
+                                ]);
+                            }
+                        } else if(in_array($corp_info->alliance_id, $renter)) {  //Renter Users
+                            if($role->role != 'Renter') {
+                                //Update the role of the user
+                                UserRole::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'role' => 'Renter',
+                                ]);
+
+                                //Update the user type
+                                User::where([
+                                    'character_id' => $user->character_id,
+                                ])->update([
+                                    'user_type' => 'Renter',
+                                ]);
+                            }
+                        } else {
+                            //If the user is part of no valid login group, then delete the user.
+                            //Delete all of the permissions first
+                            UserPermission::where([
+                                'character_id' => $user->character_id,
+                            ])->delete();
+
+                            //Delete the user's role
+                            UserRole::where([
+                                'character_id' => $user->character_id,
+                            ])->delete();
+
+                            //Delete any alts the user might have registered.
+                            $altCount = UserAlt::where(['main_id' => $user->character_id])->count();
+                            if($altCount > 0) {
+                                UserAlt::where([
+                                    'main_id' => $user->character_id,
+                                ])->delete();
+                            }
+
+                            //Delete the user from the user table
+                            User::where([
+                                'character_id' => $user->character_id,
+                            ])->delete();
+
+                            EsiScope::where([
+                                'character_id' => $user->character_id,
+                            ])->delete();
+
+                            EsiToken::where([
+                                'character_id' => $user->character_id,
+                            ])->delete();                        
+                        }
+                    }
+                }
+            }
+        }   
+    }
+}

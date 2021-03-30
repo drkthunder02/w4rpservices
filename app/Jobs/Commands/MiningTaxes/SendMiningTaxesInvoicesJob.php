@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Console\Commands\MiningTaxes;
+namespace App\Jobs\Commands\MiningTaxes;
 
-//Internal Library
-use Illuminate\Console\Command;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Log;
 use Carbon\Carbon;
 
 //Application Library
-use Commands\Library\CommandHelper;
 use App\Library\Helpers\LookupHelper;
 
 //Models
@@ -20,46 +22,46 @@ use App\Models\User\User;
 //Jobs
 use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
 
-class MiningTaxesInvoices extends Command
+
+class SendMiningTaxesInvoicesJob implements ShouldQueue
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'mining:Invoice';
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The console command description.
-     *
-     * @var string
+     * Timeout in seconds
+     * 
+     * @var int
      */
-    protected $description = 'Mining Taxes Invoice Command';
+    public $timeout = 3600;
 
     /**
-     * Create a new command instance.
+     * Retries
+     * 
+     * @var int
+     */
+    public $retries = 3;
+
+    /**
+     * Create a new job instance.
      *
      * @return void
      */
     public function __construct()
     {
-        parent::__construct();
+        //
     }
 
     /**
-     * Execute the console command.
+     * Execute the job.
      *
-     * @return int
+     * @return void
      */
     public function handle()
     {
         //Declare variables
         $lookup = new LookupHelper;
         $config = config('esi');
-        $task = new CommandHelper('MiningTaxesInvoices');
         $mailDelay = 15;
-        //Set the task as started
-        $task->SetStartStatus();
 
         //Get the characters for each non-invoiced ledger entry
         $charIds = Ledger::where([
@@ -189,12 +191,6 @@ class MiningTaxesInvoices extends Command
                 //update the delay
                 $mailDelay = $mailDelay + 20;
             }
-
         }
-
-        //Set the task as stopped
-        $task->SetStopStatus();
-
-        return 0;
     }
 }

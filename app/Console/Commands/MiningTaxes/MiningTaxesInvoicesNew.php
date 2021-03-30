@@ -29,7 +29,7 @@ class MiningTaxesInvoicesNew extends Command
      *
      * @var string
      */
-    protected $signature = 'MiningTax:InvoiceNew';
+    protected $signature = 'mining:invoice_new';
 
     /**
      * The console command description.

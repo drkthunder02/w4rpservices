@@ -28,7 +28,7 @@ class MiningTaxesPayments extends Command
      *
      * @var string
      */
-    protected $signature = 'MiningTax:Payments';
+    protected $signature = 'mining:Payments';
 
     /**
      * The console command description.

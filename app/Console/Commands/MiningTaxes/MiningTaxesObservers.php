@@ -27,7 +27,7 @@ class MiningTaxesObservers extends Command
      *
      * @var string
      */
-    protected $signature = 'MiningTax:Observer';
+    protected $signature = 'mining:Observer';
 
     /**
      * The console command description.
