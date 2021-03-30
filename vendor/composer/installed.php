@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '4b72a59e62d368371546246a68aef55ee21c2705',
+    'reference' => '40ed5dd5a576916f6561953482f68722d1ecce8f',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -440,7 +440,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '4b72a59e62d368371546246a68aef55ee21c2705',
+      'reference' => '40ed5dd5a576916f6561953482f68722d1ecce8f',
     ),
     'laravel/socialite' => 
     array (
@@ -504,6 +504,15 @@
       array (
       ),
       'reference' => '159c3d2bf27568f9af87d6c3f4bb616a251eb12b',
+    ),
+    'lorisleiva/cron-translator' => 
+    array (
+      'pretty_version' => 'v0.1.1',
+      'version' => '0.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '784a6f6255a4b5f45da5d89dc6ec631a14d7b011',
     ),
     'mockery/mockery' => 
     array (
@@ -922,6 +931,15 @@
       array (
       ),
       'reference' => '7b72592e0d823e2948c413f5e661de0fd3431db5',
+    ),
+    'spatie/laravel-schedule-monitor' => 
+    array (
+      'pretty_version' => '2.0.1',
+      'version' => '2.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '4ffdaea81b5c27a119b6cbac8f4894657b8fd6d9',
     ),
     'spomky-labs/base64url' => 
     array (
