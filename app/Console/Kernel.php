@@ -14,24 +14,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        /**
-         * Data Commands
-         */
         Commands\Data\PurgeUsers::class,
-        Commands\Data\EmptyJumpBridges::class,
-        Commands\Data\CleanStaleDataCommand::class,
         Commands\Data\Test::class,
-        /**
-         * Eve Commands
-         */
         Commands\Eve\ItemPricesUpdateCommand::class,
-        /**
-         * Finance Commands
-         */
         Commands\Finances\UpdateAllianceWalletJournal::class,
-        /**
-         * Mining Tax Commands
-         */
         Commands\MiningTaxes\MiningTaxesInvoices::class,
         Commands\MiningTaxes\MiningTaxesInvoicesNew::class,
         Commands\MiningTaxes\MiningTaxesLedgers::class,
@@ -49,13 +35,15 @@ class Kernel extends ConsoleKernel
     {
         //Horizon Graph Schedule
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
+
+        //Test rung to help figure out what is going on.
+        $schedule->command('inspire')->everyMinute();
+
         /**
          * Purge Data Schedule
          */
-        //$schedule->command('data:CleanData')
-        //         ->weekly(7, '11:00');
-        //$schedule->command('data:PurgeUsers')
-        //         ->dailyAt('23:00');
+        $schedule->command('data:PurgeUsers')
+                 ->dailyAt('23:00');
 
         /**
          * Finances Update Schedule
