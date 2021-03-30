@@ -43,6 +43,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        //Schedule Monitor Jobs
+        $schedule->command('schedule-monitor:sync')->dailyAt('04:56');
+        $schedule->command('schedule-monitor:clean')->daily();
+
         //Horizon Graph Schedule
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
