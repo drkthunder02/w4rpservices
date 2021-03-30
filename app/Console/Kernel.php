@@ -51,7 +51,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
         //Test rung to help figure out what is going on.
-        $schedule->command('inspire')->everyMinute();
+        //$schedule->command('inspire')->everyMinute();
 
         /**
          * Purge Data Schedule

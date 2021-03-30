@@ -8,3 +8,4 @@ worker.log
 .env
 .vscode
 /storage/logs
+worker.log
