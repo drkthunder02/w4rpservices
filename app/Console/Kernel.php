@@ -56,13 +56,13 @@ class Kernel extends ConsoleKernel
         /**
          * Purge Data Schedule
          */
-        $schedule->job(new PurgeUsersJob)->onQueue('default')
+        $schedule->job(new PurgeUsersJob)
                  ->weekly();
 
         /**
          * Finances Update Schedule
          */
-        $schedule->job(new UpdateAllianceWalletJournalJob)->onQueue('default')
+        $schedule->job(new UpdateAllianceWalletJournalJob)
                  ->timezone('UTC')
                  ->hourlyAt('45')
                  ->withoutOverlapping();
@@ -70,7 +70,7 @@ class Kernel extends ConsoleKernel
         /**
          * Item Update Schedule
          */
-        $schedule->job(new UpdateItemPricesJob)->onQueue('default')
+        $schedule->job(new UpdateItemPricesJob)
                  ->timezone('UTC')
                  ->hourlyAT('30')
                  ->withoutOverlapping();
@@ -78,16 +78,16 @@ class Kernel extends ConsoleKernel
         /**
          * Mining Tax Schedule
          */
-        $schedule->job(new FetchMiningTaxesObserversJob)->onQueue('miningtaxes')
+        $schedule->job(new FetchMiningTaxesObserversJob)
                  ->timezone('UTC')
                  ->dailyAt('22:00');
-        $schedule->job(new FetchMiningTaxesLedgersJob)->onQueue('miningtaxes')
+        $schedule->job(new FetchMiningTaxesLedgersJob)
                  ->timezone('UTC')
                  ->dailyAt('20:00');
-        $schedule->job(new SendMiningTaxesInvoicesJob)->onQueue('miningtaxes')
+        $schedule->job(new SendMiningTaxesInvoicesJob)
                  ->timezone('UTC')
                  ->weeklyOn(1, '06:00');
-        $schedule->job(new ProcessMiningTaxesPaymentsJob)->onQueue('miningtaxes')
+        $schedule->job(new ProcessMiningTaxesPaymentsJob)
                  ->timezone('UTC')
                  ->hourlyAt('15');
     }
