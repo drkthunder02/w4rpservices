@@ -25,11 +25,6 @@ class EndSupplyChainContractJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The queue connection that should handle the job
-     */
-    public $connection = 'queue';
-
-    /**
      * Timeout in seconds
      * 
      * @var int
@@ -64,7 +59,7 @@ class EndSupplyChainContractJob implements ShouldQueue
     public function __construct(SupplyChainContract $contract)
     {
         //Set the queue connection up
-        //$this->connection = 'redis';
+        $this->connection = 'redis';
 
         //Set the variables
         $contractId = $contract->contract_id;

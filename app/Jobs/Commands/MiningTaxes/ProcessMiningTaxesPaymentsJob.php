@@ -24,18 +24,13 @@ class ProcessMiningTaxesPaymentsJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The queue connection that should handle the job
-     */
-    public $connection = 'queue';
-
-    /**
      * Create a new job instance.
      *
      * @return void
      */
     public function __construct()
     {
-        //$this->connection = 'redis';
+        $this->connection = 'redis';
     }
 
     /**

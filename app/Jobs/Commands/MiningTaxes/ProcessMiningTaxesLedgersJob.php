@@ -24,11 +24,6 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The queue connection that should handle the job
-     */
-    public $connection = 'queue';
-
-    /**
      * Timeout in seconds
      * 
      * @var int
@@ -56,7 +51,7 @@ class ProcessMiningTaxesLedgersJob implements ShouldQueue
     public function __construct($ledger, $observerId)
     {
         //Set the connection for the job
-        //$this->connection = 'redis';
+        $this->connection = 'redis';
 
         //Import variables from the calling function
         $this->ledger = $ledger;

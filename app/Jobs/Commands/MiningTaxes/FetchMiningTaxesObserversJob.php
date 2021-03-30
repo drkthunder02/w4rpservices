@@ -41,7 +41,7 @@ class FetchMiningTaxesObserversJob implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        $this->connection = 'redis';
     }
 
     /**

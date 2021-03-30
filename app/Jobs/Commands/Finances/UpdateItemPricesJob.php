@@ -35,7 +35,7 @@ class UpdateItemPricesJob implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        $this->connection = 'redis';
     }
 
     /**

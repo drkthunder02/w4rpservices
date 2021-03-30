@@ -29,11 +29,6 @@ class ProcessSendEveMailJobRL implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The queue connection that should handle the job
-     */
-    public $connection = 'queue';
-
-    /**
      * Timeout in seconds
      * With new rate limiting, we shouldn't use this timeout
      * @var int
@@ -60,7 +55,7 @@ class ProcessSendEveMailJobRL implements ShouldQueue
      */
     public function __construct($body, $recipient, $recipient_type, $subject, $sender) {
         //Set the connection
-        //$this->connection = 'redis';
+        $this->connection = 'redis';
         
 
 

@@ -48,7 +48,7 @@ class SendMiningTaxesInvoicesJob implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        $this->connection = 'redis';
     }
 
     /**
