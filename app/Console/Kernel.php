@@ -81,7 +81,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new FetchMiningTaxesObserversJob)
                  ->timezone('UTC')
                  ->dailyAt('22:00');
-        $schedule->job(new FetchMiningTaxesLedgersJob)
+        $schedule->job(new PreFetchMiningTaxesLedgersJob)
                  ->timezone('UTC')
                  ->dailyAt('20:00');
         $schedule->job(new SendMiningTaxesInvoicesJob)
