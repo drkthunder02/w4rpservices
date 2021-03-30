@@ -7,6 +7,7 @@
             <h2>Invoice Status</h2>
         </div>
         <div class="card-body">
+            {{ $invoices->links() }}
             <table class="table table-striped table-bordered">
                 <thead>
                     <th>Character</th>
@@ -42,7 +43,6 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $invoices->links() }}
             <br>
             <h2>Total Amount Owed: {{ number_format($totalAmount, 2, ".", ",") }}</h2>
         </div>
