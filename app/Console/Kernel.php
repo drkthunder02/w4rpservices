@@ -7,7 +7,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 //Jobs
-use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgersJob;
+use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgersJob;
 use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObserversJob;
 use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPaymentsJob;
 use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoicesJob;
