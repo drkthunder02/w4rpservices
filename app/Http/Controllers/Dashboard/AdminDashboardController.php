@@ -395,7 +395,7 @@ class AdminDashboardController extends Controller
                                          ->where([
                                             'corporation_id' => 98287666,
                                             'ref_type' => 'player_donation',
-                                         ])->get(['amount', 'reason', 'description', 'date']);
+                                         ])->orderByDesc('date',)->get(['amount', 'reason', 'description', 'date']);
 
         return view('admin.dashboards.walletjournal')->with('journal', $journal);
     }
