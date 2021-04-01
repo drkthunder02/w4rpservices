@@ -21,6 +21,7 @@ use App\Models\User\UserPermission;
 use App\Models\User\AvailableUserPermission;
 use App\Models\User\AvailableUserRole;
 use App\Models\Admin\AllowedLogin;
+use App\Models\Finances\AllianceWalletJournal;
 
 class AdminDashboardController extends Controller
 {
@@ -382,5 +383,20 @@ class AdminDashboardController extends Controller
         ])->delete();
 
         return redirect('/admin/dashboard')->with('success', 'Entity removed from allowed login list.');
+    }
+
+    /**
+     * Show journal entries in a table for admins from alliance wallets
+     */
+    public function displayJournalEntries() {
+        $date = Carbon::now()->subDays(60);
+
+        $journal = AllianceWalletJournal::where('date', '>=', $date)
+                                         ->where([
+                                            'corporation_id' => 98287666,
+                                            'ref_type' => 'player_donation',
+                                         ])->get(['amount', 'reason', 'description', 'date']);
+
+        return view('admin.dashboards.walletjournal')->with('journal', $journal);
     }
 }

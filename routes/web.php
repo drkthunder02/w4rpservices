@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/admin/add/allowedlogin', 'Dashboard\AdminDashboardController@addAllowedLogin');
     Route::post('/admin/remove/allowedlogin', 'Dashboard\AdminDashboardController@removeAllowedLogin');
     Route::get('/admin/dashboard', 'Dashboard\AdminDashboardController@displayAdminDashboard');
+    Route::get('/admin/dashboard/journal', 'Dashboard\AdminDashboardController@displayJournalEntries');
 
     /**
      * After Action Report display pages
