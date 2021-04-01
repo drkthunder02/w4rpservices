@@ -43,7 +43,7 @@ class MiningTaxesAdminController extends Controller
             'status' => 'Late',
         ])->orWhere([
             'status' => 'Deferred',
-        ])->paginate(50);
+        ])->orderByDesc('date_due')->paginate(50);
 
         $totalAmount = Invoice::where([
             'status' => 'Pending',
