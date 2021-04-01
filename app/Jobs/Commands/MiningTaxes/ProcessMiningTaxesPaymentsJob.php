@@ -17,7 +17,7 @@ use App\Library\Lookups\LookupHelper;
 //Models
 use App\Models\MiningTaxes\Invoice;
 use App\Models\MiningTaxes\Payment;
-use App\Models\Finances\PlayerDonationJournal;
+use App\Models\Finances\AllianceWalletJournal;
 
 class ProcessMiningTaxesPaymentsJob implements ShouldQueue
 {
@@ -53,15 +53,17 @@ class ProcessMiningTaxesPaymentsJob implements ShouldQueue
         //as a reason
         foreach($outstanding as $invoice) {
             //See if we have a reason with the correct uniqid from the player donation journal
-            $found = PlayerDonationJournal::where([
+            $found = AllianceWalletJournal::where([
                 'reason' => "MMT: " . $invoice->invoice_id,
             ])->count();
 
             //If we have received the invoice, then mark the invoice as paid
             if($count > 0) {
                 //If we have the count, then grab the journal entry in order to do some things with it
-                $journal = PlayerDonationJournal::where([
+                $journal = AllianceWalletJournal::where([
                     'reason' => "MMT: " . $invoice->invoice_id,
+                ])->orWhere([
+                    'reason' => $invoice->invoice_id,
                 ])->first();
 
                 //If the bill is paid on time, then update the invoice as such
