@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Input;
-use App\Models\MiningTax\Invoice;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -90,16 +87,16 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/miningtax/admin/delete/invoice', 'MiningTaxes\MiningTaxesAdminController@DeleteInvoice');
     Route::get('/miningtax/admin/display/paid', 'MiningTaxes\MiningTaxesAdminController@DisplayPaidInvoices');
     Route::any('/miningtax/admin/display/unpaid/search', function() {
-        $q = Input::get('q');
+        $q = Illuminate\Support\Facades\Input::get('q');
         if($q != "") {
-            $invoices = Invoice::where('invoice_id', 'LIKE', '%' . $q . '%')
+            $invoices = App\Models\MiningTax\Invoice::where('invoice_id', 'LIKE', '%' . $q . '%')
                                 ->where(['status' => 'Pending'])
                                 ->orWhere(['status' => 'Late'])
                                 ->orWhere(['status' => 'Deferred'])
                                 ->orderByDesc('invoice_id')
                                 ->paginate(25)
                                 ->setPath('');
-            $pagination = $invoices->appends(array('q' => Input::get('q')));
+            $pagination = $invoices->appends(array('q' => Illuminate\Support\Facades\Input::get('q')));
 
             if(count($invoices) > 0) {
                 return view('miningtax.admin.display.unpaid')->withDetails($invoices)->withQuery($q);
