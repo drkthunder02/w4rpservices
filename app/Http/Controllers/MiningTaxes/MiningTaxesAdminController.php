@@ -58,6 +58,24 @@ class MiningTaxesAdminController extends Controller
     }
 
     /**
+     * Search unpaid invoices
+     */
+    public function SearchUnpaidInvoice(Request $request) {
+        $invoices = Invoice::where('invoice_id', 'LIKE', '%' . $request->q . '%')
+                           ->where(['status' => 'Pending'])
+                           ->orWhere(['status' => 'Late'])
+                           ->orWhere(['status' => 'Deferred'])
+                           ->orderByDesc('invoice_id')
+                           ->paginate(25);
+
+        if(count($invoices) > 0) {
+            return view('miningtax.admin.display.unpaid')->with('invoices', $invoices);
+        }
+
+        return view('miningtax.admin.display.unpaid')->with('error', 'No invoices found');
+    }
+
+    /**
      * Mark an invoice paid
      */
     public function UpdateInvoice(Request $request) {

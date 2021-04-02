@@ -86,25 +86,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/miningtax/admin/update/invoice', 'MiningTaxes\MiningTaxesAdminController@UpdateInvoice');
     Route::post('/miningtax/admin/delete/invoice', 'MiningTaxes\MiningTaxesAdminController@DeleteInvoice');
     Route::get('/miningtax/admin/display/paid', 'MiningTaxes\MiningTaxesAdminController@DisplayPaidInvoices');
-    Route::any('/miningtax/admin/display/unpaid/search', function() {
-        $q = Illuminate\Support\Facades\Input::get('q');
-        if($q != "") {
-            $invoices = App\Models\MiningTax\Invoice::where('invoice_id', 'LIKE', '%' . $q . '%')
-                                ->where(['status' => 'Pending'])
-                                ->orWhere(['status' => 'Late'])
-                                ->orWhere(['status' => 'Deferred'])
-                                ->orderByDesc('invoice_id')
-                                ->paginate(25)
-                                ->setPath('');
-            $pagination = $invoices->appends(array('q' => Illuminate\Support\Facades\Input::get('q')));
-
-            if(count($invoices) > 0) {
-                return view('miningtax.admin.display.unpaid')->withDetails($invoices)->withQuery($q);
-            }
-
-            return view('miningtax.admin.display.unpaid')->with('error', 'No invoices found.  Try to search again!');
-        }
-    });
+    Route::any('/miningtax/admin/display/unpaid/search', 'MiningTaxes\MiningTaxesAdminController@SearchUnpaidInvoice');
     
     /**
      * Scopes Controller display pages

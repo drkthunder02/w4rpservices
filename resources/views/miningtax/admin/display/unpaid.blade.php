@@ -14,15 +14,12 @@
                     </div>
                     <div class="column">
                         <div class="container">
-                        <form action="/miningtax/admin/display/unpaid/search" method="POST" role="search">
-                            {{ csrf_field() }}
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="q" placeholder="Search Invoices">
-                                <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                                </span>
+                        {!! Form::open(['action' => 'MiningTaxes\MiningTaxesAdminController@SearchUnpaidInvoice', 'method' => 'POST']) !!}
+                            <div class="form-group">
+                                {{ Form::text('q', '', ['class' => 'form-control']) }}
+                                {{ Form::submit('Search', ['class' => 'btn btn-primary']) }}
                             </div>
-                        </form>
+                        {!! Form::close() !!}
                         </div>	
                     </div>
                 </div>
