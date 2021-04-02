@@ -7,21 +7,7 @@
             <h2>Invoice Status</h2>
         </div>
         <div class="card-body">
-            <div class="container">
-                <div class="row">
-                    <div class="column">
-                        {{ $invoices->links() }}
-                    </div>
-                    <div class="column">
-                        <div class="container">
-                            {!! Form::open(['method' => 'POST', 'role' => '/miningtax/admin/display/unpaid/search']) !!}
-                            {{ Form::text('q', '', ['class' => 'form-control']) }}
-                            {{ Form::submit('Search', ['class' => 'btn btn-default glyphicon glyphicon-search']) }}
-                            {!! Form::close() !!}
-                        </div>	
-                    </div>
-                </div>
-            </div>
+            {{ $invoices->links() }}
             <table class="table table-striped table-bordered">
                 <thead>
                     <th>Character</th>
@@ -33,15 +19,6 @@
                     <th>Update</th>
                 </thead>
                 <tbody>
-                    @if(isset($error))
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    @else
                     @foreach($invoices as $invoice)
                     <tr>
                         <td>{{ $invoice->character_name }}</td>
@@ -64,7 +41,6 @@
                         </td>
                     </tr>
                     @endforeach
-                    @endif
                 </tbody>
             </table>
             {{ $invoices->links() }}
