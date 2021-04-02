@@ -53,8 +53,7 @@ class MiningTaxesAdminController extends Controller
             'status' => 'Deferred',
         ])->sum('invoice_amount');
 
-        return view('miningtax.admin.display.unpaid')->with('invoices', $invoices)
-                                                     ->with('totalAmount', $totalAmount);
+        return view('miningtax.admin.display.unpaid')->with('invoices', $invoices);
     }
 
     /**

@@ -71,7 +71,6 @@
             </table>
             {{ $invoices->links() }}
             <br>
-            <h2>Total Amount Owed: {{ number_format($totalAmount, 2, ".", ",") }}</h2>
         </div>
     </div>
 </div>
