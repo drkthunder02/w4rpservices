@@ -24,7 +24,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\Jobs\JobStatus;
 use App\Models\Mail\SentMail;
 
-class ProcessSendEveMailJobRL implements ShouldQueue
+class SendEveMailRL implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -71,7 +71,7 @@ class ProcessSendEveMailJobRL implements ShouldQueue
 
     /**
      * Execute the job.
-     * Utilized by using ProcessSendEveMailJob::dispatch($mail);
+     * Utilized by using SendEveMail::dispatch($mail);
      * The model is passed into the dispatch function, then added to the queue
      * for processing.
      *

@@ -18,7 +18,7 @@ use App\Models\Contracts\SupplyChainBid;
 use App\Models\Contracts\SupplyChainContract;
 
 //Jobs
-use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
+use App\Jobs\Commands\Eve\SendEveMail;
 
 class EndSupplyChainContractJob implements ShouldQueue
 {

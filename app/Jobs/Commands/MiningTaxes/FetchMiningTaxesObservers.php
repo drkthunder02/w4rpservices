@@ -16,7 +16,7 @@ use App\Library\Esi\Esi;
 use App\Library\Helpers\LookupHelper;
 use App\Library\Helpers\StructureHelper;
 
-class FetchMiningTaxesObserversJob implements ShouldQueue
+class FetchMiningTaxesObservers implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

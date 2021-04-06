@@ -12,7 +12,7 @@ use Log;
 //Library
 use App\Library\Moons\MoonCalc;
 
-class ItemPricesUpdateJob implements ShouldQueue
+class ItemPricesUpdate implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

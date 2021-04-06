@@ -10,7 +10,14 @@ use Illuminate\Queue\SerializesModels;
 use Log;
 use Carbon\Carbon;
 
-class UpdateItemPricesJob implements ShouldQueue
+//Application Library
+use App\Library\Helpers\FinanceHelper;
+use Commands\Library\CommandHelper;
+
+//Models
+use App\Models\Finances\AllianceWalletJournal;
+
+class UpdateAllianceWalletJournal implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -22,7 +29,7 @@ class UpdateItemPricesJob implements ShouldQueue
     public $timeout = 1800;
 
     /**
-     * Retries 
+     * Retries
      * 
      * @var int
      */
@@ -46,8 +53,9 @@ class UpdateItemPricesJob implements ShouldQueue
     public function handle()
     {
         //Declare variables
-        $moonHelper = new MoonCalc;
-        //Fetch new prices from fuzzwork.co.uk for the item pricing schemes
-        $moonHelper->FetchNewPrices();
+        $fHelper = new FinanceHelper;
+        $config = config('esi');
+
+        $fHelper->GetApiWalletJournal(1, $config['primary']);
     }
 }

@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Console\Commands\MiningTaxes;
+namespace App\Jobs;
 
-//Internal Library
-use Illuminate\Console\Command;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Log;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 //Application Library
-use Commands\Library\CommandHelper;
 use App\Library\Helpers\LookupHelper;
 
 //Models
@@ -20,55 +22,35 @@ use App\Models\User\UserAlt;
 use App\Models\User\User;
 
 //Jobs
-use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
+use App\Jobs\Commands\Eve\SendEveMail;
 
-class MiningTaxesInvoicesNew extends Command
+class SendMiningTaxesInvoicesNew implements ShouldQueue
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'mining:invoice_new';
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Mining Taxes Invoice Command';
-
-    /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @return void
      */
     public function __construct()
     {
-        parent::__construct();
+        //
     }
 
     /**
-     * Execute the console command.
-     * Get all of the users, then build a list of alts.  From the main user and list of alts, 
-     * check for mining ledgers which haven't been invoiced, and invoice them.
-     * Once the main check of all characters is completed, then create a separate list of characters
-     * to send as one offs who haven't registered alts for this process.
+     * Execute the job.
      *
-     * @return int
+     * @return void
      */
     public function handle()
     {
         //Declare variables
         $lookup = new LookupHelper;
         $config = config('esi');
-        $task = new CommandHelper('MiningTaxesInvoicesNew');
-        $mainsAlts = array();
+        $mainAlts = array();
         $mailDelay = 15;
         $mainIds = new Collection;
-
-        //Set the task as started
-        $task->SetStartStatus();
 
         //Get all of the users in the database
         $charIds = User::all();
@@ -79,8 +61,10 @@ class MiningTaxesInvoicesNew extends Command
             //Gather up all of the ledgers from the character and its alts.
             $ledgers = $this->LedgersWithAlts($charId);
 
-            //Create an invoice from the ledger rows
-            $this->CreateInvoice($charId, $ledgers, $mailDelay);
+            if(sizeof($ledgers) > 0) {
+                //Create an invoice from the ledger rows
+                $this->CreateInvoice($charId, $ledgers, $mailDelay);
+            }
         }
 
         //Get the ledgers characters which haven't had an invoice created yet.
@@ -94,9 +78,6 @@ class MiningTaxesInvoicesNew extends Command
         }
 
         $this->CreateOtherInvoices($charIds, $mailDelay);
-
-        //Set the task as stopped
-        $task->SetStopStatus();
 
         return 0;
     }
@@ -185,7 +166,7 @@ class MiningTaxesInvoicesNew extends Command
                 $recipient = $config['primary'];
     
                 //Send the Eve Mail Job to the queue to be dispatched
-                ProcessSendEveMailJob::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
+                SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
     
                 //Save the invoice model
                 $invoice = new Invoice;
@@ -283,7 +264,7 @@ class MiningTaxesInvoicesNew extends Command
             $recipient = $charId;
 
             //Send the Eve Mail Job to the queue to be dispatched
-            ProcessSendEveMailJob::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
+            SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
 
             //Save the invoice model
             $invoice = new Invoice;

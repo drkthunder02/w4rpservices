@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Commands\Finances;
+namespace App\Jobs\Commands\MiningTaxes;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,13 +11,15 @@ use Log;
 use Carbon\Carbon;
 
 //Application Library
-use App\Library\Helpers\FinanceHelper;
 use Commands\Library\CommandHelper;
 
 //Models
-use App\Models\Finances\AllianceWalletJournal;
+use App\Models\MiningTax\Observer;
 
-class UpdateAllianceWalletJournalJob implements ShouldQueue
+//Jobs
+use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgersJob;
+
+class PreFetchMiningTaxesLedgers implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -52,10 +54,15 @@ class UpdateAllianceWalletJournalJob implements ShouldQueue
      */
     public function handle()
     {
-        //Declare variables
-        $fHelper = new FinanceHelper;
+        //Get the site configuration which holds some data we need
         $config = config('esi');
-
-        $fHelper->GetApiWalletJournal(1, $config['primary']);
+        //Get the observers from the database
+        $observers = Observer::all();
+        
+        //For each of the observers, send a job to fetch the mining ledger
+        foreach($observers as $obs) {
+            //Dispatch the mining taxes ledger jobs
+            FetchMiningTaxesLedgersJob::dispatch($config['primary'], $config['corporation'], $obs->observer_id)->onQueue('miningtaxes');
+        }
     }
 }

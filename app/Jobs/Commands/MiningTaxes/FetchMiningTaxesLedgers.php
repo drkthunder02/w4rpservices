@@ -27,7 +27,7 @@ use App\Models\Moon\ItemComposition;
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 
-class FetchMiningTaxesLedgersJob implements ShouldQueue
+class FetchMiningTaxesLedgers implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

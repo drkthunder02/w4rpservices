@@ -13,7 +13,7 @@ use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 
 //Jobs
-use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
+use App\Jobs\Commands\Eve\SendEveMail;
 
 //Seat Stuff
 use Seat\Eseye\Cache\NullCache;
@@ -46,7 +46,7 @@ class Esi {
             $subject = 'W4RP Services - Incorrect ESI Scope';
             $body = "Please register on https://services.w4rp.space with the scope: " . $scope;
 
-            ProcessSendEveMailJob::dispatch($body, (int)$charId, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+            SendEveMail::dispatch($body, (int)$charId, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
             return false;
         }
 

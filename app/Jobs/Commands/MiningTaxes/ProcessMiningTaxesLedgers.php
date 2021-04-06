@@ -19,7 +19,7 @@ use App\Models\MiningTax\Ledger;
 use App\Models\Moon\MineralPrice;
 use App\Models\Moon\ItemComposition;
 
-class ProcessMiningTaxesLedgersJob implements ShouldQueue
+class ProcessMiningTaxesLedgers implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

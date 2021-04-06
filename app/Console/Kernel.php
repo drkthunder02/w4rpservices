@@ -7,13 +7,13 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 //Jobs
-use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgersJob;
-use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObserversJob;
-use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPaymentsJob;
-use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoicesJob;
-use App\Jobs\Commands\Finances\UpdateAllianceWalletJournalJob;
-use App\Jobs\Commands\Finances\UpdateItemPricesJob;
-use App\Jobs\Commands\Data\PurgeUsersJob;
+use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgers;
+use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObservers;
+use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPayments;
+use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoices;
+use App\Jobs\Commands\Finances\UpdateAllianceWalletJournal as UpdateAllianceWalletJournalJob;
+use App\Jobs\Commands\Finances\UpdateItemPrices as UpdateItemPricesJob;
+use App\Jobs\Commands\Data\PurgeUsers as PurgeUsersJob;
 
 class Kernel extends ConsoleKernel
 {
@@ -27,12 +27,6 @@ class Kernel extends ConsoleKernel
         Commands\Data\Test::class,
         Commands\Eve\ItemPricesUpdateCommand::class,
         Commands\Finances\UpdateAllianceWalletJournal::class,
-        Commands\MiningTaxes\MiningTaxesDataCleanup::class,
-        Commands\MiningTaxes\MiningTaxesInvoices::class,
-        Commands\MiningTaxes\MiningTaxesInvoicesNew::class,
-        Commands\MiningTaxes\MiningTaxesLedgers::class,
-        Commands\MiningTaxes\MiningTaxesObservers::class,
-        Commands\MiningTaxes\MiningTaxesPayments::class,
     ];
 
     /**
@@ -78,18 +72,21 @@ class Kernel extends ConsoleKernel
         /**
          * Mining Tax Schedule
          */
-        $schedule->job(new FetchMiningTaxesObserversJob)
+        $schedule->job(new FetchMiningTaxesObservers)
                  ->timezone('UTC')
                  ->dailyAt('22:00');
-        $schedule->job(new PreFetchMiningTaxesLedgersJob)
+        $schedule->job(new PreFetchMiningTaxesLedgers)
                  ->timezone('UTC')
                  ->dailyAt('20:00');
-        $schedule->job(new SendMiningTaxesInvoicesJob)
+        $schedule->job(new SendMiningTaxesInvoices)
                  ->timezone('UTC')
                  ->weeklyOn(1, '06:00');
-        $schedule->job(new ProcessMiningTaxesPaymentsJob)
+        $schedule->job(new ProcessMiningTaxesPayments)
                  ->timezone('UTC')
                  ->hourlyAt('15');
+        $schedule->job(new UpdateMiningTaxesLateInvoices)
+                 ->timezone('UTC')
+                 ->dailyAt('16:00');
     }
 
     /**

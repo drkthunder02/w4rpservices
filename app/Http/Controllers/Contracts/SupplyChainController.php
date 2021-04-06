@@ -16,7 +16,7 @@ use App\Models\Contracts\SupplyChainBid;
 use App\Models\Contracts\SupplyChainContract;
 
 //Jobs
-use App\Jobs\Commands\Eve\ProcessSendEveMailJob;
+use App\Jobs\Commands\Eve\SendEveMail;
 
 class SupplyChainController extends Controller
 {
@@ -454,7 +454,7 @@ class SupplyChainController extends Controller
         $body .= "Notes: " . $contract->body . "<br>";
         $body .= "Delivery Date: " . $contract->delivery_date . "<br>";
         $body .= "<br>Sincerely on behalf of,<br>" . $contract->issuer_name . "<br>";
-        ProcessSendEveMailJob::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(30));
+        SendEveMail::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(30));
     }
 
     /**
@@ -469,7 +469,7 @@ class SupplyChainController extends Controller
         $body .= "Contract: " . $contract->title . "<br>";
         $body .= "Notes: " . $contract->note . "<br>";
         $body .= "<br>Sincerely on behalf of,<br>" . $contract->issuer_name;
-        ProcessSendEveMailJob::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(30));
+        SendEveMail::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(30));
     }
 
     /**

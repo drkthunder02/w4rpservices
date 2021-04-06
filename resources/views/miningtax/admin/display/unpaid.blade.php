@@ -35,15 +35,7 @@
                     <th>Update</th>
                 </thead>
                 <tbody>
-                    @if(isset($error))
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    @else
+                    @if(isset($invoices))
                     @foreach($invoices as $invoice)
                     <tr>
                         <td>{{ $invoice->character_name }}</td>

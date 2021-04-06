@@ -23,7 +23,7 @@ use App\Models\User\UserPermission;
 use App\Models\User\UserRole;
 use App\Models\Admin\AllowedLogin;
 
-class PurgeUsersJob implements ShouldQueue
+class PurgeUsers implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

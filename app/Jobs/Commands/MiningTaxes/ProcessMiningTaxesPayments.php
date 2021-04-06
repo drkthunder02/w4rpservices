@@ -19,7 +19,7 @@ use App\Models\MiningTaxes\Invoice;
 use App\Models\MiningTaxes\Payment;
 use App\Models\Finances\AllianceWalletJournal;
 
-class ProcessMiningTaxesPaymentsJob implements ShouldQueue
+class ProcessMiningTaxesPayments implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -84,6 +84,10 @@ class ProcessMiningTaxesPaymentsJob implements ShouldQueue
                 }
             }
         }
+
+        //Use the contract descriptions from the esi to see if the invoice_id is present.
+        //If the invoice is present, then mark it off as sent in correctly
+        
 
     }
 }

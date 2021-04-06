@@ -25,7 +25,7 @@ use App\Models\Jobs\JobStatus;
 use App\Models\Mail\SentMail;
 use Seat\Eseye\Containers\EsiResponse;
 
-class ProcessSendEveMailJob implements ShouldQueue
+class SendEveMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -64,7 +64,7 @@ class ProcessSendEveMailJob implements ShouldQueue
 
     /**
      * Execute the job.
-     * Utilized by using ProcessSendEveMailJob::dispatch($mail);
+     * Utilized by using SendEveMail::dispatch($mail);
      * The model is passed into the dispatch function, then added to the queue
      * for processing.
      *
@@ -151,39 +151,39 @@ class ProcessSendEveMailJob implements ShouldQueue
            (is_string($exception->getEsiResponse()) && (stristr($exception->getEsiResponse(), 'Too many errors') || stristr($exception->getEsiResponse(), 'This software has exceeded the error limit for ESI')))) {
             
             //We have hit the error rate limiter, wait 120 seconds before releasing the job back into the queue.
-            Log::info('ProcessSendEveMailJob has hit the error rate limiter.  Releasing the job back into the wild in 2 minutes.');
+            Log::info('SendEveMail has hit the error rate limiter.  Releasing the job back into the wild in 2 minutes.');
             $this->release(120);
         }  else {
             $errorCode = $exception->getEsiResponse()->getErrorCode();
 
             switch($errorCode) {
                 case 400:  //Bad Request
-                    Log::critical("Bad request has occurred in ProcessSendEveMailJob.  Job has been discarded");
+                    Log::critical("Bad request has occurred in SendEveMail.  Job has been discarded");
                     break;
                 case 401:  //Unauthorized Request
-                    Log::critical("Unauthorized request has occurred in ProcessSendEveMailJob at " . Carbon::now()->toDateTimeString() . ".\r\nCancelling the job.");
+                    Log::critical("Unauthorized request has occurred in SendEveMail at " . Carbon::now()->toDateTimeString() . ".\r\nCancelling the job.");
                     break;
                 case 403:  //Forbidden
-                    Log::critical("ProcessSendEveMailJob has incurred a forbidden error.  Cancelling the job.");
+                    Log::critical("SendEveMail has incurred a forbidden error.  Cancelling the job.");
                     break;
                 case 420:  //Error Limited
-                    Log::warning("Error rate limit occurred in ProcessSendEveMailJob.  Restarting job in 120 seconds.");
+                    Log::warning("Error rate limit occurred in SendEveMail.  Restarting job in 120 seconds.");
                     $this->release(120);
                     break;
                 case 500:  //Internal Server Error
-                    Log::critical("Internal Server Error for ESI in ProcessSendEveMailJob.  Attempting a restart in 120 seconds.");
+                    Log::critical("Internal Server Error for ESI in SendEveMail.  Attempting a restart in 120 seconds.");
                     $this->release(120);
                     break;
                 case 503:  //Service Unavailable
-                    Log::critical("Service Unavailabe for ESI in ProcessSendEveMailJob.  Releasing the job back to the queue in 30 seconds.");
+                    Log::critical("Service Unavailabe for ESI in SendEveMail.  Releasing the job back to the queue in 30 seconds.");
                     $this->release(30);
                     break;
                 case 504:  //Gateway Timeout
-                    Log::critical("Gateway timeout in ProcessSendEveMailJob.  Releasing the job back to the queue in 30 seconds.");
+                    Log::critical("Gateway timeout in SendEveMail.  Releasing the job back to the queue in 30 seconds.");
                     $this->release(30);
                     break;
                 case 520:  //Internal Error -- Mostly comes when rate limited hit
-                    Log::warning("Rate limit hit for ProcessSendEveMailJob.  Releasing the job back to the queue in 30 seconds.");
+                    Log::warning("Rate limit hit for SendEveMail.  Releasing the job back to the queue in 30 seconds.");
                     $this->release(30);
                     break;
                 case 201:   //Good response code
@@ -192,7 +192,7 @@ class ProcessSendEveMailJob implements ShouldQueue
                     break;
                 //If no code is given, then log and break out of switch.
                 default:
-                    Log::warning("No response code received from esi call in processSendEveMailJob.\r\n");
+                    Log::warning("No response code received from esi call in SendEveMail.\r\n");
                     $this->delete();
                     break;
             }
