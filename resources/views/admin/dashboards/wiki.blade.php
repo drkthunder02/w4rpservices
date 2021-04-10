@@ -15,7 +15,7 @@
                     <h2>Add User to Group</h2>
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['action' => 'Dashboard\AdminController@addWikiUserGroup', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Dashboard\AdminDashboardController@addWikiUserGroup', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('user', 'Select a User') }}
                         {{ Form::select('user', $wikiUsers, null, ['placeholder' => 'Pick A User']) }}
@@ -35,7 +35,7 @@
                     <h2>Create New User Group</h2>
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['action' => 'Dashboard\AdminController@insertNewWikiUserGroup', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Dashboard\AdminDashboardController@insertNewWikiUserGroup', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('group', 'New Group Name') }}
                         {{ Form::text('group', '', ['class' => 'form-control col-md-4']) }}

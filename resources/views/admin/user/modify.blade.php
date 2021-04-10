@@ -19,7 +19,7 @@
                     <h3>Add Permission</h3>
                 </div>
                 <div class="card-body">
-                    {{ Form::open(['action' => 'Dashboard\AdminController@addPermission', 'method' => 'POST']) }}
+                    {{ Form::open(['action' => 'Dashboard\AdminDashboardController@addPermission', 'method' => 'POST']) }}
                     <div class="form-group">
                     {{ Form::hidden('user', $user->character_id) }}
                     {{ Form::select('permission', $permissions, 'None', ['class' => 'form-control']) }}

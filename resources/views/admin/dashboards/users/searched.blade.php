@@ -20,11 +20,11 @@
                         <td>{{ $user->role }}</td>
                         <td>{{ $user->permission }}</td>
                         <td>
-                            {!! Form::open(['action' => 'Dashboard\DashboardAdminController@displayModifyUser', 'method' => 'POST']) !!}
+                            {!! Form::open(['action' => 'Dashboard\AdminDashboardController@displayModifyUser', 'method' => 'POST']) !!}
                             {{ Form::hidden('user', $user->name) }}
                             {{ Form::submit('Modify User', ['class' => 'btn btn-primary']) }}
                             {!! Form::close() !!}
-                            {!! Form::open(['action' => 'Dashboard\DashboardAdminController@removeUser', 'method' => 'POST']) !!}
+                            {!! Form::open(['action' => 'Dashboard\AdminDashboardController@removeUser', 'method' => 'POST']) !!}
                             {{ Form::hidden('user', $user->name) }}
                             {{ Form::submit('Remove User', ['class' => 'btn btn-danger']) }}
                             {!! Form::close() !!}

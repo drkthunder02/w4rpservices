@@ -8,7 +8,7 @@
                     Add Allowed Login
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['action' => 'Dashboard\AdminController@addAllowedLogin', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Dashboard\AdminDashboardController@addAllowedLogin', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('allowedEntityId', 'Allowed Entity ID') }}
                         {{ Form::text('allowedEntityId', '', ['class' => 'form-control']) }}
@@ -36,7 +36,7 @@
                     Remove Allowed Login
                 </div>
                 <div class="card-body">
-                    {!! Form::open(['action' => 'Dashboard\AdminController@removeAllowedLogin', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'Dashboard\AdminDashboardController@removeAllowedLogin', 'method' => 'POST']) !!}
                     <div class="form-group">
                         {{ Form::label('removeAllowedLogin', 'Remove Entity') }}
                         {{ Form::select('removeAllowedLogin', $entities, null, ['class' => 'form-control']) }}
