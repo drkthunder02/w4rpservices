@@ -247,6 +247,7 @@ class AdminDashboardController extends Controller
      */
     public function displayModifyUser(Request $request) {
         $permissions = array();
+        $roles = array();
         
         $name = $request->user;
 
@@ -258,7 +259,13 @@ class AdminDashboardController extends Controller
             $permissions[$p->permission] = $p->permission;
         }
 
-        $roles = AvailableUserRole::all();
+        $tempRoles = AvailableUserRole::all();
+
+        foreach($tempRoles as $tempRole) {
+            array_push($roles, [
+                $tempRole['id'] => $tempRole['role']
+            ]);
+        }
 
         $role = $user->getRole();
 
