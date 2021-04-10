@@ -11,6 +11,7 @@ use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgers;
 use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObservers;
 use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPayments;
 use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoices;
+use App\Jobs\Commands\MiningTaxes\UpdateMiningTaxesLateInvoices;
 use App\Jobs\Commands\Finances\UpdateAllianceWalletJournal as UpdateAllianceWalletJournalJob;
 use App\Jobs\Commands\Finances\UpdateItemPrices as UpdateItemPricesJob;
 use App\Jobs\Commands\Data\PurgeUsers as PurgeUsersJob;
