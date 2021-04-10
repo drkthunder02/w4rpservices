@@ -285,7 +285,7 @@ class AdminDashboardController extends Controller
             'role' => 'required',
         ]);
 
-        UserRole::where(['character_id' => $user])->update([
+        UserRole::where(['character_id' => $request->user])->update([
             'role' => $request->role,
         ]);
 
