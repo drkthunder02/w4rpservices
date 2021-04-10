@@ -282,7 +282,7 @@ class AdminDashboardController extends Controller
     public function modifyRole(Request $request) {
         $this->validate($request, [
             'user' => 'required',
-            'role' => 'required|role!=None',
+            'role' => 'required',
         ]);
 
         UserRole::where(['character_id' => $user])->update([
