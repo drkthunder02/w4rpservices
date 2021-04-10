@@ -263,7 +263,7 @@ class AdminDashboardController extends Controller
 
         foreach($tempRoles as $tempRole) {
             array_push($roles, [
-                $tempRole['id'] => $tempRole['role']
+                $tempRole['role'] => $tempRole['role']
             ]);
         }
 
