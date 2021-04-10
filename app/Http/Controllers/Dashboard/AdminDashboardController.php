@@ -289,7 +289,7 @@ class AdminDashboardController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect('/admin/dashboard/users')->with('success', "User: " . $user . " has been modified to a new role: " . $request->role . ".");
+        return redirect('/admin/dashboard/users')->with('success', "User: " . $request->user . " has been modified to a new role: " . $request->role . ".");
     }
 
     public function addPermission(Request $request) {
