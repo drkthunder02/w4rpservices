@@ -21,7 +21,7 @@ use App\Models\User\UserAlt;
 //Jobs
 use App\Jobs\Commands\Eve\SendEveMail;
 
-class UpdateMiningTaxesLateInvoices implements ShouldQueue
+class UpdateMiningTaxesLateInvoices1st implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

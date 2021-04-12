@@ -11,7 +11,8 @@ use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgers;
 use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObservers;
 use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPayments;
 use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoices;
-use App\Jobs\Commands\MiningTaxes\UpdateMiningTaxesLateInvoices;
+use App\Jobs\Commands\MiningTaxes\UpdateMiningTaxesLateInvoices1st;
+use App\Jobs\Commands\MiningTaxes\UpdateMiningTaxesLateInvoices15th;
 use App\Jobs\Commands\Finances\UpdateAllianceWalletJournal as UpdateAllianceWalletJournalJob;
 use App\Jobs\Commands\Finances\UpdateItemPrices as UpdateItemPricesJob;
 use App\Jobs\Commands\Data\PurgeUsers as PurgeUsersJob;
@@ -85,10 +86,10 @@ class Kernel extends ConsoleKernel
         $schedule->job(new ProcessMiningTaxesPayments)
                  ->timezone('UTC')
                  ->hourlyAt('15');
-        $schedule->job(new UpdateMiningTaxesLateInvoices)
+        $schedule->job(new UpdateMiningTaxesLateInvoices1st)
                  ->timezone('UTC')
                  ->monthlyOn(1, '16:00');
-        $schedule->job(new UpdateMiningTaxesLateInvoices)
+        $schedule->job(new UpdateMiningTaxesLateInvoices15th)
                  ->timezone('UTC')
                  ->monthlyOn(15, '16:00');
     }
