@@ -87,7 +87,10 @@ class Kernel extends ConsoleKernel
                  ->hourlyAt('15');
         $schedule->job(new UpdateMiningTaxesLateInvoices)
                  ->timezone('UTC')
-                 ->dailyAt('16:00');
+                 ->monthlyOn(1, '16:00');
+        $schedule->job(new UpdateMiningTaxesLateInvoices)
+                 ->timezone('UTC')
+                 ->monthlyOn(15, '16:00');
     }
 
     /**
