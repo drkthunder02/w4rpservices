@@ -15,8 +15,8 @@ use Log;
 use App\Library\Helpers\LookupHelper;
 
 //Models
-use App\Models\MiningTaxes\Invoice;
-use App\Models\MiningTaxes\Payment;
+use App\Models\MiningTax\Invoice;
+use App\Models\MiningTax\Payment;
 use App\Models\Finances\AllianceWalletJournal;
 
 class ProcessMiningTaxesPayments implements ShouldQueue
