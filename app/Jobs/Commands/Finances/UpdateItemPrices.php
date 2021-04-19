@@ -10,6 +10,9 @@ use Illuminate\Queue\SerializesModels;
 use Log;
 use Carbon\Carbon;
 
+//Library Functions
+use App\Library\Moons\MoonCalc;
+
 class UpdateItemPrices implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
