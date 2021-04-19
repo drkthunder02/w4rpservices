@@ -17,11 +17,6 @@ use App\Jobs\Commands\Finances\UpdateAllianceWalletJournal as UpdateAllianceWall
 use App\Jobs\Commands\Finances\UpdateItemPrices as UpdateItemPricesJob;
 use App\Jobs\Commands\Data\PurgeUsers as PurgeUsersJob;
 
-//Commands
-use App\Console\Commands\MiningTaxes\ExecuteMiningTaxesObserversCommand;
-use App\Console\Commands\MiningTaxes\ExecuteMiningTaxesLedgersCommand;
-use App\Console\Commands\MiningTaxes\ExecuteSendMiningTaxesInvoiceCommand;
-
 class Kernel extends ConsoleKernel
 {
     /**
