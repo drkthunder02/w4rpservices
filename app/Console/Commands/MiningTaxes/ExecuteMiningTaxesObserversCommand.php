@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObservers;
 
-class ExecuteMinigTaxesObserversCommand extends Command
+class ExecuteMiningTaxesObserversCommand extends Command
 {
     /**
      * The name and signature of the console command.
