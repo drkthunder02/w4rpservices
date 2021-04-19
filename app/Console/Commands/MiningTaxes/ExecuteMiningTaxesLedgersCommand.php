@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\MiningTaxes;
 
 use Illuminate\Console\Command;
 
