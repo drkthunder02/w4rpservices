@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgers;
+use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgers as PreFetch;
 
 class ExecuteMiningTaxesLedgersCommand extends Command
 {
@@ -13,7 +13,7 @@ class ExecuteMiningTaxesLedgersCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'miningtax:ledgers';
+    protected $signature = 'mt:ledgers';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class ExecuteMiningTaxesLedgersCommand extends Command
      */
     public function handle()
     {
-        PreFetchMiningTaxesLedgers::dispatch();
+        PreFetch::dispatch();
 
         return 0;
     }

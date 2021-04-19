@@ -4,7 +4,7 @@ namespace App\Console\Commands\MiningTaxes;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObservers;
+use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObservers as FetchObservers;
 
 class ExecuteMiningTaxesObserversCommand extends Command
 {
@@ -13,7 +13,7 @@ class ExecuteMiningTaxesObserversCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'miningtax:observer';
+    protected $signature = 'mt:observer';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class ExecuteMiningTaxesObserversCommand extends Command
      */
     public function handle()
     {
-        FetchMiningTaxesObservers::dispatch();
+        FetchObservers::dispatch();
 
         return 0;
     }

@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoices;
+use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoices as SendInvoice;
 
 class ExecuteSendMiningTaxesInvoiceCommand extends Command
 {
@@ -13,7 +13,7 @@ class ExecuteSendMiningTaxesInvoiceCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'miningtax:send';
+    protected $signature = 'mt:send';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class ExecuteSendMiningTaxesInvoiceCommand extends Command
      */
     public function handle()
     {
-        SendMiningTaxesInvoices::dispatch();
+        SendInvoice::dispatch();
 
         return 0;
     }
