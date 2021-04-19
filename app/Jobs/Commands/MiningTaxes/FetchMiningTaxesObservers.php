@@ -110,10 +110,6 @@ class FetchMiningTaxesObservers implements ShouldQueue
         $date = Carbon::now()->subDays(7);
         Observer::where('last_updated', '<', $date)->delete();
 
-        //Set the end time for debugging and printint out to the screen
-        $endTime = time();
-        printf("Time to complete: " . ($endTime - $startTime) . "\n\r");
-
         //Return 0 saying everything is fine
         return 0;
     }
