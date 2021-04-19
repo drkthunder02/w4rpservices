@@ -70,8 +70,6 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                          ->pluck('character_id');
 
         if($charIds == null) {
-            //Set the task status as done and Log the issue
-            $task->SetStopStatus();
             Log::warning("No characters found to send invoices to in MiningTaxesInvoices Command.");
             return 0;
         }
