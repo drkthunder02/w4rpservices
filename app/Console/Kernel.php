@@ -29,9 +29,9 @@ class Kernel extends ConsoleKernel
         Commands\Data\Test::class,
         Commands\Eve\ItemPricesUpdateCommand::class,
         Commands\Finances\UpdateAllianceWalletJournal::class,
-        Commands\MiningTaxes\ExecuteMiningTaxesObserversCommand::class,
-        Commands\MiningTaxes\ExecuteMiningTaxesLedgersCommand::class,
-        Commands\MiningTaxes\ExecuteSendMiningTaxesInvoiceCommand::class,
+        //Commands\MiningTaxes\ExecuteMiningTaxesObserversCommand::class,
+        //Commands\MiningTaxes\ExecuteMiningTaxesLedgersCommand::class,
+        //Commands\MiningTaxes\ExecuteSendMiningTaxesInvoiceCommand::class,
     ];
 
     /**
