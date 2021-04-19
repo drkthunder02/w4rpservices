@@ -17,7 +17,7 @@ use Commands\Library\CommandHelper;
 use App\Models\MiningTax\Observer;
 
 //Jobs
-use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgersJob;
+use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesLedgers;
 
 class PreFetchMiningTaxesLedgers implements ShouldQueue
 {
@@ -62,7 +62,7 @@ class PreFetchMiningTaxesLedgers implements ShouldQueue
         //For each of the observers, send a job to fetch the mining ledger
         foreach($observers as $obs) {
             //Dispatch the mining taxes ledger jobs
-            FetchMiningTaxesLedgersJob::dispatch($config['primary'], $config['corporation'], $obs->observer_id)->onQueue('miningtaxes');
+            FetchMiningTaxesLedgers::dispatch($config['primary'], $config['corporation'], $obs->observer_id)->onQueue('miningtaxes');
         }
     }
 }
