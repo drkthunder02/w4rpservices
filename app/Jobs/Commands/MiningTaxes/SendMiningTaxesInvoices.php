@@ -163,7 +163,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
                 $subject = 'Warped Intentions Mining Taxes';
                 $sender = $config['primary'];
                 $recipientType = 'character';
-                $recipient = $config['primary'];
+                $recipient = $charId;
     
                 //Send the Eve Mail Job to the queue to be dispatched
                 SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
