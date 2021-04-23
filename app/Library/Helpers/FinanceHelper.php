@@ -26,7 +26,6 @@ class FinanceHelper {
     public function GetApiWalletJournal($division, $charId) {
         //Declare class variables
         $lookup = new LookupHelper;
-        $finance = new FinanceHelper;
         $esiHelper = new Esi;
 
         //Setup the esi container.
@@ -157,6 +156,47 @@ class FinanceHelper {
         } while($currentPage <= $totalPages);
 
         return 0;
+    }
+
+    /**
+     * Get the pages for the alliance wallet journal
+     */
+    public function GetAllianceWalletJournalPages() {
+        $lookup = new LookupHelper;
+        $esiHelper = new Esi;
+
+        //Setup the esi container.
+        $token = $esiHelper->GetRefreshToken($charId);
+        $esi = $esiHelper->SetupEsiAuthentication($token);
+
+        //Check the scope
+        if(!$esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1')) {
+            Log::critical('Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
+            return null;
+        }
+
+        //Reference the character id to the corporation id
+        $char = $lookup->GetCharacterInfo($charId);
+        $corpId = $char->corporation_id;
+
+        /**
+         * Attempt to get the data from the esi api.  If it fails, we skip the page, and go onto the next page, unless
+         * the failed page is the first page.
+         */
+        try {
+            $journals = $esi->page(1)
+                            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                                'corporation_id' => $corpId,
+                                'division' => $division,
+                            ]);
+        } catch(RequestFailedException $e) {
+            Log::warning('Failed to get wallet journal pages for character id: ' . $charId);
+            Log::warning($e);
+            return 0;
+        }
+
+        //Return the total pages
+        return $journals->pages;
     }
 
     private function GetPIMaterialsArray() {
