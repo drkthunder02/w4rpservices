@@ -87,6 +87,10 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/miningtax/admin/delete/invoice', 'MiningTaxes\MiningTaxesAdminController@DeleteInvoice');
     Route::get('/miningtax/admin/display/paid', 'MiningTaxes\MiningTaxesAdminController@DisplayPaidInvoices');
     Route::any('/miningtax/admin/display/unpaid/search', 'MiningTaxes\MiningTaxesAdminController@SearchUnpaidInvoice');
+
+    /**
+     * Moon Rental display pages
+     */
     
     /**
      * Scopes Controller display pages

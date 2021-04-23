@@ -58,7 +58,7 @@ class ProcessMiningTaxesPayments implements ShouldQueue
             ])->count();
 
             //If we have received the invoice, then mark the invoice as paid
-            if($count > 0) {
+            if($found > 0) {
                 //If we have the count, then grab the journal entry in order to do some things with it
                 $journal = AllianceWalletJournal::where([
                     'reason' => "MMT: " . $invoice->invoice_id,
@@ -81,6 +81,36 @@ class ProcessMiningTaxesPayments implements ShouldQueue
                     ])->update([
                         'status' => 'Paid Late',
                     ]);
+                }
+            } else {
+                $count = AllianceWalletJournal::where([
+                    'reason' => $invoice->invoice_id,
+                ])->count();
+
+                if($count > 0) {
+                    //If we have the count, then grab the journal entry in order to do some things with it
+                    $journal = AllianceWalletJournal::where([
+                        'reason' => "MMT: " . $invoice->invoice_id,
+                    ])->orWhere([
+                        'reason' => $invoice->invoice_id,
+                    ])->first();
+
+                    //If the bill is paid on time, then update the invoice as such
+                    if($currentTime->lessThanOrEqualTo($journal->inserted_at)) {
+                        Invoice::where([
+                            'invoice_id' => $invoice->invoice_id,
+                        ])->update([
+                            'status' => 'Paid',
+                        ]);
+                    }
+
+                    if($currentTime->greaterThan($journal->inserted_at)) {
+                        Invoice::where([
+                            'invoice_id' => $invoice->invoice_id,
+                        ])->update([
+                            'status' => 'Paid Late',
+                        ]);
+                    }
                 }
             }
         }
