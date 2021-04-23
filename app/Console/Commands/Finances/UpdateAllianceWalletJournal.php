@@ -50,23 +50,6 @@ class UpdateAllianceWalletJournal extends Command
      */
     public function handle()
     {
-        //Declare variables
-        $fHelper = new FinanceHelper;
-        $config = config('esi');
-        $task = new CommandHelper('UpdateAllianceWalletJournal');
-        //Set the task as started
-        $task->SetStartStatus();
-        $startTime = time();
-
         UpdateAllianceWalletJournalJob::dispatch();
-
-        $endTime = time();
-
-        printf("Updating the wallets took " . ($endTime - $startTime) . " seconds.\r\n");
-
-        //Set the task as stopped
-        $task->SetStopStatus();
-
-        return 0;
     }
 }

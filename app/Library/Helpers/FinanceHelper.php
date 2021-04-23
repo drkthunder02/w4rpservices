@@ -161,7 +161,7 @@ class FinanceHelper {
     /**
      * Get the pages for the alliance wallet journal
      */
-    public function GetAllianceWalletJournalPages() {
+    public function GetAllianceWalletJournalPages($division, $charId) {
         $lookup = new LookupHelper;
         $esiHelper = new Esi;
 
