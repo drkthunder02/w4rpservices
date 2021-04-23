@@ -4,7 +4,7 @@ namespace App\Console\Commands\MiningTaxes;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPayemnts as PMTP;
+use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPayments as PMTP;
 
 class ExecuteProcesssMiningTaxesPaymentsCommand extends Command
 {
