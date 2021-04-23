@@ -59,7 +59,7 @@ class UpdateAllianceWalletJournalJob implements ShouldQueue
         $pages = $fHelper->GetAllianceWalletJournalPages(1, $config['primary']);
 
         for($i = 1; $i <= $pages; $i++) {
-            UpdateAllianceWalletJournalPage::dispatch(1, $config['primary'], $i)->onQueue('finances');
+            UpdateAllianceWalletJournalPage::dispatch(1, $config['primary'], $i)->onQueue('journal');
         }
     }
 }
