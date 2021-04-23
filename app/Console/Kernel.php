@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
         Commands\MiningTaxes\ExecuteMiningTaxesObserversCommand::class,
         Commands\MiningTaxes\ExecuteMiningTaxesLedgersCommand::class,
         Commands\MiningTaxes\ExecuteSendMiningTaxesInvoiceCommand::class,
-        Commands\MiningTaxes\ExecuteProcessMiningTaxesPaymentsCommand::class,
+        Commands\MiningTaxes\ExecuteProcesssMiningTaxesPaymentsCommand::class,
     ];
 
     /**

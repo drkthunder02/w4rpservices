@@ -20,7 +20,7 @@ class ExecuteProcesssMiningTaxesPaymentsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Process Mining Taxes payments from the console.';
 
     /**
      * Create a new command instance.
