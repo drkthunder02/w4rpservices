@@ -12,7 +12,7 @@ use App\Library\Helpers\FinanceHelper;
 use Commands\Library\CommandHelper;
 
 //Jobs
-use App\Jobs\Commands\Finances\UpdateAllianceWalletJournal as UAWJ;
+use App\Jobs\Commands\Finances\UpdateAllianceWalletJournalJob;
 
 //Models
 use App\Models\Finances\AllianceWalletJournal;
@@ -58,7 +58,7 @@ class UpdateAllianceWalletJournal extends Command
         $task->SetStartStatus();
         $startTime = time();
 
-        UAWJ::dispatch();
+        UpdateAllianceWalletJournalJob::dispatch();
 
         $endTime = time();
 
