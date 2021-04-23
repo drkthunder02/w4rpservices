@@ -11,6 +11,9 @@ use Carbon\Carbon;
 use App\Library\Helpers\FinanceHelper;
 use Commands\Library\CommandHelper;
 
+//Jobs
+use App\Jobs\Commands\Finances\UpdateAllianceWalletJournal as UAWJ;
+
 //Models
 use App\Models\Finances\AllianceWalletJournal;
 
@@ -55,7 +58,7 @@ class UpdateAllianceWalletJournal extends Command
         $task->SetStartStatus();
         $startTime = time();
 
-        $fHelper->GetApiWalletJournal(1, $config['primary']);
+        UAWJ::dispatch();
 
         $endTime = time();
 

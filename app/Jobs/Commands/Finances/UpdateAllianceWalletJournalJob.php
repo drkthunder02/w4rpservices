@@ -17,7 +17,7 @@ use Commands\Library\CommandHelper;
 //Models
 use App\Models\Finances\AllianceWalletJournal;
 
-class UpdateAllianceWalletJournal implements ShouldQueue
+class UpdateAllianceWalletJournalJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
