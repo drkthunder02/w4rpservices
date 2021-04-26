@@ -80,7 +80,7 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
             $journals = $esi->page($this->page)
                             ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
                                 'corporation_id' => $corpId,
-                                'division' => $division,
+                                'division' => $this->division,
                             ]);
         } catch(RequestFailedException $e) {
             Log::warning('Failed to get wallet journal page ' . $currentPage . ' for character id: ' . $charId);
