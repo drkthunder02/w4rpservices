@@ -37,4 +37,13 @@ class ItemPricesUpdate implements ShouldQueue
 
         $moonHelper->FetchNewPrices();
     }
+
+    /**
+     * Set the tags for Horzion
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['Eve', 'ItemPricesUpdate'];
+    }
 }

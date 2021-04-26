@@ -57,12 +57,19 @@ class FetchMiningTaxesObservers implements ShouldQueue
         //Declare variables
         $config = config('esi');
         $lookup = new LookupHelper;
+        $sHelper = new StructureHelper($config['primary'], $config['corporation']);
         $esiHelper = new Esi;
 
         //Check for the esi scope
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
             Log::critical('Esi scopes were not found for FetchMiningTaxesObserversJob.');
             print("Esi scopes not found.");
+            return;
+        }
+
+        if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-universe.read_structures.v1')) {
+            Log::critical('Esi scope esi-universe.read_structures.v1 was not found for FetchMiningTaxesObserversJob.');
+            print("Esi scopes not found 2");
             return;
         }
 
@@ -82,23 +89,36 @@ class FetchMiningTaxesObservers implements ShouldQueue
         //Run through the mining observers, and add them to the database
         foreach($resp as $observer) {
             if($observer->observer_id > 1030000000000) {
+                //Get the observer name from esi as well
+                $structureInfo = $sHelper->GetStructureInfo($observer->observer_id);
+
+                //See if the observer is found in the database
                 $found = Observer::where([
                     'observer_id' => $observer->observer_id,
                 ])->count();
     
+                //If found, then update the structure
                 if($found > 0) {
+
                     Observer::where([
                         'observer_id' => $observer->observer_id,
                     ])->update([
                         'observer_id' => $observer->observer_id,
                         'observer_type' => $observer->observer_type,
+                        'observer_name' => $observerName,
                         'last_updated' => $observer->last_updated,
+                        'solar_system_id' => $structureInfo->solar_system_id,
+                        'solar_system_name' => $sHelper->GetSolarSystemName($structureInfo->solar_system_id),
                     ]);
                 } else {
+                    //Add a new observer into the observer table
                     $newObs = new Observer;
                     $newObs->observer_id = $observer->observer_id;
                     $newObs->observer_type = $observer->observer_type;
+                    $newObs->observer_name = $observerName;
                     $newObs->last_updated = $observer->last_updated;
+                    $newObs->solar_system_id = $structureInfo->solar_system_id;
+                    $newObs->solar_system_name = $sHelper->GetSolarSystemName($structureInfo->solar_system_id);
                     $newObs->save();
                 }
             }            
@@ -179,6 +199,6 @@ class FetchMiningTaxesObservers implements ShouldQueue
      * @var array
      */
     public function tags() {
-        return ['FetchMiningObservers'];
+        return ['FetchMiningObservers', 'MiningTaxes'];
     }
 }

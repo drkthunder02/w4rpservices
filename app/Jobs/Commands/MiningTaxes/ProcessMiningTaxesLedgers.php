@@ -120,4 +120,13 @@ class ProcessMiningTaxesLedgers implements ShouldQueue
 
         return 0;
     }
+
+    /**
+     * Set the tags for Horzion
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['ProcessMiningTaxesLedgers', 'MiningTaxes', 'MiningTaxesLedgers'];
+    }
 }

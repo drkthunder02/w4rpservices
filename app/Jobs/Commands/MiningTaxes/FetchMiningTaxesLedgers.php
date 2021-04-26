@@ -151,4 +151,13 @@ class FetchMiningTaxesLedgers implements ShouldQueue
 
         } while($currentPage <= $totalPages);
     }
+
+    /**
+     * Set the tags for Horzion
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['FetchMiningTaxesLedgers', 'MiningTaxes', 'MiningTaxesLedgers'];
+    }
 }

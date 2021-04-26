@@ -65,4 +65,13 @@ class PreFetchMiningTaxesLedgers implements ShouldQueue
             FetchMiningTaxesLedgers::dispatch($config['primary'], $config['corporation'], $obs->observer_id)->onQueue('miningtaxes');
         }
     }
+
+    /**
+     * Set the tags for Horzion
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['PreFetchMiningTaxesLedgers', 'MiningTaxes', 'MiningTaxesLedgers'];
+    }
 }

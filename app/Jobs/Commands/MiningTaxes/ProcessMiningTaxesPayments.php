@@ -120,4 +120,13 @@ class ProcessMiningTaxesPayments implements ShouldQueue
         
 
     }
+
+    /**
+     * Set the tags for Horzion
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['ProcessMiningTaxesPayments', 'MiningTaxes', 'Payments'];
+    }
 }

@@ -73,9 +73,8 @@ class StructureHelper {
         }
     }
 
-    private function GetSolarSystemName($systemId) {
+    public function GetSolarSystemName($systemId) {
         //Declare some variables
-        $esiHelper = new Esi;
         $lookup = new LookupHelper;
 
         $solar = $lookup->SystemIdToName($systemId);

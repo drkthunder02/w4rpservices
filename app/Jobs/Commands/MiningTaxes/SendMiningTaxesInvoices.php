@@ -200,17 +200,22 @@ class SendMiningTaxesInvoices implements ShouldQueue
     private function CreateInvoice($charId, $ledgers, &$mailDelay) {
         $invoice = array();
         $ores = array();
+        $characters = array();
         $totalPrice = 0.00;
         $body = null;
         $lookup = new LookupHelper;
 
         if(sizeof($ledgers) > 0) {
             foreach($ledgers as $ledger) {
-                if(!isset($ores[$row['type_id']])) {
-                    $ores[$row['type_id']] = 0;
+                if(!isset($ores[$ledger['type_id']])) {
+                    $ores[$ledger['type_id']] = 0;
                 }
-                $ores[$row['type_id']] = $ores[$row['type_id']] + $row['quantity'];
-                $totalPrice = $totalPrice + $row['amount'];
+                $ores[$ledger['type_id']] = $ores[$ledger['type_id']] + $ledger['quantity'];
+                $totalPrice = $totalPrice + $ledger['amount'];
+
+                if(!isset($characters[$ledger['character_name']])) {
+                    $characters[$ledger['character_name']] = $ledger['character_name'];
+                }
             }
 
             $invoiceAmount = round(($totalPrice * $config['mining_tax']), 2);
@@ -224,7 +229,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
             $numberMiningTax = number_format(($config['mining_tax'] * 100.00), 2, ".", ",");
 
             //Create the mail body
-            $body .= "Dear Miner,<br><br>";
+            $body .= "Dear " . $charName . ",<br><br>";
             $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
             foreach($ores as $ore => $quantity) {
                 $oreName = $lookup->ItemIdToName($ore);
@@ -242,11 +247,16 @@ class SendMiningTaxesInvoices implements ShouldQueue
                 $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
             }
             $body .= "<br>";
+            $body .= "Characters Processed: <br>";
+            foreach($characters as $character) {
+                $body .= $character['character_name'] . "<br>";
+            }
+            $body .= "<br>";
             $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
 
             //Check if the mail body is greater than 2000 characters.  If greater than 2,000 characters, then 
             if(strlen($body) > 2000) {
-                $body = "Dear Miner,<br><br>";
+                $body = "Dear " . $charName . "<br><br>";
                 $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
                 $body .= "<br><br>";
                 $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
@@ -303,12 +313,21 @@ class SendMiningTaxesInvoices implements ShouldQueue
             'main_id' => $charId,
         ])->get();
 
+        $altCount = UserAlt::where([
+            'main_id' => $charId,
+        ])->count();
+
         $rows = Ledger::where([
             'character_id' => $charId,
             'invoiced' => 'No',
         ])->get();
 
-        if($rows->count() > 0) {
+        $mainCount = Ledger::where([
+            'character_id' => $charId,
+            'invoiced' => 'No',
+        ])->count();
+
+        if($mainCount > 0) {
             foreach($rows as $row) {
                 array_push($ledgers, [
                     'character_id' => $row->character_id,
@@ -325,31 +344,47 @@ class SendMiningTaxesInvoices implements ShouldQueue
             }
         }
 
-        if($alts->count() > 0) {
+        if($altCount > 0) {
             foreach($alts as $alt) {
                 $rows = Ledger::where([
                     'character_id' => $alt->character_id,
                     'invoiced' => 'No',
                 ])->get();
-    
-                foreach($rows as $row) {
-                    array_push($ledgers, [
-                        'character_id' => $row->character_id,
-                        'character_name' => $row->character_name,
-                        'observer_id' => $row->observer_id,
-                        'last_updated' => $row->last_updated,
-                        'type_id' => $row->type_id,
-                        'ore_name' => $row->ore_name,
-                        'quantity' => $row->quantity,
-                        'amount' => $row->amount,
-                        'invoiced' => $row->invoiced,
-                        'invoice_id' => $row->invoice_id,
-                    ]);
+
+                $rowCount = Ledger::where([
+                    'character_id' => $alt->character_id,
+                    'invoiced' => 'No',
+                ])->count();
+
+                if($rowCount > 0) {
+                    foreach($rows as $row) {
+                        array_push($ledgers, [
+                            'character_id' => $row->character_id,
+                            'character_name' => $row->character_name,
+                            'observer_id' => $row->observer_id,
+                            'last_updated' => $row->last_updated,
+                            'type_id' => $row->type_id,
+                            'ore_name' => $row->ore_name,
+                            'quantity' => $row->quantity,
+                            'amount' => $row->amount,
+                            'invoiced' => $row->invoiced,
+                            'invoice_id' => $row->invoice_id,
+                        ]);
+                    }
                 }
             }
         }
         
         //Return the ledgers
         return $ledgers;
+    }
+
+    /**
+     * Set the tags for Horzion
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['MiningTaxes', 'SendMiningTaxesInvoices', 'Invoices'];
     }
 }

@@ -77,7 +77,7 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
          * the failed page is the first page.
          */
         try {
-            $journals = $esi->page($currentPage)
+            $journals = $esi->page($this->page)
                             ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
                                 'corporation_id' => $corpId,
                                 'division' => $division,
@@ -140,5 +140,14 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
 
         //Return as completed
         return 0;
+    }
+
+    /**
+     * Set the tags for Horzion
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['UpdateAllianceWalletJournalPage', 'Finances'];
     }
 }

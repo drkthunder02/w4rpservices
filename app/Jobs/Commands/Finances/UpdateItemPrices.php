@@ -53,4 +53,13 @@ class UpdateItemPrices implements ShouldQueue
         //Fetch new prices from fuzzwork.co.uk for the item pricing schemes
         $moonHelper->FetchNewPrices();
     }
+
+    /**
+     * Set the tags for Horzion
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['UpdateItemPrices', 'Finances'];
+    }
 }

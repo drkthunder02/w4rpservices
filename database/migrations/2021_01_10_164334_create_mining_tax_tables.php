@@ -41,7 +41,6 @@ class CreateMiningTaxTables extends Migration
                 $table->dateTime('last_updated');
                 $table->unsignedBigInteger('observer_id');
                 $table->string('observer_type');
-                $table->string('observer_name');
                 $table->timestamps();
             });
         }

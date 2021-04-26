@@ -62,4 +62,13 @@ class UpdateAllianceWalletJournalJob implements ShouldQueue
             UpdateAllianceWalletJournalPage::dispatch(1, $config['primary'], $i)->onQueue('journal');
         }
     }
+
+    /**
+     * Set the tags for Horzion
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['UpdateAllianceWalletJournal', 'Finances'];
+    }
 }

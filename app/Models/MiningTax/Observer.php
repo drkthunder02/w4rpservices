@@ -25,5 +25,7 @@ class Observer extends Model
         'observer_id',
         'observer_type',
         'observer_name',
+        'solar_system_name',
+        'solar_system_id',
     ];    
 }
