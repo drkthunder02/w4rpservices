@@ -53,17 +53,17 @@ class SendMiningTaxesInvoices implements ShouldQueue
         $mainIds = new Collection;
 
         //Get all of the users in the database
-        $charIds = User::all();
+        $users = User::all();
 
         //Get a list of the alts for each character, then process the ledgers and combine them to send one mail out
         //in this first part
-        foreach($charIds as $charId) {
+        foreach($users as $char) {
             //Gather up all of the ledgers from the character and its alts.
-            $ledgers = $this->LedgersWithAlts($charId);
+            $ledgers = $this->LedgersWithAlts($char->character_id);
 
             if(sizeof($ledgers) > 0) {
                 //Create an invoice from the ledger rows
-                $this->CreateInvoice($charId, $ledgers, $mailDelay);
+                $this->CreateInvoice($char->character_id, $ledgers, $mailDelay);
             }
         }
 

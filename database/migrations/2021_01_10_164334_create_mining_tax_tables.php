@@ -29,6 +29,7 @@ class CreateMiningTaxTables extends Migration
                     'Paid Late',
                     'Deferred',
                     'Deleted',
+                    'Combined',
                 ])->default('Pending');
                 $table->text('mail_body')->nullable();
                 $table->timestamps();

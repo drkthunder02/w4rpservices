@@ -24,6 +24,16 @@ class ModifyMiningTaxTables extends Migration
                 ])->default('No');
             });
         }
+
+        if(!Schema::hasTable('alliance_mining_tax_wallet')) {
+            Schema::create('alliance_mining_tax_wallet', function (Blueprint $table) {
+                $table->unsignedBigInteger('id')->primary();
+                $table->unsignedBigInteger('character_id')->unique();
+                $table->string('character_name');
+                $table->decimal('amount', 20, 2)->default(0.00);                
+                $table->timestamps();
+            });
+        }
     }
 
     /**
