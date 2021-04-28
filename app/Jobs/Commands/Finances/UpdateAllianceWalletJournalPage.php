@@ -102,7 +102,7 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
                 $awj = new AllianceWalletJournal;
                 $awj->id = $entry['id'];
                 $awj->corporation_id = $corpId;
-                $awj->division = $division;
+                $awj->division = $this->division;
                 if(isset($entry['amount'])) {
                     $awj->amount = $entry['amount'];
                 }
