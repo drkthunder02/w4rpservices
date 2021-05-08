@@ -40,6 +40,29 @@ class MiningTaxesController extends Controller
         $this->middleware('role:User');
     }
 
+    public function DisplayInvoice($invoice) {
+        $ores = array();
+        $totalPrice = 0.00;
+
+        $items = Ledger::where([
+            'character_id' => auth()->user()->getId(),
+            'invoice_id' => $invoice,
+        ])->get();
+
+        foreach($items as $item) {
+            if(!isset($ores[$item['ore_name']])) {
+                $ores[$item['ore_name']] = 0;
+            }
+            $ores[$item['ore_name']] = $ores[$item['ore_name']] + $item['quantity'];
+
+            $totalPrice += $item['amount'];
+        }
+
+        return view('miningtax.user.display.details.invoice')->with('ore', $ores)
+                                                             ->with('invoice', $invoice)
+                                                             ->with('totalPrice', $totalPrice);
+    }
+
     /**
      * Display the users invoices
      */

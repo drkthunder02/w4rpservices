@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Mining Moon Tax display pages
      */
+    Route::get('/miningtax/display/detail/invoice/{invoice}', 'MiningTaxes\MiningTaxesController@displayInvoice');
     Route::get('/miningtax/display/invoices', 'MiningTaxes\MiningTaxesController@DisplayInvoices');
     Route::get('/miningtax/display/extractions', 'MiningTaxes\MiningTaxesController@DisplayUpcomingExtractions');
     Route::get('/miningtax/display/ledgers', 'MiningTaxes\MiningTaxesController@DisplayMoonLedgers');
