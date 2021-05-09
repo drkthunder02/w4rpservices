@@ -16,7 +16,7 @@
             <tbody>
             @foreach($unpaid as $un)
                 <tr>
-                    <td>{{ $un->invoice_id }}</td>
+                    <td><a href="/miningtax/display/detail/invoice/{{ $un->invoice_id }}">{{ $un->invoice_id }}</td>
                     <td>{{ number_format($un->invoice_amount, 2, ".", ",") }}</td>
                     <td>{{ $un->date_due }}</td>
                 </tr>
