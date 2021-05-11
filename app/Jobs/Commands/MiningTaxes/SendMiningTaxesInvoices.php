@@ -250,7 +250,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
             $body .= "<br>";
             $body .= "Characters Processed: <br>";
             foreach($characters as $character) {
-                $body .= $character['character_name'] . "<br>";
+                $body .= $character . "<br>";
             }
             $body .= "<br>";
             $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
