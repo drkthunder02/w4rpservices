@@ -39,7 +39,7 @@ class ExecuteMiningTaxesObserversCommand extends Command
      */
     public function handle()
     {
-        FetchObservers::dispatch();
+        FetchObservers::dispatch()->onQueue('miningtaxes');
 
         return 0;
     }

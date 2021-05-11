@@ -39,7 +39,7 @@ class ExecuteProcesssMiningTaxesPaymentsCommand extends Command
      */
     public function handle()
     {
-        PMTP::dispatch();
+        PMTP::dispatch()->onQueue('miningtaxes');
 
         return 0;
     }

@@ -39,7 +39,7 @@ class ExecuteSendMiningTaxesInvoiceCommand extends Command
      */
     public function handle()
     {
-        SendInvoice::dispatch();
+        SendInvoice::dispatch()->onQueue('miningtaxes');
 
         return 0;
     }

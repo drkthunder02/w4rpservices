@@ -39,7 +39,7 @@ class ExecuteMiningTaxesLedgersCommand extends Command
      */
     public function handle()
     {
-        PreFetch::dispatch();
+        PreFetch::dispatch()->onQueue('miningtaxes');
 
         return 0;
     }
