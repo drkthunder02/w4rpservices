@@ -63,6 +63,7 @@ return [
             'queue' => 'default',
             'retry_after' => 90,
             'block_for' => null,
+            'prefix' => env('QUEUE_PREFIX','w4rpservices_queue'),
         ],
 
         'job' => [
@@ -71,6 +72,7 @@ return [
             'queue' => '{job}',
             'retry_after' => 90,
             'block_for' => null,
+            'prefix' => env('JOB_PREFIX', 'w4rpservices_job')
         ],
 
         'app' => [
