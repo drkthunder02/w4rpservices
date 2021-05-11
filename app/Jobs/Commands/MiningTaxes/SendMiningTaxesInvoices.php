@@ -224,7 +224,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
             $charName = $lookup->CharacterIdToName($charId);
 
             $invoiceId = uniqid();
-            $datedue = Carbon::now()->addDays(7);
+            $dateDue = Carbon::now()->addDays(7);
             $invoiceDate = Carbon::now();
 
             $numberMiningTax = number_format(($config['mining_tax'] * 100.00), 2, ".", ",");
