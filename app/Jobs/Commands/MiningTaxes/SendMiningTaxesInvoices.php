@@ -204,6 +204,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
         $totalPrice = 0.00;
         $body = null;
         $lookup = new LookupHelper;
+        $config = config('esi');
 
         if(sizeof($ledgers) > 0) {
             foreach($ledgers as $ledger) {
