@@ -61,6 +61,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
             //Gather up all of the ledgers from the character and its alts.
             $ledgers = $this->LedgersWithAlts($char->character_id);
 
+            //If the size of the ledgers array is greater than 0, then we need to invoice the ledgers
             if(sizeof($ledgers) > 0) {
                 //Create an invoice from the ledger rows
                 $this->CreateInvoice($char->character_id, $ledgers, $mailDelay);
@@ -185,7 +186,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
                     'character_id' => $charId,
                     'invoiced' => 'No',
                 ])->update([
-                    'invoiced' => 'No',
+                    'invoiced' => 'Yes',
                     'invoice_id' => $invoiceId,
                 ]);
     
@@ -201,6 +202,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
         $invoice = array();
         $ores = array();
         $characters = array();
+        $characterIds = array();
         $totalPrice = 0.00;
         $body = null;
         $lookup = new LookupHelper;
@@ -208,14 +210,21 @@ class SendMiningTaxesInvoices implements ShouldQueue
 
         if(sizeof($ledgers) > 0) {
             foreach($ledgers as $ledger) {
+                //Create the ores array indexes, then totalize the ores from each ledger entry
                 if(!isset($ores[$ledger['type_id']])) {
                     $ores[$ledger['type_id']] = 0;
                 }
                 $ores[$ledger['type_id']] = $ores[$ledger['type_id']] + $ledger['quantity'];
                 $totalPrice = $totalPrice + $ledger['amount'];
 
+                //Create a list of character names for the mail body
                 if(!isset($characters[$ledger['character_name']])) {
                     $characters[$ledger['character_name']] = $ledger['character_name'];
+                }
+
+                //Create a list of character id's to update invoices before the end of the function
+                if(!isset($characterIds[$ledger['character_id']])) {
+                    $characterIds[$ledger['character_id']] = $ledger['character_id'];
                 }
             }
 
@@ -289,17 +298,19 @@ class SendMiningTaxesInvoices implements ShouldQueue
             $invoice->mail_body = $body;
             $invoice->save();
 
-            foreach($ledgers as $ledger) {
+            //Mark the invoices as paid
+            foreach($characterIds as $charId) {
                 Ledger::where([
-                    'character_id' => $ledger['character_id'],
+                    'character_id' => $charId,
                     'invoiced' => 'No',
                 ])->update([
                     'invoiced' => 'Yes',
                     'invoice_id' => $invoiceId,
                 ]);
-
-                $mailDelay += 20;
             }
+
+            //Increase the delay for the next mail
+            $mailDelay += 20;
         } else {
             return null;
         }
@@ -323,12 +334,12 @@ class SendMiningTaxesInvoices implements ShouldQueue
             'invoiced' => 'No',
         ])->get();
 
-        $mainCount = Ledger::where([
+        $mainLedgerCount = Ledger::where([
             'character_id' => $charId,
             'invoiced' => 'No',
         ])->count();
 
-        if($mainCount > 0) {
+        if($mainLedgerCount > 0) {
             foreach($rows as $row) {
                 array_push($ledgers, [
                     'character_id' => $row->character_id,
