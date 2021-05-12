@@ -58,7 +58,7 @@ class MiningTaxesController extends Controller
             $totalPrice += $item['amount'];
         }
 
-        return view('miningtax.user.display.details.invoice')->with('ore', $ores)
+        return view('miningtax.user.display.details.invoice')->with('ores', $ores)
                                                              ->with('invoice', $invoice)
                                                              ->with('totalPrice', $totalPrice);
     }
