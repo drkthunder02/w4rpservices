@@ -43,7 +43,7 @@
             <tbody>
                 @foreach($paid as $p)
                 <tr>
-                    <td>{{ $p->invoice_id }}</td>
+                    <td><a href="/miningtax/display/detail/invoice/{{ $un->invoice_id }}">{{ $un->invoice_id }}</td>
                     <td>{{ number_format($p->invoice_amount, 2, ".", ",") }}</td>
                     <td>{{ $p->date_due }}</td>
                 </tr>
@@ -69,7 +69,7 @@
             <tbody>
             @foreach($late as $l)
             <tr>
-                <td>{{ $l->invoice_id }}</td>
+                <td><a href="/miningtax/display/detail/invoice/{{ $un->invoice_id }}">{{ $un->invoice_id }}</td>
                 <td>{{ number_format($l->invoice_amount, 2, ".", ",") }}</td>
                 <td>{{ $l->date_due }}</td>
             </tr>
