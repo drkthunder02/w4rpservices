@@ -6,7 +6,7 @@
         <div class="card-header">
             <h2>Invoice Details</h2><br>
             <h3>Id: {!! $invoice !!}</h3><br>
-            <h3>Amount: {!! $totalPrice !!}</h3>
+            <h3>Amount: {!! number_format($totalPrice, 2, ".", ",") !!}</h3>
         </div>
         <div class="card-body">
             <table class="table table-striped table-bordered">
