@@ -5,21 +5,20 @@
     <div class="card">
         <div class="card-header">
             <h2>Invoice Details</h2><br>
-            <h3>Id: {!! $invoice !!}</h3>
+            <h3>Id: {!! $invoice !!}</h3><br>
+            <h3>Amount: {!! $totalPrice !!}</h3>
         </div>
         <div class="card-body">
             <table class="table table-striped table-bordered">
                 <thead>
                     <th>Ore Name</th>
                     <th>Quantity</th>
-                    <th>Amount</th>
                 </thead>
                 <tbody>
-                @foreach($ores as $ore)
+                @foreach($ores as $name => $quantity)
                 <tr>
-                    <td>{!! $ore['ore_name'] !!}</td>
-                    <td>{!! $ore['quantity'] !!}</td>
-                    <td>{!! number_format($ore['amount'], 2, ".", ",") !!} ISK </td>
+                    <td>{{ $name }}</td>
+                    <td>{{ $quantity }}</td>
                 </tr>
                 @endforeach
                 </tbody>
