@@ -17,9 +17,9 @@
                 <tbody>
                 @foreach($ores as $ore)
                 <tr>
-                    <td>{{ $ore['ore_name'] }}</td>
-                    <td>{{ $ore['quantity'] }}</td>
-                    <td>{{ number_format($ore['amount'], 2, ".", ",") }} ISK </td>
+                    <td>{!! $ore['ore_name'] !!}</td>
+                    <td>{!! $ore['quantity'] !!}</td>
+                    <td>{!! number_format($ore['amount'], 2, ".", ",") !!} ISK </td>
                 </tr>
                 @endforeach
                 </tbody>
