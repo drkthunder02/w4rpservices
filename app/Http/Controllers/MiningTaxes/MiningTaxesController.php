@@ -40,9 +40,13 @@ class MiningTaxesController extends Controller
         $this->middleware('role:User');
     }
 
-    public function DisplayInvoice($invoice) {
+    public function DisplayInvoice($invoiceId) {
         $ores = array();
         $totalPrice = 0.00;
+
+        $invoice = Invoice::where([
+            'invoice_id' => $invoiceId,
+        ])->first();
 
         $items = Ledger::where([
             'character_id' => auth()->user()->getId(),

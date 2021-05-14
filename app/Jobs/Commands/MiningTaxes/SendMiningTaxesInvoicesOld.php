@@ -114,7 +114,7 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                 $charName = $lookup->CharacterIdToName($charId);
     
                 //Generate a unique invoice id
-                $invoiceId = uniqid();
+                $invoiceId = "M" uniqid();
                 //Set the due date of the invoice
                 $dateDue = Carbon::now()->addDays(7);
                 $invoiceDate = Carbon::now();
@@ -132,7 +132,7 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                 $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
                 $body .= "<br><br>";
                 $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
-                $body .= "Set the reason for transfer as MMT: " . $invoiceId . "<br>";
+                $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
                 $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
                 $body .= "<br><br>";
                 $body .= "You can also send a contract with the following ores in the contract with the reason set as MMT: " . $invoiceId . "<br>";
@@ -149,7 +149,7 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                     $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
                     $body .= "<br><br>";
                     $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
-                    $body .= "Set the reason for transfer as MMT: " . $invoiceId . "<br>";
+                    $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
                     $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
                     $body .= "<br>";
                     $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";

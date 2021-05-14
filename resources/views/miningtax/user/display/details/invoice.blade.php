@@ -5,8 +5,10 @@
     <div class="card">
         <div class="card-header">
             <h2>Invoice Details</h2><br>
-            <h3>Id: {!! $invoice !!}</h3><br>
+            <h3>Id: {!! $invoice->invoice_id !!}</h3><br>
             <h3>Amount: {!! number_format($totalPrice, 2, ".", ",") !!} ISK</h3>
+            <h3>Invoice Date: {!! $invoice->date_issued !!}</h3><br>
+            <h3>Invoice Due Date: {!! $invoice->date_due !!}</h3>
         </div>
         <div class="card-body">
             <table class="table table-striped table-bordered">

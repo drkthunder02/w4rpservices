@@ -54,15 +54,13 @@ class ProcessMiningTaxesPayments implements ShouldQueue
         foreach($outstanding as $invoice) {
             //See if we have a reason with the correct uniqid from the player donation journal
             $found = AllianceWalletJournal::where([
-                'reason' => "MMT: " . $invoice->invoice_id,
+                'reason' => $invoice->invoice_id,
             ])->count();
 
             //If we have received the invoice, then mark the invoice as paid
             if($found > 0) {
                 //If we have the count, then grab the journal entry in order to do some things with it
                 $journal = AllianceWalletJournal::where([
-                    'reason' => "MMT: " . $invoice->invoice_id,
-                ])->orWhere([
                     'reason' => $invoice->invoice_id,
                 ])->first();
 
@@ -90,8 +88,6 @@ class ProcessMiningTaxesPayments implements ShouldQueue
                 if($count > 0) {
                     //If we have the count, then grab the journal entry in order to do some things with it
                     $journal = AllianceWalletJournal::where([
-                        'reason' => "MMT: " . $invoice->invoice_id,
-                    ])->orWhere([
                         'reason' => $invoice->invoice_id,
                     ])->first();
 

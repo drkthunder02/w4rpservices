@@ -83,6 +83,6 @@ class FuelController extends Controller
         ]);
 
         return view('logistics.fuel')->with('jumpGates', $jumpGates)
-                                             ->with('lava', $lava);
+                                     ->with('lava', $lava);
     }
 }
