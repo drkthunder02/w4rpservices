@@ -10,7 +10,7 @@ class Service extends Model
     public $table = 'alliance_services';
 
     //Timestamps
-    public $timestamps = false;
+    public $timestamps = true;
 
     //Primary Key
     public $primaryKey = 'id';
@@ -24,6 +24,8 @@ class Service extends Model
         'structure_id',
         'name',
         'state',
+        'created_at',
+        'updated_at',
     ];
 
     public function structure() {

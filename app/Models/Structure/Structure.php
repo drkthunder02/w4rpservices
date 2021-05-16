@@ -31,6 +31,7 @@ class Structure extends Model
         'solar_system_id',
         'solar_system_name',
         'type_id',
+        'type_name',
         'corporation_id',
         'services',             //True or false on whether it has services which are held in a different table
         'state',
@@ -38,15 +39,12 @@ class Structure extends Model
         'state_timer_end',
         'fuel_expires',
         'profile_id',
-        'position_x',
-        'position_y',
-        'position_z',
         'next_reinforce_apply',
         'next_reinforce_hour',
-        'next_reinforce_weekday',
         'reinforce_hour',
-        'reinforce_weekday',
         'unanchors_at',
+        'created_at',
+        'updated_at',
     ];
 
     public function services() {

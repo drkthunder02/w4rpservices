@@ -1,14 +1,21 @@
 <?php
 
-namespace App\Jobs\Commands\JumpBridges;
+namespace App\Jobs\Commands\Assets;
 
+//Internal Library
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class PurgeJumpBridgeStructures implements ShouldQueue
+//Jobs
+use App\Jobs\Commands\Assets\FetchAllianceAssets;
+
+//Models
+use App\Models\Structure\Asset;
+
+class PurgeAllianceAssets implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -29,6 +36,8 @@ class PurgeJumpBridgeStructures implements ShouldQueue
      */
     public function handle()
     {
-        //
+        Asset::truncate();
+
+        FetchAllianceAssets::dispatch()->onQueue('default');
     }
 }

@@ -32,6 +32,42 @@ class LookupHelper {
         $this->esi = $esiHelper->SetupEsiAuthentication();
     }
 
+    public function StructureTypeIdToName($typeId) {
+        $structureTypes = [
+            35841 => 'Ansiblex Jump Gate',
+            35840 => 'Pharolux Cyno Beacon',
+            37534 => 'Tenebrex Cyno Jammer',
+            35834 => 'Keepstar',
+            35833 => 'Fortizar',
+            35832 => 'Astrahus',
+            35836 => 'Tatara',
+            35835 => 'Athanor',
+            35827 => 'Sotiyo',
+            35826 => 'Azbel',
+            35825 => 'Raitaru',
+        ]
+
+        return $structureTypes[$typeId];
+    }
+
+    public function StructureNameToTypeId($name) {
+        $structureTypes = [
+            'Ansiblex Jump Gate' => 35841,
+            'Pharolux Cyno Beacon' => 35840,
+            'Tenebrex Cyno Jammer' => 37534,
+            'Keepstar' => 35834,
+            'Fortizar' => 35833,
+            'Astrahus' => 35832,
+            'Tatara' => 35836,
+            'Athanor' => 35835,
+            'Sotiyo' => 35827,
+            'Azbel' => 35826,
+            'Raitaru' => 35825,
+        ];
+
+        return $structureTypes[$name];
+    }
+
     public function ItemNameToId($itemName) {
         $item = ItemLookup::where([
             'name' => $itemName,

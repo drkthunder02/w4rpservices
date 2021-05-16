@@ -50,9 +50,6 @@ class Kernel extends ConsoleKernel
         //Horizon Graph Schedule
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
-        //Test rung to help figure out what is going on.
-        //$schedule->command('inspire')->everyMinute();
-
         /**
          * Purge Data Schedule
          */
@@ -96,6 +93,23 @@ class Kernel extends ConsoleKernel
         $schedule->job(new UpdateMiningTaxesLateInvoices15th)
                  ->timezone('UTC')
                  ->monthlyOn(15, '16:00');
+        
+        /**
+         * Alliance Structure and Assets Schedule
+         */
+        $schedule->job(new FetchAllianceStructures)
+                 ->timezone('UTC')
+                 ->dailyAt('21:00');
+        $schedule->job(new FetchAllianceAssets)
+                 ->timezone('UTC')
+                 ->hourlyAt('15');
+        $schedule->job(new PurgeAllianceStructures)
+                 ->timezone('UTC')
+                 ->monthlyOn(2, '14:00');
+        $schedule->job(new PurgeAllianceAssets)
+                 ->timezone('UTC')
+                 ->monthlyOn(2, '15:00');
+
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Commands\JumpBridges;
+namespace App\Jobs\Commands\Assets;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class FetchJumpBridges implements ShouldQueue
+class ProcessAllianceAssets implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

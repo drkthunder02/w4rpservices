@@ -1,14 +1,22 @@
 <?php
 
-namespace App\Jobs\Commands\JumpBridges;
+namespace App\Jobs\Commands\Structures;
 
+//Internal Library
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class FetchLiquidOzoneAssets implements ShouldQueue
+//Jobs
+use App\Jobs\Commands\FetchAllianceStructures;
+
+//Models
+use App\Models\Structure\Structure;
+use App\Models\Structure\Service;
+
+class PurgeAllianceStructures implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -29,6 +37,9 @@ class FetchLiquidOzoneAssets implements ShouldQueue
      */
     public function handle()
     {
-        //
+        Structure::truncate();
+        Service::truncate();
+
+        FetchAllianceStructures::dispatch()->onQueue('default');
     }
 }
