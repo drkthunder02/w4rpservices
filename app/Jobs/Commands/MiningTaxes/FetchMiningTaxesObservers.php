@@ -115,7 +115,7 @@ class FetchMiningTaxesObservers implements ShouldQueue
                     $newObs = new Observer;
                     $newObs->observer_id = $observer->observer_id;
                     $newObs->observer_type = $observer->observer_type;
-                    $newObs->observer_name = $observerName;
+                    $newObs->observer_name = $structureInfo->name;
                     $newObs->last_updated = $observer->last_updated;
                     $newObs->solar_system_id = $structureInfo->solar_system_id;
                     $newObs->solar_system_name = $sHelper->GetSolarSystemName($structureInfo->solar_system_id);
