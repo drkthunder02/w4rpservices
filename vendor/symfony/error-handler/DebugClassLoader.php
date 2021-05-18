@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\ErrorHandler;
 
+use Composer\InstalledVersions;
 use Doctrine\Common\Persistence\Proxy as LegacyProxy;
 use Doctrine\Persistence\Proxy;
 use Mockery\MockInterface;
@@ -67,10 +68,11 @@ class DebugClassLoader
         'string' => 'string',
         'self' => 'self',
         'parent' => 'parent',
+        'mixed' => 'mixed',
     ] + (\PHP_VERSION_ID >= 80000 ? [
+        'static' => 'static',
         '$this' => 'static',
     ] : [
-        'mixed' => 'mixed',
         'static' => 'object',
         '$this' => 'object',
     ]);
@@ -231,8 +233,8 @@ class DebugClassLoader
     public static function enable(): void
     {
         // Ensures we don't hit https://bugs.php.net/42098
-        class_exists('Symfony\Component\ErrorHandler\ErrorHandler');
-        class_exists('Psr\Log\LogLevel');
+        class_exists(\Symfony\Component\ErrorHandler\ErrorHandler::class);
+        class_exists(\Psr\Log\LogLevel::class);
 
         if (!\is_array($functions = spl_autoload_functions())) {
             return;
@@ -490,6 +492,14 @@ class DebugClassLoader
                         self::$method[$class] = self::$method[$use];
                     }
                 } elseif (!$refl->isInterface()) {
+                    if (!strncmp($vendor, str_replace('_', '\\', $use), $vendorLen)
+                        && 0 === strpos($className, 'Symfony\\')
+                        && (!class_exists(InstalledVersions::class)
+                            || 'symfony/symfony' !== InstalledVersions::getRootPackage()['name'])
+                    ) {
+                        // skip "same vendor" @method deprecations for Symfony\* classes unless symfony/symfony is being tested
+                        continue;
+                    }
                     $hasCall = $refl->hasMethod('__call');
                     $hasStaticCall = $refl->hasMethod('__callStatic');
                     foreach (self::$method[$use] as $method) {
@@ -533,7 +543,7 @@ class DebugClassLoader
             if (null !== (self::INTERNAL_TYPES[$use] ?? null)) {
                 foreach (self::INTERNAL_TYPES[$use] as $method => $returnType) {
                     if ('void' !== $returnType) {
-                        self::$returnTypes[$class] += [$method => [$returnType, $returnType, $class, '']];
+                        self::$returnTypes[$class] += [$method => [$returnType, $returnType, $use, '']];
                     }
                 }
             }
@@ -610,7 +620,7 @@ class DebugClassLoader
                     $this->patchMethod($method, $returnType, $declaringFile, $normalizedType);
                 }
 
-                if (strncmp($ns, $declaringClass, $len)) {
+                if (false === strpos($doc, '* @deprecated') && strncmp($ns, $declaringClass, $len)) {
                     if ($canAddReturnType && 'docblock' === $this->patchTypes['force'] && false === strpos($method->getFileName(), \DIRECTORY_SEPARATOR.'vendor'.\DIRECTORY_SEPARATOR)) {
                         $this->patchMethod($method, $returnType, $declaringFile, $normalizedType);
                     } elseif ('' !== $declaringClass && $this->patchTypes['deprecations']) {

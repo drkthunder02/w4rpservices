@@ -109,7 +109,7 @@ class SocialiteManager extends Manager implements Contracts\Factory
 
         return $this->buildProvider(
             GitlabProvider::class, $config
-        );
+        )->setHost($config['host'] ?? null);
     }
 
     /**
@@ -170,6 +170,32 @@ class SocialiteManager extends Manager implements Contracts\Factory
         return Str::startsWith($redirect, '/')
                     ? $this->container->make('url')->to($redirect)
                     : $redirect;
+    }
+
+    /**
+     * Forget all of the resolved driver instances.
+     *
+     * @return $this
+     */
+    public function forgetDrivers()
+    {
+        $this->drivers = [];
+
+        return $this;
+    }
+
+    /**
+     * Set the container instance used by the manager.
+     *
+     * @param  \Illuminate\Contracts\Container\Container  $container
+     * @return $this
+     */
+    public function setContainer($container)
+    {
+        $this->app = $container;
+        $this->container = $container;
+
+        return $this;
     }
 
     /**
