@@ -61,25 +61,7 @@ return [
             'driver' => 'redis',
             'connection' => 'default',
             'queue' => env('REDIS_QUEUE', 'default'),
-            'retry_after' => 90,
-            'block_for' => null,
-            'prefix' => env('QUEUE_PREFIX','w4rpservices_queue'),
-        ],
-
-        'job' => [
-            'driver' => 'redis',
-            'connection' => 'queue',
-            'queue' => '{job}',
-            'retry_after' => 90,
-            'block_for' => null,
-            'prefix' => env('JOB_PREFIX', 'w4rpservices_job')
-        ],
-
-        'app' => [
-            'driver' => 'redis',
-            'connection' => 'queue',
-            'queue' => '{app}',
-            'rery_after' => 90,
+            'retry_after' => 120,
             'block_for' => null,
         ],
 
