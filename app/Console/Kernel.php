@@ -60,70 +60,71 @@ class Kernel extends ConsoleKernel
          * Purge Data Schedule
          */
         $schedule->job(new PurgeUsersJob)
+                 ->onQueue('default')
                  ->weekly();
 
         /**
          * Finances Update Schedule
          */
         $schedule->job(new UpdateAllianceWalletJournalJob)
-                 ->timezone('UTC')
                  ->hourlyAt('45')
+                 ->onQueue('finances')
                  ->withoutOverlapping();
 
         /**
          * Item Update Schedule
          */
         $schedule->job(new UpdateItemPricesJob)
-                 ->timezone('UTC')
                  ->hourlyAT('30')
+                 ->onQueue('default');
                  ->withoutOverlapping();
 
         /**
          * Mining Tax Schedule
          */
         $schedule->job(new FetchMiningTaxesObservers)
-                 ->timezone('UTC')
                  ->dailyAt('22:00')
+                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new PreFetchMiningTaxesLedgers)
-                 ->timezone('UTC')
                  ->dailyAt('20:00')
+                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new SendMiningTaxesInvoices)
-                 ->timezone('UTC')
                  ->weeklyOn(1, '06:00')
+                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new ProcessMiningTaxesPayments)
-                 ->timezone('UTC')
                  ->hourlyAt('15')
+                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new UpdateMiningTaxesLateInvoices1st)
-                 ->timezone('UTC')
                  ->monthlyOn(1, '16:00')
+                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new UpdateMiningTaxesLateInvoices15th)
-                 ->timezone('UTC')
                  ->monthlyOn(15, '16:00')
+                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         
         /**
          * Alliance Structure and Assets Schedule
          */
         $schedule->job(new FetchAllianceStructures)
-                 ->timezone('UTC')
                  ->dailyAt('21:00')
+                 ->onQueue('structures')
                  ->withoutOverlapping();
         $schedule->job(new FetchAllianceAssets)
-                 ->timezone('UTC')
                  ->hourlyAt('15')
+                 ->onQueue('structures')
                  ->withoutOverlapping();
         $schedule->job(new PurgeAllianceStructures)
-                 ->timezone('UTC')
                  ->monthlyOn(2, '14:00')
+                 ->onQueue('structures')
                  ->withoutOverlapping();
         $schedule->job(new PurgeAllianceAssets)
-                 ->timezone('UTC')
                  ->monthlyOn(2, '15:00')
+                 ->onQueue('structures')
                  ->withoutOverlapping();
 
     }
@@ -138,5 +139,15 @@ class Kernel extends ConsoleKernel
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
+    }
+
+    /**
+     * Get the timezone that should be used by default for scheduled events.
+     *
+     * @return \DateTimeZone|string|null
+     */
+    protected function scheduleTimezone()
+    {
+        return 'UTC';
     }
 }

@@ -39,7 +39,7 @@ class ExecuteFetchAllianceAssetsCommand extends Command
      */
     public function handle()
     {
-        FAA::dispatch()->onQueue('structures');
+        FAA::dispatch()->onQueue('assets');
 
         return 0;
     }

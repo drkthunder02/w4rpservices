@@ -13,9 +13,6 @@ use Illuminate\Queue\SerializesModels;
 use App\Library\Helpers\LookupHelper;
 use App\Library\Esi\Esi;
 
-//Jobs
-use App\Jobs\Commands\Structures\ProcessAllianceStructureServices;
-
 //Models
 use App\Models\Structure\Structure;
 use App\Models\Structure\Service;
@@ -98,6 +95,12 @@ class ProcessAllianceStructures implements ShouldQueue
         $s->corporation_id = $structure->corporation_id;
         if(isset($structure->services)) {
             $s->services = true;
+            foreach($structure->services as $service) {
+                $serv = new Service;
+                $serv->structure_id = $structure->structure_id;
+                $serv->name = $service->name;
+                $serv->state = $service->state;
+            }
         } else {
             $s->services = false;
         }
@@ -123,16 +126,6 @@ class ProcessAllianceStructures implements ShouldQueue
             $s->unanchors_at = $esiHelper->DecodeDate($s->unanchors_at);
         }
         $s->save();
-
-        //If there are services on the structure, then save the service and the structure id in the database table.
-        if($s->services == true) {
-            foreach($structure->services as $service) {
-                $serv = new Service;
-                $serv->structure_id = $structure->structure_id;
-                $serv->name = $service->name;
-                $serv->state = $service->state;
-            }
-        }
     }
 
     private function UpdateStructure($structure) {

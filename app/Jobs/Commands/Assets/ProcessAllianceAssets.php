@@ -57,7 +57,11 @@ class ProcessAllianceAssets implements ShouldQueue
          * If the asset is not in the database, then let's save it to the database,
          * otherwise, we just update the old asset
          */
-        if(Asset::where(['item_id' => $this->asset->item_id])->count() == 0) {
+        $count = Asset::where([
+            'item_id' => $this->asset->item_id,
+        ])->count();
+
+        if($count == 0) {
             $as = new Asset;
             if(isset($this->asset->is_blueprint_copy)) {
                 $as->is_blueprint_copy = $this->asset->is_blueprint_copy;
