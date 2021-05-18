@@ -26,6 +26,7 @@ class CreateJumpBridgeFuelLevelsTables extends Migration
                 $table->unsignedBigInteger('solar_system_id');
                 $table->string('solar_system_name')->nullable();
                 $table->unsignedBigInteger('type_id');
+                $table->string('type_name');
                 $table->unsignedBigInteger('corporation_id');
                 $table->boolean('services');
                 $table->enum('state', [
