@@ -122,6 +122,8 @@ class ProcessAllianceStructures implements ShouldQueue
     }
 
     private function UpdateStructure($structure) {
+        $esiHelper = new Esi;
+
         if(isset($structure->corporation_id)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
@@ -140,21 +142,21 @@ class ProcessAllianceStructures implements ShouldQueue
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
-                'state_timer_start' => $structure->state_timer_start,
+                'state_timer_start' => $esiHelper->DecodeDate($structure->state_timer_start),
             ]);
         }
         if(isset($structure->state_timer_end)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
-                'state_timer_end' => $structure->state_timer_end,
+                'state_timer_end' => $esiHelper->DecodeDate($structure->state_timer_end),
             ]);
         }
         if(isset($structure->fuel_expires)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
-                'fuel_expires' => $structure->fuel_expires,
+                'fuel_expires' => $esiHelper->DecodeDate($structure->fuel_expires),
             ]);
         }
         if(isset($structure->profile_id)) {
@@ -189,7 +191,7 @@ class ProcessAllianceStructures implements ShouldQueue
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
-                'unanchors_at' => $structure->unanchors_at,
+                'unanchors_at' => $esiHelper->DecodeDate($structure->unanchors_at),
             ]);
         }
 
