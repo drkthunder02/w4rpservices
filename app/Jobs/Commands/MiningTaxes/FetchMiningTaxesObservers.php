@@ -60,13 +60,13 @@ class FetchMiningTaxesObservers implements ShouldQueue
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
         $esiHelper = new Esi;
 
-        //Check for the esi scope
+        //Check for the ESI scope needed.
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
             Log::critical('Esi scopes were not found for FetchMiningTaxesObserversJob.');
             print("Esi scopes not found.");
             return;
         }
-
+        //Check for the other ESI scope needed.
         if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-universe.read_structures.v1')) {
             Log::critical('Esi scope esi-universe.read_structures.v1 was not found for FetchMiningTaxesObserversJob.');
             print("Esi scopes not found 2");
@@ -78,34 +78,34 @@ class FetchMiningTaxesObservers implements ShouldQueue
         //Get the esi variable
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
+        //Invoke the call to ESI API.
         $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
             'corporation_id' => $config['corporation'],
         ]);
 
+        //Decode the json response, but leave it as objects rather than an array
         $resp = json_decode($response->raw, false);
 
         //Run through the mining observers, and add them to the database
         foreach($resp as $observer) {
             if($observer->observer_id > 1030000000000) {
-                //Get the observer name from esi as well
-                $structureInfo = $sHelper->GetStructureInfo($observer->observer_id);
-
                 //See if the observer is found in the database
                 $found = Observer::where([
                     'observer_id' => $observer->observer_id,
                 ])->count();
+
+                //Get the observer name from esi
+                $structureInfo = $sHelper->GetStructureInfo($observer->observer_id);
     
                 //If found, then update the structure
                 if($found > 0) {
-
+                    //Update the existing structure in the database
                     Observer::where([
                         'observer_id' => $observer->observer_id,
                     ])->update([
                         'observer_id' => $observer->observer_id,
                         'observer_name' => $structureInfo->name,
                         'last_updated' => $observer->last_updated,
-                        'solar_system_id' => $structureInfo->solar_system_id,
-                        'solar_system_name' => $lookup->SystemIdToName($structureInfo->solar_system_id),
                     ]);
                 } else {
                     //Add a new observer into the observer table
