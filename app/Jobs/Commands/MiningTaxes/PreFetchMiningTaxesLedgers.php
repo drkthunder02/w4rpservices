@@ -35,13 +35,6 @@ class PreFetchMiningTaxesLedgers implements ShouldQueue
     public $tries = 3;
 
     /**
-     * Retries
-     * 
-     * @var int
-     */
-    public $retries = 3;
-
-    /**
      * Create a new job instance.
      *
      * @return void
