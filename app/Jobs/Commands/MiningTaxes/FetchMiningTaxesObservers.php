@@ -13,6 +13,7 @@ use Carbon\Carbon;
 //Application Library
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
+use App\Library\Helpers\LookupHelper;
 use App\Library\Helpers\StructureHelper;
 
 //Models
@@ -103,7 +104,7 @@ class FetchMiningTaxesObservers implements ShouldQueue
                         'observer_name' => $structureInfo->name,
                         'last_updated' => $observer->last_updated,
                         'solar_system_id' => $structureInfo->solar_system_id,
-                        'solar_system_name' => $sHelper->GetSolarSystemName($structureInfo->solar_system_id),
+                        'solar_system_name' => $lookup->SystemIdToName($structureInfo->solar_system_id),
                     ]);
                 } else {
                     //Add a new observer into the observer table
@@ -113,7 +114,7 @@ class FetchMiningTaxesObservers implements ShouldQueue
                     $newObs->observer_name = $structureInfo->name;
                     $newObs->last_updated = $observer->last_updated;
                     $newObs->solar_system_id = $structureInfo->solar_system_id;
-                    $newObs->solar_system_name = $sHelper->GetSolarSystemName($structureInfo->solar_system_id);
+                    $newObs->solar_system_name = $lookup->SystemIdToName($structureInfo->solar_system_id);
                     $newObs->save();
                 }
             }            

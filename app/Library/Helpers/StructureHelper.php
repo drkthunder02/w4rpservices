@@ -14,7 +14,7 @@ use Log;
 use App\Jobs\Library\JobHelper;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
-use App\Library\Lookups\LookupHelper;
+use App\Library\Helpers\LookupHelper;
 
 //App Models
 use App\Models\Jobs\JobStatus;
@@ -70,19 +70,6 @@ class StructureHelper {
             $this->SaveNewStructure($structure, $info);            
         } else {
             $this->UpdateExistingStructure($structure, $info);
-        }
-    }
-
-    public function GetSolarSystemName($systemId) {
-        //Declare some variables
-        $lookup = new LookupHelper;
-
-        $solar = $lookup->SystemIdToName($systemId);
-
-        if($solar != null) {
-            return $solar;
-        } else {
-            return null;
         }
     }
 
@@ -248,12 +235,13 @@ class StructureHelper {
     }
 
     private function SaveNewStructure($structure, $info) {
+        //Declare helper variable needed
+        $lookup = new LookupHelper;
 
         if(isset($info->solar_system_id)) {
-            $solarName = $this->GetSolarSystemName($info->solar_system_id);
+            $solarName = $lookup->SolarSystemIdToName($info->solar_system_id);
         } else {
-            Log::critical("Couldn't get solar system name for structure " . $structure->structure_id);
-            Log::critical("Check access lists.");
+            Log::critical("Couldn't get solar system name for structure " . $structure->structure_id . " in SaveNewStructure in StructureHelper.php");
             $solarName = null;
         }
 
