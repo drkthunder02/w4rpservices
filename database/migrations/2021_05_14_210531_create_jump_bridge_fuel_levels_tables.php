@@ -28,7 +28,7 @@ class CreateJumpBridgeFuelLevelsTables extends Migration
                 $table->unsignedBigInteger('type_id');
                 $table->unsignedBigInteger('corporation_id');
                 $table->boolean('services');
-                $table->enum('state'. [
+                $table->enum('state', [
                     'anchor_vulnerable', 
                     'anchoring', 
                     'armor_reinforce', 
