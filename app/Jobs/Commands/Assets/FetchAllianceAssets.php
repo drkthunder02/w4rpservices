@@ -42,6 +42,7 @@ class FetchAllianceAssets implements ShouldQueue
         //Declare variables
         $config = config('esi');
         $corpId = 98287666;
+        $esiHelper = new Esi;
 
         //Get the refresh token from the database
         $token = $esiHelper->GetRefreshToken($config['primary']);
@@ -49,7 +50,7 @@ class FetchAllianceAssets implements ShouldQueue
         $esi = $esiHelper->SetupEsiAuthentication($token);
 
         //Check the esi scope
-        if(!$esiHelpeer->HaveEsiScope($config['primary'], 'esi-assets.read_corporation_assets.v1')) {
+        if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-assets.read_corporation_assets.v1')) {
             Log::critical("Scope check failed in FetchAllianceAssets for esi-assets.read_corporation_assets.v1");
         }
 
