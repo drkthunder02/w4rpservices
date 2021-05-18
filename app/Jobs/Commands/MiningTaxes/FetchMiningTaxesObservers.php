@@ -88,37 +88,35 @@ class FetchMiningTaxesObservers implements ShouldQueue
 
         //Run through the mining observers, and add them to the database
         foreach($resp as $observer) {
-            if($observer->observer_id > 1030000000000) {
-                //See if the observer is found in the database
-                $found = Observer::where([
-                    'observer_id' => $observer->observer_id,
-                ])->count();
+            //See if the observer is found in the database
+            $found = Observer::where([
+                'observer_id' => $observer->observer_id,
+            ])->count();
 
-                //Get the observer name from esi
-                $structureInfo = $sHelper->GetStructureInfo($observer->observer_id);
-    
-                //If found, then update the structure
-                if($found > 0) {
-                    //Update the existing structure in the database
-                    Observer::where([
-                        'observer_id' => $observer->observer_id,
-                    ])->update([
-                        'observer_id' => $observer->observer_id,
-                        'observer_name' => $structureInfo->name,
-                        'last_updated' => $observer->last_updated,
-                    ]);
-                } else {
-                    //Add a new observer into the observer table
-                    $newObs = new Observer;
-                    $newObs->observer_id = $observer->observer_id;
-                    $newObs->observer_type = $observer->observer_type;
-                    $newObs->observer_name = $structureInfo->name;
-                    $newObs->last_updated = $observer->last_updated;
-                    $newObs->solar_system_id = $structureInfo->solar_system_id;
-                    $newObs->solar_system_name = $lookup->SystemIdToName($structureInfo->solar_system_id);
-                    $newObs->save();
-                }
-            }            
+            //Get the observer name from esi
+            $structureInfo = $sHelper->GetStructureInfo($observer->observer_id);
+
+            //If found, then update the structure
+            if($found > 0) {
+                //Update the existing structure in the database
+                Observer::where([
+                    'observer_id' => $observer->observer_id,
+                ])->update([
+                    'observer_id' => $observer->observer_id,
+                    'observer_name' => $structureInfo->name,
+                    'last_updated' => $observer->last_updated,
+                ]);
+            } else {
+                //Add a new observer into the observer table
+                $newObs = new Observer;
+                $newObs->observer_id = $observer->observer_id;
+                $newObs->observer_type = $observer->observer_type;
+                $newObs->observer_name = $structureInfo->name;
+                $newObs->last_updated = $observer->last_updated;
+                $newObs->solar_system_id = $structureInfo->solar_system_id;
+                $newObs->solar_system_name = $lookup->SystemIdToName($structureInfo->solar_system_id);
+                $newObs->save();
+            }          
         }
 
         /**
