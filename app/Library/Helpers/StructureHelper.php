@@ -112,6 +112,8 @@ class StructureHelper {
     }
 
     private function UpdateExistingStructure($structure, $info) {
+        $esi = new Esi;
+
         //Update the structure id and name
         Structure::where(['structure_id' => $structure->structure_id])->update([
             'structure_id' => $structure->structure_id,
@@ -145,21 +147,21 @@ class StructureHelper {
         //Update the state timer start
         if(isset($structure->state_timer_start)) {
             Structure::where(['structure_id' => $structure->structure_id])->update([
-                'state_timer_start' => $this->DecodeDate($structure->state_timer_start),
+                'state_timer_start' => $esi->DecodeDate($structure->state_timer_start),
             ]);
         }
 
         //Update the state timer end
         if(isset($structure->state_timer_end)) {
             Structure::where(['structure_id' => $structure->structure_id])->update([
-                'state_timer_end' => $this->DecodeDate($structure->state_timer_end),
+                'state_timer_end' => $esi->DecodeDate($structure->state_timer_end),
             ]);
         }
 
         //Update the fuel expires
         if(isset($structure->fuel_expires)) {
             Structure::where(['structure_id' => $structure->structure_id])->update([
-                'fuel_expires' => $this->DecodeDate($structure->fuel_expires),
+                'fuel_expires' => $esi->DecodeDate($structure->fuel_expires),
             ]);
         }
 
@@ -174,7 +176,7 @@ class StructureHelper {
         //Update the next reinforce apply
         if(isset($structure->next_reinforce_apply)) {
             Structure::where(['structure_id' => $structure->structure_id])->update([
-                'next_reinforce_apply' => $this->DecodeDate($structure->next_reinforce_apply),
+                'next_reinforce_apply' => $esi->DecodeDate($structure->next_reinforce_apply),
             ]);
         }
 
@@ -209,7 +211,7 @@ class StructureHelper {
         //Update the unanchors at field
         if(isset($structure->unanchors_at)) {
             //Decode the date / time
-            $daTi = $this->DecodeDate($structure->unanchors_at);
+            $daTi = $esi->DecodeDate($structure->unanchors_at);
 
             Structure::where(['structure_id' => $structure->structure_id])->update([
                 'unanchors_at' => $daTi,
@@ -237,6 +239,7 @@ class StructureHelper {
     private function SaveNewStructure($structure, $info) {
         //Declare helper variable needed
         $lookup = new LookupHelper;
+        $esi = new Esi;
 
         if(isset($info->solar_system_id)) {
             $solarName = $lookup->SolarSystemIdToName($info->solar_system_id);
@@ -266,20 +269,20 @@ class StructureHelper {
             $st->state = 'None';
         }
         if(isset($structure->state_timer_start)) {
-            $st->state_timer_start = $this->DecodeDate($structure->state_timer_start);
+            $st->state_timer_start = $esi->DecodeDate($structure->state_timer_start);
         }
         if(isset($structure->state_timer_end)) {
-            $st->state_timer_end = $this->DecodeDate($structure->state_timer_end);
+            $st->state_timer_end = $esi->DecodeDate($structure->state_timer_end);
         }
         if(isset($structure->fuel_expires)) {
-            $st->fuel_expires = $this->DecodeDate($structure->fuel_expires);
+            $st->fuel_expires = $esi->DecodeDate($structure->fuel_expires);
         }
         $st->profile_id = $structure->profile_id;
         $st->position_x = $info->position->x;
         $st->position_y = $info->position->y;
         $st->position_z = $info->position->z;
         if(isset($structure->next_reinforce_apply)) {
-            $st->next_reinforce_apply = $this->DecodeDate($structure->next_reinforce_apply);
+            $st->next_reinforce_apply = $esi->DecodeDate($structure->next_reinforce_apply);
         }
         if(isset($structure->next_reinforce_hour)) {
             $st->next_reinforce_hour = $structure->next_reinforce_hour;
@@ -292,7 +295,7 @@ class StructureHelper {
             $st->reinforce_weekday = $structure->reinforce_weekday;
         }
         if(isset($structure->unanchors_at)) {
-            $daTi = $this->DecodeDate($structure->unanchors_at);
+            $daTi = $esi->DecodeDate($structure->unanchors_at);
             $st->unanchors_at = $daTi;
         }
 
@@ -310,39 +313,16 @@ class StructureHelper {
     }
 
     public function GetStructuresByType($type) {
-        $sType = $this->StructureTypeToId($type);
+        //Declare variable
+        $lookup = new LookupHelper;
+
+        $sType = $lookup->StructureNameToTypeId($type);
 
         $structures = Structure::where([
             'type_id' => $sType,
         ])->get();
 
         return $structures;
-    }
-
-    private function StructureTypeToId($name) {
-        $structureTypes = [
-            'Ansiblex Jump Gate' => 35841,
-            'Pharolux Cyno Beacon' => 35840,
-            'Tenebrex Cyno Jammer' => 37534,
-            'Keepstar' => 35834,
-            'Fortizar' => 35833,
-            'Astrahus' => 35832,
-            'Tatara' => 35836,
-            'Athanor' => 35835,
-            'Sotiyo' => 35827,
-            'Azbel' => 35826,
-            'Raitaru' => 35825,
-        ];
-
-        return $structureTypes[$name];
-    }
-
-    private function DecodeDate($date) {
-        $esiHelper = new Esi;
-
-        $dateTime = $esiHelper->DecodeDate($date);
-
-        return $dateTime;
     }
 }
 

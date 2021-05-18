@@ -47,7 +47,7 @@ class LookupHelper {
             35825 => 'Raitaru',
         ]
 
-        return $structureTypes[$typeId];
+        return (string)$structureTypes[$typeId];
     }
 
     public function StructureNameToTypeId($name) {
@@ -65,7 +65,7 @@ class LookupHelper {
             'Raitaru' => 35825,
         ];
 
-        return $structureTypes[$name];
+        return (int)$structureTypes[$name];
     }
 
     public function ItemNameToId($itemName) {
