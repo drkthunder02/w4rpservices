@@ -13,7 +13,6 @@ use Carbon\Carbon;
 //Application Library
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
-use App\Library\Helpers\LookupHelper;
 use App\Library\Helpers\StructureHelper;
 
 //Models
@@ -56,7 +55,6 @@ class FetchMiningTaxesObservers implements ShouldQueue
     {
         //Declare variables
         $config = config('esi');
-        $lookup = new LookupHelper;
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
         $esiHelper = new Esi;
 
@@ -73,15 +71,13 @@ class FetchMiningTaxesObservers implements ShouldQueue
             return;
         }
 
-        $char = $lookup->GetCharacterInfo($config['primary']);
-
         //Get the refresh token for the character
         $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
         //Get the esi variable
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
-            'corporation_id' => $char->corporation_id,
+            'corporation_id' => $config['corporation'],
         ]);
 
         $resp = json_decode($response->raw, false);
@@ -104,7 +100,6 @@ class FetchMiningTaxesObservers implements ShouldQueue
                         'observer_id' => $observer->observer_id,
                     ])->update([
                         'observer_id' => $observer->observer_id,
-                        'observer_type' => $observer->observer_type,
                         'observer_name' => $structureInfo->name,
                         'last_updated' => $observer->last_updated,
                         'solar_system_id' => $structureInfo->solar_system_id,
