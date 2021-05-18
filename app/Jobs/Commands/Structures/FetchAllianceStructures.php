@@ -84,7 +84,7 @@ class FetchAllianceStructures implements ShouldQueue
 
             //For each asset retrieved, let's process it.
             foreach($structures as $s) {
-                ProcessAllianceStructures::dispatch($s)->onQueue('default');
+                ProcessAllianceStructures::dispatch($s)->onQueue('structures');
             }
 
             //Increment the current page

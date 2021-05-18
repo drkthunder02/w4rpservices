@@ -39,6 +39,6 @@ class PurgeAllianceAssets implements ShouldQueue
     {
         Asset::truncate();
 
-        FetchAllianceAssets::dispatch()->onQueue('default');
+        FetchAllianceAssets::dispatch()->onQueue('structures');
     }
 }
