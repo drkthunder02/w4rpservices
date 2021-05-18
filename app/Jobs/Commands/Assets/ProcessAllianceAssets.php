@@ -70,6 +70,8 @@ class ProcessAllianceAssets implements ShouldQueue
             $as->is_singleton = $this->asset->is_singleton;
             $as->item_id = $this->asset->item_id;
             $as->location_flag = $this->asset->location_flag;
+            $as->location_id = $this->asset->location_id;
+            $as->location_type = $this->asset->location_type;
             $as->quantity = $this->asset->quantity;
             $as->type_id = $this->asset->type_id;
             $as->save();
@@ -80,6 +82,7 @@ class ProcessAllianceAssets implements ShouldQueue
             ])->update([
                 'is_blueprint_copy' => $this->asset->is_blueprint_copy,
                 'location_flag' => $this->asset->location_flag,
+                'location_id' => $this->asset->location_id,
                 'location_type' => $this->asset->location_type,
                 'quantity' => $this->asset->quantity,
                 'type_id' => $this->asset->type_id,
