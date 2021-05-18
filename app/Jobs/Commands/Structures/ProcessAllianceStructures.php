@@ -63,7 +63,7 @@ class ProcessAllianceStructures implements ShouldQueue
         return ['ProcessAllianceStructures', 'AllianceStructures', 'Structures'];
     }
 
-    private SaveNewStructure($structure) {
+    private function SaveNewStructure($structure) {
         //Declare variables
         $lookup = new LookupHelper;
         $esiHelper = new Esi;
@@ -118,7 +118,7 @@ class ProcessAllianceStructures implements ShouldQueue
         }
     }
 
-    private UpdateStructure($structure) {
+    private function UpdateStructure($structure) {
         if(isset($structure->corporation_id)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
