@@ -27,7 +27,8 @@ class PurgeAllianceStructures implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        //Set the connection for the job
+        $this->connection = 'redis';
     }
 
     /**
@@ -40,6 +41,6 @@ class PurgeAllianceStructures implements ShouldQueue
         Structure::truncate();
         Service::truncate();
 
-        FetchAllianceStructures::dispatch()->onQueue('default');
+        FetchAllianceStructures::dispatch()->onQueue('structures');
     }
 }

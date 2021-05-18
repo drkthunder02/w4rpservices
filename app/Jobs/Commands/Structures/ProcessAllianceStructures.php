@@ -33,6 +33,9 @@ class ProcessAllianceStructures implements ShouldQueue
      */
     public function __construct($s)
     {
+        //Set the connection for the job
+        $this->connection = 'redis';
+
         //Set variables
         $this->structure = $s;
     }
@@ -69,7 +72,7 @@ class ProcessAllianceStructures implements ShouldQueue
         $esiHelper = new Esi;
 
         //Get the solar system name
-        $solarName = $lookup->SolarSystemIdToName($structure->system_id);
+        $solarName = $lookup->SystemIdToName($structure->system_id);
 
         $s = new Structure;
         $s->structure_id = $structure->structure_id;

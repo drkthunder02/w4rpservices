@@ -39,7 +39,7 @@ class ExecuteFetchAllianceStructuresCommand extends Command
      */
     public function handle()
     {
-        FAS::dispatch()->onQueue('default');
+        FAS::dispatch()->onQueue('structures');
 
         return 0;
     }

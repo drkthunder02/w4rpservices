@@ -29,7 +29,8 @@ class FetchAllianceStructures implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        //Set the connection for the job
+        $this->connection = 'redis';
     }
 
     /**
