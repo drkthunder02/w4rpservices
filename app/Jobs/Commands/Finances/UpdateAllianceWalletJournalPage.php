@@ -51,6 +51,9 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
      */
     public function __construct($division, $charId, $page)
     {
+        $this->connection = 'redis';
+        $this->onQueue('finances');
+
         $this->division = $division;
         $this->charId = $charId;
         $this->page = $page;

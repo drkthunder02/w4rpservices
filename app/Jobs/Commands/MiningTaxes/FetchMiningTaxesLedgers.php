@@ -61,6 +61,7 @@ class FetchMiningTaxesLedgers implements ShouldQueue
     {
         //Set the connection for the job
         $this->connection = 'redis';
+        $this->onQueue('miningtaxes');
 
         //Import the variables from the calling function
         $this->charId = $charId;

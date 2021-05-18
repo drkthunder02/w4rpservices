@@ -52,6 +52,7 @@ class ProcessMiningTaxesLedgers implements ShouldQueue
     {
         //Set the connection for the job
         $this->connection = 'redis';
+        $this->onQueue('miningtaxes');
 
         //Import variables from the calling function
         $this->ledger = $ledger;

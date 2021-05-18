@@ -43,7 +43,8 @@ class CreateMiningTaxesInvoice implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        $this->connection = 'redis';
+        $this->onQueue('miningtaxes');
     }
 
     /**

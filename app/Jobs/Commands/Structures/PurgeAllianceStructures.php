@@ -43,6 +43,7 @@ class PurgeAllianceStructures implements ShouldQueue
     {
         //Set the connection for the job
         $this->connection = 'redis';
+        $this->onQueue('structures');
     }
 
     /**

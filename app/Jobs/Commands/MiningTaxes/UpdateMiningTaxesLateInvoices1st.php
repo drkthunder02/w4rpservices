@@ -46,7 +46,8 @@ class UpdateMiningTaxesLateInvoices1st implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        $this->connection = 'redis';
+        $this->onQueue('miningtaxes');
     }
 
     /**

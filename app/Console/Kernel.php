@@ -60,7 +60,6 @@ class Kernel extends ConsoleKernel
          * Purge Data Schedule
          */
         $schedule->job(new PurgeUsersJob)
-                 ->onQueue('default')
                  ->weekly();
 
         /**
@@ -68,7 +67,6 @@ class Kernel extends ConsoleKernel
          */
         $schedule->job(new UpdateAllianceWalletJournalJob)
                  ->hourlyAt('45')
-                 ->onQueue('finances')
                  ->withoutOverlapping();
 
         /**
@@ -76,7 +74,6 @@ class Kernel extends ConsoleKernel
          */
         $schedule->job(new UpdateItemPricesJob)
                  ->hourlyAT('30')
-                 ->onQueue('default')
                  ->withoutOverlapping();
 
         /**
@@ -84,27 +81,21 @@ class Kernel extends ConsoleKernel
          */
         $schedule->job(new FetchMiningTaxesObservers)
                  ->dailyAt('22:00')
-                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new PreFetchMiningTaxesLedgers)
                  ->dailyAt('20:00')
-                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new SendMiningTaxesInvoices)
                  ->weeklyOn(1, '06:00')
-                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new ProcessMiningTaxesPayments)
                  ->hourlyAt('15')
-                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new UpdateMiningTaxesLateInvoices1st)
                  ->monthlyOn(1, '16:00')
-                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         $schedule->job(new UpdateMiningTaxesLateInvoices15th)
                  ->monthlyOn(15, '16:00')
-                 ->onQueue('miningtaxes')
                  ->withoutOverlapping();
         
         /**
@@ -112,19 +103,15 @@ class Kernel extends ConsoleKernel
          */
         $schedule->job(new FetchAllianceStructures)
                  ->dailyAt('21:00')
-                 ->onQueue('structures')
                  ->withoutOverlapping();
         $schedule->job(new FetchAllianceAssets)
                  ->hourlyAt('15')
-                 ->onQueue('structures')
                  ->withoutOverlapping();
         $schedule->job(new PurgeAllianceStructures)
                  ->monthlyOn(2, '14:00')
-                 ->onQueue('structures')
                  ->withoutOverlapping();
         $schedule->job(new PurgeAllianceAssets)
                  ->monthlyOn(2, '15:00')
-                 ->onQueue('structures')
                  ->withoutOverlapping();
 
     }

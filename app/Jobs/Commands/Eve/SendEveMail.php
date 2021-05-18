@@ -50,6 +50,7 @@ class SendEveMail implements ShouldQueue
     public function __construct($body, $recipient, $recipient_type, $subject, $sender) {      
         //Set the connection
         $this->connection = 'redis';
+        $this->onQueue('mail');
 
         //Set the middleware for the job
         $this->middleware = $this->middleware();
