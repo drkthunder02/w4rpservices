@@ -45,7 +45,7 @@ class LookupHelper {
             35827 => 'Sotiyo',
             35826 => 'Azbel',
             35825 => 'Raitaru',
-        ]
+        ];
 
         return (string)$structureTypes[$typeId];
     }
