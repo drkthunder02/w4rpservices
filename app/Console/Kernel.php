@@ -76,7 +76,7 @@ class Kernel extends ConsoleKernel
          */
         $schedule->job(new UpdateItemPricesJob)
                  ->hourlyAT('30')
-                 ->onQueue('default');
+                 ->onQueue('default')
                  ->withoutOverlapping();
 
         /**
