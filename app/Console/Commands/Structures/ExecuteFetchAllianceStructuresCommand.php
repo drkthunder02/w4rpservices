@@ -4,7 +4,7 @@ namespace App\Console\Commands\Structures;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\Structures\FetchAllianceStructures as FAS;
+use App\Jobs\Commands\Assets\FetchAllianceStructures as FAS;
 
 class ExecuteFetchAllianceStructuresCommand extends Command
 {
