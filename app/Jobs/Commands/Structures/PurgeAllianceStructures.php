@@ -56,6 +56,15 @@ class PurgeAllianceStructures implements ShouldQueue
         Structure::truncate();
         Service::truncate();
 
-        FetchAllianceStructures::dispatch()->onQueue('structures');
+        FetchAllianceStructures::dispatch();
+    }
+
+    /**
+     * Set the tags for the job
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['PurgeAllianceStructures', 'AllianceStructures', 'Structures'];
     }
 }

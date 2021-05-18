@@ -42,7 +42,7 @@ class ProcessAllianceAssets implements ShouldQueue
     {
         //Set the connection for the job
         $this->connection = 'redis';
-        $this->onQueue('structures');
+        $this->onQueue('assets');
 
         $this->asset = $a;
     }
@@ -93,5 +93,14 @@ class ProcessAllianceAssets implements ShouldQueue
                 ]);
             }
         }
+    }
+
+    /**
+     * Tags for jobs
+     * 
+     * @var array
+     */
+    public function tags() {
+        return ['FetchAllianceAssets', 'AllianceStructures', 'Assets'];
     }
 }

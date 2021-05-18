@@ -44,7 +44,7 @@ class FetchAllianceAssets implements ShouldQueue
     {
         //Set the connection for the job
         $this->connection = 'redis';
-        $this->onQueue('structures');
+        $this->onQueue('assets');
         
     }
 
@@ -89,7 +89,7 @@ class FetchAllianceAssets implements ShouldQueue
 
             //For each asset retrieved, let's process it.
             foreach($assets as $a) {
-                ProcessAllianceAssets::dispatch($a)->onQueue('structures');
+                ProcessAllianceAssets::dispatch($a);
             }
 
             //Increment the current page
