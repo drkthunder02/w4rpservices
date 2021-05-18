@@ -15,9 +15,6 @@ class ModifyMiningTaxTables extends Migration
     {
         if(Schema::hasTable('alliance_mining_tax_observers')) {
             Schema::table('alliance_mining_tax_observers', function(Blueprint $table) {
-                $table->string('observer_name')->nullable();
-                $table->unsignedBigInteger('solar_system_id')->nullable();
-                $table->string('solar_system_name')->nullable();
                 $table->enum('corp_rented', [
                     'No',
                     'Yes',
@@ -43,12 +40,6 @@ class ModifyMiningTaxTables extends Migration
      */
     public function down()
     {
-        //Drop the newly created columns
-        Schema::table('alliance_mining_tax_observers', function(Blueprint $table) {
-            $table->dropColumn(['observer_name']);
-            $table->dropColumn(['solar_system_id']);
-            $table->dropColumn(['solar_system_name']);
-            $table->dropColumn(['corp_rented']);
-        });
+        //Do nothing
     }
 }
