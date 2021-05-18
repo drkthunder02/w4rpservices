@@ -7,9 +7,6 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 use Log;
 
-//Library
-use Commands\Library\CommandHelper;
-
 //Models
 use App\Models\Lookups\AllianceLookup;
 use App\Models\Lookups\CharacterLookup;
@@ -57,9 +54,6 @@ class CleanStaleDataCommand extends Command
      */
     public function handle()
     {
-        $command = new CommandHelper;
-        $command->CleanJobStatusTable();
-
         //Empty the item lookup table
         ItemLookup::truncate();
 

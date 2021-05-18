@@ -10,9 +10,6 @@ use Illuminate\Queue\SerializesModels;
 use Log;
 use Carbon\Carbon;
 
-//Application Library
-use Commands\Library\CommandHelper;
-
 //Models
 use App\Models\MiningTax\Observer;
 
