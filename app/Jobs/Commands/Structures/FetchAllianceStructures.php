@@ -23,6 +23,20 @@ class FetchAllianceStructures implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Timeout in seconds
+     * 
+     * @var int
+     */
+    public $timeout = 3600;
+
+    /**
+     * Number of job retries
+     * 
+     * @var int
+     */
+    public $tries = 3;
+
+    /**
      * Create a new job instance.
      *
      * @return void
@@ -31,6 +45,7 @@ class FetchAllianceStructures implements ShouldQueue
     {
         //Set the connection for the job
         $this->connection = 'redis';
+
     }
 
     /**

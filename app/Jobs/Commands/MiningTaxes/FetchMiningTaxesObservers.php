@@ -28,6 +28,20 @@ class FetchMiningTaxesObservers implements ShouldQueue
      * 
      * @var int
      */
+    public $timeout = 3600;
+
+    /**
+     * Number of job retries
+     * 
+     * @var int
+     */
+    public $tries = 3;
+
+    /**
+     * Timeout in seconds
+     * 
+     * @var int
+     */
     public $timeout = 1800;
 
     /**

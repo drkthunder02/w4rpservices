@@ -25,7 +25,14 @@ class PreFetchMiningTaxesLedgers implements ShouldQueue
      * 
      * @var int
      */
-    public $timeout = 1800;
+    public $timeout = 3600;
+
+    /**
+     * Number of job retries
+     * 
+     * @var int
+     */
+    public $tries = 3;
 
     /**
      * Retries
