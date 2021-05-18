@@ -83,38 +83,48 @@ class Kernel extends ConsoleKernel
          */
         $schedule->job(new FetchMiningTaxesObservers)
                  ->timezone('UTC')
-                 ->dailyAt('22:00');
+                 ->dailyAt('22:00')
+                 ->withoutOverlapping();
         $schedule->job(new PreFetchMiningTaxesLedgers)
                  ->timezone('UTC')
-                 ->dailyAt('20:00');
+                 ->dailyAt('20:00')
+                 ->withoutOverlapping();
         $schedule->job(new SendMiningTaxesInvoices)
                  ->timezone('UTC')
-                 ->weeklyOn(1, '06:00');
+                 ->weeklyOn(1, '06:00')
+                 ->withoutOverlapping();
         $schedule->job(new ProcessMiningTaxesPayments)
                  ->timezone('UTC')
-                 ->hourlyAt('15');
+                 ->hourlyAt('15')
+                 ->withoutOverlapping();
         $schedule->job(new UpdateMiningTaxesLateInvoices1st)
                  ->timezone('UTC')
-                 ->monthlyOn(1, '16:00');
+                 ->monthlyOn(1, '16:00')
+                 ->withoutOverlapping();
         $schedule->job(new UpdateMiningTaxesLateInvoices15th)
                  ->timezone('UTC')
-                 ->monthlyOn(15, '16:00');
+                 ->monthlyOn(15, '16:00')
+                 ->withoutOverlapping();
         
         /**
          * Alliance Structure and Assets Schedule
          */
         $schedule->job(new FetchAllianceStructures)
                  ->timezone('UTC')
-                 ->dailyAt('21:00');
+                 ->dailyAt('21:00')
+                 ->withoutOverlapping();
         $schedule->job(new FetchAllianceAssets)
                  ->timezone('UTC')
-                 ->hourlyAt('15');
+                 ->hourlyAt('15')
+                 ->withoutOverlapping();
         $schedule->job(new PurgeAllianceStructures)
                  ->timezone('UTC')
-                 ->monthlyOn(2, '14:00');
+                 ->monthlyOn(2, '14:00')
+                 ->withoutOverlapping();
         $schedule->job(new PurgeAllianceAssets)
                  ->timezone('UTC')
-                 ->monthlyOn(2, '15:00');
+                 ->monthlyOn(2, '15:00')
+                 ->withoutOverlapping();
 
     }
 

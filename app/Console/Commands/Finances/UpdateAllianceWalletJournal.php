@@ -50,6 +50,6 @@ class UpdateAllianceWalletJournal extends Command
      */
     public function handle()
     {
-        UpdateAllianceWalletJournalJob::dispatch();
+        UpdateAllianceWalletJournalJob::dispatch()->onQueue('finances');
     }
 }
