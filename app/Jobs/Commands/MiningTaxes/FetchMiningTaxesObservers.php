@@ -56,6 +56,7 @@ class FetchMiningTaxesObservers implements ShouldQueue
     {
         //Declare variables
         $config = config('esi');
+        $lookup = new LookupHelper;
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
         $esiHelper = new Esi;
 
