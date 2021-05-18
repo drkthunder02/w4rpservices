@@ -4,7 +4,7 @@ namespace App\Console\Commands\Structures;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\Structure\FetchAllianceAssets as FAA;
+use App\Jobs\Commands\Assets\FetchAllianceAssets as FAA;
 
 class ExecuteFetchAllianceAssetsCommand extends Command
 {
