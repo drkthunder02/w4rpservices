@@ -16,6 +16,10 @@ use App\Jobs\Commands\MiningTaxes\UpdateMiningTaxesLateInvoices15th;
 use App\Jobs\Commands\Finances\UpdateAllianceWalletJournalJob;
 use App\Jobs\Commands\Finances\UpdateItemPrices as UpdateItemPricesJob;
 use App\Jobs\Commands\Data\PurgeUsers as PurgeUsersJob;
+use App\Jobs\Commands\Structures\FetchAllianceStructures;
+use App\Jobs\Commands\Structures\PurgeAllianceStructures;
+use App\Jobs\Commands\Assets\FetchAllianceAssets;
+use App\Jobs\Commands\Assets\PurgeAllianceAssets;
 
 class Kernel extends ConsoleKernel
 {
