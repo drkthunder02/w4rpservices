@@ -77,6 +77,11 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/profile', 'Dashboard\DashboardController@profile');
 
     /**
+     * Jump Bridge Fuel Display pages
+     */
+    Route::get('/jumpbridges/fuel', 'Logistics\FuelController@displayStructures');
+
+    /**
      * Mining Moon Tax display pages
      */
     Route::get('/miningtax/display/detail/invoice/{invoice}', 'MiningTaxes\MiningTaxesController@displayInvoice');

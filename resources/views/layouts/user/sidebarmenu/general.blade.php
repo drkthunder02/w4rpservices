@@ -19,6 +19,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a href="/jumpbridges/fuel" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Jump Bridge Fuel</p>
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="https://buyback.w4rp.space" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>Buyback Program</p>
