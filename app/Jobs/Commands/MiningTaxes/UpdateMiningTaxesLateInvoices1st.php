@@ -92,7 +92,7 @@ class UpdateMiningTaxesLateInvoices1st implements ShouldQueue
                 $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
 
                 //Send a reminder to the user through eve mail about the late invoice
-                SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
+                SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->delay(Carbon::now()->addSeconds($mailDelay));
             }
         }
     }

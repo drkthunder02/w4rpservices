@@ -454,7 +454,7 @@ class SupplyChainController extends Controller
         $body .= "Notes: " . $contract->body . "<br>";
         $body .= "Delivery Date: " . $contract->delivery_date . "<br>";
         $body .= "<br>Sincerely on behalf of,<br>" . $contract->issuer_name . "<br>";
-        SendEveMail::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(30));
+        SendEveMail::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->delay(Carbon::now()->addSeconds(30));
     }
 
     /**
@@ -469,7 +469,7 @@ class SupplyChainController extends Controller
         $body .= "Contract: " . $contract->title . "<br>";
         $body .= "Notes: " . $contract->note . "<br>";
         $body .= "<br>Sincerely on behalf of,<br>" . $contract->issuer_name;
-        SendEveMail::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(30));
+        SendEveMail::dispatch($body, 145223267, 'mailing_list', $subject, $config['primary'])->delay(Carbon::now()->addSeconds(30));
     }
 
     /**

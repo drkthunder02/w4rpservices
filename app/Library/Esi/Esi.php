@@ -46,7 +46,7 @@ class Esi {
             $subject = 'W4RP Services - Incorrect ESI Scope';
             $body = "Please register on https://services.w4rp.space with the scope: " . $scope;
 
-            SendEveMail::dispatch($body, (int)$charId, 'character', $subject, $config['primary'])->onQueue('mail')->delay(Carbon::now()->addSeconds(5));
+            SendEveMail::dispatch($body, (int)$charId, 'character', $subject, $config['primary'])->delay(Carbon::now()->addSeconds(5));
             return false;
         }
 

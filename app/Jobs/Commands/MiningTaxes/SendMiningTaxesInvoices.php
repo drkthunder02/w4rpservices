@@ -154,7 +154,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
                 $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
                 $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
                 $body .= "<br><br>";
-                $body .= "You can also send a contract with the following ores in the contract with the reason set as MMT: " . $invoiceId . "<br>";
+                $body .= "You can also send a contract with the following ores in the contract with the reason set as: " . $invoiceId . "<br>";
                 foreach($ores as $ore => $quantity) {
                     $oreName = $lookup->ItemIdToName($ore);
                     $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
@@ -182,7 +182,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
                 $recipient = $charId;
     
                 //Send the Eve Mail Job to the queue to be dispatched
-                SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
+                SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->delay(Carbon::now()->addSeconds($mailDelay));
     
                 //Save the invoice model
                 $invoice = new Invoice;
@@ -266,7 +266,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
             $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
             $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
             $body .= "<br><br>";
-            $body .= "You can also send a contract with the following ores in the contract with the reason set as MMT: " . $invoiceId . "<br>";
+            $body .= "You can also send a contract with the following ores in the contract with the reason set as: " . $invoiceId . "<br>";
             foreach($ores as $ore => $quantity) {
                 $oreName = $lookup->ItemIdToName($ore);
                 $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
@@ -285,7 +285,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
                 $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
                 $body .= "<br><br>";
                 $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
-                $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
+                $body .= "Set the reason for transfer as: " . $invoiceId . "<br>";
                 $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
                 $body .= "<br>";
                 $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
@@ -299,7 +299,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
             $recipient = $charId;
 
             //Send the Eve Mail Job to the queue to be dispatched
-            SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->onQueue('mail')->delay(Carbon::now()->addSeconds($mailDelay));
+            SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->delay(Carbon::now()->addSeconds($mailDelay));
 
             //Save the invoice model
             $invoice = new Invoice;
