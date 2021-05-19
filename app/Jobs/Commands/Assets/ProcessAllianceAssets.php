@@ -80,7 +80,7 @@ class ProcessAllianceAssets implements ShouldQueue
             Asset::where([
                 'item_id' => $this->asset->item_id,
             ])->update([
-                'is_blueprint_copy' => $this->asset->is_blueprint_copy,
+                'is_singleton' => $this->asset->is_singleton,
                 'location_flag' => $this->asset->location_flag,
                 'location_id' => $this->asset->location_id,
                 'location_type' => $this->asset->location_type,
@@ -92,7 +92,7 @@ class ProcessAllianceAssets implements ShouldQueue
                 Asset::where([
                     'item_id' => $this->asset->item_id,
                 ])->update([
-                    'is_singleton' => $this->asset->is_singleton,
+                    'is_singleton' => $this->asset->is_blueprint_copy,
                 ]);
             }
         }
