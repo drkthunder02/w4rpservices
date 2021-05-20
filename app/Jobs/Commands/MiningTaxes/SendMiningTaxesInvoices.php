@@ -209,8 +209,6 @@ class SendMiningTaxesInvoices implements ShouldQueue
                 $mailDelay = $mailDelay + 20;
             }
         }
-
-        return 0;
     }
 
     private function CreateInvoice($charId, $ledgers, &$mailDelay) {
@@ -326,11 +324,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
 
             //Increase the delay for the next mail
             $mailDelay += 20;
-        } else {
-            return null;
         }
-
-        return 0;
     }
 
     private function LedgersWithAlts($charId) {
@@ -371,32 +365,41 @@ class SendMiningTaxesInvoices implements ShouldQueue
             }
         }
 
+        //If the alt count is greater than zero, let's add the alt's ledgers to the ledger array
         if($altCount > 0) {
+            //Run through all of the alts and add the individual ledger rows to the ledger array
             foreach($alts as $alt) {
-                $rows = Ledger::where([
-                    'character_id' => $alt->character_id,
-                    'invoiced' => 'No',
-                ])->get();
+                //Check to make sure we aren't adding the main character twice
+                if($alt->character_id != $charId){
+                    //Get the count of the ledgers to make sure something is actually there to process
+                    $rowCount = Ledger::where([
+                        'character_id' => $alt->character_id,
+                        'invoiced' => 'No',
+                    ])->count();
 
-                $rowCount = Ledger::where([
-                    'character_id' => $alt->character_id,
-                    'invoiced' => 'No',
-                ])->count();
+                    //If there are rows to process, get the rows, and add to the array
+                    if($rowCount > 0) {
+                        //Get all of the rows
+                        $rows = Ledger::where([
+                            'character_id' => $alt->character_id,
+                            'invoiced' => 'No',
+                        ])->get();
 
-                if($rowCount > 0) {
-                    foreach($rows as $row) {
-                        array_push($ledgers, [
-                            'character_id' => $row->character_id,
-                            'character_name' => $row->character_name,
-                            'observer_id' => $row->observer_id,
-                            'last_updated' => $row->last_updated,
-                            'type_id' => $row->type_id,
-                            'ore_name' => $row->ore_name,
-                            'quantity' => $row->quantity,
-                            'amount' => $row->amount,
-                            'invoiced' => $row->invoiced,
-                            'invoice_id' => $row->invoice_id,
-                        ]);
+                        //Add all of the rows to the ledger array
+                        foreach($rows as $row) {
+                            array_push($ledgers, [
+                                'character_id' => $row->character_id,
+                                'character_name' => $row->character_name,
+                                'observer_id' => $row->observer_id,
+                                'last_updated' => $row->last_updated,
+                                'type_id' => $row->type_id,
+                                'ore_name' => $row->ore_name,
+                                'quantity' => $row->quantity,
+                                'amount' => $row->amount,
+                                'invoiced' => $row->invoiced,
+                                'invoice_id' => $row->invoice_id,
+                            ]);
+                        }
                     }
                 }
             }
