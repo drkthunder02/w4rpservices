@@ -88,11 +88,11 @@ class ProcessAllianceAssets implements ShouldQueue
                 'type_id' => $this->asset->type_id,
             ]);
 
-            if(isset($this->asset->is_singleton)) {
+            if(isset($this->asset->is_blueprint_copy)) {
                 Asset::where([
                     'item_id' => $this->asset->item_id,
                 ])->update([
-                    'is_singleton' => $this->asset->is_blueprint_copy,
+                    'is_blueprint_copy' => $this->asset->is_blueprint_copy,
                 ]);
             }
         }
