@@ -112,6 +112,7 @@ class TestController extends Controller
                         'ore_name' => $row->ore_name,
                         'quantity' => $row->quantity,
                         'amount' => (float)$row->amount,
+                        'last_updated' => $row->last_updated,
                     ]);
                 }
             }
@@ -146,6 +147,7 @@ class TestController extends Controller
                                 'ore_name' => $row->ore_name,
                                 'quantity' => $row->quantity,
                                 'amount' => (float)$row->amount,
+                                'last_updated' => $row->last_updated,
                             ]);
                         }
                     }
