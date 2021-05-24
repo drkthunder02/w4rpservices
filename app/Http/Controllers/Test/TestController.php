@@ -112,7 +112,7 @@ class TestController extends Controller
             'corporation_id' => $config['corporation'],
         ]);
 
-        $resp = json_decode($response->raw, true);
+        $observers = json_decode($response->raw, true);
 
         $currentPage = 1;
         $totalPages = 1;
