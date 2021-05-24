@@ -94,7 +94,7 @@ class TestController extends Controller
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
                 'character_id' => $main->character_id,
-            ])->where('last_updated', '>', '2021-03-01')->count();
+            ])->where('last_updated', '>', Carbon::now()->subMonths(3))->count();
 
             dd($mainLedgerCount);
 
