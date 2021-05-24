@@ -77,17 +77,21 @@ class TestController extends Controller
         $mailDelay = 15;
         $config = config('esi');
 
-        //Get the users from the database
-        $mains = User::all();
+        /**
+         * This section will determine if users are mains or alts of a main.
+         * If they are mains, we keep the key.  If they are alts of a main, then we delete
+         * the key from the collection.
+         */
 
         //Pluck all the users from the database of ledgers to determine if they are mains or alts.
-        $mains = Ledger::where([
+        $tempMains = Ledger::where([
             'invoiced' => 'Yes',
         ])->where('last_updated', '>', Carbon::now()->subMonths(3))->pluck('character_id');
+        
+        //Get the unique character ids from the ledgers in the previous statement
+        $tempMains = $tempMains->unique()->values()->all()->toArray();
 
-        $mains = $mains->unique()->values()->all();
-
-        dd($mains);
+        dd($tempMains);
 
         /**
          * For each of the users, let's determine if there are any ledgers,
