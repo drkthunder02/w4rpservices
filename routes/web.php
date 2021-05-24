@@ -148,6 +148,7 @@ Route::group(['middleware' => ['auth']], function(){
      * Test Controller display pages
      */
     Route::get('/test/char/display', 'Test\TestController@displayCharTest');
+    Route::get('/test/miningtax/invoice', 'Test\TestController@DebugMiningTaxesInvoices');
 
 });
 

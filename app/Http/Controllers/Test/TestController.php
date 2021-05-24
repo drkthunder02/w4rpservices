@@ -2,10 +2,22 @@
 
 namespace App\Http\Controllers\Test;
 
+//Internal Library
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Log;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
+//Application Library
 use App\Library\Helpers\LookupHelper;
+
+//Models
+use App\Models\MiningTax\Invoice;
+use App\Models\MiningTax\Ledger;
+use App\Models\User\UserAlt;
+use App\Models\User\User;
 
 class TestController extends Controller
 {
@@ -21,6 +33,72 @@ class TestController extends Controller
 
     public function CharacterLookupTest(Request $request) {
         
+    }
+
+    public function DebugMiningTaxesInvoices() {
+        $lookup = new LookupHelper;
+        $ledgers = new Collection;
+        
+
+        //Get all of the users in the database
+        $users = User::all();
+
+        //Get a list of the alts for each character, then process the ledgers and combine them to send one mail out
+        //in this first part
+        foreach($users as $char) {
+            $alts = $char->userAlts();
+
+            $mainLedgers = Ledger::where([
+                'character_id' => $char->character_id,
+                'invoiced' => 'No',
+            ])->get();
+
+            if(Ledger::where([
+                'character_id' => $char->character_id,
+            ])->count() > 0) {
+                foreach($mainLedgers as $row) {
+                    $ledgers->push([
+                        'main_id' => $row->character_id,
+                        'character_id' => $row->character_id,
+                        'character_name' => $row->character_name,
+                        'observer_id' => $row->observer_id,
+                        'last_updated' => $row->last_updated,
+                        'type_id' => $row->type_id,
+                        'ore_name' => $row->ore_name,
+                        'quantity' => $row->quantity,
+                        'amount' => $row->amount,
+                        'invoiced' => $row->invoiced,
+                        'invoice_id' => $row->invoice_id,
+                    ])
+                }
+            }
+
+            foreach($alts as $alt) {
+                if($alt->character_id != $char->character_id) {
+                    $ledgerRows = Ledger::where([
+                        'character_id' => $alt->character_id,
+                        'invoiced' => 'No',
+                    ])->get();
+
+                    if($ledgerRows->count() > 0) {
+                        $ledgers->push([
+                            'main_id' => $char->character_id,
+                            'character_id' => $alt->character_id,
+                            'observer_id' => $row->observer_id,
+                            'last_updated' => $row->last_updated,
+                            'type_id' => $row->type_id,
+                            'ore_name' => $row->ore_name,
+                            'quantity' => $row->quantity,
+                            'amount' => $row->amount,
+                            'invoiced' => $row->invoiced,
+                            'invoice_id' => $row->invoice_id,
+                        ])
+                    }
+                }
+            }
+        }
+
+        return view('test.miningtax.invoice')->with('ledgers', $ledgers);
     }
 
     public function DebugMiningTaxes($invoiceId) {
