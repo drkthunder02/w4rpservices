@@ -109,7 +109,7 @@ class TestController extends Controller
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
         $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
-            'corporation' => $config['corporation'],
+            'corporation_id' => $config['corporation'],
         ]);
 
         $resp = json_decode($response->raw, true);
