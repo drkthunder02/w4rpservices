@@ -95,7 +95,7 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                         'type_id' => $row->type_id,
                         'ore_name' => $row->ore_name,
                         'quantity' => $row->quantity,
-                        'amount' => $row->amount,
+                        'amount' => (float)$row->amount,
                     ]);
                 }
             }
@@ -128,7 +128,7 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                                 'type_id' => $row->type_id,
                                 'ore_name' => $row->ore_name,
                                 'quantity' => $row->quantity,
-                                'amount' => $row->amount,
+                                'amount' => (float)$row->amount,
                             ]);
                         }
                     }
