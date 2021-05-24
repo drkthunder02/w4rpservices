@@ -61,7 +61,7 @@ class TestController extends Controller
                     'main_id' => $char->character_id,
                     'alt_id' => null,
                     'count' => 0,
-                ])
+                ]);
             }
         }
 
