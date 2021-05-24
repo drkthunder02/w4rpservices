@@ -73,22 +73,19 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
         foreach($mains as $main) {
             //Declare some variables for each run through the for loop
             $ledgers = new Collection;
-            $mainLedgers = new Collection;
-            $mainLedgerCount = 0;
-            $altLedgers = new Collection;
-            $alts = new Collection;
 
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
                 'character_id' => $main->character_id,
-            ])->count();
+                'invoiced' => 'No',
+            ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
 
             //If there are ledgers for the main, then let's grab them
             if($mainLedgerCount > 0) {
                 $mainLedgers = Ledger::where([
                     'character_id' => $main->character_id,
                     'invoiced' => 'No',
-                ])->get();
+                ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
 
                 //Cycle through the entries, and add them to the ledger to send with the invoice
                 foreach($mainLedgers as $row) {
@@ -114,15 +111,15 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                 //Cycle through the alts, and get the ledgers, and push onto the stack
                 foreach($alts as $alt) {
                     $altLedgerCount = Ledger::where([
-                        'character_id' => 'No',
+                        'character_id' => $alt->character_id,
                         'invoiced' => 'No',
-                    ])->count();
+                    ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
 
                     if($altLedgerCount > 0) {
                         $altLedgers = Ledger::where([
-                            'character_id' => 'No',
+                            'character_id' => $alt->character_id,
                             'invoiced' => 'No',
-                        ])->get();
+                        ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
 
                         foreach($altLedgers as $row) {
                             $ledgers->push([
