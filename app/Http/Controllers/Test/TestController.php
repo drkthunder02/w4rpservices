@@ -159,6 +159,14 @@ class TestController extends Controller
         $lookup = new LookupHelper;
         $config = config('esi');
 
+        //Set the due date of the invoice
+        $dateDue = Carbon::now()->addDays(7);
+        $invoiceDate = Carbon::now();
+        //Format the mining tax into a human readable number
+        $numberMiningTax = number_format(($config['mining_tax'] * 100.00), 2, ".", ",");
+        //Generate a unique invoice id
+        $invoiceId = "M" . uniqid();
+
         $rows = Ledger::where([
             'invoice_id' => $invoiceId,
         ])->get()->toArray();
@@ -182,14 +190,6 @@ class TestController extends Controller
             //Get the character name from the character id
             $charName = $lookup->CharacterIdToName($charId);
 
-            //Generate a unique invoice id
-            $invoiceId = "M" . uniqid();
-            //Set the due date of the invoice
-            $dateDue = Carbon::now()->addDays(7);
-            $invoiceDate = Carbon::now();
-
-            //Format the mining tax into a human readable number
-            $numberMiningTax = number_format(($config['mining_tax'] * 100.00), 2, ".", ",");
         }
 
         return view('test.miningtax.display')->with('rows', $rows)
