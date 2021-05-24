@@ -148,9 +148,11 @@ class TestController extends Controller
                         }
                     }
                 }
-            }   
+            }
+            
+            dd($ledgers);
         }
 
-        dd($ledgers);
+        
     }
 }
