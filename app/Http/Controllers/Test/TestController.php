@@ -39,7 +39,7 @@ class TestController extends Controller
         $perms = new Collection;
         
 
-        var_dump(auth()->user()->userAlts());
+        var_dump(auth()->user()->getAlts());
         dd(auth()->user()->altCount());
 
         //Get all of the users in the database
@@ -49,9 +49,9 @@ class TestController extends Controller
         //in this first part
         foreach($users as $char) {
             $altCount = $char->altCount();
-            dd($altCount);
+            
             if($altCount > 0) {
-                $alts = $char->userAlts;
+                $alts = $char->getAlts();
 
                 foreach($alts as $alt) {
                     $perms->push([

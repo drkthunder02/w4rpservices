@@ -32,6 +32,10 @@ class UserAlt extends Model
     ];
 
     public function mainCharacter() {
-        return $this->belongsTo('App\Models\User\User', 'character_id');
+        return $this->belongsTo('App\Models\User\User', 'character_id', 'main_id');
+    }
+
+    public function getMain() {
+        return User::where(['character_id' => $this->main_id])->get();
     }
 }
