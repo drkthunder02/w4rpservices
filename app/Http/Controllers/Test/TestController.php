@@ -45,7 +45,8 @@ class TestController extends Controller
         //Get a list of the alts for each character, then process the ledgers and combine them to send one mail out
         //in this first part
         foreach($users as $char) {
-            $altCount = $char->altCount;
+            $altCount = $char->altCount();
+            dd($altCount);
             if($altCount > 0) {
                 $alts = $char->userAlts;
 
