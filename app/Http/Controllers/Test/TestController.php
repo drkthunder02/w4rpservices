@@ -76,21 +76,16 @@ class TestController extends Controller
         //Declare variables
         $mailDelay = 15;
         $config = config('esi');
-        $mains = array();
 
         //Get the users from the database
         $mains = User::all();
 
         //Pluck all the users from the database of ledgers to determine if they are mains or alts.
-        $tempMains = Ledger::where([
+        $mains = Ledger::where([
             'invoiced' => 'Yes',
         ])->where('last_updated', '>', Carbon::now()->subMonths(3))->pluck('character_id');
 
-        foreach($tempMains as $main) {
-            if(!isset($mains[$main])) {
-                $mains[$main] = $main;
-            }
-        }
+        $mains = $mains->unique()->values()->all();
 
         dd($mains);
 
