@@ -105,6 +105,9 @@ class TestController extends Controller
         $config = config('esi');
         $esiHelper = new Esi;
 
+        $time_limit = ini_get('max_execution_time');
+        $memory_limit = ini_get('memory_limit');
+
         ini_set('memory_limit', -1);
         ini_set('max_execution_time', 600);
 
@@ -150,6 +153,9 @@ class TestController extends Controller
                 }
             } while($currentPage <= $totalPages);
         }
+
+        ini_set('memory_limit', $memory_limit);
+        ini_set('max_execution_time', $time_limit);
 
         return view('test.miningtax.observers')->with('ledgers', $ledgers)
                                                ->with('observers', $observers);
