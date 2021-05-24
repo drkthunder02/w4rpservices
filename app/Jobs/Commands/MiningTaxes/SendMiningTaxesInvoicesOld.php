@@ -72,8 +72,8 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
 
         //Pluck all the users from the database of ledgers to determine if they are mains or alts.
         $tempMains = Ledger::where([
-            'invoiced' => 'Yes',
-        ])->where('last_updated', '>', Carbon::now()->subMonths(3))->pluck('character_id');
+            'invoiced' => 'No',
+        ])->where('last_updated', '>', Carbon::now()->subDays(7))->pluck('character_id');
         
         //Get the unique character ids from the ledgers in the previous statement
         $tempMains = $tempMains->unique()->values()->all();
@@ -92,21 +92,20 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
          */
         foreach($mains as $main) {
             //Declare some variables for each run through the for loop
-            $mainLedgerCount = 0;
             $ledgers = new Collection;
 
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
                 'character_id' => $main,
-                'invoiced' => 'Yes',
-            ])->where('last_updated', '>', Carbon::now()->subMonths(3))->count();
+                'invoiced' => 'No',
+            ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
 
             //If there are ledgers for the main, then let's grab them
             if($mainLedgerCount > 0) {
                 $mainLedgers = Ledger::where([
                     'character_id' => $main,
-                    'invoiced' => 'Yes',
-                ])->where('last_updated', '>', Carbon::now()->subMonths(3))->get();
+                    'invoiced' => 'No',
+                ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
 
                 //Cycle through the entries, and add them to the ledger to send with the invoice
                 foreach($mainLedgers as $row) {
@@ -116,7 +115,7 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                         'observer_id' => $row->observer_id,
                         'type_id' => $row->type_id,
                         'ore_name' => $row->ore_name,
-                        'quantity' => $row->quantity,
+                        'quantity' => (int)$row->quantity,
                         'amount' => (float)$row->amount,
                         'last_updated' => $row->last_updated,
                     ]);
@@ -135,14 +134,14 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                 foreach($alts as $alt) {
                     $altLedgerCount = Ledger::where([
                         'character_id' => $alt->character_id,
-                        'invoiced' => 'Yes',
-                    ])->where('last_updated', '>', Carbon::now()->subMonths(3))->count();
+                        'invoiced' => 'No',
+                    ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
 
                     if($altLedgerCount > 0) {
                         $altLedgers = Ledger::where([
                             'character_id' => $alt->character_id,
-                            'invoiced' => 'Yes',
-                        ])->where('last_updated', '>', Carbon::now()->subMonths(3))->get();
+                            'invoiced' => 'No',
+                        ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
 
                         foreach($altLedgers as $row) {
                             $ledgers->push([
@@ -151,7 +150,7 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
                                 'observer_id' => $row->observer_id,
                                 'type_id' => $row->type_id,
                                 'ore_name' => $row->ore_name,
-                                'quantity' => $row->quantity,
+                                'quantity' => (int)$row->quantity,
                                 'amount' => (float)$row->amount,
                                 'last_updated' => $row->last_updated,
                             ]);
@@ -164,7 +163,7 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
              * Send the collected information over to the function to send the actual mail
              */
             if($ledgers->count() > 0) {
-                $this->CreateInvoice($main->character_id, $ledgers, $mailDelay);
+                $this->CreateInvoice($main, $ledgers, $mailDelay);
             }
         }
     }
