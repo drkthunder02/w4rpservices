@@ -105,6 +105,8 @@ class TestController extends Controller
         $config = config('esi');
         $esiHelper = new Esi;
 
+        ini_set('memory_limit', -1);
+
         $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
@@ -148,6 +150,7 @@ class TestController extends Controller
             } while($currentPage <= $totalPages);
         }
 
-        return view('test.miningtax.observers')->with('ledgers', $ledgers);
+        return view('test.miningtax.observers')->with('ledgers', $ledgers)
+                                               ->with('observers', $observers);
     }
 }
