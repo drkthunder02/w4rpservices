@@ -98,8 +98,6 @@ class TestController extends Controller
             }
         }
 
-        dd($mains);
-
         /**
          * For each of the users, let's determine if there are any ledgers,
          * then determine if there are any alts and ledgers associated with the alts.
@@ -111,14 +109,14 @@ class TestController extends Controller
 
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
-                'character_id' => $main->character_id,
+                'character_id' => $main,
                 'invoiced' => 'Yes',
             ])->where('last_updated', '>', Carbon::now()->subMonths(3))->count();
 
             //If there are ledgers for the main, then let's grab them
             if($mainLedgerCount > 0) {
                 $mainLedgers = Ledger::where([
-                    'character_id' => $main->character_id,
+                    'character_id' => $main,
                     'invoiced' => 'Yes',
                 ])->where('last_updated', '>', Carbon::now()->subMonths(3))->get();
 
@@ -138,11 +136,11 @@ class TestController extends Controller
             }
 
             //Get the alt count for the main character
-            $altCount = $main->altCount();
+            $altCount = UserAlt::where(['main_id' => $main])->count();
             //If more than 0 alts, grab all the alts.
             if($altCount > 0) {
                 $alts = UserAlt::where([
-                    'main_id' => $main->character_id,
+                    'main_id' => $main,
                 ])->get();
 
                 //Cycle through the alts, and get the ledgers, and push onto the stack
