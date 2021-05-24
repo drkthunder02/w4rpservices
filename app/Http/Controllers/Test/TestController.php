@@ -85,6 +85,7 @@ class TestController extends Controller
          */
         foreach($mains as $main) {
             //Declare some variables for each run through the for loop
+            $ledge = array();
             $ledgers = new Collection;
             $mainLedgers = new Collection;
             $mainLedgerCount = 0;
@@ -105,14 +106,20 @@ class TestController extends Controller
 
                 //Cycle through the entries, and add them to the ledger to send with the invoice
                 foreach($mainLedgers as $row) {
-                    $ledgers->push([
+                    $ledge = [
                         'character_id' => $row->character_id,
                         'character_name' => $row->character_name,
                         'type_id' => $row->type_id,
                         'ore_name' => $row->ore_name,
                         'quantity' => $row->quantity,
                         'amount' => $row->amount,
-                    ]);
+                    ];
+
+                    if($ledgers->empty()) {
+                        $ledgers->collect($ledge);
+                    } else {
+                        $ledgers->push($ledge);
+                    }
                 }
             }
 
