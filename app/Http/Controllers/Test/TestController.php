@@ -86,10 +86,8 @@ class TestController extends Controller
         foreach($mains as $main) {
             //Declare some variables for each run through the for loop
             $ledge = array();
-            $ledgers = new Collection;
-            $mainLedgers = new Collection;
+            $ledgers = array();
             $mainLedgerCount = 0;
-            $altLedgers = new Collection;
             $alts = new Collection;
 
             //Count the ledgers for the main
@@ -106,20 +104,14 @@ class TestController extends Controller
 
                 //Cycle through the entries, and add them to the ledger to send with the invoice
                 foreach($mainLedgers as $row) {
-                    $ledge = [
+                    array_push($ledgers, [
                         'character_id' => $row->character_id,
                         'character_name' => $row->character_name,
                         'type_id' => $row->type_id,
                         'ore_name' => $row->ore_name,
                         'quantity' => $row->quantity,
                         'amount' => $row->amount,
-                    ];
-
-                    if($ledgers->empty()) {
-                        $ledgers->collect($ledge);
-                    } else {
-                        $ledgers->push($ledge);
-                    }
+                    ]);
                 }
             }
 
@@ -134,18 +126,18 @@ class TestController extends Controller
                 //Cycle through the alts, and get the ledgers, and push onto the stack
                 foreach($alts as $alt) {
                     $altLedgerCount = Ledger::where([
-                        'character_id' => 'No',
+                        'character_id' => $alt->character_id,
                         'invoiced' => 'Yes',
                     ])->where('last_updated', '>', Carbon::now()->subMonths(3))->count();
 
                     if($altLedgerCount > 0) {
                         $altLedgers = Ledger::where([
-                            'character_id' => 'No',
+                            'character_id' => $alt->character_id,
                             'invoiced' => 'Yes',
                         ])->where('last_updated', '>', Carbon::now()->subMonths(3))->get();
 
                         foreach($altLedgers as $row) {
-                            $ledgers->push([
+                            array_push($ledgers, [
                                 'character_id' => $row->character_id,
                                 'character_name' => $row->character_name,
                                 'type_id' => $row->type_id,
