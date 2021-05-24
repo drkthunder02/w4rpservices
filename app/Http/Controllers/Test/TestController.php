@@ -83,9 +83,9 @@ class TestController extends Controller
         //Pluck all the users from the database of ledgers to determine if they are mains or alts.
         $mains = Ledger::where([
             'invoiced' => 'Yes',
-        ])->where('last_updated', '>', Carbon::now()->subMonths(3))->pluck('character_id')->toArray();
+        ])->where('last_updated', '>', Carbon::now()->subMonths(3))->pluck('character_id')->unique('character_id')->toArray();
 
-        dd($mains);
+        
 
         /**
          * For each of the users, let's determine if there are any ledgers,
