@@ -75,6 +75,7 @@ class TestController extends Controller
     public function DebugMiningObservers() {
         //Declare variables
         $mailDelay = 15;
+        $config = config('esi');
 
         //Get the users from the database
         $mains = User::all();
