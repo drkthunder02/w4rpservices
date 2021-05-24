@@ -62,7 +62,6 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
     {
         //Declare variables
         $mailDelay = 15;
-        $config = config('esi');
         $mains = new Collection;
 
         /**
@@ -79,6 +78,8 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
         //Get the unique character ids from the ledgers in the previous statement
         $tempMains = $tempMains->unique()->values()->all();
 
+        //Cycle through the array of mains, and remove any characters which are in the User Alt table,
+        //as those characters will be grouped with their correct main later.
         for($i = 0; $i < sizeof($tempMains); $i++) {
             if(UserAlt::where(['character_id' => $tempMains[$i]])->count() == 0) {
                 $mains->push($tempMains[$i]);
