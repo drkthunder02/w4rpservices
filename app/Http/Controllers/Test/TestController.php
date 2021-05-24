@@ -94,14 +94,14 @@ class TestController extends Controller
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
                 'character_id' => $main->character_id,
-            ])->count();
+            ])->where('last_updated', '>', '2021-05-01')->count();
 
             //If there are ledgers for the main, then let's grab them
             if($mainLedgerCount > 0) {
                 $mainLedgers = Ledger::where([
                     'character_id' => $main->character_id,
                     'invoiced' => 'No',
-                ])->get();
+                ])->where('last_updated', '>', '2021-05-01')->get();
 
                 //Cycle through the entries, and add them to the ledger to send with the invoice
                 foreach($mainLedgers as $row) {
@@ -128,14 +128,14 @@ class TestController extends Controller
                 foreach($alts as $alt) {
                     $altLedgerCount = Ledger::where([
                         'character_id' => 'No',
-                        'invoiced' => 'No',
-                    ])->count();
+                        'invoiced' => 'Yes',
+                    ])->where('last_updated', '>', '2021-05-01')->count();
 
                     if($altLedgerCount > 0) {
                         $altLedgers = Ledger::where([
                             'character_id' => 'No',
-                            'invoiced' => 'No',
-                        ])->get();
+                            'invoiced' => 'Yes',
+                        ])->where('last_updated', '>', '2021-05-01')->get();
 
                         foreach($altLedgers as $row) {
                             $ledgers->push([
