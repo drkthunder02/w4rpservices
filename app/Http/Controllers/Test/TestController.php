@@ -76,6 +76,7 @@ class TestController extends Controller
         //Declare variables
         $mailDelay = 15;
         $config = config('esi');
+        $mains = new Collection;
 
         /**
          * This section will determine if users are mains or alts of a main.
@@ -91,7 +92,13 @@ class TestController extends Controller
         //Get the unique character ids from the ledgers in the previous statement
         $tempMains = $tempMains->unique()->values()->all();
 
-        dd($tempMains);
+        for($i = 0; $i < sizeof($tempMains); $i++) {
+            if(UserAlt::where(['character_id' => $tempMains[$i]])->count() == 0) {
+                $mains->push($tempMains[$i]);
+            }
+        }
+
+        dd($mains);
 
         /**
          * For each of the users, let's determine if there are any ledgers,
