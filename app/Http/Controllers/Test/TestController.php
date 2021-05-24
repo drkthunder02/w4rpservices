@@ -73,60 +73,85 @@ class TestController extends Controller
     }
 
     public function DebugMiningObservers() {
-        $ledgers = array();
-        $lookup = new LookupHelper;
-        $config = config('esi');
-        $esiHelper = new Esi;
+        //Declare variables
+        $mailDelay = 15;
 
-        $time_limit = ini_get('max_execution_time');
-        $memory_limit = ini_get('memory_limit');
+        //Get the users from the database
+        $mains = User::all();
 
-        ini_set('memory_limit', -1);
-        ini_set('max_execution_time', 600);
+        /**
+         * For each of the users, let's determine if there are any ledgers,
+         * then determine if there are any alts and ledgers associated with the alts.
+         */
+        foreach($mains as $main) {
+            //Declare some variables for each run through the for loop
+            $ledgers = new Collection;
+            $mainLedgers = new Collection;
+            $mainLedgerCount = 0;
+            $altLedgers = new Collection;
+            $alts = new Collection;
 
-        $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
-        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+            //Count the ledgers for the main
+            $mainLedgerCount = Ledger::where([
+                'character_id' => $main->character_id,
+            ])->count();
 
-        $observers = [1035697195484, 1035697216662];
+            //If there are ledgers for the main, then let's grab them
+            if($mainLedgerCount > 0) {
+                $mainLedgers = Ledger::where([
+                    'character_id' => $main->character_id,
+                    'invoiced' => 'No',
+                ])->get();
 
-        $currentPage = 1;
-        $totalPages = 1;
-
-        foreach($observers as $observer) {
-            do {
-                if($esiHelper->TokenExpired($refreshToken)) {
-                    $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
-                    $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
-                }
-
-                $response = $esi->page($currentPage)
-                                ->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}', [
-                                    'corporation_id' => $config['corporation'],
-                                    'observer_id' => $observer['observer_id'],
-                                ]);
-
-                if($currentPage == 1) {
-                    $totalPages = $response->pages;
-                }
-
-                $tempLedgers = json_decode($response->raw, true);
-
-                foreach($tempLedgers as $ledg) {
-                    array_push($ledgers, [
-                        'observer_id' => $observer['observer_id'],
-                        'character_id' => $ledg['character_id'],
-                        'last_updated' => $ledg['last_updated'],
-                        'type_id' => $ledg['type_id'],
-                        'quantity' => $ledg['quantity'],
+                //Cycle through the entries, and add them to the ledger to send with the invoice
+                foreach($mainLedgers as $row) {
+                    $ledgers->push([
+                        'character_id' => $row->character_id,
+                        'character_name' => $row->character_name,
+                        'type_id' => $row->type_id,
+                        'ore_name' => $row->ore_name,
+                        'quantity' => $row->quantity,
+                        'amount' => $row->amount,
                     ]);
                 }
-            } while($currentPage <= $totalPages);
+            }
+
+            //Get the alt count for the main character
+            $altCount = $main->altCount();
+            //If more than 0 alts, grab all the alts.
+            if($altCount > 0) {
+                $alts = UserAlt::where([
+                    'main_id' => $main->character_id,
+                ])->get();
+
+                //Cycle through the alts, and get the ledgers, and push onto the stack
+                foreach($alts as $alt) {
+                    $altLedgerCount = Ledger::where([
+                        'character_id' => 'No',
+                        'invoiced' => 'No',
+                    ])->count();
+
+                    if($altLedgerCount > 0) {
+                        $altLedgers = Ledger::where([
+                            'character_id' => 'No',
+                            'invoiced' => 'No',
+                        ])->get();
+
+                        foreach($altLedgers as $row) {
+                            $ledgers->push([
+                                'character_id' => $row->character_id,
+                                'character_name' => $row->character_name,
+                                'type_id' => $row->type_id,
+                                'ore_name' => $row->ore_name,
+                                'quantity' => $row->quantity,
+                                'amount' => $row->amount,
+                            ]);
+                        }
+                    }
+                }
+            }   
         }
 
-        ini_set('memory_limit', $memory_limit);
-        ini_set('max_execution_time', $time_limit);
-
-        return view('test.miningtax.observers')->with('ledgers', $ledgers)
-                                               ->with('observers', $observers);
+        dd($ledgers);
     }
 }
