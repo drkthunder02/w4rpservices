@@ -86,7 +86,7 @@ class TestController extends Controller
             'invoiced' => 'Yes',
         ])->where('last_updated', '>', Carbon::now()->subMonths(3))->pluck('character_id')->get();
 
-        dd($mains)
+        dd($mains);
 
         /**
          * For each of the users, let's determine if there are any ledgers,
