@@ -148,8 +148,10 @@ class TestController extends Controller
                     }
                 }
             }
-
-            var_dump($ledgers);
+        
+            if($ledgers->count() > 0) {
+                var_dump($ledgers);
+            }
         }
     }
 }
