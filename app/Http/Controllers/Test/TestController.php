@@ -107,6 +107,7 @@ class TestController extends Controller
                     $ledgers->push([
                         'character_id' => $row->character_id,
                         'character_name' => $row->character_name,
+                        'observer_id' => $row->observer_id,
                         'type_id' => $row->type_id,
                         'ore_name' => $row->ore_name,
                         'quantity' => $row->quantity,
@@ -140,6 +141,7 @@ class TestController extends Controller
                             $ledgers->push([
                                 'character_id' => $row->character_id,
                                 'character_name' => $row->character_name,
+                                'observer_id' => $row->observer_id,
                                 'type_id' => $row->type_id,
                                 'ore_name' => $row->ore_name,
                                 'quantity' => $row->quantity,
