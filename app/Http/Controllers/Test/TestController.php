@@ -86,8 +86,7 @@ class TestController extends Controller
         foreach($mains as $main) {
             //Declare some variables for each run through the for loop
             $mainLedgerCount = 0;
-            $ledgers = array();
-            $ledge = new Collection;
+            $ledgers = new Collection;
 
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
@@ -104,16 +103,7 @@ class TestController extends Controller
 
                 //Cycle through the entries, and add them to the ledger to send with the invoice
                 foreach($mainLedgers as $row) {
-                    array_push($ledgers, [
-                        'character_id' => $row->character_id,
-                        'character_name' => $row->character_name,
-                        'type_id' => $row->type_id,
-                        'ore_name' => $row->ore_name,
-                        'quantity' => $row->quantity,
-                        'amount' => $row->amount,
-                    ]);
-
-                    $ledge->push([
+                    $ledgers->push([
                         'character_id' => $row->character_id,
                         'character_name' => $row->character_name,
                         'type_id' => $row->type_id,
@@ -123,8 +113,6 @@ class TestController extends Controller
                     ]);
                 }
             }
-
-            dd($ledge);
 
             //Get the alt count for the main character
             $altCount = $main->altCount();
@@ -148,7 +136,7 @@ class TestController extends Controller
                         ])->where('last_updated', '>', Carbon::now()->subMonths(3))->get();
 
                         foreach($altLedgers as $row) {
-                            array_push($ledgers, [
+                            $ledgers->push([
                                 'character_id' => $row->character_id,
                                 'character_name' => $row->character_name,
                                 'type_id' => $row->type_id,
@@ -163,7 +151,5 @@ class TestController extends Controller
             
             dd($ledgers);
         }
-
-        
     }
 }
