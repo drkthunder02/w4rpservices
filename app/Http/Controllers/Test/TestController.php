@@ -48,7 +48,7 @@ class TestController extends Controller
 
             $mainLedgers = Ledger::where([
                 'character_id' => $char->character_id,
-                'invoiced' => 'No',
+                'invoiced' => 'Yes',
             ])->get();
 
             if(Ledger::where([
@@ -75,7 +75,7 @@ class TestController extends Controller
                 if($alt->character_id != $char->character_id) {
                     $ledgerRows = Ledger::where([
                         'character_id' => $alt->character_id,
-                        'invoiced' => 'No',
+                        'invoiced' => 'Yes',
                     ])->get();
 
                     if($ledgerRows->count() > 0) {
