@@ -94,7 +94,7 @@ class TestController extends Controller
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
                 'character_id' => $main->character_id,
-            ])->where('last_updated', '>', '2021-05-01')->count();
+            ])->where('last_updated', '>', '2021-03-01')->count();
 
             dd($mainLedgerCount);
 
@@ -103,7 +103,7 @@ class TestController extends Controller
                 $mainLedgers = Ledger::where([
                     'character_id' => $main->character_id,
                     'invoiced' => 'No',
-                ])->where('last_updated', '>', '2021-05-01')->get();
+                ])->where('last_updated', '>', '2021-03-01')->get();
 
                 //Cycle through the entries, and add them to the ledger to send with the invoice
                 foreach($mainLedgers as $row) {
@@ -131,13 +131,13 @@ class TestController extends Controller
                     $altLedgerCount = Ledger::where([
                         'character_id' => 'No',
                         'invoiced' => 'Yes',
-                    ])->where('last_updated', '>', '2021-05-01')->count();
+                    ])->where('last_updated', '>', '2021-03-01')->count();
 
                     if($altLedgerCount > 0) {
                         $altLedgers = Ledger::where([
                             'character_id' => 'No',
                             'invoiced' => 'Yes',
-                        ])->where('last_updated', '>', '2021-05-01')->get();
+                        ])->where('last_updated', '>', '2021-03-01')->get();
 
                         foreach($altLedgers as $row) {
                             $ledgers->push([
