@@ -89,7 +89,8 @@ class TestController extends Controller
         ])->where('last_updated', '>', Carbon::now()->subMonths(3))->pluck('character_id');
         
         //Get the unique character ids from the ledgers in the previous statement
-        $tempMains = $tempMains->unique()->values()->all()->toArray();
+        $tempMains = $tempMains->unique()->values()->all();
+        $tempMains = $tempMains->toArray();
 
         dd($tempMains);
 
