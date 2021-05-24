@@ -100,7 +100,7 @@ class TestController extends Controller
     }
 
     public function DebugMiningObservers() {
-        $ledgers = new Collection;
+        $ledgers = array();
         $lookup = new LookupHelper;
         $config = config('esi');
         $esiHelper = new Esi;
@@ -137,7 +137,7 @@ class TestController extends Controller
                 $tempLedgers = json_decode($response->raw, true);
 
                 foreach($tempLedgers as $ledg) {
-                    $ledgers->push([
+                    array_push($ledgers, [
                         'observer_id' => $observer['observer_id'],
                         'character_id' => $ledg['character_id'],
                         'last_updated' => $ledg['last_updated'],
