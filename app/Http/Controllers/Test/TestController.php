@@ -87,6 +87,7 @@ class TestController extends Controller
             //Declare some variables for each run through the for loop
             $mainLedgerCount = 0;
             $ledgers = array();
+            $ledge = new Collection;
 
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
@@ -111,10 +112,19 @@ class TestController extends Controller
                         'quantity' => $row->quantity,
                         'amount' => $row->amount,
                     ]);
+
+                    $ledge->push([
+                        'character_id' => $row->character_id,
+                        'character_name' => $row->character_name,
+                        'type_id' => $row->type_id,
+                        'ore_name' => $row->ore_name,
+                        'quantity' => $row->quantity,
+                        'amount' => $row->amount,
+                    ]);
                 }
             }
 
-            dd($ledgers);
+            dd($ledge);
 
             //Get the alt count for the main character
             $altCount = $main->altCount();
