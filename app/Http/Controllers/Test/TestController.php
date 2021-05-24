@@ -90,7 +90,6 @@ class TestController extends Controller
         
         //Get the unique character ids from the ledgers in the previous statement
         $tempMains = $tempMains->unique()->values()->all();
-        $tempMains = $tempMains->toArray();
 
         dd($tempMains);
 
