@@ -115,6 +115,8 @@ class TestController extends Controller
                 }
             }
 
+            dd($ledgers);
+
             //Get the alt count for the main character
             $altCount = $main->altCount();
             //If more than 0 alts, grab all the alts.
