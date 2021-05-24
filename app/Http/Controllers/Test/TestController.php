@@ -114,11 +114,7 @@ class TestController extends Controller
         $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
-        $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
-            'corporation_id' => $config['corporation'],
-        ]);
-
-        $observers = json_decode($response->raw, true);
+        $observers = [1035697195484, 1035697216662];
 
         $currentPage = 1;
         $totalPages = 1;
