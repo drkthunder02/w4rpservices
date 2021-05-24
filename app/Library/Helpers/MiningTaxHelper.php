@@ -14,8 +14,9 @@ use App\Library\Helpers\LookupHelper;
 //Models
 use App\Models\MiningTax\Invoice;
 use App\Models\MiningTax\Ledger;
-use App\Models\User\User;
-use App\Models\User\UserAlt;
+
+//Jobs
+use App\Jobs\Commands\Eve\SendEveMail;
 
 class MiningTaxHelper {
     /**
@@ -28,14 +29,14 @@ class MiningTaxHelper {
     public function __construct() {
 
     }
-    
+
     /**
-     * Get the main character ledgers and send back as a collection
+     * Get the ledgers for a certain character and send back as a collection
      * 
      * @var $charId
      * @return collection $ledgers
      */
-    public function GetMainLedgers($charId) {
+    public function GetLedgers(int $charId) {
         $ledgers = new Collection;
 
         $rowCount = Ledger::where([
@@ -43,12 +44,12 @@ class MiningTaxHelper {
             'invoiced' => 'No',
         ])->count();
 
-        $rows = Ledger::where([
-            'character_id' => $charId,
-            'invoiced' => 'No',
-        ])->get()->toArry();
-
         if($rowCount > 0) {
+            $rows = Ledger::where([
+                'character_id' => $charId,
+                'invoiced' => 'No',
+            ])->get()->toArray();
+
             foreach($rows as $row) {
                 $ledgers->push($row);
             }
@@ -58,16 +59,14 @@ class MiningTaxHelper {
     }
 
     /**
-     * Get the alt characters ledgers and send back as a collection
+     * Create the invoice and mail it
      * 
-     * @var array $alts
-     * @return collection ledgers
+     * @var int $charId
+     * @var collection $ledgers
+     * @var int $mailDelay
+     * 
      */
-    public function GetAltLedgers($alts) {
-        $ledgers = new Collection;
-
-
-    }
-
-    public function 
+    public function MailMiningInvoice(int $charId, collection $ledgers, int &$mailDelay) {
+        
+    } 
 }

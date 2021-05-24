@@ -92,20 +92,7 @@ class ProcessMiningTaxesLedgers implements ShouldQueue
                 'last_updated' => $this->ledger->last_updated,
             ])->count();
 
-            if($found > 0) {
-                Ledger::where([
-                    'character_id' => $this->ledger->character_id,
-                    'character_name' => $charName,
-                    'observer_id' => $this->observerId,
-                    'type_id' => $this->ledger->type_id,
-                    'quantity' => $this->ledger->quantity,
-                    'last_updated' => $this->ledger->last_updated,
-                ])->update([
-                    'last_updated' => $this->ledger->last_updated,
-                    'quantity' => $this->ledger->quantity,
-                    'amount' => $amount,
-                ]);
-            } else {
+            if($found == 0) {
                 $ledg = new Ledger;
                 $ledg->character_id = $this->ledger->character_id;
                 $ledg->character_name = $charName;
