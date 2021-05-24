@@ -164,7 +164,7 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
         $invoiceId = "M" . uniqid();
 
         //Get the sum of all the ledgers
-        $invoiceAmount = round(($ledgers->sum('amount') * $config['mining_tax']), 2);
+        $invoiceAmount = round(((float)$ledgers->sum('amount') * (float)$config['mining_tax']), 2);
 
         //Get the character name from the lookup table
         $charName = $lookup->CharacterIdToName($charId);
@@ -174,22 +174,25 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
         $invoiceDate = Carbon::now();
 
         //Set the mining tax from the config file
-        $numberMiningTax = number_format(($config['mining_tax'] * 100.00), 2, ".", ",");
+        $numberMiningTax = number_format(((float)$config['mining_tax'] * (float)100.00), 2, ".", ",");
 
         //Create the list of ores to put in the mail
         $temp = $ledgers->toArray();
         foreach($temp as $t) {
             //If the key isn't set, set it to the default of 0
             if(!isset($ores[$t['type_id']])) {
-                $ores[$t['type_id']] = 0;
+                $ores[$t['type_id']] = (int)0;
             }
-            //Add the quantity into the ores array
-            $ores[$t['type_id']] += $t['quantity'];
 
+            //Add the quantity into the ores array
+            $ores[$t['type_id']] += (int)$t['quantity'];
+
+            //Create a list of character names
             if(!isset($characters[$t['character_name']])) {
                 $characters[$t['character_name']] = $t['character_name'];
             }
 
+            //Create a list of character ids
             if(!isset($characterIds[$t['character_id']])) {
                 $characterIds[$t['character_id']] = $t['character_id'];
             }
