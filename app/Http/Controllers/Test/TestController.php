@@ -85,21 +85,20 @@ class TestController extends Controller
          */
         foreach($mains as $main) {
             //Declare some variables for each run through the for loop
-            $ledge = array();
-            $ledgers = array();
             $mainLedgerCount = 0;
-            $alts = new Collection;
+            $ledgers = array();
 
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
                 'character_id' => $main->character_id,
+                'invoiced' => 'Yes',
             ])->where('last_updated', '>', Carbon::now()->subMonths(3))->count();
 
             //If there are ledgers for the main, then let's grab them
             if($mainLedgerCount > 0) {
                 $mainLedgers = Ledger::where([
                     'character_id' => $main->character_id,
-                    'invoiced' => 'No',
+                    'invoiced' => 'Yes',
                 ])->where('last_updated', '>', Carbon::now()->subMonths(3))->get();
 
                 //Cycle through the entries, and add them to the ledger to send with the invoice
