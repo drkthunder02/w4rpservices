@@ -105,7 +105,7 @@ class FetchMiningTaxesLedgers implements ShouldQueue
              * library functionality.
              */
             if($esiHelper->TokenExpired($refreshToken)) {
-                $refreshToken = $esiHelper->GetRefreshToken($charId);
+                $refreshToken = $esiHelper->GetRefreshToken($this->charId);
                 $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
             }
 

@@ -149,6 +149,7 @@ Route::group(['middleware' => ['auth']], function(){
      */
     Route::get('/test/char/display', 'Test\TestController@displayCharTest');
     Route::get('/test/miningtax/invoice', 'Test\TestController@DebugMiningTaxesInvoices');
+    Route::get('/test/miningtax/observers', 'Test\TestController@DebugMiningObservers');
 
 });
 

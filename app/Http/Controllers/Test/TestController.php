@@ -12,10 +12,12 @@ use Illuminate\Support\Str;
 
 //Application Library
 use App\Library\Helpers\LookupHelper;
+use App\Library\Esi\Esi;
 
 //Models
 use App\Models\MiningTax\Invoice;
 use App\Models\MiningTax\Ledger;
+use App\Models\MiningTax\Observer;
 use App\Models\User\UserAlt;
 use App\Models\User\User;
 
@@ -29,10 +31,6 @@ class TestController extends Controller
         $char = $lookup->GetCharacterInfo($config['primary']);
 
         return view('test.char.display')->with('char', $char);
-    }
-
-    public function CharacterLookupTest(Request $request) {
-        
     }
 
     public function DebugMiningTaxesInvoices() {
@@ -69,7 +67,7 @@ class TestController extends Controller
                         'amount' => $row->amount,
                         'invoiced' => $row->invoiced,
                         'invoice_id' => $row->invoice_id,
-                    ])
+                    ]);
                 }
             }
 
@@ -92,13 +90,65 @@ class TestController extends Controller
                             'amount' => $row->amount,
                             'invoiced' => $row->invoiced,
                             'invoice_id' => $row->invoice_id,
-                        ])
+                        ]);
                     }
                 }
             }
         }
 
         return view('test.miningtax.invoice')->with('ledgers', $ledgers);
+    }
+
+    public function DebugMiningObservers() {
+        $ledgers = new Collection;
+        $lookup = new LookupHelper;
+        $config = config('esi');
+        $esiHelper = new Esi;
+
+        $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
+        $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+
+        $response = $esi->invoke('get', '/corporation/{corporation_id}/mining/observers/', [
+            'corporation' => $config['corporation'],
+        ]);
+
+        $resp = json_decode($response->raw, true);
+
+        $currentPage = 1;
+        $totalPages = 1;
+
+        foreach($observers as $observer) {
+            do {
+                if($esiHelper->TokenExpired($refreshToken)) {
+                    $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
+                    $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
+                }
+
+                $response = $esi->page($currentPage)
+                                ->invoke('get', '/corporation/{corporation_id}/mining/observers/{observer_id}', [
+                                    'corporation_id' => $config['corporation'],
+                                    'observer_id' => $observer['observer_id'],
+                                ]);
+
+                if($currentPage == 1) {
+                    $totalPages = $response->pages;
+                }
+
+                $tempLedgers = json_decode($response->raw, true);
+
+                foreach($tempLedgers as $ledg) {
+                    $ledgers->push([
+                        'observer_id' => $observer['observer_id'],
+                        'character_id' => $ledg['character_id'],
+                        'last_updated' => $ledg['last_updated'],
+                        'type_id' => $ledg['type_id'],
+                        'quantity' => $ledg['quantity'],
+                    ]);
+                }
+            } while($currentPage <= $totalPages);
+        }
+
+        return view('test.miningtax.observers')->with('ledgers', $ledgers);
     }
 
     public function DebugMiningTaxes($invoiceId) {
