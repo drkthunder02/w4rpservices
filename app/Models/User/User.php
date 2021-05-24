@@ -63,6 +63,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\User\UserAlt', 'character_id', 'main_id');
     }
 
+    public function altCount() {
+        return $this->hasMany('App\Models\User\UserAlt', 'character_id', 'main_id')->count();
+    }
+
     public function hasPermission($permission) {
         $found = UserPermission::where(['character_id' => $this->character_id, 'permission' => $permission])->get(['permission']);
         foreach($found as $foo) {
