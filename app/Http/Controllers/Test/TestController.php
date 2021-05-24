@@ -96,6 +96,8 @@ class TestController extends Controller
                 'character_id' => $main->character_id,
             ])->where('last_updated', '>', '2021-05-01')->count();
 
+            dd($mainLedgerCount);
+
             //If there are ledgers for the main, then let's grab them
             if($mainLedgerCount > 0) {
                 $mainLedgers = Ledger::where([
