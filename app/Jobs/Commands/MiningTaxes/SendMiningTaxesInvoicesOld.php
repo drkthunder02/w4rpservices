@@ -62,9 +62,28 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
     {
         //Declare variables
         $mailDelay = 15;
+        $config = config('esi');
+        $mains = new Collection;
 
-        //Get the users from the database
-        $mains = User::all();
+        /**
+         * This section will determine if users are mains or alts of a main.
+         * If they are mains, we keep the key.  If they are alts of a main, then we delete
+         * the key from the collection.
+         */
+
+        //Pluck all the users from the database of ledgers to determine if they are mains or alts.
+        $tempMains = Ledger::where([
+            'invoiced' => 'Yes',
+        ])->where('last_updated', '>', Carbon::now()->subMonths(3))->pluck('character_id');
+        
+        //Get the unique character ids from the ledgers in the previous statement
+        $tempMains = $tempMains->unique()->values()->all();
+
+        for($i = 0; $i < sizeof($tempMains); $i++) {
+            if(UserAlt::where(['character_id' => $tempMains[$i]])->count() == 0) {
+                $mains->push($tempMains[$i]);
+            }
+        }
 
         /**
          * For each of the users, let's determine if there are any ledgers,
@@ -72,63 +91,68 @@ class SendMiningTaxesInvoicesOld implements ShouldQueue
          */
         foreach($mains as $main) {
             //Declare some variables for each run through the for loop
+            $mainLedgerCount = 0;
             $ledgers = new Collection;
 
             //Count the ledgers for the main
             $mainLedgerCount = Ledger::where([
-                'character_id' => $main->character_id,
-                'invoiced' => 'No',
-            ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
+                'character_id' => $main,
+                'invoiced' => 'Yes',
+            ])->where('last_updated', '>', Carbon::now()->subMonths(3))->count();
 
             //If there are ledgers for the main, then let's grab them
             if($mainLedgerCount > 0) {
                 $mainLedgers = Ledger::where([
-                    'character_id' => $main->character_id,
-                    'invoiced' => 'No',
-                ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
+                    'character_id' => $main,
+                    'invoiced' => 'Yes',
+                ])->where('last_updated', '>', Carbon::now()->subMonths(3))->get();
 
                 //Cycle through the entries, and add them to the ledger to send with the invoice
                 foreach($mainLedgers as $row) {
                     $ledgers->push([
                         'character_id' => $row->character_id,
                         'character_name' => $row->character_name,
+                        'observer_id' => $row->observer_id,
                         'type_id' => $row->type_id,
                         'ore_name' => $row->ore_name,
                         'quantity' => $row->quantity,
                         'amount' => (float)$row->amount,
+                        'last_updated' => $row->last_updated,
                     ]);
                 }
             }
 
             //Get the alt count for the main character
-            $altCount = $main->altCount();
+            $altCount = UserAlt::where(['main_id' => $main])->count();
             //If more than 0 alts, grab all the alts.
             if($altCount > 0) {
                 $alts = UserAlt::where([
-                    'main_id' => $main->character_id,
+                    'main_id' => $main,
                 ])->get();
 
                 //Cycle through the alts, and get the ledgers, and push onto the stack
                 foreach($alts as $alt) {
                     $altLedgerCount = Ledger::where([
                         'character_id' => $alt->character_id,
-                        'invoiced' => 'No',
-                    ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
+                        'invoiced' => 'Yes',
+                    ])->where('last_updated', '>', Carbon::now()->subMonths(3))->count();
 
                     if($altLedgerCount > 0) {
                         $altLedgers = Ledger::where([
                             'character_id' => $alt->character_id,
-                            'invoiced' => 'No',
-                        ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
+                            'invoiced' => 'Yes',
+                        ])->where('last_updated', '>', Carbon::now()->subMonths(3))->get();
 
                         foreach($altLedgers as $row) {
                             $ledgers->push([
                                 'character_id' => $row->character_id,
                                 'character_name' => $row->character_name,
+                                'observer_id' => $row->observer_id,
                                 'type_id' => $row->type_id,
                                 'ore_name' => $row->ore_name,
                                 'quantity' => $row->quantity,
                                 'amount' => (float)$row->amount,
+                                'last_updated' => $row->last_updated,
                             ]);
                         }
                     }
