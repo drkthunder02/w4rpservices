@@ -39,6 +39,9 @@ class TestController extends Controller
         $perms = new Collection;
         
 
+        var_dump(auth()->user()->userAlts());
+        dd(auth()->user()->altCount());
+
         //Get all of the users in the database
         $users = User::all();
 
