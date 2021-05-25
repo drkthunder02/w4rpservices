@@ -75,6 +75,20 @@ class MiningTaxesAdminController extends Controller
     }
 
     /**
+     * Display page to modify an unpaid invoice
+     */
+    public function DisplayModifyInvoice() {
+
+    }
+
+    /**
+     * Modify an unpaid invoice
+     */
+    public function ProcessModifyInvoice() {
+        
+    }
+
+    /**
      * Mark an invoice paid
      */
     public function UpdateInvoice(Request $request) {
