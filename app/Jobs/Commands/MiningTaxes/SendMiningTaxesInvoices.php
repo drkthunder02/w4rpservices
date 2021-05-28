@@ -61,158 +61,121 @@ class SendMiningTaxesInvoices implements ShouldQueue
     public function handle()
     {
         //Declare variables
-        $lookup = new LookupHelper;
-        $config = config('esi');
-        $mainAlts = array();
         $mailDelay = 15;
-        $mainIds = new Collection;
+        $mains = new Collection;
 
-        //Get all of the users in the database
-        $users = User::all();
+        /**
+         * This section will determine if users are mains or alts of a main.
+         * If they are mains, we keep the key.  If they are alts of a main, then we delete
+         * the key from the collection.
+         */
 
-        //Get a list of the alts for each character, then process the ledgers and combine them to send one mail out
-        //in this first part
-        foreach($users as $char) {
-            //Gather up all of the ledgers from the character and its alts.
-            $ledgers = $this->LedgersWithAlts($char->character_id);
-
-            //If the size of the ledgers array is greater than 0, then we need to invoice the ledgers
-            if(sizeof($ledgers) > 0) {
-                //Create an invoice from the ledger rows
-                $this->CreateInvoice($char->character_id, $ledgers, $mailDelay);
-            }
-        }
-
-        //Get the ledgers characters which haven't had an invoice created yet.
-        $charIds = Ledger::where([
+        //Pluck all the users from the database of ledgers to determine if they are mains or alts.
+        $tempMains = Ledger::where([
             'invoiced' => 'No',
-        ])->distinct('character_id')
-          ->pluck('character_id');
+        ])->where('last_updated', '>', Carbon::now()->subDays(7))->pluck('character_id');
+        
+        //Get the unique character ids from the ledgers in the previous statement
+        $tempMains = $tempMains->unique()->values()->all();
 
-        if($charIds == null) {
-            return 0;
+        //Cycle through the array of mains, and remove any characters which are in the User Alt table,
+        //as those characters will be grouped with their correct main later.
+        for($i = 0; $i < sizeof($tempMains); $i++) {
+            if(UserAlt::where(['character_id' => $tempMains[$i]])->count() == 0) {
+                $mains->push($tempMains[$i]);
+            }
         }
 
-        $this->CreateOtherInvoices($charIds, $mailDelay);
+        /**
+         * For each of the users, let's determine if there are any ledgers,
+         * then determine if there are any alts and ledgers associated with the alts.
+         */
+        foreach($mains as $main) {
+            //Declare some variables for each run through the for loop
+            $ledgers = new Collection;
 
-        return 0;
-    }
-
-    private function CreateOtherInvoices($charIds, $mailDelay) {
-        foreach($charIds as $charId) {
-            $invoice = array();
-            $ores = array();
-            $totalPrice = 0.00;
-            $body = null;
-            $lookup = new LookupHelper;
-            $config = config('esi');
-
-            //Get the actual rows
-            $rows = Ledger::where([
-                'character_id' => $charId,
+            //Count the ledgers for the main
+            $mainLedgerCount = Ledger::where([
+                'character_id' => $main,
                 'invoiced' => 'No',
-            ])->get()->toArray();
+            ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
 
-            //Taly up the item composition from each row and multiply by the quantity
-            if(sizeof($rows) > 0) {
-                foreach($rows as $row) {
-                    if(!isset($ores[$row['type_id']])) {
-                        $ores[$row['type_id']] = 0;
-                    }
-                    $ores[$row['type_id']] = $ores[$row['type_id']] + $row['quantity'];
-    
-                    //Add up the total price from the ledger rows for the report later
-                    $totalPrice = $totalPrice + $row['amount'];
-                }
-    
-                //Reduce the total price by the take percentage
-                $invoiceAmount = $totalPrice * $config['mining_tax'];
-                $invoiceAmount = round($invoiceAmount, 2);
-                
-                //Get the character name from the character id
-                $charName = $lookup->CharacterIdToName($charId);
-    
-                //Generate a unique invoice id
-                $invoiceId = "M" . uniqid();
-                //Set the due date of the invoice
-                $dateDue = Carbon::now()->addDays(7);
-                $invoiceDate = Carbon::now();
-    
-                //Format the mining tax into a human readable number
-                $numberMiningTax = number_format(($config['mining_tax'] * 100.00), 2, ".", ",");
-    
-                //Create the mail body
-                $body .= "Dear Miner,<br><br>";
-                $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
-                foreach($ores as $ore => $quantity) {
-                    $oreName = $lookup->ItemIdToName($ore);
-                    $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
-                }
-                $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
-                $body .= "<br><br>";
-                $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
-                $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
-                $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
-                $body .= "<br><br>";
-                $body .= "You can also send a contract with the following ores in the contract with the reason set as: " . $invoiceId . "<br>";
-                foreach($ores as $ore => $quantity) {
-                    $oreName = $lookup->ItemIdToName($ore);
-                    $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
-                }
-                $body .= "<br>";
-                $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
-    
-                //Check if the mail body is greater than 2000 characters.  If greater than 2,000 characters, then 
-                if(strlen($body) > 2000) {
-                    $body = "Dear Miner,<br><br>";
-                    $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
-                    $body .= "<br><br>";
-                    $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
-                    $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
-                    $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
-                    $body .= "<br>";
-                    $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
-                }
-    
-                //Mail the invoice to the character if the character is in
-                //Warped Intentions or Legacy
-                $subject = 'Warped Intentions Mining Taxes';
-                $sender = $config['primary'];
-                $recipientType = 'character';
-                $recipient = $charId;
-    
-                //Send the Eve Mail Job to the queue to be dispatched
-                SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->delay(Carbon::now()->addSeconds($mailDelay));
-    
-                //Save the invoice model
-                $invoice = new Invoice;
-                $invoice->character_id = $charId;
-                $invoice->character_name = $charName;
-                $invoice->invoice_id = $invoiceId;
-                $invoice->invoice_amount = $invoiceAmount;
-                $invoice->date_issued = $invoiceDate;
-                $invoice->date_due = $dateDue;
-                $invoice->status = 'Pending';
-                $invoice->mail_body = $body;
-                $invoice->save();
-    
-                //Update the ledger entries
-                Ledger::where([
-                    'character_id' => $charId,
+            //If there are ledgers for the main, then let's grab them
+            if($mainLedgerCount > 0) {
+                $mainLedgers = Ledger::where([
+                    'character_id' => $main,
                     'invoiced' => 'No',
-                ])->update([
-                    'invoiced' => 'Yes',
-                    'invoice_id' => $invoiceId,
-                ]);
-    
-                //update the delay
-                $mailDelay = $mailDelay + 20;
+                ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
+
+                //Cycle through the entries, and add them to the ledger to send with the invoice
+                foreach($mainLedgers as $row) {
+                    $ledgers->push([
+                        'character_id' => $row->character_id,
+                        'character_name' => $row->character_name,
+                        'observer_id' => $row->observer_id,
+                        'type_id' => $row->type_id,
+                        'ore_name' => $row->ore_name,
+                        'quantity' => (int)$row->quantity,
+                        'amount' => (float)$row->amount,
+                        'last_updated' => $row->last_updated,
+                    ]);
+                }
+            }
+
+            //Get the alt count for the main character
+            $altCount = UserAlt::where(['main_id' => $main])->count();
+            //If more than 0 alts, grab all the alts.
+            if($altCount > 0) {
+                $alts = UserAlt::where([
+                    'main_id' => $main,
+                ])->get();
+
+                //Cycle through the alts, and get the ledgers, and push onto the stack
+                foreach($alts as $alt) {
+                    $altLedgerCount = Ledger::where([
+                        'character_id' => $alt->character_id,
+                        'invoiced' => 'No',
+                    ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
+
+                    if($altLedgerCount > 0) {
+                        $altLedgers = Ledger::where([
+                            'character_id' => $alt->character_id,
+                            'invoiced' => 'No',
+                        ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
+
+                        foreach($altLedgers as $row) {
+                            $ledgers->push([
+                                'character_id' => $row->character_id,
+                                'character_name' => $row->character_name,
+                                'observer_id' => $row->observer_id,
+                                'type_id' => $row->type_id,
+                                'ore_name' => $row->ore_name,
+                                'quantity' => (int)$row->quantity,
+                                'amount' => (float)$row->amount,
+                                'last_updated' => $row->last_updated,
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            /**
+             * Send the collected information over to the function to send the actual mail
+             */
+            if($ledgers->count() > 0) {
+                $this->CreateInvoice($main, $ledgers, $mailDelay);
             }
         }
     }
 
-    private function CreateInvoice($charId, $ledgers, &$mailDelay) {
-        $invoice = array();
+    /**
+     * Create the invoice to the mail out
+     * 
+     * @var charId
+     * @var ledgers
+     * @var mailDelay
+     */
+    private function CreateInvoice($charId, Collection $ledgers, int &$mailDelay) {
         $ores = array();
         $characters = array();
         $characterIds = array();
@@ -221,200 +184,133 @@ class SendMiningTaxesInvoices implements ShouldQueue
         $lookup = new LookupHelper;
         $config = config('esi');
 
-        if(sizeof($ledgers) > 0) {
-            foreach($ledgers as $ledger) {
-                //Create the ores array indexes, then totalize the ores from each ledger entry
-                if(!isset($ores[$ledger['type_id']])) {
-                    $ores[$ledger['type_id']] = 0;
-                }
-                $ores[$ledger['type_id']] = $ores[$ledger['type_id']] + $ledger['quantity'];
-                $totalPrice = $totalPrice + $ledger['amount'];
+        //Create an invoice id 
+        $invoiceId = "M" . uniqid();
 
-                //Create a list of character names for the mail body
-                if(!isset($characters[$ledger['character_name']])) {
-                    $characters[$ledger['character_name']] = $ledger['character_name'];
-                }
+        //Get the sum of all the ledgers
+        $invoiceAmount = round(((float)$ledgers->sum('amount') * (float)$config['mining_tax']), 2);
 
-                //Create a list of character id's to update invoices before the end of the function
-                if(!isset($characterIds[$ledger['character_id']])) {
-                    $characterIds[$ledger['character_id']] = $ledger['character_id'];
-                }
+        //Get the character name from the lookup table
+        $charName = $lookup->CharacterIdToName($charId);
+
+        //Create the date due and the invoice date
+        $dateDue = Carbon::now()->addDays(7);
+        $invoiceDate = Carbon::now();
+
+        //Set the mining tax from the config file
+        $numberMiningTax = number_format(((float)$config['mining_tax'] * (float)100.00), 2, ".", ",");
+
+        //Create the list of ores to put in the mail
+        $temp = $ledgers->toArray();
+        foreach($temp as $t) {
+            //If the key isn't set, set it to the default of 0
+            if(!isset($ores[$t['type_id']])) {
+                $ores[$t['type_id']] = (int)0;
             }
 
-            $invoiceAmount = round(($totalPrice * $config['mining_tax']), 2);
+            //Add the quantity into the ores array
+            $ores[$t['type_id']] += (int)$t['quantity'];
 
-            $charName = $lookup->CharacterIdToName($charId);
-
-            $invoiceId = "M" . uniqid();
-            $dateDue = Carbon::now()->addDays(7);
-            $invoiceDate = Carbon::now();
-
-            $numberMiningTax = number_format(($config['mining_tax'] * 100.00), 2, ".", ",");
-
-            //Create the mail body
-            $body .= "Dear " . $charName . ",<br><br>";
-            $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
-            foreach($ores as $ore => $quantity) {
-                $oreName = $lookup->ItemIdToName($ore);
-                $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
+            //Create a list of character names
+            if(!isset($characters[$t['character_name']])) {
+                $characters[$t['character_name']] = $t['character_name'];
             }
+
+            //Create a list of character ids
+            if(!isset($characterIds[$t['character_id']])) {
+                $characterIds[$t['character_id']] = $t['character_id'];
+            }
+        }
+
+        /**
+         * Create the mail body to send to the main character
+         */
+        $body .= "Dear " . $charName . ",<br><br>";
+        $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
+        foreach($ores as $ore => $quantity) {
+            $oreName = $lookup->ItemIdToName($ore);
+            $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
+        }
+        $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
+        $body .= "<br><br>";
+        $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
+        $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
+        $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
+        $body .= "<br><br>";
+        $body .= "You can also send a contract with the following ores in the contract with the reason set as: " . $invoiceId . "<br>";
+        foreach($ores as $ore => $quantity) {
+            $oreName = $lookup->ItemIdToName($ore);
+            $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
+        }
+        $body .= "<br>";
+        $body .= "Characters Processed: <br>";
+        foreach($characters as $character) {
+            $body .= $character . "<br>";
+        }
+        $body .= "<br>";
+        $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
+
+        //Check if the mail body is greater than 2000 characters.  If greater than 2,000 characters, then 
+        if(strlen($body) > 2000) {
+            $body = "Dear " . $charName . "<br><br>";
             $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
             $body .= "<br><br>";
             $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
-            $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
+            $body .= "Set the reason for transfer as: " . $invoiceId . "<br>";
             $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
-            $body .= "<br><br>";
-            $body .= "You can also send a contract with the following ores in the contract with the reason set as: " . $invoiceId . "<br>";
-            foreach($ores as $ore => $quantity) {
-                $oreName = $lookup->ItemIdToName($ore);
-                $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
-            }
-            $body .= "<br>";
-            $body .= "Characters Processed: <br>";
-            foreach($characters as $character) {
-                $body .= $character . "<br>";
-            }
             $body .= "<br>";
             $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
-
-            //Check if the mail body is greater than 2000 characters.  If greater than 2,000 characters, then 
-            if(strlen($body) > 2000) {
-                $body = "Dear " . $charName . "<br><br>";
-                $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
-                $body .= "<br><br>";
-                $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
-                $body .= "Set the reason for transfer as: " . $invoiceId . "<br>";
-                $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
-                $body .= "<br>";
-                $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
-            }
-
-            //Mail the invoice to the character if the character is in
-            //Warped Intentions or Legacy
-            $subject = 'Warped Intentions Mining Taxes';
-            $sender = $config['primary'];
-            $recipientType = 'character';
-            $recipient = $charId;
-
-            //Send the Eve Mail Job to the queue to be dispatched
-            SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->delay(Carbon::now()->addSeconds($mailDelay));
-
-            //Save the invoice model
-            $invoice = new Invoice;
-            $invoice->character_id = $charId;
-            $invoice->character_name = $charName;
-            $invoice->invoice_id = $invoiceId;
-            $invoice->invoice_amount = $invoiceAmount;
-            $invoice->date_issued = $invoiceDate;
-            $invoice->date_due = $dateDue;
-            $invoice->status = 'Pending';
-            $invoice->mail_body = $body;
-            $invoice->save();
-
-            //Mark the invoices as paid
-            foreach($characterIds as $charId) {
-                Ledger::where([
-                    'character_id' => $charId,
-                    'invoiced' => 'No',
-                ])->update([
-                    'invoiced' => 'Yes',
-                    'invoice_id' => $invoiceId,
-                ]);
-            }
-
-            //Increase the delay for the next mail
-            $mailDelay += 20;
-        }
-    }
-
-    private function LedgersWithAlts($charId) {
-        $ledgers = array();
-        
-        $alts = UserAlt::where([
-            'main_id' => $charId,
-        ])->get();
-
-        $altCount = UserAlt::where([
-            'main_id' => $charId,
-        ])->count();
-
-        $rows = Ledger::where([
-            'character_id' => $charId,
-            'invoiced' => 'No',
-        ])->get();
-
-        $mainLedgerCount = Ledger::where([
-            'character_id' => $charId,
-            'invoiced' => 'No',
-        ])->count();
-
-        if($mainLedgerCount > 0) {
-            foreach($rows as $row) {
-                array_push($ledgers, [
-                    'character_id' => $row->character_id,
-                    'character_name' => $row->character_name,
-                    'observer_id' => $row->observer_id,
-                    'last_updated' => $row->last_updated,
-                    'type_id' => $row->type_id,
-                    'ore_name' => $row->ore_name,
-                    'quantity' => $row->quantity,
-                    'amount' => $row->amount,
-                    'invoiced' => $row->invoiced,
-                    'invoice_id' => $row->invoice_id,
-                ]);
-            }
         }
 
-        //If the alt count is greater than zero, let's add the alt's ledgers to the ledger array
-        if($altCount > 0) {
-            //Run through all of the alts and add the individual ledger rows to the ledger array
-            foreach($alts as $alt) {
-                //Check to make sure we aren't adding the main character twice
-                if($alt->character_id != $charId){
-                    //Get the count of the ledgers to make sure something is actually there to process
-                    $rowCount = Ledger::where([
-                        'character_id' => $alt->character_id,
-                        'invoiced' => 'No',
-                    ])->count();
+        //Mail the invoice to the character if the character is in
+        //Warped Intentions or Legacy
+        $subject = 'Warped Intentions Mining Taxes';
+        $sender = $config['primary'];
+        $recipientType = 'character';
+        $recipient = $charId;
 
-                    //If there are rows to process, get the rows, and add to the array
-                    if($rowCount > 0) {
-                        //Get all of the rows
-                        $rows = Ledger::where([
-                            'character_id' => $alt->character_id,
-                            'invoiced' => 'No',
-                        ])->get();
+        //Send the Eve Mail Job to the queue to be dispatched
+        SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->delay(Carbon::now()->addSeconds($mailDelay));
 
-                        //Add all of the rows to the ledger array
-                        foreach($rows as $row) {
-                            array_push($ledgers, [
-                                'character_id' => $row->character_id,
-                                'character_name' => $row->character_name,
-                                'observer_id' => $row->observer_id,
-                                'last_updated' => $row->last_updated,
-                                'type_id' => $row->type_id,
-                                'ore_name' => $row->ore_name,
-                                'quantity' => $row->quantity,
-                                'amount' => $row->amount,
-                                'invoiced' => $row->invoiced,
-                                'invoice_id' => $row->invoice_id,
-                            ]);
-                        }
-                    }
-                }
-            }
+        /**
+         * Create a new invoice model, and save it to the database
+         */
+        $invoice = new Invoice;
+        $invoice->character_id = $charId;
+        $invoice->character_name = $charName;
+        $invoice->invoice_id = $invoiceId;
+        $invoice->invoice_amount = $invoiceAmount;
+        $invoice->date_issued = $invoiceDate;
+        $invoice->date_due = $dateDue;
+        $invoice->status = 'Pending';
+        $invoice->mail_body = $body;
+        $invoice->save();
+
+        /**
+         * Mark the invoices as paid
+         */
+        foreach($characterIds as $char) {
+            Ledger::where([
+                'character_id' => $char,
+                'invoiced' => 'No',
+            ])->update([
+                'invoice' => $invoiceId,
+                'invoiced' => 'Yes',
+            ]);
         }
-        
-        //Return the ledgers
-        return $ledgers;
+
+        /**
+         * Increment the mail delay for the next cycle
+         */
+        $mailDelay += 20;
     }
 
     /**
-     * Set the tags for Horzion
+     * Set the tags for Horizon
      * 
      * @var array
      */
     public function tags() {
-        return ['MiningTaxes', 'SendMiningTaxesInvoices', 'Invoices'];
+        return ['MiningTaxes', 'SendMiningTaxesInvoics', 'Invoices'];
     }
 }
