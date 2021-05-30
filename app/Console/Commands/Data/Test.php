@@ -62,7 +62,7 @@ class Test extends Command
 
             $ores = AllianceMoonOre::where([
                 'moon_id' => $moon->moon_id,
-            ])->get(['ore_id', 'quantity'])->toArray();
+            ])->get(['ore_type_id', 'quantity'])->toArray();
 
             dd($ores);
         }
