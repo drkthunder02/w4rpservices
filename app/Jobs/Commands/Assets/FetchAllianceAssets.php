@@ -114,43 +114,45 @@ class FetchAllianceAssets implements ShouldQueue
            (is_string($exception->getEsiResponse()) && (stristr($exception->getEsiResponse(), 'Too many errors') || stristr($exception->getEsiResponse(), 'This software has exceeded the error limit for ESI')))) {
             
             //We have hit the error rate limiter, wait 120 seconds before releasing the job back into the queue.
-            Log::info('FetchMiningTaxesObservers has hit the error rate limiter.  Releasing the job back into the wild in 2 minutes.');
+            Log::info('FetchAllianceAssets has hit the error rate limiter.  Releasing the job back into the wild in 2 minutes.');
             $this->release(120);
         }  else {
             $errorCode = $exception->getEsiResponse()->getErrorCode();
 
             switch($errorCode) {
                 case 400:  //Bad Request
-                    Log::critical("Bad request has occurred in FetchMiningTaxesObservers.  Job has been discarded");
+                    Log::critical("Bad request has occurred in FetchAllianceAssets.  Job has been discarded");
                     break;
                 case 401:  //Unauthorized Request
-                    Log::critical("Unauthorized request has occurred in FetchMiningTaxesObservers at " . Carbon::now()->toDateTimeString() . ".\r\nCancelling the job.");
+                    Log::critical("Unauthorized request has occurred in FetchAllianceAssets at " . Carbon::now()->toDateTimeString() . ".\r\nCancelling the job.");
+                    $this->delete();
                     break;
                 case 403:  //Forbidden
-                    Log::critical("FetchMiningTaxesObservers has incurred a forbidden error.  Cancelling the job.");
+                    Log::critical("FetchAllianceAssets has incurred a forbidden error.  Cancelling the job.");
+                    $this->delete();
                     break;
                 case 420:  //Error Limited
-                    Log::warning("Error rate limit occurred in FetchMiningTaxesObservers.  Restarting job in 120 seconds.");
+                    Log::warning("Error rate limit occurred in FetchAllianceAssets.  Restarting job in 120 seconds.");
                     $this->release(120);
                     break;
                 case 500:  //Internal Server Error
-                    Log::critical("Internal Server Error for ESI in FetchMiningTaxesObservers.  Attempting a restart in 120 seconds.");
+                    Log::critical("Internal Server Error for ESI in FetchAllianceAssets.  Attempting a restart in 120 seconds.");
                     $this->release(120);
                     break;
                 case 503:  //Service Unavailable
-                    Log::critical("Service Unavailabe for ESI in FetchMiningTaxesObservers.  Releasing the job back to the queue in 30 seconds.");
+                    Log::critical("Service Unavailabe for ESI in FetchAllianceAssets.  Releasing the job back to the queue in 30 seconds.");
                     $this->release(30);
                     break;
                 case 504:  //Gateway Timeout
-                    Log::critical("Gateway timeout in FetchMiningTaxesObservers.  Releasing the job back to the queue in 30 seconds.");
+                    Log::critical("Gateway timeout in FetchAllianceAssets.  Releasing the job back to the queue in 30 seconds.");
                     $this->release(30);
                     break;
-                case 201:   //Good response code
-                    $this->delete();
+                case 201:
+                    //Good response code
                     break;
                 //If no code is given, then log and break out of switch.
                 default:
-                    Log::warning("No response code received from esi call in FetchMiningTaxesObservers.\r\n");
+                    Log::warning("No response code received from esi call in FetchAllianceAssets.\r\n");
                     $this->delete();
                     break;
             }

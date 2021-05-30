@@ -173,18 +173,20 @@ class PurgeUsers implements ShouldQueue
                                 ])->delete();
                             }
 
-                            //Delete the user from the user table
-                            User::where([
-                                'character_id' => $user->character_id,
-                            ])->delete();
-
+                            //Delete the user's esi scopes
                             EsiScope::where([
                                 'character_id' => $user->character_id,
                             ])->delete();
 
+                            //Delete the user's esi token
                             EsiToken::where([
                                 'character_id' => $user->character_id,
-                            ])->delete();                        
+                            ])->delete();    
+                            
+                            //Delete the user from the user table
+                            User::where([
+                                'character_id' => $user->character_id,
+                            ])->delete();
                         }
                     }
                 }
