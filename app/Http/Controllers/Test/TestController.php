@@ -36,31 +36,6 @@ class TestController extends Controller
         return view('test.char.display')->with('char', $char);
     }
 
-    public function TestAllianceMoonWorth() {
-        //Declare variables
-        $lookup = new LookupHelper;
-        $mHelper = new MoonCalc;
-        $months = 3;
-        $rentalTax = 0.25;
-        $worth1;
-        $worth2;
-
-        $moons = AllianceMoon::all();
-
-        foreach($moons as $moon) {
-            //Declare the arrays needed
-            $ores = array();
-
-            $ores = AllianceMoonOre::where([
-                'moon_id' => $moon->moon_id,
-            ])->get(['ore_id', 'quantity'])->toArray();
-
-            return view('test.moonworth.moon')->with('ores', $ores);
-        }
-
-        
-    }
-
     public function DebugMiningTaxesInvoices() {
         $lookup = new LookupHelper;
         $ledgers = new Collection;
