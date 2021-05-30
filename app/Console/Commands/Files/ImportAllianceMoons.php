@@ -97,7 +97,7 @@ class ImportAllianceMoons extends Command
                 $newMoon->name = $moonInfo->name;
                 $newMoon->system_id = $moonInfo->system_id;
                 $newMoon->system_name = $solarName;
-                $newMoon->worthAmount = 0.00;
+                $newMoon->worth_amount = 0.00;
                 $newMoon->rented = 'No';
                 $newMoon->rentalAmount = 0.00;
                 $newMoon->save();
