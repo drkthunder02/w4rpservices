@@ -64,6 +64,7 @@ class Test extends Command
                 'moon_id' => $moon->moon_id,
             ])->get(['ore_id', 'quantity'])->toArray();
 
+            dd($ores);
         }
     }
 }
