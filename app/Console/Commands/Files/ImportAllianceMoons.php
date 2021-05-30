@@ -74,13 +74,33 @@ class ImportAllianceMoons extends Command
             $moons->push($separated);            
         }
 
+        /**
+         * The first pass through the collection of data is to get all of the ore data
+         * and store it in the database.  From the database moon ore, we will create a list
+         * of moons and store those in the database.  After the list of moons are created in the
+         * database, the function will then update the value of all the moons.
+         */
+
         //Start working our way through all of the moons
         //and saving the data to the database
         foreach($moons as $moon) {
+            //Declare variables for each instance of the foreach loop
+            $moonId = null;
+            $moonName = null;
+            $oreId = null;
+            $oreName = null;
+            $oreQuantity = null;
+            $systemId = null;
+            $systemname = null;
+
             if($moon[0] != null) {
-                //Test print
-                printf($moon[0] . "\r\n");
+                //Do nothing
+            } else {
+                for($i = 0; $i < sizeof($moon[0]; $i++)) {
+                    var_dump($moon[0]);
+                }
             }
+
         }
 
         dd();

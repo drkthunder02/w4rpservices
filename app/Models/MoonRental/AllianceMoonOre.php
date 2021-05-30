@@ -28,7 +28,7 @@ class AllianceMoonOre extends Model
      */
     protected $fillable = [
         'moon_id',
-        'name',
+        'moon_name',
         'ore_type_id',
         'ore_name',
     ];
