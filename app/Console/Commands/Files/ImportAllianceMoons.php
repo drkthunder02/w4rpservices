@@ -99,7 +99,7 @@ class ImportAllianceMoons extends Command
                 $newMoon->system_name = $solarName;
                 $newMoon->worth_amount = 0.00;
                 $newMoon->rented = 'No';
-                $newMoon->rentalAmount = 0.00;
+                $newMoon->rental_amount = 0.00;
                 $newMoon->save();
 
                 //Save a new entry into the database
