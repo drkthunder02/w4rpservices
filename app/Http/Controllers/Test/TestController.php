@@ -55,14 +55,14 @@ class TestController extends Controller
 
             //one of these two ways will work
             $worth = $mHelper->MoonTotalWorth($ores[0][0], $ores[0][1], $ores[1][0], $ores[1][1], $ores[2][0], $ores[2][1], $ores[3][0], $ores[3][1]);
-            dd($worth);
+            
             $worth = $mHelper->MoonTotalWorth($ores[0], $ores[1], $ores[2], $ores[3], $ores[4], $ores[5], $ores[6], $ores[7]);
 
-            
+            break;
         }
 
         return view('test.moonworth.moon')->with('worth1', $worth1)
-                                              ->with('worth2', $worth2);
+                                          ->with('worth2', $worth2);
     }
 
     public function DebugMiningTaxesInvoices() {
