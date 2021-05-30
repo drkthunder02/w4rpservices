@@ -31,5 +31,8 @@ class AllianceMoonOre extends Model
         'moon_name',
         'ore_type_id',
         'ore_name',
+        'quantity',
+        'solar_system_id',
+        'planet_id',
     ];
 }

@@ -62,6 +62,9 @@ class ImportAllianceMoons extends Command
         //Create the collection of lines for the input file.
         $moons = new Collection;
 
+        AllianceMoonOre::truncate();
+        AllianceMoon::truncate();
+
         //Create the file handler
         $data = Storage::get('public/alliance_moons.txt');
         //Split the string into separate arrays based on the line
@@ -84,19 +87,19 @@ class ImportAllianceMoons extends Command
         //Start working our way through all of the moons
         //and saving the data to the database
         foreach($moons as $moon) {
-            //Declare variables for each instance of the foreach loop
-            $moonId = null;
-            $moonName = null;
-            $oreId = null;
-            $oreName = null;
-            $oreQuantity = null;
-            $systemId = null;
-            $systemname = null;
-
-            var_dump($moon);
-
+            //If the first array is null then we are dealing with an ore
+            if($moon[0] == null) {
+                //Save a new entry into the database
+                $ore = new AllianceMoonOre;
+                $ore->moon_id = $moon[6];
+                $ore->moon_name = null;
+                $ore->ore_type_id = $moon[3];
+                $ore->ore_name = $moon[1];
+                $ore->quantity = $moon[2];
+                $ore->solar_system_id = $moon[4];
+                $ore->planet_id = $moon[5];
+                $ore->save();
+            }
         }
-
-        dd();
     }
 }
