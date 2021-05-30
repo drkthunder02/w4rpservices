@@ -61,8 +61,13 @@ class ImportAllianceMoons extends Command
         //Create the collection of lines for the input file.
         $moons = new Collection;
 
-        AllianceMoonOre::truncate();
-        AllianceMoon::truncate();
+        if(!AllianceMoonOre::empty()) {
+            AllianceMoonOre::truncate();
+        }
+
+        if(!AllianceMoon::empty()) {
+            AllianceMoon::truncate();
+        }
 
         //Create the file handler
         $data = Storage::get('public/alliance_moons.txt');

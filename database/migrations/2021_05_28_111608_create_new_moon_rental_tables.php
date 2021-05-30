@@ -13,8 +13,6 @@ class CreateNewMoonRentalTables extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('alliance_moons');
-
         if(!Schema::hasTable('moon_lookup')) {
             Schema::create('moon_lookup', function (Blueprint $table) {
                 $table->id();
@@ -45,7 +43,7 @@ class CreateNewMoonRentalTables extends Migration
         }
 
         if(!Schema::hasTable('alliance_moon_ores')) {
-            Schema::create('alliance_moons', function (Blueprint $table) {
+            Schema::create('alliance_moons_ores', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('moon_id');
                 $table->string('moon_name')->default('Not Assigned');
