@@ -56,7 +56,6 @@ class ImportAllianceMoons extends Command
     public function handle()
     {
         ///universe/moons/{moon_id}/
-
         //Declare variables
         $lookup = new LookupHelper;
         //Create the collection of lines for the input file.
