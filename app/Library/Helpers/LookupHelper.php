@@ -296,7 +296,7 @@ class LookupHelper {
      */
     private function SaveMoonInfo($moon) {
         $newMoon = new MoonLookup;
-        $newMoon->moon_id = $moon->id;
+        $newMoon->moon_id = $moon->moon_id;
         $newMoon->name = $moon->name;
         $newMoon->position_x = $moon->position->x;
         $newMoon->position_y = $moon->position->y;
