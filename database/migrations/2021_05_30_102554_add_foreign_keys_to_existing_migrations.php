@@ -13,13 +13,6 @@ class AddForeignKeysToExistingMigrations extends Migration
      */
     public function up()
     {
-        Schema::table('supply_chain_bids', function(Blueprint $table) {
-            $table->foreign('contract_id', 'fk_supply_chain_contract_id')
-                  ->references('contract_id')
-                  ->on('supply_chain_contracts')
-                  ->cascadeOnDelete();
-        });
-
         Schema::table('alliance_mining_tax_ledgers', function(Blueprint $table) {
             $table->foreign('observer_id', 'fk_alliance_mining_observer_id')
                   ->references('observer_id')
