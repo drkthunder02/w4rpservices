@@ -105,7 +105,7 @@ class ImportAllianceMoons extends Command
                 //Save a new entry into the database
                 $ore = new AllianceMoonOre;
                 $ore->moon_id = $moon[6];
-                $ore->moon_name = null;
+                $ore->moon_name = $moonInfo->name;
                 $ore->ore_type_id = $moon[3];
                 $ore->ore_name = $moon[1];
                 $ore->quantity = $moon[2];
