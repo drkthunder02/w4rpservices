@@ -28,7 +28,7 @@ class CreateNewMoonRentalTables extends Migration
         if(!Schema::hasTable('alliance_moons')) {
             Schema::create('alliance_moons', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('moon_id');
+                $table->unsignedBigInteger('moon_id')->unique();
                 $table->string('name')->default('Not Assigned');
                 $table->unsignedBigInteger('system_id');
                 $table->string('system_name')->default('Not Assigned');
@@ -46,12 +46,12 @@ class CreateNewMoonRentalTables extends Migration
             Schema::create('alliance_moon_ores', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('moon_id');
-                $table->foreign('moon_id', 'fk_moon_id')
+                $table->foreign('moon_id')
                       ->references('moon_id')
                       ->on('alliance_moons')
                       ->cascadeOnDelete();
                 $table->string('moon_name');
-                $table->foreign('moon_name', 'fk_moon_name')
+                $table->foreign('moon_name')
                       ->references('moon_name')
                       ->on('alliance_moons')
                       ->cascadeOnDelete();
