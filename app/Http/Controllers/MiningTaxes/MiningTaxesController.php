@@ -40,6 +40,11 @@ class MiningTaxesController extends Controller
         $this->middleware('role:User');
     }
 
+    /**
+     * Display an invoice based on it's id
+     * 
+     * @var $invoiceId
+     */
     public function DisplayInvoice($invoiceId) {
         $ores = array();
         $totalPrice = 0.00;

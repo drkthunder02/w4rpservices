@@ -19,6 +19,7 @@ use App\Models\Lookups\CorporationLookup;
 use App\Models\Lookups\AllianceLookup;
 use App\Models\Lookups\SolarSystem;
 use App\Models\Lookups\ItemLookup;
+use App\Models\Lookups\MoonLookup;
 
 class LookupHelper {
 
@@ -250,6 +251,58 @@ class LookupHelper {
             $solar->solar_system_id = $system->id;
             $solar->save();
         }
+    }
+
+    /**
+     * Get moon information from the database, or store it in the database if it's not found
+     */
+    public function GetMoonInfo($moonId) {
+        //Check our own database first
+        $moon = $this->LookupMoonInfo($moonId);
+
+        //If no data was found in the database, then save the data, and return what is found through esi
+        if( $moon == null) {
+            try {
+                $response = $this->esi->invoke('get', '/universe/moons/{moon_id}/', [
+                    'moon_id' => $moonId,
+                ]);
+            } catch(RequestFailedException $e) {
+                Log::critical("Failed to get moon information in LookupHelper.");
+                return null;
+            }
+
+            $this->SaveMoonInfo($response);
+ 
+            return $response;
+        } else {
+            //Return the moon info
+            return $moon;
+        }
+    }
+
+    /**
+     * Lookup moon info from the database
+     */
+    private function LookupMoonInfo($moonId) {
+        $moon = MoonLookup::where([
+            'moon_id' => $moonId,
+        ])->first();
+
+        return $moon;
+    }
+
+    /**
+     * Save moon info into the lookup database
+     */
+    private function SaveMoonInfo($moon) {
+        $newMoon = new MoonLookup;
+        $newMoon->moon_id = $moon->id;
+        $newMoon->name = $moon->name;
+        $newMoon->position_x = $moon->position->x;
+        $newMoon->position_y = $moon->position->y;
+        $newMoon->position_z = $moon->position->z;
+        $newMoon->system_id = $moon->system_id;
+        $newMoon->save();
     }
 
     public function GetCharacterInfo($charId) {

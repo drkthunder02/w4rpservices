@@ -34,6 +34,27 @@ class MiningTaxesAdminController extends Controller
     }
 
     /**
+     * Display the page to setup the form for corporations to rent a moon
+     */
+    public function DisplayMoonRentalForm() {
+
+    }
+
+    /**
+     * Store the details for the form for corporations renting a specific moon
+     */
+    public function StoreMoonRentalForm() {
+
+    }
+
+    /**
+     * Remove a moon from being rented from a specific corporation
+     */
+    public function DeleteMoonRental(Request $request) {
+
+    }
+
+    /**
      * Display current unpaid invoices
      */
     public function DisplayUnpaidInvoice() {

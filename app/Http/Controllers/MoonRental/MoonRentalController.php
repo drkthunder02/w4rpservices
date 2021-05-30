@@ -18,14 +18,11 @@ class MoonRentalController extends Controller
      * Display all of the available moons for rental
      */
     public function displayMoons() {
+        $moons = AllianceMoon::where([
+            'rented' => 'No',
+        ])->get();
 
-    }
-
-    /**
-     * Display form to request new moon structure be placed
-     */
-    public function displayNewMoonRequestForm() {
-
+        return view('moon.rental.available.display')->with('moons', $moons);
     }
 
     /**
@@ -39,6 +36,13 @@ class MoonRentalController extends Controller
      * Store moon rental from the request form
      */
     public function storeMoonRentalRequest() {
+
+    }
+
+    /**
+     * Request a mail job be added to the mail queue to resend mining bill instantly
+     */
+    public function requestMoonRentalBill() {
 
     }
 }

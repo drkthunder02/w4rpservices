@@ -631,6 +631,7 @@ class ComposerStaticInitc3f953f8a7291d41a76e1664339777c9
         'App\\Library\\Helpers\\FinanceHelper' => __DIR__ . '/../..' . '/app/Library/Helpers/FinanceHelper.php',
         'App\\Library\\Helpers\\LookupHelper' => __DIR__ . '/../..' . '/app/Library/Helpers/LookupHelper.php',
         'App\\Library\\Helpers\\MiningLedgerHelper' => __DIR__ . '/../..' . '/app/Library/Helpers/MiningLedgerHelper.php',
+        'App\\Library\\Helpers\\MiningTaxHelper' => __DIR__ . '/../..' . '/app/Library/Helpers/MiningTaxHelper.php',
         'App\\Library\\Helpers\\SRPHelper' => __DIR__ . '/../..' . '/app/Library/Helpers/SRPHelper.php',
         'App\\Library\\Helpers\\StructureHelper' => __DIR__ . '/../..' . '/app/Library/Helpers/StructureHelper.php',
         'App\\Library\\Helpers\\TaxesHelper' => __DIR__ . '/../..' . '/app/Library/Helpers/TaxesHelper.php',

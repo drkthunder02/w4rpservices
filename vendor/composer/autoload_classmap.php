@@ -81,6 +81,7 @@ return array(
     'App\\Library\\Helpers\\FinanceHelper' => $baseDir . '/app/Library/Helpers/FinanceHelper.php',
     'App\\Library\\Helpers\\LookupHelper' => $baseDir . '/app/Library/Helpers/LookupHelper.php',
     'App\\Library\\Helpers\\MiningLedgerHelper' => $baseDir . '/app/Library/Helpers/MiningLedgerHelper.php',
+    'App\\Library\\Helpers\\MiningTaxHelper' => $baseDir . '/app/Library/Helpers/MiningTaxHelper.php',
     'App\\Library\\Helpers\\SRPHelper' => $baseDir . '/app/Library/Helpers/SRPHelper.php',
     'App\\Library\\Helpers\\StructureHelper' => $baseDir . '/app/Library/Helpers/StructureHelper.php',
     'App\\Library\\Helpers\\TaxesHelper' => $baseDir . '/app/Library/Helpers/TaxesHelper.php',

@@ -39,6 +39,7 @@ class Kernel extends ConsoleKernel
         Commands\MiningTaxes\ExecuteProcesssMiningTaxesPaymentsCommand::class,
         Commands\Structures\ExecuteFetchAllianceStructuresCommand::class,
         Commands\Structures\ExecuteFetchAllianceAssetsCommand::class,
+        Commands\Files\ImportAllianceMoons::class,
     ];
 
     /**
