@@ -91,16 +91,18 @@ class ImportAllianceMoons extends Command
                 $moonInfo = $lookup->GetMoonInfo($moon[6]);
                 $solarName = $lookup->SystemIdToName($moonInfo->system_id);
 
-                //Save the moon into the database
-                $newMoon = new AllianceMoon;
-                $newMoon->moon_id = $moonInfo->moon_id;
-                $newMoon->name = $moonInfo->name;
-                $newMoon->system_id = $moonInfo->system_id;
-                $newMoon->system_name = $solarName;
-                $newMoon->worth_amount = 0.00;
-                $newMoon->rented = 'No';
-                $newMoon->rental_amount = 0.00;
-                $newMoon->save();
+                if(AllianceMoon::where(['moon_id' => $moonInfo->moon_id])->count() == 0) {
+                    //Save the moon into the database
+                    $newMoon = new AllianceMoon;
+                    $newMoon->moon_id = $moonInfo->moon_id;
+                    $newMoon->name = $moonInfo->name;
+                    $newMoon->system_id = $moonInfo->system_id;
+                    $newMoon->system_name = $solarName;
+                    $newMoon->worth_amount = 0.00;
+                    $newMoon->rented = 'No';
+                    $newMoon->rental_amount = 0.00;
+                    $newMoon->save();
+                }
 
                 //Save a new entry into the database
                 $ore = new AllianceMoonOre;
