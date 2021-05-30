@@ -61,7 +61,7 @@ class UpdateAllianceWalletJournalJob implements ShouldQueue
         //If the number of pages received is zero there is an error in the job.
         if($pages == 0) {
             Log::critical('Failed to get the number of pages in the job.');
-            $this->
+            $this->delete();
         }
 
         for($i = 1; $i <= $pages; $i++) {
