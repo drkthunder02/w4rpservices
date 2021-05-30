@@ -46,7 +46,7 @@ class CreateNewMoonRentalTables extends Migration
             Schema::create('alliance_moon_ores', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('moon_id');
-                $table->string('moon_name')->default('Not Assigned');
+                $table->string('moon_name')->nullable();
                 $table->unsignedBigInteger('ore_type_id');
                 $table->string('ore_name');
                 $table->float('quantity');
