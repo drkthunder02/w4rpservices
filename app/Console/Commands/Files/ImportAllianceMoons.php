@@ -72,6 +72,10 @@ class ImportAllianceMoons extends Command
             $moons->push($separated);            
         }
 
-        dd($moons);
+        foreach($moons as $moon) {
+
+        }
+
+        dd();
     }
 }
