@@ -63,7 +63,7 @@ class ImportAllianceMoons extends Command
         ///universe/moons/{moon_id}/
 
         //Create the file handler
-        $data = Storage::get('public/alliance_moons.txt');
+        $data = Storage::get('alliance_moons.txt');
         //Split the string into separate arrays based on the line
         $data = preg_split("/\n/", $data);
 
