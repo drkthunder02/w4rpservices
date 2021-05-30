@@ -29,7 +29,7 @@ class AllianceMoon extends Model
     protected $fillable = [
         'moon_id',
         'name',
-        'system_id'
+        'system_id',
         'system_name',
         'worth_amount',
         'rented',
