@@ -12,9 +12,7 @@ This package can also sync your schedule with [Oh Dear](https://ohdear.app). Oh 
 
 ## Support us
 
-Learn how to create a package like this one, by watching our premium video course:
-
-[![Laravel Package training](https://spatie.be/github/package-training.jpg)](https://laravelpackage.training)
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-schedule-monitor.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-schedule-monitor)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
@@ -184,6 +182,21 @@ protected function schedule(Schedule $schedule)
 }
 ```
 
+### Storing output in the database
+
+You can store the output by tacking on `storeOutputInDb` when scheduling the task.
+
+```php
+// in app/Console/Kernel.php
+
+protected function schedule(Schedule $schedule)
+{
+   $schedule->command('your-command')->daily()->storeOutputInDb();
+}
+```
+
+The output will be stored in the `monitored_scheduled_task_log_items` table, in the `output` key of the `meta` column.
+
 ### Getting notified when a scheduled task doesn't finish in time
 
 This package can sync your schedule with the [Oh Dear](https://ohdear.app) cron check. Oh Dear will send you a notification whenever a scheduled task does not finish on time.
@@ -245,7 +258,7 @@ We assume that, when your scheduled tasks do not run properly, a scheduled task 
 These services can notify you when scheduled tasks do not run properly:
 
 - [Oh Dear](https://ohdear.app)
-- [thenping.me](https://thenping.me) (in closed beta)
+- [thenping.me](https://thenping.me)
 - [Cronbox](https://cronbox.app)
 - [Healthchecks.io](https://healthchecks.io)
 - [Cronitor](https://cronitor.io)
@@ -266,7 +279,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Security
 

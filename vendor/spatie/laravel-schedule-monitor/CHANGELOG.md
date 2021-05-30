@@ -2,6 +2,28 @@
 
 All notable changes to `laravel-schedule-monitor` will be documented in this file
 
+## 2.3.0 - 2021-05-13
+
+- add `storeOutputInDb`
+
+## 2.2.1 - 2021-03-29
+
+- upgrade to latest lorisleiva/cron-translator version (#40)
+
+## 2.2.0 - 2021-01-15
+
+- throw an exception if pinging Oh Dear has failed [#37](https://github.com/spatie/laravel-schedule-monitor/pull/37)
+- pass 0 instead of null parameters to Oh dear for Background tasks [#37](https://github.com/spatie/laravel-schedule-monitor/pull/37)
+
+## 2.1.0 - 2020-12-04
+
+- add support for PHP 8
+
+## 2.0.2 - 2020-10-14
+
+- drop support for Laravel 7
+- fix command description
+
 ## 2.0.1 - 2020-10-06
 
 - report right exit code for scheduled tasks in background
