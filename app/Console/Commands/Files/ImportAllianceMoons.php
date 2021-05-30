@@ -96,7 +96,7 @@ class ImportAllianceMoons extends Command
             if($moon[0] != null) {
                 //Do nothing
             } else {
-                for($i = 0; $i < sizeof($moon[0]; $i++)) {
+                for($i = 0; $i < sizeof($moon[0]); $i++)) {
                     var_dump($moon[0]);
                 }
             }
