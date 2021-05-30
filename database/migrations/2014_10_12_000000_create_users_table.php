@@ -48,7 +48,7 @@ class CreateUsersTable extends Migration
                 $table->rememberToken();
                 $table->timestamps();
 
-                $table->foreign('main_id', 'fk_main_id')
+                $table->foreign('main_id', 'fk_users_alts_main_id')
                       ->references('character_id')
                       ->on('users')
                       ->cascadeOnDelete();
@@ -62,7 +62,7 @@ class CreateUsersTable extends Migration
                 $table->string('role')->default('None');
                 $table->timestamps();
 
-                $table->foreign('character_id', 'fk_character_id')
+                $table->foreign('character_id', 'fk_user_roles_character_id')
                       ->references('character_id')
                       ->on('users')
                       ->cascadeOnDelete();
@@ -87,7 +87,7 @@ class CreateUsersTable extends Migration
                 $table->string('scope');
                 $table->timestamps();
 
-                $table->foreign('character_id', 'fk_character_id')
+                $table->foreign('character_id', 'fk_esi_scopes_character_id')
                       ->references('character_id')
                       ->on('EsiTokens')
                       ->cascadeOnDelete();
@@ -102,7 +102,7 @@ class CreateUsersTable extends Migration
                 $table->string('permission');
                 $table->timestamps();
 
-                $table->foreign('character_id', 'fk_character_id')
+                $table->foreign('character_id', 'fk_user_permissions_character_id')
                       ->references('character_id')
                       ->on('users')
                       ->cascadeOnDelete();
