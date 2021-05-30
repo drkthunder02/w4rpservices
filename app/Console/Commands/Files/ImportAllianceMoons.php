@@ -93,11 +93,7 @@ class ImportAllianceMoons extends Command
             $systemId = null;
             $systemname = null;
 
-            if($moon[0] != null) {
-                var_dump($moon[0]);
-            } else {
-                
-            }
+            var_dump($moon);
 
         }
 
