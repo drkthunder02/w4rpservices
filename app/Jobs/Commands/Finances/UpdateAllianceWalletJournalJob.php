@@ -58,6 +58,12 @@ class UpdateAllianceWalletJournalJob implements ShouldQueue
 
         $pages = $fHelper->GetAllianceWalletJournalPages(1, $config['primary']);
 
+        //If the number of pages received is zero there is an error in the job.
+        if($pages == 0) {
+            Log::critical('Failed to get the number of pages in the job.');
+            $this->
+        }
+
         for($i = 1; $i <= $pages; $i++) {
             UpdateAllianceWalletJournalPage::dispatch(1, $config['primary'], $i)->onQueue('journal');
         }

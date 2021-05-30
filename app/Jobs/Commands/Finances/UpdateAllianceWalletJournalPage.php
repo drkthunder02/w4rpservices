@@ -93,17 +93,11 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
          * Attempt to get the data from the esi api.  If it fails, we skip the page, and go onto the next page, unless
          * the failed page is the first page.
          */
-        try {
-            $journals = $esi->page($this->page)
-                            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
-                                'corporation_id' => $corpId,
-                                'division' => $this->division,
-                            ]);
-        } catch(RequestFailedException $e) {
-            Log::warning('Failed to get wallet journal page ' . $currentPage . ' for character id: ' . $charId);
-            Log::warning($e);
-            $this->delete();
-        }
+        $journals = $esi->page($this->page)
+                        ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                            'corporation_id' => $corpId,
+                            'division' => $this->division,
+                        ]);
 
         //Decode the json data, and return it as an array
         $wallet = json_decode($journals->raw, true);
@@ -157,6 +151,67 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
 
         //Return as completed
         return 0;
+    }
+
+    /**
+     * The job failed to process
+     * @param Exception $exception
+     * @return void
+     */
+    public function failed($exception) {
+        if(!exception instanceof RequestFailedException) {
+            //If not a failure due to ESI, then log it.  Otherwise,
+            //deduce why the exception occurred.
+            Log::critical($exception);
+        }
+
+        if ((is_object($exception->getEsiResponse()) && (stristr($exception->getEsiResponse()->error, 'Too many errors') || stristr($exception->getEsiResponse()->error, 'This software has exceeded the error limit for ESI'))) || 
+           (is_string($exception->getEsiResponse()) && (stristr($exception->getEsiResponse(), 'Too many errors') || stristr($exception->getEsiResponse(), 'This software has exceeded the error limit for ESI')))) {
+            
+            //We have hit the error rate limiter, wait 120 seconds before releasing the job back into the queue.
+            Log::info('UpdateAllianceWalletJournalPage has hit the error rate limiter.  Releasing the job back into the wild in 2 minutes.');
+            $this->release(120);
+        }  else {
+            $errorCode = $exception->getEsiResponse()->getErrorCode();
+
+            switch($errorCode) {
+                case 400:  //Bad Request
+                    Log::critical("Bad request has occurred in UpdateAllianceWalletJournalPage.  Job has been discarded");
+                    break;
+                case 401:  //Unauthorized Request
+                    Log::critical("Unauthorized request has occurred in UpdateAllianceWalletJournalPage at " . Carbon::now()->toDateTimeString() . ".\r\nCancelling the job.");
+                    $this->delete();
+                    break;
+                case 403:  //Forbidden
+                    Log::critical("UpdateAllianceWalletJournalPage has incurred a forbidden error.  Cancelling the job.");
+                    $this->delete();
+                    break;
+                case 420:  //Error Limited
+                    Log::warning("Error rate limit occurred in UpdateAllianceWalletJournalPage.  Restarting job in 120 seconds.");
+                    $this->release(120);
+                    break;
+                case 500:  //Internal Server Error
+                    Log::critical("Internal Server Error for ESI in UpdateAllianceWalletJournalPage.  Attempting a restart in 120 seconds.");
+                    $this->release(120);
+                    break;
+                case 503:  //Service Unavailable
+                    Log::critical("Service Unavailabe for ESI in UpdateAllianceWalletJournalPage.  Releasing the job back to the queue in 30 seconds.");
+                    $this->release(30);
+                    break;
+                case 504:  //Gateway Timeout
+                    Log::critical("Gateway timeout in UpdateAllianceWalletJournalPage.  Releasing the job back to the queue in 30 seconds.");
+                    $this->release(30);
+                    break;
+                case 201:
+                    //Good response code
+                    break;
+                //If no code is given, then log and break out of switch.
+                default:
+                    Log::warning("No response code received from esi call in UpdateAllianceWalletJournalPage.\r\n");
+                    $this->delete();
+                    break;
+            }
+        }
     }
 
     /**
