@@ -43,67 +43,29 @@ class MoonCalc {
     /**
      * Calculate the total worth of a moon
      */
-    public function SpatialMoonsTotalWorth($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
+    public function MoonTotalWorth($firstOre = null, $firstQuan = 0.00, $secondOre = null, $secondQuan = 0.00, $thirdOre = null, $thirdQuan = 0.00, $fourthOre = null, $fourthQuan = 0.00) {
         //Declare variables
-        $totalPriceMined = 0.00;
-
-        //Get the configuration for pricing calculations
-        $config = DB::table('Config')->get();
+        $total = 0.00;
 
         //Convert the quantities into numbers we want to utilize
-        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
+        $this->ConvertPercentages($firstQuan, $secondQuan, $thirdQuan, $fourthQuan);
 
         //Calculate the prices from the ores
-        if($firstOre != 'None') {
-            $totalPriceMined += $this->CalcMoonPrice($firstOre, $firstPerc);
+        if($firstOre != null) {
+            $total += $this->CalcMoonPrice($firstOre, $firstPerc);
         }
-        if($secondOre != 'None') {
-            $totalPriceMined += $this->CalcMoonPrice($secondOre, $secondPerc);
+        if($secondOre != null) {
+            $total += $this->CalcMoonPrice($secondOre, $secondPerc);
         }
-        if($thirdOre != 'None') {
-            $totalPriceMined += $this->CalcMoonPrice($thirdOre, $thirdPerc);
+        if($thirdOre != null) {
+            $total += $this->CalcMoonPrice($thirdOre, $thirdPerc);
         }
-        if($fourthOre != 'None') {
-            $totalPriceMined += $this->CalcMoonPrice($fourthOre, $fourthPerc);
+        if($fourthOre != null) {
+            $total += $this->CalcMoonPrice($fourthOre, $fourthPerc);
         }  
 
         //Return the rental price to the caller
-        return $totalPriceMined;
-    }
-
-    /**
-     * Calculate the rental price
-     */
-    public function SpatialMoons($firstOre, $firstQuan, $secondOre, $secondQuan, $thirdOre, $thirdQuan, $fourthOre, $fourthQuan) {
-        //Declare variables
-        $totalPrice = 0.00;
-
-        //Get the configuration for pricing calculations
-        $config = DB::table('Config')->get();
-
-        //Convert the quantities into numbers we want to utilize
-        $this->ConvertPercentages($firstPerc, $firstQuan, $secondPerc, $secondQuan, $thirdPerc, $thirdQuan, $fourthPerc, $fourthQuan);
-
-        //Calculate the prices from the ores
-        if($firstOre != 'None') {
-            $totalPrice += $this->CalcRentalPrice($firstOre, $firstPerc);
-        }
-        if($secondOre != 'None') {
-            $totalPrice += $this->CalcRentalPrice($secondOre, $secondPerc);
-        }
-        if($thirdOre != 'None') {
-            $totalPrice += $this->CalcRentalPrice($thirdOre, $thirdPerc);
-        }
-        if($fourthOre != 'None') {
-            $totalPrice += $this->CalcRentalPrice($fourthOre, $fourthPerc);
-        }
-
-        //Calculate the rental price.  Refined rate is already included in the price from rental composition
-        $rentalPrice['alliance'] = $totalPrice * ($config[0]->RentalTax / 100.00);
-        $rentalPrice['outofalliance'] = $totalPrice * ($config[0]->AllyRentalTax / 100.00);
-       
-        //Return the rental price to the caller
-        return $rentalPrice;
+        return $total;
     }
 
     /**
@@ -480,7 +442,7 @@ class MoonCalc {
     /**
      * Calculate the moon's total price
      */
-    private function CalcMoonPrice($ore, $percentage) {
+    public function CalcMoonPrice($ore, $percentage) {
         //Specify the total pull amount
         $totalPull = $this->CalculateTotalMoonPull();
 
@@ -612,34 +574,24 @@ class MoonCalc {
     /**
      * Convert percentages from quantities into a normalized percentage
      */
-    private function ConvertPercentages(&$firstPerc, $firstQuan, &$secondPerc, $secondQuan, &$thirdPerc, $thirdQuan, &$fourthPerc, $fourthQuan) {
-        //Set the base percentages for the if statements
-        $firstPerc = 0.00;
-        $secondPerc = 0.00;
-        $thirdPerc = 0.00;
-        $fourthPerc = 0.00;
-        
+    public function ConvertPercentages(&$firstPerc, &$secondPerc, &$thirdPerc, &$fourthPerc) {       
         //Convert the quantities into numbers we want to utilize
-        if($firstQuan >= 1.00) {
-            $firstPerc = $this->ConvertToPercentage($firstQuan);
-        } else {
-            $firstPerc = $firstQuan;
-        }
+        if($firstPerc >= 1.00) {
+            $firstPerc = $this->ConvertToPercentage($firstPerc);
+        } 
+
         if($secondQuan >= 1.00) {
-            $secondPerc = $this->ConvertToPercentage($secondQuan);
-        } else {
-            $secondPerc = $secondQuan;
-        }
+            $secondPerc = $this->ConvertToPercentage($secondPerc);
+        } 
+
         if($thirdQuan >= 1.00) {
-            $thirdPerc = $this->ConvertToPercentage($thirdQuan);
-        } else {
-            $thirdPerc = $thirdQuan;
-        }
+            $thirdPerc = $this->ConvertToPercentage($thirdPerc);
+        } 
+        
         if($fourthQuan >= 1.00) {
-            $fourthPerc = $this->ConvertToPercentage($fourthQuan);
-        } else {
-            $fourthPerc = $fourthQuan;
-        }
+            $fourthPerc = $this->ConvertToPercentage($fourthPerc);
+        } 
+        
 
         //Add up all the percentages
         $totalPerc = $firstPerc + $secondPerc + $thirdPerc + $fourthPerc;

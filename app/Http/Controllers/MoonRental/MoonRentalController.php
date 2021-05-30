@@ -29,7 +29,7 @@ class MoonRentalController extends Controller
      * Display moon rental request form
      */
     public function displayMoonRentalRequestForm() {
-
+        
     }
 
     /**

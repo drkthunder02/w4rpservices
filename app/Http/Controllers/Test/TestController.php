@@ -13,8 +13,11 @@ use Illuminate\Support\Str;
 //Application Library
 use App\Library\Helpers\LookupHelper;
 use App\Library\Esi\Esi;
+use App\Library\Moons\MoonCalc;
 
 //Models
+use App\Models\MoonRental\AllianceMoon;
+use App\Models\MoonRental\AllianceMoonOre;
 use App\Models\MiningTax\Invoice;
 use App\Models\MiningTax\Ledger;
 use App\Models\MiningTax\Observer;
@@ -31,6 +34,31 @@ class TestController extends Controller
         $char = $lookup->GetCharacterInfo($config['primary']);
 
         return view('test.char.display')->with('char', $char);
+    }
+
+    public function TestAllianceMoonWorth() {
+        //Declare variables
+        $lookup = new LookupHelper;
+        $mHelper = new MoonCalc;
+        $months = 3;
+        $rentalTax = 0.25;
+
+        $moons = AllianceMoon::all();
+
+        foreach($moons as $moon) {
+            //Declare the arrays needed
+            $ores = array();
+
+            $ores = AllianceMoonOre::where([
+                'moon_id' => $moon->moon_id,
+            ])->get(['ore_id', 'quantity'])->toArray();
+
+            //one of these two ways will work
+            $worth = $mHelper->MoonTotalWorth($ores[0][0], $ores[0][1], $ores[1][0], $ores[1][1], $ores[2][0], $ores[2][1], $ores[3][0], $ores[3[1]]);
+            dd($worth);
+            $worth = $mHelper->MoonTotalWorth($ores[0], $ores[1], $ores[2], $ores[3], $ores[4], $ores[5], $ores[6], $ores[7]);
+
+            return view('test.moonworth.moon')->with('worth', $worth);
     }
 
     public function DebugMiningTaxesInvoices() {
