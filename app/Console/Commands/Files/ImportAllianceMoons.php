@@ -55,25 +55,32 @@ class ImportAllianceMoons extends Command
      */
     public function handle()
     {
+        ///universe/moons/{moon_id}/
+
         //Declare variables
         $lookup = new LookupHelper;
         //Create the collection of lines for the input file.
         $moons = new Collection;
 
-        ///universe/moons/{moon_id}/
-
         //Create the file handler
         $data = Storage::get('public/alliance_moons.txt');
         //Split the string into separate arrays based on the line
         $lines = preg_split("/\n/", $data);
-
+        //Take each line and split it again by tabs
         foreach($lines as $temp) {
+            //Split the lines into separate arrays by tabs
             $separated = preg_split("/\t/", $temp);
+            //Push the tabbed array into the collection
             $moons->push($separated);            
         }
 
+        //Start working our way through all of the moons
+        //and saving the data to the database
         foreach($moons as $moon) {
-
+            if($moon[0] != null) {
+                //Test print
+                printf($moon[0] . "\r\n");
+            }
         }
 
         dd();
