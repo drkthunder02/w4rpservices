@@ -59,11 +59,7 @@ class ImportAllianceMoons extends Command
         //Declare variables
         $lookup = new LookupHelper;
         //Create the collection of lines for the input file.
-        $moons = new Collection;
-
-        AllianceMoonOre::truncate();
-        AllianceMoon::truncate();
-        
+        $moons = new Collection;       
 
         //Create the file handler
         $data = Storage::get('public/alliance_moons.txt');
