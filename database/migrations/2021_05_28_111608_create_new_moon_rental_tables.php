@@ -53,12 +53,12 @@ class CreateNewMoonRentalTables extends Migration
                 $table->unsignedBigInteger('solar_system_id');
                 $table->unsignedBigInteger('planet_id');
 
-                $table->foreign('moon_id')
+                $table->foreign('moon_id', 'fk_moon_id')
                       ->references('moon_id')
                       ->on('alliance_moons')
                       ->cascadeOnDelete();
 
-                $table->foreign('moon_name')
+                $table->foreign('moon_name', 'fk_moon_name')
                       ->references('name')
                       ->on('alliance_moons')
                       ->cascadeOnDelete();
@@ -95,8 +95,9 @@ class CreateNewMoonRentalTables extends Migration
     public function down()
     {
         Schema::dropIfExists('moon_lookup');
-        Schema::dropIfExists('alliance_moons');
-        Schema::dropIfExists('alliance_moon_ores');
         Schema::dropIfExists('alliance_moon_rentals');
+        Schema::dropIfExists('alliance_moon_ores');
+        Schema::dropIfExists('alliance_moons');
+        
     }
 }
