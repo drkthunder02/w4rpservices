@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             Schema::create('users', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
-                $table->integer('character_id')->unsigned()->unique();
+                $table->unsignedBigInteger('character_id')->unique();
                 $table->string('avatar');
                 $table->string('access_token')->nullable();
                 $table->string('refresh_token')->nullable();
@@ -37,8 +37,8 @@ class CreateUsersTable extends Migration
             Schema::create('user_alts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
-                $table->integer('main_id')->unsigned();
-                $table->integer('character_id')->unsigned()->unique();
+                $table->unsignedBigInteger('main_id');
+                $table->unsignedBigInteger('character_id')->unique();
                 $table->string('avatar');
                 $table->string('access_token')->nullable();
                 $table->string('refresh_token')->nullable();
@@ -47,23 +47,32 @@ class CreateUsersTable extends Migration
                 $table->string('owner_hash');
                 $table->rememberToken();
                 $table->timestamps();
+
+                $table->foreign('main_id', 'fk_main_id')
+                      ->references('character_id')
+                      ->on('users')
+                      ->cascadeOnDelete();
             });
         }
 
         if(!Schema::hasTable('user_roles')) {
             Schema::create('user_roles', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('character_id')->unsigned();
-                $table->foreign('character_id')->references('character_id')->on('users');
+                $table->unsignedBigInteger('character_id');
                 $table->string('role')->default('None');
                 $table->timestamps();
+
+                $table->foreign('character_id', 'fk_character_id')
+                      ->references('character_id')
+                      ->on('users')
+                      ->cascadeOnDelete();
             });
         }
 
         if(!Schema::hasTable('EsiTokens')) {
             Schema::create('EsiTokens', function(Blueprint $table) {
                 $table->increments('id');
-                $table->integer('character_id')->unique();
+                $table->unsignedBigInteger('character_id')->unique();
                 $table->string('access_token');
                 $table->string('refresh_token');
                 $table->integer('expires_in');
@@ -74,20 +83,29 @@ class CreateUsersTable extends Migration
         if(!Schema::hasTable('EsiScopes')) {
             Schema::create('EsiScopes', function(Blueprint $table) {
                 $table->increments('id');
-                $table->integer('character_id');
-                $table->foreign('character_id')->references('character_id')->on('EsiTokens');
+                $table->unsignedBigInteger('character_id');
                 $table->string('scope');
                 $table->timestamps();
+
+                $table->foreign('character_id', 'fk_character_id')
+                      ->references('character_id')
+                      ->on('EsiTokens')
+                      ->cascadeOnDelete();
+
             });
         }
 
         if(!Schema::hasTable('user_permissions')) {
             Schema::create('user_permissions', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('character_id')->unsigned();
-                $table->foreign('character_id')->references('character_id')->on('users');
+                $table->unsignedBigInteger('character_id');
                 $table->string('permission');
                 $table->timestamps();
+
+                $table->foreign('character_id', 'fk_character_id')
+                      ->references('character_id')
+                      ->on('users')
+                      ->cascadeOnDelete();
             });
         }
 
