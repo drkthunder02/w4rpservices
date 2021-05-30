@@ -89,7 +89,7 @@ class ImportAllianceMoons extends Command
             //If the first array is null then we are dealing with an ore
             if($moon[0] == null) {
                 $moonInfo = $lookup->GetMoonInfo($moon[6]);
-                $solarName = $lookup->SolarSystemIdToName($moonInfo->system_id);
+                $solarName = $lookup->SystemIdToName($moonInfo->system_id);
 
                 //Save the moon into the database
                 $newMoon = new AllianceMoon;
