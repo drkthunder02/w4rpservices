@@ -24,5 +24,17 @@
             <p>Ledgers</p>
           </a>
       </li>
+      <li class="nav-item">
+          <a href="/miningtax/display/availablemoons" class="nav-link">
+            <i class="fas fa-cog nav-icon"></i>
+            <p>Available Moons</p>
+          </a>
+      </li>
+      <li class="nav-item">
+          <a href="/miningtax/display/allmoons" class="nav-link">
+            <i class="fas fa-cog nav-icon"></i>
+            <p>All Moons</p>
+          </a>
+      </li>
     </ul>
   </li>
