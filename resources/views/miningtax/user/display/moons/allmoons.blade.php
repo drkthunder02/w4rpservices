@@ -34,7 +34,6 @@
                 @foreach($moons as $moon)
                     @if($moon['system'] == $system)
                     <tr>
-                    {{ dd(isset($moon['ores'][0])) }}
                     @if(isset($moon['ores'][0]))
                         @if(in_array($moon['ores'][0], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][0]['ore_name'] }}</td>
