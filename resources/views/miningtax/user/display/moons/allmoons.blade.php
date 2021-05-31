@@ -38,23 +38,23 @@
                     @if(isset($moon['ores'][0]))
                         @if(in_array($moon['ores'][0]['ore_name'], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][0]['ore_name'] }}</td>
-                        <td class="table-secondary">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
+                        <td class="table-secondary">{{ number_format(($moon['ores'][0]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][0]['ore_name'], $r8Goo))
                         <td class="table-primary">{{ $moon['ores'][0]['ore_name'] }}</td>
-                        <td class="table-primary">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
+                        <td class="table-primary">{{ number_format(($moon['ores'][0]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][0]['ore_name'], $r16Goo))
                         <td class="table-success">{{ $moon['ores'][0]['ore_name'] }}</td>
-                        <td class="table-success">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
+                        <td class="table-success">{{ number_format(($moon['ores'][0]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][0]['ore_name'], $r32Goo))
                         <td class="table-warning">{{ $moon['ores'][0]['ore_name'] }}</td>
-                        <td class="table-warning">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
+                        <td class="table-warning">{{ number_format(($moon['ores'][0]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][0]['ore_name'], $r64Goo))
                         <td class="table-danger">{{ $moon['ores'][0]['ore_name'] }}</td>
-                        <td class="table-danger">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
+                        <td class="table-danger">{{ number_format(($moon['ores'][0]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                     @else
                     <td></td>
@@ -63,23 +63,23 @@
                     @if(isset($moon['ores'][1]))
                         @if(in_array($moon['ores'][1]['ore_name'], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][1]['ore_name'] }}</td>
-                        <td class="table-secondary">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
+                        <td class="table-secondary">{{ number_format(($moon['ores'][1]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][1]['ore_name'], $r8Goo))
                         <td class="table-primary">{{ $moon['ores'][1]['ore_name'] }}</td>
-                        <td class="table-primary">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
+                        <td class="table-primary">{{ number_format(($moon['ores'][1]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][1]['ore_name'], $r16Goo))
                         <td class="table-success">{{ $moon['ores'][1]['ore_name'] }}</td>
-                        <td class="table-success">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
+                        <td class="table-success">{{ number_format(($moon['ores'][1]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][1]['ore_name'], $r32Goo))
                         <td class="table-warning">{{ $moon['ores'][1]['ore_name'] }}</td>
-                        <td class="table-warning">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
+                        <td class="table-warning">{{ number_format(($moon['ores'][1]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][1]['ore_name'], $r64Goo))
                         <td class="table-danger">{{ $moon['ores'][1]['ore_name'] }}</td>
-                        <td class="table-danger">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
+                        <td class="table-danger">{{ number_format(($moon['ores'][1]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                     @else
                     <td></td>
@@ -88,23 +88,23 @@
                     @if(isset($moon['ores'][2]))
                         @if(in_array($moon['ores'][2]['ore_name'], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][2]['ore_name'] }}</td>
-                        <td class="table-secondary">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
+                        <td class="table-secondary">{{ number_format(($moon['ores'][2]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][2]['ore_name'], $r8Goo))
                         <td class="table-primary">{{ $moon['ores'][2]['ore_name'] }}</td>
-                        <td class="table-primary">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
+                        <td class="table-primary">{{ number_format(($moon['ores'][2]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][2]['ore_name'], $r16Goo))
                         <td class="table-success">{{ $moon['ores'][2]['ore_name'] }}</td>
-                        <td class="table-success">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
+                        <td class="table-success">{{ number_format(($moon['ores'][2]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][2]['ore_name'], $r32Goo))
                         <td class="table-warning">{{ $moon['ores'][2]['ore_name'] }}</td>
-                        <td class="table-warning">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
+                        <td class="table-warning">{{ number_format(($moon['ores'][2]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][2]['ore_name'], $r64Goo))
                         <td class="table-danger">{{ $moon['ores'][2]['ore_name'] }}</td>
-                        <td class="table-danger">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
+                        <td class="table-danger">{{ number_format(($moon['ores'][2]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                     @else
                     <td></td>
@@ -113,23 +113,23 @@
                     @if(isset($moon['ores'][3]))
                         @if(in_array($moon['ores'][3]['ore_name'], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][3]['ore_name'] }}</td>
-                        <td class="table-secondary">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
+                        <td class="table-secondary">{{ number_format(($moon['ores'][3]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][3]['ore_name'], $r8Goo))
                         <td class="table-primary">{{ $moon['ores'][3]['ore_name'] }}</td>
-                        <td class="table-primary">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
+                        <td class="table-primary">{{ number_format(($moon['ores'][3]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][3]['ore_name'], $r16Goo))
                         <td class="table-success">{{ $moon['ores'][3]['ore_name'] }}</td>
-                        <td class="table-success">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
+                        <td class="table-success">{{ number_format(($moon['ores'][3]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][3]['ore_name'], $r32Goo))
                         <td class="table-warning">{{ $moon['ores'][3]['ore_name'] }}</td>
-                        <td class="table-warning">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
+                        <td class="table-warning">{{ number_format(($moon['ores'][3]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                         @if(in_array($moon['ores'][3]['ore_name'], $r64Goo))
                         <td class="table-danger">{{ $moon['ores'][3]['ore_name'] }}</td>
-                        <td class="table-danger">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
+                        <td class="table-danger">{{ number_format(($moon['ores'][3]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                     @else
                     <td></td>
