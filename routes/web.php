@@ -101,7 +101,7 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Planetary Interaction Display pages
      */
-    Route::get('/pi/display/alyssa', 'PlaneteryInteraction\PlanetaryInterfactionController@displayAlyssaPi');
+    Route::get('/pi/display/alyssa', 'PlaneteryInteraction\PlanetaryInteractionController@displayAlyssaPi');
     
     /**
      * Scopes Controller display pages
