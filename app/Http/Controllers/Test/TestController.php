@@ -173,7 +173,7 @@ class TestController extends Controller
         $totalPrice = round((float)$ledgers->sum('amount'), 2);
 
         //Get the sum of all the ledgers
-        $invoiceAmount = round(($totalPrice * (float)$config['minig_tax']), 2);
+        $invoiceAmount = round(((float)$ledgers->sum('amount') * (float)$config['mining_tax']), 2);
 
         //Get the character name from the lookup table
         $charName = $lookup->CharacterIdToName($charId);
