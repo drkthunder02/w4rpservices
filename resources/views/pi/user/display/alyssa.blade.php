@@ -1,7 +1,7 @@
 @section('content')
 <title>Alysii's PI Scheme</title>
 <style type="text/css" media="screen">
-	body { background-color: #FFF; }
+	body { background-color: #111; }
 	body,td { font: .8em Gotham, Helvetica Neue, Helvetica, Arial Narrow, Arial; font-weight: 500; color: #666; padding: 0; margin: 0; }
 	ul { list-style: none none; margin: 0; padding: 0; display: block; }
 	
