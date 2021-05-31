@@ -97,6 +97,11 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Moon Rental display pages
      */
+
+    /**
+     * Planetary Interaction Display pages
+     */
+    Route::get('/pi/display/alyssa', 'PlaneteryInteraction\PlanetaryInterfactionController@displayAlyssaPi');
     
     /**
      * Scopes Controller display pages

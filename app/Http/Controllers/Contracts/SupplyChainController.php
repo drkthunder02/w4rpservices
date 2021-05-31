@@ -25,7 +25,7 @@ class SupplyChainController extends Controller
      */
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('role:Renter');
+        $this->middleware('role:User');
     }
 
     /**
