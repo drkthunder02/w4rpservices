@@ -164,19 +164,11 @@
                             <tr class="table-success">
                                 <td>R16 Ore</td>
                             </tr>
-                            <tr class="table-warning">
-                                <td>R32 Ore</td>
-                            </tr>
-                            <tr class="table-danger">
-                                <td>R64 Ore</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
         <div class="col"></div>
         <div class="col"></div>
         <div class="col"></div>
