@@ -34,7 +34,7 @@
                 @foreach($moons as $moon)
                     @if($moon['system'] == $system)
                     <tr>
-                        <td>{{ $system }}</td>
+                        <td>{{ $moon['moon_name'] }}</td>
                     @if(isset($moon['ores'][0]))
                         @if(in_array($moon['ores'][0]['ore_name'], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][0]['ore_name'] }}</td>
@@ -57,8 +57,8 @@
                         <td class="table-danger">{{ number_format(($moon['ores'][0]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                     @else
-                    <td></td>
-                    <td></td>
+                        <td></td>
+                        <td></td>
                     @endif
                     @if(isset($moon['ores'][1]))
                         @if(in_array($moon['ores'][1]['ore_name'], $r4Goo))
@@ -82,8 +82,8 @@
                         <td class="table-danger">{{ number_format(($moon['ores'][1]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                     @else
-                    <td></td>
-                    <td></td>
+                        <td></td>
+                        <td></td>
                     @endif
                     @if(isset($moon['ores'][2]))
                         @if(in_array($moon['ores'][2]['ore_name'], $r4Goo))
@@ -107,8 +107,8 @@
                         <td class="table-danger">{{ number_format(($moon['ores'][2]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                     @else
-                    <td></td>
-                    <td></td>
+                        <td></td>
+                        <td></td>
                     @endif
                     @if(isset($moon['ores'][3]))
                         @if(in_array($moon['ores'][3]['ore_name'], $r4Goo))
@@ -132,8 +132,8 @@
                         <td class="table-danger">{{ number_format(($moon['ores'][3]['quantity'] * 100.00), 2, ".", ",") }}%</td>
                         @endif
                     @else
-                    <td></td>
-                    <td></td>
+                        <td></td>
+                        <td></td>
                     @endif
                     </tr>
                     @endif
