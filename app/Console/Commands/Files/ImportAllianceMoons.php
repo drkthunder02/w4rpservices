@@ -61,7 +61,7 @@ class ImportAllianceMoons extends Command
         $lookup = new LookupHelper;
         $mHelper = new MoonCalc;
         //Create the collection of lines for the input file.
-        $moons = new Collection; 
+        $moons = new Collection;
 
         //Create the file handler
         $data = Storage::get('public/alliance_moons.txt');
@@ -105,11 +105,35 @@ class ImportAllianceMoons extends Command
                     $newMoon->rental_amount = 0.00;
                     $newMoon->save();
                 } else {
-                    AllianceMoon::where([
+                    $current = AllianceMoon::where([
                         'moon_id' => $moonInfo->moon_id,
-                    ])->update([
-                        'moon_type' => $moonType,
-                    ]);
+                    ])->first();
+
+                    if($current->moon_type == 'R4' && ($moonType == 'R8' || $moonType == 'R16' || $moonType == 'R32' || $moonType == 'R64')) {
+                        AllianceMoon::where([
+                            'moon_id' => $moonInfo->moon_id,
+                        ])->update([
+                            'moon_type' => $moonType,
+                        ]);
+                    } else if($current->moon_type == 'R8' && ($moonType == 'R16' || $moonType == 'R32' || $moonType == 'R64')) {
+                        AllianceMoon::where([
+                            'moon_id' => $moonInfo->moon_id,
+                        ])->update([
+                            'moon_type' => $moonType,
+                        ]);
+                    } else if($current->moon_type == 'R16' && ($moonType == 'R32' || $moonType == 'R64')) {
+                        AllianceMoon::where([
+                            'moon_id' => $moonInfo->moon_id,
+                        ])->update([
+                            'moon_type' => $moonType,
+                        ]);
+                    } else if($current->moon_type == 'R32' && $moonType == 'R64') {
+                        AllianceMoon::where([
+                            'moon_id' => $moonInfo->moon_id,
+                        ])->update([
+                            'moon_type' => $moonType,
+                        ]);
+                    }
                 }
 
                 //Save a new entry into the database

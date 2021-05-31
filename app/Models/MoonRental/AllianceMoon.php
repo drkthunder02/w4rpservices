@@ -31,6 +31,7 @@ class AllianceMoon extends Model
         'name',
         'system_id',
         'system_name',
+        'moon_type',
         'worth_amount',
         'rented',
         'rental_amount',
