@@ -120,8 +120,6 @@ class MiningTaxesController extends Controller
             ]);
         }
 
-        dd($moons);
-
         return view('miningtax.user.display.moons.allmoons')->with('moons', $moons)
                                                             ->with('systems', $systems)
                                                             ->with('r4Goo', $r4Goo)
