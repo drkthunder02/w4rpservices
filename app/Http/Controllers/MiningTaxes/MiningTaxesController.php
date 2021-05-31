@@ -45,7 +45,7 @@ class MiningTaxesController extends Controller
      * 
      * @var $invoiceId
      */
-    public function DisplayInvoice($invoiceId) {
+    public function displayInvoice($invoiceId) {
         $ores = array();
         $totalPrice = 0.00;
 

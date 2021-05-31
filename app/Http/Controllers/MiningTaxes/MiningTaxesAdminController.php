@@ -55,6 +55,38 @@ class MiningTaxesAdminController extends Controller
     }
 
     /**
+     * Display an invoice based on it's id
+     * 
+     * @var $invoiceId
+     */
+    public function displayInvoice($invoiceId) {
+        $ores = array();
+        $totalPrice = 0.00;
+
+        $invoice = Invoice::where([
+            'invoice_id' => $invoiceId,
+        ])->first();
+
+        $items = Ledger::where([
+            'character_id' => auth()->user()->getId(),
+            'invoice_id' => $invoiceId,
+        ])->get();
+
+        foreach($items as $item) {
+            if(!isset($ores[$item['ore_name']])) {
+                $ores[$item['ore_name']] = 0;
+            }
+            $ores[$item['ore_name']] = $ores[$item['ore_name']] + $item['quantity'];
+
+            $totalPrice += $item['amount'];
+        }
+
+        return view('miningtax.user.display.details.invoice')->with('ores', $ores)
+                                                             ->with('invoice', $invoice)
+                                                             ->with('totalPrice', $totalPrice);
+    }
+
+    /**
      * Display current unpaid invoices
      */
     public function DisplayUnpaidInvoice() {
