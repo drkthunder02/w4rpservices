@@ -37,39 +37,114 @@ class TestController extends Controller
     }
 
     public function DebugMiningTaxesInvoices() {
-        $lookup = new LookupHelper;
-        $ledgers = new Collection;
-        $perms = new Collection;
+        //Declare variables
+        $mailDelay = 15;
+        $mains = new Collection;
+        $perms = null;
+
+        /**
+         * This section will determine if users are mains or alts of a main.
+         * If they are mains, we keep the key.  If they are alts of a main, then we delete
+         * the key from the collection.
+         */
+
+        //Pluck all the users from the database of ledgers to determine if they are mains or alts.
+        $tempMains = Ledger::where([
+            'invoiced' => 'No',
+        ])->where('last_updated', '>', Carbon::now()->subDays(7))->pluck('character_id');
         
+        //Get the unique character ids from the ledgers in the previous statement
+        $tempMains = $tempMains->unique()->values()->all();
 
-        var_dump(auth()->user()->getAlts());
-        dd(auth()->user()->altCount());
-
-        //Get all of the users in the database
-        $users = User::all();
-
-        //Get a list of the alts for each character, then process the ledgers and combine them to send one mail out
-        //in this first part
-        foreach($users as $char) {
-            $altCount = $char->altCount();
-            
-            if($altCount > 0) {
-                $alts = $char->getAlts();
-
-                foreach($alts as $alt) {
-                    $perms->push([
-                        'main_id' => $char->character_id,
-                        'alt_id' => $alt->character_id,
-                        'count' => $altCount,
-                    ]);
-                } 
-            } else {
-                $perms->push([
-                    'main_id' => $char->character_id,
-                    'alt_id' => null,
-                    'count' => 0,
-                ]);
+        //Cycle through the array of mains, and remove any characters which are in the User Alt table,
+        //as those characters will be grouped with their correct main later.
+        for($i = 0; $i < sizeof($tempMains); $i++) {
+            if(UserAlt::where(['character_id' => $tempMains[$i]])->count() == 0) {
+                $mains->push($tempMains[$i]);
             }
+        }
+
+        /**
+         * For each of the users, let's determine if there are any ledgers,
+         * then determine if there are any alts and ledgers associated with the alts.
+         */
+        foreach($mains as $main) {
+            //Declare some variables for each run through the for loop
+            $ledgers = new Collection;
+
+            //Count the ledgers for the main
+            $mainLedgerCount = Ledger::where([
+                'character_id' => $main,
+                'invoiced' => 'No',
+            ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
+
+            //If there are ledgers for the main, then let's grab them
+            if($mainLedgerCount > 0) {
+                $mainLedgers = Ledger::where([
+                    'character_id' => $main,
+                    'invoiced' => 'No',
+                ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
+
+                //Cycle through the entries, and add them to the ledger to send with the invoice
+                foreach($mainLedgers as $row) {
+                    $ledgers->push([
+                        'character_id' => $row->character_id,
+                        'character_name' => $row->character_name,
+                        'observer_id' => $row->observer_id,
+                        'type_id' => $row->type_id,
+                        'ore_name' => $row->ore_name,
+                        'quantity' => (int)$row->quantity,
+                        'amount' => (float)$row->amount,
+                        'last_updated' => $row->last_updated,
+                    ]);
+                }
+            }
+
+            //Get the alt count for the main character
+            $altCount = UserAlt::where(['main_id' => $main])->count();
+            //If more than 0 alts, grab all the alts.
+            if($altCount > 0) {
+                $alts = UserAlt::where([
+                    'main_id' => $main,
+                ])->get();
+
+                //Cycle through the alts, and get the ledgers, and push onto the stack
+                foreach($alts as $alt) {
+                    $altLedgerCount = Ledger::where([
+                        'character_id' => $alt->character_id,
+                        'invoiced' => 'No',
+                    ])->where('last_updated', '>', Carbon::now()->subDays(7))->count();
+
+                    if($altLedgerCount > 0) {
+                        $altLedgers = Ledger::where([
+                            'character_id' => $alt->character_id,
+                            'invoiced' => 'No',
+                        ])->where('last_updated', '>', Carbon::now()->subDays(7))->get();
+
+                        foreach($altLedgers as $row) {
+                            $ledgers->push([
+                                'character_id' => $row->character_id,
+                                'character_name' => $row->character_name,
+                                'observer_id' => $row->observer_id,
+                                'type_id' => $row->type_id,
+                                'ore_name' => $row->ore_name,
+                                'quantity' => (int)$row->quantity,
+                                'amount' => (float)$row->amount,
+                                'last_updated' => $row->last_updated,
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            /**
+             * Send the collected information over to the function to send the actual mail
+             */
+            if($ledgers->count() > 0) {
+                $invoiceAmount = round(((float)$ledgers->sum('amount') * (float)$config['mining_tax']), 2);
+                var_dump($ledgers);
+            }
+
         }
 
         return view('test.miningtax.invoice')->with('perms', $perms);
