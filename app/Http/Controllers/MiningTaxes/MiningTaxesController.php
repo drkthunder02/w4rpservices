@@ -116,7 +116,7 @@ class MiningTaxesController extends Controller
 
             $moons->push([
                 'system' => $moon->system_name,
-                'ores' => $ores;
+                'ores' => $ores,
             ]);
         }
 
@@ -204,7 +204,7 @@ class MiningTaxesController extends Controller
 
             $moons->push([
                 'system' => $moon->system_name,
-                'ores' => $ores;
+                'ores' => $ores,
             ]);
         }
 
