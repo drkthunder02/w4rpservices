@@ -10,7 +10,6 @@ use Log;
 use Carbon\Carbon;
 use Khill\Lavacharts\Lavacharts;
 use Auth;
-//Collection Stuff
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -19,6 +18,7 @@ use App\Library\Helpers\LookupHelper;
 use App\Library\Helpers\StructureHelper;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
+use App\Library\Moons\MoonCalc;
 
 //Models
 use App\Models\Moon\ItemComposition;
@@ -29,6 +29,8 @@ use App\Models\MiningTax\Invoice;
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 use App\Models\User\User;
+use App\Models\MoonRental\AllianceMoon;
+use App\Models\MoonRental\AllianceMoonOre;
 
 class MiningTaxesController extends Controller
 {
@@ -38,6 +40,181 @@ class MiningTaxesController extends Controller
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('role:User');
+    }
+
+    public function displayAvailableMoons() {
+        //Declare variables
+        $moons = new Collection;
+        $mHelper = new MoonCalc;
+        $lookup = new LookupHelper;
+        $system = array();
+
+        /**
+         * Declare our different flavors of moon goo for the blade
+         */
+        $r4Goo = [
+            'Zeolites',
+            'Sylvite',
+            'Bitumens',
+            'Coesite',
+        ];
+
+        $r8Goo = [
+            'Cobaltite',
+            'Euxenite',
+            'Titanite',
+            'Scheelite',
+        ];
+
+        $r16Goo = [
+            'Otavite',
+            'Sperrylite',
+            'Vanadinite',
+            'Chromite',
+        ];
+
+        $r32Goo = [
+            'Carnotite',
+            'Zircon',
+            'Pollucite',
+            'Cinnabar',
+        ];  
+
+        $r64Goo = [
+            'Xenotime',
+            'Monazite',
+            'Loparite',
+            'Ytterbite',
+        ];
+
+        $systems = [
+            '0-NTIS',
+            '1-NJLK',
+            '35-JWD',
+            '8KR9-5',
+            'EIMJ-M',
+            'F-M1FU',
+            'G-C8QO',
+            'I6M-9U',
+            'L5D-ZL',
+            'L-YMYU',
+            'VQE-CN',
+            'VR-YIQ',
+            'XZ-SKZ',
+            'Y-CWQY',
+        ];
+
+        //Get all of the moons which are not rented
+        $allyMoons = AllianceMoon::where([
+            'rented' => 'No',
+        ])->get();
+
+        foreach($allyMoons as $moon) {
+            $ores = AllianceMoonOre::where([
+                'moon_id' => $moon->moon_id,
+            ])->get()->toArray();
+
+            $moons->push([
+                'system' => $moon->system_name,
+                'ores' => $ores;
+            ]);
+        }
+
+        return view('miningtax.user.display.moons.allmoons')->with('moons', $moons)
+                                                            ->with('systems', $systems);
+                                                            ->with('r4Goo', $r4Goo)
+                                                            ->with('r8Goo', $r8Goo)
+                                                            ->with('r16Goo', $r16Goo)
+                                                            ->with('r32Goo', $r32Goo)
+                                                            ->with('r64Goo', $r64Goo);
+    }
+
+    /**
+     * Display all the moons in Warped Intentions Sovreignty
+     */
+    public function displayAllMoons() {
+        //Declare variables
+        $moons = new Collection;
+        $mHelper = new MoonCalc;
+        $lookup = new LookupHelper;
+        $system = array();
+
+        /**
+         * Declare our different flavors of moon goo for the blade
+         */
+        $r4Goo = [
+            'Zeolites',
+            'Sylvite',
+            'Bitumens',
+            'Coesite',
+        ];
+
+        $r8Goo = [
+            'Cobaltite',
+            'Euxenite',
+            'Titanite',
+            'Scheelite',
+        ];
+
+        $r16Goo = [
+            'Otavite',
+            'Sperrylite',
+            'Vanadinite',
+            'Chromite',
+        ];
+
+        $r32Goo = [
+            'Carnotite',
+            'Zircon',
+            'Pollucite',
+            'Cinnabar',
+        ];  
+
+        $r64Goo = [
+            'Xenotime',
+            'Monazite',
+            'Loparite',
+            'Ytterbite',
+        ];
+
+        $systems = [
+            '0-NTIS',
+            '1-NJLK',
+            '35-JWD',
+            '8KR9-5',
+            'EIMJ-M',
+            'F-M1FU',
+            'G-C8QO',
+            'I6M-9U',
+            'L5D-ZL',
+            'L-YMYU',
+            'VQE-CN',
+            'VR-YIQ',
+            'XZ-SKZ',
+            'Y-CWQY',
+        ];
+
+        //Get all of the moons which are not rented
+        $allyMoons = AllianceMoon::all();
+
+        foreach($allyMoons as $moon) {
+            $ores = AllianceMoonOre::where([
+                'moon_id' => $moon->moon_id,
+            ])->get()->toArray();
+
+            $moons->push([
+                'system' => $moon->system_name,
+                'ores' => $ores;
+            ]);
+        }
+
+        return view('miningtax.user.display.moons.allmoons')->with('moons', $moons)
+                                                            ->with('systems', $systems);
+                                                            ->with('r4Goo', $r4Goo)
+                                                            ->with('r8Goo', $r8Goo)
+                                                            ->with('r16Goo', $r16Goo)
+                                                            ->with('r32Goo', $r32Goo)
+                                                            ->with('r64Goo', $r64Goo);
     }
 
     /**
@@ -114,12 +291,12 @@ class MiningTaxesController extends Controller
             $paidAmount += $p->invoice_amount;
         }
 
-        return view('miningtax.user.display.invoices')->with('unpaid', $unpaid)
-                                                      ->with('late', $late)
-                                                      ->with('deferred', $deferred)
-                                                      ->with('paid', $paid)
-                                                      ->with('unpaidAmount', $unpaidAmount)
-                                                      ->with('paidAmount', $paidAmount);
+        return view('miningtax.user.display.invoices.invoices')->with('unpaid', $unpaid)
+                                                                ->with('late', $late)
+                                                                ->with('deferred', $deferred)
+                                                                ->with('paid', $paid)
+                                                                ->with('unpaidAmount', $unpaidAmount)
+                                                                ->with('paidAmount', $paidAmount);
     }
 
     /**
@@ -228,7 +405,7 @@ class MiningTaxesController extends Controller
         ]);
 
         //Return the view with the extractions variable for html processing
-        return view('miningtax.user.display.upcoming')->with('structures', $structures)
+        return view('miningtax.user.display.pulls.upcoming')->with('structures', $structures)
                                                       ->with('lava', $lava)
                                                       ->with('calendar', $calendar);
     }
@@ -304,7 +481,7 @@ class MiningTaxesController extends Controller
         }
 
         //Return the view
-        return view('miningtax.user.display.ledger')->with('miningLedgers', $miningLedgers)
+        return view('miningtax.user.display.details.ledger')->with('miningLedgers', $miningLedgers)
                                                     ->with('structures', $structures);
     }
 }
