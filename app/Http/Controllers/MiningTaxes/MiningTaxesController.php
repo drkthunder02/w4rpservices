@@ -55,7 +55,7 @@ class MiningTaxesController extends Controller
 
         $items = Ledger::where([
             'character_id' => auth()->user()->getId(),
-            'invoice_id' => $invoice,
+            'invoice_id' => $invoiceId,
         ])->get();
 
         foreach($items as $item) {
