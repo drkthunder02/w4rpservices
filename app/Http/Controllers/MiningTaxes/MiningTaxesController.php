@@ -106,7 +106,7 @@ class MiningTaxesController extends Controller
 
         $systems = AllianceMoon::where([
             'rented' => 'No',
-        ])->pluck('system_name')->toArray();
+        ])->pluck('system_name')->unique()->toArray();
 
         dd($systems);
 
