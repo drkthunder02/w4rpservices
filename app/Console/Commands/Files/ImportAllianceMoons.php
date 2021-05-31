@@ -17,7 +17,7 @@ use DB;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Helpers\LookupHelper;
-use App\Library\Moon\MoonCalc;
+use App\Library\Moons\MoonCalc;
 
 //Models
 use App\Models\MoonRental\AllianceMoonOre;
