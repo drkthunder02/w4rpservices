@@ -1,4 +1,3 @@
-@extends('layouts.user.dashb4')
 @section('content')
 <title>Alysii's PI Scheme</title>
 <style type="text/css" media="screen">
