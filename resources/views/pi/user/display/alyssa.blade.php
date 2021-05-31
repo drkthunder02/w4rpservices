@@ -1,6 +1,35 @@
 @extends('layouts.user.dashb4')
 @section('content')
+<title>Alysii's PI Scheme</title>
+<style type="text/css" media="screen">
+	body { background-color: #FFF; }
+	body,td { font: .8em Gotham, Helvetica Neue, Helvetica, Arial Narrow, Arial; font-weight: 500; color: #666; padding: 0; margin: 0; }
+	ul { list-style: none none; margin: 0; padding: 0; display: block; }
+	
+	a,a:link { color: #ffcc00; text-decoration: none; }
+	
+	td { padding: 4px 4px; text-align: center; border: 1px solid #111; border-width: 1px 0; }
+	tr:last-child td { border-bottom-width: 0; }
+	tr.header td { padding: 10px 4px; font-size: 1.5em; font-weight: 200; color: #aaa; }
+	tr.header td i { font-size: .4em; font-weight: 200; font-style: normal; }
 
+	.items li { margin: 5px 0px; }
+	.items li.current span { text-shadow: 0px 0px 8px #79cef4; }
+	.arrows li { margin: 5px 0px; color: #333; }
+	.items li span { white-space: nowrap; cursor: pointer; background-color: rgba(0,0,0,0.75); border-radius: 3px; padding: 1px 4px; }
+	
+	tr.footer { display: none; }
+/*
+	tr.footer td { color: #111; }
+	.p1 td,.p2 td,.p3 td,.p4 td,
+	.p1,.p2,.p3,.p4 { font-weight: 900 !important; }
+	.p1.current,.p2.current,.p3.current,.p4.current,
+	.p1.current td,.p2.current td,.p3.current td,.p4.current td { color: red; }
+*/
+	#canvas { z-index: 1; display: block; position: absolute; left: 0; top: 0; background-color: transparent; }
+	#pi { z-index: 2; border-collapse: collapse; position: relative; left: 0; top: 0; }
+
+</style>
 <table id="pi" border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr class="header">
 <td valign="top">Planets</td>
