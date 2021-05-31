@@ -101,7 +101,7 @@ class MiningTaxesController extends Controller
                 'moon_id' => $moon->moon_id,
             ])->get(['ore_name', 'quantity'])->toArray();
           
-            if($moon->moon_type != 'R32' || $moon->moon_type != 'R64') {
+            if($moon->moon_type != 'R32' && $moon->moon_type != 'R64') {
                 $moons->push([
                     'system' => $moon->system_name,
                     'moon_name' => $moon->name,
