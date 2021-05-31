@@ -41,6 +41,7 @@ class TestController extends Controller
         $mailDelay = 15;
         $mains = new Collection;
         $perms = null;
+        $config = config('esi');
 
         /**
          * This section will determine if users are mains or alts of a main.
