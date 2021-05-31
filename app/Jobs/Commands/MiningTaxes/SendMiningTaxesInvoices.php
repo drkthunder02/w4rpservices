@@ -187,6 +187,9 @@ class SendMiningTaxesInvoices implements ShouldQueue
         //Create an invoice id 
         $invoiceId = "M" . uniqid();
 
+        //Collect the total price of all of the ledgers
+        $totalPrice = round((float)$ledgers->sum('amount'), 2);
+
         //Get the sum of all the ledgers
         $invoiceAmount = round(((float)$ledgers->sum('amount') * (float)$config['mining_tax']), 2);
 

@@ -142,15 +142,117 @@ class TestController extends Controller
              * Send the collected information over to the function to send the actual mail
              */
             if($ledgers->count() > 0) {
-                $invoiceAmount = round(((float)$ledgers->sum('amount') * (float)$config['mining_tax']), 2);
-                var_dump($ledgers);
-                var_dump($invoiceAmount);
-                var_dump(number_format($invoiceAmount, 2, ".", ","));
+                
             }
 
         }
 
         return view('test.miningtax.invoice')->with('perms', $perms);
+    }
+
+    /**
+     * Create the invoice to the mail out
+     * 
+     * @var charId
+     * @var ledgers
+     * @var mailDelay
+     */
+    private function CreateInvoice($charId, Collection $ledgers, int &$mailDelay) {
+        $ores = array();
+        $characters = array();
+        $characterIds = array();
+        $totalPrice = 0.00;
+        $body = null;
+        $lookup = new LookupHelper;
+        $config = config('esi');
+
+        //Create an invoice id 
+        $invoiceId = "M" . uniqid();
+
+        //Collect the total price of all of the ledgers
+        $totalPrice = round((float)$ledgers->sum('amount'), 2);
+
+        //Get the sum of all the ledgers
+        $invoiceAmount = round(($totalPrice * (float)$config['minig_tax']), 2);
+
+        //Get the character name from the lookup table
+        $charName = $lookup->CharacterIdToName($charId);
+
+        //Create the date due and the invoice date
+        $dateDue = Carbon::now()->addDays(7);
+        $invoiceDate = Carbon::now();
+
+        //Set the mining tax from the config file
+        $numberMiningTax = number_format(((float)$config['mining_tax'] * (float)100.00), 2, ".", ",");
+
+        //Create the list of ores to put in the mail
+        $temp = $ledgers->toArray();
+        foreach($temp as $t) {
+            //If the key isn't set, set it to the default of 0
+            if(!isset($ores[$t['type_id']])) {
+                $ores[$t['type_id']] = (int)0;
+            }
+
+            //Add the quantity into the ores array
+            $ores[$t['type_id']] += (int)$t['quantity'];
+
+            //Create a list of character names
+            if(!isset($characters[$t['character_name']])) {
+                $characters[$t['character_name']] = $t['character_name'];
+            }
+
+            //Create a list of character ids
+            if(!isset($characterIds[$t['character_id']])) {
+                $characterIds[$t['character_id']] = $t['character_id'];
+            }
+        }
+
+        /**
+         * Create the mail body to send to the main character
+         */
+        $body .= "Dear " . $charName . ",<br><br>";
+        $body .= "Mining Taxes are due for the following ores mined from alliance moons: <br>";
+        foreach($ores as $ore => $quantity) {
+            $oreName = $lookup->ItemIdToName($ore);
+            $body .= $oreName . ": " . number_format($quantity, 0, ".", ",") . "<br>";
+        }
+        $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
+        $body .= "<br><br>";
+        $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
+        $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
+        $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
+        $body .= "<br><br>";
+        $body .= "You can also send a contract with the following ores in the contract with the reason set as: " . $invoiceId . "<br>";
+        foreach($ores as $ore => $quantity) {
+            $oreName = $lookup->ItemIdToName($ore);
+            $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
+        }
+        $body .= "<br>";
+        $body .= "Characters Processed: <br>";
+        foreach($characters as $character) {
+            $body .= $character . "<br>";
+        }
+        $body .= "<br>";
+        $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
+
+        //Check if the mail body is greater than 2000 characters.  If greater than 2,000 characters, then 
+        if(strlen($body) > 2000) {
+            $body = "Dear " . $charName . "<br><br>";
+            $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
+            $body .= "<br><br>";
+            $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
+            $body .= "Set the reason for transfer as: " . $invoiceId . "<br>";
+            $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
+            $body .= "<br>";
+            $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
+        }
+
+        var_dump($body);
+
+        /**
+         * Increment the mail delay for the next cycle
+         */
+        $mailDelay += 20;
     }
 
     public function DebugMiningObservers() {
