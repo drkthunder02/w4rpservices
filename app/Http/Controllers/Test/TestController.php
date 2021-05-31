@@ -143,6 +143,7 @@ class TestController extends Controller
              */
             if($ledgers->count() > 0) {
                 $invoiceAmount = round(((float)$ledgers->sum('amount') * (float)$config['mining_tax']), 2);
+                var_dump($ledgers);
                 var_dump($invoiceAmount);
             }
 
