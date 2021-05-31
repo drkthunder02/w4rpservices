@@ -39,7 +39,7 @@
                     @foreach($invoices as $invoice)
                     <tr>
                         <td>{{ $invoice->character_name }}</td>
-                        <td><a href="/miningtax/admin/display/detail/invoices/{{ $invoice->invoice_id }}">{{ $invoice->invoice_id }}</a></td>
+                        <td><a href="/miningtax/admin/display/detail/invoice/{{ $invoice->invoice_id }}">{{ $invoice->invoice_id }}</a></td>
                         <td>{{ number_format($invoice->invoice_amount, 2, ".", ",") }}</td>
                         <td>{{ $invoice->date_issued }}</td>
                         <td>{{ $invoice->date_due }}</td>
