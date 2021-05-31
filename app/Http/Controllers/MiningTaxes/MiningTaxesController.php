@@ -86,33 +86,19 @@ class MiningTaxesController extends Controller
             'Loparite',
             'Ytterbite',
         ];
-        /*
-        $systems = [
-            '0-NTIS',
-            '1-NJLK',
-            '35-JWD',
-            '8KR9-5',
-            'EIMJ-M',
-            'F-M1FU',
-            'G-C8QO',
-            'I6M-9U',
-            'L5D-ZL',
-            'L-YMYU',
-            'VQE-CN',
-            'VR-YIQ',
-            'XZ-SKZ',
-            'Y-CWQY',
-        ];
-        */
 
         $systems = AllianceMoon::where([
             'rented' => 'No',
-        ])->pluck('system_name')->unique()->toArray();
+        ])->where(['moon_type', '!=', 'R32'])
+          ->orWhere(['moon_type', '!=', 'R64'])        
+          ->pluck('system_name')->unique()->toArray();
 
         //Get all of the moons which are not rented
         $allyMoons = AllianceMoon::where([
             'rented' => 'No',
-        ])->get();
+        ])->where(['moon_type', '!=', 'R32'])
+          ->orWhere(['moon_type', '!=', 'R64']) 
+          ->get();
 
         foreach($allyMoons as $moon) {
             $ores = AllianceMoonOre::where([
@@ -125,13 +111,13 @@ class MiningTaxesController extends Controller
             ]);
         }
 
-        return view('miningtax.user.display.moons.allmoons')->with('moons', $moons)
-                                                            ->with('systems', $systems)
-                                                            ->with('r4Goo', $r4Goo)
-                                                            ->with('r8Goo', $r8Goo)
-                                                            ->with('r16Goo', $r16Goo)
-                                                            ->with('r32Goo', $r32Goo)
-                                                            ->with('r64Goo', $r64Goo);
+        return view('miningtax.user.display.moons.availablemoons')->with('moons', $moons)
+                                                                  ->with('systems', $systems)
+                                                                  ->with('r4Goo', $r4Goo)
+                                                                  ->with('r8Goo', $r8Goo)
+                                                                  ->with('r16Goo', $r16Goo)
+                                                                  ->with('r32Goo', $r32Goo)
+                                                                  ->with('r64Goo', $r64Goo);
     }
 
     /**
