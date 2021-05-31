@@ -294,7 +294,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
                 'character_id' => $char,
                 'invoiced' => 'No',
             ])->update([
-                'invoice' => $invoiceId,
+                'invoice_id' => $invoiceId,
                 'invoiced' => 'Yes',
             ]);
         }
