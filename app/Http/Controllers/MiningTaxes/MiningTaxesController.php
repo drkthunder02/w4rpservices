@@ -86,7 +86,7 @@ class MiningTaxesController extends Controller
             'Loparite',
             'Ytterbite',
         ];
-
+        /*
         $systems = [
             '0-NTIS',
             '1-NJLK',
@@ -103,12 +103,11 @@ class MiningTaxesController extends Controller
             'XZ-SKZ',
             'Y-CWQY',
         ];
+        */
 
         $systems = AllianceMoon::where([
             'rented' => 'No',
         ])->pluck('system_name')->unique()->toArray();
-
-        dd($systems);
 
         //Get all of the moons which are not rented
         $allyMoons = AllianceMoon::where([
@@ -124,8 +123,6 @@ class MiningTaxesController extends Controller
                 'system' => $moon->system_name,
                 'ores' => $ores,
             ]);
-
-            dd($moons);
         }
 
         return view('miningtax.user.display.moons.allmoons')->with('moons', $moons)
