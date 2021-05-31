@@ -145,6 +145,7 @@ class TestController extends Controller
                 $invoiceAmount = round(((float)$ledgers->sum('amount') * (float)$config['mining_tax']), 2);
                 var_dump($ledgers);
                 var_dump($invoiceAmount);
+                var_dump(round(((float)$ledgers->sum('amount') * (float)$config['mining_tax']), 2));
             }
 
         }
