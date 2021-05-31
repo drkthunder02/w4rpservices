@@ -104,6 +104,12 @@ class MiningTaxesController extends Controller
             'Y-CWQY',
         ];
 
+        $systems = AllianceMoon::where([
+            'rented' => 'No',
+        ])->pluck('system_name')->toArray();
+
+        dd($systems);
+
         //Get all of the moons which are not rented
         $allyMoons = AllianceMoon::where([
             'rented' => 'No',
