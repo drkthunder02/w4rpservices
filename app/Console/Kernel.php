@@ -81,10 +81,10 @@ class Kernel extends ConsoleKernel
          * Mining Tax Schedule
          */
         $schedule->job(new FetchMiningTaxesObservers)
-                 ->dailyAt('22:00')
+                 ->dailyAt('20:00')
                  ->withoutOverlapping();
         $schedule->job(new PreFetchMiningTaxesLedgers)
-                 ->dailyAt('20:00')
+                 ->dailyAt('22:00')
                  ->withoutOverlapping();
         $schedule->job(new SendMiningTaxesInvoices)
                  ->weeklyOn(1, '06:00')
