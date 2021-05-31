@@ -81,9 +81,9 @@ class MiningTaxesAdminController extends Controller
             $totalPrice += $item['amount'];
         }
 
-        return view('miningtax.user.display.details.invoice')->with('ores', $ores)
-                                                             ->with('invoice', $invoice)
-                                                             ->with('totalPrice', $totalPrice);
+        return view('miningtax.admin.display.details.invoice')->with('ores', $ores)
+                                                              ->with('invoice', $invoice)
+                                                              ->with('totalPrice', $totalPrice);
     }
 
     /**
