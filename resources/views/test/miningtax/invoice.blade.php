@@ -2,6 +2,9 @@
 @section('content')
 <br>
 @foreach($bodies as $body)
-{{ $body }}<br>
+$body
+<br>
+<br>
+<br>
 @endforeach
 @endsection
