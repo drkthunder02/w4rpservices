@@ -34,25 +34,24 @@
                 @foreach($moons as $moon)
                     @if($moon['system'] == $system)
                     <tr>
-                    {{ dd($moon['ores']) }}
                     @if(isset($moon['ores'][0]))
-                        @if(in_array($moon['ores'][0], $r4Goo))
+                        @if(in_array($moon['ores'][0]['ore_name'], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][0]['ore_name'] }}</td>
                         <td class="table-secondary">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][0], $r8Goo))
+                        @if(in_array($moon['ores'][0]['ore_name'], $r8Goo))
                         <td class="table-primary">{{ $moon['ores'][0]['ore_name'] }}</td>
                         <td class="table-primary">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][0], $r16Goo))
+                        @if(in_array($moon['ores'][0]['ore_name'], $r16Goo))
                         <td class="table-success">{{ $moon['ores'][0]['ore_name'] }}</td>
                         <td class="table-success">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][0], $r32Goo))
+                        @if(in_array($moon['ores'][0]['ore_name'], $r32Goo))
                         <td class="table-warning">{{ $moon['ores'][0]['ore_name'] }}</td>
                         <td class="table-warning">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][0], $r64Goo))
+                        @if(in_array($moon['ores'][0]['ore_name'], $r64Goo))
                         <td class="table-danger">{{ $moon['ores'][0]['ore_name'] }}</td>
                         <td class="table-danger">{{ round(($moon['ores'][0]['quantity'] * 100.0), 2) }}
                         @endif
@@ -61,23 +60,23 @@
                     <td></td>
                     @endif
                     @if(isset($moon['ores'][1]))
-                        @if(in_array($moon['ores'][1], $r4Goo))
+                        @if(in_array($moon['ores'][1]['ore_name'], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][1]['ore_name'] }}</td>
                         <td class="table-secondary">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][1], $r8Goo))
+                        @if(in_array($moon['ores'][1]['ore_name'], $r8Goo))
                         <td class="table-primary">{{ $moon['ores'][1]['ore_name'] }}</td>
                         <td class="table-primary">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][1], $r16Goo))
+                        @if(in_array($moon['ores'][1]['ore_name'], $r16Goo))
                         <td class="table-success">{{ $moon['ores'][1]['ore_name'] }}</td>
                         <td class="table-success">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][1], $r32Goo))
+                        @if(in_array($moon['ores'][1]['ore_name'], $r32Goo))
                         <td class="table-warning">{{ $moon['ores'][1]['ore_name'] }}</td>
                         <td class="table-warning">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][1], $r64Goo))
+                        @if(in_array($moon['ores'][1]['ore_name'], $r64Goo))
                         <td class="table-danger">{{ $moon['ores'][1]['ore_name'] }}</td>
                         <td class="table-danger">{{ round(($moon['ores'][1]['quantity'] * 100.0), 2) }}
                         @endif
@@ -86,23 +85,23 @@
                     <td></td>
                     @endif
                     @if(isset($moon['ores'][2]))
-                        @if(in_array($moon['ores'][2], $r4Goo))
+                        @if(in_array($moon['ores'][2]['ore_name'], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][2]['ore_name'] }}</td>
                         <td class="table-secondary">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][2], $r8Goo))
+                        @if(in_array($moon['ores'][2]['ore_name'], $r8Goo))
                         <td class="table-primary">{{ $moon['ores'][2]['ore_name'] }}</td>
                         <td class="table-primary">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][2], $r16Goo))
+                        @if(in_array($moon['ores'][2]['ore_name'], $r16Goo))
                         <td class="table-success">{{ $moon['ores'][2]['ore_name'] }}</td>
                         <td class="table-success">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][2], $r32Goo))
+                        @if(in_array($moon['ores'][2]['ore_name'], $r32Goo))
                         <td class="table-warning">{{ $moon['ores'][2]['ore_name'] }}</td>
                         <td class="table-warning">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][2], $r64Goo))
+                        @if(in_array($moon['ores'][2]['ore_name'], $r64Goo))
                         <td class="table-danger">{{ $moon['ores'][2]['ore_name'] }}</td>
                         <td class="table-danger">{{ round(($moon['ores'][2]['quantity'] * 100.0), 2) }}
                         @endif
@@ -111,23 +110,23 @@
                     <td></td>
                     @endif
                     @if(isset($moon['ores'][3]))
-                        @if(in_array($moon['ores'][3], $r4Goo))
+                        @if(in_array($moon['ores'][3]['ore_name'], $r4Goo))
                         <td class="table-secondary">{{ $moon['ores'][3]['ore_name'] }}</td>
                         <td class="table-secondary">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][3], $r8Goo))
+                        @if(in_array($moon['ores'][3]['ore_name'], $r8Goo))
                         <td class="table-primary">{{ $moon['ores'][3]['ore_name'] }}</td>
                         <td class="table-primary">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][3], $r16Goo))
+                        @if(in_array($moon['ores'][3]['ore_name'], $r16Goo))
                         <td class="table-success">{{ $moon['ores'][3]['ore_name'] }}</td>
                         <td class="table-success">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][3], $r32Goo))
+                        @if(in_array($moon['ores'][3]['ore_name'], $r32Goo))
                         <td class="table-warning">{{ $moon['ores'][3]['ore_name'] }}</td>
                         <td class="table-warning">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
                         @endif
-                        @if(in_array($moon['ores'][3], $r64Goo))
+                        @if(in_array($moon['ores'][3]['ore_name'], $r64Goo))
                         <td class="table-danger">{{ $moon['ores'][3]['ore_name'] }}</td>
                         <td class="table-danger">{{ round(($moon['ores'][3]['quantity'] * 100.0), 2) }}
                         @endif
