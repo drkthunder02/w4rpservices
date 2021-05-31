@@ -499,7 +499,7 @@ class MoonCalc {
     /**
      * Return the type of ore a particular moon ore is.
      */
-    private function IsRMoonGoo($ore) {
+    public function IsRMoonGoo($ore) {
         $ores = [
             'Zeolites' => 'R4',
             'Sylvite' => 'R4',
@@ -537,7 +537,7 @@ class MoonCalc {
      * Return true if a moon ore is a moon ore, and false
      * if the ore is not a moon ore.
      */
-    private function IsRMoonOre($ore) {
+    public function IsRMoonOre($ore) {
         $ores = [
             'Zeolites' => 'R4',
             'Sylvite' => 'R4',
