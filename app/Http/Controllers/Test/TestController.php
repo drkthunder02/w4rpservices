@@ -42,6 +42,7 @@ class TestController extends Controller
         $mains = new Collection;
         $perms = null;
         $config = config('esi');
+        $bodies = new Collection;
 
         /**
          * This section will determine if users are mains or alts of a main.
@@ -142,12 +143,13 @@ class TestController extends Controller
              * Send the collected information over to the function to send the actual mail
              */
             if($ledgers->count() > 0) {
-                $this->CreateInvoice($main, $ledgers, $mailDelay);
+                $body = $this->CreateInvoice($main, $ledgers, $mailDelay);
+                $bodies->push($body);
             }
 
         }
 
-        return view('test.miningtax.invoice')->with('perms', $perms);
+        return view('test.miningtax.invoice')->with('bodies', $bodies);
     }
 
     /**
@@ -247,12 +249,12 @@ class TestController extends Controller
             $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
         }
 
-        var_dump($body);
-
         /**
          * Increment the mail delay for the next cycle
          */
         $mailDelay += 20;
+
+        return $body;
     }
 
     public function DebugMiningObservers() {
