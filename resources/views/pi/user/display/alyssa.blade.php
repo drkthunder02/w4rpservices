@@ -293,17 +293,6 @@
 <td style="width: 7%;">&nbsp;</td>
 </tr>
 </table>
-<canvas id="canvas"></canvas>
-<div style="position: fixed; bottom: 0; text-align: center; width: 100%;">
-<h2 style="margin: 0px;">News</h2>
-- Added sticky on click / click sticky again to unsticky -<br>
-- I've plans to move this to github and add calculations, hold off on feature request -<br><br>
-&copy; 2004 alysii.com &copy; 2004-2018 hanns.io All Rights Reserved.<br>
-Material related to EVE-Online is used with limited permission of CCP Games hf.<br>
-No official affiliation or endorsement by CCP Games hf is stated or implied.<br><br>
-<small style="font-size: 0.6em">EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other trademarks are the property of their respective owners. EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf. All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf. CCP hf. has granted permission to [insert your name or site name] to use EVE Online and all associated logos and designs for promotional and information purposes on its website but does not endorse, and is not in any way affiliated with, [insert name or site name]. CCP is in no way responsible for the content on or functioning of this website, nor can it be liable for any damage arising from the use of this website.</small>
-</div>
-
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script>
