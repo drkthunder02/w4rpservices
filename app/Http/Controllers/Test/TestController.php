@@ -142,7 +142,7 @@ class TestController extends Controller
              * Send the collected information over to the function to send the actual mail
              */
             if($ledgers->count() > 0) {
-                
+                $this->CreateInvoice($main, $ledgers, $mailDelay);
             }
 
         }
