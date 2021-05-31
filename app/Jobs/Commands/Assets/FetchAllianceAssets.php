@@ -76,6 +76,11 @@ class FetchAllianceAssets implements ShouldQueue
         $totalPages = 1;
 
         do {
+            if($esiHelper->TokenExpired($token)) {
+                $token = $esiHelper->GetRefreshToken($config['primary']);
+                $esi = $esiHelper->SetupAuthenticationToken($token);
+            }            
+
             //Attempt to get the assets
             $assets = $esi->page($currentPage)
                           ->invoke('get', '/corporations/{corporation_id}/assets/', [
