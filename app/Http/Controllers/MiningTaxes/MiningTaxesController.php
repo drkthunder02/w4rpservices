@@ -113,7 +113,7 @@ class MiningTaxesController extends Controller
             $ores = AllianceMoonOre::where([
                 'moon_id' => $moon->moon_id,
             ])->get(['ore_name', 'quantity'])->toArray();
-
+            dd($moon->system_name);
             $moons->push([
                 'system' => $moon->system_name,
                 'ores' => $ores,
