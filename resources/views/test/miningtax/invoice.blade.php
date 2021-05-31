@@ -2,7 +2,7 @@
 @section('content')
 <br>
 @foreach($bodies as $body)
-$body
+{!! $body !!}
 <br>
 <br>
 <br>
