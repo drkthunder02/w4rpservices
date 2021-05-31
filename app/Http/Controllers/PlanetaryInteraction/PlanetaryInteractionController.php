@@ -18,8 +18,4 @@ class PlanetaryInteractionController extends Controller
         $this->middleware('auth');
         $this->middleware('role:User');
     }
-
-    public function displayAlyssaPi() {
-        return view('pi.user.display.alyssa');
-    }
 }
