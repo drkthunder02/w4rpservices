@@ -89,15 +89,17 @@ class MiningTaxesController extends Controller
 
         $systems = AllianceMoon::where([
             'rented' => 'No',
-        ])->where('moon_type', '!=', 'R32')
-          ->orWhere('moon_type', '!=', 'R64')        
+        ])->where('moon_type', '=', 'R4')
+          ->orWhere('moon_type', '=', 'R8')        
+          ->orWhere('moon_type', '=', 'R16')
           ->pluck('system_name')->unique()->toArray();
 
         //Get all of the moons which are not rented
         $allyMoons = AllianceMoon::where([
             'rented' => 'No',
-        ])->where('moon_type', '!=', 'R32')
-          ->orWhere('moon_type', '!=', 'R64') 
+        ])->where('moon_type', '=', 'R4')
+          ->orWhere('moon_type', '=', 'R8')
+          ->orWhere('moon_type', '=', 'R16')
           ->get();
 
         foreach($allyMoons as $moon) {
@@ -106,7 +108,7 @@ class MiningTaxesController extends Controller
             ])->get(['ore_name', 'quantity'])->toArray();
             
             $moons->push([
-                'system' => $moon->system_name,
+                'system' => $moon->name,
                 'ores' => $ores,
             ]);
         }
@@ -194,7 +196,7 @@ class MiningTaxesController extends Controller
             ])->get(['ore_name', 'quantity'])->toArray();
 
             $moons->push([
-                'system' => $moon->system_name,
+                'system' => $moon->name,
                 'ores' => $ores,
             ]);
         }
