@@ -17,6 +17,7 @@ use DB;
 use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
 use App\Library\Helpers\LookupHelper;
+use App\Library\Moon\MoonCalc;
 
 //Models
 use App\Models\MoonRental\AllianceMoonOre;
@@ -58,8 +59,9 @@ class ImportAllianceMoons extends Command
         ///universe/moons/{moon_id}/
         //Declare variables
         $lookup = new LookupHelper;
+        $mHelper = new MoonCalc;
         //Create the collection of lines for the input file.
-        $moons = new Collection;       
+        $moons = new Collection; 
 
         //Create the file handler
         $data = Storage::get('public/alliance_moons.txt');
@@ -88,6 +90,8 @@ class ImportAllianceMoons extends Command
                 $moonInfo = $lookup->GetMoonInfo($moon[6]);
                 $solarName = $lookup->SystemIdToName($moonInfo->system_id);
 
+                $moonType = $mHelper->IsRMoonGoo($moon[1]);
+
                 if(AllianceMoon::where(['moon_id' => $moonInfo->moon_id])->count() == 0) {
                     //Save the moon into the database
                     $newMoon = new AllianceMoon;
@@ -95,10 +99,17 @@ class ImportAllianceMoons extends Command
                     $newMoon->name = $moonInfo->name;
                     $newMoon->system_id = $moonInfo->system_id;
                     $newMoon->system_name = $solarName;
+                    $newMoon->moon_type = $moonType;
                     $newMoon->worth_amount = 0.00;
                     $newMoon->rented = 'No';
                     $newMoon->rental_amount = 0.00;
                     $newMoon->save();
+                } else {
+                    AllianceMoon::where([
+                        'moon_id' => $moonInfo->moon_id,
+                    ])->update([
+                        'moon_type' => $moonType,
+                    ]);
                 }
 
                 //Save a new entry into the database

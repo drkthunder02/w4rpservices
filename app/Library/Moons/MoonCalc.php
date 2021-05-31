@@ -501,10 +501,10 @@ class MoonCalc {
      */
     private function IsRMoonGoo($ore) {
         $ores = [
-            'Zeolites' => 'Gas',
-            'Sylvite' => 'Gas',
-            'Bitumens' => 'Gas',
-            'Coesite' => 'Gas',
+            'Zeolites' => 'R4',
+            'Sylvite' => 'R4',
+            'Bitumens' => 'R4',
+            'Coesite' => 'R4',
             'Cobaltite' => 'R8',
             'Euxenite' => 'R8',
             'Titanite' => 'R8',
@@ -539,10 +539,10 @@ class MoonCalc {
      */
     private function IsRMoonOre($ore) {
         $ores = [
-            'Zeolites' => 'Gas',
-            'Sylvite' => 'Gas',
-            'Bitumens' => 'Gas',
-            'Coesite' => 'Gas',
+            'Zeolites' => 'R4',
+            'Sylvite' => 'R4',
+            'Bitumens' => 'R4',
+            'Coesite' => 'R4',
             'Cobaltite' => 'R8',
             'Euxenite' => 'R8',
             'Titanite' => 'R8',

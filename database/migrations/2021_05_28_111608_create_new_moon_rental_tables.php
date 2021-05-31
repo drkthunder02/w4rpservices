@@ -32,6 +32,14 @@ class CreateNewMoonRentalTables extends Migration
                 $table->string('name')->default('Not Assigned');
                 $table->unsignedBigInteger('system_id');
                 $table->string('system_name')->default('Not Assigned');
+                $table->enum('moon_type', [
+                    'R4',
+                    'R8',
+                    'R16',
+                    'R32',
+                    'R64',
+                    'None',
+                ])->default('None');
                 $table->decimal('worth_amount')->default(0.00);
                 $table->enum('rented', [
                     'No',
