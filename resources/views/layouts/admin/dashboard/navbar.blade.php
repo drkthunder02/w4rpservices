@@ -9,6 +9,9 @@
         <a href="/dashboard" class="nav-link">Dashboard</a>
       </li>
     </ul>
+    @hasSection('navbar-upper-left')
+    @yeild('navbar-upper-left')
+    @endif
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -27,5 +30,8 @@
             class="fas fa-th-large"></i></a>
       </li>
     </ul>
+    @hasSection('navbar-upper-right')
+    @yeild('navbar-upper-right')
+    @endif
   </nav>
   <!-- /.navbar -->

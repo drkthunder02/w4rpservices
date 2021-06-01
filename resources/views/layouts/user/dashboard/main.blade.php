@@ -45,7 +45,7 @@
     <!-- /.sidebar-menu -->
   </div>
   <!-- /.sidebar -->
+  @hasSection('sidebar')
+  @yield('sidebar')
+  @endif
 </aside>
-@hasSection('sidebar')
-@yield('sidebar')
-@endif
