@@ -14,6 +14,9 @@
     </li>
     @endif
   </ul>
+  @hasSection('navbar-upper-left')
+  @yield('navbar-upper-left')
+  @endif
 
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
@@ -44,5 +47,8 @@
           class="fas fa-th-large"></i></a>
     </li>
   </ul>
+  @hasSection('navbar-upper-right')
+  @yeild('navbar-upper-right')
+  @endif
 </nav>
 <!-- /.navbar -->

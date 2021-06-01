@@ -6,3 +6,6 @@
 <script src="/bower_components/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/bower_components/admin-lte/dist/js/adminlte.min.js"></script>
+@hasSection('scripts')
+@yeild('scripts')
+@endif

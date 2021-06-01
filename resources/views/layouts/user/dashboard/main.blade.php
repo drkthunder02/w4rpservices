@@ -1,47 +1,51 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-      <span class="brand-text font-weight-light">W4RP</span>
-    </a>
+  <!-- Brand Logo -->
+  <a href="#" class="brand-link">
+    <span class="brand-text font-weight-light">W4RP</span>
+  </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="info">
-          <a href="/profile" class="d-block">{{ auth()->user()->getName() }}</a>
-        </div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="info">
+        <a href="/profile" class="d-block">{{ auth()->user()->getName() }}</a>
       </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- General Items -->
-          @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
-          @include('layouts.user.sidebarmenu.general')
-          @endif
-          <!-- End General Items -->
-          <!-- Mining Tax Items -->
-          @include('layouts.user.sidebarmenu.miningtax')
-          <!-- End Mining Tax Items -->
-          <!-- After Action Reports -->
-          @if(auth()->user()->hasPermission('fc.team'))
-          @include('layouts.user.sidebarmenu.reports')
-          @endif
-          <!-- End After Action Reports -->
-          <!-- SRP Items -->
-          @include('layouts.user.sidebarmenu.srp')
-          <!-- SRP Items -->
-          <!-- Contracts -->
-          @include('layouts.user.sidebarmenu.contracts')
-          <!-- End Contracts -->
-          <!-- Blacklist -->
-          @include('layouts.user.sidebarmenu.blacklist')
-          <!-- End Blacklist -->
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
-  </aside>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- General Items -->
+        @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
+        @include('layouts.user.sidebarmenu.general')
+        @endif
+        <!-- End General Items -->
+        <!-- Mining Tax Items -->
+        @include('layouts.user.sidebarmenu.miningtax')
+        <!-- End Mining Tax Items -->
+        <!-- After Action Reports -->
+        @if(auth()->user()->hasPermission('fc.team'))
+        @include('layouts.user.sidebarmenu.reports')
+        @endif
+        <!-- End After Action Reports -->
+        <!-- SRP Items -->
+        @include('layouts.user.sidebarmenu.srp')
+        <!-- SRP Items -->
+        <!-- Contracts -->
+        @include('layouts.user.sidebarmenu.contracts')
+        <!-- End Contracts -->
+        <!-- Blacklist -->
+        @include('layouts.user.sidebarmenu.blacklist')
+        <!-- End Blacklist -->
+        
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
+@hasSection('sidebar')
+@yield('sidebar')
+@endif
