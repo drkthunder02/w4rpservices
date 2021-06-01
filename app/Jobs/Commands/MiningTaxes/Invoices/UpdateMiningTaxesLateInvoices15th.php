@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Commands\MiningTaxes;
+namespace App\Jobs\Commands\MiningTaxes\Invoices;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,7 +21,7 @@ use App\Models\User\UserAlt;
 //Jobs
 use App\Jobs\Commands\Eve\SendEveMail;
 
-class UpdateMiningTaxesLateInvoices1st implements ShouldQueue
+class UpdateMiningTaxesLateInvoices15th implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

@@ -33,14 +33,17 @@ class AdminDashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:Admin');
+        $this->middleware('role:User');
     }
 
     /**
      * Show the administration dashboard.
      */
     public function displayAdminDashboard() {
-        if(auth()->user()->hasRole('Admin') || auth()->user()->hasPermission('moon.admin') || auth()->user()->hasPermission('srp.admin') || auth()->user()->hasPermission('contract.admin')) {
+        if(auth()->user()->hasRole('Admin');
+           auth()->user()->hasPermission('srp.admin') || 
+           auth()->user()->hasPermission('contract.admin' ||
+           auth()->user()->hasPermission('mining.officer'))) {
             //Do nothing and continue on
         } else {
             redirect('/dashboard');
@@ -54,6 +57,8 @@ class AdminDashboardController extends Controller
      * Display users in a paginated format
      */
     public function displayUsersPaginated() {
+        $this->middleware('role:Admin');
+
         //Declare array variables
         $user = array();
         $permission = array();
@@ -91,6 +96,8 @@ class AdminDashboardController extends Controller
      * Search users for a specific user
      */
     public function searchUsers(Request $request) {
+        $this->middleware('role:Admin');
+
         //Declare array variables
         $user = array();
         $permission = array();
@@ -133,6 +140,8 @@ class AdminDashboardController extends Controller
      * Display the allowed logins
      */
     public function displayAllowedLogins() {
+        $this->middleware('role:Admin');
+
         //Declare array variables
         $entities = array();
 
@@ -155,6 +164,8 @@ class AdminDashboardController extends Controller
      * 
      */
     public function displayTaxes() {
+        $this->middleware('role:Admin');
+
         //Declare variables needed for displaying items on the page
         $months = 3;
         $pi = array();
@@ -246,6 +257,8 @@ class AdminDashboardController extends Controller
      * Display the modify user form
      */
     public function displayModifyUser(Request $request) {
+        $this->middleware('role:Admin');
+
         $permissions = array();
         $roles = array();
         
@@ -280,6 +293,8 @@ class AdminDashboardController extends Controller
      * Modify a user's role
      */
     public function modifyRole(Request $request) {
+        $this->middleware('role:Admin');
+
         $this->validate($request, [
             'user' => 'required',
             'role' => 'required',
@@ -293,6 +308,8 @@ class AdminDashboardController extends Controller
     }
 
     public function addPermission(Request $request) {
+        $this->middleware('role:Admin');
+
         //Get the user and permission from the form
         $character = $request->user;
         $permission = $request->permission;
@@ -316,6 +333,8 @@ class AdminDashboardController extends Controller
      * Delete a user to reset their permissions
      */
     public function removeUser(Request $request) {
+        $this->middleware('role:Admin');
+
         //Get the user from the form to delete
         $user = $request->user;
 
@@ -341,6 +360,8 @@ class AdminDashboardController extends Controller
      * Add an entity to the allowed login table
      */
     public function addAllowedLogin(Request $request) {
+        $this->middleware('role:Admin');
+
         //Set the parameters to validate the form
         $this->validate($request, [
             'allowedEntityId' => 'required',
@@ -380,6 +401,8 @@ class AdminDashboardController extends Controller
      * Remove an entity from the allowed login table
      */
     public function removeAllowedLogin(Request $request) {
+        $this->middleware('role:Admin');
+
         //Set the parameters to validate the form
         $this->validate($request, [
             'removeAllowedLogin' => 'required',
@@ -396,6 +419,8 @@ class AdminDashboardController extends Controller
      * Show journal entries in a table for admins from alliance wallets
      */
     public function displayJournalEntries() {
+        $this->middleware('role:Admin');
+
         $date = Carbon::now()->subDays(60);
 
         $journal = AllianceWalletJournal::where('date', '>=', $date)

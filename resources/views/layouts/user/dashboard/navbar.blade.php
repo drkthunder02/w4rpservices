@@ -8,7 +8,9 @@
     <li class="nav-item d-none d-sm-inline-block">
       <a href="/dashboard" class="nav-link">Dashboard</a>
     </li>
-    @if(auth()->user()->hasRole('Admin') || auth()->user()->hasPermission('contract.admin') || auth()->user()->hasPermission('moon.admin'))
+    @if(auth()->user()->hasRole('Admin') || 
+        auth()->user()->hasPermission('contract.admin') || 
+        auth()->user()->hasPermission('mining.officer'))
     <li class="nav-item d-non d-sm-inline-block">
       <a class="nav-link" href="/admin/dashboard">Admin Dashboard</a>
     </li>

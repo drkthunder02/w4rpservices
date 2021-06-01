@@ -25,12 +25,74 @@ use App\Models\Moon\ItemComposition;
 use App\Models\Moon\MineralPrice;
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
+use App\Models\Structure\Structure;
 
 class MiningTaxesAdminController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('role:Admin');
+        $this->middleware('role:User');
+        $this->middleware('mining.officer');
+    }
+
+    /**
+     * Display the form for mining operations held by the alliance
+     */
+    public function DisplayMiningOperationForm() {
+        //Declare variables
+        $lookup = new LookupHelper;
+        $sHelper = new StructureHelper;
+        $structures = new Collection;
+
+        //Get all of the structures
+        $athanors = $sHelper->GetStructuresByType('Athanor');
+        $tataras = $sHelper->GetStructuresByType('Tatara');
+
+        foreach($athanors as $athanor) {
+            $structures->push([
+                $athanor->structure_name => $athanor->structure_id,
+            ]);
+        }
+
+        foreach($tataras as $tatara) {
+            $structures->push([
+                $tatara->structure_name => $tatara->structure_id,
+            ]);
+        }
+
+        $structures->sort();
+
+        return view('miningtax.admin.display.miningops.form')->with('structures', $structures);
+    }
+
+    /**
+     * Store the results from the mining operations form
+     */
+    public function StoreMiningOperationForm(Request $request) {
+        //Validate the data
+        $this->validate($request, [
+            'name' => 'required',
+            'date' => 'required',
+            'structure' => 'required',
+        ]);
+
+        //Get the name of the structure from the table
+        $moon = Observer::where([
+            'observer_id' => $request->structure,
+        ])->get();
+
+        //Save the mining operation into the database
+        $operation = new MiningOperation;
+        $operation->structure_id = $request->structure;
+        $operation->structure_name = $moon->observer_name;
+        $operation->authorized_by_id = auth()->user()->getId();
+        $operation->authorized_by_name = auth()->user()->getName();
+        $operation->operation_date = $request->date;
+        $operation->processed = 'No';
+        $operation->processed_on = null;
+        $operation->save();
+
+        return redirect('/admin/dashboard')->with('success', 'Operation added successfully.');
     }
 
     /**
@@ -153,6 +215,8 @@ class MiningTaxesAdminController extends Controller
             'invoice_id' => $request->invoiceId,
         ])->update([
             'status' => $request->status,
+            'modified_by_id' => auth()->user()->getId(),
+            'modified_by_name' => auth()->user()->getName(),
         ]);
 
         return redirect('/miningtax/admin/display/unpaid')->with('success', 'Invoice successfully updated.');

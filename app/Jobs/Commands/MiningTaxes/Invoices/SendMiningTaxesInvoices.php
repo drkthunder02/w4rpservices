@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Commands\MiningTaxes;
+namespace App\Jobs\Commands\MiningTaxes\Invoices;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

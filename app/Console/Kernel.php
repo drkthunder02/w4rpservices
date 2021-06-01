@@ -10,9 +10,11 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgers;
 use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObservers;
 use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPayments;
-use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoices;
-use App\Jobs\Commands\MiningTaxes\UpdateMiningTaxesLateInvoices1st;
-use App\Jobs\Commands\MiningTaxes\UpdateMiningTaxesLateInvoices15th;
+//use App\Jobs\Commands\MiningTaxes\Invoices\SendMiningTaxesInvoices;
+use App\Jobs\Commands\MiningTaxes\Invoices\UpdateMiningTaxesLateInvoices1st;
+use App\Jobs\Commands\MiningTaxes\Invoices\UpdateMiningTaxesLateInvoices15th;
+//use App\Jobs\Commands\MiningTaxes\Invoices\ProcessAllianceMiningOperations;
+use App\Jobs\Commands\MiningTaxes\MiningTaxesWeeklyInvoicing;
 use App\Jobs\Commands\Finances\UpdateAllianceWalletJournalJob;
 use App\Jobs\Commands\Finances\UpdateItemPrices as UpdateItemPricesJob;
 use App\Jobs\Commands\Data\PurgeUsers as PurgeUsersJob;
@@ -86,9 +88,16 @@ class Kernel extends ConsoleKernel
         $schedule->job(new PreFetchMiningTaxesLedgers)
                  ->dailyAt('22:00')
                  ->withoutOverlapping();
-        $schedule->job(new SendMiningTaxesInvoices)
+        $schedule->job(new MiningTaxesWeeklyInvoicing)
                  ->weeklyOn(1, '06:00')
                  ->withoutOverlapping();
+        //$schedule->job(new ProcessAllianceMiningOperations)
+        //         ->weeklyOn(1, '06:00')
+        //         ->withChain([new SendMiningTaxesInvoices])
+        //         ->withoutOverlapping();
+        //$schedule->job(new SendMiningTaxesInvoices)
+        //         ->weeklyOn(1, '06:00')
+        //         ->withoutOverlapping();
         $schedule->job(new ProcessMiningTaxesPayments)
                  ->hourlyAt('15')
                  ->withoutOverlapping();
