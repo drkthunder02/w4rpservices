@@ -40,7 +40,7 @@ class AdminDashboardController extends Controller
      * Show the administration dashboard.
      */
     public function displayAdminDashboard() {
-        if(auth()->user()->hasRole('Admin');
+        if(auth()->user()->hasRole('Admin') ||
            auth()->user()->hasPermission('srp.admin') || 
            auth()->user()->hasPermission('contract.admin' ||
            auth()->user()->hasPermission('mining.officer'))) {
