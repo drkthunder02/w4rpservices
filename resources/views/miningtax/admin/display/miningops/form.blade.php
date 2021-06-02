@@ -8,7 +8,7 @@
             <h4>Enter in the information, then hit submit.</h4>
         </div>
         <div class="card-body">
-            {!! Form::open(['action' => 'MiningTaxes\MiningTaxesAdminController@submitMiningOperationForm', method' => 'POST']) !!}
+            {!! Form::open(['action' => 'MiningTaxes\MiningTaxesAdminController@submitMiningOperationForm', 'method' => 'POST']) !!}
             <div class="form-group col-md-6">
                 {{ Form::label('name', 'Mining Operation Name') }}
                 {{ Form::text('name', '', ['class' => 'form-control']) }}
