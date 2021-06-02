@@ -85,18 +85,19 @@ Route::group(['middleware' => ['auth']], function(){
      * Mining Moon Tax display pages
      */
     Route::get('/miningtax/display/detail/invoice/{invoice}', 'MiningTaxes\MiningTaxesController@displayInvoice');
-    Route::get('/miningtax/admin/display/detail/invoice/{invoice}', 'MiningTaxes\MiningTaxesAdminController@displayInvoice');
     Route::get('/miningtax/display/invoices', 'MiningTaxes\MiningTaxesController@DisplayInvoices');
     Route::get('/miningtax/display/extractions', 'MiningTaxes\MiningTaxesController@DisplayUpcomingExtractions');
     Route::get('/miningtax/display/ledgers', 'MiningTaxes\MiningTaxesController@DisplayMoonLedgers');
+    Route::get('/miningtax/display/availablemoons', 'MiningTaxes\MiningTaxesController@displayAvailableMoons');
+    Route::get('/miningtax/display/allmoons', 'MiningTaxes\MiningTaxesController@displayAllMoons');
+    Route::get('/miningtax/admin/display/detail/invoice/{invoice}', 'MiningTaxes\MiningTaxesAdminController@displayInvoice');
     Route::get('/miningtax/admin/display/unpaid', 'MiningTaxes\MiningTaxesAdminController@DisplayUnpaidInvoice');
     Route::post('/miningtax/admin/update/invoice', 'MiningTaxes\MiningTaxesAdminController@UpdateInvoice');
     Route::post('/miningtax/admin/delete/invoice', 'MiningTaxes\MiningTaxesAdminController@DeleteInvoice');
     Route::get('/miningtax/admin/display/paid', 'MiningTaxes\MiningTaxesAdminController@DisplayPaidInvoices');
     Route::any('/miningtax/admin/display/unpaid/search', 'MiningTaxes\MiningTaxesAdminController@SearchUnpaidInvoice');
-    Route::get('/miningtax/display/availablemoons', 'MiningTaxes\MiningTaxesController@displayAvailableMoons');
-    Route::get('/miningtax/display/allmoons', 'MiningTaxes\MiningTaxesController@displayAllMoons');
     Route::get('/miningtax/admin/display/form/operations', 'MiningTaxes\MiningTaxesAdminController@displayMiningOperationForm');
+    Route::post('/miningtax/admin/display/form/operations', 'MiningTaxes\MiningTaxesAdminController@storeMiningOperationForm');
     
     /**
      * Scopes Controller display pages

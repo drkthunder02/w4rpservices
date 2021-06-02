@@ -68,7 +68,7 @@ class MiningTaxesAdminController extends Controller
     /**
      * Store the results from the mining operations form
      */
-    public function StoreMiningOperationForm(Request $request) {
+    public function storeMiningOperationForm(Request $request) {
         //Validate the data
         $this->validate($request, [
             'name' => 'required',
