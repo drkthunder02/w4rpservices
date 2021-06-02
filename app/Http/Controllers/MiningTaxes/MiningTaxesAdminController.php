@@ -52,6 +52,8 @@ class MiningTaxesAdminController extends Controller
         $athanors = $sHelper->GetStructuresByType('Athanor');
         $tataras = $sHelper->GetStructuresByType('Tatara');
 
+        dd($athanors);
+
         foreach($athanors as $athanor) {
             $structures->push([
                 $athanor->structure_name => $athanor->structure_id,
@@ -65,8 +67,6 @@ class MiningTaxesAdminController extends Controller
         }
 
         $structures->sort();
-
-        dd($structures);
 
         return view('miningtax.admin.display.miningops.form')->with('structures', $structures);
     }
