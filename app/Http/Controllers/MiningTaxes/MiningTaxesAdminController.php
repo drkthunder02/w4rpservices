@@ -45,7 +45,8 @@ class MiningTaxesAdminController extends Controller
         $config = config('esi');
         $lookup = new LookupHelper;
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
-        $structures = new Collection;
+        $coll = new Collection;
+        $structures = array();
         
 
         //Get all of the structures
@@ -53,18 +54,24 @@ class MiningTaxesAdminController extends Controller
         $tataras = $sHelper->GetStructuresByType('Tatara');
 
         foreach($athanors as $athanor) {
-            $structures->push([
+            $coll->push([
                 $athanor->structure_id => $athanor->structure_name,
             ]);
         }
 
         foreach($tataras as $tatara) {
-            $structures->push([
+            $coll->push([
                 $tatara->structure_id => $tatara->structure_name,
             ]);
         }
 
-        $structures->sort();
+        $coll->sort();
+
+        foreach($coll as $key => $value) {
+            array_push($structures, [
+                $key => $value,
+            ]);
+        }
 
         return view('miningtax.admin.display.miningops.form')->with('structures', $structures);
     }
@@ -79,6 +86,8 @@ class MiningTaxesAdminController extends Controller
             'date' => 'required',
             'structure' => 'required',
         ]);
+
+        dd($request);
 
         //Get the name of the structure from the table
         $moon = Observer::where([
