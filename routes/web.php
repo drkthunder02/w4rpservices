@@ -96,6 +96,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::any('/miningtax/admin/display/unpaid/search', 'MiningTaxes\MiningTaxesAdminController@SearchUnpaidInvoice');
     Route::get('/miningtax/display/availablemoons', 'MiningTaxes\MiningTaxesController@displayAvailableMoons');
     Route::get('/miningtax/display/allmoons', 'MiningTaxes\MiningTaxesController@displayAllMoons');
+    Route::get('/miningtax/admin/display/form/operations', 'MiningTaxes\MiningTaxesAdminController@displayMiningOperationForm');
     
     /**
      * Scopes Controller display pages
