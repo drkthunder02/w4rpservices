@@ -15,7 +15,7 @@
             </div>
             <div class="form-group col-md-6">
                 {{ Form::label('date', 'Date') }}
-                {{ Form::date('date', \Carbon\Carbon::now(), ['class' => 'form-control'] }}
+                {{ Form::date('date', \Carbon\Carbon::now(), ['class' => 'form-control']) }}
             </div>
             <div class="form-group col-md-6">
                 {{ Form::label('structure', 'Mining Structure') }}
