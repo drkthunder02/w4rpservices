@@ -66,6 +66,8 @@ class MiningTaxesAdminController extends Controller
 
         $structures->sort();
 
+        dd($structures);
+
         return view('miningtax.admin.display.miningops.form')->with('structures', $structures);
     }
 
