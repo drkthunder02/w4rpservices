@@ -21,7 +21,7 @@
                 {{ Form::label('structure', 'Mining Structure') }}
                 {{ Form::select('structure', $structures, 'None', ['class' => 'form-control']) }}
             </div>
-            {{ Submit::submit('Submit', ['class' => 'btn btn-primary']) }}
+            {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
             {!! Form::close() !!}
         </div>
     </div>
