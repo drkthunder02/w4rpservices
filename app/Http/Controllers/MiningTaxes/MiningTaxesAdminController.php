@@ -54,13 +54,13 @@ class MiningTaxesAdminController extends Controller
 
         foreach($athanors as $athanor) {
             $structures->push([
-                $athanor->structure_name => $athanor->structure_id,
+                $athanor->structure_id => $athanor->structure_name,
             ]);
         }
 
         foreach($tataras as $tatara) {
             $structures->push([
-                $tatara->structure_name => $tatara->structure_id,
+                $tatara->structure_id => $tatara->structure_name,
             ]);
         }
 
