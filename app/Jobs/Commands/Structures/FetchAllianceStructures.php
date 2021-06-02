@@ -156,8 +156,8 @@ class FetchAllianceStructures implements ShouldQueue
                     Log::critical("Gateway timeout in FetchAllianceStructures.  Releasing the job back to the queue in 30 seconds.");
                     $this->release(30);
                     break;
-                case 201:   
-                    //Good response code
+                case 201:   //Good response code
+                    $this->delete();
                     break;
                 //If no code is given, then log and break out of switch.
                 default:

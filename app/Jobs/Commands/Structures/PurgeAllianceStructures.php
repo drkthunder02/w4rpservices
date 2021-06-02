@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 //Jobs
-use App\Jobs\Commands\FetchAllianceStructures;
+use App\Jobs\Commands\Structures\FetchAllianceStructures;
 
 //Models
 use App\Models\Structure\Structure;
