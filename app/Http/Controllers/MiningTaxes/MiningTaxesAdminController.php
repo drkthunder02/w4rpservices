@@ -38,7 +38,7 @@ class MiningTaxesAdminController extends Controller
     /**
      * Display the form for mining operations held by the alliance
      */
-    public function DisplayMiningOperationForm() {
+    public function displayMiningOperationForm() {
         //Declare variables
         $lookup = new LookupHelper;
         $sHelper = new StructureHelper;
