@@ -28,7 +28,7 @@ class CreateMiningTaxMiningOperationsTable extends Migration
                 ])->default('No');
                 $table->date('processed_on')->nullable();
                 $table->timestamps();
-            })
+            });
         }
 
         if(!Schema::hasTable('alliance_mining_tax_invoices')) {
