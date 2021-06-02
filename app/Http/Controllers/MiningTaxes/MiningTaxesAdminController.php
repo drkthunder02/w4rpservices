@@ -9,6 +9,8 @@ use Log;
 use Carbon\Carbon;
 use Khill\Lavacharts\Lavacharts;
 use Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 //Application Library
 use App\Library\Helpers\LookupHelper;
