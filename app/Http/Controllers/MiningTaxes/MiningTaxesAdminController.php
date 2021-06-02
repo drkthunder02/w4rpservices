@@ -40,9 +40,11 @@ class MiningTaxesAdminController extends Controller
      */
     public function displayMiningOperationForm() {
         //Declare variables
+        $config = config('esi');
         $lookup = new LookupHelper;
-        $sHelper = new StructureHelper;
+        $sHelper = new StructureHelper($config['primary'], $config['corporation']);
         $structures = new Collection;
+        
 
         //Get all of the structures
         $athanors = $sHelper->GetStructuresByType('Athanor');
