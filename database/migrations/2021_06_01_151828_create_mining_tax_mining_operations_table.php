@@ -21,6 +21,7 @@ class CreateMiningTaxMiningOperationsTable extends Migration
                 $table->unsignedBigInteger('authorized_by_id');
                 $table->string('authorized_by_name');
                 $table->date('operation_date');
+                $table->string('operation_name');
                 $table->enum('processed', [
                     'No',
                     'Yes',

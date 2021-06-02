@@ -28,6 +28,7 @@ use App\Models\Moon\MineralPrice;
 use App\Models\Esi\EsiToken;
 use App\Models\Esi\EsiScope;
 use App\Models\Structure\Structure;
+use App\Models\MiningTax\MiningOperation;
 
 class MiningTaxesAdminController extends Controller
 {
@@ -48,32 +49,32 @@ class MiningTaxesAdminController extends Controller
         $coll = new Collection;
         $structures = array();
         
-
         //Get all of the structures
         $athanors = $sHelper->GetStructuresByType('Athanor');
         $tataras = $sHelper->GetStructuresByType('Tatara');
 
+        //Cycle through each athanor and add it to the stack
         foreach($athanors as $athanor) {
-            $coll->push([
+            $structures->push([
                 $athanor->structure_id => $athanor->structure_name,
             ]);
         }
-
+        //Cycle through each tatara and add it to the stack
         foreach($tataras as $tatara) {
-            $coll->push([
+            $structures->push([
                 $tatara->structure_id => $tatara->structure_name,
             ]);
         }
+        //Sort all of the structures
+        $structures->sort();
 
-        $coll->sort();
+        //Get the current mining operations.
+        $operations = MiningOperation::where([
+            'processed' => 'No',
+        ])->get();
 
-        foreach($coll as $key => $value) {
-            array_push($structures, [
-                $key => $value,
-            ]);
-        }
-
-        return view('miningtax.admin.display.miningops.form')->with('structures', $structures);
+        return view('miningtax.admin.display.miningops.form')->with('structures', $structures)
+                                                             ->with('operations', $operations);
     }
 
     /**
@@ -87,12 +88,12 @@ class MiningTaxesAdminController extends Controller
             'structure' => 'required',
         ]);
 
-        dd($request);
-
         //Get the name of the structure from the table
         $moon = Observer::where([
             'observer_id' => $request->structure,
         ])->get();
+
+        dd($moon);
 
         //Save the mining operation into the database
         $operation = new MiningOperation;
@@ -100,6 +101,7 @@ class MiningTaxesAdminController extends Controller
         $operation->structure_name = $moon->observer_name;
         $operation->authorized_by_id = auth()->user()->getId();
         $operation->authorized_by_name = auth()->user()->getName();
+        $operation->operation_name = $request->name;
         $operation->operation_date = $request->date;
         $operation->processed = 'No';
         $operation->processed_on = null;

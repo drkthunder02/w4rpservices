@@ -26,4 +26,40 @@
         </div>
     </div>
 </div>
+<br>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2>Current Alliance Mining Operations</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th>Operation Date</th>
+                    <th>Operation Name</th>
+                    <th>Structure Name</th>
+                    <th>Authorized By</th>
+                </thead>
+                <tbody>
+                    @if($operations != null)
+                    @foreach($operations as $operation)
+                    <tr>
+                        <td>$operation->operation_date</td>
+                        <td>$operation->operation_name</td>
+                        <td>$operation->structure_name</td>
+                        <td>$operation->authorized_by_name</td>
+                    </tr>
+                    @endforeach
+                    @else
+                    <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @endsection

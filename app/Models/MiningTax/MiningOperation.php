@@ -27,6 +27,7 @@ class MiningOperation extends Model
         'authorized_by_id',
         'authorized_by_name',
         'operation_date',
+        'operation_name',
         'processed',
         'processed_on',
     ];
