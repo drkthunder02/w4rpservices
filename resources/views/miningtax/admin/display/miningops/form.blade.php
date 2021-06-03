@@ -44,10 +44,10 @@
                     @if($operations != null)
                     @foreach($operations as $operation)
                     <tr>
-                        <td>$operation->operation_date</td>
-                        <td>$operation->operation_name</td>
-                        <td>$operation->structure_name</td>
-                        <td>$operation->authorized_by_name</td>
+                        <td>{{ $operation->operation_date }}</td>
+                        <td>{{ $operation->operation_name }}</td>
+                        <td>{{ $operation->structure_name }}</td>
+                        <td>{{ $operation->authorized_by_name }}</td>
                     </tr>
                     @endforeach
                     @else
