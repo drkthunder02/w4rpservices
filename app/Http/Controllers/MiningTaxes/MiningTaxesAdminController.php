@@ -89,14 +89,14 @@ class MiningTaxesAdminController extends Controller
         ]);
 
         //Get the name of the structure from the table
-        $moon = Observer::where([
+        $m = Observer::where([
             'observer_id' => $request->structure,
-        ])->get()->toArray();
+        ])->get();
 
         //Save the mining operation into the database
         $operation = new MiningOperation;
         $operation->structure_id = $request->structure;
-        $operation->structure_name = $moon['observer_name'];
+        $operation->structure_name = $m->observer_name;
         $operation->authorized_by_id = auth()->user()->getId();
         $operation->authorized_by_name = auth()->user()->getName();
         $operation->operation_name = $request->name;
