@@ -93,8 +93,6 @@ class MiningTaxesAdminController extends Controller
             'observer_id' => $request->structure,
         ])->get();
 
-        dd($moon);
-
         //Save the mining operation into the database
         $operation = new MiningOperation;
         $operation->structure_id = $request->structure;
