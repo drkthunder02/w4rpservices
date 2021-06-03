@@ -47,7 +47,7 @@ class MiningTaxesAdminController extends Controller
         $lookup = new LookupHelper;
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
         $coll = new Collection;
-        $structures = array();
+        $structures = new Collection;
         
         //Get all of the structures
         $athanors = $sHelper->GetStructuresByType('Athanor');
