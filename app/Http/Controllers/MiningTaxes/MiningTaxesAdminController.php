@@ -91,7 +91,7 @@ class MiningTaxesAdminController extends Controller
         //Get the name of the structure from the table
         $m = Observer::where([
             'observer_id' => $request->structure,
-        ])->get();
+        ])->first();
 
         //Save the mining operation into the database
         $operation = new MiningOperation;
