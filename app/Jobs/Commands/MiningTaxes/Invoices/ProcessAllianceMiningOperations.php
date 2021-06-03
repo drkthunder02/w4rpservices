@@ -55,12 +55,14 @@ class ProcessAllianceMiningOperations implements ShouldQueue
     {
         $count = MiningOperation::where([
             'processed' => 'No',
-        ])->count()
+        ])->where('operation_date', '<=', Carbon::now())
+          ->count()
 
         if($count > 0) {
             $operations = MiningOperation::where([
                 'processed' => 'No',
-            ])->get();
+            ])->where('operation_date', '<=', Carbon::now())
+              ->get();
     
             foreach($operations as $operation) {
                 $ledgers = Ledger::where([
