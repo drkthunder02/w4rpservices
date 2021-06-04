@@ -55,8 +55,8 @@ class PurgeAllianceStructures implements ShouldQueue
     {
         Structure::truncate();
         Service::truncate();
-
-        FetchAllianceStructures::dispatch();
+        
+        FetchAllianceStructures::dispatch()->delay(Carbon::now()->addSeconds(30));
     }
 
     /**

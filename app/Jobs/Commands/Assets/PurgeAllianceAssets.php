@@ -54,6 +54,6 @@ class PurgeAllianceAssets implements ShouldQueue
     {
         Asset::truncate();
 
-        FetchAllianceAssets::dispatch();
+        FetchAllianceAssets::dispatch()->delay(Carbon::now()->addSeconds(30));
     }
 }

@@ -154,6 +154,7 @@ class FetchAllianceAssets implements ShouldQueue
                     break;
                 case 201:
                     //Good response code
+                    $this->delete();
                     break;
                 //If no code is given, then log and break out of switch.
                 default:
