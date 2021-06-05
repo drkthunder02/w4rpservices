@@ -36,7 +36,7 @@ class AfterActionReportsController extends Controller
             'comments' => 'required',
         ]);
 
-        $report = new Report;
+        $report = new AfterActionReport;
         $report->fc_id = auth()->user()->getId();
         $report->fc_name = auth()->user()->getName();
         $report->formup_time = $request->time;
