@@ -4,7 +4,7 @@ namespace App\Console\Commands\MiningTaxes;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\MiningTaxes\SendMiningTaxesInvoices as SendInvoice;
+use App\Jobs\Commands\MiningTaxes\Invoices\SendMiningTaxesInvoices as SendInvoice;
 
 class ExecuteSendMiningTaxesInvoiceCommand extends Command
 {
@@ -39,7 +39,7 @@ class ExecuteSendMiningTaxesInvoiceCommand extends Command
      */
     public function handle()
     {
-        SendInvoice::dispatch()->onQueue('miningtaxes');
+        SendInvoice::dispatch();
 
         return 0;
     }

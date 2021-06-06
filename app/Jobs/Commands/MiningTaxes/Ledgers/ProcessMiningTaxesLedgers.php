@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Commands\MiningTaxes;
+namespace App\Jobs\Commands\MiningTaxes\Ledgers;
 
 //Internal Library
 use Illuminate\Bus\Queueable;

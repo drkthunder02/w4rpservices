@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Commands\MiningTaxes;
+namespace App\Jobs\Commands\MiningTaxes\Ledgers;
 
 //Internal Library
 use Illuminate\Bus\Queueable;
@@ -17,7 +17,7 @@ use App\Library\Helpers\LookupHelper;
 use App\Library\Moons\MoonCalc;
 
 //Jobs
-use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesLedgers;
+use App\Jobs\Commands\MiningTaxes\Ledgers\ProcessMiningTaxesLedgers;
 
 //App Models
 use App\Models\MiningTax\Observer;
@@ -143,7 +143,7 @@ class FetchMiningTaxesLedgers implements ShouldQueue
 
                 //Dispatch jobs to process each of the mining ledger entries
                 foreach($ledgers as $ledger) {
-                    ProcessMiningTaxesLedgers::dispatch($ledger, $this->observerId)->onQueue('miningtaxes');
+                    ProcessMiningTaxesLedgers::dispatch($ledger, $this->observerId);
                 }                
             }
 

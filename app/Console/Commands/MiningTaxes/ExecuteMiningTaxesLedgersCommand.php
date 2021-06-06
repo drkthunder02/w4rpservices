@@ -4,7 +4,7 @@ namespace App\Console\Commands\MiningTaxes;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgers as PreFetch;
+use App\Jobs\Commands\MiningTaxes\Ledgers\PreFetchMiningTaxesLedgers as PreFetch;
 
 class ExecuteMiningTaxesLedgersCommand extends Command
 {
@@ -39,7 +39,7 @@ class ExecuteMiningTaxesLedgersCommand extends Command
      */
     public function handle()
     {
-        PreFetch::dispatch()->onQueue('miningtaxes');
+        PreFetch::dispatch();
 
         return 0;
     }

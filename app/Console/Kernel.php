@@ -22,6 +22,7 @@ use App\Jobs\Commands\Structures\FetchAllianceStructures;
 use App\Jobs\Commands\Structures\PurgeAllianceStructures;
 use App\Jobs\Commands\Assets\FetchAllianceAssets;
 use App\Jobs\Commands\Assets\PurgeAllianceAssets;
+use App\Jobs\Commands\MoonRental\UpdateAllianceMoonRentalWorth;
 
 class Kernel extends ConsoleKernel
 {
@@ -106,6 +107,9 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
         $schedule->job(new UpdateMiningTaxesLateInvoices15th)
                  ->monthlyOn(15, '16:00')
+                 ->withoutOverlapping();
+        $schedule->job(new UpdateAllianceMoonRentalWorth)
+                 ->dailyAt('13:00')
                  ->withoutOverlapping();
         
         /**
