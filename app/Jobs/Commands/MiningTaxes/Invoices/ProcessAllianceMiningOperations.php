@@ -68,15 +68,17 @@ class ProcessAllianceMiningOperations implements ShouldQueue
                 $ledgers = Ledger::where([
                     'observer_id' => $operation->structure_id,
                     'invoiced' => 'No',
+                    'last_updated' => $operation->operation_date,
                 ])->get();
     
                 foreach($ledgers as $ledger) {
                     Ledger::where([
                         'observer_id' => $operation->structure_id,
                         'invoiced' => 'No',
+                        'last_updated' => $operation->operation_date,
                     ])->update([
                         'invoiced' => 'Yes',
-                        'invoice_id' => 'MiningOp ' . $operation->id,
+                        'invoice_id' => 'MiningOp' . $operation->id,
                     ]);
                 }
     
