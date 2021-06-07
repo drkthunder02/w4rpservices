@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs\Jobs\Commands\MiningTaxes\Invoices;
+namespace App\Jobs\Commands\MiningTaxes\Invoices;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
