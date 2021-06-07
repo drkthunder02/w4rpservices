@@ -56,7 +56,7 @@ class ProcessAllianceMiningOperations implements ShouldQueue
         $count = MiningOperation::where([
             'processed' => 'No',
         ])->where('operation_date', '<=', Carbon::now())
-          ->count()
+          ->count();
 
         if($count > 0) {
             $operations = MiningOperation::where([
@@ -76,7 +76,7 @@ class ProcessAllianceMiningOperations implements ShouldQueue
                         'invoiced' => 'No',
                     ])->update([
                         'invoiced' => 'Yes',
-                        'invoice_id' => 'Mining Op ',
+                        'invoice_id' => 'MiningOp ' . $operation->id,
                     ]);
                 }
     

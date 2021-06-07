@@ -4,7 +4,7 @@ namespace App\Console\Commands\MiningTaxes;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\MiningTaxes\Invoices\SendMiningTaxesInvoices as SendInvoice;
+use App\Jobs\Commands\MiningTaxes\MiningTaxesWeeklyInvoicing as SendInvoice;
 
 class ExecuteSendMiningTaxesInvoiceCommand extends Command
 {
