@@ -236,15 +236,15 @@ class SendMiningTaxesInvoices implements ShouldQueue
         }
         $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
         $body .= "<br><br>";
-        $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
-        $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
-        $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
-        $body .= "<br><br>";
-        $body .= "You can also send a contract with the following ores in the contract with the reason set as: " . $invoiceId . "<br>";
+        $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces or contract Spatial Forces the following ores:<br>";
         foreach($ores as $ore => $quantity) {
             $oreName = $lookup->ItemIdToName($ore);
             $body .= $oreName . ": " . number_format(round($quantity * $config['mining_tax']), 0, ".", ",") . "<br>";
         }
+        $body .= "<br>";
+        $body .= "The due date is " . $dateDue . "<br>";
+        $body .= "Set the reason for transfer as " . $invoiceId . "<br>";
+        $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
         $body .= "<br>";
         $body .= "Characters Processed: <br>";
         foreach($characters as $character) {
@@ -258,7 +258,8 @@ class SendMiningTaxesInvoices implements ShouldQueue
             $body = "Dear " . $charName . "<br><br>";
             $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
             $body .= "<br><br>";
-            $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces by " . $dateDue . "<br>";
+            $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces or contract 15% of the ores mined to Spatial Forces.<br>"
+            $body .= "The due date is " . $dateDue . "<br>";
             $body .= "Set the reason for transfer as: " . $invoiceId . "<br>";
             $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
             $body .= "<br>";
