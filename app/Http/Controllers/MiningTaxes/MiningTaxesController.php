@@ -222,7 +222,6 @@ class MiningTaxesController extends Controller
         ])->first();
 
         $items = Ledger::where([
-            'character_id' => auth()->user()->getId(),
             'invoice_id' => $invoiceId,
         ])->get();
 
