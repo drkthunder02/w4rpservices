@@ -43,6 +43,7 @@ class Kernel extends ConsoleKernel
         Commands\Structures\ExecuteFetchAllianceStructuresCommand::class,
         Commands\Structures\ExecuteFetchAllianceAssetsCommand::class,
         Commands\Files\ImportAllianceMoons::class,
+        Commands\MiningTaxes\ExecuteUpdateAllianceMoonRentalWorth::class,
     ];
 
     /**
@@ -92,13 +93,6 @@ class Kernel extends ConsoleKernel
         $schedule->job(new MiningTaxesWeeklyInvoicing)
                  ->weeklyOn(1, '06:00')
                  ->withoutOverlapping();
-        //$schedule->job(new ProcessAllianceMiningOperations)
-        //         ->weeklyOn(1, '06:00')
-        //         ->withChain([new SendMiningTaxesInvoices])
-        //         ->withoutOverlapping();
-        //$schedule->job(new SendMiningTaxesInvoices)
-        //         ->weeklyOn(1, '06:00')
-        //         ->withoutOverlapping();
         $schedule->job(new ProcessMiningTaxesPayments)
                  ->hourlyAt('15')
                  ->withoutOverlapping();
