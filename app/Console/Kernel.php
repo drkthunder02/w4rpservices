@@ -10,10 +10,8 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgers;
 use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObservers;
 use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPayments;
-//use App\Jobs\Commands\MiningTaxes\Invoices\SendMiningTaxesInvoices;
 use App\Jobs\Commands\MiningTaxes\Invoices\UpdateMiningTaxesLateInvoices1st;
 use App\Jobs\Commands\MiningTaxes\Invoices\UpdateMiningTaxesLateInvoices15th;
-//use App\Jobs\Commands\MiningTaxes\Invoices\ProcessAllianceMiningOperations;
 use App\Jobs\Commands\MiningTaxes\MiningTaxesWeeklyInvoicing;
 use App\Jobs\Commands\Finances\UpdateAllianceWalletJournalJob;
 use App\Jobs\Commands\Finances\UpdateItemPrices as UpdateItemPricesJob;
@@ -22,7 +20,7 @@ use App\Jobs\Commands\Structures\FetchAllianceStructures;
 use App\Jobs\Commands\Structures\PurgeAllianceStructures;
 use App\Jobs\Commands\Assets\FetchAllianceAssets;
 use App\Jobs\Commands\Assets\PurgeAllianceAssets;
-use App\Jobs\Commands\MoonRental\UpdateAllianceMoonRentalWorth;
+use App\Jobs\Commands\MoonRental\UpdateAllianceMoonRentalWorth as UpdateAMRW;
 
 class Kernel extends ConsoleKernel
 {
@@ -102,7 +100,7 @@ class Kernel extends ConsoleKernel
         $schedule->job(new UpdateMiningTaxesLateInvoices15th)
                  ->monthlyOn(15, '16:00')
                  ->withoutOverlapping();
-        $schedule->job(new UpdateAllianceMoonRentalWorth)
+        $schedule->job(new UpdateAMRW)
                  ->dailyAt('13:00')
                  ->withoutOverlapping();
         

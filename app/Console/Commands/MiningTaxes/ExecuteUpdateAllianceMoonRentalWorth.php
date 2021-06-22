@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use App\Jobs\Commands\MoonRental\UpdateAllianceMoonRentalWorth as UpdateWorth;
+use App\Jobs\Commands\MoonRental\UpdateAllianceMoonRentalWorth;
 
 class ExecuteUpdateAllianceMoonRentalWorth extends Command
 {
@@ -39,7 +39,7 @@ class ExecuteUpdateAllianceMoonRentalWorth extends Command
      */
     public function handle()
     {
-        UpdateWorth::dispatch();
+        UpdateAllianceMoonRentalWorth::dispatch();
 
         return 0;
     }
