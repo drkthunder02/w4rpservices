@@ -258,7 +258,7 @@ class SendMiningTaxesInvoices implements ShouldQueue
             $body = "Dear " . $charName . "<br><br>";
             $body .= "Total Value of Ore Mined: " . number_format($totalPrice, 2, ".", ",") . " ISK.";
             $body .= "<br><br>";
-            $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces or contract 15% of the ores mined to Spatial Forces.<br>"
+            $body .= "Please remit " . number_format($invoiceAmount, 2, ".", ",") . " ISK to Spatial Forces or contract 15% of the ores mined to Spatial Forces.<br>";
             $body .= "The due date is " . $dateDue . "<br>";
             $body .= "Set the reason for transfer as: " . $invoiceId . "<br>";
             $body .= "The mining taxes are currently set to " . $numberMiningTax . "%.<br>";
