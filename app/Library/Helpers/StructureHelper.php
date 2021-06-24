@@ -99,7 +99,7 @@ class StructureHelper {
      * Search for a structure in our own database, otherwise pull it from esi.
      */
     public function GetStructureInfo($structureId) {
-        $info = Struture::where([
+        $info = Structure::where([
             'structure_id' => $structureId,
         ])->first();
 
