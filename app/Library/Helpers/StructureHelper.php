@@ -95,20 +95,31 @@ class StructureHelper {
         }
     }
 
+    /**
+     * Search for a structure in our own database, otherwise pull it from esi.
+     */
     public function GetStructureInfo($structureId) {
-        try {
-            $info = $this->esi->invoke('get', '/universe/structures/{structure_id}/', [
-                'structure_id' => $structureId,
-            ]);
-        } catch(RequestFailedException $e) {
-            Log::warning("Failed to get structure information for structure with id " . $structureId);
-            Log::warning($e->getCode());
-            Log::warning($e->getMessage());
-            Log::warning($e->getEsiResponse());
-            $info = null;
-        }
+        $info = Struture::where([
+            'structure_id' => $structureId,
+        ])->first();
 
-        return $info;
+        if($info != null) {
+            return $info;
+        } else {
+            try {
+                $info = $this->esi->invoke('get', '/universe/structures/{structure_id}/', [
+                    'structure_id' => $structureId,
+                ]);
+            } catch(RequestFailedException $e) {
+                Log::warning("Failed to get structure information for structure with id " . $structureId);
+                Log::warning($e->getCode());
+                Log::warning($e->getMessage());
+                Log::warning($e->getEsiResponse());
+                return null;
+            }
+
+            return $info;
+        }
     }
 
     private function UpdateExistingStructure($structure, $info) {

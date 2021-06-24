@@ -88,10 +88,11 @@ class MiningTaxesAdminController extends Controller
             'structure' => 'required',
         ]);
 
-        //Get the name of the structure from the table
-        $m = Observer::where([
-            'observer_id' => $request->structure,
-        ])->first();
+        $config = config('esi');
+        $sHelper = new StructureHelper($config['primary'], $config['corporation']);
+
+        //Get the name of the structure from the database
+        $m = $sHelper->GetStructureInfo($request->structure);
 
         //Save the mining operation into the database
         $operation = new MiningOperation;
