@@ -97,7 +97,7 @@ class MiningTaxesAdminController extends Controller
         //Save the mining operation into the database
         $operation = new MiningOperation;
         $operation->structure_id = $request->structure;
-        $operation->structure_name = $m->observer_name;
+        $operation->structure_name = $m->structure_name;
         $operation->authorized_by_id = auth()->user()->getId();
         $operation->authorized_by_name = auth()->user()->getName();
         $operation->operation_name = $request->name;
