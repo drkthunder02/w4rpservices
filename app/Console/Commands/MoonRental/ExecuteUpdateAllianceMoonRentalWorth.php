@@ -87,8 +87,6 @@ class ExecuteUpdateAllianceMoonRentalWorth extends Command
                 $ores[3]["quantity"] = 0.00;
             }
 
-            dd($ores);
-
             //one of these two ways will work
             $worth = $mHelper->MoonTotalWorth($ores[0]["ore_name"], $ores[0]["quantity"], 
                                               $ores[1]["ore_name"], $ores[1]["quantity"], 
