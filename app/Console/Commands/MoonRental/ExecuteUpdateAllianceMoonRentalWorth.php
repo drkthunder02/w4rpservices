@@ -92,7 +92,7 @@ class ExecuteUpdateAllianceMoonRentalWorth extends Command
                                               $ores[1]["ore_name"], $ores[1]["quantity"], 
                                               $ores[2]["ore_name"], $ores[2]["quantity"], 
                                               $ores[3]["ore_name"], $ores[3]["quantity"]);
-            dd($worth);
+            
             $rentalAmount = $worth * $rentalTax * $months;
 
             AllianceMoon::where([
