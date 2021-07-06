@@ -52,16 +52,16 @@ class MoonCalc {
 
         //Calculate the prices from the ores
         if($firstOre != null) {
-            $total += $this->CalcMoonPrice($firstOre, $firstPerc);
+            $total += $this->CalcMoonPrice($firstOre, $firstQuan);
         }
         if($secondOre != null) {
-            $total += $this->CalcMoonPrice($secondOre, $secondPerc);
+            $total += $this->CalcMoonPrice($secondOre, $secondQuan);
         }
         if($thirdOre != null) {
-            $total += $this->CalcMoonPrice($thirdOre, $thirdPerc);
+            $total += $this->CalcMoonPrice($thirdOre, $thirdQuan);
         }
         if($fourthOre != null) {
-            $total += $this->CalcMoonPrice($fourthOre, $fourthPerc);
+            $total += $this->CalcMoonPrice($fourthOre, $fourthQuan);
         }  
 
         //Return the rental price to the caller
