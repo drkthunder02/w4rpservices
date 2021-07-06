@@ -580,15 +580,15 @@ class MoonCalc {
             $firstPerc = $this->ConvertToPercentage($firstPerc);
         } 
 
-        if($secondQuan >= 1.00) {
+        if($secondPerc >= 1.00) {
             $secondPerc = $this->ConvertToPercentage($secondPerc);
         } 
 
-        if($thirdQuan >= 1.00) {
+        if($thirdPerc >= 1.00) {
             $thirdPerc = $this->ConvertToPercentage($thirdPerc);
         } 
         
-        if($fourthQuan >= 1.00) {
+        if($fourthPerc >= 1.00) {
             $fourthPerc = $this->ConvertToPercentage($fourthPerc);
         } 
         
