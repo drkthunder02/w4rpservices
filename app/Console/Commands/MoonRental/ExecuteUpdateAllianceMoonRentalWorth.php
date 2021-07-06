@@ -69,6 +69,8 @@ class ExecuteUpdateAllianceMoonRentalWorth extends Command
                 'moon_id' => $moon->moon_id,
             ])->get(['ore_name', 'quantity'])->toArray();
 
+            dd($ores);
+
             //one of these two ways will work
             $worth = $mHelper->MoonTotalWorth($ores[0][0], $ores[0][1], $ores[1][0], $ores[1][1], $ores[2][0], $ores[2][1], $ores[3][0], $ores[3][1]);
             dd($worth);
