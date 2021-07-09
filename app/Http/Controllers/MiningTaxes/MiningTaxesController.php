@@ -167,6 +167,7 @@ class MiningTaxesController extends Controller
             'Ytterbite',
         ];
 
+        //Get all of the system names from the database by plucking all the non-rented moon system names
         $systems = AllianceMoon::where([
             'rented' => 'No',
         ])->pluck('system_name')->unique()->toArray();
@@ -176,6 +177,7 @@ class MiningTaxesController extends Controller
             'rented' => 'No',
         ])->get();
 
+        //Cycle through all of the moons to create arrays of data
         foreach($allyMoons as $moon) {
             $ores = AllianceMoonOre::where([
                 'moon_id' => $moon->moon_id,

@@ -138,14 +138,14 @@
                     <td></td>
                     <td></td>
                     @endif
-                    <td>{{ number_format($moon->worth_amount, 0, ".", ",") }}</td>
-                    <td>{{ number_format($moon->rental_amount, 0, ".", ",") }}</td>
+                    <td>{{ number_format($moon['worth_amount'], 0, ".", ",") }}</td>
+                    <td>{{ number_format($moon['rental_amount'], 0, ".", ",") }}</td>
                     <td>
                         {!! Form::open(['action' => 'MiningTaxes\MiningTaxesController@DisplayMoonRentalForm', 'method' => 'POST']) !!}
-                        {{ Form::hidden('moon_id', $moon->moon_id) }}
-                        {{ Form::hidden('moon_name', $moon->moon_name) }}
-                        {{ Form::hidden('worth_amount', $moon->worth_amount) }}
-                        {{ Form::hidden('rental_amount', $moon->rental_amount) }}
+                        {{ Form::hidden('moon_id', $moon['moon_id']) }}
+                        {{ Form::hidden('moon_name', $moon['moon_name']) }}
+                        {{ Form::hidden('worth_amount', $moon['worth_amount']) }}
+                        {{ Form::hidden('rental_amount', $moon['rental_amount']) }}
                         {{ Form::submit('Rent', ['class' => 'btn btn-danger']) }}
                         {!! Form::close() !!}
                     </td>
