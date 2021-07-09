@@ -167,7 +167,7 @@
                     Legend
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-bordered">
                         <tbody>
                             <tr class="table-secondary">
                                 <td>R4 Ore</td>
@@ -183,7 +183,27 @@
                 </div>
             </div>
         </div>
-        <div class="col"></div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Moon Rental Notes
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                            <tr><td>1. Moon Rentals are for a period of 3 months.</td></tr>
+                            <tr><td>2. Moon Rental amount already accounts for the period of 3 months.</td></tr>
+                            <tr><td>3. Payment must be made before structure is placed down, no exceptions.</td></tr>
+                            <tr><td>4. You are responsible for your own structure and fueling of your own structure.</td></tr>
+                            <tr><td>5. No reprocessing modules are allowed for moon rental structures.</td></tr>
+                            <tr><td>6. There is no maximum time on moon rentals.</td></tr>
+                            <tr><td>7. Minimum time of rental is 3 months.</td></tr>
+                            <tr><td>8. Billing cycle is every 3 months.  Rentals are in multiples of 3 months.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div class="col"></div>
         <div class="col"></div>
     </div>
