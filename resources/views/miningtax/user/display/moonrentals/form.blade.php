@@ -15,7 +15,7 @@
             {{ Form::hideen('moon_id', $moon->moon_id) }}
             {{ Form::hidden('moon_name', $moon->moon_name) }}
             <div class="form-group">
-                {{ Form::label('rental_start', Day of Rental Start) }}
+                {{ Form::label('rental_start', 'Day of Rental Start') }}
                 {{ Form::date('rental_start', Carbon\Carbon::now(), ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
