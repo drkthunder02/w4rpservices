@@ -110,6 +110,20 @@ class MiningTaxesAdminController extends Controller
     }
 
     /**
+     * Display the page to approve corporation moon rentals
+     */
+    public function DisplayMoonRentalRequests() {
+
+    }
+
+    /**
+     * Approve a moon rental from the form
+     */
+    public function storeApproveMoonRentalRequest() {
+        
+    }
+
+    /**
      * Display the page to setup the form for corporations to rent a moon
      */
     public function DisplayMoonRentalForm() {

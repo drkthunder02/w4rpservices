@@ -51,8 +51,9 @@ class ExecuteUpdateAllianceMoonRentalWorth extends Command
      */
     public function handle()
     {
-        //UpdateAllianceMoonRentalWorth::dispatch();
-
+        UpdateAllianceMoonRentalWorth::dispatch();
+        
+        /*
         //Declare variables
         $lookup = new LookupHelper;
         $mHelper = new MoonCalc;
@@ -102,6 +103,7 @@ class ExecuteUpdateAllianceMoonRentalWorth extends Command
                 'rental_amount' => $rentalAmount,
             ]);
         }
+        */
 
         return 0;
     }

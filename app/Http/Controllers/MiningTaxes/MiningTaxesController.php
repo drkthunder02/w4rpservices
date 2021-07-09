@@ -31,6 +31,7 @@ use App\Models\Esi\EsiScope;
 use App\Models\User\User;
 use App\Models\MoonRental\AllianceMoon;
 use App\Models\MoonRental\AllianceMoonOre;
+use App\Models\MoonRental\AllianceMoonRental;
 
 class MiningTaxesController extends Controller
 {
@@ -40,6 +41,85 @@ class MiningTaxesController extends Controller
     public function __construct() {
         $this->middleware('auth');
         $this->middleware('role:User');
+    }
+
+    /**
+     * Display the page with the moon rental form
+     */
+    public function DisplayMoonRentalForm(Request $request) {
+        $this->validate($request, [
+            'moon_id' => 'required',
+            'moon_name' => 'required',
+            'worth_amount' => 'required',
+            'rental_amount' => 'required',
+        ]);
+
+        $moon = AllianceMoon::where([
+            'moon_id' => $request->moon_id,
+        ])->first();
+
+        $ores = AllianceMoonOre::where([
+            'moon_id' => $request->moon_id,
+        ])->get();
+
+        return view('minintax.user.moonrentals.form')->with('moon', $moon)
+                                                     ->with('ores', $ores);
+    }
+
+    /**
+     * Store the information from the moon rental form
+     */
+    public function storeMoonRentalForm(Request $request) {
+        $this->validate($request, [
+            'moon_id' => 'required',
+            'moon_name' => 'required',
+            'rental_start' => 'required',
+            'rental_end' => 'required',
+            'entity_name' => 'required',
+            'entity_type' => 'reuqired',
+        ]);
+        
+        $lookup = new LookupHelper;
+        $entityId = null;
+
+        //From the name and type of the entity get the entity id.
+        if($request->entity_type == 'Character') {
+            $entityId = $lookup->CharacterNameToId();
+        } else if($request->entity_type == 'Corporation') {
+            $entityId = $lookup->CorporationNameToId();
+        } else if($request->entity_type == 'Alliance') {
+            $entityId = $lookup->AllianceNameToId();
+        } else {
+            return redirect('error', 'Moon Rental error.  Please contact the site admin.');
+        }
+
+        //Create the next billing date from a Carbon date 3 months from the rental start
+        $nextBillingDate = Carbon::create($request->rental_end)->addMonths(3);
+
+        //Create the uniqid for the billing cycle.
+        $invoiceId = "MR" . uniqid();
+
+        //Update the data on the Alliance Moon
+        AllianceMoon::where([
+            'moon_id' => $request->moon_id,
+        ])->update([
+            'rented' => 'Yes',
+        ]);
+
+        //Insert a new moon rental into the database
+        AllianceMoonRental::insert([
+            'moon_id' => $request->moon_id,
+            'moon_name' => $request->moon_name,
+            'rental_amount' => $rentalAmount,
+            'rental_start' => $request->rental_start,
+            'rental_end' => $request->rental_end,
+            'next_billing_date' => $nextBillingDate,
+            'entity_id' => $entityId,
+            'entity_name' => $request->entity_name,
+            'entity_type' => $request->entity_type,
+        ]);
+
+        return redirect('/dashboard')->with('success', 'Before placing a structure please send the ISK to the holding corp with the description of ' . $invoiceId);
     }
 
     public function displayAvailableMoons() {
@@ -106,6 +186,9 @@ class MiningTaxesController extends Controller
                     'system' => $moon->system_name,
                     'moon_name' => $moon->name,
                     'ores' => $ores,
+                    'worth_amount' => $moon->worth_amount,
+                    'rental_amount' => $moon->rental_amount,
+                    'moon_id' => $moon->moon_id,
                 ]);
             }
         }
