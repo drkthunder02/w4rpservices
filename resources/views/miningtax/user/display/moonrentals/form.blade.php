@@ -12,7 +12,7 @@
         </div>
         <div class="card-body">
             {!! Form::open(['action' => 'MiningTaxes\MiningTaxesController@storeMoonRentalForm']) !!}
-            {{ Form::hideen('moon_id', $moon->moon_id) }}
+            {{ Form::hidden('moon_id', $moon->moon_id) }}
             {{ Form::hidden('moon_name', $moon->moon_name) }}
             <div class="form-group">
                 {{ Form::label('rental_start', 'Day of Rental Start') }}
