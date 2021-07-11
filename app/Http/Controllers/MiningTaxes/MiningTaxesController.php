@@ -412,9 +412,9 @@ class MiningTaxesController extends Controller
         //Basically get the structure info and attach it to the variable set
         foreach($extractions as $ex) {
             $sName = $sHelper->GetStructureInfo($ex->structure_id);
-            dd($sName);
+            //Add the information into the structures array to go to the page to be displayed
             array_push($structures, [
-                'structure_name' => $sName->name,
+                'structure_name' => $sName->structure_name,
                 'start_time' => $esiHelper->DecodeDate($ex->extraction_start_time),
                 'arrival_time' => $esiHelper->DecodeDate($ex->chunk_arrival_time),
                 'decay_time' => $esiHelper->DecodeDate($ex->natural_decay_time),
