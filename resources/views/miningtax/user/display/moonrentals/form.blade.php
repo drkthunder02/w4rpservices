@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 {{ Form::label('entity_type', 'Select Character or Corporation') }}
-                {{ Form::select('entity_type', ['Character', 'Corporation'], 'Character', ['class' => 'form-control']) }}
+                {{ Form::select('entity_type', ['Character' => 'Character', 'Corporation' => 'Corporation'], 'Character', ['class' => 'form-control']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('entity_name', 'Enter Name for Rental') }}
