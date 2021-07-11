@@ -84,11 +84,11 @@ class MiningTaxesController extends Controller
 
         //From the name and type of the entity get the entity id.
         if($request->entity_type == 'Character') {
-            $entityId = $lookup->CharacterNameToId();
+            $entityId = $lookup->CharacterNameToId($request->entity_name);
         } else if($request->entity_type == 'Corporation') {
-            $entityId = $lookup->CorporationNameToId();
+            $entityId = $lookup->CorporationNameToId($request->entity_name);
         } else if($request->entity_type == 'Alliance') {
-            $entityId = $lookup->AllianceNameToId();
+            $entityId = $lookup->AllianceNameToId($request->entity_name);
         } else {
             return redirect('/dashboard')->with('error', 'Moon Rental error.  Please contact the site admin.');
         }
