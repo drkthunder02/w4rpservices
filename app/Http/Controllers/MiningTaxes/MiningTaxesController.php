@@ -82,8 +82,6 @@ class MiningTaxesController extends Controller
         $lookup = new LookupHelper;
         $entityId = null;
 
-        dd($request->entity_type);
-
         //From the name and type of the entity get the entity id.
         if($request->entity_type == 'Character') {
             $entityId = $lookup->CharacterNameToId();
