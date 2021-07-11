@@ -72,7 +72,6 @@ class MiningTaxesController extends Controller
     public function storeMoonRentalForm(Request $request) {
         $this->validate($request, [
             'moon_id' => 'required',
-            'moon_name' => 'required',
             'rental_start' => 'required',
             'rental_end' => 'required',
             'entity_name' => 'required',
@@ -99,6 +98,11 @@ class MiningTaxesController extends Controller
         //Create the uniqid for the billing cycle.
         $invoiceId = "MR" . uniqid();
 
+        //Get the moon's information from the database so we know how much to make the bill for
+        $moon = AllianceMoon::where([
+            'moon_id' => $request->moon_id,
+        ])->first();
+
         //Update the data on the Alliance Moon
         AllianceMoon::where([
             'moon_id' => $request->moon_id,
@@ -108,9 +112,9 @@ class MiningTaxesController extends Controller
 
         //Insert a new moon rental into the database
         AllianceMoonRental::insert([
-            'moon_id' => $request->moon_id,
-            'moon_name' => $request->moon_name,
-            'rental_amount' => $rentalAmount,
+            'moon_id' => $moon->moon_id,
+            'moon_name' => $moon->name,
+            'rental_amount' => $moon->rental_amount,
             'rental_start' => $request->rental_start,
             'rental_end' => $request->rental_end,
             'next_billing_date' => $nextBillingDate,
