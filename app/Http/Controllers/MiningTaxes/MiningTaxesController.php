@@ -90,7 +90,7 @@ class MiningTaxesController extends Controller
         } else if($request->entity_type == 'Alliance') {
             $entityId = $lookup->AllianceNameToId();
         } else {
-            return redirect('error', 'Moon Rental error.  Please contact the site admin.');
+            return redirect('/dashboard')->with('error', 'Moon Rental error.  Please contact the site admin.');
         }
 
         dd($entityId);
