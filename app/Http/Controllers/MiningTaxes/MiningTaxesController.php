@@ -76,7 +76,7 @@ class MiningTaxesController extends Controller
             'rental_start' => 'required',
             'rental_end' => 'required',
             'entity_name' => 'required',
-            'entity_type' => 'reuqired',
+            'entity_type' => 'required',
         ]);
         
         $lookup = new LookupHelper;
