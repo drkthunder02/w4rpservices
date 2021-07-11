@@ -5,15 +5,15 @@
     <div class="card">
         <div class="card-header">
             <h2>Rental Form for Moon Rental</h2><br>
-            Moon: {{ $moon->moon_name }}<br>
+            Moon: {{ $moon->name }}<br>
             @foreach($ores as $ore)
-            {{ $ore->ore_name }} : {{ number_format(($ore->ore_quantity * 100.00), 2, ".", ",") }}<br>
+            {{ $ore->ore_name }} : {{ number_format(($ore->quantity * 100.00), 2, ".", ",") }}<br>
             @endforeach
         </div>
         <div class="card-body">
             {!! Form::open(['action' => 'MiningTaxes\MiningTaxesController@storeMoonRentalForm', 'method' => 'POST']) !!}
             {{ Form::hidden('moon_id', $moon->moon_id) }}
-            {{ Form::hidden('moon_name', $moon->moon_name) }}
+            {{ Form::hidden('moon_name', $moon->name) }}
             <div class="form-group">
                 {{ Form::label('rental_start', 'Day of Rental Start') }}
                 {{ Form::date('rental_start', Carbon\Carbon::now(), ['class' => 'form-control']) }}
