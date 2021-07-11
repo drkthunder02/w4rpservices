@@ -93,8 +93,6 @@ class MiningTaxesController extends Controller
             return redirect('/dashboard')->with('error', 'Moon Rental error.  Please contact the site admin.');
         }
 
-        dd($entityId);
-
         //Create the next billing date from a Carbon date 3 months from the rental start
         $nextBillingDate = Carbon::create($request->rental_end)->addMonths(3);
 
