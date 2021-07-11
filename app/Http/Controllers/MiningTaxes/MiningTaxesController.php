@@ -78,6 +78,8 @@ class MiningTaxesController extends Controller
             'entity_name' => 'required',
             'entity_type' => 'required',
         ]);
+
+        dd($request);
         
         $lookup = new LookupHelper;
         $entityId = null;
