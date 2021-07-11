@@ -78,8 +78,6 @@ class MiningTaxesController extends Controller
             'entity_name' => 'required',
             'entity_type' => 'required',
         ]);
-
-        dd($request);
         
         $lookup = new LookupHelper;
         $entityId = null;
@@ -94,6 +92,8 @@ class MiningTaxesController extends Controller
         } else {
             return redirect('error', 'Moon Rental error.  Please contact the site admin.');
         }
+
+        dd($entityId);
 
         //Create the next billing date from a Carbon date 3 months from the rental start
         $nextBillingDate = Carbon::create($request->rental_end)->addMonths(3);
