@@ -11,7 +11,7 @@
             @endforeach
         </div>
         <div class="card-body">
-            {!! Form::open(['action' => 'MiningTaxes\MiningTaxesController@storeMoonRentalForm']) !!}
+            {!! Form::open(['action' => 'MiningTaxes\MiningTaxesController@storeMoonRentalForm', 'method' => 'POST']) !!}
             {{ Form::hidden('moon_id', $moon->moon_id) }}
             {{ Form::hidden('moon_name', $moon->moon_name) }}
             <div class="form-group">

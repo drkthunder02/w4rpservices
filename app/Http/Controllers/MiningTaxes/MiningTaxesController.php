@@ -63,7 +63,7 @@ class MiningTaxesController extends Controller
         ])->get();
 
         return view('miningtax.user.display.moonrentals.form')->with('moon', $moon)
-                                                     ->with('ores', $ores);
+                                                              ->with('ores', $ores);
     }
 
     /**
