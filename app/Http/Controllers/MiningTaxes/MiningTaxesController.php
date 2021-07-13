@@ -44,6 +44,35 @@ class MiningTaxesController extends Controller
     }
 
     /**
+     * Display the moons either the person is renting, or their corp are renting
+     */
+    public function DisplayRentedMoons() {
+        $moons = array();
+        $ores = array();
+
+        $lookup = new LookupHelper;
+
+        $userId = auth()->user()->getId();
+        $charInfo = $lookup->GetCharacterInfo(auth()->user()->getId());
+        $corpId = $charInfo->corporation_id;
+
+
+        $tempMoons = AllianceMoonRental::where([
+            'entity_id' => $userId,
+        ])->orWhere([
+            'entity_id' => $corpId,
+        ])->get();
+
+        //Foreach of the moons we got let's build the moon info and the ore data
+        foreach($tempMoons as $tempMoon) {
+            
+        }
+
+        return view('miningtax.user.display.rentedmoons')->with('moons', $moons)
+                                                         ->with('ores', $ores);
+    }
+
+    /**
      * Display the page with the moon rental form
      */
     public function DisplayMoonRentalForm(Request $request) {
