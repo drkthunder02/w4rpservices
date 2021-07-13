@@ -93,7 +93,7 @@ class MiningTaxesController extends Controller
         }
 
         //Create the next billing date from a Carbon date 3 months from the rental start
-        $nextBillingDate = Carbon::create($request->rental_end)->addMonths(3);
+        $nextBillingDate = Carbon::create($request->rental_start)->addMonths(3);
 
         //Create the uniqid for the billing cycle.
         $invoiceId = "MR" . uniqid();
