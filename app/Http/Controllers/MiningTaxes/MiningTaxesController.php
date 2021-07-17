@@ -48,7 +48,6 @@ class MiningTaxesController extends Controller
      */
     public function DisplayRentedMoons() {
         $moons = array();
-        $ores = array();
 
         $lookup = new LookupHelper;
 
@@ -65,7 +64,19 @@ class MiningTaxesController extends Controller
 
         //Foreach of the moons we got let's build the moon info and the ore data
         foreach($tempMoons as $tempMoon) {
-            
+            //Get the ores for the moon
+            $ores = AllianceMoonOre::where([
+                'moon_id' => $tempMoon->moon_id,
+            ])->get();
+
+            $moons->push([
+                'moon_id' => $tempMoon->moon_id,
+                'system' => $tempMoon->system_name,
+                'moon_name' => $tempMoon->name,
+                'ores' => $ores,
+                'worth_amount' => $tempMoon->worth_amount,
+                'rental_amount' => $tempMoon->rental_amount,
+            ]);
         }
 
         return view('miningtax.user.display.rentedmoons')->with('moons', $moons)
