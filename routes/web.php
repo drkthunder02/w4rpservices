@@ -77,6 +77,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/profile', 'Dashboard\DashboardController@profile');
 
     /**
+     * Finance Controller Display pages
+     */
+    Route::get('/finances', 'Finances\FinancesController@displayOutlook');
+    Route::get('/finances/card', 'Finances\FinancesController@displayCards');
+
+    /**
      * Jump Bridge Fuel Display pages
      */
     Route::get('/jumpbridges/fuel', 'Logistics\FuelController@displayStructures');
