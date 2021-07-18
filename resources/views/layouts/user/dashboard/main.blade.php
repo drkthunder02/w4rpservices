@@ -18,17 +18,16 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- General Items -->
-        @if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
         @include('layouts.user.sidebarmenu.general')
-        @endif
         <!-- End General Items -->
+        <!-- Finance Items -->
+        @include('layouts.user.sidebarmenu.finances')
+        <!-- End Finance Items -->
         <!-- Mining Tax Items -->
         @include('layouts.user.sidebarmenu.miningtax')
         <!-- End Mining Tax Items -->
         <!-- After Action Reports -->
-        @if(auth()->user()->hasPermission('fc.team'))
         @include('layouts.user.sidebarmenu.reports')
-        @endif
         <!-- End After Action Reports -->
         <!-- SRP Items -->
         @include('layouts.user.sidebarmenu.srp')
@@ -39,7 +38,6 @@
         <!-- Blacklist -->
         @include('layouts.user.sidebarmenu.blacklist')
         <!-- End Blacklist -->
-        
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

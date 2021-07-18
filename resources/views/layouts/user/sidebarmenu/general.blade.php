@@ -1,3 +1,4 @@
+@if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
 <li class="nav-item has-treeview">
     <a href="#" class="nav-link">
       <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -31,4 +32,5 @@
         </a>
       </li>
     </ul>
-  </li>
+</li>
+@endif
