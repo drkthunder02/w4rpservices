@@ -239,6 +239,11 @@ class AdminDashboardController extends Controller
                 'date' => $date['start']->toFormattedDateString(),
                 'gross' => number_format($tHelper->GetMoonMiningTaxesLateGross($date['start'], $date['end']), 2, ".", ","),
             ];
+
+            $moonRentalTaxes[] = [
+                'date' => $date['start']->toFormattedDateString(),
+                'gross' => number_format($tHelper->GetMoonRentalTaxesGross($date['start'], $date['end']), 2, ".", ","),
+            ];
         }
 
         return view('admin.dashboards.taxes')->with('pis', $pis)

@@ -11,6 +11,7 @@ use App\Models\User\UserRole;
 use App\Models\User\UserPermission;
 use App\Models\Finances\AllianceWalletJournal;
 use App\Models\MiningTax\Invoice;
+use App\Models\MoonRental\AllianceMoonRental;
 
 class TaxesHelper {
 
@@ -24,6 +25,15 @@ class TaxesHelper {
         $this->refType = $ref;
         $this->start = $st;
         $this->end = $en;
+    }
+
+    public function GetMoonRentalTaxesGross($start, $end) {
+        $revenue = 0.00;
+
+        $revenue = AllianceMoonRental::whereBetween('rental_start', [$start, $end])
+                                     ->sum('rental_amount');
+
+        return $revenue;
     }
 
     public function GetMoonMiningTaxesGross($start, $end) {
