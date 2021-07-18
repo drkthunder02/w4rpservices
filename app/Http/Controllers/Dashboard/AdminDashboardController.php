@@ -167,7 +167,7 @@ class AdminDashboardController extends Controller
         $this->middleware('role:Admin');
 
         //Declare variables needed for displaying items on the page
-        $months = 3;
+        $months = 6;
         $pi = array();
         $industry = array();
         $reprocessing = array();
@@ -255,7 +255,8 @@ class AdminDashboardController extends Controller
                                             ->with('srpActual', $srpActual)
                                             ->with('srpLoss', $srpLoss)
                                             ->with('miningTaxes', $miningTaxes)
-                                            ->with('miningTaxesLate', $miningTaxesLate);
+                                            ->with('miningTaxesLate', $miningTaxesLate)
+                                            ->with('moonRentalTaxes', $moonRentalTaxes);
     }
 
     /**
