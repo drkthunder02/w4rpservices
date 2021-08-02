@@ -79,8 +79,8 @@ Route::group(['middleware' => ['auth']], function(){
     /**
      * Finance Controller Display pages
      */
-    Route::get('/finances', 'Finances\FinancesController@displayOutlook');
-    Route::get('/finances/card', 'Finances\FinancesController@displayCards');
+    Route::get('/finances', 'Finances\FinanceController@displayOutlook');
+    Route::get('/finances/card', 'Finances\FinanceController@displayCards');
 
     /**
      * Jump Bridge Fuel Display pages
