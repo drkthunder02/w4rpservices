@@ -279,7 +279,7 @@ class FinanceController extends Controller
         $lava->PieChart('Incomes', $incomeStreams, [
             'title' => 'Alliance Income Streams',
             'is3D' => true,
-            'height' => 360
+            'height' => 360,
         ]);        
 
         /**
@@ -288,7 +288,7 @@ class FinanceController extends Controller
         $lava->PieChart('Expenses', $expenseStreams, [
             'title' => 'Alliance Expenses',
             'is3D' => true,
-            'height' => 360
+            'height' => 360,
             'slices' => [
                 ['offset' => 0.15],
                 ['offset' => 0.25],
