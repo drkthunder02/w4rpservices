@@ -129,7 +129,7 @@ class FinanceController extends Controller
      * Display a graph of the financial outlook of the alliance
      */
     public function displayOutlook() {
-        $months = 6;
+        $months = 12;
         $income = array();
         $expenses = array();
 
@@ -163,6 +163,7 @@ class FinanceController extends Controller
              */
             $srpActual = $srpHelper->GetAllianceSRPActual($date['start'], $date['end']);
             $capEx = 0.00;
+            $sovExpenses = 3000000000.00
 
             /**
              * Get the individual incomes.
@@ -180,7 +181,7 @@ class FinanceController extends Controller
             /**
              * Totalize the expenses
              */
-            $expenses = (($srpActual + $capEx) / 1000000.00);
+            $expenses = (($srpActual + $capEx + $sovExpenses) / 1000000.00);
             
             /**
              * Totalize the incomes
