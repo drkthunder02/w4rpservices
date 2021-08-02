@@ -183,7 +183,7 @@ class MiningTaxesAdminController extends Controller
 
             if(isset($tempObserverInfo->name)) {
                 array_push($moons, [
-                    'character_nanme' => $item['character_name'],
+                    'character_name' => $item['character_name'],
                     'observer_name' => $tempObserverInfo->name,
                     'type_id' => $item['type_id'],
                     'ore_name' => $item['ore_name'],
