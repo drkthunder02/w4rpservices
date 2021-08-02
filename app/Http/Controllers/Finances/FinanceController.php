@@ -30,7 +30,7 @@ class FinanceController extends Controller
      * Display the finances of the alliance with cards like the admin dashboard
      */
     public function displayCards() {
-        $months = 6;
+        $months = 3;
 
         $pi = array();
         $industry = array();
@@ -112,7 +112,7 @@ class FinanceController extends Controller
 
         }
 
-        return view('admin.dashboards.taxes')->with('pis', $pis)
+        return view('finances.display.card')->with('pis', $pis)
                                             ->with('industrys', $industrys)
                                             ->with('offices', $offices)
                                             ->with('markets', $markets)
