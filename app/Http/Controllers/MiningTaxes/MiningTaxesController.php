@@ -381,7 +381,7 @@ class MiningTaxesController extends Controller
             //Create the array for the line by line
             array_push($moons, [
                 'character_name' => $item['character_name'],
-                'observer_name' => $tempObserverInfo->name,
+                'observer_name' => $tempObserverInfo->structure_name,
                 'type_id' => $item['type_id'],
                 'ore_name' => $item['ore_name'],
                 'quantity' => $item['quantity'],
