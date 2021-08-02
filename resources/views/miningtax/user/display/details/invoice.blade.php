@@ -27,5 +27,35 @@
             </table>
         </div>
     </div>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h2>Ledger Details</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <th>Character Name</th>
+                    <th>Observer Name</th>
+                    <th>Ore Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Tax Amount</th>
+                </thead>
+                <tbody>
+                @foreach($moons as $moon)
+                <tr>
+                    <td>{{ $moon['character_name'] }}</td>
+                    <td>{{ $moon['observer_name'] }}</td>
+                    <td>{{ $moon['ore_name'] }}</td>
+                    <td>{{ $moon['quantity'] }}</td>
+                    <td>{{ $moon['amount'] </td>
+                    <td>{{ $moon['tax_amount'] }}</td>
+                </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 @endsection
