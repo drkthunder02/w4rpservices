@@ -132,6 +132,17 @@ class FinanceController extends Controller
         $months = 12;
         $income = array();
         $expenses = array();
+        $totalPi = 0.00;
+        $totalIndustry = 0.00;
+        $totalReprocessing = 0.00;
+        $totalOffices = 0.00;
+        $totalMarket = 0.00;
+        $totalJumpGate = 0.00;
+        $totalMiningTaxes = 0.00;
+        $totalMoonRentals = 0.00;
+        $totalSrp = 0.00;
+        $totalCapEx = 0.00;
+        $totalSovExpenses = 0.00;
 
         /**
          * Declare classes needed for displaying items on the page
@@ -146,6 +157,8 @@ class FinanceController extends Controller
          */
         $lava = new Lavacharts;
         $finances = $lava->DataTable();
+        $incomeStreams = $lava->DataTable();
+        $expenseStreams = $lava->DataTable();
 
         $finances->addDateColumn('Month')
                  ->addNumberColumn('Income')
@@ -200,7 +213,21 @@ class FinanceController extends Controller
              */
             $difference = $incomes - $expenses;
 
+            //Add the rows for the combo column chart
             $finances->addRow([$date['start'], $incomes, $expenses, $difference]);
+
+            //Add up each of the income streams, then the expenses
+            $totalPi += $pi;
+            $totalIndustry += $industry;
+            $totalReprocessing += $reprocessing;
+            $totalOffices += $offices;
+            $totalMarket += $market;
+            $totalJumpGate += $jumpgate;
+            $totalMiningTaxes += $miningTaxes;
+            $totalMoonRentals += $moonRentals;
+            $totalSrp += $srpActual;
+            $totalCapEx = $capEx;
+            $totalSovExpenses += $sovExpenses;
         }
 
         /**
@@ -220,6 +247,58 @@ class FinanceController extends Controller
                 2 => [
                     'type' => 'line',
                 ],
+            ],
+        ]);
+
+        /**
+         * Setup the 3d pie chart for income streams
+         */
+        $incomeStreams->addStringColumn('Incomes')
+                      ->addNumberColumn('ISK')
+                      ->addRow(['PI', $totalPi])
+                      ->addRow(['Industry', $totalIndustry])
+                      ->addRow(['Reprocessing', $totalReprocessing])
+                      ->addRow(['Offices', $totalOffices])
+                      ->addRow(['Market', $totalMarket])
+                      ->addRow(['Jump Gate', $totalJumpGate])
+                      ->addRow(['Mining Taxes', $totalMiningTaxes])
+                      ->addRow(['Moon Rentals', $totalMoonRentals]);
+
+        /**
+         * Setup the 3d pie chart for expense streams
+         */
+        $expenseStreams->addStringColumn('Expenses')
+                      ->addNumberColumn('ISK')
+                      ->addRow(['SRP', $totalSrp])
+                      ->addRow(['Cap Ex', $totalCapEx])
+                      ->addRow(['Sov Expenses', $totalSovExpenses]);
+
+        /**
+         * Setup the pie chart data for income streams
+         */
+        $lava->PieChart('Incomes', $incomeStreams, [
+            'title' => 'Alliance Income Streams',
+            'is3D' => true,
+            'slices' => [
+                ['offset' => 0.1],
+                ['offset' => 0.15],
+                ['offset' => 0.20],
+                ['offset' => 0.25],
+                ['offset' => 0.30],
+                ['offset' => 0.35],
+                ['offset' => 0.40],
+            ],
+        ]);        
+
+        /**
+         * Setup the pie chart data for expenses
+         */
+        $lava->PieChart('Expenses', $expenseStreams, [
+            'title' => 'Alliance Expenses',
+            'is3D' => true,
+            'slices' => [
+                ['offset' => 0.25],
+                ['offset' => 0.35],
             ],
         ]);
 

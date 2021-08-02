@@ -5,6 +5,7 @@
     <div class="card">
         <div class="card-header">
             <h2>Financial Outlook for the Alliance</h2>
+            All numbers are in millions.
         </div>
         <div class="card-body">
             <div id="finances-div"></div>
@@ -19,7 +20,8 @@
             <h2>Income Streams</h2>
         </div>
         <div class="card-body">
-
+            <div id="income-div"></div>
+            {!! $lava->render('PieChart', 'Incomes', 'income-div') !!}
         </div>
     </div>
 </div>
@@ -30,7 +32,8 @@
             <h2>Expenses</h2>
         </div>
         <div class="card-body">
-
+            <div id="expense-div"></div>
+            {!! $lava->render('PieChart', 'Expenses', 'expense-div') !!}
         </div>
     </div>
 </div>
