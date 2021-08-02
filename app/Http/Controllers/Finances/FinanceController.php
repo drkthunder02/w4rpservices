@@ -129,7 +129,7 @@ class FinanceController extends Controller
      * Display a graph of the financial outlook of the alliance
      */
     public function displayOutlook() {
-        $months = 12;
+        $months = 6;
         $income = array();
         $expenses = array();
 
