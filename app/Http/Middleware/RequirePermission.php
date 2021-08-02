@@ -6,6 +6,7 @@ use Closure;
 use DB;
 
 use App\Models\User\UserPermission;
+use App\Models\User\UserRole;
 
 class RequirePermission
 {
