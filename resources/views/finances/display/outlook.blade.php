@@ -12,4 +12,26 @@
         </div>
     </div>
 </div>
+<br>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2>Income Streams</h2>
+        </div>
+        <div class="card-body">
+
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2>Expenses</h2>
+        </div>
+        <div class="card-body">
+
+        </div>
+    </div>
+</div>
 @endsection
