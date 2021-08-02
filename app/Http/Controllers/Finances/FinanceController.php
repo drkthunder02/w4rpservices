@@ -248,6 +248,7 @@ class FinanceController extends Controller
                     'type' => 'line',
                 ],
             ],
+            'height' => 360,
         ]);
 
         /**
