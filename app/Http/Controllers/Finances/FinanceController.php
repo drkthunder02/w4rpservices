@@ -281,12 +281,12 @@ class FinanceController extends Controller
             'is3D' => true,
             'slices' => [
                 ['offset' => 0.1],
-                ['offset' => 0.15],
-                ['offset' => 0.20],
-                ['offset' => 0.25],
-                ['offset' => 0.30],
-                ['offset' => 0.35],
-                ['offset' => 0.40],
+                ['offset' => 0.1],
+                ['offset' => 0.1],
+                ['offset' => 0.1],
+                ['offset' => 0.1],
+                ['offset' => 0.1],
+                ['offset' => 0.1],
             ],
         ]);        
 
