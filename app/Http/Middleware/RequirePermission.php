@@ -18,9 +18,17 @@ class RequirePermission
      */
     public function handle($request, Closure $next, $permission)
     {
-        $perms = UserPermission::where(['character_id' => auth()->user()->character_id, 'permission'=> $permission])->get(['permission']);
+        $role = UserRole::where([
+            'character_id' => auth()->user()->character_id,
+        ])->get(['role']);
 
-        abort_unless(auth()->check() && isset($perms[0]->permission), 403, "You don't have the correct permission to be in this area.");
+        if($role[0]->role != "Admin") {
+            $perms = UserPermission::where(['character_id' => auth()->user()->character_id, 'permission'=> $permission])->get(['permission']);
+
+            abort_unless(auth()->check() && isset($perms[0]->permission), 403, "You don't have the correct permission to be in this area.");
+        }
+
+        
 
         return $next($request);
     }
