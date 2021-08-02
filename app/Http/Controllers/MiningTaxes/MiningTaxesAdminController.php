@@ -181,7 +181,9 @@ class MiningTaxesAdminController extends Controller
             //Get the structure info from the database or esi
             $tempObserverInfo = $structure->GetStructureInfo($item['observer_id']);
 
-            dd($tempObserverInfo);
+            if(isset($tempObserverInfo->name)) {
+                dd($tempObserverInfo);
+            }
 
             //Create the array for the line by line
             array_push($moons, [
