@@ -49,8 +49,8 @@
                     <td>{{ $moon['observer_name'] }}</td>
                     <td>{{ $moon['ore_name'] }}</td>
                     <td>{{ $moon['quantity'] }}</td>
-                    <td>{{ number_format($moon['amount'], 2, ".", ",") }}</td>
-                    <td>{{ $moon['tax_amount'] }}</td>
+                    <td>{{ number_format($moon['amount'], 2, ".", ",") }} ISK</td>
+                    <td>{{ number_format($moon['tax_amount'], 2, ".", ",") }} ISK</td>
                 </tr>
                 @endforeach
                 </tbody>
