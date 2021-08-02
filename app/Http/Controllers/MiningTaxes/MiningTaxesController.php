@@ -346,8 +346,8 @@ class MiningTaxesController extends Controller
         $ores = array();
         $moons = array();
         $totalPrice = 0.00;
-        $structure = new StructureHelper;
         $config = config('esi');
+        $structure = new StructureHelper($config['primary'], $config['corporation']);
 
         $systems = AllianceMoon::where([
             'rented' => 'No',

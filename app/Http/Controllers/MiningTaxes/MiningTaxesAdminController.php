@@ -153,8 +153,8 @@ class MiningTaxesAdminController extends Controller
         $ores = array();
         $moons = array();
         $totalPrice = 0.00;
-        $structure = new StructureHelper;
         $config = config('esi');
+        $structure = new StructureHelper($config['primary'], $config['corporation']);
 
         //Get the invoice from the database
         $invoice = Invoice::where([
