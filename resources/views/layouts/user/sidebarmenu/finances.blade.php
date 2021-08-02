@@ -1,4 +1,5 @@
-@if(auth()->user()->hasRole('User') || auth()->user()->hasRole('Admin'))
+@if((auth()->user()->hasRole('User') && auth()->user()->hasPermission('ceo')) || 
+    (auth()->user()->hasRole('Admin') && auth()->user()->hasPermission('ceo')))
 <li class="nav-item has-treeview">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-file-contract"></i>
