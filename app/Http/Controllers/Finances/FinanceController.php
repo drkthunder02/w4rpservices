@@ -297,8 +297,8 @@ class FinanceController extends Controller
             'title' => 'Alliance Expenses',
             'is3D' => true,
             'slices' => [
+                ['offset' => 0.15],
                 ['offset' => 0.25],
-                ['offset' => 0.35],
             ],
         ]);
 
