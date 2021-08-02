@@ -151,16 +151,22 @@ class MiningTaxesAdminController extends Controller
      */
     public function displayInvoice($invoiceId) {
         $ores = array();
+        $moons = array();
         $totalPrice = 0.00;
+        $structure = new StructureHelper;
+        $config = config('esi');
 
+        //Get the invoice from the database
         $invoice = Invoice::where([
             'invoice_id' => $invoiceId,
         ])->first();
 
+        //Get the line items for the ledger for the invoice
         $items = Ledger::where([
             'invoice_id' => $invoiceId,
         ])->get();
 
+        //Build the total ores table for the display page
         foreach($items as $item) {
             if(!isset($ores[$item['ore_name']])) {
                 $ores[$item['ore_name']] = 0;
@@ -170,7 +176,25 @@ class MiningTaxesAdminController extends Controller
             $totalPrice += $item['amount'];
         }
 
+        //Print out the lines of the ledger line by line for another table
+        foreach($items as $item) {
+            //Get the structure info from the database or esi
+            $tempObserverInfo = $structure->GetStructureInfo($item['observer_id']);
+
+            //Create the array for the line by line
+            array_push($moons, [
+                'character_name' => $item['character_name'],
+                'observer_name' => $tempObserverInfo->name,
+                'type_id' => $item['type_id'],
+                'ore_name' => $item['ore_name'],
+                'quantity' => $item['quantity'],
+                'amount' => $item['amount'],
+                'tax_amount' => $item['amount'] * $config['public_mining_tax'],
+            ]);            
+        }
+
         return view('miningtax.admin.display.details.invoice')->with('ores', $ores)
+                                                              ->with('moons', $moons)
                                                               ->with('invoice', $invoice)
                                                               ->with('totalPrice', $totalPrice);
     }
