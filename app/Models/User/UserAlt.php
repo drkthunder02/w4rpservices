@@ -33,7 +33,7 @@ class UserAlt extends Model
 
     public function mainCharacter()
     {
-        return $this->belongsTo('App\Models\User\User', 'character_id', 'main_id');
+        return $this->belongsTo(\App\Models\User\User::class, 'character_id', 'main_id');
     }
 
     public function getMain()

@@ -34,6 +34,6 @@ class SupplyChainContract extends Model
     // Relationship
     public function Bids()
     {
-        return $this->hasMany('App\Models\Contracts\SupplyChainBid', 'contract_id', 'id');
+        return $this->hasMany(\App\Models\Contracts\SupplyChainBid::class, 'contract_id', 'id');
     }
 }

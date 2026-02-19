@@ -38,27 +38,27 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->hasOne('\App\Models\User\UserRole', 'character_id', 'character_id');
+        return $this->hasOne(\App\Models\User\UserRole::class, 'character_id', 'character_id');
     }
 
     public function permissions()
     {
-        return $this->hasMany('App\Models\User\UserPermission', 'character_id');
+        return $this->hasMany(\App\Models\User\UserPermission::class, 'character_id');
     }
 
     public function esitoken()
     {
-        return $this->hasOne('App\Models\Esi\EsiToken', 'character_id', 'character_id');
+        return $this->hasOne(\App\Models\Esi\EsiToken::class, 'character_id', 'character_id');
     }
 
     public function esiScopes()
     {
-        return $this->hasMany('App\Models\Esi\EsiScope', 'character_id');
+        return $this->hasMany(\App\Models\Esi\EsiScope::class, 'character_id');
     }
 
     public function userAlts()
     {
-        return $this->hasMany('App\Models\User\UserAlt', 'character_id', 'main_id');
+        return $this->hasMany(\App\Models\User\UserAlt::class, 'character_id', 'main_id');
     }
 
     public function altCount()
