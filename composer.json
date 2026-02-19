@@ -1,7 +1,10 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -24,7 +27,8 @@
         "web-token/jwt-easy": "^2.2",
         "web-token/jwt-signature-algorithm-ecdsa": "^2.2",
         "web-token/jwt-signature-algorithm-hmac": "^2.2",
-        "web-token/jwt-signature-algorithm-rsa": "^2.2"
+        "web-token/jwt-signature-algorithm-rsa": "^2.2",
+        "league/flysystem-aws-s3-v3": "^3.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -32,7 +36,7 @@
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "phpunit/phpunit": "^9.0",
-	"nunomaduro/collision": "^5.0"
+        "nunomaduro/collision": "^5.0"
     },
     "autoload": {
         "classmap": [
@@ -50,8 +54,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {
