@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class NewLookupTables extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -79,4 +79,4 @@ class NewLookupTables extends Migration
         Schema::dropIfExists('corporation_lookup');
         Schema::dropIfExists('alliance_lookup');
     }
-}
+};

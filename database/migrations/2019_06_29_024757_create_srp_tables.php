@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSrpTables extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -190,4 +190,4 @@ class CreateSrpTables extends Migration
         Schema::dropIfExists('srp_fleet_types');
         Schema::dropIfExists('srp_payouts');
     }
-}
+};

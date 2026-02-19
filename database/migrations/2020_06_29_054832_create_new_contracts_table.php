@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNewContractsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -79,4 +79,4 @@ class CreateNewContractsTable extends Migration
         Schema::dropIfExists('supply_chain_contract');
         Schema::dropIfExists('supply_chain_bids');
     }
-}
+};

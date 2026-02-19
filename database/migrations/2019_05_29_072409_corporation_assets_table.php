@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CorporationAssetsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -79,4 +79,4 @@ class CorporationAssetsTable extends Migration
         Schema::dropIfExists('alliance_services');
         Schema::dropIfExists('alliance_assets');
     }
-}
+};

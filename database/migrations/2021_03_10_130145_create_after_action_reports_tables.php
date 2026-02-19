@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAfterActionReportsTables extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -63,4 +63,4 @@ class CreateAfterActionReportsTables extends Migration
         Schema::dropIfExists('fc_aar_comments');
         Schema::dropIfExists('fc_after_action_reports');
     }
-}
+};
