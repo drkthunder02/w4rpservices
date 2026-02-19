@@ -2,13 +2,11 @@
 
 namespace App\Console\Commands\Eve;
 
+use App\Library\Moons\MoonCalc;
+// Library
 use Illuminate\Console\Command;
 
-//Library
-use App\Library\Moons\MoonCalc;
-
-//Job
-use App\Jobs\Commands\Eve\ItemPricesUpdateJob;
+// Job
 
 class ItemPricesUpdateCommand extends Command
 {
@@ -43,10 +41,10 @@ class ItemPricesUpdateCommand extends Command
      */
     public function handle()
     {
-        //Declare variables
+        // Declare variables
         $moonHelper = new MoonCalc;
 
-        //Fetch new prices from fuzzwork.co.uk for the item pricing schemes
+        // Fetch new prices from fuzzwork.co.uk for the item pricing schemes
         $moonHelper->FetchNewPrices();
 
         return 0;

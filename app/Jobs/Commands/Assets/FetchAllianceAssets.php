@@ -2,20 +2,17 @@
 
 namespace App\Jobs\Commands\Assets;
 
-//Internal Library
+// Internal Library
+use App\Library\Esi\Esi;
+use App\Models\Structure\Asset;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+// Application Library
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-
-//Application Library
-use App\Library\Esi\Esi;
-use App\Library\Helpers\LookupHelper;
+// Models
 use Seat\Eseye\Exceptions\RequestFailedException;
-
-//Models
-use App\Models\Structure\Asset;
 
 class FetchAllianceAssets implements ShouldQueue
 {
@@ -23,14 +20,14 @@ class FetchAllianceAssets implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
@@ -42,10 +39,10 @@ class FetchAllianceAssets implements ShouldQueue
      */
     public function __construct()
     {
-        //Set the connection for the job
+        // Set the connection for the job
         $this->connection = 'redis';
         $this->onQueue('assets');
-        
+
     }
 
     /**
@@ -55,108 +52,110 @@ class FetchAllianceAssets implements ShouldQueue
      */
     public function handle()
     {
-        //Declare variables
+        // Declare variables
         $config = config('esi');
         $corpId = 98287666;
         $esiHelper = new Esi;
 
-        //Get the refresh token from the database
+        // Get the refresh token from the database
         $token = $esiHelper->GetRefreshToken($config['primary']);
-        //Create the esi authentication container
+        // Create the esi authentication container
         $esi = $esiHelper->SetupEsiAuthentication($token);
 
-        //Check the esi scope
-        if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-assets.read_corporation_assets.v1')) {
-            Log::critical("Scope check failed in FetchAllianceAssets for esi-assets.read_corporation_assets.v1");
+        // Check the esi scope
+        if (! $esiHelper->HaveEsiScope($config['primary'], 'esi-assets.read_corporation_assets.v1')) {
+            Log::critical('Scope check failed in FetchAllianceAssets for esi-assets.read_corporation_assets.v1');
         }
 
-        //Set the current page
+        // Set the current page
         $currentPage = 1;
-        //Set our default pages
+        // Set our default pages
         $totalPages = 1;
 
         do {
-            if($esiHelper->TokenExpired($token)) {
+            if ($esiHelper->TokenExpired($token)) {
                 $token = $esiHelper->GetRefreshToken($config['primary']);
                 $esi = $esiHelper->SetupAuthenticationToken($token);
-            }            
+            }
 
-            //Attempt to get the assets
+            // Attempt to get the assets
             $assets = $esi->page($currentPage)
-                          ->invoke('get', '/corporations/{corporation_id}/assets/', [
-                              'corporation_id' => $corpId,
-                          ]);
-            
-            //If on the first page, then update the total number of pages
-            if($currentPage == 1) {
+                ->invoke('get', '/corporations/{corporation_id}/assets/', [
+                    'corporation_id' => $corpId,
+                ]);
+
+            // If on the first page, then update the total number of pages
+            if ($currentPage == 1) {
                 $totalPages = $assets->pages;
             }
 
-            //For each asset retrieved, let's process it.
-            foreach($assets as $a) {
+            // For each asset retrieved, let's process it.
+            foreach ($assets as $a) {
                 ProcessAllianceAssets::dispatch($a);
             }
 
-            //Increment the current page
+            // Increment the current page
             $currentPage++;
-        } while($currentPage <= $totalPages);
-        
+        } while ($currentPage <= $totalPages);
+
     }
 
     /**
      * The job failed to process
-     * @param Exception $exception
+     *
+     * @param  Exception  $exception
      * @return void
      */
-    public function failed($exception) {
-        if(!exception instanceof RequestFailedException) {
-            //If not a failure due to ESI, then log it.  Otherwise,
-            //deduce why the exception occurred.
+    public function failed($exception)
+    {
+        if (! exception instanceof RequestFailedException) {
+            // If not a failure due to ESI, then log it.  Otherwise,
+            // deduce why the exception occurred.
             Log::critical($exception);
         }
 
-        if ((is_object($exception->getEsiResponse()) && (stristr($exception->getEsiResponse()->error, 'Too many errors') || stristr($exception->getEsiResponse()->error, 'This software has exceeded the error limit for ESI'))) || 
+        if ((is_object($exception->getEsiResponse()) && (stristr($exception->getEsiResponse()->error, 'Too many errors') || stristr($exception->getEsiResponse()->error, 'This software has exceeded the error limit for ESI'))) ||
            (is_string($exception->getEsiResponse()) && (stristr($exception->getEsiResponse(), 'Too many errors') || stristr($exception->getEsiResponse(), 'This software has exceeded the error limit for ESI')))) {
-            
-            //We have hit the error rate limiter, wait 120 seconds before releasing the job back into the queue.
+
+            // We have hit the error rate limiter, wait 120 seconds before releasing the job back into the queue.
             Log::info('FetchAllianceAssets has hit the error rate limiter.  Releasing the job back into the wild in 2 minutes.');
             $this->release(120);
-        }  else {
+        } else {
             $errorCode = $exception->getEsiResponse()->getErrorCode();
 
-            switch($errorCode) {
-                case 400:  //Bad Request
-                    Log::critical("Bad request has occurred in FetchAllianceAssets.  Job has been discarded");
+            switch ($errorCode) {
+                case 400:  // Bad Request
+                    Log::critical('Bad request has occurred in FetchAllianceAssets.  Job has been discarded');
                     break;
-                case 401:  //Unauthorized Request
-                    Log::critical("Unauthorized request has occurred in FetchAllianceAssets at " . Carbon::now()->toDateTimeString() . ".\r\nCancelling the job.");
+                case 401:  // Unauthorized Request
+                    Log::critical('Unauthorized request has occurred in FetchAllianceAssets at '.Carbon::now()->toDateTimeString().".\r\nCancelling the job.");
                     $this->delete();
                     break;
-                case 403:  //Forbidden
-                    Log::critical("FetchAllianceAssets has incurred a forbidden error.  Cancelling the job.");
+                case 403:  // Forbidden
+                    Log::critical('FetchAllianceAssets has incurred a forbidden error.  Cancelling the job.');
                     $this->delete();
                     break;
-                case 420:  //Error Limited
-                    Log::warning("Error rate limit occurred in FetchAllianceAssets.  Restarting job in 120 seconds.");
+                case 420:  // Error Limited
+                    Log::warning('Error rate limit occurred in FetchAllianceAssets.  Restarting job in 120 seconds.');
                     $this->release(120);
                     break;
-                case 500:  //Internal Server Error
-                    Log::critical("Internal Server Error for ESI in FetchAllianceAssets.  Attempting a restart in 120 seconds.");
+                case 500:  // Internal Server Error
+                    Log::critical('Internal Server Error for ESI in FetchAllianceAssets.  Attempting a restart in 120 seconds.');
                     $this->release(120);
                     break;
-                case 503:  //Service Unavailable
-                    Log::critical("Service Unavailabe for ESI in FetchAllianceAssets.  Releasing the job back to the queue in 30 seconds.");
+                case 503:  // Service Unavailable
+                    Log::critical('Service Unavailabe for ESI in FetchAllianceAssets.  Releasing the job back to the queue in 30 seconds.');
                     $this->release(30);
                     break;
-                case 504:  //Gateway Timeout
-                    Log::critical("Gateway timeout in FetchAllianceAssets.  Releasing the job back to the queue in 30 seconds.");
+                case 504:  // Gateway Timeout
+                    Log::critical('Gateway timeout in FetchAllianceAssets.  Releasing the job back to the queue in 30 seconds.');
                     $this->release(30);
                     break;
                 case 201:
-                    //Good response code
+                    // Good response code
                     $this->delete();
                     break;
-                //If no code is given, then log and break out of switch.
+                    // If no code is given, then log and break out of switch.
                 default:
                     Log::warning("No response code received from esi call in FetchAllianceAssets.\r\n");
                     $this->delete();
@@ -167,10 +166,11 @@ class FetchAllianceAssets implements ShouldQueue
 
     /**
      * Tags for jobs
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['FetchAllianceAssets', 'AllianceStructures', 'Assets'];
     }
 }

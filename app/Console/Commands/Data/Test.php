@@ -2,16 +2,11 @@
 
 namespace App\Console\Commands\Data;
 
-use Illuminate\Console\Command;
-use Log;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use App\Library\Helpers\LookupHelper;
-use App\Library\Esi\Esi;
 use App\Library\Moons\MoonCalc;
 use App\Models\MoonRental\AllianceMoon;
 use App\Models\MoonRental\AllianceMoonOre;
+use Illuminate\Console\Command;
 
 class Test extends Command
 {
@@ -46,19 +41,17 @@ class Test extends Command
      */
     public function handle()
     {
-        //Declare variables
+        // Declare variables
         $lookup = new LookupHelper;
         $mHelper = new MoonCalc;
         $months = 3;
         $rentalTax = 0.25;
-        $worth1;
-        $worth2;
 
         $moons = AllianceMoon::all();
 
-        foreach($moons as $moon) {
-            //Declare the arrays needed
-            $ores = array();
+        foreach ($moons as $moon) {
+            // Declare the arrays needed
+            $ores = [];
 
             $ores = AllianceMoonOre::where([
                 'moon_id' => $moon->moon_id,

@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands\MiningTaxes;
 
-use Illuminate\Console\Command;
-
 use App\Jobs\Commands\MiningTaxes\PreFetchMiningTaxesLedgers as PreFetch;
+use Illuminate\Console\Command;
 
 class ExecuteMiningTaxesLedgersCommand extends Command
 {

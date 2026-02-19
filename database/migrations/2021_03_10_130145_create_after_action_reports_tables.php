@@ -13,7 +13,7 @@ class CreateAfterActionReportsTables extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('fc_after_action_reports')) {
+        if (! Schema::hasTable('fc_after_action_reports')) {
             Schema::create('fc_after_action_reports', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('fc_id');
@@ -41,7 +41,7 @@ class CreateAfterActionReportsTables extends Migration
             });
         }
 
-        if(!Schema::hasTable('fc_aar_comments')) {
+        if (! Schema::hasTable('fc_aar_comments')) {
             Schema::create('fc_aar_comments', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('report_id');

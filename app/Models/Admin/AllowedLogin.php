@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class AllowedLogin extends Model
 {
-    //Table Name
+    // Table Name
     public $table = 'allowed_logins';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
     protected $fillable = [

@@ -13,7 +13,7 @@ class CreateAllianceJournalTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('alliance_wallet_journal')) {
+        if (! Schema::hasTable('alliance_wallet_journal')) {
             Schema::create('alliance_wallet_journal', function (Blueprint $table) {
                 $table->unsignedBigInteger('id')->unique();
                 $table->unsignedBigInteger('corporation_id');
@@ -169,7 +169,7 @@ class CreateAllianceJournalTable extends Migration
             });
         }
 
-        //Drop the old tables which we don't want to use anymore
+        // Drop the old tables which we don't want to use anymore
         Schema::dropIfExists('CorpJournals');
         Schema::dropIfExists('HoldingCorpFinancesJournal');
         Schema::dropIfExists('jump_bridge_journal');

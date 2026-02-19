@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateEveMailTemplateTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateEveMailTemplateTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('eve_mail_template')) {
+        if (! Schema::hasTable('eve_mail_template')) {
             Schema::create('eve_mail_template', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->string('subject');

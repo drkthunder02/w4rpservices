@@ -22,8 +22,7 @@ final class TypeChecker implements HeaderChecker
     /**
      * TypeChecker constructor.
      *
-     * @param string[] $supported_types
-     * @param bool $protected_header
+     * @param  string[]  $supported_types
      */
     public function __construct(array $supported_types, bool $protected_header = true)
     {
@@ -36,11 +35,13 @@ final class TypeChecker implements HeaderChecker
      */
     public function checkHeader($value): void
     {
-        if (! is_string($value))
+        if (! is_string($value)) {
             throw new InvalidHeaderException('"typ" must be a string.', self::HEADER_NAME, $value);
+        }
 
-        if (! in_array($value, $this->supported_types, true))
+        if (! in_array($value, $this->supported_types, true)) {
             throw new InvalidHeaderException('Unsupported type.', self::HEADER_NAME, $value);
+        }
     }
 
     /**
@@ -59,5 +60,3 @@ final class TypeChecker implements HeaderChecker
         return $this->protected_header;
     }
 }
-
-?>

@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    //Table Name
+    // Table Name
     public $table = 'alliance_services';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -28,7 +28,8 @@ class Service extends Model
         'updated_at',
     ];
 
-    public function structure() {
+    public function structure()
+    {
         return $this->belongsTo(App\Models\Structure\Structure::class, 'structure_id', 'structure_id');
     }
 }

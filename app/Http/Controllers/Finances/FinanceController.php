@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers\Finances;
 
-//Internal Libraries
+// Internal Libraries
 use App\Http\Controllers\Controller;
+use App\Library\Helpers\SRPHelper;
+use App\Library\Helpers\TaxesHelper;
+// Application Library
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use Log;
 use Khill\Lavacharts\Lavacharts;
 
-//Application Library
-use App\Library\Helpers\TaxesHelper;
-use App\Library\Helpers\LookupHelper;
-use App\Library\Helpers\SRPHelper;
-
-//Models
-use App\Models\User\User;
+// Models
 
 class FinanceController extends Controller
 {
-    //Construct
-    public function __construct() {
+    // Construct
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('role:User');
         $this->middleware('permission:ceo');
@@ -29,109 +25,110 @@ class FinanceController extends Controller
     /**
      * Display the finances of the alliance with cards like the admin dashboard
      */
-    public function displayCards() {
+    public function displayCards()
+    {
         $months = 3;
 
-        $pi = array();
-        $industry = array();
-        $reprocessing = array();
-        $office = array();
+        $pi = [];
+        $industry = [];
+        $reprocessing = [];
+        $office = [];
         $corpId = 98287666;
-        $srpActual = array();
-        $srpLoss = array();
-        $miningTaxes = array();
-        $miningTaxesLate = array();
+        $srpActual = [];
+        $srpLoss = [];
+        $miningTaxes = [];
+        $miningTaxesLate = [];
 
         /** Taxes Pane */
-        //Declare classes needed for displaying items on the page
-        $tHelper = new TaxesHelper();
-        $srpHelper = new SRPHelper();
-        //Get the dates for the tab panes
+        // Declare classes needed for displaying items on the page
+        $tHelper = new TaxesHelper;
+        $srpHelper = new SRPHelper;
+        // Get the dates for the tab panes
         $dates = $tHelper->GetTimeFrameInMonths($months);
 
-        //Get the data for the Taxes Pane
-        foreach($dates as $date) {
-            //Get the srp actual pay out for the date range
+        // Get the data for the Taxes Pane
+        foreach ($dates as $date) {
+            // Get the srp actual pay out for the date range
             $srpActual[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($srpHelper->GetAllianceSRPActual($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($srpHelper->GetAllianceSRPActual($date['start'], $date['end']), 2, '.', ','),
             ];
 
-            //Get the srp loss value for the date range
+            // Get the srp loss value for the date range
             $srpLoss[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($srpHelper->GetAllianceSRPLoss($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($srpHelper->GetAllianceSRPLoss($date['start'], $date['end']), 2, '.', ','),
             ];
 
-            //Get the pi taxes for the date range
+            // Get the pi taxes for the date range
             $pis[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetPIGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetPIGross($date['start'], $date['end']), 2, '.', ','),
             ];
-            //Get the industry taxes for the date range
+            // Get the industry taxes for the date range
             $industrys[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetIndustryGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetIndustryGross($date['start'], $date['end']), 2, '.', ','),
             ];
-            //Get the reprocessing taxes for the date range
+            // Get the reprocessing taxes for the date range
             $reprocessings[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetReprocessingGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetReprocessingGross($date['start'], $date['end']), 2, '.', ','),
             ];
-            //Get the office taxes for the date range
+            // Get the office taxes for the date range
             $offices[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetOfficeGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetOfficeGross($date['start'], $date['end']), 2, '.', ','),
             ];
-            //Get the market taxes for the date range
+            // Get the market taxes for the date range
             $markets[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetAllianceMarketGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetAllianceMarketGross($date['start'], $date['end']), 2, '.', ','),
             ];
-            //Get the jump gate taxes for the date range
+            // Get the jump gate taxes for the date range
             $jumpgates[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetJumpGateGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetJumpGateGross($date['start'], $date['end']), 2, '.', ','),
             ];
 
             $miningTaxes[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetMoonMiningTaxesGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetMoonMiningTaxesGross($date['start'], $date['end']), 2, '.', ','),
             ];
 
             $miningTaxesLate[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetMoonMiningTaxesLateGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetMoonMiningTaxesLateGross($date['start'], $date['end']), 2, '.', ','),
             ];
 
             $moonRentalTaxes[] = [
                 'date' => $date['start']->toFormattedDateString(),
-                'gross' => number_format($tHelper->GetMoonRentalTaxesGross($date['start'], $date['end']), 2, ".", ","),
+                'gross' => number_format($tHelper->GetMoonRentalTaxesGross($date['start'], $date['end']), 2, '.', ','),
             ];
-
 
         }
 
         return view('finances.display.card')->with('pis', $pis)
-                                            ->with('industrys', $industrys)
-                                            ->with('offices', $offices)
-                                            ->with('markets', $markets)
-                                            ->with('jumpgates', $jumpgates)
-                                            ->with('reprocessings', $reprocessings)
-                                            ->with('srpActual', $srpActual)
-                                            ->with('srpLoss', $srpLoss)
-                                            ->with('miningTaxes', $miningTaxes)
-                                            ->with('miningTaxesLate', $miningTaxesLate)
-                                            ->with('moonRentalTaxes', $moonRentalTaxes);
+            ->with('industrys', $industrys)
+            ->with('offices', $offices)
+            ->with('markets', $markets)
+            ->with('jumpgates', $jumpgates)
+            ->with('reprocessings', $reprocessings)
+            ->with('srpActual', $srpActual)
+            ->with('srpLoss', $srpLoss)
+            ->with('miningTaxes', $miningTaxes)
+            ->with('miningTaxesLate', $miningTaxesLate)
+            ->with('moonRentalTaxes', $moonRentalTaxes);
     }
 
     /**
      * Display a graph of the financial outlook of the alliance
      */
-    public function displayOutlook() {
+    public function displayOutlook()
+    {
         $months = 12;
-        $income = array();
-        $expenses = array();
+        $income = [];
+        $expenses = [];
         $totalPi = 0.00;
         $totalIndustry = 0.00;
         $totalReprocessing = 0.00;
@@ -147,9 +144,9 @@ class FinanceController extends Controller
         /**
          * Declare classes needed for displaying items on the page
          */
-        $tHelper = new TaxesHelper();
-        $srpHelper = new SRPHelper();
-        //Get the dates to process
+        $tHelper = new TaxesHelper;
+        $srpHelper = new SRPHelper;
+        // Get the dates to process
         $dates = $tHelper->GetTimeFrameInMonths($months);
 
         /**
@@ -161,17 +158,17 @@ class FinanceController extends Controller
         $expenseStreams = $lava->DataTable();
 
         $finances->addDateColumn('Month')
-                 ->addNumberColumn('Income')
-                 ->addNumberColumn('Expenses')
-                 ->addNumberColumn('Difference')
-                 ->setDateTimeFormat('Y');
+            ->addNumberColumn('Income')
+            ->addNumberColumn('Expenses')
+            ->addNumberColumn('Difference')
+            ->setDateTimeFormat('Y');
 
         /**
          * Get the income and expenses data for date range
          */
-        foreach($dates as $date) {
+        foreach ($dates as $date) {
             /**
-             * Get the individual expenses. 
+             * Get the individual expenses.
              * Will totalize later in the foreach loop
              */
             $srpActual = $srpHelper->GetAllianceSRPActual($date['start'], $date['end']);
@@ -195,7 +192,7 @@ class FinanceController extends Controller
              * Totalize the expenses
              */
             $expenses = (($srpActual + $capEx + $sovExpenses) / 1000000.00);
-            
+
             /**
              * Totalize the incomes
              */
@@ -213,10 +210,10 @@ class FinanceController extends Controller
              */
             $difference = $incomes - $expenses;
 
-            //Add the rows for the combo column chart
+            // Add the rows for the combo column chart
             $finances->addRow([$date['start'], $incomes, $expenses, $difference]);
 
-            //Add up each of the income streams, then the expenses
+            // Add up each of the income streams, then the expenses
             $totalPi += $pi;
             $totalIndustry += $industry;
             $totalReprocessing += $reprocessing;
@@ -255,24 +252,24 @@ class FinanceController extends Controller
          * Setup the 3d pie chart for income streams
          */
         $incomeStreams->addStringColumn('Incomes')
-                      ->addNumberColumn('ISK')
-                      ->addRow(['PI', $totalPi])
-                      ->addRow(['Industry', $totalIndustry])
-                      ->addRow(['Reprocessing', $totalReprocessing])
-                      ->addRow(['Offices', $totalOffices])
-                      ->addRow(['Market', $totalMarket])
-                      ->addRow(['Jump Gate', $totalJumpGate])
-                      ->addRow(['Mining Taxes', $totalMiningTaxes])
-                      ->addRow(['Moon Rentals', $totalMoonRentals]);
+            ->addNumberColumn('ISK')
+            ->addRow(['PI', $totalPi])
+            ->addRow(['Industry', $totalIndustry])
+            ->addRow(['Reprocessing', $totalReprocessing])
+            ->addRow(['Offices', $totalOffices])
+            ->addRow(['Market', $totalMarket])
+            ->addRow(['Jump Gate', $totalJumpGate])
+            ->addRow(['Mining Taxes', $totalMiningTaxes])
+            ->addRow(['Moon Rentals', $totalMoonRentals]);
 
         /**
          * Setup the 3d pie chart for expense streams
          */
         $expenseStreams->addStringColumn('Expenses')
-                      ->addNumberColumn('ISK')
-                      ->addRow(['SRP', $totalSrp])
-                      ->addRow(['Cap Ex', $totalCapEx])
-                      ->addRow(['Sov Expenses', $totalSovExpenses]);
+            ->addNumberColumn('ISK')
+            ->addRow(['SRP', $totalSrp])
+            ->addRow(['Cap Ex', $totalCapEx])
+            ->addRow(['Sov Expenses', $totalSovExpenses]);
 
         /**
          * Setup the pie chart data for income streams
@@ -281,7 +278,7 @@ class FinanceController extends Controller
             'title' => 'Alliance Income Streams',
             'is3D' => true,
             'height' => 360,
-        ]);        
+        ]);
 
         /**
          * Setup the pie chart data for expenses
@@ -302,21 +299,15 @@ class FinanceController extends Controller
     /**
      * Request an amount of ISK to fund a capital project
      */
-    public function requestFundingDisplay() {
-
-    }
+    public function requestFundingDisplay() {}
 
     /**
      * Store the request for the capital project
      */
-    public function storeFundingRequest() {
-
-    }
+    public function storeFundingRequest() {}
 
     /**
      * Delete a request for the capital project
      */
-    public function deleteFundingRequest() {
-
-    }
+    public function deleteFundingRequest() {}
 }

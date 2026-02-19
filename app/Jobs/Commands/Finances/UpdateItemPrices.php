@@ -2,16 +2,13 @@
 
 namespace App\Jobs\Commands\Finances;
 
+use App\Library\Moons\MoonCalc;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+// Library Functions
 use Illuminate\Queue\SerializesModels;
-use Log;
-use Carbon\Carbon;
-
-//Library Functions
-use App\Library\Moons\MoonCalc;
 
 class UpdateItemPrices implements ShouldQueue
 {
@@ -19,14 +16,14 @@ class UpdateItemPrices implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 1800;
 
     /**
-     * Retries 
-     * 
+     * Retries
+     *
      * @var int
      */
     public $retries = 3;
@@ -49,18 +46,19 @@ class UpdateItemPrices implements ShouldQueue
      */
     public function handle()
     {
-        //Declare variables
+        // Declare variables
         $moonHelper = new MoonCalc;
-        //Fetch new prices from fuzzwork.co.uk for the item pricing schemes
+        // Fetch new prices from fuzzwork.co.uk for the item pricing schemes
         $moonHelper->FetchNewPrices();
     }
 
     /**
      * Set the tags for Horzion
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['UpdateItemPrices', 'Finances'];
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class ModifyBlackListTable extends Migration
 {
@@ -13,8 +13,8 @@ class ModifyBlackListTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('alliance_blacklist')) {
-            Schema::table('alliance_blacklist', function(Blueprint $table) {
+        if (Schema::hasTable('alliance_blacklist')) {
+            Schema::table('alliance_blacklist', function (Blueprint $table) {
                 $table->enum('validity', [
                     'Valid',
                     'Invalid',
@@ -33,7 +33,7 @@ class ModifyBlackListTable extends Migration
      */
     public function down()
     {
-        Schema::table('alliance_blacklist', function(Blueprint $table) {
+        Schema::table('alliance_blacklist', function (Blueprint $table) {
             $table->dropColumn([
                 'validity',
                 'removed_by_id',

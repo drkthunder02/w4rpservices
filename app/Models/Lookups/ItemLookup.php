@@ -11,7 +11,7 @@ class ItemLookup extends Model
      */
     public $table = 'item_lookup';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     /**
@@ -21,7 +21,7 @@ class ItemLookup extends Model
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [

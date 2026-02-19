@@ -2,18 +2,16 @@
 
 namespace App\Jobs\Commands\Assets;
 
-//Internal Library
+// Internal Library
+use App\Models\Structure\Asset;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+// Jobs
+
+// Models
 use Illuminate\Queue\SerializesModels;
-
-//Jobs
-use App\Jobs\Commands\Assets\FetchAllianceAssets;
-
-//Models
-use App\Models\Structure\Asset;
 
 class PurgeAllianceAssets implements ShouldQueue
 {
@@ -21,14 +19,14 @@ class PurgeAllianceAssets implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
@@ -40,7 +38,7 @@ class PurgeAllianceAssets implements ShouldQueue
      */
     public function __construct()
     {
-        //Set the connection for the job
+        // Set the connection for the job
         $this->connection = 'redis';
         $this->onQueue('assets');
     }

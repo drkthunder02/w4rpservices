@@ -2,37 +2,24 @@
 
 namespace App\Http\Controllers\MiningTaxes;
 
-//Internal Library
+// Internal Library
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Log;
-use Carbon\Carbon;
-use Khill\Lavacharts\Lavacharts;
-use Auth;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
-
-//Application Library
-use App\Library\Helpers\LookupHelper;
-use App\Library\Helpers\StructureHelper;
-use Seat\Eseye\Exceptions\RequestFailedException;
 use App\Library\Esi\Esi;
-
-//Models
+use App\Library\Helpers\LookupHelper;
+// Application Library
+use App\Library\Helpers\StructureHelper;
 use App\Models\MiningTax\Invoice;
-use App\Models\MiningTax\Observer;
 use App\Models\MiningTax\Ledger;
-use App\Models\MiningTax\Payment;
-use App\Models\Moon\ItemComposition;
-use App\Models\Moon\MineralPrice;
-use App\Models\Esi\EsiToken;
-use App\Models\Esi\EsiScope;
-use App\Models\Structure\Structure;
+// Models
 use App\Models\MiningTax\MiningOperation;
+use App\Models\Structure\Structure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class MiningTaxesAdminController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('role:User');
         $this->middleware('permission:mining.officer');
@@ -41,47 +28,49 @@ class MiningTaxesAdminController extends Controller
     /**
      * Display the form for mining operations held by the alliance
      */
-    public function displayMiningOperationForm() {
-        //Declare variables
+    public function displayMiningOperationForm()
+    {
+        // Declare variables
         $config = config('esi');
         $lookup = new LookupHelper;
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
         $coll = new Collection;
         $structures = new Collection;
-        
-        //Get all of the structures
+
+        // Get all of the structures
         $athanors = $sHelper->GetStructuresByType('Athanor');
         $tataras = $sHelper->GetStructuresByType('Tatara');
 
-        //Cycle through each athanor and add it to the stack
-        foreach($athanors as $athanor) {
+        // Cycle through each athanor and add it to the stack
+        foreach ($athanors as $athanor) {
             $structures->push([
                 $athanor->structure_id => $athanor->structure_name,
             ]);
         }
-        //Cycle through each tatara and add it to the stack
-        foreach($tataras as $tatara) {
+        // Cycle through each tatara and add it to the stack
+        foreach ($tataras as $tatara) {
             $structures->push([
                 $tatara->structure_id => $tatara->structure_name,
             ]);
         }
-        //Sort all of the structures
+        // Sort all of the structures
         $structures->sort();
 
-        //Get the current mining operations.
+        // Get the current mining operations.
         $operations = MiningOperation::where([
             'processed' => 'No',
         ])->get();
 
         return view('miningtax.admin.display.miningops.form')->with('structures', $structures)
-                                                             ->with('operations', $operations);
+            ->with('operations', $operations);
     }
 
     /**
      * Store the results from the mining operations form
      */
-    public function storeMiningOperationForm(Request $request) {
-        //Validate the data
+    public function storeMiningOperationForm(Request $request)
+    {
+        // Validate the data
         $this->validate($request, [
             'name' => 'required',
             'date' => 'required',
@@ -91,10 +80,10 @@ class MiningTaxesAdminController extends Controller
         $config = config('esi');
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
 
-        //Get the name of the structure from the database
+        // Get the name of the structure from the database
         $m = $sHelper->GetStructureInfo($request->structure);
 
-        //Save the mining operation into the database
+        // Save the mining operation into the database
         $operation = new MiningOperation;
         $operation->structure_id = $request->structure;
         $operation->structure_name = $m->structure_name;
@@ -112,63 +101,54 @@ class MiningTaxesAdminController extends Controller
     /**
      * Display the page to approve corporation moon rentals
      */
-    public function DisplayMoonRentalRequests() {
-
-    }
+    public function DisplayMoonRentalRequests() {}
 
     /**
      * Approve a moon rental from the form
      */
-    public function storeApproveMoonRentalRequest() {
-        
-    }
+    public function storeApproveMoonRentalRequest() {}
 
     /**
      * Display the page to setup the form for corporations to rent a moon
      */
-    public function DisplayMoonRentalForm() {
-
-    }
+    public function DisplayMoonRentalForm() {}
 
     /**
      * Store the details for the form for corporations renting a specific moon
      */
-    public function StoreMoonRentalForm() {
-
-    }
+    public function StoreMoonRentalForm() {}
 
     /**
      * Remove a moon from being rented from a specific corporation
      */
-    public function DeleteMoonRental(Request $request) {
-
-    }
+    public function DeleteMoonRental(Request $request) {}
 
     /**
      * Display an invoice based on it's id
-     * 
-     * @var $invoiceId
+     *
+     * @var
      */
-    public function displayInvoice($invoiceId) {
-        $ores = array();
-        $moons = array();
+    public function displayInvoice($invoiceId)
+    {
+        $ores = [];
+        $moons = [];
         $totalPrice = 0.00;
         $config = config('esi');
         $structure = new StructureHelper($config['primary'], $config['corporation']);
 
-        //Get the invoice from the database
+        // Get the invoice from the database
         $invoice = Invoice::where([
             'invoice_id' => $invoiceId,
         ])->first();
 
-        //Get the line items for the ledger for the invoice
+        // Get the line items for the ledger for the invoice
         $items = Ledger::where([
             'invoice_id' => $invoiceId,
         ])->get();
 
-        //Build the total ores table for the display page
-        foreach($items as $item) {
-            if(!isset($ores[$item['ore_name']])) {
+        // Build the total ores table for the display page
+        foreach ($items as $item) {
+            if (! isset($ores[$item['ore_name']])) {
                 $ores[$item['ore_name']] = 0;
             }
             $ores[$item['ore_name']] = $ores[$item['ore_name']] + $item['quantity'];
@@ -176,12 +156,12 @@ class MiningTaxesAdminController extends Controller
             $totalPrice += $item['amount'];
         }
 
-        //Print out the lines of the ledger line by line for another table
-        foreach($items as $item) {
-            //Get the structure info from the database or esi
+        // Print out the lines of the ledger line by line for another table
+        foreach ($items as $item) {
+            // Get the structure info from the database or esi
             $tempObserverInfo = $structure->GetStructureInfo($item['observer_id']);
 
-            if(isset($tempObserverInfo->name)) {
+            if (isset($tempObserverInfo->name)) {
                 array_push($moons, [
                     'character_name' => $item['character_name'],
                     'observer_name' => $tempObserverInfo->name,
@@ -202,19 +182,20 @@ class MiningTaxesAdminController extends Controller
                     'tax_amount' => $item['amount'] * $config['public_mining_tax'],
                 ]);
             }
-                        
+
         }
 
         return view('miningtax.admin.display.details.invoice')->with('ores', $ores)
-                                                              ->with('moons', $moons)
-                                                              ->with('invoice', $invoice)
-                                                              ->with('totalPrice', $totalPrice);
+            ->with('moons', $moons)
+            ->with('invoice', $invoice)
+            ->with('totalPrice', $totalPrice);
     }
 
     /**
      * Display current unpaid invoices
      */
-    public function DisplayUnpaidInvoice() {
+    public function DisplayUnpaidInvoice()
+    {
         $invoices = Invoice::where([
             'status' => 'Pending',
         ])->orWhere([
@@ -237,15 +218,16 @@ class MiningTaxesAdminController extends Controller
     /**
      * Search unpaid invoices
      */
-    public function SearchUnpaidInvoice(Request $request) {
-        $invoices = Invoice::where('invoice_id', 'LIKE', '%' . $request->q . '%')
-                           ->where(['status' => 'Pending'])
-                           ->orWhere(['status' => 'Late'])
-                           ->orWhere(['status' => 'Deferred'])
-                           ->orderByDesc('invoice_id')
-                           ->paginate(25);
+    public function SearchUnpaidInvoice(Request $request)
+    {
+        $invoices = Invoice::where('invoice_id', 'LIKE', '%'.$request->q.'%')
+            ->where(['status' => 'Pending'])
+            ->orWhere(['status' => 'Late'])
+            ->orWhere(['status' => 'Deferred'])
+            ->orderByDesc('invoice_id')
+            ->paginate(25);
 
-        if(count($invoices) > 0) {
+        if (count($invoices) > 0) {
             return view('miningtax.admin.display.unpaid')->with('invoices', $invoices);
         }
 
@@ -255,21 +237,18 @@ class MiningTaxesAdminController extends Controller
     /**
      * Display page to modify an unpaid invoice
      */
-    public function DisplayModifyInvoice() {
-
-    }
+    public function DisplayModifyInvoice() {}
 
     /**
      * Modify an unpaid invoice
      */
-    public function ProcessModifyInvoice() {
-        
-    }
+    public function ProcessModifyInvoice() {}
 
     /**
      * Mark an invoice paid
      */
-    public function UpdateInvoice(Request $request) {
+    public function UpdateInvoice(Request $request)
+    {
         $this->validate($request, [
             'invoiceId' => 'required',
             'status' => 'required',
@@ -289,7 +268,8 @@ class MiningTaxesAdminController extends Controller
     /**
      * Display past paid invoices
      */
-    public function DisplayPaidInvoices() {
+    public function DisplayPaidInvoices()
+    {
         $invoices = Invoice::where([
             'status' => 'Paid',
         ])->orWhere([
@@ -303,6 +283,6 @@ class MiningTaxesAdminController extends Controller
         ])->sum('invoice_amount');
 
         return view('miningtax.admin.display.paidinvoices')->with('invoices', $invoices)
-                                                           ->with('totalAmount', $totalAmount);
-    }    
+            ->with('totalAmount', $totalAmount);
+    }
 }

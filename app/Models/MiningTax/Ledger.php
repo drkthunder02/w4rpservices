@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ledger extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'alliance_mining_tax_ledgers';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = false;
 
     /**
      * Items which are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -33,9 +33,8 @@ class Ledger extends Model
         'invoice_id',
     ];
 
-    public function getInvoice() {
+    public function getInvoice()
+    {
         return $this->belongsTo(App\Models\MiningTax\Invoice::class, 'invoice_id', 'invoice_id');
     }
-
-    
 }

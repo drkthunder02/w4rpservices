@@ -2,19 +2,15 @@
 
 namespace App\Jobs\Commands\MiningTaxes;
 
+use App\Jobs\Commands\MiningTaxes\Ledgers\FetchMiningTaxesLedgers;
+use App\Models\MiningTax\Observer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+// Models
 use Illuminate\Queue\InteractsWithQueue;
+// Jobs
 use Illuminate\Queue\SerializesModels;
-use Log;
-use Carbon\Carbon;
-
-//Models
-use App\Models\MiningTax\Observer;
-
-//Jobs
-use App\Jobs\Commands\MiningTaxes\Ledgers\FetchMiningTaxesLedgers;
 
 class PreFetchMiningTaxesLedgers implements ShouldQueue
 {
@@ -22,14 +18,14 @@ class PreFetchMiningTaxesLedgers implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
@@ -52,24 +48,25 @@ class PreFetchMiningTaxesLedgers implements ShouldQueue
      */
     public function handle()
     {
-        //Get the site configuration which holds some data we need
+        // Get the site configuration which holds some data we need
         $config = config('esi');
-        //Get the observers from the database
+        // Get the observers from the database
         $observers = Observer::all();
-        
-        //For each of the observers, send a job to fetch the mining ledger
-        foreach($observers as $obs) {
-            //Dispatch the mining taxes ledger jobs
+
+        // For each of the observers, send a job to fetch the mining ledger
+        foreach ($observers as $obs) {
+            // Dispatch the mining taxes ledger jobs
             FetchMiningTaxesLedgers::dispatch($config['primary'], $config['corporation'], $obs->observer_id);
         }
     }
 
     /**
      * Set the tags for Horzion
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['PreFetchMiningTaxesLedgers', 'MiningTaxes', 'MiningTaxesLedgers'];
     }
 }

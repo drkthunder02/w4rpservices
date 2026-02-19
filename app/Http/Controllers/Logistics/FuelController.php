@@ -2,62 +2,55 @@
 
 namespace App\Http\Controllers\Logistics;
 
-//Internal Library
-use Illuminate\Http\Request;
+// Internal Library
 use App\Http\Controllers\Controller;
-use DB;
-use Log;
-use Carbon\Carbon;
-use Khill\Lavacharts\Lavacharts;
-use Auth;
-use Charts;
-
-//Library Helpers
 use App\Library\Helpers\AssetHelper;
 use App\Library\Helpers\StructureHelper;
+// Library Helpers
+use Charts;
+use Khill\Lavacharts\Lavacharts;
 
-//Models
-use App\Models\Structure\Structure;
-use App\Models\Structure\Asset;
-use App\Models\Structure\Service;
+// Models
 
 class FuelController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('role:User');
     }
 
-    public function displayStructures() {
-        //Declare variables
-        $jumpGates = array();
+    public function displayStructures()
+    {
+        // Declare variables
+        $jumpGates = [];
         $lava = new Lavacharts;
 
-        //Declare the class helpers
+        // Declare the class helpers
         $sHelper = new StructureHelper(null, null, null);
         $aHelper = new AssetHelper(null, null, null);
 
-        //Setup the charts
+        // Setup the charts
         $gauge = $lava->DataTable();
         $gauge->addStringColumn('Fuel')
-              ->addNumberColumn('Units');
+            ->addNumberColumn('Units');
 
-        //Get all of the jump gates
+        // Get all of the jump gates
         $gates = $sHelper->GetStructuresByType('Ansiblex Jump Gate');
 
-        foreach($gates as $gate) {
+        foreach ($gates as $gate) {
             $liquidOzone = $aHelper->GetAssetByType(16273, $gate->structure_id);
             $temp = [
                 'name' => $gate->structure_name,
                 'system' => $gate->solar_system_name,
                 'fuel_expires' => $gate->fuel_expires,
                 'liquid_ozone' => $liquidOzone,
-                'link' => '/logistics/fuel/display/' . $gate->structure_id . '/',
+                'link' => '/logistics/fuel/display/'.$gate->structure_id.'/',
             ];
 
             array_push($jumpGates, $temp);
 
-            if($liquidOzone > 1000000) {
+            if ($liquidOzone > 1000000) {
                 $liquidOzone = 1000000;
             }
 
@@ -83,6 +76,6 @@ class FuelController extends Controller
         ]);
 
         return view('logistics.fuel')->with('jumpGates', $jumpGates)
-                                     ->with('lava', $lava);
+            ->with('lava', $lava);
     }
 }

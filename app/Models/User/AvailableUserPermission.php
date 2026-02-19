@@ -11,7 +11,7 @@ class AvailableUserPermission extends Model
      */
     protected $table = 'available_user_permissions';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     /**
@@ -25,6 +25,4 @@ class AvailableUserPermission extends Model
     protected $fillable = [
         'permission',
     ];
-
-    
 }

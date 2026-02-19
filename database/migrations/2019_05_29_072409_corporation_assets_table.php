@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CorporationAssetsTable extends Migration
 {
@@ -13,8 +13,8 @@ class CorporationAssetsTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('alliance_structures')) {
-            Schema::create('alliance_structures', function(Blueprint $table) {
+        if (! Schema::hasTable('alliance_structures')) {
+            Schema::create('alliance_structures', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('structure_id')->unique();
                 $table->string('structure_name');
@@ -41,8 +41,8 @@ class CorporationAssetsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('alliance_services')) {
-            Schema::create('alliance_services', function(Blueprint $table) {
+        if (! Schema::hasTable('alliance_services')) {
+            Schema::create('alliance_services', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('structure_id');
                 $table->string('name');
@@ -51,8 +51,8 @@ class CorporationAssetsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('alliance_assets')) {
-            Schema::create('alliance_assets', function(Blueprint $table) {
+        if (! Schema::hasTable('alliance_assets')) {
+            Schema::create('alliance_assets', function (Blueprint $table) {
                 $table->increments('id');
                 $table->boolean('is_blueprint_copy')->nullable();
                 $table->boolean('is_singleton');

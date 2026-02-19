@@ -13,7 +13,7 @@ class CreateMiningTaxTables extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('alliance_mining_tax_invoices')) {
+        if (! Schema::hasTable('alliance_mining_tax_invoices')) {
             Schema::create('alliance_mining_tax_invoices', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('character_id');
@@ -34,9 +34,9 @@ class CreateMiningTaxTables extends Migration
                 $table->text('mail_body')->nullable();
                 $table->timestamps();
             });
-        }     
-        
-        if(!Schema::hasTable('alliance_mining_tax_observers')) {
+        }
+
+        if (! Schema::hasTable('alliance_mining_tax_observers')) {
             Schema::create('alliance_mining_tax_observers', function (Blueprint $table) {
                 $table->id();
                 $table->dateTime('last_updated');
@@ -45,8 +45,8 @@ class CreateMiningTaxTables extends Migration
                 $table->timestamps();
             });
         }
-        
-        if(!Schema::hasTable('alliance_mining_tax_ledgers')) {
+
+        if (! Schema::hasTable('alliance_mining_tax_ledgers')) {
             Schema::create('alliance_mining_tax_ledgers', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('character_id');
@@ -65,7 +65,7 @@ class CreateMiningTaxTables extends Migration
             });
         }
 
-        if(!Schema::hasTable('alliance_mining_tax_payments')) {
+        if (! Schema::hasTable('alliance_mining_tax_payments')) {
             Schema::create('alliance_mining_tax_payments', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('character_id');

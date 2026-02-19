@@ -2,19 +2,15 @@
 
 namespace App\Jobs\Commands\MiningTaxes\Invoices;
 
+use App\Models\MiningTax\Ledger;
+use App\Models\MiningTax\MiningOperation;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+// Models
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Bus;
-use Carbon\Carbon;
-use Log;
-
-//Models
-use App\Models\MiningTax\MiningOperation;
-use App\Models\MiningTax\Ledger;
 
 class ProcessAllianceMiningOperations implements ShouldQueue
 {
@@ -22,14 +18,14 @@ class ProcessAllianceMiningOperations implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
@@ -41,7 +37,7 @@ class ProcessAllianceMiningOperations implements ShouldQueue
      */
     public function __construct()
     {
-        //Set job parameters
+        // Set job parameters
         $this->connection = 'redis';
         $this->onQueue('miningtaxes');
     }
@@ -56,32 +52,32 @@ class ProcessAllianceMiningOperations implements ShouldQueue
         $count = MiningOperation::where([
             'processed' => 'No',
         ])->where('operation_date', '<=', Carbon::now())
-          ->count();
+            ->count();
 
-        if($count > 0) {
+        if ($count > 0) {
             $operations = MiningOperation::where([
                 'processed' => 'No',
             ])->where('operation_date', '<=', Carbon::now())
-              ->get();
-    
-            foreach($operations as $operation) {
+                ->get();
+
+            foreach ($operations as $operation) {
                 $ledgers = Ledger::where([
                     'observer_id' => $operation->structure_id,
                     'invoiced' => 'No',
                     'last_updated' => $operation->operation_date,
                 ])->get();
-    
-                foreach($ledgers as $ledger) {
+
+                foreach ($ledgers as $ledger) {
                     Ledger::where([
                         'observer_id' => $operation->structure_id,
                         'invoiced' => 'No',
                         'last_updated' => $operation->operation_date,
                     ])->update([
                         'invoiced' => 'Yes',
-                        'invoice_id' => 'MiningOp' . $operation->id,
+                        'invoice_id' => 'MiningOp'.$operation->id,
                     ]);
                 }
-    
+
                 MiningOperation::where([
                     'id' => $operation->id,
                 ])->update([
@@ -94,10 +90,11 @@ class ProcessAllianceMiningOperations implements ShouldQueue
 
     /**
      * Set the tags for Horzion
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['ProcessAllianceMiningOperations', 'MiningTaxes', 'MiningOperations'];
     }
 }

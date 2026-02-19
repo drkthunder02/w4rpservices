@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands\MiningTaxes;
 
-use Illuminate\Console\Command;
-
 use App\Jobs\Commands\MiningTaxes\ProcessMiningTaxesPayments as PMTP;
+use Illuminate\Console\Command;
 
 class ExecuteProcesssMiningTaxesPaymentsCommand extends Command
 {

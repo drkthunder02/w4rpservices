@@ -13,7 +13,7 @@ class CreateNewMoonRentalTables extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('moon_lookup')) {
+        if (! Schema::hasTable('moon_lookup')) {
             Schema::create('moon_lookup', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('moon_id');
@@ -25,7 +25,7 @@ class CreateNewMoonRentalTables extends Migration
             });
         }
 
-        if(!Schema::hasTable('alliance_moons')) {
+        if (! Schema::hasTable('alliance_moons')) {
             Schema::create('alliance_moons', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('moon_id');
@@ -50,7 +50,7 @@ class CreateNewMoonRentalTables extends Migration
             });
         }
 
-        if(!Schema::hasTable('alliance_moon_ores')) {
+        if (! Schema::hasTable('alliance_moon_ores')) {
             Schema::create('alliance_moon_ores', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('moon_id');
@@ -62,18 +62,18 @@ class CreateNewMoonRentalTables extends Migration
                 $table->unsignedBigInteger('planet_id');
 
                 $table->foreign('moon_id', 'fk_moon_id')
-                      ->references('moon_id')
-                      ->on('alliance_moons')
-                      ->cascadeOnDelete();
+                    ->references('moon_id')
+                    ->on('alliance_moons')
+                    ->cascadeOnDelete();
 
                 $table->foreign('moon_name', 'fk_moon_name')
-                      ->references('name')
-                      ->on('alliance_moons')
-                      ->cascadeOnDelete();
+                    ->references('name')
+                    ->on('alliance_moons')
+                    ->cascadeOnDelete();
             });
         }
 
-        if(!Schema::hasTable('alliance_moon_rentals')) {
+        if (! Schema::hasTable('alliance_moon_rentals')) {
             Schema::create('alliance_moon_rentals', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('moon_id');
@@ -106,6 +106,6 @@ class CreateNewMoonRentalTables extends Migration
         Schema::dropIfExists('alliance_moon_rentals');
         Schema::dropIfExists('alliance_moon_ores');
         Schema::dropIfExists('alliance_moons');
-        
+
     }
 }

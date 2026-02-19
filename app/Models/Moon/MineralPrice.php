@@ -9,7 +9,7 @@ class MineralPrice extends Model
     // Table Name
     protected $table = 'mineral_prices';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     // Timestamps
@@ -17,7 +17,7 @@ class MineralPrice extends Model
 
     /**
      * Fillable Array
-     * 
+     *
      * @var array
      */
     protected $fillable = [

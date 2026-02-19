@@ -2,21 +2,16 @@
 
 namespace App\Console\Commands\MoonRental;
 
-//Application Library
-use Illuminate\Console\Command;
-use Log;
-use Carbon\Carbon;
-
-//Internal Library
-use App\Library\Moons\MoonCalc;
+// Application Library
+use App\Jobs\Commands\MoonRental\UpdateAllianceMoonRentalWorth;
+// Internal Library
 use App\Library\Helpers\LookupHelper;
-
-//Models
+use App\Library\Moons\MoonCalc;
+// Models
 use App\Models\MoonRental\AllianceMoon;
 use App\Models\MoonRental\AllianceMoonOre;
-
-//Jobs
-use App\Jobs\Commands\MoonRental\UpdateAllianceMoonRentalWorth;
+// Jobs
+use Illuminate\Console\Command;
 
 class ExecuteUpdateAllianceMoonRentalWorth extends Command
 {
@@ -52,7 +47,7 @@ class ExecuteUpdateAllianceMoonRentalWorth extends Command
     public function handle()
     {
         UpdateAllianceMoonRentalWorth::dispatch();
-        
+
         /*
         //Declare variables
         $lookup = new LookupHelper;
@@ -89,11 +84,11 @@ class ExecuteUpdateAllianceMoonRentalWorth extends Command
             }
 
             //one of these two ways will work
-            $worth = $mHelper->MoonTotalWorth($ores[0]["ore_name"], $ores[0]["quantity"], 
-                                              $ores[1]["ore_name"], $ores[1]["quantity"], 
-                                              $ores[2]["ore_name"], $ores[2]["quantity"], 
+            $worth = $mHelper->MoonTotalWorth($ores[0]["ore_name"], $ores[0]["quantity"],
+                                              $ores[1]["ore_name"], $ores[1]["quantity"],
+                                              $ores[2]["ore_name"], $ores[2]["quantity"],
                                               $ores[3]["ore_name"], $ores[3]["quantity"]);
-            
+
             $rentalAmount = $worth * $rentalTax * $months;
 
             AllianceMoon::where([

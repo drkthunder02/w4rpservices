@@ -9,7 +9,7 @@ class EsiToken extends Model
     // Table Name
     protected $table = 'EsiTokens';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     // Timestamps
@@ -17,7 +17,7 @@ class EsiToken extends Model
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -28,11 +28,13 @@ class EsiToken extends Model
         'expires_in',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(App\Models\User\User::class, 'character_id', 'character_id');
     }
 
-    public function esiscopes() {
+    public function esiscopes()
+    {
         return $this->hasMany(App\Models\EsiScope::class, 'character_id', 'character_id');
     }
 }

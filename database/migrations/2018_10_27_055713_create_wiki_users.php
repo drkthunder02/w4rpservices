@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateWikiUsers extends Migration
 {
@@ -13,8 +13,8 @@ class CreateWikiUsers extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('wiki_user')) {
-            Schema::create('wiki_user', function(Blueprint $table) {
+        if (! Schema::hasTable('wiki_user')) {
+            Schema::create('wiki_user', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('login');
                 $table->string('pass');
@@ -24,8 +24,8 @@ class CreateWikiUsers extends Migration
             });
         }
 
-        if(!Schema::hasTable('wiki_member')) {
-            Schema::create('wiki_member', function(Blueprint $table) {
+        if (! Schema::hasTable('wiki_member')) {
+            Schema::create('wiki_member', function (Blueprint $table) {
                 $table->integer('uid');
                 $table->integer('gid');
                 $table->string('groupname');
@@ -33,8 +33,8 @@ class CreateWikiUsers extends Migration
             });
         }
 
-        if(!Schema::hasTable('wiki_groupnames')) {
-            Schema::create('wiki_groupnames', function(Blueprint $table) {
+        if (! Schema::hasTable('wiki_groupnames')) {
+            Schema::create('wiki_groupnames', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('gname');
                 $table->unique('id', 'id');

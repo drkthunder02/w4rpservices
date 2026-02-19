@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateItemLookupTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateItemLookupTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('item_lookup')) {
+        if (! Schema::hasTable('item_lookup')) {
             Schema::create('item_lookup', function (Blueprint $table) {
                 $table->double('capacity', 20, 2)->nullable();
                 $table->text('description');

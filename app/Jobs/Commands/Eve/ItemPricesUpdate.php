@@ -2,15 +2,13 @@
 
 namespace App\Jobs\Commands\Eve;
 
+use App\Library\Moons\MoonCalc;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Log;
-
-//Library
-use App\Library\Moons\MoonCalc;
+use Illuminate\Queue\InteractsWithQueue;
+// Library
+use Illuminate\Queue\SerializesModels;
 
 class ItemPricesUpdate implements ShouldQueue
 {
@@ -18,14 +16,14 @@ class ItemPricesUpdate implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
@@ -55,10 +53,11 @@ class ItemPricesUpdate implements ShouldQueue
 
     /**
      * Set the tags for Horzion
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['Eve', 'ItemPricesUpdate'];
     }
 }

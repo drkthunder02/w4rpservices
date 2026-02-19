@@ -11,12 +11,12 @@ class UserPermission extends Model
      */
     protected $table = 'user_permissions';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -24,9 +24,8 @@ class UserPermission extends Model
         'permission',
     ];
 
-    
-
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

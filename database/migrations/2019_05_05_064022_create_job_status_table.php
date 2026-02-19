@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateJobStatusTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateJobStatusTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('job_status')) {
+        if (! Schema::hasTable('job_status')) {
             Schema::create('job_status', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('job_name');
@@ -22,7 +22,7 @@ class CreateJobStatusTable extends Migration
                 $table->timestamps();
             });
         }
-        
+
     }
 
     /**

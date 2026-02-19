@@ -11,12 +11,12 @@ class UserRole extends Model
      */
     protected $table = 'user_roles';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     /**
      * Attributes which are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -24,7 +24,8 @@ class UserRole extends Model
         'role',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

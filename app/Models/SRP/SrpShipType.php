@@ -6,26 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class SrpShipType extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'srp_ship_types';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = false;
 
-    //Fillable
+    // Fillable
     protected $fillable = [
         'code',
         'description',
     ];
 
-    public function costCode() {
+    public function costCode()
+    {
         return $this->hasOne(App\Models\SRP\SrpPayout::class, 'code', 'code');
     }
 
-    public function fleetType() {
+    public function fleetType()
+    {
         return $this->belongsTo(App\Models\SRP\SrpFleetType::class, 'code', 'code');
     }
 }

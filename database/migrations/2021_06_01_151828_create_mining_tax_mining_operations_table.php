@@ -13,7 +13,7 @@ class CreateMiningTaxMiningOperationsTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('alliance_mining_tax_operations')) {
+        if (! Schema::hasTable('alliance_mining_tax_operations')) {
             Schema::create('alliance_mining_tax_operations', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('structure_id');
@@ -31,7 +31,7 @@ class CreateMiningTaxMiningOperationsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('alliance_mining_tax_invoices')) {
+        if (! Schema::hasTable('alliance_mining_tax_invoices')) {
             Schema::table('alliance_mining_tax_invoices', function (Blueprint $table) {
                 $table->unsignedBigInteger('modified_by_id')->nullable();
                 $table->string('modified_by_name')->nullable();

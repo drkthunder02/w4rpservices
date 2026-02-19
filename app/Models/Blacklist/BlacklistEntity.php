@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class BlacklistEntity extends Model
 {
-    //Table Name
+    // Table Name
     public $table = 'alliance_blacklist';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [

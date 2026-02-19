@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateJobsTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('jobs')) {
+        if (! Schema::hasTable('jobs')) {
             Schema::create('jobs', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->string('queue')->index();
@@ -25,7 +25,7 @@ class CreateJobsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('failed_jobs')) {
+        if (! Schema::hasTable('failed_jobs')) {
             Schema::create('failed_jobs', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->text('connection');
@@ -36,8 +36,8 @@ class CreateJobsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('schedule_jobs')) {
-            Schema::create('schedule_jobs', function(Blueprint $table) {
+        if (! Schema::hasTable('schedule_jobs')) {
+            Schema::create('schedule_jobs', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('job_name');
                 $table->string('job_state');

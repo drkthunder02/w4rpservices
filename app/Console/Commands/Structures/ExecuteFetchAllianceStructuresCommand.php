@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands\Structures;
 
-use Illuminate\Console\Command;
-
 use App\Jobs\Commands\Structures\FetchAllianceStructures as FAS;
+use Illuminate\Console\Command;
 
 class ExecuteFetchAllianceStructuresCommand extends Command
 {

@@ -2,23 +2,22 @@
 
 namespace App\Models\MiningTax;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class MiningOperation extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'alliance_mining_tax_operations';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
     /**
      * The array of variables which are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [

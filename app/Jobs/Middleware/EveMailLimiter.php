@@ -5,7 +5,8 @@ namespace App\Jobs\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Redis;
 
-class EveMailLimiter {
+class EveMailLimiter
+{
     /** @var bool|\Closure */
     protected $enabled = true;
 
@@ -35,8 +36,7 @@ class EveMailLimiter {
     }
 
     /**
-     * @param bool|\Closure $enabled
-     *
+     * @param  bool|\Closure  $enabled
      * @return $this
      */
     public function enabled($enabled = true)

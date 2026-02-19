@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateNewContractsTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateNewContractsTable extends Migration
      */
     public function up()
     {
-        //Remove this group of tables
+        // Remove this group of tables
         Schema::dropIfExists('eve_regions');
         Schema::dropIfExists('public_contracts');
         Schema::dropIfExists('public_contract_items');
@@ -24,9 +24,9 @@ class CreateNewContractsTable extends Migration
         Schema::dropIfExists('contract_bids');
         Schema::dropIfExists('accepted_bids');
 
-        //Add these new tables for the contracts
-        if(!Schema::hasTable('supply_chain_contracts')) {
-            Schema::create('supply_chain_contracts', function(Blueprint $table) {
+        // Add these new tables for the contracts
+        if (! Schema::hasTable('supply_chain_contracts')) {
+            Schema::create('supply_chain_contracts', function (Blueprint $table) {
                 $table->increments('contract_id')->unique();
                 $table->unsignedBigInteger('issuer_id');
                 $table->string('issuer_name');
@@ -46,8 +46,8 @@ class CreateNewContractsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('supply_chain_bids')) {
-            Schema::create('supply_chain_bids', function(Blueprint $table) {
+        if (! Schema::hasTable('supply_chain_bids')) {
+            Schema::create('supply_chain_bids', function (Blueprint $table) {
                 $table->increments('bid_id')->unique();
                 $table->unsignedBigInteger('contract_id');
                 $table->decimal('bid_amount', 20, 2)->default(0.00);

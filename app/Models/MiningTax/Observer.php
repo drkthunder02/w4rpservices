@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Observer extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'alliance_mining_tax_observers';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
     /**
      * Items which are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -27,5 +27,5 @@ class Observer extends Model
         'observer_name',
         'solar_system_name',
         'solar_system_id',
-    ];    
+    ];
 }

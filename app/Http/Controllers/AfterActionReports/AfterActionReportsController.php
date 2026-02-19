@@ -2,27 +2,29 @@
 
 namespace App\Http\Controllers\AfterActionReports;
 
-//Internal Library
+// Internal Library
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-
-//Models
 use App\Models\AfterActionReports\AfterActionReport;
 use App\Models\AfterActionReports\AfterActionReportComment;
+// Models
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class AfterActionReportsController extends Controller
 {
-    public function __contstruct() {
+    public function __contstruct()
+    {
         $this->middleware('auth');
         $this->middleware('permission:fc.team');
     }
 
-    public function DisplayReportForm() {
+    public function DisplayReportForm()
+    {
         return view('reports.user.form.report');
     }
 
-    public function StoreReport(Request $request) {
+    public function StoreReport(Request $request)
+    {
         $this->validate($request, [
             'location' => 'required',
             'time' => 'required',
@@ -50,15 +52,17 @@ class AfterActionReportsController extends Controller
         $report->worked_well = $request->well;
         $report->additonal_comments = $request->comments;
         $report->save();
-        
+
         return redirect('/reports/display/all')->with('success', 'Added report to the database.');
     }
 
-    public function DisplayCommentForm($id) {
+    public function DisplayCommentForm($id)
+    {
         return view('reports.user.form.comment')->with('id', $id);
     }
 
-    public function StoreComment(Request $request) {
+    public function StoreComment(Request $request)
+    {
         $this->validate($request, [
             'reportId' => 'required',
             'comments' => 'required',
@@ -74,14 +78,15 @@ class AfterActionReportsController extends Controller
         return redirect('/reports/display/all')->with('success', 'Added comemnt to the report.');
     }
 
-    public function DisplayAllReports() {
-        //Grab all the reports
+    public function DisplayAllReports()
+    {
+        // Grab all the reports
         $reports = AfterActionReport::where('created_at', '>=', Carbon::now()->subDays(30));
         $comments = AfterActionReportComment::where('created_at', '>=', Carbon::now()->subDays(30));
         $reportCount = AfterActionReport::where('created_at', '>=', Carbon::now()->subDays(30))->count();
-        
+
         return view('reports.user.displayreports')->with('reports', $reports)
-                                                  ->with('comments', $comments)
-                                                  ->with('reportCount', $reportCount);
+            ->with('comments', $comments)
+            ->with('reportCount', $reportCount);
     }
 }

@@ -7,46 +7,42 @@
 
 namespace App\Library\Helpers;
 
-//Internal Library
-use Log;
-use Carbon\Carbon;
-use Seat\Eseye\Exceptions\RequestFailedException;
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-
-//Application Library
+// Internal Library
 use App\Library\Esi\Esi;
-use App\Library\Helpers\LookupHelper;
-
-//Models
 use App\Models\Finances\AllianceWalletJournal;
+// Application Library
+use Log;
+// Models
+use Seat\Eseye\Exceptions\RequestFailedException;
 
-class FinanceHelper {
-
-    public function GetApiWalletJournal($division, $charId) {
-        //Declare class variables
+class FinanceHelper
+{
+    public function GetApiWalletJournal($division, $charId)
+    {
+        // Declare class variables
         $lookup = new LookupHelper;
         $esiHelper = new Esi;
 
-        //Setup the esi container.
+        // Setup the esi container.
         $token = $esiHelper->GetRefreshToken($charId);
         $esi = $esiHelper->SetupEsiAuthentication($token);
 
-        //Check the scope
-        if(!$esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1')) {
-            Log::critical('Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
+        // Check the scope
+        if (! $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1')) {
+            Log::critical('Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: '.$charId);
+
             return null;
         }
 
-        //Reference the character id to the corporation id
+        // Reference the character id to the corporation id
         $char = $lookup->GetCharacterInfo($charId);
         $corpId = $char->corporation_id;
 
-        //Set the current page to 1 which is the page we start on
+        // Set the current page to 1 which is the page we start on
         $currentPage = 1;
-        //Set the total pages to 1, but in the future we will set it to another number
+        // Set the total pages to 1, but in the future we will set it to another number
         $totalPages = 1;
-        //Setup a page failed variable
+        // Setup a page failed variable
         $pageFailed = false;
 
         do {
@@ -55,7 +51,7 @@ class FinanceHelper {
              * If the token has expired, then resetup the authentication container, which will refresh the
              * access token.
              */
-            if($esiHelper->TokenExpired($token)) {
+            if ($esiHelper->TokenExpired($token)) {
                 $token = $esiHelper->GetRefreshToken($charId);
                 $esi = $esiHelper->SetupEsiAuthentication($token);
             }
@@ -66,12 +62,12 @@ class FinanceHelper {
              */
             try {
                 $journals = $esi->page($currentPage)
-                                ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
-                                    'corporation_id' => $corpId,
-                                    'division' => $division,
-                                ]);
-            } catch(RequestFailedException $e) {
-                Log::warning('Failed to get wallet journal page ' . $currentPage . ' for character id: ' . $charId);
+                    ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                        'corporation_id' => $corpId,
+                        'division' => $division,
+                    ]);
+            } catch (RequestFailedException $e) {
+                Log::warning('Failed to get wallet journal page '.$currentPage.' for character id: '.$charId);
                 Log::warning($e);
                 dd($e);
                 $pageFailed = true;
@@ -81,9 +77,9 @@ class FinanceHelper {
              * If the current page is the first one and the page didn't fail, then update the total pages.
              * If the first page failed, just return as we aren't going to be able to get the total amount of data needed.
              */
-            if($currentPage == 1 && $pageFailed == false) {
+            if ($currentPage == 1 && $pageFailed == false) {
                 $totalPages = $journals->pages;
-            } else if($currentPage == 1 && $pageFailed == true) {
+            } elseif ($currentPage == 1 && $pageFailed == true) {
                 return null;
             }
 
@@ -91,51 +87,50 @@ class FinanceHelper {
              * If the page was successfully pulled, we need to decode the data, then cycle through the data, and save it
              * where we can.
              */
-            if($pageFailed == false) {
-                //Decode the json data, and return it as an array
+            if ($pageFailed == false) {
+                // Decode the json data, and return it as an array
                 $wallet = json_decode($journals->raw, true);
 
-                
-                //Foreach journal entry, add the journal entry to the table
-                foreach($wallet as $entry) {                 
-                    //See if we find the entry id in the database already
+                // Foreach journal entry, add the journal entry to the table
+                foreach ($wallet as $entry) {
+                    // See if we find the entry id in the database already
                     $found = AllianceWalletJournal::where([
                         'id' => $entry['id'],
                     ])->count();
 
-                    if($found == 0) {
+                    if ($found == 0) {
                         $awj = new AllianceWalletJournal;
                         $awj->id = $entry['id'];
                         $awj->corporation_id = $corpId;
                         $awj->division = $division;
-                        if(isset($entry['amount'])) {
+                        if (isset($entry['amount'])) {
                             $awj->amount = $entry['amount'];
                         }
-                        if(isset($entry['balance'])) {
+                        if (isset($entry['balance'])) {
                             $awj->balance = $entry['balance'];
                         }
-                        if(isset($entry['context_id'])) {
+                        if (isset($entry['context_id'])) {
                             $awj->context_id = $entry['context_id'];
                         }
-                        if(isset($entry['date'])) {
+                        if (isset($entry['date'])) {
                             $awj->date = $esiHelper->DecodeDate($entry['date']);
                         }
-                        if(isset($entry['description'])) {
+                        if (isset($entry['description'])) {
                             $awj->description = $entry['description'];
                         }
-                        if(isset($entry['first_party_id'])) {
+                        if (isset($entry['first_party_id'])) {
                             $awj->first_party_id = $entry['first_party_id'];
                         }
-                        if(isset($entry['reason'])) {
+                        if (isset($entry['reason'])) {
                             $awj->reason = $entry['reason'];
                         }
-                        if(isset($entry['ref_type'])) {
+                        if (isset($entry['ref_type'])) {
                             $awj->ref_type = $entry['ref_type'];
                         }
-                        if(isset($entry['tax'])) {
+                        if (isset($entry['tax'])) {
                             $awj->tax = $entry['tax'];
                         }
-                        if(isset($entry['tax_receiver_id'])) {
+                        if (isset($entry['tax_receiver_id'])) {
                             $awj->tax_receiver_id = $entry['tax_receiver_id'];
                         }
                         $awj->save();
@@ -151,9 +146,9 @@ class FinanceHelper {
                 $pageFailed = false;
             }
 
-            //Increment the current page counter
+            // Increment the current page counter
             $currentPage++;
-        } while($currentPage <= $totalPages);
+        } while ($currentPage <= $totalPages);
 
         return 0;
     }
@@ -161,21 +156,23 @@ class FinanceHelper {
     /**
      * Get the pages for the alliance wallet journal
      */
-    public function GetAllianceWalletJournalPages($division, $charId) {
+    public function GetAllianceWalletJournalPages($division, $charId)
+    {
         $lookup = new LookupHelper;
         $esiHelper = new Esi;
 
-        //Setup the esi container.
+        // Setup the esi container.
         $token = $esiHelper->GetRefreshToken($charId);
         $esi = $esiHelper->SetupEsiAuthentication($token);
 
-        //Check the scope
-        if(!$esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1')) {
-            Log::critical('Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
+        // Check the scope
+        if (! $esiHelper->HaveEsiScope($charId, 'esi-wallet.read_corporation_wallets.v1')) {
+            Log::critical('Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: '.$charId);
+
             return null;
         }
 
-        //Reference the character id to the corporation id
+        // Reference the character id to the corporation id
         $char = $lookup->GetCharacterInfo($charId);
         $corpId = $char->corporation_id;
 
@@ -185,24 +182,26 @@ class FinanceHelper {
          */
         try {
             $journals = $esi->page(1)
-                            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
-                                'corporation_id' => $corpId,
-                                'division' => $division,
-                            ]);
-        } catch(RequestFailedException $e) {
-            Log::warning('Failed to get wallet journal pages for character id: ' . $charId);
+                ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                    'corporation_id' => $corpId,
+                    'division' => $division,
+                ]);
+        } catch (RequestFailedException $e) {
+            Log::warning('Failed to get wallet journal pages for character id: '.$charId);
             Log::warning($e);
+
             return 0;
         }
 
-        //Return the total pages
+        // Return the total pages
         return $journals->pages;
     }
 
-    private function GetPIMaterialsArray() {
-        //Setup array for PI items
+    private function GetPIMaterialsArray()
+    {
+        // Setup array for PI items
         $pi_items = [
-            //R0 Materials
+            // R0 Materials
             '2073',
             '2667',
             '2268',
@@ -218,7 +217,7 @@ class FinanceHelper {
             '2309',
             '2310',
             '2311',
-            //P1 Materials
+            // P1 Materials
             '2389',
             '2390',
             '2392',
@@ -234,7 +233,7 @@ class FinanceHelper {
             '3683',
             '3779',
             '9828',
-            //P2 Materials
+            // P2 Materials
             '44',
             '2312',
             '2317',
@@ -259,7 +258,7 @@ class FinanceHelper {
             '9840',
             '9842',
             '15317',
-            //P3 Materials
+            // P3 Materials
             '2344',
             '2345',
             '2346',
@@ -281,7 +280,7 @@ class FinanceHelper {
             '17392',
             '17898',
             '28974',
-            //P4 Materials
+            // P4 Materials
             '2867',
             '2868',
             '2869',
@@ -294,7 +293,4 @@ class FinanceHelper {
 
         return $pi_items;
     }
-
 }
-
-?>

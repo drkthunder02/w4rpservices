@@ -2,15 +2,13 @@
 
 namespace App\Jobs\Commands\Assets;
 
+use App\Models\Structure\Asset;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+// Models
 use Illuminate\Queue\SerializesModels;
-use Log;
-
-//Models
-use App\Models\Structure\Asset;
 
 class ProcessAllianceAssets implements ShouldQueue
 {
@@ -18,19 +16,19 @@ class ProcessAllianceAssets implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
 
-    //Private variable
+    // Private variable
     private $asset;
 
     /**
@@ -40,7 +38,7 @@ class ProcessAllianceAssets implements ShouldQueue
      */
     public function __construct($a)
     {
-        //Set the connection for the job
+        // Set the connection for the job
         $this->connection = 'redis';
         $this->onQueue('assets');
 
@@ -62,9 +60,9 @@ class ProcessAllianceAssets implements ShouldQueue
             'item_id' => $this->asset->item_id,
         ])->count();
 
-        if($count == 0) {
+        if ($count == 0) {
             $as = new Asset;
-            if(isset($this->asset->is_blueprint_copy)) {
+            if (isset($this->asset->is_blueprint_copy)) {
                 $as->is_blueprint_copy = $this->asset->is_blueprint_copy;
             }
             $as->is_singleton = $this->asset->is_singleton;
@@ -76,7 +74,7 @@ class ProcessAllianceAssets implements ShouldQueue
             $as->type_id = $this->asset->type_id;
             $as->save();
         } else {
-            //Update the previously found asset
+            // Update the previously found asset
             Asset::where([
                 'item_id' => $this->asset->item_id,
             ])->update([
@@ -88,7 +86,7 @@ class ProcessAllianceAssets implements ShouldQueue
                 'type_id' => $this->asset->type_id,
             ]);
 
-            if(isset($this->asset->is_blueprint_copy)) {
+            if (isset($this->asset->is_blueprint_copy)) {
                 Asset::where([
                     'item_id' => $this->asset->item_id,
                 ])->update([
@@ -100,10 +98,11 @@ class ProcessAllianceAssets implements ShouldQueue
 
     /**
      * Tags for jobs
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['FetchAllianceAssets', 'AllianceStructures', 'Assets'];
     }
 }

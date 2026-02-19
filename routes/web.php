@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    if(Auth::check()) {
+    if (Auth::check()) {
         return redirect('/dashboard');
     }
 
@@ -26,7 +26,7 @@ Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('/callback', 'Auth\LoginController@handleProviderCallback')->name('callback');
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::group(['middleware' => ['auth']], function(){
+Route::group(['middleware' => ['auth']], function () {
     /**
      * Admin Controller display pages
      */
@@ -68,7 +68,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/blacklist/add', 'Blacklist\BlacklistController@AddToBlacklist');
     Route::post('/blacklist/remove', 'Blacklist\BlacklistController@RemoveFromBlacklist');
     Route::post('/blacklist/search', 'Blacklist\BlacklistController@SearchInBlacklist');
-    
+
     /**
      * Dashboard Controller Display pages
      */
@@ -110,7 +110,7 @@ Route::group(['middleware' => ['auth']], function(){
      */
     Route::post('/moonrental/display/form', 'MiningTaxes\MiningTaxesController@DisplayMoonRentalForm');
     Route::post('/moonrental/display/form/store', 'MiningTaxes\MiningTaxesController@storeMoonRentalForm');
-    
+
     /**
      * Scopes Controller display pages
      */
@@ -138,7 +138,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/srp/admin/update/shiptype/{id}/{value}', 'SRP\SRPAdminController@updateShipType');
     Route::get('/srp/admin/update/lossvalue/{id}/{value}', 'SRP\SRPAdminController@updateLossValue');
 
-
     /**
      * Supply Chain Contracts Controller display pages
      */
@@ -163,7 +162,5 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/test/char/display', 'Test\TestController@displayCharTest');
     Route::get('/test/miningtax/invoice', 'Test\TestController@DebugMiningTaxesInvoices');
     Route::get('/test/miningtax/observers', 'Test\TestController@DebugMiningObservers');
-   
-});
 
-?>
+});
