@@ -26,7 +26,7 @@ Route::get('/login', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('/callback', 'Auth\LoginController@handleProviderCallback')->name('callback');
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::group(['middleware' => ['auth']], function () {
+Route::middleware('auth')->group(function () {
     /**
      * Admin Controller display pages
      */
