@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('users')) {
+        if (! Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('user_alts')) {
+        if (! Schema::hasTable('user_alts')) {
             Schema::create('user_alts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
@@ -49,13 +49,13 @@ class CreateUsersTable extends Migration
                 $table->timestamps();
 
                 $table->foreign('main_id', 'fk_users_alts_main_id')
-                      ->references('character_id')
-                      ->on('users')
-                      ->cascadeOnDelete();
+                    ->references('character_id')
+                    ->on('users')
+                    ->cascadeOnDelete();
             });
         }
 
-        if(!Schema::hasTable('user_roles')) {
+        if (! Schema::hasTable('user_roles')) {
             Schema::create('user_roles', function (Blueprint $table) {
                 $table->increments('id');
                 $table->unsignedBigInteger('character_id');
@@ -63,39 +63,39 @@ class CreateUsersTable extends Migration
                 $table->timestamps();
 
                 $table->foreign('character_id', 'fk_user_roles_character_id')
-                      ->references('character_id')
-                      ->on('users')
-                      ->cascadeOnDelete();
+                    ->references('character_id')
+                    ->on('users')
+                    ->cascadeOnDelete();
             });
         }
 
-        if(!Schema::hasTable('EsiTokens')) {
-            Schema::create('EsiTokens', function(Blueprint $table) {
+        if (! Schema::hasTable('EsiTokens')) {
+            Schema::create('EsiTokens', function (Blueprint $table) {
                 $table->increments('id');
                 $table->unsignedBigInteger('character_id')->unique();
                 $table->string('access_token');
                 $table->string('refresh_token');
                 $table->integer('expires_in');
                 $table->timestamps();
-           });
+            });
         }
 
-        if(!Schema::hasTable('EsiScopes')) {
-            Schema::create('EsiScopes', function(Blueprint $table) {
+        if (! Schema::hasTable('EsiScopes')) {
+            Schema::create('EsiScopes', function (Blueprint $table) {
                 $table->increments('id');
                 $table->unsignedBigInteger('character_id');
                 $table->string('scope');
                 $table->timestamps();
 
                 $table->foreign('character_id', 'fk_esi_scopes_character_id')
-                      ->references('character_id')
-                      ->on('EsiTokens')
-                      ->cascadeOnDelete();
+                    ->references('character_id')
+                    ->on('EsiTokens')
+                    ->cascadeOnDelete();
 
             });
         }
 
-        if(!Schema::hasTable('user_permissions')) {
+        if (! Schema::hasTable('user_permissions')) {
             Schema::create('user_permissions', function (Blueprint $table) {
                 $table->increments('id');
                 $table->unsignedBigInteger('character_id');
@@ -103,20 +103,20 @@ class CreateUsersTable extends Migration
                 $table->timestamps();
 
                 $table->foreign('character_id', 'fk_user_permissions_character_id')
-                      ->references('character_id')
-                      ->on('users')
-                      ->cascadeOnDelete();
+                    ->references('character_id')
+                    ->on('users')
+                    ->cascadeOnDelete();
             });
         }
 
-        if(!Schema::hasTable('available_user_permissions')) {
-            Schema::create('available_user_permissions', function(Blueprint $table) {
+        if (! Schema::hasTable('available_user_permissions')) {
+            Schema::create('available_user_permissions', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('permission');
             });
         }
 
-        if(!Schema::hasTable('available_user_roles')) {
+        if (! Schema::hasTable('available_user_roles')) {
             Schema::create('available_user_roles', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('role');
@@ -155,7 +155,7 @@ class CreateUsersTable extends Migration
             ]);
         }
 
-        if(!Schema::hasTable('user_to_corporation')) {
+        if (! Schema::hasTable('user_to_corporation')) {
             Schema::create('user_to_corporation', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('character_id');
@@ -165,15 +165,15 @@ class CreateUsersTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('AllianceCorps')) {
-            Schema::create('AllianceCorps', function(Blueprint $table) {
+        if (! Schema::hasTable('AllianceCorps')) {
+            Schema::create('AllianceCorps', function (Blueprint $table) {
                 $table->integer('corporation_id')->unique();
                 $table->string('name');
                 $table->timestamps();
             });
         }
 
-        if(!Schema::hasTable('character_to_corporation')) {
+        if (! Schema::hasTable('character_to_corporation')) {
             Schema::create('character_to_corporation', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('character_id');
@@ -183,7 +183,7 @@ class CreateUsersTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('corporation_to_alliance')) {
+        if (! Schema::hasTable('corporation_to_alliance')) {
             Schema::create('corporation_to_alliance', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('corporation_id');
@@ -193,8 +193,8 @@ class CreateUsersTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('allowed_logins')) {
-            Schema::create('allowed_logins', function(Blueprint $table) {
+        if (! Schema::hasTable('allowed_logins')) {
+            Schema::create('allowed_logins', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('entity_id');
                 $table->string('entity_type');
@@ -226,4 +226,4 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('corporation_to_alliance');
         Schema::dropIfExists('allowed_logins');
     }
-}
+};

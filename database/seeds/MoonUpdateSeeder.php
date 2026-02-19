@@ -1,13 +1,12 @@
 <?php
 
-//Internal Libraries
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\File;
-
-//Models
+// Internal Libraries
 use App\Models\Moon\AllianceMoon;
 use App\Models\Moon\RentalMoon;
+use Illuminate\Database\Seeder;
+// Models
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 class MoonUpdateSeeder extends Seeder
 {
@@ -22,7 +21,8 @@ class MoonUpdateSeeder extends Seeder
         $this->UpdateRentalMoons();
     }
 
-    private function IsRMoon($firstOre, $secondOre, $thirdOre, $fourthOre) {
+    private function IsRMoon($firstOre, $secondOre, $thirdOre, $fourthOre)
+    {
         $rMoons = [
             'Carnotite',
             'Zircon',
@@ -34,14 +34,15 @@ class MoonUpdateSeeder extends Seeder
             'Ytterbite',
         ];
 
-        if(in_array($firstOre, $rMoons) || in_array($secondOre, $rMoons) || in_array($thirdOre, $rMoons) || in_array($fourthOre, $rMoons)) {
+        if (in_array($firstOre, $rMoons) || in_array($secondOre, $rMoons) || in_array($thirdOre, $rMoons) || in_array($fourthOre, $rMoons)) {
             return true;
         } else {
             return false;
         }
     }
 
-    private function FindRegion($system) {
+    private function FindRegion($system)
+    {
         $catch = [
             '6X7-JO',
             'A-803L',
@@ -52,7 +53,7 @@ class MoonUpdateSeeder extends Seeder
             'J-ODE7',
             'OGL8-Q',
             'R-K4QY',
-            'Q-S7ZD'
+            'Q-S7ZD',
         ];
 
         $immensea = [
@@ -89,35 +90,36 @@ class MoonUpdateSeeder extends Seeder
             'E8-YS9',
         ];
 
-        if(in_array($system, $catch)) {
+        if (in_array($system, $catch)) {
             return 'Catch';
-        } else if(in_array($system, $immensea)) {
+        } elseif (in_array($system, $immensea)) {
             return 'Immensea';
         } else {
             return null;
         }
     }
 
-    private function UpdateRentalMoons() {
-        $lines = array();
+    private function UpdateRentalMoons()
+    {
+        $lines = [];
 
-        //Create the file handler
+        // Create the file handler
         $data = Storage::get('public/moon_data.txt');
-        //Split the string into separate arrays based on the line
+        // Split the string into separate arrays based on the line
         $data = preg_split("/\n/", $data);
 
-        //For each array of data, let's separate the data into more arrays built in arrays
-        for($i = 0; $i < sizeof($data); $i++) {
-            //Strip the beginning [ from the line
+        // For each array of data, let's separate the data into more arrays built in arrays
+        for ($i = 0; $i < count($data); $i++) {
+            // Strip the beginning [ from the line
             $temp = str_replace('[', '', $data[$i]);
-            //Strip the ending ] from the line
+            // Strip the ending ] from the line
             $temp = str_replace(']', '', $temp);
-            //Remove the spacees from the line
+            // Remove the spacees from the line
             $temp = str_replace(' ', '', $temp);
-            //Remove the quotes from the line
+            // Remove the quotes from the line
             $temp = str_replace("'", '', $temp);
-            //Split up the line into separate arrays after each comma
-            $lines[$i] = preg_split("/,/", $temp);
+            // Split up the line into separate arrays after each comma
+            $lines[$i] = preg_split('/,/', $temp);
         }
 
         /**
@@ -134,17 +136,16 @@ class MoonUpdateSeeder extends Seeder
          * 9 => FourthOre
          * 10 => FourthQuan
          */
-
-        foreach($lines as $line) {
-            //If the moon is a rare moon, then either update it or add it.
-            if($this->IsRMoon($line[3], $line[5], $line[7], $line[9])) {
+        foreach ($lines as $line) {
+            // If the moon is a rare moon, then either update it or add it.
+            if ($this->IsRMoon($line[3], $line[5], $line[7], $line[9])) {
                 $count = RentalMoon::where([
                     'System' => $line[0],
-                    'Planet' =>  $line[1],
+                    'Planet' => $line[1],
                     'Moon' => $line[2],
                 ])->count();
-                //Insert the moon into the database
-                if($count == 0) {
+                // Insert the moon into the database
+                if ($count == 0) {
                     $region = $this->FindRegion($line[0]);
 
                     RentalMoon::insert([
@@ -162,7 +163,7 @@ class MoonUpdateSeeder extends Seeder
                         'FourthOre' => $line[9],
                         'FourthQuantity' => $line[10],
                     ]);
-                } else if($count > 0) {  //If the moon is found then update it.
+                } elseif ($count > 0) {  // If the moon is found then update it.
                     $firstQuantity = round($line[4] * 100);
                     $secondQuantity = round($line[6] * 100);
                     $thirdQuantity = round($line[8] * 100);
@@ -188,26 +189,27 @@ class MoonUpdateSeeder extends Seeder
         }
     }
 
-    private function UpdateAllianceMoons() {
-        $lines = array();
+    private function UpdateAllianceMoons()
+    {
+        $lines = [];
 
-        //Create the file handler
+        // Create the file handler
         $data = Storage::get('public/moon_data.txt');
-        //Split the string into separate arrays based on the line
+        // Split the string into separate arrays based on the line
         $data = preg_split("/\n/", $data);
 
-        //For each array of data, let's separate the data into more arrays built in arrays
-        for($i = 0; $i < sizeof($data); $i++) {
-            //Strip the beginning [ from the line
+        // For each array of data, let's separate the data into more arrays built in arrays
+        for ($i = 0; $i < count($data); $i++) {
+            // Strip the beginning [ from the line
             $temp = str_replace('[', '', $data[$i]);
-            //Strip the ending ] from the line
+            // Strip the ending ] from the line
             $temp = str_replace(']', '', $temp);
-            //Remove the spacees from the line
+            // Remove the spacees from the line
             $temp = str_replace(' ', '', $temp);
-            //Remove the quotes from the line
+            // Remove the quotes from the line
             $temp = str_replace("'", '', $temp);
-            //Split up the line into separate arrays after each comma
-            $lines[$i] = preg_split("/,/", $temp);
+            // Split up the line into separate arrays after each comma
+            $lines[$i] = preg_split('/,/', $temp);
         }
 
         /**
@@ -224,9 +226,8 @@ class MoonUpdateSeeder extends Seeder
          * 9 => FourthOre
          * 10 => FourthQuan
          */
-
-        foreach($lines as $line) {
-            //Update the alliance moons
+        foreach ($lines as $line) {
+            // Update the alliance moons
             AllianceMoon::where([
                 'System' => $line[0],
                 'Planet' => $line[1],

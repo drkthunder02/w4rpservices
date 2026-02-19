@@ -9,7 +9,7 @@ class Config extends Model
     // Table Name
     protected $table = 'Config';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     // Timestamps
@@ -17,7 +17,7 @@ class Config extends Model
 
     /**
      * Fillable Array
-     * 
+     *
      * @var array
      */
     protected $fillable = [

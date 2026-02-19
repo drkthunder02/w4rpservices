@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class WormholesSpaceTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class WormholesSpaceTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('alliance_wormholes')) {
+        if (! Schema::hasTable('alliance_wormholes')) {
             Schema::create('alliance_wormholes', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('system');
@@ -62,7 +62,7 @@ class WormholesSpaceTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('wormhole_types')) {
+        if (! Schema::hasTable('wormhole_types')) {
             Schema::create('wormhole_types', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('type');
@@ -995,4 +995,4 @@ class WormholesSpaceTable extends Migration
         Schema::dropIfExists('alliance_wormholes');
         Schema::dropIfExists('wormhole_types');
     }
-}
+};

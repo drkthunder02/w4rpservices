@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWarpedBucksProgramTables extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateWarpedBucksProgramTables extends Migration
      */
     public function up()
     {
-        Schema::create('bucks_character_wallet_entries', function(Blueprint $table) {
+        Schema::create('bucks_character_wallet_entries', function (Blueprint $table) {
             $table->id();
         });
 
-        Schema::create('bucks_alliance_systems', function(Blueprint $table) {
+        Schema::create('bucks_alliance_systems', function (Blueprint $table) {
             $table->id();
         });
 
-        Schema::create('bucks_ratting_daily_pool', function(Blueprint $table) {
+        Schema::create('bucks_ratting_daily_pool', function (Blueprint $table) {
             $table->id();
         });
     }
@@ -37,4 +37,4 @@ class CreateWarpedBucksProgramTables extends Migration
         Schema::dropIfExists('bucks_alliance_systems');
         Schema::dropIfExists('bucks_ratting_daily_pool');
     }
-}
+};

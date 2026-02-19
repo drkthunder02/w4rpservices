@@ -2,16 +2,13 @@
 
 namespace App\Console\Commands\Data;
 
-//Internal Library
-use Illuminate\Console\Command;
-
-//Models
-use App\Models\Corporation\AllianceCorp;
-use App\Models\ScheduledTask\ScheduleJob;
-
-//Library
-use Seat\Eseye\Exceptions\RequestFailedException;
+// Internal Library
 use App\Library\Esi\Esi;
+// Models
+use App\Models\Corporation\AllianceCorp;
+// Library
+use Illuminate\Console\Command;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 class GetCorpsCommand extends Command
 {
@@ -46,29 +43,29 @@ class GetCorpsCommand extends Command
      */
     public function handle()
     {
-        //Declare some variables
+        // Declare some variables
         $esiHelper = new Esi;
-        
+
         $esi = $esiHelper->SetupEsiAuthentication();
 
-        //try the  esi call to get all of the corporations in the alliance
+        // try the  esi call to get all of the corporations in the alliance
         try {
             $corporations = $esi->invoke('get', '/alliances/{alliance_id}/corporations/', [
                 'alliance_id' => 99004116,
             ]);
-        } catch(RequestFailedException $e){
+        } catch (RequestFailedException $e) {
             dd($e->getEsiResponse());
         }
-        //Delete all of the entries in the AllianceCorps table
+        // Delete all of the entries in the AllianceCorps table
         AllianceCorp::truncate();
 
-        //Foreach corporation, make entries into the database.
-        foreach($corporations as $corp) {
+        // Foreach corporation, make entries into the database.
+        foreach ($corporations as $corp) {
             try {
                 $corpInfo = $esi->invoke('get', '/corporations/{corporation_id}/', [
                     'corporation_id' => $corp,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
                 return $e->getEsiResponse();
             }
             $entry = new AllianceCorp;

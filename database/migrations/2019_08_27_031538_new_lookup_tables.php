@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class NewLookupTables extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class NewLookupTables extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('character_lookup')) {
+        if (! Schema::hasTable('character_lookup')) {
             Schema::create('character_lookup', function (Blueprint $table) {
                 $table->unsignedInteger('character_id');
                 $table->unsignedInteger('alliance_id')->nullable();
@@ -31,7 +31,7 @@ class NewLookupTables extends Migration
             });
         }
 
-        if(!Schema::hasTable('corporation_lookup')) {
+        if (! Schema::hasTable('corporation_lookup')) {
             Schema::create('corporation_lookup', function (Blueprint $table) {
                 $table->unsignedInteger('corporation_id');
                 $table->unsignedInteger('alliance_id')->nullable();
@@ -54,7 +54,7 @@ class NewLookupTables extends Migration
             });
         }
 
-        if(!Schema::hasTable('alliance_lookup')) {
+        if (! Schema::hasTable('alliance_lookup')) {
             Schema::create('alliance_lookup', function (Blueprint $table) {
                 $table->unsignedInteger('alliance_id');
                 $table->unsignedInteger('creator_corporation_id');
@@ -79,4 +79,4 @@ class NewLookupTables extends Migration
         Schema::dropIfExists('corporation_lookup');
         Schema::dropIfExists('alliance_lookup');
     }
-}
+};

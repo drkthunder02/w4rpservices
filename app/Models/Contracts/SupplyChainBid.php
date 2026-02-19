@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class SupplyChainBid extends Model
 {
-    //Table Name
+    // Table Name
     public $table = 'supply_chain_bids';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     // Timestamps
@@ -17,7 +17,7 @@ class SupplyChainBid extends Model
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -30,17 +30,20 @@ class SupplyChainBid extends Model
         'bid_note',
     ];
 
-    //Relationships
-    public function ContractId() {
+    // Relationships
+    public function ContractId()
+    {
         return $this->belongsTo(App\Models\Contracts\SupplyChainContract::class, 'contract_id', 'contract_id');
     }
 
-    public function Contract() {
+    public function Contract()
+    {
         return $this->belongsTo(App\Models\Contracts\SupplyChainContract::class);
     }
 
-    //Model functions
-    public function getContractId() {
+    // Model functions
+    public function getContractId()
+    {
         return $this->contract_id;
     }
 }

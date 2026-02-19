@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\Auth;
 
-//Internal Library
+// Internal Library
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
-use Auth;
-use Laravel\Socialite\Contracts\Factory as Socialite;
-use Laravel\Socialite\Two\User as SocialiteUser;
-
-//Library
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
 use App\Library\Esi\Esi;
 use App\Library\Helpers\LookupHelper;
-
-//Models
-use App\Models\User\User;
+use App\Models\Admin\AllowedLogin;
+// Library
 use App\Models\Esi\EsiScope;
 use App\Models\Esi\EsiToken;
+use App\Models\User\User;
+use App\Models\User\UserAlt;
+// Models
 use App\Models\User\UserPermission;
 use App\Models\User\UserRole;
-use App\Models\Admin\AllowedLogin;
-use App\Models\User\UserAlt;
-
+use Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Contracts\Factory as Socialite;
+use Seat\Eseye\Cache\NullCache;
+use Seat\Eseye\Configuration;
 
 class LoginController extends Controller
 {
@@ -55,41 +50,44 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except(['logout', 
-                                            'handleProviderCallback', 
-                                            'redirectToProvider']);
+        $this->middleware('guest')->except(['logout',
+            'handleProviderCallback',
+            'redirectToProvider']);
     }
 
     /**
      * Logout function
-     * 
+     *
      * @return void
      */
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
+
         return redirect('/');
     }
 
     /**
      * Redirect to the provider's website
-     * 
+     *
      * @return Socialite
      */
-    public function redirectToProvider($profile = null, Socialite $social) {
-        //The default scope is public data for everyone due to OAuth2 Tokens
-        //We also add the send mail scope in order to be able to send mails more efficiently through jobs when other scopes are required.
+    public function redirectToProvider($profile, Socialite $social)
+    {
+        // The default scope is public data for everyone due to OAuth2 Tokens
+        // We also add the send mail scope in order to be able to send mails more efficiently through jobs when other scopes are required.
         $scopes = ['publicData', 'esi-mail.send_mail.v1'];
 
-        //Collect any other scopes we need if we are logged in.
-        //If we are logged in we are linking another character to this one.
-        //Attempt to use the same scopes for this character as the original one
-        if(Auth::check()) {
+        // Collect any other scopes we need if we are logged in.
+        // If we are logged in we are linking another character to this one.
+        // Attempt to use the same scopes for this character as the original one
+        if (Auth::check()) {
             $extraScopes = EsiScope::where([
                 'character_id' => auth()->user()->getId(),
             ])->get(['scope']);
-            
-            //Pop each scope onto the array of scopes
-            foreach($extraScopes as $extra) {
+
+            // Pop each scope onto the array of scopes
+            foreach ($extraScopes as $extra) {
                 array_push($scopes, $extra->scope);
             }
 
@@ -102,73 +100,77 @@ class LoginController extends Controller
         }
 
         return $social->driver('eveonline')
-                         ->scopes($scopes)
-                         ->redirect();
+            ->scopes($scopes)
+            ->redirect();
     }
 
     /**
      * Get token from callback
-     * Redirect to the dashboard if logging in successfully. 
+     * Redirect to the dashboard if logging in successfully.
      */
-    public function handleProviderCallback(Socialite $social) {
-        //Get the sso user from the socialite driver
+    public function handleProviderCallback(Socialite $social)
+    {
+        // Get the sso user from the socialite driver
         $ssoUser = $social->driver('eveonline')->user();
 
         $scpSession = session()->pull('scopes');
 
-        //If the user was already logged in, let's do some checks to see if we are adding
-        //additional scopes to the user's account
-        if(Auth::check()) {
-            //If we are logged in already and the session contains the original characters, then we are creating an alt
-            //for the original character
-            if(session()->has('orgCharacter')) {
+        // If the user was already logged in, let's do some checks to see if we are adding
+        // additional scopes to the user's account
+        if (Auth::check()) {
+            // If we are logged in already and the session contains the original characters, then we are creating an alt
+            // for the original character
+            if (session()->has('orgCharacter')) {
                 $orgCharacter = session()->pull('orgCharacter');
 
-                if($this->createAlt($ssoUser, $orgCharacter)) {
+                if ($this->createAlt($ssoUser, $orgCharacter)) {
                     return redirect()->to('/profile')->with('success', 'Alt registered.');
-                } else {    
+                } else {
                     return redirect()->to('/profile')->with('error', 'Unable to register alt or it was previously registered.');
                 }
             } else {
-                if(sizeof($ssoUser->scopes) > 1) {
+                if (count($ssoUser->scopes) > 1) {
                     $tokenCount = EsiToken::where([
                         'character_id' => $ssoUser->id,
                     ])->count();
-                    if($tokenCount > 0) {
+                    if ($tokenCount > 0) {
                         $this->UpdateEsiToken($ssoUser);
                     } else {
                         $this->SaveEsiToken($ssoUser);
                     }
                     $this->SetScopes($ssoUser->scopes, $ssoUser->id);
+
                     return redirect()->to('/dashboard')->with('success', 'Successfully updated ESI scopes.');
                 }
             }
         } else {
-            //If the user wasn't logged in, then create a new user
+            // If the user wasn't logged in, then create a new user
             $user = $this->createOrGetUser($ssoUser);
-            //Login in the new user
+            // Login in the new user
             auth()->login($user, true);
-            //Redirect back to the dashboard
+
+            // Redirect back to the dashboard
             return redirect()->to('/dashboard')->with('success', 'Successfully Logged In.');
         }
     }
 
     /**
-     * Check if an alt exists in the database, else, create and 
+     * Check if an alt exists in the database, else, create and
      * return the user object.
-     * 
-     * @param \Laravel\Socialite\Two\User $user
+     *
+     * @param  \Laravel\Socialite\Two\User  $user
      */
-    private function createAlt($user, $orgCharacter) {
-        //Check to see if the alt is already in the database
+    private function createAlt($user, $orgCharacter)
+    {
+        // Check to see if the alt is already in the database
         $altCount = UserAlt::where(['character_id' => $user->id])->count();
 
-        //Check to see if the new character being added is already a main character
+        // Check to see if the new character being added is already a main character
         $mainCount = User::where(['character_id' => $user->id])->count();
 
-        //If not already in the database, then add the new character
-        if($altCount == 0 && $mainCount == 0) {
-            //Create the new alt in the table
+        // If not already in the database, then add the new character
+        if ($altCount == 0 && $mainCount == 0) {
+            // Create the new alt in the table
             $newAlt = new UserAlt;
             $newAlt->name = $user->getName();
             $newAlt->main_id = $orgCharacter;
@@ -180,75 +182,77 @@ class LoginController extends Controller
             $newAlt->expires_in = $user->expiresIn;
             $newAlt->save();
 
-            //Create the entry into the EsiToken table
-            if(EsiToken::where(['character_id' => $user->id])->count() == 0) {
+            // Create the entry into the EsiToken table
+            if (EsiToken::where(['character_id' => $user->id])->count() == 0) {
                 $this->SaveEsiToken($user);
             } else {
                 $this->UpdateEsiToken($user);
             }
 
-            //Create the entry into the EsiScopes table
-            if(sizeof($user->scopes) > 1) {
+            // Create the entry into the EsiScopes table
+            if (count($user->scopes) > 1) {
                 $this->SetScopes($user->scopes, $user->id);
             }
-            //Return the successfull conclusion of the function
+
+            // Return the successfull conclusion of the function
             return 1;
         } else {
-            //Return the unsuccessfull conclusion of the function
+            // Return the unsuccessfull conclusion of the function
             return 0;
         }
     }
 
-     /**
-     * Check if a user exists in the database, else, create and 
+    /**
+     * Check if a user exists in the database, else, create and
      * return the user object.
-     * 
-     * @param \Laravel\Socialite\Two\User $user
+     *
+     * @param  \Laravel\Socialite\Two\User  $user
      */
-    private function createOrGetUser($eveUser) {
+    private function createOrGetUser($eveUser)
+    {
         $authUser = null;
 
-        //Search to see if we have a matching user in the database.
-        //At this point we don't care about the information
+        // Search to see if we have a matching user in the database.
+        // At this point we don't care about the information
         $userCount = User::where([
             'character_id' => $eveUser->id,
         ])->count();
-        
-        //If the user is found, do more checks to see what type of login we are doing
-        if($userCount > 0) {
-            //Search for user in the database
+
+        // If the user is found, do more checks to see what type of login we are doing
+        if ($userCount > 0) {
+            // Search for user in the database
             $authUser = User::where([
                 'character_id' => $eveUser->id,
             ])->first();
 
-            //Check to see if the owner has changed
-            //If the owner has changed, then update their roles and permissions
-            if($this->OwnerHasChanged($authUser->owner_hash, $eveUser->owner_hash)) {
-                //Get the right role for the user
+            // Check to see if the owner has changed
+            // If the owner has changed, then update their roles and permissions
+            if ($this->OwnerHasChanged($authUser->owner_hash, $eveUser->owner_hash)) {
+                // Get the right role for the user
                 $role = $this->GetRole(null, $eveUser->id);
-                //Set the role for the user
+                // Set the role for the user
                 $this->SetRole($role, $eveUser->id);
 
-                //Update the user information never the less.
+                // Update the user information never the less.
                 $this->UpdateUser($eveUser, $role);
 
-                //Update the user's roles and permission
+                // Update the user's roles and permission
                 $this->UpdatePermission($eveUser, $role);
             }
 
-            //Return the user to the calling auth function
+            // Return the user to the calling auth function
             return $authUser;
         } else {
-            //Get the role for the character to be stored in the database
+            // Get the role for the character to be stored in the database
             $role = $this->GetRole(null, $eveUser->id);
 
-            //Create the user account
+            // Create the user account
             $user = $this->CreateNewUser($eveUser);
 
-            //Set the role for the user
+            // Set the role for the user
             $this->SetRole($role, $eveUser->id);
 
-            //Create a user account
+            // Create a user account
             return $user;
         }
     }
@@ -256,7 +260,8 @@ class LoginController extends Controller
     /**
      * Update the ESI Token
      */
-    private function UpdateEsiToken($eveUser) {
+    private function UpdateEsiToken($eveUser)
+    {
         EsiToken::where('character_id', $eveUser->id)->update([
             'character_id' => $eveUser->getId(),
             'access_token' => $eveUser->token,
@@ -269,9 +274,10 @@ class LoginController extends Controller
     /**
      * Create a new ESI Token in the database
      */
-    private function SaveEsiToken($eveUser) {
+    private function SaveEsiToken($eveUser)
+    {
         $token = new EsiToken;
-        $token->character_id  = $eveUser->id;
+        $token->character_id = $eveUser->id;
         $token->access_token = $eveUser->token;
         $token->refresh_token = $eveUser->refreshToken;
         $token->inserted_at = time();
@@ -282,7 +288,8 @@ class LoginController extends Controller
     /**
      * Update avatar
      */
-    private function UpdateAvatar($eveUser) {
+    private function UpdateAvatar($eveUser)
+    {
         User::where('character_id', $eveUser->id)->update([
             'avatar' => $eveUser->avatar,
         ]);
@@ -291,9 +298,10 @@ class LoginController extends Controller
     /**
      * Update user permission
      */
-    private function UpdatePermission($eveUser, $role) {
+    private function UpdatePermission($eveUser, $role)
+    {
         UserPermission::where(['character_id' => $eveUser->id])->delete();
-        $perm = new UserPermission();
+        $perm = new UserPermission;
         $perm->character_id = $eveUser->id;
         $perm->permission = $role;
         $perm->save();
@@ -302,7 +310,8 @@ class LoginController extends Controller
     /**
      * Update the user
      */
-    private function UpdateUser($eveUser, $role) {
+    private function UpdateUser($eveUser, $role)
+    {
         User::where('character_id', $eveUser->id)->update([
             'avatar' => $eveUser->avatar,
             'owner_hash' => $eveUser->owner_hash,
@@ -313,7 +322,8 @@ class LoginController extends Controller
     /**
      * Create a new user account
      */
-    private function CreateNewUser($eveUser) {
+    private function CreateNewUser($eveUser)
+    {
         $user = User::create([
             'name' => $eveUser->getName(),
             'avatar' => $eveUser->avatar,
@@ -323,13 +333,13 @@ class LoginController extends Controller
             'expires_in' => $eveUser->expiresIn,
             'user_type' => $this->GetAccountType(null, $eveUser->id),
         ]);
-        
-        //Look for an existing token for the characters
+
+        // Look for an existing token for the characters
         $tokenFound = EsiToken::where([
             'character_id' => $eveUser->id,
         ])->count();
 
-        if($tokenFound == 0) {
+        if ($tokenFound == 0) {
             $token = new EsiToken;
             $token->character_id = $eveUser->id;
             $token->access_token = $eveUser->token;
@@ -354,11 +364,12 @@ class LoginController extends Controller
 
     /**
      * Set the user role in the database
-     * 
+     *
      * @param role
      * @param charId
      */
-    private function SetRole($role, $charId) {
+    private function SetRole($role, $charId)
+    {
         $permission = new UserRole;
         $permission->character_id = $charId;
         $permission->role = $role;
@@ -367,14 +378,15 @@ class LoginController extends Controller
 
     /**
      * Set the user scopes in the database
-     * 
+     *
      * @param scopes
      * @param charId
      */
-    private function SetScopes($scopes, $charId) {
-        //Delete the current scopes, so we can add new scopes into the database
+    private function SetScopes($scopes, $charId)
+    {
+        // Delete the current scopes, so we can add new scopes into the database
         EsiScope::where('character_id', $charId)->delete();
-        foreach($scopes as $scope) {
+        foreach ($scopes as $scope) {
             $data = new EsiScope;
             $data->character_id = $charId;
             $data->scope = $scope;
@@ -384,12 +396,13 @@ class LoginController extends Controller
 
     /**
      * Get the current owner hash, and compare it with the new owner hash
-     * 
+     *
      * @param hash
      * @param charId
      */
-    private function OwnerHasChanged($hash, $newHash) {
-        if($hash === $newHash) {
+    private function OwnerHasChanged($hash, $newHash)
+    {
+        if ($hash === $newHash) {
             return false;
         } else {
             return true;
@@ -398,19 +411,20 @@ class LoginController extends Controller
 
     /**
      * Get the account type and returns it
-     * 
+     *
      * @param refreshToken
      * @param character_id
      */
-    private function GetRole($refreshToken, $charId) {
+    private function GetRole($refreshToken, $charId)
+    {
         $accountType = $this->GetAccountType($refreshToken, $charId);
-        if($accountType == 'Guest') {
+        if ($accountType == 'Guest') {
             $role = 'Guest';
-        } else if($accountType == 'Legacy'){
+        } elseif ($accountType == 'Legacy') {
             $role = 'User';
-        } else if($accountType == 'W4RP') {
+        } elseif ($accountType == 'W4RP') {
             $role = 'User';
-        } elseif($accountType == 'Renter') {
+        } elseif ($accountType == 'Renter') {
             $role = 'Renter';
         } else {
             $role = 'None';
@@ -418,47 +432,47 @@ class LoginController extends Controller
 
         return $role;
     }
-    
+
     /**
      * Gets the appropriate account type the user should be assigned through ESI API
-     * 
+     *
      * @param refreshToken
      * @param charId
-     * 
      * @return text
      */
-    private function GetAccountType($refreshToken, $charId) {
-        //Declare some variables
+    private function GetAccountType($refreshToken, $charId)
+    {
+        // Declare some variables
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
 
-        //Instantiate a new ESI isntance
+        // Instantiate a new ESI isntance
         $esi = $esiHelper->SetupEsiAuthentication();
 
-        //Set caching to null
+        // Set caching to null
         $configuration = Configuration::getInstance();
         $configuration->cache = NullCache::class;
 
-        //Get the character information
+        // Get the character information
         $character_info = $lookup->GetCharacterInfo($charId);
 
-        //Get the corporation information
+        // Get the corporation information
         $corp_info = $lookup->GetCorporationInfo($character_info->corporation_id);
 
-        if($character_info == null || $corp_info == null) {
+        if ($character_info == null || $corp_info == null) {
             return redirect('/')->with('error', 'Could not create user at this time.');
         }
 
         $legacy = AllowedLogin::where(['login_type' => 'Legacy'])->pluck('entity_id')->toArray();
         $renter = AllowedLogin::where(['login_type' => 'Renter'])->pluck('entity_id')->toArray();
 
-        //Send back the appropriate group
-        if(isset($corp_info->alliance_id)) {
-            if($corp_info->alliance_id == '99004116') {
+        // Send back the appropriate group
+        if (isset($corp_info->alliance_id)) {
+            if ($corp_info->alliance_id == '99004116') {
                 return 'W4RP';
-            } else if(in_array($corp_info->alliance_id, $legacy)) {
+            } elseif (in_array($corp_info->alliance_id, $legacy)) {
                 return 'Legacy';
-            } else if(in_array($corp_info->alliance_id, $renter)) {
+            } elseif (in_array($corp_info->alliance_id, $renter)) {
                 return 'Renter';
             } else {
                 return 'Guest';

@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class SentMail extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'sent_mails';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = false;
 
     protected $fillable = [

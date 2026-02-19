@@ -2,19 +2,17 @@
 
 namespace App\Jobs\Commands\Structures;
 
-//Internal Library
+// Internal Library
+use App\Models\Structure\Service;
+use App\Models\Structure\Structure;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+// Jobs
+
+// Models
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-
-//Jobs
-use App\Jobs\Commands\Structures\FetchAllianceStructures;
-
-//Models
-use App\Models\Structure\Structure;
-use App\Models\Structure\Service;
 
 class PurgeAllianceStructures implements ShouldQueue
 {
@@ -22,14 +20,14 @@ class PurgeAllianceStructures implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
@@ -41,7 +39,7 @@ class PurgeAllianceStructures implements ShouldQueue
      */
     public function __construct()
     {
-        //Set the connection for the job
+        // Set the connection for the job
         $this->connection = 'redis';
         $this->onQueue('structures');
     }
@@ -55,16 +53,17 @@ class PurgeAllianceStructures implements ShouldQueue
     {
         Structure::truncate();
         Service::truncate();
-        
+
         FetchAllianceStructures::dispatch()->delay(Carbon::now()->addSeconds(30));
     }
 
     /**
      * Set the tags for the job
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['PurgeAllianceStructures', 'AllianceStructures', 'Structures'];
     }
 }

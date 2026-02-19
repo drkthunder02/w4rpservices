@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateEveMailsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEveMailsTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('eve_mails')) {
+        if (! Schema::hasTable('eve_mails')) {
             Schema::create('eve_mails', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('sender');
@@ -25,7 +25,7 @@ class CreateEveMailsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('sent_mails')) {
+        if (! Schema::hasTable('sent_mails')) {
             Schema::create('sent_mails', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('sender');
@@ -47,4 +47,4 @@ class CreateEveMailsTable extends Migration
         Schema::dropIfExists('eve_mails');
         Schema::dropIfExists('sent_mails');
     }
-}
+};

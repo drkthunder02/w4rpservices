@@ -11,7 +11,7 @@ class AllianceWalletJournal extends Model
      */
     protected $table = 'alliance_wallet_journal';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     /**
@@ -21,7 +21,7 @@ class AllianceWalletJournal extends Model
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [

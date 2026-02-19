@@ -11,18 +11,18 @@ class Asset extends Model
      * esi-assets.read_corporation_assets.v1
      */
 
-    //Table Name
+    // Table Name
     public $table = 'alliance_assets';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -38,7 +38,8 @@ class Asset extends Model
         'updated_at',
     ];
 
-    public function structure() {
+    public function structure()
+    {
         return $this->belongsTo(App\Models\Structure\Structure::class, 'structure_id', 'location_id');
     }
 }

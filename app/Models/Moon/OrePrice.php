@@ -9,7 +9,7 @@ class OrePrice extends Model
     // Table Name
     protected $table = 'ore_prices';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     // Timestamps
@@ -17,7 +17,7 @@ class OrePrice extends Model
 
     /**
      * Fillable Array
-     * 
+     *
      * @var array
      */
     protected $fillable = [

@@ -2,25 +2,20 @@
 
 namespace App\Jobs\Commands\Finances;
 
-//Internal Library
+// Internal Library
+use App\Library\Esi\Esi;
+use App\Library\Helpers\LookupHelper;
+use App\Models\Finances\AllianceWalletJournal;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+// Application Library
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Carbon\Carbon;
 use Log;
-
-
-//Application Library
+// Models
 use Seat\Eseye\Exceptions\RequestFailedException;
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use App\Library\Esi\Esi;
-use App\Library\Helpers\LookupHelper;
-
-//Models
-use App\Models\Finances\AllianceWalletJournal;
 
 class UpdateAllianceWalletJournalPage implements ShouldQueue
 {
@@ -28,20 +23,22 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
 
     private $division;
+
     private $charId;
+
     private $page;
 
     /**
@@ -66,26 +63,27 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
      */
     public function handle()
     {
-        //Declare variables in the handler
+        // Declare variables in the handler
         $lookup = new LookupHelper;
         $esiHelper = new Esi;
 
-        //Setup the esi container.
+        // Setup the esi container.
         $token = $esiHelper->GetRefreshToken($this->charId);
         $esi = $esiHelper->SetupEsiAuthentication($token);
 
-        //Check the scope
-        if(!$esiHelper->HaveEsiScope($this->charId, 'esi-wallet.read_corporation_wallets.v1')) {
-            Log::critical('Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: ' . $charId);
+        // Check the scope
+        if (! $esiHelper->HaveEsiScope($this->charId, 'esi-wallet.read_corporation_wallets.v1')) {
+            Log::critical('Scope check failed for esi-wallet.read_corporation_wallets.v1 for character id: '.$charId);
+
             return null;
         }
 
-        if($esiHelper->TokenExpired($token)) {
+        if ($esiHelper->TokenExpired($token)) {
             $token = $esiHelper->GetRefreshToken($this->charId);
             $esi = $esiHelper->SetupEsiAuthentication($token);
         }
 
-        //Reference the character id to the corporation id
+        // Reference the character id to the corporation id
         $char = $lookup->GetCharacterInfo($this->charId);
         $corpId = $char->corporation_id;
 
@@ -94,54 +92,54 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
          * the failed page is the first page.
          */
         $journals = $esi->page($this->page)
-                        ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
-                            'corporation_id' => $corpId,
-                            'division' => $this->division,
-                        ]);
+            ->invoke('get', '/corporations/{corporation_id}/wallets/{division}/journal/', [
+                'corporation_id' => $corpId,
+                'division' => $this->division,
+            ]);
 
-        //Decode the json data, and return it as an array
+        // Decode the json data, and return it as an array
         $wallet = json_decode($journals->raw, true);
 
-        //Foreach journal entry, add the journal entry to the table
-        foreach($wallet as $entry) {                 
-            //See if we find the entry id in the database already
+        // Foreach journal entry, add the journal entry to the table
+        foreach ($wallet as $entry) {
+            // See if we find the entry id in the database already
             $found = AllianceWalletJournal::where([
                 'id' => $entry['id'],
             ])->count();
 
-            if($found == 0) {
+            if ($found == 0) {
                 $awj = new AllianceWalletJournal;
                 $awj->id = $entry['id'];
                 $awj->corporation_id = $corpId;
                 $awj->division = $this->division;
-                if(isset($entry['amount'])) {
+                if (isset($entry['amount'])) {
                     $awj->amount = $entry['amount'];
                 }
-                if(isset($entry['balance'])) {
+                if (isset($entry['balance'])) {
                     $awj->balance = $entry['balance'];
                 }
-                if(isset($entry['context_id'])) {
+                if (isset($entry['context_id'])) {
                     $awj->context_id = $entry['context_id'];
                 }
-                if(isset($entry['date'])) {
+                if (isset($entry['date'])) {
                     $awj->date = $esiHelper->DecodeDate($entry['date']);
                 }
-                if(isset($entry['description'])) {
+                if (isset($entry['description'])) {
                     $awj->description = $entry['description'];
                 }
-                if(isset($entry['first_party_id'])) {
+                if (isset($entry['first_party_id'])) {
                     $awj->first_party_id = $entry['first_party_id'];
                 }
-                if(isset($entry['reason'])) {
+                if (isset($entry['reason'])) {
                     $awj->reason = $entry['reason'];
                 }
-                if(isset($entry['ref_type'])) {
+                if (isset($entry['ref_type'])) {
                     $awj->ref_type = $entry['ref_type'];
                 }
-                if(isset($entry['tax'])) {
+                if (isset($entry['tax'])) {
                     $awj->tax = $entry['tax'];
                 }
-                if(isset($entry['tax_receiver_id'])) {
+                if (isset($entry['tax_receiver_id'])) {
                     $awj->tax_receiver_id = $entry['tax_receiver_id'];
                 }
                 $awj->save();
@@ -149,64 +147,66 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
             }
         }
 
-        //Return as completed
+        // Return as completed
         return 0;
     }
 
     /**
      * The job failed to process
-     * @param Exception $exception
+     *
+     * @param  Exception  $exception
      * @return void
      */
-    public function failed($exception) {
-        if(!exception instanceof RequestFailedException) {
-            //If not a failure due to ESI, then log it.  Otherwise,
-            //deduce why the exception occurred.
+    public function failed($exception)
+    {
+        if (! exception instanceof RequestFailedException) {
+            // If not a failure due to ESI, then log it.  Otherwise,
+            // deduce why the exception occurred.
             Log::critical($exception);
         }
 
-        if ((is_object($exception->getEsiResponse()) && (stristr($exception->getEsiResponse()->error, 'Too many errors') || stristr($exception->getEsiResponse()->error, 'This software has exceeded the error limit for ESI'))) || 
+        if ((is_object($exception->getEsiResponse()) && (stristr($exception->getEsiResponse()->error, 'Too many errors') || stristr($exception->getEsiResponse()->error, 'This software has exceeded the error limit for ESI'))) ||
            (is_string($exception->getEsiResponse()) && (stristr($exception->getEsiResponse(), 'Too many errors') || stristr($exception->getEsiResponse(), 'This software has exceeded the error limit for ESI')))) {
-            
-            //We have hit the error rate limiter, wait 120 seconds before releasing the job back into the queue.
+
+            // We have hit the error rate limiter, wait 120 seconds before releasing the job back into the queue.
             Log::info('UpdateAllianceWalletJournalPage has hit the error rate limiter.  Releasing the job back into the wild in 2 minutes.');
             $this->release(120);
-        }  else {
+        } else {
             $errorCode = $exception->getEsiResponse()->getErrorCode();
 
-            switch($errorCode) {
-                case 400:  //Bad Request
-                    Log::critical("Bad request has occurred in UpdateAllianceWalletJournalPage.  Job has been discarded");
+            switch ($errorCode) {
+                case 400:  // Bad Request
+                    Log::critical('Bad request has occurred in UpdateAllianceWalletJournalPage.  Job has been discarded');
                     break;
-                case 401:  //Unauthorized Request
-                    Log::critical("Unauthorized request has occurred in UpdateAllianceWalletJournalPage at " . Carbon::now()->toDateTimeString() . ".\r\nCancelling the job.");
+                case 401:  // Unauthorized Request
+                    Log::critical('Unauthorized request has occurred in UpdateAllianceWalletJournalPage at '.Carbon::now()->toDateTimeString().".\r\nCancelling the job.");
                     $this->delete();
                     break;
-                case 403:  //Forbidden
-                    Log::critical("UpdateAllianceWalletJournalPage has incurred a forbidden error.  Cancelling the job.");
+                case 403:  // Forbidden
+                    Log::critical('UpdateAllianceWalletJournalPage has incurred a forbidden error.  Cancelling the job.');
                     $this->delete();
                     break;
-                case 420:  //Error Limited
-                    Log::warning("Error rate limit occurred in UpdateAllianceWalletJournalPage.  Restarting job in 120 seconds.");
+                case 420:  // Error Limited
+                    Log::warning('Error rate limit occurred in UpdateAllianceWalletJournalPage.  Restarting job in 120 seconds.');
                     $this->release(120);
                     break;
-                case 500:  //Internal Server Error
-                    Log::critical("Internal Server Error for ESI in UpdateAllianceWalletJournalPage.  Attempting a restart in 120 seconds.");
+                case 500:  // Internal Server Error
+                    Log::critical('Internal Server Error for ESI in UpdateAllianceWalletJournalPage.  Attempting a restart in 120 seconds.');
                     $this->release(120);
                     break;
-                case 503:  //Service Unavailable
-                    Log::critical("Service Unavailabe for ESI in UpdateAllianceWalletJournalPage.  Releasing the job back to the queue in 30 seconds.");
+                case 503:  // Service Unavailable
+                    Log::critical('Service Unavailabe for ESI in UpdateAllianceWalletJournalPage.  Releasing the job back to the queue in 30 seconds.');
                     $this->release(30);
                     break;
-                case 504:  //Gateway Timeout
-                    Log::critical("Gateway timeout in UpdateAllianceWalletJournalPage.  Releasing the job back to the queue in 30 seconds.");
+                case 504:  // Gateway Timeout
+                    Log::critical('Gateway timeout in UpdateAllianceWalletJournalPage.  Releasing the job back to the queue in 30 seconds.');
                     $this->release(30);
                     break;
                 case 201:
-                    //Good response code
+                    // Good response code
                     $this->delete();
                     break;
-                //If no code is given, then log and break out of switch.
+                    // If no code is given, then log and break out of switch.
                 default:
                     Log::warning("No response code received from esi call in UpdateAllianceWalletJournalPage.\r\n");
                     $this->delete();
@@ -217,10 +217,11 @@ class UpdateAllianceWalletJournalPage implements ShouldQueue
 
     /**
      * Set the tags for Horzion
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['UpdateAllianceWalletJournalPage', 'Finances'];
     }
 }

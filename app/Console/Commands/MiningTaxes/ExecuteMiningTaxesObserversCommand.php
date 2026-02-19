@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands\MiningTaxes;
 
-use Illuminate\Console\Command;
-
 use App\Jobs\Commands\MiningTaxes\FetchMiningTaxesObservers as FetchObservers;
+use Illuminate\Console\Command;
 
 class ExecuteMiningTaxesObserversCommand extends Command
 {

@@ -2,24 +2,19 @@
 
 namespace App\Jobs\Commands\MiningTaxes\Invoices;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Log;
-use Carbon\Carbon;
-
-//Application Library
+use App\Jobs\Commands\Eve\SendEveMail;
 use App\Library\Helpers\LookupHelper;
-
-//Models
 use App\Models\MiningTax\Invoice;
 use App\Models\User\User;
-use App\Models\User\UserAlt;
-
-//Jobs
-use App\Jobs\Commands\Eve\SendEveMail;
+use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+// Application Library
+use Illuminate\Contracts\Queue\ShouldQueue;
+// Models
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+// Jobs
+use Illuminate\Queue\SerializesModels;
 
 class UpdateMiningTaxesLateInvoices1st implements ShouldQueue
 {
@@ -27,14 +22,14 @@ class UpdateMiningTaxesLateInvoices1st implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
@@ -57,41 +52,41 @@ class UpdateMiningTaxesLateInvoices1st implements ShouldQueue
      */
     public function handle()
     {
-        //Declare variables
+        // Declare variables
         $lookup = new LookupHelper;
         $config = config('esi');
         $mailDelay = 15;
         $today = Carbon::now();
 
-        //Get all of the invoices that are still pending.
+        // Get all of the invoices that are still pending.
         $invoices = Invoice::where([
             'status' => 'Pending',
         ])->get();
 
-        //Cycle through the invoices, and see if they are late or not.
-        foreach($invoices as $invoice) {
+        // Cycle through the invoices, and see if they are late or not.
+        foreach ($invoices as $invoice) {
             $dueDate = Carbon::create($invoice->date_due);
 
-            if($dueDate->greaterThan($today->subDays(7))) {
-                //Update the invoice in the database
+            if ($dueDate->greaterThan($today->subDays(7))) {
+                // Update the invoice in the database
                 Invoice::where([
                     'invoice_id' => $invoice->invoice_id,
                 ])->update([
                     'status' => 'Late',
                 ]);
 
-                //Build the mail
+                // Build the mail
                 $subject = 'Warped Intentions Mining Taxes - Invoice Late';
                 $sender = $config['primary'];
                 $recipientType = 'character';
                 $recipient = $invoice->character_id;
 
-                $body = "Dear " . $invoice->character_name . ",<br><br>";
-                $body .= "The Mining Invoice: " . $invoice->invoice_id . " is late.<br>";
-                $body .= "Please remite " . number_format($invoice->invoice_amount, 2, ".", ",") . "to Spatial Forces.<br>";
-                $body .= "<br>Sincerely,<br>Warped Intentions Leadership<br>";
+                $body = 'Dear '.$invoice->character_name.',<br><br>';
+                $body .= 'The Mining Invoice: '.$invoice->invoice_id.' is late.<br>';
+                $body .= 'Please remite '.number_format($invoice->invoice_amount, 2, '.', ',').'to Spatial Forces.<br>';
+                $body .= '<br>Sincerely,<br>Warped Intentions Leadership<br>';
 
-                //Send a reminder to the user through eve mail about the late invoice
+                // Send a reminder to the user through eve mail about the late invoice
                 SendEveMail::dispatch($body, $recipient, $recipientType, $subject, $sender)->delay(Carbon::now()->addSeconds($mailDelay));
 
                 $mailDelay += 20;
@@ -101,10 +96,11 @@ class UpdateMiningTaxesLateInvoices1st implements ShouldQueue
 
     /**
      * Set the tags for Horzion
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['UpdateMiningTaxesLateInvoices', 'MiningTaxes', 'Invoices'];
     }
 }

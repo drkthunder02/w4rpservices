@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateConfigTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateConfigTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('Config')) {
+        if (! Schema::hasTable('Config')) {
             Schema::create('Config', function (Blueprint $table) {
-                $table->decimal('RentalTax', 5,2);
+                $table->decimal('RentalTax', 5, 2);
                 $table->decimal('AllyRentalTax', 5, 2);
                 $table->decimal('RefineRate', 5, 2);
                 $table->integer('RentalTime');
             });
         }
 
-        if(!Schema::hasTable('ItemComposition')) {
+        if (! Schema::hasTable('ItemComposition')) {
             Schema::create('ItemComposition', function (Blueprint $table) {
                 $table->string('Name')->unique();
                 $table->integer('ItemId');
@@ -66,7 +66,7 @@ class CreateConfigTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('mineral_prices')) {
+        if (! Schema::hasTable('mineral_prices')) {
             Schema::create('mineral_prices', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('Name');
@@ -76,12 +76,12 @@ class CreateConfigTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('ore_prices')) {
+        if (! Schema::hasTable('ore_prices')) {
             Schema::create('ore_prices', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('Name');
                 $table->integer('ItemId');
-                $table->decimal('BatchPrice', 20,2);
+                $table->decimal('BatchPrice', 20, 2);
                 $table->decimal('UnitPrice', 20, 2);
                 $table->decimal('m3Price', 20, 2);
                 $table->string('Time');
@@ -101,4 +101,4 @@ class CreateConfigTable extends Migration
         Schema::dropIfExists('mineral_prices');
         Schema::dropIfExists('ore_prices');
     }
-}
+};

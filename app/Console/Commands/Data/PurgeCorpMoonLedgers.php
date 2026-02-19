@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands\Data;
 
-//Internal Library
-use Illuminate\Console\Command;
-
-//Jobs
+// Internal Library
 use App\Jobs\Commands\Moons\PurgeMoonLedgerJob;
+// Jobs
+use Illuminate\Console\Command;
 
 class PurgeCorpMoonLedgers extends Command
 {

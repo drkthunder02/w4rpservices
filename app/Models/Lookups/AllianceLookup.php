@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class AllianceLookup extends Model
 {
-    //Table Name
+    // Table Name
     public $table = 'alliance_lookup';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = false;
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [

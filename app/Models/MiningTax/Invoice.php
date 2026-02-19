@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'alliance_mining_tax_invoices';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
     /**
      * Items which are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -31,27 +31,33 @@ class Invoice extends Model
         'mail_body',
     ];
 
-    public function getPayment() {
+    public function getPayment()
+    {
         return $this->hasOne(App\Models\MiningTax\Payment::class, 'invoice_id', 'invoice_id');
     }
 
-    public function getCharacterId() {
+    public function getCharacterId()
+    {
         return $this->character_id;
     }
 
-    public function getCharacterName() {
+    public function getCharacterName()
+    {
         return $this->character_name;
     }
 
-    public function getStatus() {
+    public function getStatus()
+    {
         return $this->status;
     }
 
-    public function getLedgers() {
+    public function getLedgers()
+    {
         return $this->hasMany(App\Models\MiningTax\Ledger::class, 'invoice_id', 'invoice_id');
     }
 
-    public function getInvoiceAmount() {
+    public function getInvoiceAmount()
+    {
         return $this->invoice_amount;
     }
 }

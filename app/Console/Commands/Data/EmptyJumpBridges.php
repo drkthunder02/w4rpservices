@@ -2,13 +2,12 @@
 
 namespace App\Console\Commands\Data;
 
-//Internal Library
-use Illuminate\Console\Command;
-
-//Models
-use App\Models\Structure\Structure;
-use App\Models\Structure\Service;
+// Internal Library
 use App\Models\Structure\Asset;
+// Models
+use App\Models\Structure\Service;
+use App\Models\Structure\Structure;
+use Illuminate\Console\Command;
 
 class EmptyJumpBridges extends Command
 {

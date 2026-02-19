@@ -2,38 +2,34 @@
 
 namespace App\Library\Helpers;
 
-//Internal Libraries
-use Log;
-
-//Seat Stuff
-use Seat\Eseye\Cache\NullCache;
-use Seat\Eseye\Configuration;
-use Seat\Eseye\Containers\EsiAuthentication;
-use Seat\Eseye\Eseye;
-use Seat\Eseye\Exceptions\RequestFailedException;
+// Internal Libraries
 use App\Library\Esi\Esi;
-
-//Models
-use App\Models\Lookups\CharacterLookup;
-use App\Models\Lookups\CorporationLookup;
+// Seat Stuff
 use App\Models\Lookups\AllianceLookup;
-use App\Models\Lookups\SolarSystem;
+use App\Models\Lookups\CharacterLookup;
+// Models
+use App\Models\Lookups\CorporationLookup;
 use App\Models\Lookups\ItemLookup;
 use App\Models\Lookups\MoonLookup;
+use App\Models\Lookups\SolarSystem;
+use Log;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
-class LookupHelper {
-
-    //Variables
+class LookupHelper
+{
+    // Variables
     private $esi;
 
-    //Construct
-    public function __construct() {
-        //Declare a variable for use by the construct
+    // Construct
+    public function __construct()
+    {
+        // Declare a variable for use by the construct
         $esiHelper = new Esi;
         $this->esi = $esiHelper->SetupEsiAuthentication();
     }
 
-    public function StructureTypeIdToName($typeId) {
+    public function StructureTypeIdToName($typeId)
+    {
         $structureTypes = [
             35841 => 'Ansiblex Jump Gate',
             35840 => 'Pharolux Cyno Beacon',
@@ -51,7 +47,8 @@ class LookupHelper {
         return $structureTypes[$typeId];
     }
 
-    public function StructureNameToTypeId($name) {
+    public function StructureNameToTypeId($name)
+    {
         $structureTypes = [
             'Ansiblex Jump Gate' => 35841,
             'Pharolux Cyno Beacon' => 35840,
@@ -69,25 +66,27 @@ class LookupHelper {
         return $structureTypes[$name];
     }
 
-    public function ItemNameToId($itemName) {
+    public function ItemNameToId($itemName)
+    {
         $item = ItemLookup::where([
             'name' => $itemName,
         ])->first();
 
-        if($item != null) {
+        if ($item != null) {
             return $item->type_id;
         } else {
             try {
-                $response = $this->esi->setBody(array(
+                $response = $this->esi->setBody([
                     $itemName,
-                ))->invoke('post', '/universe/ids/');
-            } catch(RequestFailedException $e) {
-                printf("Failed to get the item information");
+                ])->invoke('post', '/universe/ids/');
+            } catch (RequestFailedException $e) {
+                printf('Failed to get the item information');
                 Log::warning('Failed to get item information from /universe/');
+
                 return null;
             }
 
-            if(isset($response->inventory_types)) {
+            if (isset($response->inventory_types)) {
                 return $response->inventory_types[0]->id;
             } else {
                 return null;
@@ -95,27 +94,29 @@ class LookupHelper {
         }
     }
 
-    public function ItemIdToName($itemId) {
-        //Check if the item is stored in our own database first
+    public function ItemIdToName($itemId)
+    {
+        // Check if the item is stored in our own database first
         $item = $this->LookupItem($itemId);
 
-        //If the item is found, return it, otherwise, do some esi to find it.
-        if($item != null) {
+        // If the item is found, return it, otherwise, do some esi to find it.
+        if ($item != null) {
             return $item->name;
         } else {
             try {
                 $response = $this->esi->invoke('get', '/universe/types/{type_id}/', [
                     'type_id' => $itemId,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
                 printf("Failed to get the item name from the id.\r\n");
                 var_dump($e);
                 printf("\r\n");
                 Log::warning('Failed to get item information from /universe/types/{type_id}/ in LookupHelper.');
+
                 return null;
             }
 
-            if(isset($response->description)) {
+            if (isset($response->description)) {
                 $this->StoreItem($response);
 
                 return $response->name;
@@ -125,7 +126,8 @@ class LookupHelper {
         }
     }
 
-    private function LookupItem($itemId) {
+    private function LookupItem($itemId)
+    {
         $item = ItemLookup::where([
             'type_id' => $itemId,
         ])->first();
@@ -133,56 +135,59 @@ class LookupHelper {
         return $item;
     }
 
-    private function StoreItem($item) {
+    private function StoreItem($item)
+    {
         $newItem = new ItemLookup;
-        if(isset($item->capacity)) {
+        if (isset($item->capacity)) {
             $newItem->capacity = $item->capacity;
         }
         $newItem->description = $item->description;
-        if(isset($item->graphic_id)) {
+        if (isset($item->graphic_id)) {
             $newItem->graphic_id = $item->graphic_id;
         }
         $newItem->group_id = $item->group_id;
-        if(isset($item->icon_id)) {
+        if (isset($item->icon_id)) {
             $newItem->icon_id = $item->icon_id;
         }
-        if(isset($item->market_group_id)) {
+        if (isset($item->market_group_id)) {
             $newItem->market_group_id = $item->market_group_id;
         }
-        if(isset($item->mass)) {
+        if (isset($item->mass)) {
             $newItem->mass = $item->mass;
         }
         $newItem->name = $item->name;
-        if(isset($item->packaged_volume)) {
+        if (isset($item->packaged_volume)) {
             $newItem->packaged_volume = $item->packaged_volume;
         }
-        if(isset($item->portion_size)) {
+        if (isset($item->portion_size)) {
             $newItem->portion_size = $item->portion_size;
         }
         $newItem->published = $item->published;
-        if(isset($item->radius)) {
+        if (isset($item->radius)) {
             $newItem->radius = $item->radius;
         }
         $newItem->type_id = $item->type_id;
-        if(isset($item->volume)) {
+        if (isset($item->volume)) {
             $newItem->volume = $item->volume;
         }
         $newItem->save();
     }
 
-    public function SystemIdToName($systemId) {
-        //Check if the solar system is stored in our database first
+    public function SystemIdToName($systemId)
+    {
+        // Check if the solar system is stored in our database first
         $solarSystem = $this->LookupSolarSystemId($systemId);
 
-        if($solarSystem != null) {
+        if ($solarSystem != null) {
             return $solarSystem->name;
         } else {
             try {
                 $solar = $this->esi->invoke('get', '/universe/systems/{system_id}/', [
                     'system_id' => $systemId,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get system id from /universe/systems in Lookup Helper.');
+
                 return null;
             }
 
@@ -192,23 +197,25 @@ class LookupHelper {
         }
     }
 
-    public function SystemNameToId($system) {
-        //Check if the solar system is stored in our own database first
+    public function SystemNameToId($system)
+    {
+        // Check if the solar system is stored in our own database first
         $solarSystem = $this->LookupSolarSystem($system);
 
-        if($solarSystem != null) {
+        if ($solarSystem != null) {
             return $solarSystem->solar_system_id;
         } else {
             try {
-                $response = $this->esi->setBody(array(
+                $response = $this->esi->setBody([
                     $system,
-                ))->invoke('post', '/universe/ids/');
-            } catch(RequestFailedException $e) {
+                ])->invoke('post', '/universe/ids/');
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get system name from /universe/ids/ in lookup helper.');
+
                 return null;
             }
-    
-            if(isset($response->systems)) {
+
+            if (isset($response->systems)) {
                 $this->StoreSolarSystem($response->systems[0]);
 
                 return $response->systems[0]->id;
@@ -218,7 +225,8 @@ class LookupHelper {
         }
     }
 
-    private function LookupSolarSystemId($systemId) {
+    private function LookupSolarSystemId($systemId)
+    {
         $solar = SolarSystem::where([
             'solar_system_id' => $systemId,
         ])->first();
@@ -226,7 +234,8 @@ class LookupHelper {
         return $solar;
     }
 
-    private function LookupSolarSystem($system) {
+    private function LookupSolarSystem($system)
+    {
         $solar = SolarSystem::where([
             'name' => $system,
         ])->first();
@@ -234,13 +243,14 @@ class LookupHelper {
         return $solar;
     }
 
-    private function StoreSolarSystem($system) {
-        if(isset($system->id)) {
+    private function StoreSolarSystem($system)
+    {
+        if (isset($system->id)) {
             SolarSystem::insertOrIgnore([
                 'name' => $system->name,
                 'solar_system_id' => $system->id,
             ]);
-        } else if(isset($system->system_id)) {
+        } elseif (isset($system->system_id)) {
             SolarSystem::insertOrIgnore([
                 'name' => $system->name,
                 'solar_system_id' => $system->system_id,
@@ -256,26 +266,28 @@ class LookupHelper {
     /**
      * Get moon information from the database, or store it in the database if it's not found
      */
-    public function GetMoonInfo($moonId) {
-        //Check our own database first
+    public function GetMoonInfo($moonId)
+    {
+        // Check our own database first
         $moon = $this->LookupMoonInfo($moonId);
 
-        //If no data was found in the database, then save the data, and return what is found through esi
-        if( $moon == null) {
+        // If no data was found in the database, then save the data, and return what is found through esi
+        if ($moon == null) {
             try {
                 $response = $this->esi->invoke('get', '/universe/moons/{moon_id}/', [
                     'moon_id' => $moonId,
                 ]);
-            } catch(RequestFailedException $e) {
-                Log::critical("Failed to get moon information in LookupHelper.");
+            } catch (RequestFailedException $e) {
+                Log::critical('Failed to get moon information in LookupHelper.');
+
                 return null;
             }
 
             $this->SaveMoonInfo($response);
- 
+
             return $response;
         } else {
-            //Return the moon info
+            // Return the moon info
             return $moon;
         }
     }
@@ -283,7 +295,8 @@ class LookupHelper {
     /**
      * Lookup moon info from the database
      */
-    private function LookupMoonInfo($moonId) {
+    private function LookupMoonInfo($moonId)
+    {
         $moon = MoonLookup::where([
             'moon_id' => $moonId,
         ])->first();
@@ -294,7 +307,8 @@ class LookupHelper {
     /**
      * Save moon info into the lookup database
      */
-    private function SaveMoonInfo($moon) {
+    private function SaveMoonInfo($moon)
+    {
         $newMoon = new MoonLookup;
         $newMoon->moon_id = $moon->moon_id;
         $newMoon->name = $moon->name;
@@ -305,74 +319,80 @@ class LookupHelper {
         $newMoon->save();
     }
 
-    public function GetCharacterInfo($charId) {
-        //Check our own database first
+    public function GetCharacterInfo($charId)
+    {
+        // Check our own database first
         $char = $this->LookupCharacter($charId, null);
 
-        //if the character was not found in the database, then get the information and store it in our database for later
-        if($char == null) {
+        // if the character was not found in the database, then get the information and store it in our database for later
+        if ($char == null) {
             try {
                 $response = $this->esi->invoke('get', '/characters/{character_id}/', [
                     'character_id' => $charId,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get character information in GetCharacterInfo in Lookup');
                 dd($e);
+
                 return null;
             }
 
-            //Store the character in our database
+            // Store the character in our database
             $this->SaveCharacter($response, $charId);
 
-            //Return the character details to the calling function
+            // Return the character details to the calling function
             return $response;
         } else {
-            //Return what was pulled from the database
+            // Return what was pulled from the database
             return $char;
         }
     }
 
-    public function GetCorporationInfo($corpId) {
-        //Check our own database first
+    public function GetCorporationInfo($corpId)
+    {
+        // Check our own database first
         $corp = $this->LookupCorporation($corpId, null);
-        
-        //If the corporation was not found in the database, then get the information and store it in our database for later
-        if($corp == null) {
+
+        // If the corporation was not found in the database, then get the information and store it in our database for later
+        if ($corp == null) {
             try {
                 $response = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
                     'corporation_id' => $corpId,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get corporation information in GetCorporationInfo in Lookup');
+
                 return null;
             }
 
-            //Store the corporation in our database
+            // Store the corporation in our database
             $this->SaveCorporation($response, $corpId);
 
-            //Return the corporation details to the calling function
+            // Return the corporation details to the calling function
             return $response;
         } else {
-            //Return what was pulled from the database
+            // Return what was pulled from the database
             return $corp;
         }
     }
 
-    public function GetAllianceInfo($allianceId) {
-        //Check our own database first
+    public function GetAllianceInfo($allianceId)
+    {
+        // Check our own database first
         $ally = $this->LookupAlliance($allianceId, null);
 
-        if($ally == null) {
+        if ($ally == null) {
             try {
                 $response = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
                     'alliance_id' => $allianceId,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get alliance information in GetAllianceInfo in Lookup');
+
                 return null;
             }
 
-            //Store the alliance in our database
+            // Store the alliance in our database
             $this->SaveAlliance($response, $allianceId);
 
             return $response;
@@ -381,108 +401,118 @@ class LookupHelper {
         }
     }
 
-    public function CharacterIdToName($charId) {
-        //Check if the character is stored in our own database first
+    public function CharacterIdToName($charId)
+    {
+        // Check if the character is stored in our own database first
         $char = $this->LookupCharacter($charId, null);
-        //If the char is null, then we did not find the character in our own database
-        if($char != null) {
+        // If the char is null, then we did not find the character in our own database
+        if ($char != null) {
             return $char->name;
         } else {
-            //Get the character id from esi
+            // Get the character id from esi
             try {
                 $character = $this->esi->invoke('get', '/characters/{character_id}/', [
                     'character_id' => $charId,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get character name from /characters/{character_id}/ in lookup helper.');
+
                 return null;
             }
-            
-            if(isset($character->name)) {
-                //Store the character name for the lookup table
+
+            if (isset($character->name)) {
+                // Store the character name for the lookup table
                 $this->StoreCharacterLookup(null, $character->name);
-                //Return the character name to the calling function
+
+                // Return the character name to the calling function
                 return $character->name;
             } else {
-                //If we don't find any information return null
+                // If we don't find any information return null
                 return null;
             }
         }
     }
 
-    public function CharacterNameToId($charName) {
-        //Check if the character is stored in our own database first
+    public function CharacterNameToId($charName)
+    {
+        // Check if the character is stored in our own database first
         $char = $this->LookupCharacter(null, $charName);
-        
-        if($char != null) {
+
+        if ($char != null) {
             return $char->character_id;
         } else {
             try {
-                $response = $this->esi->setBody(array(
+                $response = $this->esi->setBody([
                     $charName,
-                ))->invoke('post', '/universe/ids/');
-            } catch(RequestFailedException $e) {
+                ])->invoke('post', '/universe/ids/');
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get character name from /universe/ids/ in lookup helper.');
+
                 return null;
             }
-            
-            if(isset($response->characters[0]->id)) {
+
+            if (isset($response->characters[0]->id)) {
                 $this->StoreCharacterLookup($response->characters[0]->id, null);
-                
+
                 return $response->characters[0]->id;
             } else {
                 return null;
-            }            
+            }
         }
     }
 
-    public function CorporationIdToName($corpId) {
-        //Check if the corporation is stored in our own database first
+    public function CorporationIdToName($corpId)
+    {
+        // Check if the corporation is stored in our own database first
         $corp = $this->LookupCorporation($corpId, null);
-        if($corp != null) {
+        if ($corp != null) {
             return $corp->name;
         } else {
-            //Try to get the corporation details from ESI
+            // Try to get the corporation details from ESI
             try {
                 $corporation = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
                     'corporation_id' => $corpId,
                 ]);
-            } catch(RequestFailedException $e) {
-                //Log the issue
+            } catch (RequestFailedException $e) {
+                // Log the issue
                 Log::warning('Failed to get corporation name from /corporations/{corporation_id}/ in lookup helper.');
+
                 return null;
             }
 
-            if(isset($corporation->name)) {
-                //Store the corporation name for the lookup table
+            if (isset($corporation->name)) {
+                // Store the corporation name for the lookup table
                 $this->StoreCorporationLookup(null, $corporation->name);
-                //Return the corporation name to the calling function
+
+                // Return the corporation name to the calling function
                 return $corporation->name;
             } else {
-                //If nothing is found and ESI didn't work, return null to the calling function
+                // If nothing is found and ESI didn't work, return null to the calling function
                 return null;
             }
         }
     }
 
-    public function CorporationNameToId($corpName) {
-        //Check if the corporation is stored in our own database first
+    public function CorporationNameToId($corpName)
+    {
+        // Check if the corporation is stored in our own database first
         $corp = $this->LookupCorporation(null, $corpName);
-        
-        if($corp != null) {
+
+        if ($corp != null) {
             return $corp->corporation_id;
         } else {
-            //Try to get the corporation details from ESI
+            // Try to get the corporation details from ESI
             try {
-                $response = $this->esi->setBody(array(
+                $response = $this->esi->setBody([
                     $corpName,
-                ))->invoke('post', '/universe/ids/');
-            } catch(RequestFailedException $e) {
+                ])->invoke('post', '/universe/ids/');
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get the corporation id from /universe/ids/ in lookup helper.');
+
                 return null;
             }
 
-            if(isset($response->corporations[0]->id)) {
+            if (isset($response->corporations[0]->id)) {
                 $this->StoreCorporationLookup($response->corporations[0]->id, null);
 
                 return $response->corporations[0]->id;
@@ -492,23 +522,25 @@ class LookupHelper {
         }
     }
 
-    public function AllianceIdToName($allianceId) {
-        //Check if the alliance is stored in our own database first
+    public function AllianceIdToName($allianceId)
+    {
+        // Check if the alliance is stored in our own database first
         $alliance = $this->LookupAlliance($allianceId, null);
-        if($alliance != null) {
+        if ($alliance != null) {
             return $alliance->alliance_id;
         } else {
-            //Try to get the alliance details from ESI
+            // Try to get the alliance details from ESI
             try {
                 $alliance = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
                     'alliance_id' => $allianceId,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get the alliance name from /alliances/{alliance_id}/ in lookup helper.');
+
                 return null;
             }
 
-            if(isset($alliance->name)) {
+            if (isset($alliance->name)) {
                 $this->StoreAllianceLookup(null, $alliance->name);
 
                 return $alliance->name;
@@ -518,24 +550,26 @@ class LookupHelper {
         }
     }
 
-    public function AllianceNameToId($allianceName) {
-        //Check if the alliance is stored in our own database first
+    public function AllianceNameToId($allianceName)
+    {
+        // Check if the alliance is stored in our own database first
         $alliance = $this->LookupAlliance(null, $allianceName);
-        if($alliance != null) {
+        if ($alliance != null) {
             return $alliance->name;
         } else {
-            //Try to get the alliance details from ESI
+            // Try to get the alliance details from ESI
             try {
-                $response = $this->esi->setBody(array(
+                $response = $this->esi->setBody([
                     $allianceName,
-                ))->invoke('post', '/universe/ids/');
-            } catch(RequestFailedException $e) {
+                ])->invoke('post', '/universe/ids/');
+            } catch (RequestFailedException $e) {
                 Log::warning('Failed to get the alliance id from /universe/ids/ in lookup helper.');
+
                 return null;
             }
 
-            //If the data is pulled from ESI store the data, and send the data back to the calling function
-            if(isset($response->alliances[0]->id)) {
+            // If the data is pulled from ESI store the data, and send the data back to the calling function
+            if (isset($response->alliances[0]->id)) {
                 $this->StoreAllianceLookup($response->alliances[0]->id, null);
 
                 return $response->alliances[0]->id;
@@ -545,56 +579,58 @@ class LookupHelper {
         }
     }
 
-    private function LookupCharacter($id = null, $name = null) {
-        //If both the id and name are null, then there is nothing to lookup
-        if($id == null & $name == null) {
+    private function LookupCharacter($id = null, $name = null)
+    {
+        // If both the id and name are null, then there is nothing to lookup
+        if ($id == null & $name == null) {
             return null;
         }
 
         $character = null;
 
-        //If the id is null attempt to lookup the character
-        if($id != null) {
+        // If the id is null attempt to lookup the character
+        if ($id != null) {
             $count = CharacterLookup::where(['character_id' => $id])->count();
-            if($count > 0) {
+            if ($count > 0) {
                 $character = CharacterLookup::where(['character_id' => $id])->first();
             } else {
-                //If we didn't find it in the database, then return null
+                // If we didn't find it in the database, then return null
                 return null;
             }
-        } else if($name != null) {
-            //If the name is not null then attemp to lookup the character
+        } elseif ($name != null) {
+            // If the name is not null then attemp to lookup the character
             $count = CharacterLookup::where(['name' => $name])->count();
-            if($count > 0) {
+            if ($count > 0) {
                 $character = CharacterLookup::where(['name' => $name])->first();
             } else {
-                //If we didn't find it in the database, then return null
+                // If we didn't find it in the database, then return null
                 return null;
             }
         }
 
-        //Return the character details to the calling function
+        // Return the character details to the calling function
         return $character;
     }
 
-    private function LookupCorporation($id = null, $name = null) {
-        if($id == null && $name == null) {
+    private function LookupCorporation($id = null, $name = null)
+    {
+        if ($id == null && $name == null) {
             return null;
         }
 
         $corporation = null;
 
-        //If the id is not null attempt to lookup the character
-        if($id != null) {
+        // If the id is not null attempt to lookup the character
+        if ($id != null) {
             $count = CorporationLookup::where(['corporation_id' => $id])->count();
-            if($count > 0) {
+            if ($count > 0) {
                 $corporation = CorporationLookup::where(['corporation_id' => $id])->first();
             } else {
                 $corporation = null;
             }
-        } else if($name != null) {
+        } elseif ($name != null) {
             $count = CorporationLookup::where(['name' => $name])->count();
-            if($count > 0) {
+            if ($count > 0) {
                 $corporation = CorporationLookup::where(['name' => $name])->first();
             } else {
                 $corporation = null;
@@ -604,23 +640,24 @@ class LookupHelper {
         return $corporation;
     }
 
-    private function LookupAlliance($id = null, $name = null) {
-        if($id == null && $name == null) {
+    private function LookupAlliance($id = null, $name = null)
+    {
+        if ($id == null && $name == null) {
             return null;
         }
 
         $alliance = null;
 
-        if($id != null) {
+        if ($id != null) {
             $count = AllianceLookup::where(['alliance_id' => $id])->count();
-            if($count > 0) {
+            if ($count > 0) {
                 $alliance = AllianceLookup::where(['alliance_id' => $id])->first();
             } else {
                 $alliance = null;
             }
-        } else if($name != null) {
+        } elseif ($name != null) {
             $count = AllianceLookup::where(['name' => $name])->count();
-            if($count > 0) {
+            if ($count > 0) {
                 $alliance = AllianceLookup::where(['name' => $name])->first();
             } else {
                 $alliance = null;
@@ -630,51 +667,52 @@ class LookupHelper {
         return $alliance;
     }
 
-    private function StoreCharacterLookup($id = null, $name = null) {
-        //Declare the esi helper
+    private function StoreCharacterLookup($id = null, $name = null)
+    {
+        // Declare the esi helper
         $esiHelper = new Esi;
 
-        //If the id and name are null, just return
-        if($id == null && $name == null) {
+        // If the id and name are null, just return
+        if ($id == null && $name == null) {
             return;
         }
 
-        //If the id isn't null, then get the character information from the esi via the character id
-        if($id != null) {
-            //See if the character already exists in the lookup table
+        // If the id isn't null, then get the character information from the esi via the character id
+        if ($id != null) {
+            // See if the character already exists in the lookup table
             $count = CharacterLookup::where(['character_id' => $id])->count();
-            if($count == 0) {
+            if ($count == 0) {
                 try {
                     $response = $this->esi->invoke('get', '/characters/{character_id}/', [
                         'character_id' => $id,
                     ]);
-                } catch(RequestFailedException $e) {
+                } catch (RequestFailedException $e) {
                     return;
                 }
 
                 $corpId = $this->SaveCharacter($response, $id);
 
-                if($corpId != null) {
-                    //Do a recursive call for the corporation Lookup
+                if ($corpId != null) {
+                    // Do a recursive call for the corporation Lookup
                     $this->StoreCorporationLookup($corpId, null);
-                }                
+                }
             } else {
                 return;
             }
         } else {
             return;
         }
-        
-        //If the name is not null attempt to add the character to the table
-        if($name != null) {
+
+        // If the name is not null attempt to add the character to the table
+        if ($name != null) {
             $count = CharacterLookup::where(['name' => $name])->count();
-            if($count == 0) {
+            if ($count == 0) {
                 try {
-                    //Get the character id from the ESI API
-                    $responseName = $this->esi->setBody(array(
+                    // Get the character id from the ESI API
+                    $responseName = $this->esi->setBody([
                         $name,
-                    ))->invoke('post', '/universe/ids/');
-                } catch(RequestFailedException $e) {
+                    ])->invoke('post', '/universe/ids/');
+                } catch (RequestFailedException $e) {
                     return;
                 }
 
@@ -682,16 +720,16 @@ class LookupHelper {
                     $response = $this->esi->invoke('get', '/characters/{character_id}/', [
                         'character_id' => $responseName->characters[0]->id,
                     ]);
-                } catch(RequestFailedException $e) {
+                } catch (RequestFailedException $e) {
                     return;
                 }
 
                 $corpId = $this->SaveCharacter($response, $responseName->characters[0]->id);
-                if($corpId != null) {
-                    //Do a recursive call for the corporation Lookup
+                if ($corpId != null) {
+                    // Do a recursive call for the corporation Lookup
                     $this->StoreCorporationLookup($corpId, null);
                 }
-                
+
             } else {
                 return;
             }
@@ -700,34 +738,35 @@ class LookupHelper {
         }
     }
 
-    private function SaveCharacter($response, $charId) {
+    private function SaveCharacter($response, $charId)
+    {
         $esiHelper = new Esi;
 
         $char = new CharacterLookup;
 
         $char->character_id = $charId;
-        if(isset($response->alliance_id)) {
+        if (isset($response->alliance_id)) {
             $char->alliance_id = $response->alliance_id;
         }
-        if(isset($response->ancestry_id)) {
+        if (isset($response->ancestry_id)) {
             $char->ancestry_id = $response->ancestry_id;
         }
         $char->birthday = $esiHelper->DecodeDate($response->birthday);
         $char->bloodline_id = $response->bloodline_id;
         $char->corporation_id = $response->corporation_id;
-        if(isset($response->description)) {
+        if (isset($response->description)) {
             $char->description = $response->description;
         }
-        if(isset($response->faction_id)) {
+        if (isset($response->faction_id)) {
             $char->faction_id = $response->faction_id;
         }
         $char->gender = $response->gender;
         $char->name = $response->name;
         $char->race_id = $response->race_id;
-        if(isset($response->security_status)) {
+        if (isset($response->security_status)) {
             $char->security_status = $response->security_status;
         }
-        if(isset($response->title)) {
+        if (isset($response->title)) {
             $char->title = $response->title;
         }
         $char->save();
@@ -735,22 +774,23 @@ class LookupHelper {
         return $response->corporation_id;
     }
 
-    public function UpdateCharacters() {
+    public function UpdateCharacters()
+    {
         $all = CharacterLookup::all();
 
-        foreach($all as $entry) {
-            //Attempt to get the data from ESI
+        foreach ($all as $entry) {
+            // Attempt to get the data from ESI
             try {
                 $response = $this->esi->invoke('get', '/characters/{character_id}/', [
                     'character_id' => $entry->character_id,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
 
             }
 
-            //Update the data
-            if(isset($response->alliance_id)) {
-                if($response->alliance_id != $entry->alliance_id) {
+            // Update the data
+            if (isset($response->alliance_id)) {
+                if ($response->alliance_id != $entry->alliance_id) {
                     CharacterLookup::where([
                         'character_id' => $entry->character_id,
                     ])->update([
@@ -758,8 +798,8 @@ class LookupHelper {
                     ]);
                 }
             }
-            if(isset($response->description)) {
-                if($response->description != $entry->description) {
+            if (isset($response->description)) {
+                if ($response->description != $entry->description) {
                     CharacterLookup::where([
                         'character_id' => $entry->character_id,
                     ])->update([
@@ -767,8 +807,8 @@ class LookupHelper {
                     ]);
                 }
             }
-            if(isset($response->security_status)) {
-                if($response->security_status != $entry->security_status) {
+            if (isset($response->security_status)) {
+                if ($response->security_status != $entry->security_status) {
                     CharacterLookup::where([
                         'character_id' => $entry->character_id,
                     ])->update([
@@ -776,8 +816,8 @@ class LookupHelper {
                     ]);
                 }
             }
-            if(isset($response->title)) {
-                if($response->title != $entry->title) {
+            if (isset($response->title)) {
+                if ($response->title != $entry->title) {
                     CharacterLookup::where([
                         'character_id' => $entry->character_id,
                     ])->update([
@@ -785,8 +825,8 @@ class LookupHelper {
                     ]);
                 }
             }
-            if(isset($response->corporation_id)) {
-                if($response->corporation_id != $entry->corporation_id) {
+            if (isset($response->corporation_id)) {
+                if ($response->corporation_id != $entry->corporation_id) {
                     CharacterLookup::where([
                         'character_id' => $entry->character_id,
                     ])->update([
@@ -797,29 +837,30 @@ class LookupHelper {
         }
     }
 
-    private function StoreCorporationLookup($id = null, $name = null) {
-        //Declare the esi helper
+    private function StoreCorporationLookup($id = null, $name = null)
+    {
+        // Declare the esi helper
         $esiHelper = new Esi;
 
-        //If the id is null and the name is null, then return
-        if($id == null && $name == null) {
+        // If the id is null and the name is null, then return
+        if ($id == null && $name == null) {
             return;
         }
 
-        if($id != null) {
+        if ($id != null) {
             $count = CorporationLookup::where(['corporation_id' => $id])->count();
-            if($count == 0) {
+            if ($count == 0) {
                 try {
                     $response = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
                         'corporation_id' => $id,
                     ]);
-                } catch(RequestFailedException $e) {
+                } catch (RequestFailedException $e) {
                     return;
                 }
 
                 $allianceId = $this->SaveCorporation($response, $id);
 
-                if($allianceId != null) {
+                if ($allianceId != null) {
                     $this->StoreAllianceLookup($allianceId);
                 }
             } else {
@@ -829,15 +870,15 @@ class LookupHelper {
             return;
         }
 
-        if($name != null) {
+        if ($name != null) {
             $count = CorporationLookup::where(['name' => $name])->count();
-            if($count == 0) {
+            if ($count == 0) {
                 try {
-                    //Get the corporation id from the ESI API
-                    $responseName = $this->esi->setBody(array(
+                    // Get the corporation id from the ESI API
+                    $responseName = $this->esi->setBody([
                         $name,
-                    ))->invoke('post', '/universe/ids/');
-                } catch(RequestFailedException $e) {
+                    ])->invoke('post', '/universe/ids/');
+                } catch (RequestFailedException $e) {
                     return;
                 }
 
@@ -845,13 +886,13 @@ class LookupHelper {
                     $response = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
                         'corporation_id' => $responseName->corporations[0]->id,
                     ]);
-                } catch(ReqeustFailedException $e) {
+                } catch (ReqeustFailedException $e) {
                     return;
                 }
 
                 $allianceId = $this->SaveCorporation($response, $responseName->corporations[0]->id);
-                if($allianceId != null) {
-                    //Do a recursive call for the alliance lookup
+                if ($allianceId != null) {
+                    // Do a recursive call for the alliance lookup
                     $this->StoreAllianceLookup($allianceId, null);
                 }
             } else {
@@ -862,44 +903,45 @@ class LookupHelper {
         }
     }
 
-    private function SaveCorporation($response, $corpId) {
+    private function SaveCorporation($response, $corpId)
+    {
         $esiHelper = new Esi;
 
         $corp = new CorporationLookup;
         $corp->corporation_id = $corpId;
-        if(isset($response->alliance_id)) {
+        if (isset($response->alliance_id)) {
             $corp->alliance_id = $response->alliance_id;
         }
         $corp->ceo_id = $response->ceo_id;
         $corp->creator_id = $response->creator_id;
-        if(isset($response->date_founded)) {
+        if (isset($response->date_founded)) {
             $corp->date_founded = $esiHelper->DecodeDate($response->date_founded);
         }
-        if(isset($response->description)) {
+        if (isset($response->description)) {
             $corp->description = $response->description;
         }
-        if(isset($response->faction_id)) {
+        if (isset($response->faction_id)) {
             $corp->faction_id = $response->faction_id;
         }
-        if(isset($response->home_station_id)) {
+        if (isset($response->home_station_id)) {
             $corp->home_station_id = $response->home_station_id;
         }
         $corp->member_count = $response->member_count;
         $corp->name = $response->name;
-        if(isset($response->shares)) {
+        if (isset($response->shares)) {
             $corp->shares = $response->shares;
         }
         $corp->tax_rate = $response->tax_rate;
         $corp->ticker = $response->ticker;
-        if(isset($response->url)) {
+        if (isset($response->url)) {
             $corp->url = $response->url;
         }
-        if(isset($response->war_eligible)) {
+        if (isset($response->war_eligible)) {
             $corp->war_eligible = $response->war_eligible;
         }
         $corp->save();
 
-        if(isset($response->alliance_id)) {
+        if (isset($response->alliance_id)) {
             return $response->alliance_id;
         } else {
             return null;
@@ -907,20 +949,21 @@ class LookupHelper {
 
     }
 
-    public function UpdateCorporations() {
+    public function UpdateCorporations()
+    {
         $all = CorporationLookup::all();
 
-        foreach($all as $entry) {
+        foreach ($all as $entry) {
             try {
                 $response = $this->esi->invoke('get', '/corporations/{corporation_id}/', [
                     'corporation_id' => $entry->corporation_id,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
 
             }
 
-            if(isset($response->alliance_id)) {
-                if($response->alliance_id != $entry->alliance_id) {
+            if (isset($response->alliance_id)) {
+                if ($response->alliance_id != $entry->alliance_id) {
                     CorporationLookup::where([
                         'corporation_id' => $entry->corporation_id,
                     ])->update([
@@ -928,8 +971,8 @@ class LookupHelper {
                     ]);
                 }
 
-                if(isset($response->description)) {
-                    if($response->description != $entry->description) {
+                if (isset($response->description)) {
+                    if ($response->description != $entry->description) {
                         CorporationLookup::where([
                             'corporation_id' => $entry->corporation_id,
                         ])->update([
@@ -938,8 +981,8 @@ class LookupHelper {
                     }
                 }
 
-                if(isset($response->faction_id)) {
-                    if($response->faction_id != $entry->faction_id) {
+                if (isset($response->faction_id)) {
+                    if ($response->faction_id != $entry->faction_id) {
                         CorporationLookup::where([
                             'corporation_id' => $entry->corporation_id,
                         ])->update([
@@ -948,8 +991,8 @@ class LookupHelper {
                     }
                 }
 
-                if(isset($response->home_station_id)) {
-                    if($response->home_station_id != $entry->home_station_id) {
+                if (isset($response->home_station_id)) {
+                    if ($response->home_station_id != $entry->home_station_id) {
                         CorporationLookup::where([
                             'corporation_id' => $entry->corporation_id,
                         ])->update([
@@ -958,8 +1001,8 @@ class LookupHelper {
                     }
                 }
 
-                if(isset($response->member_count)) {
-                    if($response->member_count != $entry->member_count) {
+                if (isset($response->member_count)) {
+                    if ($response->member_count != $entry->member_count) {
                         CorporationLookup::where([
                             'corporation_id' => $entry->corporation_id,
                         ])->update([
@@ -968,8 +1011,8 @@ class LookupHelper {
                     }
                 }
 
-                if(isset($response->tax_rate)) {
-                    if($response->tax_rate != $entry->tax_rate) {
+                if (isset($response->tax_rate)) {
+                    if ($response->tax_rate != $entry->tax_rate) {
                         CorporationLookup::where([
                             'corporation_id' => $entry->corporation_id,
                         ])->update([
@@ -978,8 +1021,8 @@ class LookupHelper {
                     }
                 }
 
-                if(isset($response->url)) {
-                    if($response->url != $entry->url) {
+                if (isset($response->url)) {
+                    if ($response->url != $entry->url) {
                         CorporationLookup::where([
                             'corporation_id' => $entry->corporation_id,
                         ])->update([
@@ -988,8 +1031,8 @@ class LookupHelper {
                     }
                 }
 
-                if(isset($response->war_eligible)) {
-                    if($response->war_eligible != $entry->war_eligible) {
+                if (isset($response->war_eligible)) {
+                    if ($response->war_eligible != $entry->war_eligible) {
                         CorporationLookup::where([
                             'corporation_id' => $entry->corporation_id,
                         ])->update([
@@ -1001,25 +1044,26 @@ class LookupHelper {
         }
     }
 
-    private function StoreAllianceLookup($id = null, $name = null) {
-        //Declare the esi helper
+    private function StoreAllianceLookup($id = null, $name = null)
+    {
+        // Declare the esi helper
         $esiHelper = new Esi;
 
-        //Check if the passed variables are null
-        if($id == null && $name == null) {
+        // Check if the passed variables are null
+        if ($id == null && $name == null) {
             return;
         }
 
-        //If the id isn't null then attempt to populate the table
-        if($id != null) {
-            //See if the alliance already exists in the table
+        // If the id isn't null then attempt to populate the table
+        if ($id != null) {
+            // See if the alliance already exists in the table
             $count = AllianceLookup::where(['alliance_id' => $id])->count();
-            if($count == 0) {
+            if ($count == 0) {
                 try {
                     $response = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
                         'alliance_id' => $id,
                     ]);
-                } catch(RequestFailedException $e) {
+                } catch (RequestFailedException $e) {
                     return;
                 }
 
@@ -1027,15 +1071,15 @@ class LookupHelper {
             }
         }
 
-        //If the name isn't null then attempt to populate the table
-        if($name != null) {
+        // If the name isn't null then attempt to populate the table
+        if ($name != null) {
             $count = AllianceLookup::where(['name' => $name])->count();
-            if($count == 0) {
+            if ($count == 0) {
                 try {
-                    $responseName = $this->esi->setBody(array(
+                    $responseName = $this->esi->setBody([
                         $name,
-                    ))->invoke('post', '/universe/ids/');
-                } catch(RequestFailedException $e) {
+                    ])->invoke('post', '/universe/ids/');
+                } catch (RequestFailedException $e) {
                     return;
                 }
 
@@ -1043,7 +1087,7 @@ class LookupHelper {
                     $response = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
                         'alliance_id' => $responseName->alliances[0]->id,
                     ]);
-                } catch(RequestFailedException $e) {
+                } catch (RequestFailedException $e) {
                     return;
                 }
 
@@ -1052,18 +1096,19 @@ class LookupHelper {
         }
     }
 
-    private function SaveAlliance($response, $allianceId) {
+    private function SaveAlliance($response, $allianceId)
+    {
         $esiHelper = new Esi;
 
         $alliance = new AllianceLookup;
         $alliance->alliance_id = $allianceId;
         $alliance->creator_corporation_id = $response->creator_corporation_id;
         $alliance->creator_id = $response->creator_id;
-        $alliance->date_founded =  $esiHelper->DecodeDate($response->date_founded);
-        if(isset($response->executor_corporation_id)) {
+        $alliance->date_founded = $esiHelper->DecodeDate($response->date_founded);
+        if (isset($response->executor_corporation_id)) {
             $alliance->executor_corporation_id = $response->executor_corporation_id;
         }
-        if(isset($response->faction_id)) {
+        if (isset($response->faction_id)) {
             $alliance->faction_id = $response->faction_id;
         }
         $alliance->name = $response->name;
@@ -1071,20 +1116,21 @@ class LookupHelper {
         $alliance->save();
     }
 
-    public function UpdateAlliances() {
+    public function UpdateAlliances()
+    {
         $all = AllianceLookup::all();
-        
-        foreach($all as $entry) {
+
+        foreach ($all as $entry) {
             try {
                 $response = $this->esi->invoke('get', '/alliances/{alliance_id}/', [
                     'alliance_id' => $entry->alliance_id,
                 ]);
-            } catch(RequestFailedException $e) {
+            } catch (RequestFailedException $e) {
 
             }
 
-            if(isset($response->executor_corporation_id)) {
-                if($response->executor_corporation_id != $entry->executor_corporation_id) {
+            if (isset($response->executor_corporation_id)) {
+                if ($response->executor_corporation_id != $entry->executor_corporation_id) {
                     AllianceLookup::where([
                         'alliance_id' => $entry->alliance_id,
                     ])->update([
@@ -1093,8 +1139,8 @@ class LookupHelper {
                 }
             }
 
-            if(isset($response->faction_id)) {
-                if($response->faction_id != $entry->faction_id) {
+            if (isset($response->faction_id)) {
+                if ($response->faction_id != $entry->faction_id) {
                     AllianceLookup::where([
                         'alliance_id' => $entry->alliance_id,
                     ])->update([
@@ -1105,5 +1151,3 @@ class LookupHelper {
         }
     }
 }
-
-?>

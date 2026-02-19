@@ -6,22 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class SrpPayout extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'srp_payouts';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = false;
 
-    //Fillable
+    // Fillable
     protected $fillable = [
         'code',
         'payout',
     ];
 
-    public function shipType() {
+    public function shipType()
+    {
         return $this->belongsTo(SrpShipType::class, 'code', 'code');
     }
 }

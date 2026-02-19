@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands\MiningTaxes;
 
-use Illuminate\Console\Command;
-
 use App\Jobs\Commands\MiningTaxes\MiningTaxesWeeklyInvoicing as SendInvoice;
+use Illuminate\Console\Command;
 
 class ExecuteSendMiningTaxesInvoiceCommand extends Command
 {

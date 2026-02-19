@@ -2,43 +2,34 @@
 
 namespace App\Http\Controllers\MiningTaxes;
 
-//Internal Library
+// Internal Library
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use DB;
-use Log;
-use Carbon\Carbon;
-use Khill\Lavacharts\Lavacharts;
-use Auth;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-
-//Library Helpers
+use App\Library\Esi\Esi;
 use App\Library\Helpers\LookupHelper;
 use App\Library\Helpers\StructureHelper;
-use Seat\Eseye\Exceptions\RequestFailedException;
-use App\Library\Esi\Esi;
 use App\Library\Moons\MoonCalc;
-
-//Models
-use App\Models\Moon\ItemComposition;
-use App\Models\Moon\MineralPrice;
+use App\Models\MiningTax\Invoice;
+// Library Helpers
 use App\Models\MiningTax\Ledger;
 use App\Models\MiningTax\Observer;
-use App\Models\MiningTax\Invoice;
-use App\Models\Esi\EsiToken;
-use App\Models\Esi\EsiScope;
-use App\Models\User\User;
 use App\Models\MoonRental\AllianceMoon;
 use App\Models\MoonRental\AllianceMoonOre;
 use App\Models\MoonRental\AllianceMoonRental;
+// Models
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Khill\Lavacharts\Lavacharts;
+use Log;
+use Seat\Eseye\Exceptions\RequestFailedException;
 
 class MiningTaxesController extends Controller
 {
     /**
      * Construct to deal with middleware and other items
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('role:User');
     }
@@ -46,8 +37,9 @@ class MiningTaxesController extends Controller
     /**
      * Display the moons either the person is renting, or their corp are renting
      */
-    public function DisplayRentedMoons() {
-        $moons = array();
+    public function DisplayRentedMoons()
+    {
+        $moons = [];
 
         $lookup = new LookupHelper;
 
@@ -55,16 +47,15 @@ class MiningTaxesController extends Controller
         $charInfo = $lookup->GetCharacterInfo(auth()->user()->getId());
         $corpId = $charInfo->corporation_id;
 
-
         $tempMoons = AllianceMoonRental::where([
             'entity_id' => $userId,
         ])->orWhere([
             'entity_id' => $corpId,
         ])->get();
 
-        //Foreach of the moons we got let's build the moon info and the ore data
-        foreach($tempMoons as $tempMoon) {
-            //Get the ores for the moon
+        // Foreach of the moons we got let's build the moon info and the ore data
+        foreach ($tempMoons as $tempMoon) {
+            // Get the ores for the moon
             $ores = AllianceMoonOre::where([
                 'moon_id' => $tempMoon->moon_id,
             ])->get()->toArray();
@@ -80,13 +71,14 @@ class MiningTaxesController extends Controller
         }
 
         return view('miningtax.user.display.rentedmoons')->with('moons', $moons)
-                                                         ->with('ores', $ores);
+            ->with('ores', $ores);
     }
 
     /**
      * Display the page with the moon rental form
      */
-    public function DisplayMoonRentalForm(Request $request) {
+    public function DisplayMoonRentalForm(Request $request)
+    {
         $this->validate($request, [
             'moon_id' => 'required',
             'moon_name' => 'required',
@@ -103,13 +95,14 @@ class MiningTaxesController extends Controller
         ])->get();
 
         return view('miningtax.user.display.moonrentals.form')->with('moon', $moon)
-                                                              ->with('ores', $ores);
+            ->with('ores', $ores);
     }
 
     /**
      * Store the information from the moon rental form
      */
-    public function storeMoonRentalForm(Request $request) {
+    public function storeMoonRentalForm(Request $request)
+    {
         $this->validate($request, [
             'moon_id' => 'required',
             'rental_start' => 'required',
@@ -117,40 +110,40 @@ class MiningTaxesController extends Controller
             'entity_name' => 'required',
             'entity_type' => 'required',
         ]);
-        
+
         $lookup = new LookupHelper;
         $entityId = null;
 
-        //From the name and type of the entity get the entity id.
-        if($request->entity_type == 'Character') {
+        // From the name and type of the entity get the entity id.
+        if ($request->entity_type == 'Character') {
             $entityId = $lookup->CharacterNameToId($request->entity_name);
-        } else if($request->entity_type == 'Corporation') {
+        } elseif ($request->entity_type == 'Corporation') {
             $entityId = $lookup->CorporationNameToId($request->entity_name);
-        } else if($request->entity_type == 'Alliance') {
+        } elseif ($request->entity_type == 'Alliance') {
             $entityId = $lookup->AllianceNameToId($request->entity_name);
         } else {
             return redirect('/dashboard')->with('error', 'Moon Rental error.  Please contact the site admin.');
         }
 
-        //Create the next billing date from a Carbon date 3 months from the rental start
+        // Create the next billing date from a Carbon date 3 months from the rental start
         $nextBillingDate = Carbon::create($request->rental_start)->addMonths(3);
 
-        //Create the uniqid for the billing cycle.
-        $invoiceId = "MR" . uniqid();
+        // Create the uniqid for the billing cycle.
+        $invoiceId = 'MR'.uniqid();
 
-        //Get the moon's information from the database so we know how much to make the bill for
+        // Get the moon's information from the database so we know how much to make the bill for
         $moon = AllianceMoon::where([
             'moon_id' => $request->moon_id,
         ])->first();
 
-        //Update the data on the Alliance Moon
+        // Update the data on the Alliance Moon
         AllianceMoon::where([
             'moon_id' => $request->moon_id,
         ])->update([
             'rented' => 'Yes',
         ]);
 
-        //Insert a new moon rental into the database
+        // Insert a new moon rental into the database
         AllianceMoonRental::insert([
             'moon_id' => $moon->moon_id,
             'moon_name' => $moon->name,
@@ -163,15 +156,16 @@ class MiningTaxesController extends Controller
             'entity_type' => $request->entity_type,
         ]);
 
-        return redirect('/dashboard')->with('success', 'Before placing a structure please send the ISK to the holding corp with the description of ' . $invoiceId);
+        return redirect('/dashboard')->with('success', 'Before placing a structure please send the ISK to the holding corp with the description of '.$invoiceId);
     }
 
-    public function displayAvailableMoons() {
-        //Declare variables
+    public function displayAvailableMoons()
+    {
+        // Declare variables
         $moons = new Collection;
         $mHelper = new MoonCalc;
         $lookup = new LookupHelper;
-        $system = array();
+        $system = [];
 
         /**
          * Declare our different flavors of moon goo for the blade
@@ -202,7 +196,7 @@ class MiningTaxesController extends Controller
             'Zircon',
             'Pollucite',
             'Cinnabar',
-        ];  
+        ];
 
         $r64Goo = [
             'Xenotime',
@@ -211,23 +205,23 @@ class MiningTaxesController extends Controller
             'Ytterbite',
         ];
 
-        //Get all of the system names from the database by plucking all the non-rented moon system names
+        // Get all of the system names from the database by plucking all the non-rented moon system names
         $systems = AllianceMoon::where([
             'rented' => 'No',
         ])->pluck('system_name')->unique()->toArray();
 
-        //Get all of the moons which are not rented
+        // Get all of the moons which are not rented
         $allyMoons = AllianceMoon::where([
             'rented' => 'No',
         ])->get();
 
-        //Cycle through all of the moons to create arrays of data
-        foreach($allyMoons as $moon) {
+        // Cycle through all of the moons to create arrays of data
+        foreach ($allyMoons as $moon) {
             $ores = AllianceMoonOre::where([
                 'moon_id' => $moon->moon_id,
             ])->get(['ore_name', 'quantity'])->toArray();
-          
-            if($moon->moon_type != 'R32' && $moon->moon_type != 'R64') {
+
+            if ($moon->moon_type != 'R32' && $moon->moon_type != 'R64') {
                 $moons->push([
                     'system' => $moon->system_name,
                     'moon_name' => $moon->name,
@@ -240,23 +234,24 @@ class MiningTaxesController extends Controller
         }
 
         return view('miningtax.user.display.moons.availablemoons')->with('moons', $moons)
-                                                                  ->with('systems', $systems)
-                                                                  ->with('r4Goo', $r4Goo)
-                                                                  ->with('r8Goo', $r8Goo)
-                                                                  ->with('r16Goo', $r16Goo)
-                                                                  ->with('r32Goo', $r32Goo)
-                                                                  ->with('r64Goo', $r64Goo);
+            ->with('systems', $systems)
+            ->with('r4Goo', $r4Goo)
+            ->with('r8Goo', $r8Goo)
+            ->with('r16Goo', $r16Goo)
+            ->with('r32Goo', $r32Goo)
+            ->with('r64Goo', $r64Goo);
     }
 
     /**
      * Display all the moons in Warped Intentions Sovreignty
      */
-    public function displayAllMoons() {
-        //Declare variables
+    public function displayAllMoons()
+    {
+        // Declare variables
         $moons = new Collection;
         $mHelper = new MoonCalc;
         $lookup = new LookupHelper;
-        $system = array();
+        $system = [];
 
         /**
          * Declare our different flavors of moon goo for the blade
@@ -287,7 +282,7 @@ class MiningTaxesController extends Controller
             'Zircon',
             'Pollucite',
             'Cinnabar',
-        ];  
+        ];
 
         $r64Goo = [
             'Xenotime',
@@ -313,10 +308,10 @@ class MiningTaxesController extends Controller
             'Y-CWQY',
         ];
 
-        //Get all of the moons which are not rented
+        // Get all of the moons which are not rented
         $allyMoons = AllianceMoon::all();
 
-        foreach($allyMoons as $moon) {
+        foreach ($allyMoons as $moon) {
             $ores = AllianceMoonOre::where([
                 'moon_id' => $moon->moon_id,
             ])->get(['ore_name', 'quantity'])->toArray();
@@ -329,22 +324,23 @@ class MiningTaxesController extends Controller
         }
 
         return view('miningtax.user.display.moons.allmoons')->with('moons', $moons)
-                                                            ->with('systems', $systems)
-                                                            ->with('r4Goo', $r4Goo)
-                                                            ->with('r8Goo', $r8Goo)
-                                                            ->with('r16Goo', $r16Goo)
-                                                            ->with('r32Goo', $r32Goo)
-                                                            ->with('r64Goo', $r64Goo);
+            ->with('systems', $systems)
+            ->with('r4Goo', $r4Goo)
+            ->with('r8Goo', $r8Goo)
+            ->with('r16Goo', $r16Goo)
+            ->with('r32Goo', $r32Goo)
+            ->with('r64Goo', $r64Goo);
     }
 
     /**
      * Display an invoice based on it's id
-     * 
-     * @var $invoiceId
+     *
+     * @var
      */
-    public function displayInvoice($invoiceId) {
-        $ores = array();
-        $moons = array();
+    public function displayInvoice($invoiceId)
+    {
+        $ores = [];
+        $moons = [];
         $totalPrice = 0.00;
         $config = config('esi');
         $structure = new StructureHelper($config['primary'], $config['corporation']);
@@ -353,19 +349,19 @@ class MiningTaxesController extends Controller
             'rented' => 'No',
         ])->pluck('system_name')->unique()->toArray();
 
-        //Get the invoice from the database
+        // Get the invoice from the database
         $invoice = Invoice::where([
             'invoice_id' => $invoiceId,
         ])->first();
 
-        //Get the line items for the ledger for the invoice
+        // Get the line items for the ledger for the invoice
         $items = Ledger::where([
             'invoice_id' => $invoiceId,
         ])->get();
 
-        //Build the total ores table for the display page
-        foreach($items as $item) {
-            if(!isset($ores[$item['ore_name']])) {
+        // Build the total ores table for the display page
+        foreach ($items as $item) {
+            if (! isset($ores[$item['ore_name']])) {
                 $ores[$item['ore_name']] = 0;
             }
             $ores[$item['ore_name']] = $ores[$item['ore_name']] + $item['quantity'];
@@ -373,12 +369,12 @@ class MiningTaxesController extends Controller
             $totalPrice += $item['amount'];
         }
 
-        //Print out the lines of the ledger line by line for another table
-        foreach($items as $item) {
-            //Get the structure info from the database or esi
+        // Print out the lines of the ledger line by line for another table
+        foreach ($items as $item) {
+            // Get the structure info from the database or esi
             $tempObserverInfo = $structure->GetStructureInfo($item['observer_id']);
 
-            //Create the array for the line by line
+            // Create the array for the line by line
             array_push($moons, [
                 'character_name' => $item['character_name'],
                 'observer_name' => $tempObserverInfo->structure_name,
@@ -387,100 +383,103 @@ class MiningTaxesController extends Controller
                 'quantity' => $item['quantity'],
                 'amount' => $item['amount'],
                 'tax_amount' => $item['amount'] * $config['public_mining_tax'],
-            ]);            
+            ]);
         }
 
         return view('miningtax.user.display.details.invoice')->with('ores', $ores)
-                                                             ->with('moons', $moons)
-                                                             ->with('invoice', $invoice)
-                                                             ->with('totalPrice', $totalPrice);
+            ->with('moons', $moons)
+            ->with('invoice', $invoice)
+            ->with('totalPrice', $totalPrice);
     }
 
     /**
      * Display the users invoices
      */
-    public function DisplayInvoices() {
-        //Declare variables
+    public function DisplayInvoices()
+    {
+        // Declare variables
         $paidAmount = 0.00;
         $unpaidAmount = 0.00;
 
-        //Get the unpaid invoices
+        // Get the unpaid invoices
         $unpaid = Invoice::where([
             'status' => 'Pending',
             'character_id' => auth()->user()->getId(),
         ])->paginate(15);
 
-        //Get the late invoices
+        // Get the late invoices
         $late = Invoice::where([
             'status' => 'Late',
             'character_id' => auth()->user()->getId(),
         ])->paginate(10);
-        
-        //Get the deferred invoices
+
+        // Get the deferred invoices
         $deferred = Invoice::where([
             'status' => 'Deferred',
             'character_id' => auth()->user()->getId(),
         ])->paginate(10);
 
-        //Get the paid invoices
+        // Get the paid invoices
         $paid = Invoice::where([
             'status' => 'Paid',
             'character_id' => auth()->user()->getId(),
         ])->paginate(15);
 
-        //Total up the unpaid invoices
-        foreach($unpaid as $un) {
+        // Total up the unpaid invoices
+        foreach ($unpaid as $un) {
             $unpaidAmount += $un->invoice_amount;
         }
 
-        //Total up the paid invoices
-        foreach($paid as $p) {
+        // Total up the paid invoices
+        foreach ($paid as $p) {
             $paidAmount += $p->invoice_amount;
         }
 
         return view('miningtax.user.display.invoices.invoices')->with('unpaid', $unpaid)
-                                                                ->with('late', $late)
-                                                                ->with('deferred', $deferred)
-                                                                ->with('paid', $paid)
-                                                                ->with('unpaidAmount', $unpaidAmount)
-                                                                ->with('paidAmount', $paidAmount);
+            ->with('late', $late)
+            ->with('deferred', $deferred)
+            ->with('paid', $paid)
+            ->with('unpaidAmount', $unpaidAmount)
+            ->with('paidAmount', $paidAmount);
     }
 
     /**
      * Display all of the upcoming extractions
      */
-    public function DisplayUpcomingExtractions() {
-        
-        //Declare variables
-        $structures = array();
+    public function DisplayUpcomingExtractions()
+    {
+
+        // Declare variables
+        $structures = [];
         $esiHelper = new Esi;
         $config = config('esi');
         $sHelper = new StructureHelper($config['primary'], $config['corporation']);
-        $structures = array();
-        $structuresCalendar = array();
+        $structures = [];
+        $structuresCalendar = [];
         $lava = new Lavacharts;
 
-        if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
+        if (! $esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
             return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the correct scopes for the services site.');
         }
 
         $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
 
-        //Get the esi data for extractions
+        // Get the esi data for extractions
         try {
             $extractions = $esi->invoke('get', '/corporation/{corporation_id}/mining/extractions/', [
                 'corporation_id' => $config['corporation'],
             ]);
-        } catch(RequestFailedException $e) {
+        } catch (RequestFailedException $e) {
             Log::warning('Could not retrieve extractions from ESI in MiningTaxesController.php');
-            return redirect('/dashboard')->with('error', "Could not pull extractions from ESI data.");
+
+            return redirect('/dashboard')->with('error', 'Could not pull extractions from ESI data.');
         }
 
-        //Basically get the structure info and attach it to the variable set
-        foreach($extractions as $ex) {
+        // Basically get the structure info and attach it to the variable set
+        foreach ($extractions as $ex) {
             $sName = $sHelper->GetStructureInfo($ex->structure_id);
-            //Add the information into the structures array to go to the page to be displayed
+            // Add the information into the structures array to go to the page to be displayed
             array_push($structures, [
                 'structure_name' => $sName->structure_name,
                 'start_time' => $esiHelper->DecodeDate($ex->extraction_start_time),
@@ -489,47 +488,47 @@ class MiningTaxesController extends Controller
             ]);
         }
 
-        //Sort extractions by arrival time
+        // Sort extractions by arrival time
         $structuresCollection = collect($structures);
         $sorted = $structuresCollection->sortBy('arrival_time');
-        //Store the sorted collection back into the variable before being used again.
+        // Store the sorted collection back into the variable before being used again.
         $structures = $sorted->all();
 
         /**
          * Create a 3 month calendar for the past, current, and future extractions
          */
-        //Create the data tables
+        // Create the data tables
         $calendar = $lava->DataTable();
-        
-        $calendar->addDateTimeColumn('Date')
-                 ->addNumberColumn('Total');
 
-        foreach($extractions as $extraction) {
+        $calendar->addDateTimeColumn('Date')
+            ->addNumberColumn('Total');
+
+        foreach ($extractions as $extraction) {
             array_push($structuresCalendar, [
                 'date' => $esiHelper->DecodeDate($extraction->chunk_arrival_time),
                 'total' => 0,
             ]);
         }
 
-        foreach($extractions as $extraction) {
-            for($i = 0; $i < sizeof($structuresCalendar); $i++) {
-                //Create the dates in a carbon object, then only get the Y-m-d to compare.
+        foreach ($extractions as $extraction) {
+            for ($i = 0; $i < count($structuresCalendar); $i++) {
+                // Create the dates in a carbon object, then only get the Y-m-d to compare.
                 $tempStructureDate = Carbon::createFromFormat('Y-m-d H:i:s', $structuresCalendar[$i]['date'])->toDateString();
                 $extractionDate = Carbon::createFromFormat('Y-m-d H:i:s', $esiHelper->DecodeDate($extraction->chunk_arrival_time))->toDateString();
-                //check if the dates are equal then increase the total by 1
-                if($tempStructureDate == $extractionDate) {
+                // check if the dates are equal then increase the total by 1
+                if ($tempStructureDate == $extractionDate) {
                     $structuresCalendar[$i]['total'] += 1;
                 }
             }
         }
 
-        foreach($structuresCalendar as $structureC) {
+        foreach ($structuresCalendar as $structureC) {
             $calendar->addRow([
                 $structureC['date'],
                 $structureC['total'],
             ]);
-        }  
-                
+        }
+
         $lava->CalendarChart('Extractions', $calendar, [
             'title' => 'Upcoming Extractions',
             'unusedMonthOutlineColor' => [
@@ -552,57 +551,58 @@ class MiningTaxesController extends Controller
             ],
         ]);
 
-        //Return the view with the extractions variable for html processing
+        // Return the view with the extractions variable for html processing
         return view('miningtax.user.display.pulls.upcoming')->with('structures', $structures)
-                                                      ->with('lava', $lava)
-                                                      ->with('calendar', $calendar);
+            ->with('lava', $lava)
+            ->with('calendar', $calendar);
     }
 
     /**
      * Display the ledger for the moons.
      */
-    public function DisplayMoonLedgers() {
-        //Declare variables
-        $structures = array();
-        $tempLedgers = array();
-        $miningLedgers = array();
-        $ledgers = array();
+    public function DisplayMoonLedgers()
+    {
+        // Declare variables
+        $structures = [];
+        $tempLedgers = [];
+        $miningLedgers = [];
+        $ledgers = [];
         $esiHelper = new Esi;
         $lookup = new LookupHelper;
         $config = config('esi');
 
-        //Check for the esi scope
-        if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
+        // Check for the esi scope
+        if (! $esiHelper->HaveEsiScope($config['primary'], 'esi-industry.read_corporation_mining.v1')) {
             return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the ESI for the holding corp for corp mining.');
         } else {
-            if(!$esiHelper->HaveEsiScope($config['primary'], 'esi-universe.read_structures.v1')) {
+            if (! $esiHelper->HaveEsiScope($config['primary'], 'esi-universe.read_structures.v1')) {
                 return redirect('/dashboard')->with('error', 'Tell the nub Minerva to register the ESI for the holding corp for structures.');
             }
         }
 
-        //Get the refresh token if scope checks have passed
+        // Get the refresh token if scope checks have passed
         $refreshToken = $esiHelper->GetRefreshToken($config['primary']);
-        
-        //Setup the esi container
+
+        // Setup the esi container
         $esi = $esiHelper->SetupEsiAuthentication($refreshToken);
-        //Declare the structure helper after the esi container has been created
+        // Declare the structure helper after the esi container has been created
         $sHelper = new StructureHelper($config['primary'], $config['corporation'], $esi);
 
-        //Get the character data from the lookup table if possible or esi
+        // Get the character data from the lookup table if possible or esi
         $character = $lookup->GetCharacterInfo($config['primary']);
-        
-        //Get the corporation information from the character id
+
+        // Get the corporation information from the character id
         $corpInfo = $lookup->GetCorporationInfo($character->corporation_id);
-        
-        //Get the observers from the database
+
+        // Get the observers from the database
         $observers = Observer::all();
 
-        //Get the ledgers for each structure one at a time
-        foreach($observers as $obs) {
-            //Get the structure information
+        // Get the ledgers for each structure one at a time
+        foreach ($observers as $obs) {
+            // Get the structure information
             $structureInfo = $sHelper->GetStructureInfo($obs->observer_id);
 
-            //Add the name to the structures array
+            // Add the name to the structures array
             array_push($structures, $structureInfo->name);
             /**
              * Get the ledger from each observer.
@@ -613,9 +613,9 @@ class MiningTaxesController extends Controller
                 'character_id' => auth()->user()->getId(),
             ])->where('last_updated', '>=', Carbon::now()->subDays(30))->get();
 
-            if($ledgers->count() > 0) {
-                foreach($ledgers as $ledger) {
-                    //Foreach ledger add it to the array
+            if ($ledgers->count() > 0) {
+                foreach ($ledgers as $ledger) {
+                    // Foreach ledger add it to the array
                     array_push($miningLedgers, [
                         'structure' => $structureInfo->name,
                         'character' => auth()->user()->getName(),
@@ -628,8 +628,8 @@ class MiningTaxesController extends Controller
             }
         }
 
-        //Return the view
+        // Return the view
         return view('miningtax.user.display.details.ledger')->with('miningLedgers', $miningLedgers)
-                                                    ->with('structures', $structures);
+            ->with('structures', $structures);
     }
 }

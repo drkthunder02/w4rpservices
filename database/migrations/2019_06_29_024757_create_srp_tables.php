@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateSrpTables extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSrpTables extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('srp_ships')) {
+        if (! Schema::hasTable('srp_ships')) {
             Schema::create('srp_ships', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('character_id')->default('N/A');
@@ -33,7 +33,7 @@ class CreateSrpTables extends Migration
             });
         }
 
-        if(!Schema::hasTable('srp_fleet_types')) {
+        if (! Schema::hasTable('srp_fleet_types')) {
             Schema::create('srp_fleet_types', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('code');
@@ -41,7 +41,7 @@ class CreateSrpTables extends Migration
             });
         }
 
-        if(!Schema::hasTable('srp_ship_types')) {
+        if (! Schema::hasTable('srp_ship_types')) {
             Schema::create('srp_ship_types', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('code');
@@ -49,7 +49,7 @@ class CreateSrpTables extends Migration
             });
         }
 
-        if(!Schema::hasTable('srp_payouts')) {
+        if (! Schema::hasTable('srp_payouts')) {
             Schema::create('srp_payouts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('code');
@@ -190,4 +190,4 @@ class CreateSrpTables extends Migration
         Schema::dropIfExists('srp_fleet_types');
         Schema::dropIfExists('srp_payouts');
     }
-}
+};

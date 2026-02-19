@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class SRPShip extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'srp_ships';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
-    //Fillable Items
+    // Fillable Items
     protected $fillable = [
         'character_id',
         'character_name',

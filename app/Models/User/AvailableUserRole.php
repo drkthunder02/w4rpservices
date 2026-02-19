@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class AvailableUserRole extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'available_user_roles';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = false;
 
     /**

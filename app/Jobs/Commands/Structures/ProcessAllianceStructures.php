@@ -2,20 +2,18 @@
 
 namespace App\Jobs\Commands\Structures;
 
-//Internal Library
+// Internal Library
+use App\Library\Esi\Esi;
+use App\Library\Helpers\LookupHelper;
+use App\Models\Structure\Service;
+use App\Models\Structure\Structure;
 use Illuminate\Bus\Queueable;
+// Application Library
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+// Models
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-
-//Application Library
-use App\Library\Helpers\LookupHelper;
-use App\Library\Esi\Esi;
-
-//Models
-use App\Models\Structure\Structure;
-use App\Models\Structure\Service;
 
 class ProcessAllianceStructures implements ShouldQueue
 {
@@ -23,14 +21,14 @@ class ProcessAllianceStructures implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
@@ -44,11 +42,11 @@ class ProcessAllianceStructures implements ShouldQueue
      */
     public function __construct($s)
     {
-        //Set the connection for the job
+        // Set the connection for the job
         $this->connection = 'redis';
         $this->onQueue('structures');
 
-        //Set variables
+        // Set variables
         $this->structure = $s;
     }
 
@@ -62,7 +60,7 @@ class ProcessAllianceStructures implements ShouldQueue
         /**
          * Update the structure if it already exists, or add the structure if it doesn't exist in the database
          */
-        if(Structure::where(['structure_id' => $this->structure->structure_id])->count() > 0) {
+        if (Structure::where(['structure_id' => $this->structure->structure_id])->count() > 0) {
             $this->UpdateStructure($this->structure);
         } else {
             $this->SaveNewStructure($this->structure);
@@ -71,19 +69,21 @@ class ProcessAllianceStructures implements ShouldQueue
 
     /**
      * Set the tags for the job
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['ProcessAllianceStructures', 'AllianceStructures', 'Structures'];
     }
 
-    private function SaveNewStructure($structure) {
-        //Declare variables
+    private function SaveNewStructure($structure)
+    {
+        // Declare variables
         $lookup = new LookupHelper;
         $esiHelper = new Esi;
 
-        //Get the solar system name
+        // Get the solar system name
         $solarName = $lookup->SystemIdToName($structure->system_id);
 
         $s = new Structure;
@@ -94,9 +94,9 @@ class ProcessAllianceStructures implements ShouldQueue
         $s->type_id = $structure->type_id;
         $s->type_name = $lookup->StructureTypeIdToName($structure->type_id);
         $s->corporation_id = $structure->corporation_id;
-        if(isset($structure->services)) {
+        if (isset($structure->services)) {
             $s->services = true;
-            foreach($structure->services as $service) {
+            foreach ($structure->services as $service) {
                 $serv = new Service;
                 $serv->structure_id = $structure->structure_id;
                 $serv->name = $service->name;
@@ -106,96 +106,97 @@ class ProcessAllianceStructures implements ShouldQueue
             $s->services = false;
         }
         $s->state = $structure->state;
-        if(isset($structre->state_timer_start)) {
+        if (isset($structre->state_timer_start)) {
             $s->state_timer_start = $esiHelper->DecodeDate($structure->state_timer_start);
         }
-        if(isset($structure->state_timer_end)) {
+        if (isset($structure->state_timer_end)) {
             $s->state_timer_end = $esiHelper->DecodeDate($structure->state_timer_end);
         }
-        if(isset($structure->fuel_expires)) {
+        if (isset($structure->fuel_expires)) {
             $s->fuel_expires = $esiHelper->DecodeDate($structure->fuel_expires);
         }
         $s->profile_id = $structure->profile_id;
-        if(isset($structure->next_reinforce_apply)) {
+        if (isset($structure->next_reinforce_apply)) {
             $s->next_reinforce_apply = $structure->next_reinforce_apply;
         }
-        if(isset($structure->next_reinforce_hour)) {
+        if (isset($structure->next_reinforce_hour)) {
             $s->next_reinforce_hour = $structure->next_reinforce_hour;
         }
         $s->reinforce_hour = $structure->reinforce_hour;
-        if(isset($structure->unanchors_at)) {
+        if (isset($structure->unanchors_at)) {
             $s->unanchors_at = $esiHelper->DecodeDate($s->unanchors_at);
         }
         $s->save();
     }
 
-    private function UpdateStructure($structure) {
+    private function UpdateStructure($structure)
+    {
         $esiHelper = new Esi;
 
-        if(isset($structure->corporation_id)) {
+        if (isset($structure->corporation_id)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
                 'corporation_id' => $structure->corporation_id,
             ]);
         }
-        if(isset($structure->state)) {
+        if (isset($structure->state)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
                 'state' => $structure->state,
             ]);
         }
-        if(isset($structure->state_timer_start)) {
+        if (isset($structure->state_timer_start)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
                 'state_timer_start' => $esiHelper->DecodeDate($structure->state_timer_start),
             ]);
         }
-        if(isset($structure->state_timer_end)) {
+        if (isset($structure->state_timer_end)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
                 'state_timer_end' => $esiHelper->DecodeDate($structure->state_timer_end),
             ]);
         }
-        if(isset($structure->fuel_expires)) {
+        if (isset($structure->fuel_expires)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
                 'fuel_expires' => $esiHelper->DecodeDate($structure->fuel_expires),
             ]);
         }
-        if(isset($structure->profile_id)) {
+        if (isset($structure->profile_id)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
                 'profile_id' => $structure->profile_id,
             ]);
         }
-        if(isset($structure->next_reinforce_apply)) {
+        if (isset($structure->next_reinforce_apply)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
                 'next_reinforce_apply' => $structure->next_reinforce_apply,
             ]);
         }
-        if(isset($structure->next_reinforce_hour)) {
+        if (isset($structure->next_reinforce_hour)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
                 'next_reinforce_hour' => $structure->next_reinforce_hour,
             ]);
         }
-        if(isset($structure->reinforce_hour)) {
+        if (isset($structure->reinforce_hour)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
                 'reinforce_hour' => $structure->reinforce_hour,
             ]);
         }
-        if(isset($structure->unanchors_at)) {
+        if (isset($structure->unanchors_at)) {
             Structure::where([
                 'structure_id' => $structure->structure_id,
             ])->update([
@@ -203,8 +204,8 @@ class ProcessAllianceStructures implements ShouldQueue
             ]);
         }
 
-        if(Service::where(['structure_id' => $structure->structure_id])->count() > 0) {
-            foreach($structure->services as $service) {
+        if (Service::where(['structure_id' => $structure->structure_id])->count() > 0) {
+            foreach ($structure->services as $service) {
                 Service::where([
                     'structure_id' => $structure->structure_id,
                 ])->update([

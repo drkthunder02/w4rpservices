@@ -9,7 +9,7 @@ class EsiScope extends Model
     // Table Name
     protected $table = 'EsiScopes';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     // Timestamps
@@ -17,15 +17,16 @@ class EsiScope extends Model
 
     /**
      *  The attributes that are mass assignable
-     * 
-     *  @var array
+     *
+     * @var array
      */
     protected $fillable = [
         'character_id',
         'scope',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(App\Models\User\User::class, 'character_id', 'character_id');
     }
 }

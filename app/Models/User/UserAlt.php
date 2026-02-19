@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserAlt extends Model
 {
-    //Table Name
+    // Table Name
     public $table = 'user_alts';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = false;
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -31,11 +31,13 @@ class UserAlt extends Model
         'owner_hash',
     ];
 
-    public function mainCharacter() {
-        return $this->belongsTo('App\Models\User\User', 'character_id', 'main_id');
+    public function mainCharacter()
+    {
+        return $this->belongsTo(\App\Models\User\User::class, 'character_id', 'main_id');
     }
 
-    public function getMain() {
+    public function getMain()
+    {
         return User::where(['character_id' => $this->main_id])->get();
     }
 }

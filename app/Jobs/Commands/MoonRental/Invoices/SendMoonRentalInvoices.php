@@ -2,23 +2,17 @@
 
 namespace App\Jobs\Commands\MoonRental\Invoices;
 
-//Application Library
+// Application Library
+use App\Library\Helpers\LookupHelper;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+// Internal Library
 use Illuminate\Queue\SerializesModels;
-use Log;
-use Carbon\Carbon;
 
-//Internal Library
-use App\Library\Helpers\LookupHelper;
-
-//Models
-use App\Models\MoonRental\AllianceMoon;
-use App\Models\MoonRental\AllianceMoonOre;
-use App\Models\MoonRental\AllianceMoonRental;
+// Models
 
 class SendMoonRentalInvoices implements ShouldQueue
 {
@@ -42,7 +36,7 @@ class SendMoonRentalInvoices implements ShouldQueue
      */
     public function handle()
     {
-        //Declare variables
+        // Declare variables
         $lookup = new LookupHelper;
         $months = 3;
         $today = Carbon::now();

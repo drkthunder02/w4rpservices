@@ -4,13 +4,15 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class EveOnlineOAuthServiceProvider extends ServiceProvider {
+class EveOnlineOAuthServiceProvider extends ServiceProvider
+{
     /**
      * Bootstrap any application services
-     * 
+     *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
         $socialite = $this->app->make('Laravel\Socialite\Contracts\Factory');
         $socialite->extend(
             'eveonline',
@@ -24,12 +26,11 @@ class EveOnlineOAuthServiceProvider extends ServiceProvider {
 
     /**
      * Register any application services
-     * 
+     *
      * @return void
      */
-    public function register() {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/services.php', 'services');
+    public function register()
+    {
+        $this->mergeConfigFrom(__DIR__.'/../../config/services.php', 'services');
     }
 }
-
-?>

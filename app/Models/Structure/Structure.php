@@ -11,18 +11,18 @@ class Structure extends Model
      * esi-universe.read_structures.v1
      */
 
-    //Table Name
+    // Table Name
     public $table = 'alliance_structures';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -33,7 +33,7 @@ class Structure extends Model
         'type_id',
         'type_name',
         'corporation_id',
-        'services',             //True or false on whether it has services which are held in a different table
+        'services',             // True or false on whether it has services which are held in a different table
         'state',
         'state_timer_start',
         'state_timer_end',
@@ -47,11 +47,13 @@ class Structure extends Model
         'updated_at',
     ];
 
-    public function services() {
+    public function services()
+    {
         return $this->hasMany(App\Models\Structure\Service::class, 'structure_id', 'structure_id');
     }
 
-    public function assets() {
+    public function assets()
+    {
         return $this->hasMany(App\Models\Structure\Asset::class, 'location_id', 'structure_id');
     }
 }

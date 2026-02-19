@@ -9,7 +9,7 @@ class ItemComposition extends Model
     // Table Name
     protected $table = 'ItemComposition';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     // Timestamps

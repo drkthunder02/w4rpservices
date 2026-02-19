@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class AfterActionReportComment extends Model
 {
-    //Table Name
+    // Table Name
     public $table = 'fc_aar_comments';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -27,7 +27,8 @@ class AfterActionReportComment extends Model
         'comments',
     ];
 
-    public function report() {
+    public function report()
+    {
         $this->belongsTo(App\Models\AfterActionReports\AfterActionReport::class, 'id', 'report_id');
     }
 }

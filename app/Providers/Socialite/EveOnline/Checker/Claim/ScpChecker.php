@@ -7,7 +7,7 @@ use Jose\Component\Checker\InvalidClaimException;
 
 /**
  * Class ScpChecker.
-*/
+ */
 class ScpChecker implements ClaimChecker
 {
     private const NAME = 'scp';
@@ -19,8 +19,6 @@ class ScpChecker implements ClaimChecker
 
     /**
      * ScpChecker constructor.
-     *
-     * @param array $scopes
      */
     public function __construct(array $scopes)
     {
@@ -32,14 +30,17 @@ class ScpChecker implements ClaimChecker
      */
     public function checkClaim($value): void
     {
-        if (! is_array($value) && ! is_string($value))
+        if (! is_array($value) && ! is_string($value)) {
             throw new InvalidClaimException('"scp" must be an array of scopes.', self::NAME, $value);
+        }
 
-        if (! is_array($value))
+        if (! is_array($value)) {
             $value = [$value];
+        }
 
-        if (! empty(array_diff($this->scopes, $value)))
+        if (! empty(array_diff($this->scopes, $value))) {
             throw new InvalidClaimException('"scp" contains scopes which does not match requested ones or miss some requested scopes.', self::NAME, $value);
+        }
     }
 
     /**
@@ -50,5 +51,3 @@ class ScpChecker implements ClaimChecker
         return self::NAME;
     }
 }
-
-?>

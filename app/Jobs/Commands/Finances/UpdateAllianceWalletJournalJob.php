@@ -2,19 +2,16 @@
 
 namespace App\Jobs\Commands\Finances;
 
+use App\Library\Helpers\FinanceHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+// Application Library
 use Log;
-use Carbon\Carbon;
 
-//Application Library
-use App\Library\Helpers\FinanceHelper;
-
-//Models
-use App\Models\Finances\AllianceWalletJournal;
+// Models
 
 class UpdateAllianceWalletJournalJob implements ShouldQueue
 {
@@ -22,14 +19,14 @@ class UpdateAllianceWalletJournalJob implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 1800;
 
     /**
      * Retries
-     * 
+     *
      * @var int
      */
     public $retries = 3;
@@ -52,29 +49,30 @@ class UpdateAllianceWalletJournalJob implements ShouldQueue
      */
     public function handle()
     {
-        //Declare variables
+        // Declare variables
         $fHelper = new FinanceHelper;
         $config = config('esi');
 
         $pages = $fHelper->GetAllianceWalletJournalPages(1, $config['primary']);
 
-        //If the number of pages received is zero there is an error in the job.
-        if($pages == 0) {
+        // If the number of pages received is zero there is an error in the job.
+        if ($pages == 0) {
             Log::critical('Failed to get the number of pages in the job.');
             $this->delete();
         }
 
-        for($i = 1; $i <= $pages; $i++) {
+        for ($i = 1; $i <= $pages; $i++) {
             UpdateAllianceWalletJournalPage::dispatch(1, $config['primary'], $i)->onQueue('journal');
         }
     }
 
     /**
      * Set the tags for Horzion
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['UpdateAllianceWalletJournal', 'Finances'];
     }
 }

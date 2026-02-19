@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class ScheduleJob extends Model
 {
-    //Table Name
+    // Table Name
     protected $table = 'schedule_jobs';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
     protected $fillable = [

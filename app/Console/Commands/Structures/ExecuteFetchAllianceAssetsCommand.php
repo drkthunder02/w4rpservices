@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands\Structures;
 
-use Illuminate\Console\Command;
-
 use App\Jobs\Commands\Assets\FetchAllianceAssets as FAA;
+use Illuminate\Console\Command;
 
 class ExecuteFetchAllianceAssetsCommand extends Command
 {

@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateBuyPublicContractsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBuyPublicContractsTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('eve_regions')) {
+        if (! Schema::hasTable('eve_regions')) {
             Schema::create('eve_regions', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('region_id');
@@ -21,11 +21,11 @@ class CreateBuyPublicContractsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('public_contracts')) {
-            Schema::create('public_contracts', function(Blueprint $table) {
+        if (! Schema::hasTable('public_contracts')) {
+            Schema::create('public_contracts', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('region_id');
-                $table->decimal('buyout', 17,2 )->nullable();
+                $table->decimal('buyout', 17, 2)->nullable();
                 $table->decimal('collateral', 17, 2)->nullable();
                 $table->unsignedInteger('contract_id');
                 $table->dateTime('date_expired');
@@ -46,11 +46,11 @@ class CreateBuyPublicContractsTable extends Migration
                     'courier',
                     'loan',
                 ]);
-                $table->decimal('volume', 17,2);
+                $table->decimal('volume', 17, 2);
             });
         }
 
-        if(!Schema::hasTable('public_contract_items')) {
+        if (! Schema::hasTable('public_contract_items')) {
             Schema::create('public_contract_items', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('contract_id');
@@ -66,7 +66,7 @@ class CreateBuyPublicContractsTable extends Migration
             });
         }
 
-        if(!Schema::hasTable('market_region_orders')) {
+        if (! Schema::hasTable('market_region_orders')) {
             Schema::create('market_region_orders', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('region_id');
@@ -114,4 +114,4 @@ class CreateBuyPublicContractsTable extends Migration
         Schema::dropIfExists('alliance_wormholes');
         Schema::dropIfExists('wormhole_types');
     }
-}
+};

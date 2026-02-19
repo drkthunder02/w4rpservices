@@ -2,23 +2,18 @@
 
 namespace App\Jobs\Commands\MiningTaxes\Ledgers;
 
-//Internal Library
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Carbon\Carbon;
-use Log;
-
-//App Library
+// Internal Library
 use App\Library\Helpers\LookupHelper;
 use App\Library\Moons\MoonCalc;
-
-//Models
 use App\Models\MiningTax\Ledger;
-use App\Models\Moon\MineralPrice;
-use App\Models\Moon\ItemComposition;
+use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+// App Library
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+// Models
+use Illuminate\Queue\SerializesModels;
 
 class ProcessMiningTaxesLedgers implements ShouldQueue
 {
@@ -26,14 +21,14 @@ class ProcessMiningTaxesLedgers implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 3;
@@ -42,6 +37,7 @@ class ProcessMiningTaxesLedgers implements ShouldQueue
      * Job Variables
      */
     private $ledger;
+
     private $observerId;
 
     /**
@@ -51,11 +47,11 @@ class ProcessMiningTaxesLedgers implements ShouldQueue
      */
     public function __construct($ledger, $observerId)
     {
-        //Set the connection for the job
+        // Set the connection for the job
         $this->connection = 'redis';
         $this->onQueue('miningtaxes');
 
-        //Import variables from the calling function
+        // Import variables from the calling function
         $this->ledger = $ledger;
         $this->observerId = $observerId;
     }
@@ -71,19 +67,19 @@ class ProcessMiningTaxesLedgers implements ShouldQueue
         $mHelper = new MoonCalc;
         $config = config('esi');
 
-        //Create a starting date for the ledger
+        // Create a starting date for the ledger
         $ledgerDate = Carbon::createFromFormat('Y-m-d', $this->ledger->last_updated);
-              
-        //If the ledger is more than one day old, then process it, otherwise, we don't process it
-        //or add it to the database as it may still be updating.
-        if($ledgerDate->lessThan(Carbon::now()->subDay())) {
-            //Get some of the basic information we need to work with
+
+        // If the ledger is more than one day old, then process it, otherwise, we don't process it
+        // or add it to the database as it may still be updating.
+        if ($ledgerDate->lessThan(Carbon::now()->subDay())) {
+            // Get some of the basic information we need to work with
             $charName = $lookup->CharacterIdToName($this->ledger->character_id);
-            //Get the type name from the ledger ore
+            // Get the type name from the ledger ore
             $typeName = $lookup->ItemIdToName($this->ledger->type_id);
-            //Get the price from the helper function
+            // Get the price from the helper function
             $price = $mHelper->CalculateOrePrice($this->ledger->type_id);
-            //Calculate the total price based on the amount
+            // Calculate the total price based on the amount
             $amount = (($price * $this->ledger->quantity) * $config['refine_rate']);
 
             $found = Ledger::where([
@@ -93,7 +89,7 @@ class ProcessMiningTaxesLedgers implements ShouldQueue
                 'last_updated' => $this->ledger->last_updated,
             ])->count();
 
-            if($found == 0) {
+            if ($found == 0) {
                 $ledg = new Ledger;
                 $ledg->character_id = $this->ledger->character_id;
                 $ledg->character_name = $charName;
@@ -112,10 +108,11 @@ class ProcessMiningTaxesLedgers implements ShouldQueue
 
     /**
      * Set the tags for Horzion
-     * 
+     *
      * @var array
      */
-    public function tags() {
+    public function tags()
+    {
         return ['ProcessMiningTaxesLedgers', 'MiningTaxes', 'MiningTaxesLedgers'];
     }
 }

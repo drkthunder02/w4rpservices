@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAllianceJournalTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAllianceJournalTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('alliance_wallet_journal')) {
+        if (! Schema::hasTable('alliance_wallet_journal')) {
             Schema::create('alliance_wallet_journal', function (Blueprint $table) {
                 $table->unsignedBigInteger('id')->unique();
                 $table->unsignedBigInteger('corporation_id');
@@ -169,7 +169,7 @@ class CreateAllianceJournalTable extends Migration
             });
         }
 
-        //Drop the old tables which we don't want to use anymore
+        // Drop the old tables which we don't want to use anymore
         Schema::dropIfExists('CorpJournals');
         Schema::dropIfExists('HoldingCorpFinancesJournal');
         Schema::dropIfExists('jump_bridge_journal');
@@ -195,4 +195,4 @@ class CreateAllianceJournalTable extends Migration
     {
         Schema::dropIfExists('alliance_journal');
     }
-}
+};

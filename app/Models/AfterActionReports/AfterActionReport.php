@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class AfterActionReport extends Model
 {
-    //Table Name
+    // Table Name
     public $table = 'fc_after_action_reports';
 
-    //Primary Key
+    // Primary Key
     public $primaryKey = 'id';
 
-    //Timestamps
+    // Timestamps
     public $timestamps = true;
 
     /**
      * The attributes that are mass assignable
-     * 
+     *
      * @var array
      */
     protected $fillable = [
@@ -35,7 +35,8 @@ class AfterActionReport extends Model
         'additional_comments',
     ];
 
-    public function comments() {
-        return $this->hasMany(App\Models\AfterActionReports\AfterActionReportComment::class, 'report_id', 'id');   
-    }    
+    public function comments()
+    {
+        return $this->hasMany(App\Models\AfterActionReports\AfterActionReportComment::class, 'report_id', 'id');
+    }
 }

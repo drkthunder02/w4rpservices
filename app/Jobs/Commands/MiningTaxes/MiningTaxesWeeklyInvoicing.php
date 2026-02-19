@@ -2,16 +2,14 @@
 
 namespace App\Jobs\Commands\MiningTaxes;
 
+use App\Jobs\Commands\MiningTaxes\Invoices\ProcessAllianceMiningOperations;
+use App\Jobs\Commands\MiningTaxes\Invoices\SendMiningTaxesInvoices;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
-
-use App\Jobs\Commands\MiningTaxes\Invoices\SendMiningTaxesInvoices;
-use App\Jobs\Commands\MiningTaxes\Invoices\ProcessAllianceMiningOperations;
 
 class MiningTaxesWeeklyInvoicing implements ShouldQueue
 {
@@ -19,14 +17,14 @@ class MiningTaxesWeeklyInvoicing implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 3600;
 
     /**
      * Number of job retries
-     * 
+     *
      * @var int
      */
     public $tries = 1;
@@ -38,7 +36,7 @@ class MiningTaxesWeeklyInvoicing implements ShouldQueue
      */
     public function __construct()
     {
-        //Set job parameters
+        // Set job parameters
         $this->connection = 'redis';
         $this->onQueue('miningtaxes');
     }

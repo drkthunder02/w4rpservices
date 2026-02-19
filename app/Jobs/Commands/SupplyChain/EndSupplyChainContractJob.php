@@ -2,23 +2,17 @@
 
 namespace App\Jobs\Commands\SupplyChain;
 
+use App\Models\Contracts\SupplyChainContract;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Carbon\Carbon;
-use Log;
+use Illuminate\Queue\InteractsWithQueue;
+// Library
 
-//Library
-use App\Library\Lookups\LookupHelper;
+// Models
+use Illuminate\Queue\SerializesModels;
 
-//Models
-use App\Models\Contracts\SupplyChainBid;
-use App\Models\Contracts\SupplyChainContract;
-
-//Jobs
-use App\Jobs\Commands\Eve\SendEveMail;
+// Jobs
 
 class EndSupplyChainContractJob implements ShouldQueue
 {
@@ -26,14 +20,14 @@ class EndSupplyChainContractJob implements ShouldQueue
 
     /**
      * Timeout in seconds
-     * 
+     *
      * @var int
      */
     public $timeout = 1200;
 
     /**
      * Retries
-     * 
+     *
      * @var int
      */
     public $retries = 3;
@@ -42,13 +36,21 @@ class EndSupplyChainContractJob implements ShouldQueue
      * Private Variables
      */
     private $contractId;
+
     private $issuerId;
+
     private $issuerName;
+
     private $title;
+
     private $endDate;
+
     private $deliveryBy;
+
     private $body;
+
     private $state;
+
     private $finalCost;
 
     /**
@@ -58,10 +60,10 @@ class EndSupplyChainContractJob implements ShouldQueue
      */
     public function __construct(SupplyChainContract $contract)
     {
-        //Set the queue connection up
+        // Set the queue connection up
         $this->connection = 'redis';
 
-        //Set the variables
+        // Set the variables
         $contractId = $contract->contract_id;
         $issuerId = $contract->issuer_id;
         $issuerName = $contract->issuer_name;
@@ -80,29 +82,29 @@ class EndSupplyChainContractJob implements ShouldQueue
      */
     public function handle()
     {
-        //Declare variables
+        // Declare variables
         $bidId = null;
         $bidAmount = null;
 
-        //Get all of the bids from the contract
+        // Get all of the bids from the contract
         $bids = SupplyChainBids::where([
             'contract_id' => $contractId,
         ])->get();
 
-        //Loop through the bids and find the lowest bid
-        foreach($bids as $bid) {
-            if($bidId == null) {
+        // Loop through the bids and find the lowest bid
+        foreach ($bids as $bid) {
+            if ($bidId == null) {
                 $bidId = $bid->id;
                 $bidAmount = $bid->bid_amount;
             } else {
-                if($bid->bid_amount < $bidAmount) {
+                if ($bid->bid_amount < $bidAmount) {
                     $bidId = $bid->id;
                     $bidAmount = $bid->bid_amount;
                 }
             }
         }
 
-        //Clean up the bids and update the contract with the winning bid
+        // Clean up the bids and update the contract with the winning bid
         SupplyChainContract::where([
             'contract_id' => $this->contractId,
         ])->update([
