@@ -26,7 +26,7 @@
         "postcss": "^8.2.8"
     },
     "dependencies": {
-        "datatables.net": "^1.10.19",
+        "datatables.net": "^1.10.22",
         "datatables.net-autofill": "^2.3.3",
         "datatables.net-autofill-bs4": "^2.3.3",
         "datatables.net-bs4": "^1.10.19",
